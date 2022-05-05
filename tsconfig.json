@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/sidenav.js", "components/navbar.js", "components/layout.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/sidenav.js", "components/navbar.js", "components/layout.js", "pages/notas.js"],
   "exclude": ["node_modules"]
 }

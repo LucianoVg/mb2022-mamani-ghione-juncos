@@ -19,16 +19,45 @@ export default function Sidenav() {
                         </a>
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav">
-                                <Link href="/notas">
+                                <Link href="/gestion/notas">
                                     <a className="nav-link active" >Notas</a>
                                 </Link>
-                                <Link href="/about">
+                                <Link href="/gestion/asistencias">
                                     <a className="nav-link active" >Asistencias</a>
                                 </Link>
 
-                                <Link href="/services">
+                                <Link href="/gestion/estudiantes">
                                     <a className="nav-link active" >Estudiantes</a>
                                 </Link>
+                                
+                                <Link href="/gestion/empleados">
+                                    <a className="nav-link active" >Empleados</a>
+                                </Link>
+                                
+                                <Link href="/gestion/sanciones">
+                                    <a className="nav-link active" >Sanciones</a>
+                                </Link>
+                                
+                                <Link href="/gestion/asistencias_Docente">
+                                    <a className="nav-link active" >Asistencia Docente</a>
+                                </Link>
+                                
+                                <Link href="/gestion/material_estudio">
+                                    <a className="nav-link active" >Material de Estudio</a>
+                                </Link>
+                                
+                                <Link href="/gestion/certificado_servicio">
+                                    <a className="nav-link active" >Certificado de Servicio</a>
+                                </Link>
+                                
+                                <Link href="/gestion/fecha_examen">
+                                    <a className="nav-link active" >Fecha de Examen</a>
+                                </Link>
+                                
+                                <Link href="/gestion/ficha_institucional">
+                                    <a className="nav-link active" >Ficha Institucional</a>
+                                </Link>
+                                                             
                             </nav>
                         </div>
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
