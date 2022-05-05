@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Sidenav() {
     return (
         <div id="layoutSidenav_nav">
@@ -12,13 +14,21 @@ export default function Sidenav() {
                         <div className="sb-sidenav-menu-heading">Interface</div>
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                            Layouts
+                            Gestion
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav">
-                                <a className="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a className="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                <Link href="/notas">
+                                    <a className="nav-link active" >Notas</a>
+                                </Link>
+                                <Link href="/about">
+                                    <a className="nav-link active" >Asistencias</a>
+                                </Link>
+
+                                <Link href="/services">
+                                    <a className="nav-link active" >Estudiantes</a>
+                                </Link>
                             </nav>
                         </div>
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
