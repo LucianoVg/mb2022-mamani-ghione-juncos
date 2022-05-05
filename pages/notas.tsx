@@ -1,8 +1,8 @@
+import { NextPage } from "next";
 import { Layout } from "../components/layout";
 
 
-const Notas = () => {
-    
+const Notas: NextPage = () => {
     return (
     <Layout>
         <h1>Notas</h1>
