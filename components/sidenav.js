@@ -55,31 +55,31 @@ export default function Sidenav() {
 
                             </nav>
                         </div>
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts1">
+                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
                             Reportes
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
-                        <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav">
                                 <Link href="/reportes/reporte_notas">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Notas</a>
                                 </Link>
                                 <Link href="/reportes/reporte_asistencias">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Asistencias</a>
                                 </Link>
                                 <Link href="/reportes/reporte_asistencia_Docente">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Asistencia Docente</a>
                                 </Link>
                                 <Link href="/reportes/reporte_sanciones">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Sanciones</a>
                                 </Link>
                                 <Link href="/reportes/reporte_preanalitico">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Preanalitco</a>
                                 </Link>
 
                                 <Link href="/reportes/reporte_mejor_promedio">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                    <a className="nav-link active" >Reporte Mejor Promedio</a>
                                 </Link>
                             </nav>
                         </div>
