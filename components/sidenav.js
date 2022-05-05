@@ -55,12 +55,12 @@ export default function Sidenav() {
 
                             </nav>
                         </div>
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsReports" aria-expanded="false" aria-controls="collapseLayoutsReports">
                             <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
                             Reportes
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
-                        <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div className="collapse" id="collapseLayoutsReports" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav">
                                 <Link href="/reportes/reporte_notas">
                                     <a className="nav-link active" >Reporte Notas</a>
@@ -75,7 +75,7 @@ export default function Sidenav() {
                                     <a className="nav-link active" >Reporte Sanciones</a>
                                 </Link>
                                 <Link href="/reportes/reporte_preanalitico">
-                                    <a className="nav-link active" >Reporte Preanalitco</a>
+                                    <a className="nav-link active" >Reporte Preanalitico</a>
                                 </Link>
 
                                 <Link href="/reportes/reporte_mejor_promedio">
