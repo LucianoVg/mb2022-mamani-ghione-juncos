@@ -18,46 +18,69 @@ export default function Sidenav() {
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
+                            <nav className="sb-sidenav-menu-nested nav" id="c">
+                                <Link href="/gestion/mantenimiento_usuario">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+                                <Link href="/gestion/estudiantes">
+                                    <a className="nav-link active" >Estudiantes</a>
+                                </Link>
+                                <Link href="/gestion/empleados">
+                                    <a className="nav-link active" >Empleados</a>
+                                </Link>
                                 <Link href="/gestion/notas">
                                     <a className="nav-link active" >Notas</a>
                                 </Link>
                                 <Link href="/gestion/asistencias">
                                     <a className="nav-link active" >Asistencias</a>
                                 </Link>
-
-                                <Link href="/gestion/estudiantes">
-                                    <a className="nav-link active" >Estudiantes</a>
+                                <Link href="/gestion/asistencias_docente">
+                                    <a className="nav-link active" >Asistencia Docente</a>
                                 </Link>
-                                
-                                <Link href="/gestion/empleados">
-                                    <a className="nav-link active" >Empleados</a>
-                                </Link>
-                                
                                 <Link href="/gestion/sanciones">
                                     <a className="nav-link active" >Sanciones</a>
                                 </Link>
-                                
-                                <Link href="/gestion/asistencias_Docente">
-                                    <a className="nav-link active" >Asistencia Docente</a>
-                                </Link>
-                                
                                 <Link href="/gestion/material_estudio">
                                     <a className="nav-link active" >Material de Estudio</a>
                                 </Link>
-                                
                                 <Link href="/gestion/certificado_servicio">
                                     <a className="nav-link active" >Certificado de Servicio</a>
                                 </Link>
-                                
                                 <Link href="/gestion/fecha_examen">
                                     <a className="nav-link active" >Fecha de Examen</a>
                                 </Link>
-                                
                                 <Link href="/gestion/ficha_institucional">
                                     <a className="nav-link active" >Ficha Institucional</a>
                                 </Link>
-                                                             
+
+                            </nav>
+                        </div>
+                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts1">
+                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
+                            Reportes
+                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                        </a>
+                        <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav className="sb-sidenav-menu-nested nav">
+                                <Link href="/reportes/reporte_notas">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+                                <Link href="/reportes/reporte_asistencias">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+                                <Link href="/reportes/reporte_asistencia_Docente">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+                                <Link href="/reportes/reporte_sanciones">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+                                <Link href="/reportes/reporte_preanalitico">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
+
+                                <Link href="/reportes/reporte_mejor_promedio">
+                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
+                                </Link>
                             </nav>
                         </div>
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
