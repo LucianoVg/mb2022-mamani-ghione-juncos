@@ -2,8 +2,10 @@
   "name": "mb2022-mamani-ghione-juncos",
   "version": "0.1.0",
   "private": true,
- 
   "dependencies": {
+    "@prisma/client": "^3.13.0",
+    "axios": "^0.27.2",
+    "firebase": "^9.7.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
@@ -14,12 +16,13 @@
     "@types/react-dom": "18.0.3",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.6",
+    "prisma": "^3.13.0",
     "typescript": "4.6.4"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint" : "next lint"
+    "lint": "next lint"
   }
 }
