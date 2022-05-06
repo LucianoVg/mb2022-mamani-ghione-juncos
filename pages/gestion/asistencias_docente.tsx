@@ -4,9 +4,9 @@ import { Layout } from "../../components/layout";
 
 const AsistenciasDocente: NextPage = () => {
     return (
-    <Layout>
-        <h1>Asistencias Docente</h1>
-    </Layout>
+        <Layout>
+            <h1>Asistencias Docente</h1>
+        </Layout>
     )
 }
 

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,6 +19,31 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/sidenav.js", "components/navbar.js", "components/layout.js", "pages/notas.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/sidenav.tsx",
+    "components/navbar.tsx",
+    "components/layout.tsx",
+    "pages/notas.js",
+    "pages/gestion/asistencias_docente.tsx",
+    "pages/api/hello.ts",
+    "pages/_app.tsx",
+    "pages/index.tsx",
+    "pages/_document.tsx",
+    "pages/gestion/sanciones.tsx",
+    "pages/gestion/notas.tsx",
+    "pages/gestion/material_estudio.tsx",
+    "pages/gestion/mantenimiento_usuario.tsx",
+    "pages/gestion/ficha_institucional.tsx",
+    "pages/gestion/fecha_examen.tsx",
+    "pages/gestion/estudiantes.tsx",
+    "pages/gestion/empleados.tsx",
+    "pages/gestion/certificado_servicio.tsx",
+    "pages/gestion/asistencias.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

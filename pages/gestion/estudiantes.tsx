@@ -1,12 +1,12 @@
-import { NextPage } from "next";
+
 import { Layout } from "../../components/layout";
 
 
-const Estudiantes: NextPage = () => {
+const Estudiantes = () => {
     return (
-    <Layout>
-        <h1>Estudiantes</h1>
-    </Layout>
+        <Layout>
+            <h1>Estudiantes</h1>
+        </Layout>
     )
 }
 

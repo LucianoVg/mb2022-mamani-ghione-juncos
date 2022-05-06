@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
@@ -12,13 +13,9 @@ export default function Document() {
                 <title>Instituto &quot;El Salvador&quot;</title>
 
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-              
             </Head>
             <body className="sb-nav-fixed">
-                <div id="layoutSidenav">
-                    <Main />
-                </div>
-
+                <Main />
                 <NextScript />
             </body>
         </Html>

@@ -1,12 +1,12 @@
-import { NextPage } from "next";
+
 import { Layout } from "../../components/layout";
 
 
-const FichaInstitucional: NextPage = () => {
+const FichaInstitucional = () => {
     return (
-    <Layout>
-        <h1>Ficha Institucional</h1>
-    </Layout>
+        <Layout>
+            <h1>Ficha Institucional</h1>
+        </Layout>
     )
 }
 
