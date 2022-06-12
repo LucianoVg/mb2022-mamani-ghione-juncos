@@ -3,12 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-model Cuenta {
-  id       Int    @id @default(autoincrement())
-  login    String @db.VarChar(50)
-  password String @db.VarChar(50)
-}
+// Modelo de datos
