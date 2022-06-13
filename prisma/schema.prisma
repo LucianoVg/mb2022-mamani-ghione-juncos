@@ -8,3 +8,8 @@ datasource db {
 }
 
 // Modelo de datos
+model Cuenta {
+  id       String  @id @default(uuid())
+  login    String  @unique
+  password String?
+}

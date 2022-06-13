@@ -1,20 +1,33 @@
+import axios from "axios"
 import { NextPage } from "next"
 import { useState } from "react"
 import { Layout } from "../../../components/layout"
 
 const Login: NextPage = () => {
-    const [email, setEmail] = useState("")
+    const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
 
-    const handleEmail = (e: any) => {
-        setEmail(e.target.value as string)
+    const handleLogin = (e: any) => {
+        setLogin(e.target.value as string)
     }
     const handlePassword = (e: any) => {
         setPassword(e.target.value as string)
     }
-    const onSubmitData = (e: any) => {
+    const onSubmitData = async (e: any) => {
         e.preventDefault()
-        console.log("Data", { email, password });
+
+        const res = await axios.post('/api/gestion/cuenta', {
+            login,
+            password
+        })
+
+        const data = res.data
+        if (data.mensaje) {
+            setError(data.mensaje)
+        } else {
+            console.log("Response", JSON.stringify(data));
+        }
     }
 
     return (
@@ -27,7 +40,7 @@ const Login: NextPage = () => {
                             <div className="card-body">
                                 <form method="post" onSubmit={onSubmitData}>
                                     <div className="form-floating mb-3">
-                                        <input className="form-control" value={email} onChange={handleEmail} name="email" id="inputEmail" type="email" placeholder="name@example.com" />
+                                        <input className="form-control" value={login} onChange={handleLogin} name="login" id="inputEmail" type="email" placeholder="name@example.com" />
                                         <label>Email address</label>
                                     </div>
                                     <div className="form-floating mb-3">
@@ -43,6 +56,13 @@ const Login: NextPage = () => {
                             <div className="card-footer text-center py-3">
                                 <div className="small"><a href="register.html">Need an account? Sign up!</a></div>
                             </div>
+                            {
+                                error !== "" && (
+                                    <div className="alert alert-warning">
+                                        {error}
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
