@@ -6,7 +6,7 @@ export default async function handler(
     res: NextApiResponse
 ) {
     const { login, password } = req.body
-    const usuario = await inciarSesion(login, password)
+    const usuario = await iniciarSesion(login, password)
 
     if (usuario) {
         res.status(200).json(usuario)
@@ -15,7 +15,7 @@ export default async function handler(
     }
 }
 
-const inciarSesion = async (email: string, password: string) => {
+const iniciarSesion = async (email: string, password: string) => {
     const prisma = new PrismaClient()
     const usuario = await prisma.cuenta.findFirst({
         where: {
