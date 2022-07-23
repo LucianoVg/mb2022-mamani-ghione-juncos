@@ -7,9 +7,309 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modelo de datos
-model Cuenta {
-  id       String  @id @default(uuid())
-  login    String  @unique
-  password String?
+model Enfermedad {
+  id          String    @id() @default(uuid())
+  descripcion String
+  usuarios    Usuario[]
+}
+
+model Discapacidad {
+  id       String    @id() @default(uuid())
+  nombre   String
+  usuarios Usuario[]
+}
+
+model Tutor {
+  id        String    @id() @default(uuid())
+  nombre    String
+  apellido  String
+  dni       String
+  correo    String
+  localidad String
+  telefono  String
+  direccion String
+  usuarios  Usuario[]
+}
+
+model Permiso {
+  id        String @id() @default(uuid())
+  tipo      String
+  menu      String
+  casoDeUso String
+  roles     Rol[]
+}
+
+model Rol {
+  id       String    @id() @default(uuid())
+  tipo     String
+  permisos Permiso[]
+  usuarios Usuario[]
+}
+
+model Division {
+  id             String           @id() @default(uuid())
+  division       String
+  cursos         Curso[]
+  cursoXDivision CursoXDivision[]
+}
+
+model Curso {
+  id             String           @id() @default(uuid())
+  nombre         String
+  divisiones     Division[]
+  notificaciones Notificacion[]
+  sanciones      Sancion[]
+  cursoXDivision CursoXDivision[]
+  materias       Materia[]
+  fechaExamenes  FechaExamen[]
+}
+
+model CursoXDivision {
+  id                    String                  @id() @default(uuid())
+  idCurso               String
+  curso                 Curso                   @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  idDivision            String
+  division              Division                @relation(fields: [idDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXCursoXDivision AlumnoXCursoXDivision[]
+}
+
+model EstadoAlumno {
+  id                      String                  @id() @default(uuid())
+  estado                  String
+  alumnoXCursoXDivisiones AlumnoXCursoXDivision[]
+}
+
+model FichaInstitucional {
+  id                String  @id() @default(uuid())
+  nombreInstitucion String
+  ubicacion         String
+  tipoInstitucion   Boolean
+  descripcion       String
+  telefono1         String
+  telefono2         String
+  oficina1          String
+  oficina2          String
+  mail              String
+  idUsuario         String
+  usuario           Usuario @relation(fields: [idUsuario], references: [id])
+}
+
+model Usuario {
+  id                      String                  @id() @default(uuid())
+  login                   String
+  contrasenia             String
+  nombre                  String
+  apellido                String
+  dni                     String
+  correo                  String
+  localidad               String
+  telefono                String
+  direccion               String
+  alergias                String
+  idTutor                 String
+  tutor                   Tutor                   @relation(fields: [idTutor], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  idRol                   String
+  rol                     Rol                     @relation(fields: [idRol], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  enfermedades            Enfermedad[]
+  discapacidades          Discapacidad[]
+  fichaInstitucionales    FichaInstitucional[]
+  materialEstudios        MaterialEstudio[]
+  notificaciones          Notificacion[]
+  noticiasYNovedades      NoticiasYNovedades[]
+  sanciones               Sancion[]
+  alumnoXCursoXDivisiones AlumnoXCursoXDivision[]
+  fechaExamenes           FechaExamen[]
+  docenteXMateria         DocenteXMateria[]
+  asistenciasDocente      AsistenciaDocente[]
+  asistencias             Asistencia[]
+}
+
+model TipoArchivo {
+  id       String    @id() @default(uuid())
+  tipo     String
+  archivos Archivo[]
+}
+
+model Archivo {
+  id               String            @id() @default(uuid())
+  titulo           String
+  descripcion      String
+  url              String
+  idTipoArchivo    String
+  tipoArchivo      TipoArchivo       @relation(fields: [idTipoArchivo], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  materialEstudios MaterialEstudio[]
+}
+
+model MaterialEstudio {
+  id          String   @id() @default(uuid())
+  titulo      String
+  fecha       DateTime
+  descripcion String
+  idArchivo   String
+  archivo     Archivo  @relation(fields: [idArchivo], references: [id])
+  idUsuario   String
+  usuario     Usuario  @relation(fields: [idUsuario], references: [id])
+}
+
+model Notificacion {
+  id          String  @id() @default(uuid())
+  descripcion String
+  idUsuario   String
+  usuario     Usuario @relation(fields: [idUsuario], references: [id])
+  idCurso     String
+  curso       Curso   @relation(fields: [idCurso], references: [id])
+}
+
+model NoticiasYNovedades {
+  id          String   @id() @default(uuid())
+  titulo      String
+  fecha       DateTime
+  descripcion String
+  idUsuario   String
+  usuario     Usuario  @relation(fields: [idUsuario], references: [id])
+}
+
+model TipoSancion {
+  id        String    @id() @default(uuid())
+  tipo      String
+  sanciones Sancion[]
+}
+
+model Sancion {
+  id            String      @id() @default(uuid())
+  motivo        String
+  fecha         DateTime
+  idTipoSancion String
+  tipoSancion   TipoSancion @relation(fields: [idTipoSancion], references: [id])
+  idCurso       String
+  curso         Curso       @relation(fields: [idCurso], references: [id])
+  usuarios      Usuario[]
+}
+
+model AlumnoXCursoXDivision {
+  id               String           @id() @default(uuid())
+  idCursoXDivision String
+  cursoXDivision   CursoXDivision   @relation(fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  idUsuario        String
+  usuario          Usuario          @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  idEstadoAlumno   String
+  estadoAlumno     EstadoAlumno     @relation(fields: [idEstadoAlumno], references: [id])
+  anoActual        DateTime
+  alumnoXMateria   AlumnoXMateria[]
+  Asistencia       Asistencia[]
+}
+
+model Materia {
+  id              String            @id() @default(uuid())
+  nombre          String
+  idCurso         String
+  curso           Curso             @relation(fields: [idCurso], references: [id])
+  idCorrelativa   String?
+  materia         Materia?          @relation("materiaTomateria_idcorrelativa", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_materia   Materia[]         @relation("materiaTomateria_idcorrelativa")
+  docenteXMateria DocenteXMateria[]
+  alumnoXMateria  AlumnoXMateria[]
+}
+
+model FechaExamen {
+  id        String  @id() @default(uuid())
+  idUsuario String
+  usuario   Usuario @relation(fields: [idUsuario], references: [id])
+  idCurso   String
+  curso     Curso   @relation(fields: [idCurso], references: [id])
+}
+
+model DocenteXMateria {
+  id                String              @id() @default(uuid())
+  idUsuario         String
+  usuario           Usuario             @relation(fields: [idUsuario], references: [id])
+  idMateria         String
+  materia           Materia             @relation(fields: [idMateria], references: [id])
+  notas             Nota[]
+  AsistenciaDocente AsistenciaDocente[]
+}
+
+model Trimestre {
+  id                String              @id() @default(uuid())
+  trimestre         String
+  notas             Nota[]
+  ReporteXTrimestre ReporteXTrimestre[]
+}
+
+model Nota {
+  id                String           @id() @default(uuid())
+  nota              Int
+  fecha             DateTime
+  idTrimestre       String
+  trimestre         Trimestre        @relation(fields: [idTrimestre], references: [id])
+  idDocenteXMateria String
+  docenteXMateria   DocenteXMateria  @relation(fields: [idDocenteXMateria], references: [id])
+  alumnoXMaterias   AlumnoXMateria[]
+}
+
+model AlumnoXMateria {
+  id                      String                @id() @default(uuid())
+  idAlumnoXCursoXDivision String
+  alumnoXCursoXDivision   AlumnoXCursoXDivision @relation(fields: [idAlumnoXCursoXDivision], references: [id])
+  idMateria               String
+  materia                 Materia               @relation(fields: [idMateria], references: [id])
+  idNota                  String
+  nota                    Nota                  @relation(fields: [idNota], references: [id])
+  reporteXTrimestres      ReporteXTrimestre[]
+}
+
+model TipoReporte {
+  id       String    @id() @default(uuid())
+  tipo     String
+  reportes Reporte[]
+}
+
+model Reporte {
+  id                String              @id() @default(uuid())
+  idTipoReporte     String
+  tipoReporte       TipoReporte         @relation(fields: [idTipoReporte], references: [id])
+  fechaEmision      DateTime
+  reporteXTrimestre ReporteXTrimestre[]
+}
+
+model ReporteXTrimestre {
+  id               String         @id() @default(uuid())
+  idReporte        String
+  reporte          Reporte        @relation(fields: [idReporte], references: [id])
+  idTrimestre      String
+  trimestre        Trimestre      @relation(fields: [idTrimestre], references: [id])
+  idAlumnoXMateria String
+  alumnoXMateria   AlumnoXMateria @relation(fields: [idAlumnoXMateria], references: [id])
+}
+
+model TipoAsistencia {
+  id                 String              @id() @default(uuid())
+  tipo               String
+  valor              Float
+  asistenciasDocente AsistenciaDocente[]
+  asistencias        Asistencia[]
+}
+
+model AsistenciaDocente {
+  id                String          @id() @default(uuid())
+  idDocenteXMateria String
+  docenteXMateria   DocenteXMateria @relation(fields: [idDocenteXMateria], references: [id])
+  idTipoAsistencia  String
+  tipoAsistencia    TipoAsistencia  @relation(fields: [idTipoAsistencia], references: [id])
+  fecha             DateTime
+  justificado       Boolean
+  idUsuario         String
+  usuario           Usuario         @relation(fields: [idUsuario], references: [id])
+}
+
+model Asistencia {
+  id                      String                @id() @default(uuid())
+  idTipoAsistencia        String
+  tipoAsistencia          TipoAsistencia        @relation(fields: [idTipoAsistencia], references: [id])
+  fecha                   DateTime
+  justificado             Boolean
+  idAlumnoXCursoXDivision String
+  alumnoXCurso            AlumnoXCursoXDivision @relation(fields: [idAlumnoXCursoXDivision], references: [id])
+  idUsuario               String
+  usuario                 Usuario               @relation(fields: [idUsuario], references: [id])
 }
