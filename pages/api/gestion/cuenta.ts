@@ -5,24 +5,36 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { login, password } = req.body
-    const usuario = await iniciarSesion(login, password)
+    try {
+        const prisma = new PrismaClient()
+        // REVISAR CONSULTA
+        const asistenciaDeUsuarios = await prisma.asistencia.findMany({
+            select: {
+                tipoAsistencia: {
+                    select: {
+                        tipo: true,
+                        valor: true
+                    },
+                },
+                fecha: true,
+                usuario: {
+                    select: {
+                        nombre: true,
+                        apellido: true
+                    }
+                }
+            }
+        })
+        asistenciaDeUsuarios.map(ass => {
+            console.log(`Asistencia: ${ass.tipoAsistencia.tipo} 
+        - Valor: ${ass.tipoAsistencia.valor} 
+        - Fecha: ${ass.fecha} 
+        - Alumno: ${ass.usuario.nombre} ${ass.usuario.apellido}
+        - Preceptor: ${ass.usuario.nombre} ${ass.usuario.apellido}`)
+        })
 
-    if (usuario) {
-        res.status(200).json(usuario)
-    } else {
-        res.status(200).json({ mensaje: "Usuario no encontrado" })
+        return res.status(200).json(asistenciaDeUsuarios)
+    } catch (error) {
+        return res.status(200).json(error)
     }
-}
-
-const iniciarSesion = async (email: string, password: string) => {
-    const prisma = new PrismaClient()
-    const usuario = await prisma.cuenta.findFirst({
-        where: {
-            login: email,
-            password: password
-        }
-    })
-
-    return usuario
 }

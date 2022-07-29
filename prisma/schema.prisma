@@ -309,7 +309,7 @@ model Asistencia {
   fecha                   DateTime
   justificado             Boolean
   idAlumnoXCursoXDivision String
-  alumnoXCurso            AlumnoXCursoXDivision @relation(fields: [idAlumnoXCursoXDivision], references: [id])
+  alumnoXCursoXDivision   AlumnoXCursoXDivision @relation(fields: [idAlumnoXCursoXDivision], references: [id])
   idUsuario               String
   usuario                 Usuario               @relation(fields: [idUsuario], references: [id])
 }
