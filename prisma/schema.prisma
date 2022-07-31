@@ -6,3 +6,346 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model alumnoXcursoXdivision {
+  id               Int              @id @default(autoincrement())
+  anoActual        DateTime?
+  idCursoXdivision Int?
+  idUsuario        Int?
+  idEstadoAlumno   Int?
+  estadoAlumno     estadoAlumno?    @relation(fields: [idEstadoAlumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario          usuario?         @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXdivision   cursoXdivision?  @relation(fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXmateria   alumnoXmateria[]
+  asistencia       asistencia[]
+}
+
+model alumnoXmateria {
+  id                      Int                    @id @default(autoincrement())
+  idAlumnoXcursoXdivision Int?
+  idMateria               Int?
+  idNota                  Int?
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nota                    nota?                  @relation(fields: [idNota], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reporteXtrimestre       reporteXtrimestre[]
+}
+
+model archivo {
+  id              Int               @id @default(autoincrement())
+  titulo          String?
+  descripcion     String?
+  url             String?
+  idTipoArchivo   Int?
+  tipoArchivo     tipoArchivo?      @relation(fields: [idTipoArchivo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materialEstudio materialEstudio[]
+}
+
+model asistencia {
+  id                      Int                    @id @default(autoincrement())
+  fecha                   DateTime?
+  justificado             Boolean?
+  idTipoAsistencia        Int?
+  idAlumnoXcursoXdivision Int?
+  idUsuario               Int?
+  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tipoAsistencia          tipoAsistencia?        @relation(fields: [idTipoAsistencia], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model asistenciaDocente {
+  id                Int              @id @default(autoincrement())
+  idDocenteXmateria Int?
+  idTipoAsistencia  Int?
+  justificado       Boolean?
+  idUsuario         Int?
+  fecha             DateTime?
+  docenteXmateria   docenteXmateria? @relation(fields: [idDocenteXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario           usuario?         @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tipoAsistencia    tipoAsistencia?  @relation(fields: [idTipoAsistencia], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model curso {
+  id             Int              @id @default(autoincrement())
+  nombre         String?
+  cursoXdivision cursoXdivision[]
+  materia        materia[]
+  notificacion   notificacion[]
+  sancion        sancion[]
+}
+
+model cursoXdivision {
+  id                    Int                     @id @default(autoincrement())
+  idCurso               Int?
+  IdDivision            Int?
+  division              division?               @relation(fields: [IdDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision alumnoXcursoXdivision[]
+}
+
+model discapacidad {
+  id                   Int                    @id @default(autoincrement())
+  nombre               String
+  discapacidadXusuario discapacidadXusuario[]
+  usuario              usuario[]
+}
+
+model discapacidadXusuario {
+  id             Int           @id @default(autoincrement())
+  idDiscapacidad Int?
+  idUsuario      Int?
+  discapacidad   discapacidad? @relation(fields: [idDiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario        usuario?      @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model division {
+  id             Int              @id @default(autoincrement())
+  division       String?
+  cursoXdivision cursoXdivision[]
+}
+
+model docenteXmateria {
+  id                Int                 @id @default(autoincrement())
+  idUsuario         Int?
+  idMateria         Int?
+  materia           materia?            @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario           usuario?            @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  asistenciaDocente asistenciaDocente[]
+  nota              nota[]
+}
+
+model enfermedad {
+  id                   Int                    @id @default(autoincrement())
+  descripcion          String?
+  enfermedadesXusuario enfermedadesXusuario[]
+  usuario              usuario[]
+}
+
+model enfermedadesXusuario {
+  id           Int         @id @default(autoincrement())
+  idEnfermedad Int?
+  idUsuario    Int?
+  usuario      usuario?    @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  enfermedad   enfermedad? @relation(fields: [idEnfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model estadoAlumno {
+  id                    Int                     @id @default(autoincrement())
+  estado                String?
+  alumnoXcursoXdivision alumnoXcursoXdivision[]
+}
+
+model fechaExamen {
+  id        Int       @id @default(autoincrement())
+  idUsuario Int?
+  idCurso   Int?
+  fecha     DateTime?
+  idMateria Int?
+  materia   materia?  @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model fichaInstitucional {
+  id                Int      @id @default(autoincrement())
+  nombreInstitucion String?
+  ubicacion         String?
+  tipoInstitucion   Boolean?
+  descripcion       String?
+  telefono1         String?
+  telefono2         String?
+  oficina1          String?
+  oficina2          String?
+  mail              String?
+  idUsuario         Int?
+  usuario           usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model materia {
+  id              Int               @id @default(autoincrement())
+  nombre          String?
+  idCurso         Int?
+  idCorrelativa   Int?
+  materia         materia?          @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso           curso?            @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXmateria  alumnoXmateria[]
+  docenteXmateria docenteXmateria[]
+  fechaExamen     fechaExamen[]
+  other_materia   materia[]         @relation("materiaTomateria")
+}
+
+model materialEstudio {
+  id          Int       @id @default(autoincrement())
+  titulo      String?
+  fecha       DateTime?
+  descripcion String?
+  idArchivo   Int?
+  idUsuario   Int?
+  usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  archivo     archivo?  @relation(fields: [idArchivo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model nota {
+  id                Int              @id @default(autoincrement())
+  nota              Int?
+  fecha             DateTime?
+  idTrimestre       Int?
+  idDocenteXmateria Int?
+  trimestre         trimestre?       @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  docenteXmateria   docenteXmateria? @relation(fields: [idDocenteXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXmateria    alumnoXmateria[]
+}
+
+model noticiasYnovedades {
+  id          Int       @id @default(autoincrement())
+  titulo      String?
+  fecha       DateTime?
+  descripcion String?
+  idUsuario   Int?
+  usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model notificacion {
+  id          Int      @id @default(autoincrement())
+  descripcion String?
+  IdUsuario   Int?
+  IdCurso     Int?
+  usuario     usuario? @relation(fields: [IdUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso       curso?   @relation(fields: [IdCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model permisos {
+  id           Int            @id @default(autoincrement())
+  tipo         String?
+  menuSistema  String?
+  casoDeUso    String?
+  permisosXrol permisosXrol[]
+}
+
+model permisosXrol {
+  id         Int       @id @default(autoincrement())
+  idRol      Int?
+  idPermisos Int?
+  permisos   permisos? @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rol        rol?      @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model reporte {
+  id                Int                 @id @default(autoincrement())
+  idTipoReporte     Int?
+  fechaEmision      DateTime?
+  tipoReporte       tipoReporte?        @relation(fields: [idTipoReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reporteXtrimestre reporteXtrimestre[]
+}
+
+model reporteXtrimestre {
+  id               Int             @id @default(autoincrement())
+  idReporte        Int?
+  IdTrimestre      Int?
+  IdAlumnoXmateria Int?
+  reporte          reporte?        @relation(fields: [idReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trimestre        trimestre?      @relation(fields: [IdTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXmateria   alumnoXmateria? @relation(fields: [IdAlumnoXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model rol {
+  id           Int            @id @default(autoincrement())
+  tipo         String?
+  permisosXrol permisosXrol[]
+  usuario      usuario[]
+}
+
+model sancion {
+  id              Int               @id @default(autoincrement())
+  motivo          String?
+  fecha           DateTime?
+  idTipoSancion   Int?
+  idCurso         Int?
+  tipoSancion     tipoSancion?      @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso           curso?            @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancionXusuario sancionXusuario[]
+}
+
+model sancionXusuario {
+  id        Int      @id @default(autoincrement())
+  idSancion Int?
+  idUsuario Int?
+  usuario   usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancion   sancion? @relation(fields: [idSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tipoArchivo {
+  id      Int       @id @default(autoincrement())
+  tipo    String?
+  archivo archivo[]
+}
+
+model tipoAsistencia {
+  id                Int                 @id @default(autoincrement())
+  tipo              String?
+  valor             Float?
+  asistencia        asistencia[]
+  asistenciaDocente asistenciaDocente[]
+}
+
+model tipoReporte {
+  id      Int       @id @default(autoincrement())
+  tipo    String?
+  reporte reporte[]
+}
+
+model tipoSancion {
+  id      Int       @id @default(autoincrement())
+  tipo    String?
+  sancion sancion[]
+}
+
+model trimestre {
+  id                Int                 @id @default(autoincrement())
+  trimestre         String?
+  nota              nota[]
+  reporteXtrimestre reporteXtrimestre[]
+}
+
+model tutor {
+  id        Int       @id @default(autoincrement())
+  nombre    String?
+  apellido  String?
+  dni       String?
+  correo    String?
+  localidad String?
+  telefono  String?
+  direccion String?
+  usuario   usuario[]
+}
+
+model usuario {
+  id                    Int                     @id @default(autoincrement())
+  login                 String?
+  password              String?
+  nombre                String?
+  apellido              String?
+  dni                   String?
+  correo                String?
+  localidad             String?
+  telefono              String?
+  direccion             String?
+  alergias              String?
+  idTutor               Int?
+  idRol                 Int?
+  idEnfermedad          Int?
+  idDiscapacidad        Int?
+  tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  enfermedad            enfermedad?             @relation(fields: [idEnfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  discapacidad          discapacidad?           @relation(fields: [idDiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision alumnoXcursoXdivision[]
+  asistencia            asistencia[]
+  asistenciaDocente     asistenciaDocente[]
+  discapacidadXusuario  discapacidadXusuario[]
+  docenteXmateria       docenteXmateria[]
+  enfermedadesXusuario  enfermedadesXusuario[]
+  fichaInstitucional    fichaInstitucional[]
+  materialEstudio       materialEstudio[]
+  noticiasYnovedades    noticiasYnovedades[]
+  notificacion          notificacion[]
+  sancionXusuario       sancionXusuario[]
+}

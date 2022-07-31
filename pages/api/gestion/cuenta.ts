@@ -8,7 +8,28 @@ export default async function handler(
     const prisma = new PrismaClient()
     try {
 
-        const asistencias = await prisma.FichaInstitucional.findMany()
+        const asistencias = await prisma.asistencia.findMany({
+     include: {
+        tipoAsistencia: true,
+        alumnoXcursoXdivision: {
+            include: {
+                cursoXdivision: {
+                  include:{
+                    curso: true,
+                    division:true
+                  }  
+                },
+                usuario: {
+                    include: {
+                        tutor: true
+                    }
+                }
+            }
+        },
+        usuario: true
+
+     }
+        })
         console.log(asistencias);
 
         // asistencias.map(ass => {
