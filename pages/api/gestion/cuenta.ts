@@ -8,7 +8,7 @@ export default async function handler(
     const prisma = new PrismaClient()
     try {
 
-        const asistencias = await prisma.asistencia.findMany()
+        const asistencias = await prisma.FichaInstitucional.findMany()
         console.log(asistencias);
 
         // asistencias.map(ass => {
