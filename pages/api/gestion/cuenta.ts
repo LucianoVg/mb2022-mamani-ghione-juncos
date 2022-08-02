@@ -5,43 +5,24 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const prisma = new PrismaClient()
     try {
-
-        const asistencias = await prisma.asistencia.findMany({
-     include: {
-        tipoAsistencia: true,
-        alumnoXcursoXdivision: {
-            include: {
-                cursoXdivision: {
-                  include:{
-                    curso: true,
-                    division:true
-                  }  
-                },
-                usuario: {
-                    include: {
-                        tutor: true
-                    }
+        if (req.method === 'POST') {
+            const prisma = new PrismaClient()
+            const { nombre, apellido, login, password } = req.body
+            const usuario = await prisma.usuario.create({
+                data: {
+                    nombre: nombre,
+                    apellido: apellido,
+                    login: login,
+                    password: password
                 }
-            }
-        },
-        usuario: true
+            })
+            console.log(usuario);
 
-     }
-        })
-        console.log(asistencias);
+            return res.status(200).json(usuario)
+        }
 
-        // asistencias.map(ass => {
-        //     console.log(`Asistencia: ${ass.tipoAsistencia.tipo} 
-        // - Valor: ${ass.tipoAsistencia.valor} 
-        // - Fecha: ${ass.fecha} 
-        // - Alumno: ${ass.usuario.nombre} ${ass.usuario.apellido}
-        // - Preceptor: ${ass.usuario.nombre} ${ass.usuario.apellido}`)
-        // })
-
-        return res.status(200).json(asistencias)
-    } catch (error) {
-        return res.status(200).json(error)
+    } catch (error: any) {
+        return res.status(200).json({ mensaje: error.message })
     }
 }
