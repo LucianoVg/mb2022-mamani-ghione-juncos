@@ -20,8 +20,11 @@ export default async function handler(
             console.log(usuario);
 
             return res.status(200).json(usuario)
+        } else {
+            const prisma = new PrismaClient()
+            const usuarios = await prisma.usuario.findMany()
+            return res.status(200).json(usuarios)
         }
-
     } catch (error: any) {
         return res.status(200).json({ mensaje: error.message })
     }
