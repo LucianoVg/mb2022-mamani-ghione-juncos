@@ -22,7 +22,16 @@ export default async function handler(
             return res.status(200).json(usuario)
         } else {
             const prisma = new PrismaClient()
-            const usuarios = await prisma.usuario.findMany()
+            const usuarios = await prisma.usuario.findMany({
+                include: {
+                    tutor: true
+                },
+                where: {
+                    tutor: {
+                        isNot: null
+                    }
+                }
+            })
             return res.status(200).json(usuarios)
         }
     } catch (error: any) {
