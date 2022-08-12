@@ -22,9 +22,13 @@ const Sidenav = () => {
                         </a>
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav" id="c">
-                                <Link href="/gestion/mantenimiento_usuario">
-                                    <a className="nav-link active" >Mantenimiento de Usuario</a>
-                                </Link>
+                                {
+                                    usuario.rol.casosDeUso.map((c, i) => {
+                                        <Link href={c.url}>
+                                            <a className="nav-link active" >{c.nombre}</a>
+                                        </Link>
+                                    })
+                                }
                                 <Link href="/gestion/estudiantes">
                                     <a className="nav-link" >Estudiantes</a>
                                 </Link>
