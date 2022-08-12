@@ -41,7 +41,8 @@
     "pages/gestion/estudiantes.tsx",
     "pages/gestion/empleados.tsx",
     "pages/gestion/certificado_servicio.tsx",
-    "pages/gestion/asistencias.tsx"
+    "pages/gestion/asistencias.tsx",
+    "servicios/prisma.ts"
   ],
   "exclude": [
     "node_modules"
