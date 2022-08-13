@@ -212,26 +212,25 @@ model notificacion {
   curso       curso?   @relation(fields: [IdCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model casoDeUso {
-  id                 Int                  @id @default(autoincrement())
-  casoDeUso          String?
-  casoDeUsoXpermisos casoDeUsoXpermisos[]
-}
-
 model permisos {
-  id                 Int                  @id @default(autoincrement())
-  menuSistema        String?
-  url                String?
-  permisosXrol       permisosXrol[]
-  casoDeUsoXpermisos casoDeUsoXpermisos[]
+  id           Int            @id @default(autoincrement())
+  casoDeUso    String?
+  permisosXrol permisosXrol[]
 }
 
-model casoDeUsoXpermisos {
+model menu {
   id          Int        @id @default(autoincrement())
-  idCasoDeUso Int?
-  idPermisos  Int?
-  permisos    permisos?  @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  casoDeUso   casoDeUso? @relation(fields: [idCasoDeUso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menuSistema String?
+  url         String?
+  menuXrol    menuXrol[]
+}
+
+model rol {
+  id           Int            @id @default(autoincrement())
+  tipo         String?
+  permisosXrol permisosXrol[]
+  menuXrol     menuXrol[]
+  usuario      usuario[]
 }
 
 model permisosXrol {
@@ -240,6 +239,14 @@ model permisosXrol {
   idPermisos Int?
   permisos   permisos? @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol        rol?      @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model menuXrol {
+  id        Int   @id @default(autoincrement())
+  idRol     Int?
+  idMenu    Int?
+  rol       rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  casoDeUso menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model reporte {
@@ -258,13 +265,6 @@ model reporteXtrimestre {
   reporte          reporte?        @relation(fields: [idReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trimestre        trimestre?      @relation(fields: [IdTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXmateria   alumnoXmateria? @relation(fields: [IdAlumnoXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model rol {
-  id           Int            @id @default(autoincrement())
-  tipo         String?
-  permisosXrol permisosXrol[]
-  usuario      usuario[]
 }
 
 model sancion {

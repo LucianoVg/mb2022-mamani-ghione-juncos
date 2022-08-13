@@ -70,6 +70,7 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
                                 <nav className="sb-sidenav-menu-nested nav">
+                                    
                                     <Link href="/reportes/reporte_notas">
                                         <a className="nav-link active" >Reporte Notas</a>
                                     </Link>
@@ -88,19 +89,6 @@ const Sidenav = () => {
 
                                     <Link href="/reportes/reporte_mejor_promedio">
                                         <a className="nav-link active" >Reporte Mejor Promedio</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_asistencia_Docente">
-                                        <a className="nav-link" >Mantenimiento de Usuario</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_sanciones">
-                                        <a className="nav-link" >Mantenimiento de Usuario</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_preanalitico">
-                                        <a className="nav-link" >Mantenimiento de Usuario</a>
-                                    </Link>
-
-                                    <Link href="/reportes/reporte_mejor_promedio">
-                                        <a className="nav-link" >Mantenimiento de Usuario</a>
                                     </Link>
                                 </nav >
                             </div >
