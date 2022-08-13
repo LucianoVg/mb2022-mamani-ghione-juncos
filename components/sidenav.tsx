@@ -56,8 +56,8 @@ const Sidenav = () => {
                                 <Link href="/gestion/fecha_examen">
                                     <a className="nav-link" >Fecha de Examen</a>
                                 </Link>
-                                <Link href="/gestion/ficha_institucional">
-                                    <a className="nav-link" >Ficha Institucional</a>
+                                <Link href="/gestion/generar_ficha_institucional">
+                                    <a className="nav-link" > Generar Ficha Institucional</a>
                                 </Link>
                             </nav>
                         </div>

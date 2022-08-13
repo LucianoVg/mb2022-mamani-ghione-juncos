@@ -212,12 +212,26 @@ model notificacion {
   curso       curso?   @relation(fields: [IdCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model casoDeUso {
+  id                 Int                  @id @default(autoincrement())
+  casoDeUso          String?
+  casoDeUsoXpermisos casoDeUsoXpermisos[]
+}
+
 model permisos {
-  id           Int            @id @default(autoincrement())
-  tipo         String?
-  menuSistema  String?
-  casoDeUso    String?
-  permisosXrol permisosXrol[]
+  id                 Int                  @id @default(autoincrement())
+  menuSistema        String?
+  url                String?
+  permisosXrol       permisosXrol[]
+  casoDeUsoXpermisos casoDeUsoXpermisos[]
+}
+
+model casoDeUsoXpermisos {
+  id          Int        @id @default(autoincrement())
+  idCasoDeUso Int?
+  idPermisos  Int?
+  permisos    permisos?  @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  casoDeUso   casoDeUso? @relation(fields: [idCasoDeUso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisosXrol {
