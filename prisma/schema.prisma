@@ -233,20 +233,20 @@ model rol {
   usuario      usuario[]
 }
 
+model menuXrol {
+  id     Int   @id @default(autoincrement())
+  idRol  Int?
+  idMenu Int?
+  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu   menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
 model permisosXrol {
   id         Int       @id @default(autoincrement())
   idRol      Int?
   idPermisos Int?
   permisos   permisos? @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol        rol?      @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model menuXrol {
-  id        Int   @id @default(autoincrement())
-  idRol     Int?
-  idMenu    Int?
-  rol       rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menu menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model reporte {

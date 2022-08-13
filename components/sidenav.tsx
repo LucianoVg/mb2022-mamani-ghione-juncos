@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import axios from 'axios'
+import { menuXrol } from '@prisma/client'
 
 const Sidenav = () => {
     return (
@@ -23,7 +25,7 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav" id="c">
                                 {
-                                    usuario.rol.casosDeUso.map((c, i) => {
+                                    menu.rol.casosDeUso.map((c, i) => {
                                         <Link href={c.url}>
                                             <a className="nav-link active" >{c.nombre}</a>
                                         </Link>
@@ -115,4 +117,14 @@ const Sidenav = () => {
     )
 }
 
+export const getServerSideProps = async () => {
+const res = await axios.get('http://localhost:3000/api/gestion/submenu')
+const menus = res.data as Menu[]
+return {
+    props: {
+        menus
+    }
+}
+}
 export default Sidenav
+
