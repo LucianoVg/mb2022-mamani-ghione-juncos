@@ -246,7 +246,7 @@ model menuXrol {
   idRol     Int?
   idMenu    Int?
   rol       rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  casoDeUso menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model reporte {
