@@ -48,9 +48,9 @@ model asistencia {
   idTipoAsistencia        Int?
   idAlumnoXcursoXdivision Int?
   idUsuario               Int?
-  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tipoAsistencia          tipoAsistencia?        @relation(fields: [idTipoAsistencia], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model asistenciaDocente {
@@ -228,8 +228,8 @@ model menu {
 model rol {
   id           Int            @id @default(autoincrement())
   tipo         String?
-  permisosXrol permisosXrol[]
   menuXrol     menuXrol[]
+  permisosXrol permisosXrol[]
   usuario      usuario[]
 }
 
@@ -237,8 +237,8 @@ model menuXrol {
   id     Int   @id @default(autoincrement())
   idRol  Int?
   idMenu Int?
-  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menu   menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisosXrol {

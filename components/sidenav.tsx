@@ -1,8 +1,19 @@
 import Link from 'next/link'
 import axios from 'axios'
-import { menuXrol } from '@prisma/client'
+import { useEffect, useState } from 'react'
 
 const Sidenav = () => {
+    const [menus, setMenus] = useState([])
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
+            .then(r => {
+                console.log(r.data);
+
+                setMenus(r.data)
+            })
+    }, [])
+
     return (
         <div id="layoutSidenav_nav">
             <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -25,13 +36,13 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav" id="c">
                                 {
-                                    menu.rol.casosDeUso.map((c, i) => {
-                                        <Link href={c.url}>
-                                            <a className="nav-link active" >{c.nombre}</a>
+                                    menus && menus.map((m: any, i: number) => (
+                                        <Link key={i} href={m.menu?.url}>
+                                            <a className="nav-link active" >{m.menu?.menuSistema}</a>
                                         </Link>
-                                    })
+                                    ))
                                 }
-                                <Link href="/gestion/estudiantes">
+                                {/* <Link href="/gestion/estudiantes">
                                     <a className="nav-link" >Estudiantes</a>
                                 </Link>
                                 <Link href="/gestion/empleados">
@@ -60,7 +71,7 @@ const Sidenav = () => {
                                 </Link>
                                 <Link href="/gestion/generar_ficha_institucional">
                                     <a className="nav-link" > Generar Ficha Institucional</a>
-                                </Link>
+                                </Link> */}
                             </nav>
                         </div>
 
@@ -72,7 +83,7 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
                                 <nav className="sb-sidenav-menu-nested nav">
-                                    
+
                                     <Link href="/reportes/reporte_notas">
                                         <a className="nav-link active" >Reporte Notas</a>
                                     </Link>
@@ -118,13 +129,15 @@ const Sidenav = () => {
 }
 
 export const getServerSideProps = async () => {
-const res = await axios.get('http://localhost:3000/api/gestion/submenu')
-const menus = res.data as Menu[]
-return {
-    props: {
-        menus
+    const res = await axios.get('http://localhost:3000/api/gestion/submenu')
+    const menus = res.data
+    console.log(menus);
+
+    return {
+        props: {
+            menus
+        }
     }
-}
 }
 export default Sidenav
 
