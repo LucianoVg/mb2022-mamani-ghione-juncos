@@ -1,21 +1,18 @@
 import axios from "axios"
 import { NextPage } from "next"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import { Layout } from "../../../components/layout"
 
 const Login: NextPage = () => {
-    const [nombre, setNombre] = useState("")
-    const [apellido, setApellido] = useState("")
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const router = useRouter()
+    
+   
 
-    const handleNombre = (e: any) => {
-        setNombre(e.target.value)
-    }
-    const handleApellido = (e: any) => {
-        setApellido(e.target.value)
-    }
+
     const handleLogin = (e: any) => {
         setLogin(e.target.value as string)
     }
@@ -25,10 +22,12 @@ const Login: NextPage = () => {
     const onSubmitData = async (e: any) => {
         e.preventDefault()
 
+
+
         const res = await axios.post('/api/gestion/cuenta', {
-            nombre,
-            apellido,
+          
             login,
+
             password
         })
 
@@ -38,7 +37,7 @@ const Login: NextPage = () => {
         if (data.mensaje) {
             setError(data.mensaje)
         } else {
-            console.log("Response", JSON.stringify(data));
+            router.push('/')
         }
     }
 
@@ -51,17 +50,10 @@ const Login: NextPage = () => {
                             <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
                             <div className="card-body">
                                 <form method="post" onSubmit={onSubmitData}>
+                                    
                                     <div className="form-floating mb-3">
-                                        <input className="form-control" value={nombre} onChange={handleNombre} name="nombre" id="inputEmail" type="text" placeholder="Nombre" />
-                                        <label>Nombre</label>
-                                    </div>
-                                    <div className="form-floating mb-3">
-                                        <input className="form-control" value={apellido} onChange={handleApellido} name="apellido" id="inputEmail" type="text" placeholder="Apellido" />
-                                        <label>Apellido</label>
-                                    </div>
-                                    <div className="form-floating mb-3">
-                                        <input className="form-control" value={login} onChange={handleLogin} name="login" id="inputEmail" type="email" placeholder="name@example.com" />
-                                        <label>Email address</label>
+                                        <input className="form-control" value={login} onChange={handleLogin} name="login" id="inputEmail" type="text" placeholder="Example" />
+                                        <label>Nombre de usuario</label>
                                     </div>
                                     <div className="form-floating mb-3">
                                         <input className="form-control" value={password} onChange={handlePassword} name="password" id="inputPassword" type="password" placeholder="Password" />

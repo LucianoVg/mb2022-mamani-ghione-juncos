@@ -11,6 +11,10 @@ export default async function handler(
             const { login, password } = req.body
             const usuario = await iniciarSesion(login, password)
             console.log(usuario);
+            if(usuario===null)
+            {
+                return res.status(200).json({mensaje:'usuario y/o contraseña incorrecto' })
+            }
 
             return res.status(200).json(usuario)
         } else {
