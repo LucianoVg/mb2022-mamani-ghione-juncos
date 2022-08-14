@@ -43,7 +43,7 @@ const Sidenav = () => {
                                         )
                                     ))
                                 }
-                            
+
                             </nav>
                         </div>
 
@@ -52,9 +52,8 @@ const Sidenav = () => {
                             Reportes
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
-                        <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
-                                <nav className="sb-sidenav-menu-nested nav">
+                        <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
+                            <nav className="sb-sidenav-menu-nested nav">
                                 {
                                     menus && menus.map((m: any, i: number) => (
                                         m.menu?.menuSistema?.startsWith('Reporte') && (
@@ -64,18 +63,7 @@ const Sidenav = () => {
                                         )
                                     ))
                                 }
-                                </nav >
-                            </div >
-
-                            <div className="sb-sidenav-menu-heading">Addons</div>
-                            <a className="nav-link" href="charts.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a className="nav-link" href="tables.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
-                                Tables
-                            </a>
+                            </nav >
                         </div >
                     </div>
                 </div >
