@@ -200,6 +200,7 @@ model noticiasYnovedades {
   fecha       DateTime?
   descripcion String?
   idUsuario   Int?
+  url         String?
   usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 

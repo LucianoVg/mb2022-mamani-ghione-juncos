@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { Prisma } from "./prisma";
 
 export async function listarNoticia(id: number) {
@@ -8,6 +9,7 @@ export async function listarNoticia(id: number) {
         }
     }
     )
+    return listarNoticia
 }
 
 export async function verNoticia(id: number) {
@@ -17,26 +19,31 @@ export async function verNoticia(id: number) {
         }
     }
     )
+    return verNoticia
 }
 
-export async function agregarNoticia(titulo: string, fecha: Date, descripcion: string) {
+export async function agregarNoticia(titulo: string, fecha: Date, url:string, descripcion: string) {
     const agregar = await Prisma.newPrisma().noticiasYnovedades.create({
         data: {
             titulo: titulo,
             fecha: fecha,
+            url: url,
             descripcion: descripcion
         }
     }
 
     )
+
+    return agregarNoticia
 }
 
 
-export async function editarNoticia(id: number, titulo: string, fecha: Date, descripcion: string) {
+export async function editarNoticia(id: number, titulo: string,  url:string, fecha: Date, descripcion: string) {
     const agregar = Prisma.newPrisma().noticiasYnovedades.update({
         data: {
             titulo: titulo,
             fecha: fecha,
+            url: url,
             descripcion: descripcion
         },
         where: {
@@ -45,6 +52,7 @@ export async function editarNoticia(id: number, titulo: string, fecha: Date, des
     }
 
     )
+    return editarNoticia
 }
 
 export async function eliminarNoticia(id: number) {
@@ -55,4 +63,5 @@ export async function eliminarNoticia(id: number) {
     }
 
     )
+    return eliminarNoticia
 }

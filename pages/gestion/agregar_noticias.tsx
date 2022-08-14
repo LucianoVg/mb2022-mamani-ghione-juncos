@@ -7,63 +7,86 @@ import Image from 'next/image'
 
 
 
+
+
+
 const AgregarNoticias: NextPage = () => {
 
     const [titulo, setTitulo] = useState("")
-    const [fecha, setFecha] = useState("")
+    // const [fecha, setFecha] = useState("")
+    const [url, setUrl] = useState("")
     const [descripcion, setDescripcion] = useState("")
+
+
+    var hoy = new Date();
+    const fecha = hoy.toLocaleDateString()
+
 
 
     // recibe un evento(e) generico
     const handleTitulo = (e: any) => {
         setTitulo(e.target.value as string)
     }
-    const handleFecha = (e: any) => {
-        setFecha(e.target.value as string)
-    }
+    // const handleFecha = (e: any) => {
+    //     setFecha(e.target.value as string)
+    // }
     const handleDescripcion = (e: any) => {
         setDescripcion(e.target.value as string)
+    }
+    const handleUrl = (e: any) => {
+        setUrl(e.target.value as string)
     }
 
     const onSubmitData = async (e: any) => {
         e.preventDefault()
 
-        await axios.post('/api/noticias_novedades', {
+       
+        await axios.post('http://localhost:3000/api/gestion/noticias_novedades', {
             titulo,
             fecha,
+            url,
             descripcion
         })
 
-        location.replace('http://localhost:3000/')
+
+        // location.replace('http://localhost:3000/')
 
     }
 
     return (
 
 
-        <div className="justify-content-center">
-            <div className="col-lg-5">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-7">
 
-                <form method='post' onSubmit={onSubmitData} >
+                    <form method='post' onSubmit={onSubmitData}>
+                        <div className="form-group">
+                            <label >Titulo</label>
+                            <input className='form-control' id='inputName' value={titulo} onChange={handleTitulo} type="text" name='Titulo' placeholder="Example" />
+                        </div>
+                        <div className="form-group">
+                            <label >Link Imagen</label>
+                            <input className='form-control' id='inputName' value={url} onChange={handleUrl} type="text" name='Url' placeholder="Example" />
+                        </div>
 
-                    <div className='form-floating mb-3'>
-                        <input className='form-control' id='inputName' value={titulo} onChange={handleTitulo} type="nombre" name='Titulo' placeholder="Example" />
-                        <label>Titulo</label>
-                    </div>
+                        <div className="form-group">
+                            <label>Descripcion</label>
+                            <textarea className='form-control' id='inputSurname' value={descripcion} onChange={handleDescripcion} name='apellido' placeholder="Example">
+                            </textarea>
+                        </div>
 
-                    <div className='form-floating mb-3'>
-                        <input className='form-control' id='inputSurname' value={descripcion} onChange={handleDescripcion} type="Descripcion" name='apellido' placeholder="Example" />
-                        <label>Descripcion</label>
-                    </div>
 
-                    <div>
-                        <button className='btn btn-primary' type="submit" >Crear</button>
-                    </div>
+                        <div className="form-group row">
+                            <div className="col-sm-10">
+                                <button type="submit" className="btn btn-primary">Crear</button>
+                            </div>
+                        </div>
+                    </form>
 
-                </form>
-
+                </div>
             </div>
-        </div >
+        </div>
 
 
 
