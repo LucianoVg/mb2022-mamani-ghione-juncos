@@ -6,7 +6,7 @@ const Sidenav = () => {
     const [menus, setMenus] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
+        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${2}`)
             .then(r => {
                 console.log(r.data);
                 setMenus(r.data)
@@ -43,36 +43,7 @@ const Sidenav = () => {
                                         )
                                     ))
                                 }
-                                {/* <Link href="/gestion/estudiantes">
-                                    <a className="nav-link" >Estudiantes</a>
-                                </Link>
-                                <Link href="/gestion/empleados">
-                                    <a className="nav-link" >Empleados</a>
-                                </Link>
-                                <Link href="/gestion/notas">
-                                    <a className="nav-link" >Notas</a>
-                                </Link>
-                                <Link href="/gestion/asistencias">
-                                    <a className="nav-link" >Asistencias</a>
-                                </Link>
-                                <Link href="/gestion/asistencias_docente">
-                                    <a className="nav-link" >Asistencia Docente</a>
-                                </Link>
-                                <Link href="/gestion/sanciones">
-                                    <a className="nav-link" >Sanciones</a>
-                                </Link>
-                                <Link href="/gestion/material_estudio">
-                                    <a className="nav-link" >Material de Estudio</a>
-                                </Link>
-                                <Link href="/gestion/certificado_servicio">
-                                    <a className="nav-link" >Certificado de Servicio</a>
-                                </Link>
-                                <Link href="/gestion/fecha_examen">
-                                    <a className="nav-link" >Fecha de Examen</a>
-                                </Link>
-                                <Link href="/gestion/generar_ficha_institucional">
-                                    <a className="nav-link" > Generar Ficha Institucional</a>
-                                </Link> */}
+                            
                             </nav>
                         </div>
 
@@ -84,26 +55,15 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
                                 <nav className="sb-sidenav-menu-nested nav">
-
-                                    <Link href="/reportes/reporte_notas">
-                                        <a className="nav-link active" >Reporte Notas</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_asistencias">
-                                        <a className="nav-link active" >Reporte Asistencias</a>
-                                    </Link >
-                                    <Link href="/reportes/reporte_asistencia_Docente">
-                                        <a className="nav-link active" >Reporte Asistencia Docente</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_sanciones">
-                                        <a className="nav-link active" >Reporte Sanciones</a>
-                                    </Link>
-                                    <Link href="/reportes/reporte_preanalitico">
-                                        <a className="nav-link active" >Reporte Preanalitico</a>
-                                    </Link>
-
-                                    <Link href="/reportes/reporte_mejor_promedio">
-                                        <a className="nav-link active" >Reporte Mejor Promedio</a>
-                                    </Link>
+                                {
+                                    menus && menus.map((m: any, i: number) => (
+                                        m.menu?.menuSistema?.startsWith('Reporte') && (
+                                            <Link key={i} href={m.menu?.url}>
+                                                <a className="nav-link active" >{m.menu?.menuSistema}</a>
+                                            </Link>
+                                        )
+                                    ))
+                                }
                                 </nav >
                             </div >
 
