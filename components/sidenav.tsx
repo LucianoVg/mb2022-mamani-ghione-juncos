@@ -6,7 +6,7 @@ const Sidenav = () => {
     const [menus, setMenus] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${2}`)
+        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
             .then(r => {
                 console.log(r.data);
                 setMenus(r.data)
