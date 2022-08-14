@@ -12,11 +12,11 @@ export async function listarNoticia(id: number) {
     return listarNoticia
 }
 
-export async function verNoticia(id: number) {
-    const agregar = await Prisma.newPrisma().noticiasYnovedades.findUnique({
-        where: {
-            id: id
-        }
+export async function verNoticia() {
+    const ver = await Prisma.newPrisma().noticiasYnovedades.findMany({
+        // where: {
+        //     id: 4
+        // }
     }
     )
     return verNoticia
