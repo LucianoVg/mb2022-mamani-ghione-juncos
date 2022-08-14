@@ -36,9 +36,11 @@ const Sidenav = () => {
                             <nav className="sb-sidenav-menu-nested nav" id="c">
                                 {
                                     menus && menus.map((m: any, i: number) => (
-                                        <Link key={i} href={m.menu?.url}>
-                                            <a className="nav-link active" >{m.menu?.menuSistema}</a>
-                                        </Link>
+                                        !m.menu?.menuSistema?.startsWith('Reporte') && (
+                                            <Link key={i} href={m.menu?.url}>
+                                                <a className="nav-link active" >{m.menu?.menuSistema}</a>
+                                            </Link>
+                                        )
                                     ))
                                 }
                                 {/* <Link href="/gestion/estudiantes">

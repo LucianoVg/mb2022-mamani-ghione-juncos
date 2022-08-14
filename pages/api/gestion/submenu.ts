@@ -8,7 +8,6 @@ export default async function handler(
     try {
         const { idRol } = req.query
         const menuXrol = await FiltrarMenu(Number.parseInt(idRol as string))
-
         return res.status(200).json(menuXrol)
     } catch (error: any) {
         return res.status(200).json({ mensaje: error.message })
