@@ -1,44 +1,33 @@
-import axios from "axios"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Layout } from "../../../components/layout"
+import { iniciarSesion } from "../../../servicios/cuenta"
 
 const Login: NextPage = () => {
-    const [login, setLogin] = useState("")
+    const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
-    
-   
 
-
-    const handleLogin = (e: any) => {
-        setLogin(e.target.value as string)
+    const handleCorreo = (e: any) => {
+        setCorreo(e.target.value as string)
     }
     const handlePassword = (e: any) => {
         setPassword(e.target.value as string)
     }
     const onSubmitData = async (e: any) => {
         e.preventDefault()
-
-
-
-        const res = await axios.post('/api/gestion/cuenta', {
-          
-            login,
-
-            password
-        })
-
-        console.log(res);
-
-        const data = res.data
-        if (data.mensaje) {
-            setError(data.mensaje)
-        } else {
-            router.push('/')
-        }
+        iniciarSesion(correo, password)
+            .then(credencial => {
+                console.log(credencial);
+                router.push('/')
+            }).catch(err => {
+                setError("Usuario y/o contraseña incorrectos")
+                setTimeout(() => {
+                    setError("")
+                }, 3000);
+            })
     }
 
     return (
@@ -50,10 +39,10 @@ const Login: NextPage = () => {
                             <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
                             <div className="card-body">
                                 <form method="post" onSubmit={onSubmitData}>
-                                    
+
                                     <div className="form-floating mb-3">
-                                        <input className="form-control" value={login} onChange={handleLogin} name="login" id="inputEmail" type="text" placeholder="Example" />
-                                        <label>Nombre de usuario</label>
+                                        <input className="form-control" value={correo} onChange={handleCorreo} name="correo" id="inputEmail" type="email" placeholder="correo@mail.com" />
+                                        <label>Correo electronico</label>
                                     </div>
                                     <div className="form-floating mb-3">
                                         <input className="form-control" value={password} onChange={handlePassword} name="password" id="inputPassword" type="password" placeholder="Password" />
@@ -66,7 +55,7 @@ const Login: NextPage = () => {
                                 </form>
                             </div>
                             <div className="card-footer text-center py-3">
-                                <div className="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                <div className="small"><a type="button" onClick={() => router.push('registro')}>No posee cuenta? Registrese</a></div>
                             </div>
                             {
                                 error !== "" && (

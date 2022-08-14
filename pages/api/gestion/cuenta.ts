@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { iniciarSesion } from "../../../servicios/cuenta";
+import { Prisma } from "../../../servicios/prisma";
 
 export default async function handler(
     req: NextApiRequest,
@@ -8,14 +9,13 @@ export default async function handler(
 ) {
     try {
         if (req.method === 'POST') {
-            const { login, password } = req.body
-            const usuario = await iniciarSesion(login, password)
-            console.log(usuario);
-            if(usuario===null)
-            {
-                return res.status(200).json({mensaje:'usuario y/o contraseña incorrecto' })
-            }
-
+            const { correo, password } = req.body
+            const usuario = await Prisma.newPrisma().usuario.findFirst({
+                where: {
+                    correo: correo,
+                    password: password
+                }
+            })
             return res.status(200).json(usuario)
         } else {
             const prisma = new PrismaClient()

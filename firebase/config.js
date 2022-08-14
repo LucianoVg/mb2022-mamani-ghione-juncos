@@ -10,4 +10,16 @@ const firebaseConfig = {
     measurementId: "G-K6RYTN7XBC"
 };
 
-export const app = initializeApp(firebaseConfig) 
+
+// const firebaseConfig = {
+//     apiKey: process.env.FIREBASE_API_KEY,
+//     authDomain: "mb2020-mamani-ghione-juncos.firebaseapp.com",
+//     projectId: process.env.FIREBASE_PROJECT_ID,
+//     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+//     messagingSenderId: "443959529787",
+//     appId: process.env.FIREBASE_APP_ID,
+//     measurementId: "G-K6RYTN7XBC"
+// };
+
+
+export const app = initializeApp(firebaseConfig)

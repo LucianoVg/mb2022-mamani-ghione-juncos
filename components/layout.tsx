@@ -10,7 +10,9 @@ export const Layout = ({ children }: PropsWithChildren<any>) => {
             <div id="layoutSidenav">
                 <Sidenav />
                 <div id="layoutSidenav_content">
-                    {children}
+                    <main>
+                        {children}
+                    </main>
                 </div>
 
                 <Script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" />
