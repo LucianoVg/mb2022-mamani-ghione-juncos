@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../components/layout";
@@ -27,14 +28,23 @@ export default function Registro() {
                 .then(credencial => {
                     console.log(credencial.user);
 
-                    registrarUsuario(usuario.nombre, usuario.apellido, usuario.correo,
-                        usuario.dni, usuario.telefono, usuario.localidad, usuario.direccion)
-                        .then(creado => {
-                            if (creado) {
-                                router.push('/')
-                            }
-                        })
-
+                    axios.post('http://localhost:3000/api/gestion/cuenta', {
+                        login: usuario.correo.split('@')[0],
+                        nombre: usuario.nombre,
+                        apellido: usuario.apellido,
+                        dni: usuario.dni,
+                        correo: usuario.correo,
+                        localidad: usuario.localidad,
+                        direccion: usuario.direccion,
+                        telefono: usuario.telefono
+                    }).then(res => {
+                        const creado = res.data as boolean
+                        if (creado) {
+                            router.push('/')
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    })
                 })
         } else {
             setError("Las contraseñas no coinciden")

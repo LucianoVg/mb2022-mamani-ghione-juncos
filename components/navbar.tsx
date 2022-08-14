@@ -1,6 +1,16 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { cerrarSesion } from "../servicios/cuenta";
 
 export const Navbar = () => {
+    const router = useRouter()
+    const logout = () => {
+        cerrarSesion()
+            .then(() => {
+                router.reload()
+            })
+    }
+
     return (
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <button className="btn btn-link btn-sm order-1 order-lg-0 me-auto" id="sidebarToggle"><i
@@ -26,7 +36,7 @@ export const Navbar = () => {
                         <li><a className="dropdown-item" href="#!">Settings</a></li>
                         <li><a className="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" href="#!">Logout</a></li>
+                        <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
                     </ul>
                 </li>
             </ul>

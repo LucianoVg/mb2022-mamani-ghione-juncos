@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { iniciarSesion } from "../../../servicios/cuenta";
+import { iniciarSesion, registrarUsuario } from "../../../servicios/cuenta";
 import { Prisma } from "../../../servicios/prisma";
 
 export default async function handler(
@@ -9,14 +9,10 @@ export default async function handler(
 ) {
     try {
         if (req.method === 'POST') {
-            const { correo, password } = req.body
-            const usuario = await Prisma.newPrisma().usuario.findFirst({
-                where: {
-                    correo: correo,
-                    password: password
-                }
-            })
-            return res.status(200).json(usuario)
+            const { login, nombre, apellido, dni, telefono, correo, direccion, localidad } = req.body
+            const creado = await registrarUsuario(login, nombre, apellido, correo, dni, telefono, localidad, direccion)
+
+            return res.status(200).json(creado)
         } else {
             const prisma = new PrismaClient()
             const usuarios = await prisma.usuario.findMany({
