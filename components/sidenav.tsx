@@ -6,7 +6,7 @@ const Sidenav = () => {
     const [menus, setMenus] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
+        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${6}`)
             .then(r => {
                 console.log(r.data);
                 setMenus(r.data)
@@ -43,7 +43,6 @@ const Sidenav = () => {
                                         )
                                     ))
                                 }
-
                             </nav>
                         </div>
 
@@ -68,10 +67,10 @@ const Sidenav = () => {
                     </div>
                 </div >
 
-                <div className="sb-sidenav-footer">
+                {/* <div className="sb-sidenav-footer">
                     <div className="small">Logged in as:</div>
                     Start Bootstrap
-                </div>
+                </div> */}
             </nav >
         </div >
     )
