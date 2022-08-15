@@ -1,54 +1,41 @@
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Image from 'next/image'
 
 const AgregarNoticias: NextPage = () => {
-
-    const [titulo, setTitulo] = useState("")
-    // const [fecha, setFecha] = useState("")
-    const [url, setUrl] = useState("")
-    const [descripcion, setDescripcion] = useState("")
-
-
+    const [noticia, setNoticia] = useState({
+        titulo: '',
+        descripcion: '',
+        url: '',
+        fecha: ''
+    })
     var hoy = new Date();
+
     const fecha = hoy.toLocaleDateString()
 
-
-
-    // recibe un evento(e) generico
-    const handleTitulo = (e: any) => {
-        setTitulo(e.target.value as string)
-    }
-    // const handleFecha = (e: any) => {
-    //     setFecha(e.target.value as string)
-    // }
-    const handleDescripcion = (e: any) => {
-        setDescripcion(e.target.value as string)
-    }
-    const handleUrl = (e: any) => {
-        setUrl(e.target.value as string)
+    const handleForm = (e: any) => {
+        setNoticia({
+            ...noticia, [e.target.name]: e.target.value
+        })
     }
 
     const onSubmitData = async (e: any) => {
         e.preventDefault()
-
+        // noticia.fecha = fecha
 
         await axios.post('http://localhost:3000/api/gestion/noticias_novedades', {
-            titulo,
-            fecha,
-            url,
-            descripcion
+            titulo: noticia.titulo,
+            fecha: fecha,
+            url: noticia.url,
+            descripcion: noticia.descripcion
         })
-
 
         // location.replace('http://localhost:3000/')
 
     }
 
     return (
-
-
         <div className="container">
             <div className="row">
                 <div className="col-md-7">
@@ -56,16 +43,16 @@ const AgregarNoticias: NextPage = () => {
                     <form method='post' onSubmit={onSubmitData}>
                         <div className="form-group">
                             <label >Titulo</label>
-                            <input className='form-control' id='inputName' value={titulo} onChange={handleTitulo} type="text" name='Titulo' placeholder="Example" />
+                            <input className='form-control' id='inputName' value={noticia.titulo} onChange={handleForm} type="text" name='titulo' placeholder="Example" />
                         </div>
                         <div className="form-group">
                             <label >Link Imagen</label>
-                            <input className='form-control' id='inputName' value={url} onChange={handleUrl} type="text" name='Url' placeholder="Example" />
+                            <input className='form-control' id='inputName' value={noticia.url} onChange={handleForm} type="text" name='url' placeholder="Example" />
                         </div>
 
                         <div className="form-group">
                             <label>Descripcion</label>
-                            <textarea className='form-control' id='inputSurname' value={descripcion} onChange={handleDescripcion} name='apellido' placeholder="Example">
+                            <textarea className='form-control' id='inputSurname' value={noticia.descripcion} onChange={handleForm} name='descripcion' placeholder="Example">
                             </textarea>
                         </div>
 
@@ -80,10 +67,6 @@ const AgregarNoticias: NextPage = () => {
                 </div>
             </div>
         </div>
-
-
-
-
     )
 }
 
