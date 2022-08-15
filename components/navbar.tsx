@@ -31,18 +31,13 @@ export const Navbar = () => {
                 className="fas fa-bars"></i></button>
 
             <Link href="/">
-                <a className="navbar-brand ps-3">
+                <a className="navbar-brand ps-3 ms-auto ms-md-0 me-3 me-lg-4">
                     {/* Agregar icono del instituto */}
 
                 </a>
             </Link>
-            <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button className="btn btn-primary" id="btnNavbarSearch" type="button"><i className="fas fa-search"></i></button>
-                </div>
-            </form>
-            <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+           
+            {/* <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i></a>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -56,8 +51,19 @@ export const Navbar = () => {
                         }
                     </ul>
                 </li>
-            </ul>
-
+            </ul> */}
+            <Link href="/">
+                <a className="navbar-brand ps-1 ms-auto ms-md-0 me-3 me-lg-1">
+                    {/* Agregar icono del instituto */}
+                    Institucional
+                </a>
+            </Link>
+            <Link href="/gestion/cuenta/login">
+                <a className="navbar-brand ps-3 ms-auto ms-md-0 me-3 me-lg-4">
+                    {/* Agregar icono del instituto */}
+                    Iniciar sesion 
+                </a>
+            </Link>
         </nav>
     )
 }
