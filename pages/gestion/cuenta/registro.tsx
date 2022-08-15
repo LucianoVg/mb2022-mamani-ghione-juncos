@@ -13,11 +13,6 @@ export default function Registro() {
         direccion: '', contrasenia: '', confirmarContrasenia: ''
     })
 
-    useEffect(() => {
-
-    }, [])
-
-
     const handleForm = (e: any) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value })
     }

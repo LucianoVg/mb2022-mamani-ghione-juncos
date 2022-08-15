@@ -3,13 +3,6 @@ import { useState } from 'react'
 import axios from 'axios';
 import Image from 'next/image'
 
-
-
-
-
-
-
-
 const AgregarNoticias: NextPage = () => {
 
     const [titulo, setTitulo] = useState("")
@@ -40,7 +33,7 @@ const AgregarNoticias: NextPage = () => {
     const onSubmitData = async (e: any) => {
         e.preventDefault()
 
-       
+
         await axios.post('http://localhost:3000/api/gestion/noticias_novedades', {
             titulo,
             fecha,

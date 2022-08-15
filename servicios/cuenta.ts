@@ -22,7 +22,7 @@ export async function registrarse(email: string, password: string) {
 export async function registrarUsuario(
     login: string, nombre: string, apellido: string, correo: string,
     dni: string, telefono: string, localidad: string,
-    direccion: string) {
+    direccion: string, idRol: number, contrasenia: string) {
     const usuarioCreado = await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
@@ -33,6 +33,8 @@ export async function registrarUsuario(
             localidad: localidad,
             telefono: telefono,
             direccion: direccion,
+            idRol: idRol,
+            password: contrasenia
         }
     })
     return usuarioCreado !== null

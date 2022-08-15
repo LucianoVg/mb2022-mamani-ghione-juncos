@@ -9,23 +9,24 @@ export default async function handler(
 ) {
     try {
         if (req.method === 'POST') {
-            const { login, nombre, apellido, dni, telefono, correo, direccion, localidad } = req.body
-            const creado = await registrarUsuario(login, nombre, apellido, correo, dni, telefono, localidad, direccion)
+            const { login,
+                nombre, apellido, dni,
+                telefono, correo, direccion,
+                localidad, idRol, contrasenia } = req.body
+            const creado = await registrarUsuario(login, nombre, apellido,
+                correo, dni, telefono,
+                localidad, direccion, Number.parseInt(idRol as string), contrasenia)
 
             return res.status(200).json(creado)
         } else {
+            const { correo } = req.query
             const prisma = new PrismaClient()
-            const usuarios = await prisma.usuario.findMany({
-                include: {
-                    tutor: true
-                },
+            const usuario = await prisma.usuario.findFirst({
                 where: {
-                    tutor: {
-                        isNot: null
-                    }
+                    correo: correo as string
                 }
             })
-            return res.status(200).json(usuarios)
+            return res.status(200).json(usuario)
         }
     } catch (error: any) {
         return res.status(200).json({ mensaje: error.message })

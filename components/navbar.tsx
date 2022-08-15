@@ -1,15 +1,29 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { cerrarSesion } from "../servicios/cuenta";
+import { useEffect, useState } from "react";
+import { authStateChanged, cerrarSesion } from "../servicios/cuenta";
 
 export const Navbar = () => {
     const router = useRouter()
+    const [usuario, setUsuario] = useState({ email: '' })
+
     const logout = () => {
         cerrarSesion()
             .then(() => {
                 router.reload()
             })
     }
+
+    useEffect(() => {
+        authStateChanged(user => {
+            console.log("Usuario logeado", user);
+            if (user.email) {
+                setUsuario({
+                    email: user.email
+                })
+            }
+        })
+    }, [])
 
     return (
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -28,18 +42,22 @@ export const Navbar = () => {
                     <button className="btn btn-primary" id="btnNavbarSearch" type="button"><i className="fas fa-search"></i></button>
                 </div>
             </form>
-
             <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i></a>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a className="dropdown-item" href="#!">Settings</a></li>
-                        <li><a className="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
+                        {
+                            usuario && usuario.email !== '' ? (
+                                <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
+                            ) : (
+                                <li><a className="dropdown-item" onClick={() => router.push('/gestion/cuenta/login')}>Iniciar Sesion</a></li>
+                            )
+                        }
                     </ul>
                 </li>
             </ul>
+
         </nav>
     )
 }

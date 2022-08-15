@@ -35,7 +35,7 @@
     "pages/gestion/sanciones.tsx",
     "pages/gestion/notas.tsx",
     "pages/gestion/material_estudio.tsx",
-    "pages/gestion/mantenimiento_usuario.tsx",
+    "pages/gestion/usuarios/mantenimiento_usuario.tsx",
     "pages/gestion/ficha_institucional.tsx",
     "pages/gestion/fecha_examen.tsx",
     "pages/gestion/estudiantes.tsx",
