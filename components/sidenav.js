@@ -35,7 +35,7 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav className="sb-sidenav-menu-nested nav" id="c">
                                 {
-                                    menus && menus.map((m: any, i: number) => (
+                                    menus && menus.map((m, i) => (
                                         !m.menu?.menuSistema?.startsWith('Reporte') && (
                                             <Link key={i} href={m.menu?.url}>
                                                 <a className="nav-link active" >{m.menu?.menuSistema}</a>
@@ -54,7 +54,7 @@ const Sidenav = () => {
                         <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
                             <nav className="sb-sidenav-menu-nested nav">
                                 {
-                                    menus && menus.map((m: any, i: number) => (
+                                    menus && menus.map((m, i) => (
                                         m.menu?.menuSistema?.startsWith('Reporte') && (
                                             <Link key={i} href={m.menu?.url}>
                                                 <a className="nav-link active" >{m.menu?.menuSistema}</a>

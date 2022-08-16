@@ -4,8 +4,8 @@ import { iniciarSesion, registrarUsuario } from "../../../servicios/cuenta";
 import { Prisma } from "../../../servicios/prisma";
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
+    req,
+    res
 ) {
     try {
         if (req.method === 'POST') {
@@ -15,7 +15,7 @@ export default async function handler(
                 localidad, idRol, contrasenia } = req.body
             const creado = await registrarUsuario(login, nombre, apellido,
                 correo, dni, telefono,
-                localidad, direccion, Number.parseInt(idRol as string), contrasenia)
+                localidad, direccion, Number.parseInt(idRol), contrasenia)
 
             return res.status(200).json(creado)
         } else {
@@ -23,12 +23,12 @@ export default async function handler(
             const prisma = new PrismaClient()
             const usuario = await prisma.usuario.findFirst({
                 where: {
-                    correo: correo as string
+                    correo: correo
                 }
             })
             return res.status(200).json(usuario)
         }
-    } catch (error: any) {
+    } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
 }

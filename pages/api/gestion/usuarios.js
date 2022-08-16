@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { Prisma } from "../../../servicios/prisma"
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
+    req,
+    res
 ) {
     try {
         if (req.method === 'POST') {
@@ -16,7 +16,7 @@ export default async function handler(
             })
             return res.status(200).json(usuarios)
         }
-    } catch (error: any) {
+    } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
 }

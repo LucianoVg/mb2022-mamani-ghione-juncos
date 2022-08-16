@@ -1,9 +1,8 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Script from "next/script";
-import { PropsWithChildren } from "react";
 
-export const Layout = ({ children }: PropsWithChildren<any>) => {
+export const Layout = ({ children }) => {
     return (
         <>
             <Navbar />

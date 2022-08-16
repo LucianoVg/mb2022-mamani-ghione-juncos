@@ -49,7 +49,7 @@ export default function Usuarios() {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        usuarios && usuarios.map((u: any, i: number) => (
+                                                        usuarios && usuarios.map((u, i) => (
                                                             <tr>
                                                                 <td>{u.nombre}</td>
                                                                 <td>{u.apellido}</td>

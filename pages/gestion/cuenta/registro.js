@@ -13,10 +13,10 @@ export default function Registro() {
         direccion: '', contrasenia: '', confirmarContrasenia: ''
     })
 
-    const handleForm = (e: any) => {
+    const handleForm = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value })
     }
-    const registroUsuario = (e: any) => {
+    const registroUsuario = (e) => {
         e.preventDefault()
         if (usuario.contrasenia === usuario.confirmarContrasenia) {
             registrarse(usuario.correo, usuario.contrasenia)
@@ -33,7 +33,7 @@ export default function Registro() {
                         direccion: usuario.direccion,
                         telefono: usuario.telefono
                     }).then(res => {
-                        const creado = res.data as boolean
+                        const creado = res.data
                         if (creado) {
                             router.push('/')
                         }

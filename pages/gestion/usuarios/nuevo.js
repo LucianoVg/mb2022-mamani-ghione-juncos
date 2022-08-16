@@ -31,15 +31,15 @@ export default function NuevoUsuario() {
     }, [])
 
 
-    const handleForm = (e: any) => {
+    const handleForm = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value })
     }
-    const handleSelect = (e: any) => {
+    const handleSelect = (e) => {
         console.log(e.target.value);
-        setRol(Number.parseInt(e.target.value as string))
+        setRol(Number.parseInt(e.target.value))
     }
 
-    const registrarUsuario = (e: any) => {
+    const registrarUsuario = (e) => {
         e.preventDefault()
         usuario.idRol = rol
         console.log(usuario);
@@ -59,7 +59,7 @@ export default function NuevoUsuario() {
                     idRol: usuario.idRol,
                     contrasenia: usuario.contrasenia
                 }).then(res => {
-                    const creado = res.data as boolean
+                    const creado = res.data
                     if (creado) {
                         setMensaje("Usuario creado!")
                     } else {
@@ -137,7 +137,7 @@ export default function NuevoUsuario() {
                                 <div className="form-floating mb-3 mb-md-0">
                                     <select onChange={handleSelect} value={rol} name="idRol" className="form-control">
                                         {
-                                            roles && roles.map((r: any, i: number) => (
+                                            roles && roles.map((r, i) => (
                                                 <option key={i} value={r.id}>{r.tipo}</option>
                                             ))
                                         }

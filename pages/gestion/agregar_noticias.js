@@ -1,9 +1,8 @@
-import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Image from 'next/image'
 
-const AgregarNoticias: NextPage = () => {
+const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
         titulo: '',
         descripcion: '',
@@ -14,13 +13,13 @@ const AgregarNoticias: NextPage = () => {
 
     const fecha = hoy.toLocaleDateString()
 
-    const handleForm = (e: any) => {
+    const handleForm = (e) => {
         setNoticia({
             ...noticia, [e.target.name]: e.target.value
         })
     }
 
-    const onSubmitData = async (e: any) => {
+    const onSubmitData = async (e) => {
         e.preventDefault()
         // noticia.fecha = fecha
 

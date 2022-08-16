@@ -1,11 +1,11 @@
 
-import { Layout } from "../../components/layout";
+import { Layout } from "../../../components/layout";
 
 
 const FichaInstitucional = () => {
     return (
         <Layout>
-            <h1>Ficha Institucional</h1>
+            <h1>Generar Ficha Institucional</h1>
         </Layout>
     )
 }

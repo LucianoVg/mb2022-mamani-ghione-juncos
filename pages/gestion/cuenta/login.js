@@ -4,19 +4,19 @@ import { useState } from "react"
 import { Layout } from "../../../components/layout"
 import { iniciarSesion } from "../../../servicios/cuenta"
 
-const Login: NextPage = () => {
+const Login = () => {
     const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
 
-    const handleCorreo = (e: any) => {
-        setCorreo(e.target.value as string)
+    const handleCorreo = (e) => {
+        setCorreo(e.target.value)
     }
-    const handlePassword = (e: any) => {
-        setPassword(e.target.value as string)
+    const handlePassword = (e) => {
+        setPassword(e.target.value)
     }
-    const onSubmitData = async (e: any) => {
+    const onSubmitData = async (e) => {
         e.preventDefault()
         iniciarSesion(correo, password)
             .then(credencial => {

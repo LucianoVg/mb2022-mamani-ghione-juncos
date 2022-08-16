@@ -1,8 +1,7 @@
-import { NextPage } from "next";
 import { Layout } from "../../components/layout";
 
 
-const AsistenciasDocente: NextPage = () => {
+const AsistenciasDocente = () => {
     return (
         <Layout>
             <h1>Asistencias Docente</h1>
