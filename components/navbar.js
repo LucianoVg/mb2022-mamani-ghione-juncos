@@ -26,42 +26,47 @@ export const Navbar = () => {
     }, [])
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
+        <header className="header" id="header">
+            <div className="header_toggle"> <i className='bx bx-menu' id="header-toggle"></i> </div>
+            <div className="header_img"> </div>
+        </header>
 
-                <button type="button" id="sidebarCollapse" className="navbar-btn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <button className="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="fas fa-align-justify"></i>
-                </button>
+        // <nav classNameName="navbar navbar-expand-lg navbar-light bg-light">
+        //     <div classNameName="container-fluid">
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="nav navbar-nav ml-auto">
-                        <li className="nav-item active">
-                            <Link href={'/gestion/institucional'}>
-                                <a className="nav-link">Institucional</a>
-                            </Link>
-                        </li>
-                        {
-                            usuario.email === '' ? (
-                                <li className="nav-item">
-                                    <a className="nav-link" href="gestion/cuenta/login">Iniciar Sesion</a>
-                                </li>
-                            ) : (
-                                <li className="nav-item">
-                                    <a className="nav-link" onClick={logout} type="button">Cerrar Sesion</a>
-                                </li>
-                            )
-                        }
+        //         <button type="button" id="sidebarCollapse" classNameName="navbar-btn">
+        //             <span></span>
+        //             <span></span>
+        //             <span></span>
+        //         </button>
+        //         <button classNameName="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+        //             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        //             aria-expanded="false" aria-label="Toggle navigation">
+        //             <i classNameName="fas fa-align-justify"></i>
+        //         </button>
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        //         <div classNameName="collapse navbar-collapse" id="navbarSupportedContent">
+        //             <ul classNameName="nav navbar-nav ml-auto">
+        //                 <li classNameName="nav-item active">
+        //                     <Link href={'/gestion/institucional'}>
+        //                         <a classNameName="nav-link">Institucional</a>
+        //                     </Link>
+        //                 </li>
+        //                 {
+        //                     usuario.email === '' ? (
+        //                         <li classNameName="nav-item">
+        //                             <a classNameName="nav-link" href="gestion/cuenta/login">Iniciar Sesion</a>
+        //                         </li>
+        //                     ) : (
+        //                         <li classNameName="nav-item">
+        //                             <a classNameName="nav-link" onClick={logout} type="button">Cerrar Sesion</a>
+        //                         </li>
+        //                     )
+        //                 }
+
+        //             </ul>
+        //         </div>
+        //     </div>
+        // </nav>
     )
 }

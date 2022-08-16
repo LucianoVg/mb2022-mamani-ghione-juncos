@@ -1,11 +1,12 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Head from "next/head";
-import Script  from "next/script";
+import Script from "next/script";
 
 export const Layout = ({ children, title }) => {
     return (
         <>
+<<<<<<< Updated upstream
         
             <Script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -28,6 +29,8 @@ export const Layout = ({ children, title }) => {
                 <Script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
                     integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
                     crossOrigin="anonymous"></Script>
+=======
+>>>>>>> Stashed changes
             <Head>
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -36,20 +39,24 @@ export const Layout = ({ children, title }) => {
                 <meta name="author" content="Nicolas Mamani, Luciano Ghione, Nicolas Juncos" />
                 <title>{title}</title>
 
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-                    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossOrigin="anonymous" />
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                    crossOrigin="anonymous" />
 
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
                 {/* <link rel="stylesheet" href="css/style5.css" /> */}
 
             </Head>
-            <div className="wrapper">
-                <Sidenav />
-                <div id="content">
-                    <Navbar />
-                    {children}
-                </div>
+            <Navbar />
+            <Sidenav />
+
+            <div className="height-100 bg-light">
+                {children}
             </div>
-        
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script src="/js/scripts.js"></script>
         </>
     )
 }
