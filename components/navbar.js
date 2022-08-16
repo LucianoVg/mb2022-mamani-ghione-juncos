@@ -26,44 +26,37 @@ export const Navbar = () => {
     }, [])
 
     return (
-        <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <button className="btn btn-link btn-sm order-1 order-lg-0 me-auto" id="sidebarToggle"><i
-                className="fas fa-bars"></i></button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
 
-            <Link href="/">
-                <a className="navbar-brand ps-3 ms-auto ms-md-0 me-3 me-lg-4">
-                    {/* Agregar icono del instituto */}
+                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
 
-                </a>
-            </Link>
-           
-            {/* <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i></a>
-                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><hr className="dropdown-divider" /></li>
-                        {
-                            usuario && usuario.email !== '' ? (
-                                <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
-                            ) : (
-                                <li><a className="dropdown-item" onClick={() => router.push('/gestion/cuenta/login')}>Iniciar Sesion</a></li>
-                            )
-                        }
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Page</a>
+                        </li>
                     </ul>
-                </li>
-            </ul> */}
-            <Link href="/">
-                <a className="navbar-brand ps-1 ms-auto ms-md-0 me-3 me-lg-1">
-                    {/* Agregar icono del instituto */}
-                    Institucional
-                </a>
-            </Link>
-            <Link href="/gestion/cuenta/login">
-                <a className="navbar-brand ps-3 ms-auto ms-md-0 me-3 me-lg-4">
-                    {/* Agregar icono del instituto */}
-                    Iniciar sesion 
-                </a>
-            </Link>
+                </div>
+            </div>
         </nav>
     )
 }

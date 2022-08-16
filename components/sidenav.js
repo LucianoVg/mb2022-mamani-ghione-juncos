@@ -14,65 +14,60 @@ const Sidenav = () => {
     }, [])
 
     return (
-        <div id="layoutSidenav_nav">
-            <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div className="sb-sidenav-menu">
-                    <div className="nav">
-                        <div className="sb-sidenav-menu-heading">Core</div>
-                        <Link href="/">
-                            <a className="nav-link">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                        </Link>
-                        <div className="sb-sidenav-menu-heading">Interface</div>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Bootstrap Sidebar</h3>
+            </div>
 
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                            Gestion
-                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                        </a>
-                        <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav" id="c">
-                                {
-                                    menus && menus.map((m, i) => (
-                                        !m.menu?.menuSistema?.startsWith('Reporte') && (
-                                            <Link key={i} href={m.menu?.url}>
-                                                <a className="nav-link active" >{m.menu?.menuSistema}</a>
-                                            </Link>
-                                        )
-                                    ))
-                                }
-                            </nav>
-                        </div>
+            <ul class="list-unstyled components">
+                <p>Dummy Heading</p>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
 
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
-                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                            Reportes
-                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                        </a>
-                        <div className="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion2">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                {
-                                    menus && menus.map((m, i) => (
-                                        m.menu?.menuSistema?.startsWith('Reporte') && (
-                                            <Link key={i} href={m.menu?.url}>
-                                                <a className="nav-link active" >{m.menu?.menuSistema}</a>
-                                            </Link>
-                                        )
-                                    ))
-                                }
-                            </nav >
-                        </div >
-                    </div>
-                </div >
-
-                {/* <div className="sb-sidenav-footer">
-                    <div className="small">Logged in as:</div>
-                    Start Bootstrap
-                </div> */}
-            </nav >
-        </div >
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li>
+            </ul>
+        </nav>
     )
 }
 
