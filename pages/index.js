@@ -20,7 +20,7 @@ const Home = () => {
   }, [])
 
   return (
-    <Layout>
+    <Layout title={'Instituto "El Salvador"'}>
       <div className="container-fluid px-4">
         {
           usuario.email !== '' ? (

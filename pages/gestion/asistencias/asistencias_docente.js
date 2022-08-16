@@ -1,9 +1,9 @@
-import { Layout } from "../../components/layout";
+import { Layout } from "../../../components/layout";
 
 
 const AsistenciasDocente = () => {
     return (
-        <Layout>
+        <Layout title={'Asistencia Docente'}>
             <h1>Asistencias Docente</h1>
         </Layout>
     )

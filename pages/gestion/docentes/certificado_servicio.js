@@ -1,10 +1,10 @@
 
-import { Layout } from "../../components/layout";
+import { Layout } from "../../../components/layout";
 
 
 const CertificadoServicio = () => {
     return (
-        <Layout>
+        <Layout title={'Certificado de Servicio'}>
             <h1>Estudiantes</h1>
         </Layout>
     )

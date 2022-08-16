@@ -41,7 +41,7 @@ export default function MantenimientoUsuario({ usuarios }) {
                         </tfoot>
                         <tbody>
                             {
-                                usuarios && usuarios.map((u: any, i: number) => (
+                                usuarios && usuarios.map((u, i) => (
                                     <tr key={i}>
                                         <td>{u.dni}</td>
                                         <td>{u.nombre}</td>

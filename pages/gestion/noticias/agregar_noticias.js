@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Image from 'next/image'
+import { Layout } from '../../../components/layout';
 
 const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
@@ -35,7 +36,7 @@ const AgregarNoticias = () => {
     }
 
     return (
-        <div className="container">
+        <Layout title={'Agregar Noticias'}>
             <div className="row">
                 <div className="col-md-7">
 
@@ -65,7 +66,7 @@ const AgregarNoticias = () => {
 
                 </div>
             </div>
-        </div>
+        </Layout>
     )
 }
 

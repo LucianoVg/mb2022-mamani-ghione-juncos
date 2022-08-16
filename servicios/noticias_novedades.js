@@ -2,24 +2,21 @@ import { url } from "inspector";
 import { Prisma } from "./prisma";
 
 export async function listarNoticia(id) {
-    const agregar = await Prisma.newPrisma().noticiasYnovedades.findMany({
-
+    const noticias = await Prisma.newPrisma().noticiasYnovedades.findMany({
         orderBy: {
             fecha: 'asc'
         }
-    }
-    )
-    return listarNoticia
+    })
+    return noticias
 }
 
-export async function verNoticia() {
-    const ver = await Prisma.newPrisma().noticiasYnovedades.findMany({
-        // where: {
-        //     id: 4
-        // }
-    }
-    )
-    return verNoticia
+export async function verNoticia(id) {
+    const noticia = await Prisma.newPrisma().noticiasYnovedades.findFirst({
+        where: {
+            id: id
+        }
+    })
+    return noticia
 }
 
 export async function agregarNoticia(titulo, fecha, url, descripcion) {
