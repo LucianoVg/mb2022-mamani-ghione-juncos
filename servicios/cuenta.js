@@ -1,4 +1,4 @@
-import { app } from './../firebase/config'
+import { app } from '../firebase/config'
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -9,20 +9,20 @@ import {
 } from 'firebase/auth'
 import { Prisma } from './prisma'
 
-export async function iniciarSesion(email: string, password: string) {
+export async function iniciarSesion(email, password) {
     const auth = getAuth(app)
     return await signInWithEmailAndPassword(auth, email, password)
 }
 
-export async function registrarse(email: string, password: string) {
+export async function registrarse(email, password) {
     const auth = getAuth(app)
     return await createUserWithEmailAndPassword(auth, email, password)
 }
 
 export async function registrarUsuario(
-    login: string, nombre: string, apellido: string, correo: string,
-    dni: string, telefono: string, localidad: string,
-    direccion: string, idRol: number, contrasenia: string) {
+    login, nombre, apellido, correo,
+    dni, telefono, localidad,
+    direccion, idRol, contrasenia) {
     const usuarioCreado = await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
@@ -40,7 +40,7 @@ export async function registrarUsuario(
     return usuarioCreado !== null
 }
 
-export async function authStateChanged(onChange: (usuarioNormalizado: { email: string | null }) => void) {
+export async function authStateChanged(onChange) {
     const auth = getAuth(app)
     onAuthStateChanged(auth, user => {
         if (user) {
@@ -52,7 +52,7 @@ export async function authStateChanged(onChange: (usuarioNormalizado: { email: s
     })
 }
 
-export async function mapearUsuario(user: User) {
+export async function mapearUsuario(user) {
     const { email } = user
     return {
         email: email

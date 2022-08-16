@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
 export class Prisma {
-    private static instancia: PrismaClient
-    private constructor() {
+    static instancia
+    _constructor() {
     }
 
-    public static newPrisma(): PrismaClient {
+    static newPrisma() {
         if (!Prisma.instancia) {
             Prisma.instancia = new PrismaClient();
         }

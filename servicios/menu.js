@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export async function FiltrarMenu(idRol?: number) {
+export async function FiltrarMenu(idRol) {
   const filtro = await Prisma.newPrisma().menuXrol.findMany({
     include: {
       menu: true,
