@@ -1,7 +1,6 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Head from "next/head";
-import script from "next/script";
 
 export const Layout = ({ children, title }) => {
     return (
