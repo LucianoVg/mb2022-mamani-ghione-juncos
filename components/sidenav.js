@@ -30,7 +30,7 @@ const Sidenav = () => {
                     <ul className="list-unstyled ps-0 overflow-hidden">
                         <li >
                             <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                                <i className='bx bx-grid-alt nav_icon'></i>
+                                <i className='bx bx-layer nav_icon'></i>
                                 Gestion
                             </a>
                             <div className="collapse ps-2" id="home-collapse">
@@ -51,7 +51,7 @@ const Sidenav = () => {
 
                         <li >
                             <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse-2" aria-expanded="false">
-                                <i className='bx bx-grid-alt nav_icon'></i>
+                                <i className='bx bx-bar-chart-alt-2 nav_icon'></i>
                                 Reportes
                             </a>
                             <div className="collapse ps-2" id="home-collapse-2">
