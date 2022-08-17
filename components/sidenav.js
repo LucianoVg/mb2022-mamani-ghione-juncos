@@ -24,12 +24,10 @@ const Sidenav = () => {
                     </a>
 
                     <div className="nav_list">
-
                         <a className="nav_link" href='/'>
                             <i className='bx bx-home nav_icon'></i>
                             <span className="nav_name">Inicio</span>
                         </a>
-
                         <ul className="list-unstyled ps-0">
                             <li>
                                 <a className="nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
@@ -79,6 +77,8 @@ const Sidenav = () => {
                             <span className="nav_name">Iniciar Sesion</span>
                         </a>
                     </div>
+
+
 
                 </nav >
             </div>

@@ -3,7 +3,7 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Layout } from "../../../components/layout"
-import { iniciarSesion, registrarse } from "../../../servicios/cuenta"
+import { cerrarSesion, iniciarSesion, registrarse } from "../../../servicios/cuenta"
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
@@ -21,6 +21,17 @@ const Login = () => {
         e.preventDefault()
         const res = await axios.get(`http://localhost:3000/api/gestion/cuenta?correo=${correo}`)
         if (res.data) {
+            iniciarSesion(correo, password)
+                .then(credencial => {
+                    console.log(credencial);
+                    router.push('/')
+                }).catch(err => {
+                    setError("Usuario y/o contraseña incorrectos")
+                    setTimeout(() => {
+                        setError("")
+                    }, 3000);
+                })
+        } else {
             registrarse(correo, password)
                 .then(credencial => {
                     console.log(credencial);

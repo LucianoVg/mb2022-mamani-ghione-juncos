@@ -1,22 +1,9 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Head from "next/head";
-import Carrusel from "./carrusel";
-import { useEffect, useState } from "react";
-import { traerImagen } from "../servicios/cuenta";
 
 export const Layout = ({ children, title }) => {
-    const [imagenes, setImagenes] = useState([])
 
-    const loadImages = async () => {
-        const imagen1 = await traerImagen('imagen1.jpg')
-        const imagen2 = await traerImagen('imagen2.jpeg')
-        const imagen3 = await traerImagen('imagen3.jpg')
-        setImagenes([imagen1, imagen2, imagen3])
-    }
-    useEffect(() => {
-        loadImages()
-    }, [])
     return (
         <>
             <Head>
@@ -34,11 +21,7 @@ export const Layout = ({ children, title }) => {
             <Sidenav />
 
             <div className="h-100">
-                {
-                    imagenes.length > 0 && (
-                        <Carrusel imagenes={imagenes} />
-                    )
-                }
+
                 {children}
             </div>
         </>
