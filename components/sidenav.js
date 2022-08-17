@@ -14,6 +14,7 @@ const Sidenav = () => {
     }, [])
 
     return (
+<<<<<<< HEAD
 
         // scrolling-navbar
         <div className="l-navbar " id="nav-bar">
@@ -21,19 +22,37 @@ const Sidenav = () => {
             <nav className="nav " id='parent'>
 
                 <div id='child'  >
+=======
+        <div className="l-navbar" id="nav-bar">
+            <div>
+                <nav className="nav">
+>>>>>>> ea82a2730fce5e7b47ee22bec6f09a6d59e04a95
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
                         <Image style={{ borderRadius: 50 }} src={'/assets/img/logo.jpg'} width={25} height={25} />
-                        <span className="nav_logo-name">Instituto Privado <br />"El Salvador"</span>
+                        <span className="nav_logo-name">Instituto <br />"El Salvador"</span>
                     </a>
+<<<<<<< HEAD
                     <div className='overflow-hidden containment'>
                         <ul className="list-unstyled ps-0 ">
                             <li >
                                 <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" >
                                     <i className='bx bx-layer nav_icon'></i>
+=======
+
+                    <div className="nav_list">
+                        <a className="nav_link" href='/'>
+                            <i className='bx bx-home nav_icon'></i>
+                            <span className="nav_name">Inicio</span>
+                        </a>
+                        <ul className="list-unstyled ps-0">
+                            <li>
+                                <a className="nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                    <i className='bx bx-bar-chart-square nav_icon'></i>
+>>>>>>> ea82a2730fce5e7b47ee22bec6f09a6d59e04a95
                                     Gestion
                                 </a>
-                                <div className="collapse ps-2" id="collapse">
+                                <div className="collapse ps-2" id="home-collapse">
                                     <ul className="list-unstyled small">
                                         {
                                             menus && menus.map((m, i) => (
@@ -49,12 +68,12 @@ const Sidenav = () => {
                                 </div>
                             </li>
 
-                            <li >
-                                <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false">
-                                    <i className='bx bx-bar-chart-alt-2 nav_icon'></i>
+                            <li>
+                                <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse-2" aria-expanded="false">
+                                    <i className='bx bx-file nav_icon'></i>
                                     Reportes
                                 </a>
-                                <div className="collapse ps-2" id="collapse-2">
+                                <div className="collapse ps-2" id="home-collapse-2">
                                     <ul className="list-unstyled small">
                                         {
                                             menus && menus.map((m, i) => (
@@ -70,26 +89,20 @@ const Sidenav = () => {
                                 </div>
                             </li>
                         </ul>
+
+                        <a className="nav_link" href='/gestion/cuenta/login'>
+                            <i className="bx bx-lock-open"></i>
+                            <span className="nav_name">Iniciar Sesion</span>
+                        </a>
                     </div>
 
 
 
-                    <a href="#" className="nav_link sb-sidenav-footer">
-                        <i className='bx bx-log-out nav_icon'></i>
-                        <span className="nav_name">Iniciar Sesion</span>
-                    </a>
-
-                </div >
-
-
-
-
-            </nav>
-       
+                </nav >
+            </div>
         </div >
-
-
     )
 }
 
 export default Sidenav
+

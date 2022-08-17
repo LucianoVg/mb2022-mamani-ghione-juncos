@@ -144,8 +144,16 @@ model fechaExamen {
   materia   materia?  @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model portadaFicha {
+  id                   Int                 @id @default(autoincrement())
+  nombre               String
+  url                  String
+  fichaInstitucional   fichaInstitucional? @relation(fields: [fichaInstitucionalId], references: [id])
+  fichaInstitucionalId Int?
+}
+
 model fichaInstitucional {
-  id                Int      @id @default(autoincrement())
+  id                Int            @id @default(autoincrement())
   nombreInstitucion String?
   ubicacion         String?
   tipoInstitucion   Boolean?
@@ -155,8 +163,9 @@ model fichaInstitucional {
   oficina1          String?
   oficina2          String?
   mail              String?
+  portadasFicha     portadaFicha[]
   idUsuario         Int?
-  usuario           usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario           usuario?       @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model materia {

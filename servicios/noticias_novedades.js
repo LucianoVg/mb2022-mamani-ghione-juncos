@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { Prisma } from "./prisma";
 
 export async function listarNoticia(id) {

@@ -1,12 +1,26 @@
 
+import axios from 'axios'
 import { useEffect, useState } from 'react'
+import Carrusel from '../components/carrusel'
 import { Layout } from '../components/layout'
 import { authStateChanged, traerImagen } from '../servicios/cuenta'
 
 const Home = () => {
   const [usuario, setUsuario] = useState({ email: '' })
 
+  const [fichaInstitucional, setFichaInstitucional] = useState({
+    id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: [{ id: 0, nombre: '', url: '' }]
+  })
 
+  const cargarFicha = async () => {
+    axios.get('http://localhost:3000/api/gestion/institucional')
+      .then(res => {
+        setFichaInstitucional(res.data)
+      })
+  }
+  useEffect(() => {
+    cargarFicha()
+  }, [])
   useEffect(() => {
     authStateChanged(user => {
       console.log("Usuario logeado", user);
@@ -21,7 +35,33 @@ const Home = () => {
   return (
     <Layout title={'Instituto "El Salvador"'}>
       {
-        usuario.email !== '' ?? (
+        usuario.email !== '' ? (
+          <div>
+            <Carrusel imagenes={fichaInstitucional.portadasFicha} />
+            <h2>{fichaInstitucional.nombreInstitucion}</h2>
+            <p>{fichaInstitucional.descripcion}</p>
+            <p></p>
+
+            <div className="line"></div>
+            <p>Ubicacion: {fichaInstitucional.ubicacion}</p>
+
+            <div className="line"></div>
+
+            <h2>Telefonos</h2>
+            <p>Telefono 1: {fichaInstitucional.telefono1}</p>
+            <p>Telefono 2: {fichaInstitucional.telefono2}</p>
+
+            <div className="line"></div>
+
+            <h2>Oficinas</h2>
+            <p>Oficina 1: {fichaInstitucional.oficina1}</p>
+            <p>Oficina 2: {fichaInstitucional.oficina2}</p>
+
+            <div className="line"></div>
+          </div>
+
+
+        ) : (
           <div>
             <h1 className="mt-4">Dashboard</h1>
             <ol className="breadcrumb mb-4">
