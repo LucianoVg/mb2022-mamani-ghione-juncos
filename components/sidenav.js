@@ -6,7 +6,7 @@ const Sidenav = () => {
     const [menus, setMenus] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${6}`)
+        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
             .then(r => {
                 console.log(r.data);
                 setMenus(r.data)
@@ -88,18 +88,42 @@ const Sidenav = () => {
                                 <i className='bx bx-grid-alt nav_icon'></i>
                                 Gestion
                             </a>
-                            <div className="collapse nav_link ps-1" id="home-collapse">
+                            <div className="collapse ps-2" id="home-collapse">
                                 <ul className="list-unstyled small">
-                                    <li>
-                                        <a href="#" className="nav_link "> Overview</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="nav_link "> Overview</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="nav_link "> Overview</a>
-                                    </li>
+                                    {
+                                        menus && menus.map((m, i) => (
+                                            !m.menu?.menuSistema.startsWith('Reporte') && (
+                                                <li key={i}>
+                                                    <Link href={m.menu?.url}>
+                                                        <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        ))
+                                    }
 
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li >
+                            <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse-2" aria-expanded="false">
+                                <i className='bx bx-grid-alt nav_icon'></i>
+                                Reportes
+                            </a>
+                            <div className="collapse ps-2" id="home-collapse-2">
+                                <ul className="list-unstyled small">
+                                    {
+                                        menus && menus.map((m, i) => (
+                                            m.menu?.menuSistema.startsWith('Reporte') && (
+                                                <li key={i}>
+                                                    <Link href={m.menu?.url}>
+                                                        <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        ))
+                                    }
 
                                 </ul>
                             </div>
