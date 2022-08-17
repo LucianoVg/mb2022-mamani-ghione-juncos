@@ -70,20 +70,51 @@ const Sidenav = () => {
         // </nav>
         <div className="l-navbar" id="nav-bar">
             <nav className="nav">
+
+
+
+
+
                 <div>
                     <a href="#" className="nav_logo">
                         <i className='bx bx-layer nav_logo-icon'></i>
                         <span className="nav_logo-name">Instituto <br />"El Salvador"</span>
                     </a>
 
+
+                    <ul className="list-unstyled ps-0">
+                        <li >
+                            <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                <i className='bx bx-grid-alt nav_icon'></i>
+                                Gestion
+                            </a>
+                            <div className="collapse nav_link ps-1" id="home-collapse">
+                                <ul className="list-unstyled small">
+                                    <li>
+                                        <a href="#" className="nav_link "> Overview</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav_link "> Overview</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav_link "> Overview</a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
                     <div className="nav_list">
-                        <a href="#" className="nav_link active">
+
+                        <a href="#" className="nav_link">
                             <i className='bx bx-grid-alt nav_icon'></i>
                             <span className="nav_name">Inicio</span>
                         </a>
 
-                        <a href="#" className="nav_link"> <i className='bx bx-user nav_icon'>
-                        </i>
+                        <a href="#" className="nav_link">
+                            <i className='bx bx-user nav_icon'> </i>
                             <span className="nav_name">Users</span>
                         </a>
 
@@ -108,8 +139,8 @@ const Sidenav = () => {
                     <i className='bx bx-log-out nav_icon'></i>
                     <span className="nav_name">Iniciar Sesion</span>
                 </a>
-            </nav>
-        </div>
+            </nav >
+        </div >
     )
 }
 
