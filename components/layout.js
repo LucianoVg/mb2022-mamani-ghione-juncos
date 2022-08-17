@@ -4,7 +4,6 @@ import Head from "next/head";
 import Carrusel from "./carrusel";
 import { useEffect, useState } from "react";
 import { traerImagen } from "../servicios/cuenta";
-import { tarjeta } from "./tarjeta_noticias";
 
 export const Layout = ({ children, title }) => {
     const [imagenes, setImagenes] = useState([])
@@ -45,8 +44,6 @@ export const Layout = ({ children, title }) => {
                         <Carrusel imagenes={imagenes} />
                     )
                 }
-
-                <tarjeta/>
                 {children}
             </div>
         </>

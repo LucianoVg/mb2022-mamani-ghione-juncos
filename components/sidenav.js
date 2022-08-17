@@ -20,13 +20,13 @@ const Sidenav = () => {
 
             <nav className="nav " id='parent'>
 
-                <div  id='child'  >
+                <div id='child'  >
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
                         <Image style={{ borderRadius: 50 }} src={'/assets/img/logo.jpg'} width={25} height={25} />
                         <span className="nav_logo-name">Instituto Privado <br />"El Salvador"</span>
                     </a>
-                    <div className='overflow-hidden'>
+                    <div className='overflow-hidden containment'>
                         <ul className="list-unstyled ps-0 ">
                             <li >
                                 <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" >
