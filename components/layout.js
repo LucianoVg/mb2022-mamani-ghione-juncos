@@ -1,12 +1,6 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Head from "next/head";
-<<<<<<< HEAD
-import Carrusel from "./carrusel";
-import { useEffect, useState } from "react";
-import { traerImagen } from "../servicios/cuenta";
-=======
->>>>>>> ea82a2730fce5e7b47ee22bec6f09a6d59e04a95
 
 export const Layout = ({ children, title }) => {
 
@@ -20,24 +14,24 @@ export const Layout = ({ children, title }) => {
                 <meta name="author" content="Nicolas Mamani, Luciano Ghione, Nicolas Juncos" />
                 <title>{title}</title>
 
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                    crossOrigin="anonymous" />
+
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
                 {/* <link rel="stylesheet" href="css/style5.css" /> */}
 
             </Head>
             <Navbar />
             <Sidenav />
 
-            <div className="h-100">
-<<<<<<< HEAD
-                {
-                    imagenes.length > 0 && (
-                        <Carrusel imagenes={imagenes} />
-                    )
-                }
-=======
-
->>>>>>> ea82a2730fce5e7b47ee22bec6f09a6d59e04a95
+            <div className="height-100 bg-light">
                 {children}
             </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script src="/js/scripts.js"></script>
         </>
     )
 }
