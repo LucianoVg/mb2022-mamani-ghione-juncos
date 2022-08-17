@@ -1,15 +1,14 @@
 
 import axios from "axios";
-import { useRouter } from "next/router";
 import { Layout } from "../../../components/layout";
 
 
 export default function MantenimientoUsuario({ usuarios }) {
-    const router = useRouter()
     return (
-        <Layout>
+        <Layout title={'Mantenimiento de Usuarios'}>
             <h3 className="text-center mt-1">Mantenimiento de Usuarios</h3>
-            <button className="btn btn-primary m-2" onClick={() => router.push('nuevo')}>Nuevo Usuario</button>
+            <a className="btn btn-primary m-2" href="/gestion/usuarios/nuevo">Nuevo Usuario</a>
+
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fas fa-table me-1"></i>

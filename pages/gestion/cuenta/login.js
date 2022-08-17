@@ -1,8 +1,9 @@
+import axios from "axios"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Layout } from "../../../components/layout"
-import { iniciarSesion } from "../../../servicios/cuenta"
+import { iniciarSesion, registrarse } from "../../../servicios/cuenta"
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
@@ -18,16 +19,19 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        iniciarSesion(correo, password)
-            .then(credencial => {
-                console.log(credencial);
-                router.push('/')
-            }).catch(err => {
-                setError("Usuario y/o contraseña incorrectos")
-                setTimeout(() => {
-                    setError("")
-                }, 3000);
-            })
+        const res = await axios.get(`http://localhost:3000/api/gestion/cuenta?correo=${correo}`)
+        if (res.data) {
+            registrarse(correo, password)
+                .then(credencial => {
+                    console.log(credencial);
+                    router.push('/')
+                }).catch(err => {
+                    setError("Usuario y/o contraseña incorrectos")
+                    setTimeout(() => {
+                        setError("")
+                    }, 3000);
+                })
+        }
     }
 
     return (

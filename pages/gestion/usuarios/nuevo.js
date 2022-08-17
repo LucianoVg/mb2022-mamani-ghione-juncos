@@ -43,38 +43,39 @@ export default function NuevoUsuario() {
         e.preventDefault()
         usuario.idRol = rol
         console.log(usuario);
-        registrarse(usuario.correo, usuario.contrasenia)
-            .then(credencial => {
-                console.log(credencial.user);
+        axios.post('http://localhost:3000/api/gestion/cuenta', {
+            login: usuario.correo.split('@')[0],
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            dni: usuario.dni,
+            correo: usuario.correo,
+            localidad: usuario.localidad,
+            direccion: usuario.direccion,
+            telefono: usuario.telefono,
+            idRol: usuario.idRol,
+            contrasenia: usuario.contrasenia
+        }).then(res => {
+            const creado = res.data
+            if (creado) {
+                setMensaje("Usuario creado!")
+            } else {
+                setMensaje("No se pudo crear al usuario")
+            }
+            setTimeout(() => { setMensaje("") }, 1200)
+        }).catch(err => {
+            console.log(err);
+            setMensaje("Error al crear el usuario")
+            setTimeout(() => { setMensaje("") }, 1200)
+        })
+        // registrarse(usuario.correo, usuario.contrasenia)
+        //     .then(credencial => {
+        //         console.log(credencial.user);
 
-                axios.post('http://localhost:3000/api/gestion/cuenta', {
-                    login: usuario.correo.split('@')[0],
-                    nombre: usuario.nombre,
-                    apellido: usuario.apellido,
-                    dni: usuario.dni,
-                    correo: usuario.correo,
-                    localidad: usuario.localidad,
-                    direccion: usuario.direccion,
-                    telefono: usuario.telefono,
-                    idRol: usuario.idRol,
-                    contrasenia: usuario.contrasenia
-                }).then(res => {
-                    const creado = res.data
-                    if (creado) {
-                        setMensaje("Usuario creado!")
-                    } else {
-                        setMensaje("No se pudo crear al usuario")
-                    }
-                    setTimeout(() => { setMensaje("") }, 1200)
-                }).catch(err => {
-                    console.log(err);
-                    setMensaje("Error al crear el usuario")
-                    setTimeout(() => { setMensaje("") }, 1200)
-                })
-            })
+
+        //     })
     }
     return (
-        <Layout>
+        <Layout title={'Nuevo Usuario'}>
             <div className="card shadow-lg border-0 rounded-lg mt-5">
                 <div className="card-header"><h3 className="text-center font-weight-light my-4">Nuevo Usuario</h3></div>
                 <div className="card-body">

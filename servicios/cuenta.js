@@ -4,9 +4,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    User,
     signOut
 } from 'firebase/auth'
+import { ref, getDownloadURL, getStorage, uploadString } from "firebase/storage";
 import { Prisma } from './prisma'
 
 export async function iniciarSesion(email, password) {
@@ -62,4 +62,16 @@ export async function mapearUsuario(user) {
 export async function cerrarSesion() {
     const auth = getAuth(app)
     return await signOut(auth)
+}
+
+export async function traerImagen(nombre) {
+    const storage = getStorage(app)
+    const storageRef = ref(storage, nombre)
+    return await getDownloadURL(storageRef)
+}
+
+export async function guardarImagen(nombre, url) {
+    const storage = getStorage(app)
+    const storageRef = ref(storage, nombre)
+    return uploadString(storageRef, url)
 }
