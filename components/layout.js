@@ -14,10 +14,6 @@ export const Layout = ({ children, title }) => {
                 <meta name="author" content="Nicolas Mamani, Luciano Ghione, Nicolas Juncos" />
                 <title>{title}</title>
 
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                    crossOrigin="anonymous" />
-
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
                 {/* <link rel="stylesheet" href="css/style5.css" /> */}
 
             </Head>
@@ -27,11 +23,6 @@ export const Layout = ({ children, title }) => {
             <div className="height-100 bg-light">
                 {children}
             </div>
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-
-            <script src="/js/scripts.js"></script>
         </>
     )
 }

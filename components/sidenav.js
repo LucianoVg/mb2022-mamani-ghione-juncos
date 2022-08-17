@@ -15,18 +15,18 @@ const Sidenav = () => {
 
     return (
         // scrolling-navbar
-        <div className="l-navbar " id="nav-bar">
+        <div className="l-navbar " id="nav-bar" >
 
-            <nav className="nav " id='parent'>
+            <nav className="nav" id='parent'>
 
-                <div id='child'  >
+                <div id='child'>
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
                         <Image style={{ borderRadius: 50 }} src={'/assets/img/logo.jpg'} width={25} height={25} />
                         <span className="nav_logo-name">Instituto <br />"El Salvador"</span>
                     </a>
 
-                    <ul className="list-unstyled ps-0 overflow-hidden">
+                    <ul className="list-unstyled ps-0 overflow-hidden" >
                         <li >
                             <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                                 <i className='bx bx-layer nav_icon'></i>

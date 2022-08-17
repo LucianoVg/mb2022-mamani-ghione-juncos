@@ -180,3 +180,17 @@ a {
         padding-left: calc(var(--nav-width) + 188px)
     }
 }
+
+#parent {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#child {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+}
