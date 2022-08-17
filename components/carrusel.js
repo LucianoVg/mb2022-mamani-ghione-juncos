@@ -6,7 +6,7 @@ export default function Carrusel({ imagenes = [] }) {
                 {
                     imagenes.map((img, i) => (
                         <div key={img.id} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
-                            <Image src={img.url} className="d-block w-100" alt={img.nombre} width={1200} height={500} />
+                            <Image src={img.url !== '' ? img.url : '/assets/img/placeholder.png'} className="d-block w-100" alt={img.nombre} width={1200} height={500} />
                         </div>
                     ))
                 }

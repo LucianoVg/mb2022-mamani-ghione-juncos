@@ -15,12 +15,14 @@ const Home = () => {
   const cargarFicha = async () => {
     axios.get('http://localhost:3000/api/gestion/institucional')
       .then(res => {
+        console.log(res.data);
         setFichaInstitucional(res.data)
       })
   }
   useEffect(() => {
     cargarFicha()
   }, [])
+
   useEffect(() => {
     authStateChanged(user => {
       console.log("Usuario logeado", user);
@@ -40,7 +42,7 @@ const Home = () => {
             <Carrusel imagenes={fichaInstitucional.portadasFicha} />
             <h2>{fichaInstitucional.nombreInstitucion}</h2>
             <p>{fichaInstitucional.descripcion}</p>
-            <p></p>
+            <p>{fichaInstitucional.email}</p>
 
             <div className="line"></div>
             <p>Ubicacion: {fichaInstitucional.ubicacion}</p>
