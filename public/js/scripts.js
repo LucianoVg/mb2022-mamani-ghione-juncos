@@ -35,4 +35,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     linkColor.forEach(l => l.addEventListener('click', colorLink))
 
     // Your code to run since DOM is loaded and ready
+
+    $(".navbar").find("[data-toggle=collapse]").click(function(e){
+
+        e.preventDefault();e.stopPropagation();
+        $(".navbar").find(".collapse.in").collapse("hide");
+        $($(this).attr("data-target")).collapse("show");
+    
+    });
 });
