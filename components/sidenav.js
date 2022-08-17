@@ -29,7 +29,7 @@ const Sidenav = () => {
                     <div className='overflow-hidden containment'>
                         <ul className="list-unstyled ps-0 ">
                             <li >
-                                <a className=" nav_link btn btn-toggle align-items-center collapsed active" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" >
+                                <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" >
                                     <i className='bx bx-layer nav_icon'></i>
                                     Gestion
                                 </a>
