@@ -4,7 +4,7 @@ const TarjetaNovedades = ({ url, titulo, descripcion }) => {
 
     return (
         <div className={`${styles.card}`} >
-            <img className="card-img-top "
+            <img className={`${styles.card_img_top }`}
                 src={url}
                 alt="Card image cap" />
             <div className="card-body">
