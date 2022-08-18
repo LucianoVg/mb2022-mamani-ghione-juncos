@@ -16,15 +16,13 @@ export async function agregarNoticia(titulo, fecha, url, descripcion) {
     const agregar = await prisma.noticiasYnovedades.create({
         data: {
             titulo: titulo,
-            fecha: fecha,
+            fecha: new Date(fecha),
             url: url,
             descripcion: descripcion
         }
-    }
+    })
 
-    )
-
-    return agregarNoticia
+    return agregar
 }
 
 
@@ -39,9 +37,7 @@ export async function editarNoticia(id, titulo, url, fecha, descripcion) {
         where: {
             id: id
         }
-    }
-
-    )
+    })
     return editar
 }
 

@@ -8,11 +8,9 @@ const AgregarNoticias = () => {
         titulo: '',
         descripcion: '',
         url: '',
-        fecha: ''
+        fecha: Date
     })
     var hoy = new Date();
-
-    const fecha = hoy.toLocaleDateString()
 
     const handleForm = (e) => {
         setNoticia({
@@ -26,9 +24,11 @@ const AgregarNoticias = () => {
 
         await axios.post('http://localhost:3000/api/gestion/noticias_novedades', {
             titulo: noticia.titulo,
-            fecha: fecha,
+            fecha: hoy.toUTCString(),
             url: noticia.url,
             descripcion: noticia.descripcion
+        }).then(res => {
+            console.log(res.data);
         })
 
         // location.replace('http://localhost:3000/')
