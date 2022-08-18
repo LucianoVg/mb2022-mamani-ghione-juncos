@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
   
+  
 #parent{
     width: 100%;
     height: 100%;
     overflow: hidden;
     position: relative;
+    
 }
+
 
 #child{
     position: absolute;
@@ -14,6 +17,8 @@
     left: 0;
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
+    overflow-x:hidden;
+    overflow-y: initial ;
 }
 :root {
     --header-height: 3rem;
