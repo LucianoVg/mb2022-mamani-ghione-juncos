@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { agregarNoticia } from "../../../servicios/noticias_novedades";
+import { agregarNoticia, traerNoticia } from "../../../servicios/noticias_novedades";
 
 export default async function handler(
     req,
@@ -12,9 +12,10 @@ export default async function handler(
             return res.status(200).json(crear)
 
         }
-        // else {
-        //     const { idRol } = req.query
-        // }
+        else {
+            const Noticia = await traerNoticia()
+            return res.status(200).json(Noticia)
+        }
 
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
