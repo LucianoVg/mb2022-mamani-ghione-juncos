@@ -4,18 +4,15 @@ import { PrismaClient } from "prisma/prisma-client";
 const prisma = new PrismaClient()
 
 export async function traerNoticia() {
-    
-    const noticias = await prisma.noticiasYnovedades.findMany({
-        orderBy: {
-            fecha: 'asc'
-        }
-    })
+
+    const noticias = await prisma.noticiasYnovedades.findMany()
+    console.log(noticias);
     return noticias
 }
 
 
 export async function agregarNoticia(titulo, fecha, url, descripcion) {
-    
+
     const agregar = await prisma.noticiasYnovedades.create({
         data: {
             titulo: titulo,

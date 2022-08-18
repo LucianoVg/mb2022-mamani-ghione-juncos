@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { agregarNoticia, traerNoticia } from "../../../servicios/noticias_novedades";
 
 export default async function handler(
@@ -13,8 +12,8 @@ export default async function handler(
 
         }
         else {
-            const Noticia = await traerNoticia()
-            return res.status(200).json(Noticia)
+            const noticias = await traerNoticia()
+            return res.status(200).json(noticias)
         }
 
     } catch (error) {

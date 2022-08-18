@@ -1,7 +1,6 @@
 import { Navbar } from "./navbar";
 import Sidenav from "./sidenav";
 import Head from "next/head";
-import Tarjeta from "./tarjeta_novedades";
 export const Layout = ({ children, title }) => {
 
     return (
@@ -21,7 +20,7 @@ export const Layout = ({ children, title }) => {
             <Sidenav />
 
             <div className="height-100 bg-light">
-                <Tarjeta />
+
                 {children}
             </div>
         </>
