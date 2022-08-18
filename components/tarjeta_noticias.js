@@ -10,7 +10,7 @@ const TarjetaNovedades = ({ url, titulo, descripcion }) => {
             <div className="card-body">
                 <h5 className="card-title">{titulo}</h5>
                 <p className="card-text">{descripcion}</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+                <a href="#" className="btn btn-primary">Mas Informacion</a>
             </div>
         </div>
     )
