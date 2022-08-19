@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
-import Image from 'next/image'
 import { Layout } from '../../../components/layout';
 import { guardarImagen, traerImagen } from '../../../servicios/portada';
 import { authStateChanged } from '../../../servicios/cuenta';
