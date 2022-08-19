@@ -204,13 +204,14 @@ model nota {
 }
 
 model noticiasYnovedades {
-  id          Int       @id @default(autoincrement())
-  titulo      String?
-  fecha       DateTime?
-  descripcion String?
-  idUsuario   Int?
-  url         String?
-  usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            Int       @id @default(autoincrement())
+  titulo        String?
+  creadaEn      DateTime?
+  actualizadaEn DateTime?
+  descripcion   String?
+  idUsuario     Int?
+  url           String?
+  usuario       usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model notificacion {

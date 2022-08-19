@@ -73,7 +73,7 @@ export default function Institucional() {
         }
         for (let i = 0; i < imgRef.current.files.length; i++) {
             const file = imgRef.current.files[i];
-            guardarImagen(file.name, file)
+            guardarImagen('portadas/' + file.name, file)
                 .then(result => {
                     traerImagen(file.name).then(url => {
                         fichaInstitucional.portadasFicha.push({
