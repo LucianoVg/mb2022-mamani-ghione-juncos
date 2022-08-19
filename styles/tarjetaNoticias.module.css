@@ -9,13 +9,24 @@
 .card_img_top {
     height: 18rem;
     width: 21rem;
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    
 }
 
-
-
-.bx {
-    size: 30%;
+ .card_img_top:hover {
+    transform: scale(1.8);
 }
+.overflow {
+  
+    height: 50%;
+    overflow: hidden;
+}
+
+/**la imagen hace zoom pero no se ve en la pantalla, solo se ven el recuadro gracias al overflow:hidden **/
+
 
 
 /* Make the image responsive */
@@ -30,7 +41,7 @@
     margin-left: -11mm;
     border: none;
     cursor: pointer;
-    font-size: 7mm;
+    font-size: 6mm;
     
 
 }
