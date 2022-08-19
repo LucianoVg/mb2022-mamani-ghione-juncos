@@ -15,6 +15,10 @@ export default function NoticiasYNovedades() {
     }, [])
     return (
         <Layout title={'Noticias y Novedades'}>
+            <h1 className="text-center"> <strong>Noticias y Novedades</strong></h1>
+        <div>
+        <a href="http://localhost:3000/gestion/noticias/agregar_noticias" className="btn btn-primary">Agregar</a>
+        </div>
             <div className="row">
                 {
                     noticias.length > 0 && noticias.map((n, i) => (

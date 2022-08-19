@@ -1,7 +1,40 @@
 .card {
-    width: 18rem
+    width: 21rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 10mm;
+    margin-top: 10mm;
+    margin-left: 10mm;
 }
+
 .card_img_top {
     height: 18rem;
-    width: 18rem;
+    width: 21rem;
+}
+
+
+
+.bx {
+    size: 30%;
+}
+
+
+/* Make the image responsive */
+
+/* Style the button and place it in the middle of the container/image */
+.btn {
+    position: absolute;
+    background-color: transparent;
+    color: black;
+    font-size: 16px;
+    margin-top: 4mm;
+    margin-left: -11mm;
+    border: none;
+    cursor: pointer;
+    font-size: 7mm;
+    
+
+}
+
+.container .btn:hover {
+    background-color: blue;
 }

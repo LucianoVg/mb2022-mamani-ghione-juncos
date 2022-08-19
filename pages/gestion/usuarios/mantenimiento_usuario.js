@@ -6,7 +6,7 @@ import { Layout } from "../../../components/layout";
 export default function MantenimientoUsuario({ usuarios }) {
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
-            <h3 className="text-center mt-1">Mantenimiento de Usuarios</h3>
+            <h1 className="text-center mt-1"><strong>Mantenimiento de Usuarios</strong></h1>
             <a className="btn btn-primary m-2" href="/gestion/usuarios/nuevo">Nuevo Usuario</a>
 
             <div className="card mb-4">
