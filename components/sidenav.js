@@ -1,9 +1,13 @@
 import axios from 'axios'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { authStateChanged, cerrarSesion } from '../servicios/cuenta'
 
 const Sidenav = () => {
     const [menus, setMenus] = useState([])
+    const [usuario, setUsuario] = useState({ email: '' })
+    const router = useRouter()
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
@@ -13,6 +17,20 @@ const Sidenav = () => {
             })
     }, [])
 
+    useEffect(() => {
+        authStateChanged(user => {
+            if (user.email) {
+                setUsuario({ email: user.email })
+            }
+        })
+    }, [])
+
+    const logout = () => {
+        cerrarSesion()
+            .then(() => {
+                router.reload()
+            })
+    }
     return (
 
         // scrolling-navbar
@@ -23,11 +41,11 @@ const Sidenav = () => {
                 <div id='child'  >
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
-                        <Image style={{ borderRadius: 50 }} src={'/assets/img/logo.jpg'} width={25} height={25} />
+                        <Image style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
                         <span className="nav_logo-name">Instituto <br />"El Salvador"</span>
                     </a>
 
-                    <ul className="list-unstyled ps-0 overflow-hidden">
+                    {/* <ul className="list-unstyled ps-0 overflow-hidden">
                         <li >
                             <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                                 <i className='bx bx-layer nav_icon'></i>
@@ -69,19 +87,31 @@ const Sidenav = () => {
                                 </ul>
                             </div>
                         </li>
-                    </ul>
+                    </ul> */}
 
-
-                    <a href="#" className="nav_link sb-sidenav-footer">
-                        <i className='bx bx-log-out nav_icon'></i>
-                        <span className="nav_name">Iniciar Sesion</span>
-                    </a>
-
+                    {
+                        usuario.email !== '' && (
+                            <a style={{ cursor: 'pointer' }} onClick={logout} className="nav_link sb-sidenav-footer">
+                                <i className='bx bx-log-out nav_icon'></i>
+                                <span className="nav_name">Cerrar Sesion</span>
+                            </a>
+                        )
+                    }
                 </div >
 
-
-
-
+                {
+                    usuario.email === '' ? (
+                        <a href="/gestion/cuenta/login" className="nav_link sb-sidenav-footer">
+                            <i className='bx bx-log-out nav_icon'></i>
+                            <span className="nav_name">Iniciar Sesion</span>
+                        </a>
+                    ) :
+                        (
+                            <footer className='text-center text-white'>
+                                <p>Logeado como: {usuario.email}</p>
+                            </footer>
+                        )
+                }
             </nav>
         </div >
     )
