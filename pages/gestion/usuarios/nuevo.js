@@ -5,7 +5,7 @@ import { Layout } from "../../../components/layout";
 import { authStateChanged, registrarse } from "../../../servicios/cuenta";
 
 export default function NuevoUsuario() {
-    // const router = useRouter()
+    const router = useRouter()
     const [usuario, setUsuario] = useState({
         nombre: '', apellido: '', dni: '',
         correo: '', localidad: '', telefono: '', idRol: 0,
@@ -26,6 +26,8 @@ export default function NuevoUsuario() {
                             setRoles(res.data)
                         }
                     })
+            } else {
+                router.push('/gestion/cuenta/login')
             }
         })
     }, [])

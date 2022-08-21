@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { Layout } from "../../../components/layout"
+import { authStateChanged } from "../../../servicios/cuenta"
 import { guardarImagen, traerImagen } from "../../../servicios/portada"
 
 export default function DetallesNoticia() {
@@ -69,14 +70,20 @@ export default function DetallesNoticia() {
         })
     }
     useEffect(() => {
-        const { id } = router.query
-        axios.get(`http://localhost:3000/api/gestion/noticias_novedades/${id}`)
-            .then(res => {
-                console.log(res.data);
-                setNoticia(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+        authStateChanged(user => {
+            if (user.email) {
+                const { id } = router.query
+                axios.get(`http://localhost:3000/api/gestion/noticias_novedades/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        setNoticia(res.data)
+                    }).catch(err => {
+                        console.error(err);
+                    })
+            } else {
+                router.push('/gestion/cuenta/login')
+            }
+        })
     }, [router])
 
     return (

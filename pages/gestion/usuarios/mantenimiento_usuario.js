@@ -1,9 +1,28 @@
 
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Layout } from "../../../components/layout";
+import { authStateChanged } from "../../../servicios/cuenta";
 
 
-export default function MantenimientoUsuario({ usuarios }) {
+export default function MantenimientoUsuario() {
+    const [usuarios, setUsuarios] = useState([])
+    const router = useRouter()
+
+    useEffect(() => {
+        authStateChanged(user => {
+            if (user.email) {
+                axios.get('http://localhost:3000/api/gestion/usuarios')
+                    .then(res => {
+                        setUsuarios(res.data)
+                    })
+            } else {
+                router.push('/gestion/cuenta/login')
+            }
+        })
+    }, [])
+
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
             <h1 className="text-center mt-1"><strong>Mantenimiento de Usuarios</strong></h1>
@@ -58,15 +77,4 @@ export default function MantenimientoUsuario({ usuarios }) {
             </div>
         </Layout>
     )
-}
-
-export const getServerSideProps = async () => {
-    const res = await axios.get('http://localhost:3000/api/gestion/usuarios')
-    console.log(res.data);
-    const usuarios = res.data
-    return {
-        props: {
-            usuarios
-        }
-    }
 }
