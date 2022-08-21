@@ -1,16 +1,26 @@
 
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import Carrusel from '../components/carrusel'
 import { Layout } from '../components/layout'
+import Pagination from '../components/pagination'
+import TarjetaNovedades from '../components/tarjeta_noticias'
 import { authStateChanged, traerImagen } from '../servicios/cuenta'
+import paginate from '../utils/paginate'
 
 const Home = () => {
   const [usuario, setUsuario] = useState({ email: '' })
+  const [noticias, setNoticias] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 5
+  const paginateNoticias = paginate(noticias, currentPage, pageSize)
 
   const [fichaInstitucional, setFichaInstitucional] = useState({
     id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: [{ id: 0, nombre: '', url: '' }]
   })
+
+  const handlerPageChange = (page) => {
+    setCurrentPage(page)
+  }
 
   const cargarFicha = async () => {
     axios.get('http://localhost:3000/api/gestion/institucional')
@@ -21,6 +31,14 @@ const Home = () => {
   }
   useEffect(() => {
     cargarFicha()
+  }, [])
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/api/gestion/noticias_novedades`)
+      .then(res => {
+        console.log(res.data);
+        setNoticias(res.data)
+      })
   }, [])
 
   useEffect(() => {
@@ -39,27 +57,24 @@ const Home = () => {
       {
         usuario.email !== '' ? (
           <div>
-            <Carrusel imagenes={fichaInstitucional.portadasFicha} />
-            <h2>{fichaInstitucional.nombreInstitucion}</h2>
-            <p>{fichaInstitucional.descripcion}</p>
-            <p>{fichaInstitucional.email}</p>
-
-            <div className="line"></div>
-            <p>Ubicacion: {fichaInstitucional.ubicacion}</p>
-
-            <div className="line"></div>
-
-            <h2>Telefonos</h2>
-            <p>Telefono 1: {fichaInstitucional.telefono1}</p>
-            <p>Telefono 2: {fichaInstitucional.telefono2}</p>
-
-            <div className="line"></div>
-
-            <h2>Oficinas</h2>
-            <p>Oficina 1: {fichaInstitucional.oficina1}</p>
-            <p>Oficina 2: {fichaInstitucional.oficina2}</p>
-
-            <div className="line"></div>
+            <div className="row">
+              {
+                paginateNoticias.length > 0 && paginateNoticias.map((n, i) => (
+                  <div key={i} className="col-md-4">
+                    <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+                  </div>
+                ))
+              }
+            </div>
+            {
+              paginateNoticias.length > 0 && (
+                <Pagination
+                  items={noticias.length}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  onPageChange={handlerPageChange} />
+              )
+            }
           </div>
 
 

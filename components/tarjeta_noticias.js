@@ -28,7 +28,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
 
             <div className="card-body">
                 <h4 className="card-title"><strong>{titulo}</strong></h4>
-                <p className="card-text">{descripcion}</p>
+                <p className="card-text">{descripcion.substring(0, 38) + '...'}</p>
                 <a href={`/gestion/noticias/${id}`} className="btn btn-primary">Más info</a>
             </div>
         </div>

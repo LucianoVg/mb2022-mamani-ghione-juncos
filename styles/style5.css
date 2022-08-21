@@ -6,7 +6,7 @@
     height: 100%;
     overflow: hidden;
     /* elimine el position relative */
-  
+
 
 }
 
@@ -15,7 +15,7 @@
     /* OCULTE LA BARRA DE SCROLL CON ESO */
     /* cambie el position absolute por relative */
     position: relative;
-    
+
     top: 0;
     bottom: 0;
     left: 0;
@@ -24,14 +24,14 @@
     overflow-y: scroll;
     overflow-x: hidden;
     overflow-y: initial;
-  
+
 }
 
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --first-color: #221979;
-    --first-color-light: #6a9fee;
+    --first-color: #373b3d;
+    --first-color-light: #e8e9e9;
     --white-color: #F7F6FB;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
