@@ -4,7 +4,7 @@ export default function Document() {
     return (
         <Html>
             <Head>
-                <link rel="shortcut icon" href="/public/logo_instituto.png" type="image/x-icon" />
+                <link rel="shortcut icon" href="/logo_instituto.png" type="image/x-icon" />
 
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
                     crossOrigin="anonymous" />
