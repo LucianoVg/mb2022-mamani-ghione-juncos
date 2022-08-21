@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { Prisma } from "./prisma";
 
+const prisma = new PrismaClient()
+
 export async function traerFichaInstitucional() {
-    const prisma = new PrismaClient()
+
     const fichaInstitucional = await prisma.fichaInstitucional.findFirst({
         where: {
             id: 6
@@ -15,7 +17,7 @@ export async function traerFichaInstitucional() {
 }
 
 export async function guardarPortadas(id, nombre, url, fichaInstitucionalId) {
-    await Prisma.newPrisma().portadaFicha.upsert({
+    await prisma.portadaFicha.upsert({
         where: {
             id: id
         },
