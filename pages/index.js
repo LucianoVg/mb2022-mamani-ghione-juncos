@@ -41,16 +41,16 @@ const Home = () => {
       })
   }, [])
 
-  useEffect(() => {
-    authStateChanged(user => {
-      console.log("Usuario logeado", user);
-      if (user.email) {
-        setUsuario({
-          email: user.email
-        })
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   authStateChanged(user => {
+  //     console.log("Usuario logeado", user);
+  //     if (user.email) {
+  //       setUsuario({
+  //         email: user.email
+  //       })
+  //     }
+  //   })
+  // }, [])
 
   return (
     <Layout title={'Instituto "El Salvador"'}>
