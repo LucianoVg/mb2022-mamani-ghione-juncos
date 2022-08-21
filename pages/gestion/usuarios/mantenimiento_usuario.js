@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "../../../components/layout";
 import { authStateChanged } from "../../../servicios/cuenta";
 

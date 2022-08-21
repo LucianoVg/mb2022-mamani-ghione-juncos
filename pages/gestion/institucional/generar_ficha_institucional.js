@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Layout } from "../../../components/layout";
 import { authStateChanged } from "../../../servicios/cuenta";
+import { guardarImagen, traerImagen } from "../../../servicios/portada";
 
 
 const FichaInstitucional = () => {
@@ -17,7 +18,7 @@ const FichaInstitucional = () => {
         authStateChanged(user => {
             console.log("Usuario logeado", user);
             if (user.email) {
-                axios.get(`http://localhost:3000/api/gestion/cuenta?correo=${user.email}`)
+                axios.get(`http://localhost:3000/api/gestion/cuenta/${user.email}`)
                     .then(res => {
                         console.log(res.data);
                         setUsuario({
@@ -75,7 +76,8 @@ const FichaInstitucional = () => {
             const file = imgRef.current.files[i];
             guardarImagen('portadas/' + file.name, file)
                 .then(result => {
-                    traerImagen(file.name).then(url => {
+                    traerImagen('portadas/' + file.name).then(url => {
+                        console.log(url);
                         fichaInstitucional.portadasFicha.push({
                             name: file.name,
                             url: url

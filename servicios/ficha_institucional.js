@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { Prisma } from "./prisma";
 
 const prisma = new PrismaClient()
 
-export async function traerFichaInstitucional() {
-
+export async function traerFichaInstitucional(id = 0) {
     const fichaInstitucional = await prisma.fichaInstitucional.findFirst({
         where: {
-            id: 6
+            OR: [
+                { id: id },
+                { idUsuario: id }
+            ]
         },
         include: {
             portadasFicha: true
@@ -16,27 +17,43 @@ export async function traerFichaInstitucional() {
     return fichaInstitucional
 }
 
-export async function guardarPortadas(id, nombre, url, fichaInstitucionalId) {
-    await prisma.portadaFicha.upsert({
-        where: {
-            id: id
-        },
-        create: {
+export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
+    const portada = await prisma.portadaFicha.create({
+        data: {
             nombre: nombre,
             url: url,
             fichaInstitucionalId: fichaInstitucionalId
         },
-        update: {
+    })
+    return portada
+}
+export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
+    const portada = await prisma.portadaFicha.update({
+        where: {
+            id: id
+        },
+        data: {
             nombre: nombre,
             url: url,
             fichaInstitucionalId: fichaInstitucionalId
         }
     })
+    return portada
 }
-
+export async function traerPortadas(idFicha) {
+    const portadas = await prisma.portadaFicha.findMany({
+        where: {
+            fichaInstitucionalId: idFicha
+        },
+        include: {
+            fichaInstitucional: true
+        }
+    })
+    return portadas
+}
 export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = false, descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
 
-    const guardado = await Prisma.newPrisma().fichaInstitucional.upsert({
+    const guardado = await prisma.fichaInstitucional.upsert({
         where: {
             id: id
         },
