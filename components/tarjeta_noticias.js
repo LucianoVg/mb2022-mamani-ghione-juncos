@@ -21,9 +21,10 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 <img className={`${styles.card_img_top}`}
                     src={url}
                     alt="Card image cap" />
+                {/*                     
                 <a className={`${styles.btn}`} onClick={() => eliminarNoticia(id)}>
                     <i className='bx bxs-trash' ></i>
-                </a>
+                </a> */}
             </div>
 
             <div className="card-body">
