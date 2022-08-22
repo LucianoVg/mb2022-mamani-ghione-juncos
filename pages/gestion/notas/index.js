@@ -23,6 +23,8 @@ export default function Notas() {
                     <th>Alumno</th>
                     <th>Materia</th>
                     <th>Nota</th>
+                    <th>Trimestre</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -30,9 +32,10 @@ export default function Notas() {
                     notas && notas.map((n, i) => (
 
                         <tr key={i}>
-                            <td>{n.alumnoXCursoXDivision?.usuario?.nombre}</td>
+                            <td>{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
                             <td>{n.materia?.nombre}</td>
                             <td>{n.nota}</td>
+                            <td>{n.trimestre?.trimestre}</td>
                         </tr>
                     ))
                 }
