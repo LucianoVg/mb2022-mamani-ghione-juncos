@@ -1,9 +1,22 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { authStateChanged } from "../servicios/cuenta";
 import styles from "../styles/tarjetaNoticias.module.css";
 
 const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const router = useRouter()
+    const [logeado, setLogeado] = useState(false)
+    useEffect(() => {
+        authStateChanged(user => {
+            if (user.email) {
+                setLogeado(true)
+            } else {
+                setLogeado(false)
+            }
+        })
+    }, [])
+
 
     const eliminarNoticia = (idNoticia) => {
         if (confirm('Esta seguro de eliminar la noticia?')) {
@@ -21,16 +34,20 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 <img className={`${styles.card_img_top}`}
                     src={url}
                     alt="Card image cap" />
-                {/*                     
-                <a className={`${styles.btn}`} onClick={() => eliminarNoticia(id)}>
-                    <i className='bx bxs-trash' ></i>
-                </a> */}
+
+                {
+                    logeado && (
+                        <a className={`${styles.btn}`} href={`/gestion/noticias/${id}`}>
+                            <i className='bx bx-edit'></i>
+                        </a>
+                    )
+                }
             </div>
 
             <div className="card-body">
                 <h4 className="card-title"><strong>{titulo}</strong></h4>
                 <p className="card-text">{descripcion.substring(0, 38) + '...'}</p>
-                <a href={`/gestion/noticias/${id}`} className="btn btn-primary">Más info</a>
+                <a href={`/gestion/noticias/detalles/${id}`} className="btn btn-primary">Más info</a>
             </div>
         </div>
     )

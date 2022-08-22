@@ -52,7 +52,7 @@ export default function NoticiasYNovedades() {
                 {
                     paginateNoticias.length > 0 && paginateNoticias.map((n, i) => (
                         <div key={i} className="col-md-4">
-                            <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+                            <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} correo={usuario.email} />
                         </div>
                     ))
                 }

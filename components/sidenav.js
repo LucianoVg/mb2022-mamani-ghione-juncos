@@ -28,6 +28,7 @@ const Sidenav = () => {
     const logout = () => {
         cerrarSesion()
             .then(() => {
+                setUsuario({ email: '' })
                 router.reload()
             })
     }

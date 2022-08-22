@@ -1,7 +1,7 @@
 import Image from "next/image"
 export default function Carrusel({ imagenes = [] }) {
     return (
-        <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls" style={{ width: 900, margin: 'auto' }} className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner">
                 {
                     imagenes.map((img, i) => (

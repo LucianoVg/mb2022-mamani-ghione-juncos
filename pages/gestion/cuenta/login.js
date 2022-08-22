@@ -19,7 +19,7 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        const res = await axios.get(`http://localhost:3000/api/gestion/cuenta?correo=${correo}`)
+        const res = await axios.get(`http://localhost:3000/api/gestion/cuenta/${correo}`)
         if (res.data) {
             iniciarSesion(correo, password)
                 .then(credencial => {
