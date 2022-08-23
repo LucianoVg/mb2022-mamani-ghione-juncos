@@ -42,7 +42,7 @@
     "pages/gestion/empleados.tsx",
     "pages/gestion/certificado_servicio.tsx",
     "pages/gestion/asistencias.tsx",
-    "servicios/prisma.js",
+    "servicios/prisma.ts",
     "servicios/noticias_novedades.js",
     "servicios/menu.js",
     "servicios/cuenta.js"

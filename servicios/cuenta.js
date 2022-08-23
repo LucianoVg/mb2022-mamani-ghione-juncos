@@ -3,21 +3,12 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    onAuthStateChanged,
     signOut
 } from 'firebase/auth'
 
 import { Prisma } from './prisma'
+import { useEffect, useState } from 'react'
 
-export async function iniciarSesion(email, password) {
-    const auth = getAuth(app)
-    return await signInWithEmailAndPassword(auth, email, password)
-}
-
-export async function registrarse(email, password) {
-    const auth = getAuth(app)
-    return await createUserWithEmailAndPassword(auth, email, password)
-}
 
 export async function registrarUsuario(
     login, nombre, apellido, correo,
@@ -37,30 +28,55 @@ export async function registrarUsuario(
             password: contrasenia
         }
     })
+    Prisma.disconnect()
+
     return usuarioCreado !== null
 }
 
-export async function authStateChanged(onChange) {
-    const auth = getAuth(app)
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            mapearUsuario(user)
-                .then(usuarioNormalizado => {
-                    onChange(usuarioNormalizado)
-                })
-        }
-    })
-}
+const formatAuthUser = (user) => ({
+    uid: user.uid,
+    email: user.email
+})
 
-export async function mapearUsuario(user) {
-    const { email } = user
-    return {
-        email: email
+export default function useFirebaseAuth() {
+    const [authUser, setAuthUser] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    const auth = getAuth(app)
+
+    const clear = () => {
+        setAuthUser(null)
     }
-}
 
-export async function cerrarSesion() {
-    const auth = getAuth(app)
-    return await signOut(auth)
+    const iniciarSesion = (email, password) => signInWithEmailAndPassword(auth, email, password)
+
+    const registrarse = (email, password) => createUserWithEmailAndPassword(auth, email, password)
+
+    const cerrarSesion = () => signOut(auth).then(clear)
+
+    const authStateChanged = async (authState) => {
+        if (!authState) {
+            setAuthUser(null)
+            setLoading(false)
+            return;
+        }
+        setLoading(true)
+        var formattedUser = formatAuthUser(authState)
+        setAuthUser(formattedUser)
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        const unsuscribe = auth.onAuthStateChanged(authStateChanged)
+        return () => unsuscribe()
+    }, [])
+
+    return {
+        authUser,
+        loading,
+        iniciarSesion,
+        registrarse,
+        cerrarSesion
+    }
 }
 

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
-import { authStateChanged } from "../../../../servicios/cuenta";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
@@ -14,22 +13,19 @@ export default function DetallesNoticia() {
         idUsuario: 0
     })
     const router = useRouter()
+    const { id } = router.query
     useEffect(() => {
-        authStateChanged(user => {
-            if (user.email) {
-                const { id } = router.query
-                axios.get(`http://localhost:3000/api/gestion/noticias_novedades/${id}`)
-                    .then(res => {
-                        console.log(res.data);
-                        setNoticia(res.data)
-                    }).catch(err => {
-                        console.error(err);
-                    })
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [router])
+        if (id) {
+            axios.get(`${process.env.BASE_URL}/gestion/noticias_novedades/${id}`)
+                .then(res => {
+                    console.log(res.data);
+                    setNoticia(res.data)
+                }).catch(err => {
+                    console.error(err);
+                })
+        }
+
+    }, [id])
 
 
     return (

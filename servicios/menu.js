@@ -10,5 +10,6 @@ export async function FiltrarMenu(idRol) {
       idRol: idRol
     }
   })
+  Prisma.disconnect()
   return filtro
 }

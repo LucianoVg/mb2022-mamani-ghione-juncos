@@ -2,8 +2,8 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { authStateChanged } from "../../../servicios/cuenta";
 import { guardarImagen, traerImagen } from "../../../servicios/portada";
 
 
@@ -13,23 +13,20 @@ const FichaInstitucional = () => {
     })
     const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
+    const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        authStateChanged(user => {
-            console.log("Usuario logeado", user);
-            if (user.email) {
-                axios.get(`http://localhost:3000/api/gestion/cuenta/${user.email}`)
-                    .then(res => {
-                        console.log(res.data);
-                        setUsuario({
-                            id: res.data.id
-                        })
-                    })
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [])
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+            .then(res => {
+                console.log(res.data);
+                setUsuario({
+                    id: res.data.id
+                })
+            })
+    }, [authUser, usuario, loading])
 
     const imgRef = useRef(null)
 
@@ -40,7 +37,7 @@ const FichaInstitucional = () => {
         e.preventDefault()
         fichaInstitucional.idUsuario = usuario.id
 
-        axios.post('http://localhost:3000/api/gestion/institucional', {
+        axios.post(`${process.env.BASE_URL}/gestion/institucional`, {
             nombreInstitucion: fichaInstitucional.nombreInstitucion,
             ubicacion: fichaInstitucional.ubicacion,
             tipoInstitucion: fichaInstitucional.tipoInstitucion,
@@ -54,7 +51,7 @@ const FichaInstitucional = () => {
         }).then(res => {
             console.log(res.data);
             fichaInstitucional.portadasFicha.map(p => {
-                axios.post('http://localhost:3000/api/gestion/portadas', {
+                axios.post(`${process.env.BASE_URL}/gestion/portadas`, {
                     nombre: p.name,
                     url: p.url,
                     fichaInstitucionalId: res.data.id
@@ -89,13 +86,6 @@ const FichaInstitucional = () => {
                 })
         }
     }
-    useEffect(() => {
-        authStateChanged(user => {
-            if (!user.email) {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [])
 
     return (
         <Layout title={'Generar Ficha Institucional'}>
@@ -173,9 +163,6 @@ const FichaInstitucional = () => {
                             </div>
                         </div>
                     </form>
-                </div>
-                <div className="card-footer text-center py-3">
-                    <div className="small"><a href="login.html">Have an account? Go to login</a></div>
                 </div>
             </div>
         </Layout>

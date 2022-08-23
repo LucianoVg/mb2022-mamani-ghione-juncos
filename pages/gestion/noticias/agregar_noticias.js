@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Layout } from '../../../components/layout';
 import { guardarImagen, traerImagen } from '../../../servicios/portada';
-import { authStateChanged } from '../../../servicios/cuenta';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../../components/context/authUserProvider';
 
 const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
@@ -22,24 +22,22 @@ const AgregarNoticias = () => {
             ...noticia, [e.target.name]: e.target.value
         })
     }
+    const { authUser } = useAuth()
 
     useEffect(() => {
-        authStateChanged(user => {
-            if (user && (user.email !== '' || user.email !== undefined)) {
-                axios.get(`http://localhost:3000/api/gestion/cuenta?correo=${user.email}`)
-                    .then(res => {
-                        setUsuario({
-                            id: res.data.id,
-                            email: res.data.correo
-                        })
-                    }).catch(err => {
-                        console.log(err);
-                    })
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [])
+        if (!authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+            .then(res => {
+                setUsuario({
+                    id: res.data.id,
+                    email: res.data.correo
+                })
+            }).catch(err => {
+                console.log(err);
+            })
+    }, [authUser])
 
 
     const onSubmitData = async (e) => {
@@ -51,7 +49,7 @@ const AgregarNoticias = () => {
             .then(result => {
                 traerImagen('imagenes_noticias/' + imagen.name)
                     .then(url => {
-                        axios.post('http://localhost:3000/api/gestion/noticias_novedades', {
+                        axios.post(`${process.env.BASE_URL}/gestion/noticias_novedades`, {
                             titulo: noticia.titulo,
                             creadaEn: hoy.toUTCString(),
                             url: url,
@@ -63,16 +61,12 @@ const AgregarNoticias = () => {
                         router.push('/gestion/noticias')
                     })
             })
-
-        // location.replace('http://localhost:3000/')
-
     }
 
     return (
         <Layout title={'Agregar Noticias'}>
             <div className="row">
                 <div className="col-md-7">
-
                     <form method='post' onSubmit={onSubmitData}>
                         <div className="form-group">
                             <label >Titulo</label>

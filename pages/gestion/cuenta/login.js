@@ -1,15 +1,15 @@
 import axios from "axios"
-import { NextPage } from "next"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useAuth } from "../../../components/context/authUserProvider"
 import { Layout } from "../../../components/layout"
-import { cerrarSesion, iniciarSesion, registrarse } from "../../../servicios/cuenta"
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
+    const { authUser, loading, iniciarSesion, registrarse } = useAuth()
 
     const handleCorreo = (e) => {
         setCorreo(e.target.value)
@@ -19,31 +19,38 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        const res = await axios.get(`http://localhost:3000/api/gestion/cuenta/${correo}`)
+        const res = await axios.get(`${process.env.BASE_URL}/gestion/cuenta/${correo}`)
         if (res.data) {
-            iniciarSesion(correo, password)
-                .then(credencial => {
-                    console.log(credencial);
+            registrarse(correo, password)
+                .then(authUser => {
+                    console.log(authUser);
                     router.push('/')
                 }).catch(err => {
-                    setError("Usuario y/o contraseña incorrectos")
-                    setTimeout(() => {
-                        setError("")
-                    }, 3000);
+                    iniciarSesion(correo, password)
+                        .then(authUser => {
+                            console.log(authUser);
+                            router.push('/')
+                        }).catch(err => {
+                            setError("Usuario y/o contraseña incorrectos")
+                            setTimeout(() => {
+                                setError("")
+                            }, 3000);
+                        })
                 })
         } else {
-            registrarse(correo, password)
-                .then(credencial => {
-                    console.log(credencial);
-                    router.push('/')
-                }).catch(err => {
-                    setError("Usuario y/o contraseña incorrectos")
-                    setTimeout(() => {
-                        setError("")
-                    }, 3000);
-                })
+            setError("No se encontró al usuario en el sistema")
+            setTimeout(() => {
+                setError("")
+            }, 3000);
         }
     }
+
+    useEffect(() => {
+        if (!loading && authUser) {
+            router.push('/')
+        }
+    }, [authUser, loading])
+
 
     return (
         <Layout title={'Iniciar Sesion'}>

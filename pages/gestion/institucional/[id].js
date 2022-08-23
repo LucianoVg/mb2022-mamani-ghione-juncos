@@ -2,9 +2,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Carrusel from "../../../components/carrusel";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import { authStateChanged } from "../../../servicios/cuenta";
 import { guardarImagen, traerImagen } from "../../../servicios/portada";
 
 export default function EditarFicha() {
@@ -21,7 +21,7 @@ export default function EditarFicha() {
     const guardarFicha = (e) => {
         e.preventDefault()
 
-        axios.put(`http://localhost:3000/api/gestion/institucional/${ficha.id}`, {
+        axios.put(`${process.env.BASE_URL}/gestion/institucional/${ficha.id}`, {
             nombreInstitucion: ficha.nombreInstitucion,
             ubicacion: ficha.ubicacion,
             tipoInstitucion: ficha.tipoInstitucion,
@@ -36,7 +36,7 @@ export default function EditarFicha() {
             console.log(res.data);
             ficha.portadasFicha.map(p => {
                 if (p.id) {
-                    axios.put(`http://localhost:3000/api/gestion/portadas/${p.id}`, {
+                    axios.put(`${process.env.BASE_URL}/gestion/portadas/${p.id}`, {
                         nombre: p.nombre,
                         url: p.url,
                         fichaInstitucionalId: p.fichaInstitucionalId
@@ -46,7 +46,7 @@ export default function EditarFicha() {
                         console.log(err);
                     })
                 } else {
-                    axios.post(`http://localhost:3000/api/gestion/portadas`, {
+                    axios.post(`${process.env.BASE_URL}/gestion/portadas`, {
                         nombre: p.nombre,
                         url: p.url,
                         fichaInstitucionalId: p.fichaInstitucionalId
@@ -62,30 +62,26 @@ export default function EditarFicha() {
         })
         router.push('/gestion/institucional')
     }
+
     const imgRef = useRef(null)
+    const { authUser, loading } = useAuth()
     const { id } = router.query
-    console.log(id);
     useEffect(() => {
-
-        setCargando(true)
-        authStateChanged(user => {
-            if (user.email) {
-
-                if (id) {
-                    axios.get(`http://localhost:3000/api/gestion/institucional/${id}`)
-                        .then(res => {
-                            if (res.data) {
-                                console.log(res.data);
-                                setFicha(res.data)
-                            }
-                            setCargando(false)
-                        })
-                }
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [id])
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        if (id) {
+            setCargando(true)
+            axios.get(`${process.env.BASE_URL}/gestion/institucional/${id}`)
+                .then(res => {
+                    if (res.data) {
+                        console.log(res.data);
+                        setFicha(res.data)
+                    }
+                    setCargando(false)
+                })
+        }
+    }, [id, authUser, loading])
 
     const cargarImagenes = () => {
 

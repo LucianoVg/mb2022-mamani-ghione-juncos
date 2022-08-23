@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { authStateChanged, registrarse } from "../../../servicios/cuenta";
 
 export default function NuevoUsuario() {
     const router = useRouter()
@@ -15,22 +15,20 @@ export default function NuevoUsuario() {
 
     const [rol, setRol] = useState(0)
     const [roles, setRoles] = useState([{ id: 0, tipo: '' }])
+    const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        authStateChanged(user => {
-            if (user.email) {
-                axios.get('http://localhost:3000/api/gestion/roles')
-                    .then(res => {
-                        if (res.data) {
-                            console.log(res.data);
-                            setRoles(res.data)
-                        }
-                    })
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [])
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        axios.get(`${process.env.BASE_URL}/gestion/roles`)
+            .then(res => {
+                if (res.data) {
+                    console.log(res.data);
+                    setRoles(res.data)
+                }
+            })
+    }, [authUser, loading])
 
 
     const handleForm = (e) => {
@@ -45,7 +43,7 @@ export default function NuevoUsuario() {
         e.preventDefault()
         usuario.idRol = rol
         console.log(usuario);
-        axios.post('http://localhost:3000/api/gestion/cuenta', {
+        axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
             login: usuario.correo.split('@')[0],
             nombre: usuario.nombre,
             apellido: usuario.apellido,
@@ -69,12 +67,6 @@ export default function NuevoUsuario() {
             setMensaje("Error al crear el usuario")
             setTimeout(() => { setMensaje("") }, 1200)
         })
-        // registrarse(usuario.correo, usuario.contrasenia)
-        //     .then(credencial => {
-        //         console.log(credencial.user);
-
-
-        //     })
     }
     return (
         <Layout title={'Nuevo Usuario'}>

@@ -2,26 +2,24 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { authStateChanged } from "../../../servicios/cuenta";
 
 
 export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
+    const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        authStateChanged(user => {
-            if (user.email) {
-                axios.get('http://localhost:3000/api/gestion/usuarios')
-                    .then(res => {
-                        setUsuarios(res.data)
-                    })
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [])
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        axios.get(`${process.env.BASE_URL}/gestion/usuarios`)
+            .then(res => {
+                setUsuarios(res.data)
+            })
+    }, [authUser, loading])
 
     return (
         <Layout title={'Mantenimiento de Usuarios'}>

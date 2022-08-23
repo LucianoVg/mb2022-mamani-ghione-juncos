@@ -1,64 +1,56 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Carrusel from "../../../components/carrusel";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import { authStateChanged } from "../../../servicios/cuenta";
 
 export default function Institucional() {
-    const router = useRouter()
-    const [usuario, setUsuario] = useState({ id: 0 })
     const [fichaInstitucional, setFichaInstitucional] = useState({
         id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: []
     })
-    const [cargando, setCargando] = useState(false)
+    const [cargando, setCargando] = useState(true)
+    const { authUser } = useAuth()
 
-    const traerUsuario = (email) => {
-        axios.get(`http://localhost:3000/api/gestion/cuenta/${email}`)
-            .then(res => {
-                if (res.data) {
-                    setUsuario({
-                        id: res.data.id
-                    })
-                }
-            })
-    }
-    const traerFicha = (id) => {
-        axios.get(`http://localhost:3000/api/gestion/institucional/usuario/${id}`)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data);
-                    setFichaInstitucional(res.data)
-                }
-                setCargando(false)
-            })
-    }
-    useEffect(() => {
+    const traerFicha = () => {
         setCargando(true)
-        authStateChanged(user => {
-            if (user.email) {
-                traerUsuario(user.email)
-                traerFicha(usuario.id)
-            } else {
-                router.push('/gestion/cuenta/login')
-            }
-        })
-    }, [usuario.id])
+        axios.get(`${process.env.BASE_URL}/gestion/institucional`)
+            .then(res => {
+                setFichaInstitucional(res.data[0])
+                setCargando(false)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+
+    useEffect(() => {
+        traerFicha()
+    }, [])
 
     return (
         <Layout title={'Ficha Institucional'}>
             {
-                usuario && usuario.id !== 0 && fichaInstitucional.id === 0 && (
-                    <a href="/gestion/institucional/generar_ficha_institucional" className="btn btn-primary m-2">Nueva Ficha Institucional</a>
+                !cargando && fichaInstitucional.id === 0 && (
+                    <div>
+                        <h3 className="text-center">No hay ninguna ficha</h3>
+                        {
+                            authUser && (
+                                <a href="/gestion/institucional/generar_ficha_institucional" className="btn btn-primary m-2">Nueva Ficha Institucional</a>
+                            )
+                        }
+                    </div>
                 )
             }
 
             {
-                fichaInstitucional.id !== 0 ? (
-                    <div>
+                fichaInstitucional.id !== 0 && (
+                    <div className="m-3">
                         <Carrusel imagenes={fichaInstitucional.portadasFicha} />
-                        <a href={`/gestion/institucional/${fichaInstitucional.idUsuario}`} className="btn btn-primary">Editar Ficha</a>
+                        {
+                            authUser && (
+                                <a href={`/gestion/institucional/${fichaInstitucional.idUsuario}`} className="btn btn-primary">Editar Ficha</a>
+                            )
+                        }
 
                         <h2>{fichaInstitucional.nombreInstitucion}</h2>
                         <p>{fichaInstitucional.descripcion}</p>
@@ -78,8 +70,6 @@ export default function Institucional() {
 
                         <div className="line"></div>
                     </div>
-                ) : (
-                    <h3 className="text-center">No hay ninguna ficha</h3>
                 )
             }
             {

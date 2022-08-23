@@ -2,36 +2,30 @@ import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { authStateChanged, cerrarSesion } from '../servicios/cuenta'
+import { useAuth } from './context/authUserProvider'
 
 const Sidenav = () => {
     const [menus, setMenus] = useState([])
-    const [usuario, setUsuario] = useState({ email: '' })
     const router = useRouter()
+    const { loading, authUser, cerrarSesion } = useAuth()
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
-            .then(r => {
-                console.log(r.data);
-                setMenus(r.data)
-            })
-    }, [])
-
-    useEffect(() => {
-        authStateChanged(user => {
-            if (user.email) {
-                setUsuario({ email: user.email })
-            }
-        })
-    }, [])
+        if (!loading && authUser) {
+            axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
+                .then(r => {
+                    console.log(r.data);
+                    setMenus(r.data)
+                })
+        }
+    }, [authUser, loading])
 
     const logout = () => {
         cerrarSesion()
             .then(() => {
-                setUsuario({ email: '' })
                 router.reload()
             })
     }
+
     return (
 
         // scrolling-navbar
@@ -47,7 +41,7 @@ const Sidenav = () => {
                     </a>
 
                     {
-                        usuario.email !== '' && (
+                        authUser && (
                             <div>
                                 <ul className="list-unstyled ps-0 overflow-hidden">
                                     <li >
@@ -102,7 +96,7 @@ const Sidenav = () => {
                 </div >
 
                 {
-                    usuario.email === '' ? (
+                    !authUser ? (
                         <a href="/gestion/cuenta/login" className="nav_link sb-sidenav-footer">
                             <i className='bx bx-log-out nav_icon'></i>
                             <span className="nav_name">Iniciar Sesion</span>
@@ -110,7 +104,7 @@ const Sidenav = () => {
                     ) :
                         (
                             <footer className='text-center text-white'>
-                                <p>Logeado como: {usuario.email}</p>
+                                <p>Logeado como: {authUser?.email}</p>
                             </footer>
                         )
                 }
