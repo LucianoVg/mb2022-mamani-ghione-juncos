@@ -6,7 +6,6 @@ import { trim } from "lodash";
 
 
 export default function Notas() {
-
     const [notas, setNotas] = useState([])
 
 
@@ -57,6 +56,88 @@ export default function Notas() {
         defaultTrimestre()
     }
 
+    // ---------------------------------------------------------------
+
+    const [inEditMode, setInEditMode] = useState({
+        status: false,
+        rowKey: null
+    });
+
+
+    const [nota, setNota] = useState(null);
+
+    // /**
+    //  *
+    //  * @param id - The id of the product
+    //  * @param currentUnitPrice - The current unit price of the product
+    //  */
+
+
+    const onEdit = ({ id, actualNota }) => {
+        setInEditMode({
+            status: true,
+            rowKey: id
+        })
+        setNota(actualNota);
+
+    
+    }
+
+        function select() {
+            const input = document.getElementById('text-box');
+            input.focus()
+            input.select()
+        }
+    /**
+     *
+    //  * @param id
+    //  * @param newUnitPrice
+     */
+
+
+    const updateNota = (id, newNota) => {
+        axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
+            nota: newNota
+        })
+            .then(res => {
+                console.log(res.data);
+                // reset inEditMode and unit price state values
+                onCancel();
+
+                // fetch the updated data
+                defaultTrimestre();
+            })
+
+    }
+
+    // /**
+    //  *
+    //  * @param id -The id of the product
+    //  * @param newUnitPrice - The new unit price of the product
+    //  */
+    const onSave = ({ id, newNota }) => {
+        updateNota({ id, newNota });
+    }
+
+    const onCancel = () => {
+        // reset the inEditMode state value
+        setInEditMode({
+            status: false,
+            rowKey: null
+        })
+        // reset the unit price state value
+        setNota(null);
+    }
+
+
+    function selectText() {
+        const input = document.getElementById('text-select');
+        input.focus()
+        input.select()
+    }
+
+
+
 
 
 
@@ -68,7 +149,7 @@ export default function Notas() {
             <h1><strong>Notas</strong></h1>
             <div>
                 <div>
-                    <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{flexDirection: 'inherit' }}>
+                    <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{ flexDirection: 'inherit' }}>
                         <li className="nav-item" onClick={primerTrimestre} role="presentation">
                             <button
                                 className="nav-link active"
@@ -129,6 +210,7 @@ export default function Notas() {
                                         <th scope="col">Materia</th>
                                         <th scope="col">Nota</th>
                                         <th scope="col">Trimestre</th>
+                                        <th scope="col">Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,10 +218,57 @@ export default function Notas() {
                                         notas && notas.map((n, i) => (
 
                                             <tr className="align-justified " key={i}>
+
                                                 <td className="col-md-3" >{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
                                                 <td className=" text-center col-md-3">{n.materia?.nombre}</td>
-                                                <td className="text-center col-md-1">{n.nota}</td>
+                                                <td className="text-center col-md-1" onClick={() => onEdit({ id: n.id, actualNota: n.nota })}>
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === n.id ? (
+                                                            <input className="text-center col-md-6" value={nota}
+                                                                onChange={(event) => setNota(event.target.value)}
+
+                                                            />
+                                                        ) : (
+                                                            <input className="text-center col-md-6" id="text-box"  value={n.nota}  
+                                                            // <input className="text-center col-md-6" value={n.nota}
+
+                                                            />
+
+                                                        )
+                                                    }
+
+                                                </td>
                                                 <td className=" text-center col-md-3">{n.trimestre?.trimestre}</td>
+                                                <td>
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === n.id ? (
+
+                                                            <React.Fragment>
+                                                                <button
+                                                                    className="btn-success "
+                                                                    onClick={() => onSave({ id: n.id, newNota: nota })}
+                                                                >
+                                                                    Save
+                                                                </button>
+
+                                                                <button
+                                                                    className="btn-secondary"
+                                                                    style={{ marginLeft: 8 }}
+                                                                    onClick={() => onCancel()}
+                                                                >
+                                                                    Cancel
+                                                                </button>
+                                                            </React.Fragment>
+                                                        ) : (
+                                                            <button
+                                                                className="btn-primary"
+                                                                onClick={() => onEdit({ id: n.id, actualNota: n.nota })}
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                        )
+                                                    }
+                                                </td>
                                             </tr>
                                         ))
                                     }
@@ -153,5 +282,6 @@ export default function Notas() {
         </Layout>
 
     );
+
 }
 

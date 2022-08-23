@@ -4,37 +4,54 @@ import { PrismaClient } from "prisma/prisma-client";
 const prisma = new PrismaClient()
 
 export async function TraerNotas(idTrimestre) {
-// export async function TraerNotas() {
+    // export async function TraerNotas() {
     const notas = await prisma.nota.findMany({
-       
+
         include: {
             materia: true,
             trimestre: true,
             alumnoXcursoXdivision: {
-               include: {
-                usuario:true
-               }
+                include: {
+                    usuario: true
+                }
             }
-          
+
         },
         where: {
             idTrimestre: idTrimestre
-         }
+        }
     })
     return notas
 }
 
-export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
+export async function updateNota(idNota, nota) {
 
-    const agregar = await prisma.noticiasYnovedades.create({
+    const newNota = await prisma.nota.update({
         data: {
-            titulo: titulo,
-            creadaEn: new Date(creadaEn),
-            url: url,
-            descripcion: descripcion,
-            idUsuario: idUsuario
+            nota: nota
+                     
+        },
+        where: {
+            id: idNota
         }
     })
 
-    return agregar
+    return newNota
 }
+
+// export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
+
+//     const agregar = await prisma.noticiasYnovedades.create({
+//         data: {
+//             titulo: titulo,
+//             creadaEn: new Date(creadaEn),
+//             url: url,
+//             descripcion: descripcion,
+//             idUsuario: idUsuario
+//         }
+//     })
+
+//     return agregar
+// }
+
+
