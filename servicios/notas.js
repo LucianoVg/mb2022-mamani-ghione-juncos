@@ -3,12 +3,10 @@ import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
 
-// export async function TraerNotas(idTrimestre) {
-export async function TraerNotas() {
+export async function TraerNotas(idTrimestre) {
+// export async function TraerNotas() {
     const notas = await prisma.nota.findMany({
-        // where: {
-        //    idTrimestre: idTrimestre
-        // }
+       
         include: {
             materia: true,
             trimestre: true,
@@ -18,7 +16,10 @@ export async function TraerNotas() {
                }
             }
           
-        }
+        },
+        where: {
+            idTrimestre: idTrimestre
+         }
     })
     return notas
 }
