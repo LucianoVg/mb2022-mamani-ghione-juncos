@@ -1,0 +1,18 @@
+.select {
+    -webkit-user-select: all;
+    user-select: all;
+    display: block;
+    padding: 20px;
+    border: 2px dashed #c9baa7;
+    color: #31808c;
+    background-color: #f5f4ef;
+    text-align: left;
+    font-family: inherit;
+    overflow: auto;
+  }
+  
+  .select:focus {
+    border: 2px dashed #31808c;
+    outline: none;
+    animation: select 100ms step-end forwards;
+  }

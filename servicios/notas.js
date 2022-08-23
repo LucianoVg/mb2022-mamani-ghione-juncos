@@ -29,7 +29,7 @@ export async function updateNota(idNota, nota) {
     const newNota = await prisma.nota.update({
         data: {
             nota: nota
-                     
+                   
         },
         where: {
             id: idNota

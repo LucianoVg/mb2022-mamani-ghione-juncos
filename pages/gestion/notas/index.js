@@ -80,7 +80,7 @@ export default function Notas() {
         })
         setNota(actualNota);
 
-    
+
     }
 
         function select() {
@@ -136,7 +136,7 @@ export default function Notas() {
         input.select()
     }
 
-
+    // }
 
 
 
@@ -206,7 +206,10 @@ export default function Notas() {
                             <table className="table  nav-justified table-striped table-dark table-bordered">
                                 <thead>
                                     <tr className="text-center">
-                                        <th scope="col">Alumno</th>
+                                        <th scope="col">Nro. de Documento</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
                                         <th scope="col">Materia</th>
                                         <th scope="col">Nota</th>
                                         <th scope="col">Trimestre</th>

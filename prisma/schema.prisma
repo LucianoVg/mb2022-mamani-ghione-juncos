@@ -76,7 +76,6 @@ model discapacidad {
   id                   Int                    @id @default(autoincrement())
   nombre               String
   discapacidadXusuario discapacidadXusuario[]
-  usuario              usuario[]
 }
 
 model discapacidadXusuario {
@@ -106,7 +105,6 @@ model enfermedad {
   id                   Int                    @id @default(autoincrement())
   descripcion          String?
   enfermedadesXusuario enfermedadesXusuario[]
-  usuario              usuario[]
 }
 
 model enfermedadesXusuario {
@@ -338,9 +336,10 @@ model usuario {
   id                    Int                     @id @default(autoincrement())
   login                 String?
   password              String?
+  sexo                  String?
   nombre                String?
-  apellido              String?
-  dni                   String?
+  apellido              Decimal?
+  dni                   Decimal?
   correo                String?
   localidad             String?
   telefono              String?
@@ -348,11 +347,7 @@ model usuario {
   alergias              String?
   idTutor               Int?
   idRol                 Int?
-  idEnfermedad          Int?
-  idDiscapacidad        Int?
   tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  enfermedad            enfermedad?             @relation(fields: [idEnfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  discapacidad          discapacidad?           @relation(fields: [idDiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
   asistencia            asistencia[]
