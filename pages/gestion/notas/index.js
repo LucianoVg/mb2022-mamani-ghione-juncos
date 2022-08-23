@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { trim } from "lodash";
 
+
 export default function Notas() {
 
     const [notas, setNotas] = useState([])
@@ -14,8 +15,8 @@ export default function Notas() {
     }, [])
 
     const [trimestre, setTrimestre] = useState({
-        id: "ex3-tabs-1",
-        aria: "ex3-tab-1",
+        id: "home0",
+        aria: "home-tab0",
         idTrimestre: 1
 
     })
@@ -31,8 +32,8 @@ export default function Notas() {
     }
     const primerTrimestre = () => {
         setTrimestre({
-            id: "ex3-tabs-1",
-            aria: "ex3-tab-1",
+            id: "home0",
+            aria: "home-tab0",
             idTrimestre: 1
         })
         defaultTrimestre()
@@ -40,8 +41,8 @@ export default function Notas() {
 
     const segundoTrimestre = () => {
         setTrimestre({
-            id: "ex3-tabs-2",
-            aria: "ex3-tabs-2",
+            id: "home2",
+            aria: "home-tab2",
             idTrimestre: 2
         })
         defaultTrimestre()
@@ -49,8 +50,8 @@ export default function Notas() {
 
     const tercerTrimestre = () => {
         setTrimestre({
-            id: "ex3-tabs-3",
-            aria: "ex3-tabs-3",
+            id: "home3",
+            aria: "home-tab3",
             idTrimestre: 3
         })
         defaultTrimestre()
@@ -63,88 +64,93 @@ export default function Notas() {
 
 
     return (
-        <div>
+        <Layout title={Notas}>
+            <h1><strong>Notas</strong></h1>
             <div>
-              
+                <div>
+                    <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{flexDirection: 'inherit' }}>
+                        <li className="nav-item" onClick={primerTrimestre} role="presentation">
+                            <button
+                                className="nav-link active"
+                                id="home-tab0"
+                                data-mdb-toggle="tab"
+                                data-mdb-target="#home0"
+                                type="button"
+                                role="tab"
+                                aria-controls="home"
+                                aria-selected="true"
+                            >
+                                Primer Trimestre
+                            </button>
+                        </li>
+                        <li className="nav-item" onClick={segundoTrimestre} role="presentation">
+                            <button
+                                className="nav-link"
+                                id="home-tab1"
+                                data-mdb-toggle="tab"
+                                data-mdb-target="#home1"
+                                type="button"
+                                role="tab"
+                                aria-controls="profile"
+                                aria-selected="false"
+                            >
+                                Segundo Trimestre
+                            </button>
+                        </li>
+                        <li className="nav-item" onClick={tercerTrimestre} role="presentation">
+                            <button
+                                className="nav-link"
+                                id="home-tab2"
+                                data-mdb-toggle="tab"
+                                data-mdb-target="#home3"
+                                type="button"
+                                role="tab"
+                                aria-controls="contact"
+                                aria-selected="false"
+                            >
+                                Tercer Trimestre
+                            </button>
+                        </li>
+                    </ul>
 
-                <ul className="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
-                    <li className="nav-item" onClick={primerTrimestre} role="presentation">
-                        <a
-                            className="nav-link "
-                            id="ex3-tab-1"
-                            data-mdb-toggle="tab"
-                            href="#"
-                            role="tab"
-                            aria-controls="ex3-tabs-1"
-                            aria-selected="true"
-                        >Primer Trimestre</a
+                    <div className="tab-content" id="myTabContent0">
+                        <div
+                            className="tab-pane active"
+                            id={trimestre.id}
+                            role="tabpanel"
+                            aria-labelledby={trimestre.aria}
                         >
-                    </li>
-
-                    <li className="nav-item" onClick={segundoTrimestre} role="presentation">
-                        <a
-                            className="nav-link"
-                            id="ex3-tab-2"
-                            data-mdb-toggle="tab"
-                            href="#"
-                            role="tab"
-                            aria-controls="ex3-tabs-2"
-                            aria-selected="true"
-                        >Segundo Trimestre</a
-                        >
-                    </li>
-                    <li className="nav-item" onClick={tercerTrimestre} role="presentation">
-                        <a
-                            className="nav-link"
-                            id="ex3-tab-3"
-                            data-mdb-toggle="tab"
-                            href="#"
-                            role="tab"
-                            aria-controls="ex3-tabs-3"
-                            aria-selected="true"
-                        >Tercer Trimestre</a
-                        >
-                    </li>
-                </ul >
 
 
-                <div className="tab-content" id="ex2-content">
-                    <div
-                        className="tab-pane fade show active"
-                        id={trimestre.id}
-                        role="tabpanel"
-                        aria-labelledby={trimestre.aria}
-                    >
-                        <table className="table table-active fill">
-                            <thead>
-                                <tr>
-                                    <th>Alumno</th>
-                                    <th>Materia</th>
-                                    <th>Nota</th>
-                                    <th>Trimestre</th>
+                            <table className="table  nav-justified table-striped table-dark table-bordered">
+                                <thead>
+                                    <tr className="text-center">
+                                        <th scope="col">Alumno</th>
+                                        <th scope="col">Materia</th>
+                                        <th scope="col">Nota</th>
+                                        <th scope="col">Trimestre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        notas && notas.map((n, i) => (
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    notas && notas.map((n, i) => (
-
-                                        <tr key={i}>
-                                            <td>{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
-                                            <td>{n.materia?.nombre}</td>
-                                            <td>{n.nota}</td>
-                                            <td>{n.trimestre?.trimestre}</td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-
+                                            <tr className="align-justified " key={i}>
+                                                <td className="col-md-3" >{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
+                                                <td className=" text-center col-md-3">{n.materia?.nombre}</td>
+                                                <td className="text-center col-md-1">{n.nota}</td>
+                                                <td className=" text-center col-md-3">{n.trimestre?.trimestre}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
+        </Layout>
 
     );
 }
