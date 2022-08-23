@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { trim } from "lodash";
+import styles from "../../../styles/notas.module.css";
 
 
 export default function Notas() {
@@ -80,14 +80,10 @@ export default function Notas() {
         })
         setNota(actualNota);
 
-    
+
     }
 
-        function select() {
-            const input = document.getElementById('text-box');
-            input.focus()
-            input.select()
-        }
+
     /**
      *
     //  * @param id
@@ -130,12 +126,11 @@ export default function Notas() {
     }
 
 
-    function selectText() {
-        const input = document.getElementById('text-select');
-        input.focus()
-        input.select()
+    const select = () => {
+        var input = document.getElementById("select")
+        input.select();
+        input.focus();
     }
-
 
 
 
@@ -206,7 +201,10 @@ export default function Notas() {
                             <table className="table  nav-justified table-striped table-dark table-bordered">
                                 <thead>
                                     <tr className="text-center">
-                                        <th scope="col">Alumno</th>
+                                        <th scope="col">Nro. de Documento</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
                                         <th scope="col">Materia</th>
                                         <th scope="col">Nota</th>
                                         <th scope="col">Trimestre</th>
@@ -218,18 +216,29 @@ export default function Notas() {
                                         notas && notas.map((n, i) => (
 
                                             <tr className="align-justified " key={i}>
-
-                                                <td className="col-md-3" >{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
-                                                <td className=" text-center col-md-3">{n.materia?.nombre}</td>
+                                                <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.dni}</td>
+                                                <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
+                                                <td className="col-md-1">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                                <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                                <td className="text-center col-md-3">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1" onClick={() => onEdit({ id: n.id, actualNota: n.nota })}>
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === n.id ? (
-                                                            <input className="text-center col-md-6" value={nota}
+                                                            <input type="number"
+                                                                min="1"
+                                                                max="10"
+                                                                className="text-center col-md-10"
+                                                                value={nota}
+
                                                                 onChange={(event) => setNota(event.target.value)}
 
                                                             />
                                                         ) : (
-                                                            <input className="text-center col-md-6" id="text-box"  value={n.nota}  
+                                                            <input
+                                                                className={`${styles.input} text-center col-md-10`}
+                                                                value={n.nota}
+
+
                                                             // <input className="text-center col-md-6" value={n.nota}
 
                                                             />
