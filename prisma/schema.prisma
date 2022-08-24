@@ -340,6 +340,7 @@ model usuario {
   password              String?
   nombre                String?
   apellido              String?
+  sexo                  String?
   dni                   String?
   correo                String?
   localidad             String?

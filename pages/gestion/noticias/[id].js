@@ -42,8 +42,8 @@ export default function DetallesNoticia() {
                                 actualizadaEn: hoy.toUTCString()
                             }).then(res => {
                                 console.log(res.data);
+                                router.push('/')
                             })
-                            // router.push('/gestion/noticias')
                         })
                 })
 
@@ -68,7 +68,7 @@ export default function DetallesNoticia() {
         if (confirm("Está seguro que desea eliminar la noticia?")) {
             axios.delete(`${process.env.BASE_URL}/gestion/noticias_novedades/${noticia.id}`).then(res => {
                 console.log(res.data);
-                router.push('/gestion/noticias')
+                router.push('/')
             })
         }
     }

@@ -1,6 +1,7 @@
 
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
 import Pagination from '../components/pagination'
 import TarjetaNovedades from '../components/tarjeta_noticias'
@@ -11,7 +12,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 5
   const paginateNoticias = paginate(noticias, currentPage, pageSize)
-
+  const { authUser } = useAuth()
   const handlerPageChange = (page) => {
     setCurrentPage(page)
   }
@@ -26,6 +27,11 @@ const Home = () => {
 
   return (
     <Layout title={'Instituto "El Salvador"'}>
+      {
+        authUser && (
+          <a href="/gestion/noticias/agregar_noticias" className="btn btn-primary m-2">Agregar</a>
+        )
+      }
       <div className="row">
         {
           paginateNoticias.length > 0 && paginateNoticias.map((n, i) => (

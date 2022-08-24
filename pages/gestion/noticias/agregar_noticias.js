@@ -14,7 +14,7 @@ const AgregarNoticias = () => {
     })
     var hoy = new Date();
     const imgRef = useRef(null)
-    const [usuario, setUsuario] = useState({ id: 0, email: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
 
     const handleForm = (e) => {
@@ -22,22 +22,23 @@ const AgregarNoticias = () => {
             ...noticia, [e.target.name]: e.target.value
         })
     }
-    const { authUser } = useAuth()
+    const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        if (!authUser) {
+        if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
         axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
             .then(res => {
-                setUsuario({
-                    id: res.data.id,
-                    email: res.data.correo
-                })
+                if (res.data) {
+                    setUsuario({
+                        id: res.data.id
+                    })
+                }
             }).catch(err => {
                 console.log(err);
             })
-    }, [authUser])
+    }, [loading, authUser])
 
 
     const onSubmitData = async (e) => {
@@ -58,7 +59,7 @@ const AgregarNoticias = () => {
                         }).then(res => {
                             console.log(res.data);
                         })
-                        router.push('/gestion/noticias')
+                        router.push('/')
                     })
             })
     }
