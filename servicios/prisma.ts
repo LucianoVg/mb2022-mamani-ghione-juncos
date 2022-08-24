@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export class Prisma {
-    private static _instancia: PrismaClient
+    private static _instancia?: PrismaClient
     _constructor() {
     }
 
