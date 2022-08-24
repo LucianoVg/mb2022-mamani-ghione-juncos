@@ -29,9 +29,8 @@ export default function NoticiasYNovedades() {
 
     return (
         <Layout title={'Noticias y Novedades'}>
-
             <div>
-                <h1 className="text-center"> <strong>Noticias y Novedades</strong></h1>
+                <h1 className="text-center">Noticias y Novedades</h1>
                 {
                     authUser && (
                         <a href="/gestion/noticias/agregar_noticias" className="btn btn-primary">Agregar</a>
