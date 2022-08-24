@@ -74,10 +74,10 @@ export default function Notas() {
     const [nota, setNota] = useState(0);
     const [columnName, setColumnName] = useState();
 
-    const updateNota = (id, newNota, columName) => {
+    const updateNota = (id, newNota, columnName) => {
         axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
             nota: newNota,
-            nombreColumna : columName
+            nombreColumna: columnName
         })
             .then(res => {
                 console.log(res.data);
