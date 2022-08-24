@@ -19,7 +19,7 @@ export default function Notas() {
 
     })
 
-    const [nota, setNota] = useState(0);
+  
 
     useEffect(() => {
         defaultTrimestre()
@@ -68,9 +68,16 @@ export default function Notas() {
     }
 
 
-    const updateNota = (id, newNota) => {
+
+
+
+    const [nota, setNota] = useState();
+    const [columnName, setColumnName] = useState();
+
+    const updateNota = (id, newNota, columName) => {
         axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
-            nota: newNota
+            nota: newNota,
+            columName : columName
         })
             .then(res => {
                 console.log(res.data);
@@ -83,8 +90,8 @@ export default function Notas() {
 
     }
 
-    const onSave = (id, newNota) => {
-        updateNota(id, newNota);
+    const onSave = (id, newNota, columnName ) => {
+        updateNota(id, newNota, columnName);
     }
 
     const onCancel = () => {
@@ -104,8 +111,9 @@ export default function Notas() {
         input.focus();
     }
 
-    const onChangeNota = (e) => {
+    const onChangeNotaColumna = (e) => {
         setNota(Number.parseInt(e.target.value))
+        setColumnName(e.target.name)
     }
 
     return (
@@ -176,7 +184,11 @@ export default function Notas() {
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Apellido</th>
                                         <th scope="col">Materia</th>
-                                        <th scope="col">Nota</th>
+                                        <th scope="col">Nota 1</th>
+                                        <th scope="col">Nota 2</th>
+                                        <th scope="col">Nota 3</th>
+                                        <th scope="col">Nota 4</th>
+                                        <th scope="col">Nota 5</th>
                                         <th scope="col">Trimestre</th>
                                         <th scope="col">Editar</th>
                                     </tr>
@@ -190,24 +202,118 @@ export default function Notas() {
                                                 <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
                                                 <td className="col-md-1">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                                 <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                                <td className="text-center col-md-3">{n.materia?.nombre}</td>
+                                                <td className="text-center col-md-1">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <input type="number"
                                                                 min="1"
                                                                 max="10"
+                                                                name="nota1"
                                                                 className="text-center col-md-10"
-                                                                placeholder={n.nota}
+                                                                placeholder={n.nota1}
                                                                 onChange={(e) => {
                                                                     setNota(Number.parseInt(e.target.value))
+                                                                    setColumnName(e.target.name)
                                                                     console.log(nota);
                                                                 }}
 
                                                             />
                                                         ) :
                                                             (
-                                                                n.nota
+                                                                n.nota1
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="text-center col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <input type="number"
+                                                                min="1"
+                                                                max="10"
+                                                                name="nota2"
+                                                                className="text-center col-md-10"
+                                                                placeholder={n.nota2}
+                                                                onChange={(e) => {
+                                                                    setNota(Number.parseInt(e.target.value))
+                                                                    setColumnName(e.target.name)
+                                                                    console.log(nota);
+                                                                }}
+
+                                                            />
+                                                        ) :
+                                                            (
+                                                                n.nota2
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="text-center col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <input type="number"
+                                                                min="1"
+                                                                max="10"
+                                                                name="nota3"
+                                                                className="text-center col-md-10"
+                                                                placeholder={n.nota3}
+                                                                onChange={(e) => {
+                                                                    setNota(Number.parseInt(e.target.value))
+                                                                    setColumnName(e.target.name)
+                                                                    console.log(nota);
+                                                                }}
+
+                                                            />
+                                                        ) :
+                                                            (
+                                                                n.nota3
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="text-center col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <input type="number"
+                                                                min="1"
+                                                                max="10"
+                                                                name="nota4"
+                                                                className="text-center col-md-10"
+                                                                placeholder={n.nota4}
+                                                                onChange={(e) => {
+                                                                    setNota(Number.parseInt(e.target.value))
+                                                                    setColumnName(e.target.name)
+                                                                    console.log(nota);
+                                                                }}
+
+                                                            />
+                                                        ) :
+                                                            (
+                                                                n.nota4
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="text-center col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <input type="number"
+                                                                min="1"
+                                                                max="10"
+                                                                name="nota5"
+                                                                className="text-center col-md-10"
+                                                                placeholder={n.nota5}
+                                                                onChange={(e) => {
+                                                                    setNota(Number.parseInt(e.target.value))
+                                                                    setColumnName(e.target.name)
+                                                                    console.log(nota);
+                                                                }}
+
+                                                            />
+                                                        ) :
+                                                            (
+                                                                n.nota5
                                                             )
                                                     }
 
@@ -220,7 +326,7 @@ export default function Notas() {
                                                             <React.Fragment>
                                                                 <button
                                                                     className="btn-success "
-                                                                    onClick={() => onSave(n.id, nota)}
+                                                                    onClick={() => onSave(n.id, nota, columnName )}
                                                                 >
                                                                     Save
                                                                 </button>

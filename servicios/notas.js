@@ -2,7 +2,7 @@ import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
 
-export async function TraerNotas(idTrimestre) {
+export async function TraerNotas(idTrimestre, idMateria) {
     // export async function TraerNotas() {
     const notas = await prisma.nota.findMany({
 
@@ -17,26 +17,89 @@ export async function TraerNotas(idTrimestre) {
 
         },
         where: {
-            idTrimestre: idTrimestre
+            AND: [
+                { idTrimestre: idTrimestre },
+                { idMateria: 1 }
+            ]
+
+
         }
     })
     console.log(notas);
     return notas
 }
 
-export async function updateNota(idNota, nota) {
+export async function updateNota(idNota, notaNueva, columnName) {
 
-    const newNota = await prisma.nota.update({
-        data: {
-            nota: nota
+    switch (columnName) {
+        case 'nota1':
+            const newNota1 = await prisma.nota.update({
+                data: {
+                    nota1: notaNueva
 
-        },
-        where: {
-            id: idNota
-        }
-    })
+                },
+                where: {
+                    id: idNota
+                }
 
-    return newNota
+            })
+            return newNota1
+
+        case 'nota2':
+            const newNota2 = await prisma.nota.update({
+                data: {
+                    nota2: notaNueva
+
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return newNota2
+
+
+        case 'nota3':
+            const newNota3 = await prisma.nota.update({
+                data: {
+                    nota3: notaNueva
+
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return newNota3
+
+        case 'nota4':
+            const newNota4 = await prisma.nota.update({
+                data: {
+                    nota4: notaNueva
+
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return newNota4
+
+        case 'nota5':
+            const newNota5 = await prisma.nota.update({
+                data: {
+                    nota5: notaNueva
+
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return newNota5
+
+
+        default:
+            break;
+    }
+
+
 }
 
 // export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
