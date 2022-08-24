@@ -27,7 +27,7 @@ export default function Notas() {
             .then(res => {
                 setNotas(res.data)
                 console.log(res.data);
-               
+
             })
     }
     const primerTrimestre = () => {
@@ -64,9 +64,9 @@ export default function Notas() {
             <h1><strong>Notas</strong></h1>
             <div>
                 <div>
-                  
+
                     <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{ flexDirection: 'inherit' }}>
-                        <li className="nav-item" onClick={primerTrimestre}  role="presentation">
+                        <li className="nav-item" onClick={primerTrimestre} role="presentation">
                             <button
                                 className="nav-link active"
                                 id="home-tab0"
@@ -76,12 +76,12 @@ export default function Notas() {
                                 role="tab"
                                 aria-controls="home"
                                 aria-selected="true"
-                              
+
                             >
                                 Primer Trimestre
                             </button>
                         </li>
-                        <li className="nav-item" onClick={segundoTrimestre}  role="presentation">
+                        <li className="nav-item" onClick={segundoTrimestre} role="presentation">
                             <button
                                 className="nav-link"
                                 id="home-tab1"
@@ -91,22 +91,21 @@ export default function Notas() {
                                 role="tab"
                                 aria-controls="profile"
                                 aria-selected="false"
-                                
+
                             >
                                 Segundo Trimestre
                             </button>
                         </li>
-                        <li className="nav-item"   onClick={tercerTrimestre}  role="presentation">
+                        <li className="nav-item" onClick={tercerTrimestre} role="presentation">
                             <button
                                 className="nav-link"
                                 id="home-tab2"
                                 data-mdb-toggle="tab"
                                 data-mdb-target="#home3"
-                            
                                 role="tab"
                                 aria-controls="contact"
                                 aria-selected="false"
-                              
+
                             >
                                 Tercer Trimestre
                             </button>
@@ -136,10 +135,10 @@ export default function Notas() {
                                         notas && notas.map((n, i) => (
 
                                             <tr className="align-justified " key={i}>
-                                                <td className="col-md-3" >{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
-                                                <td className="text-center col-md-3">{n.materia?.nombre}</td>
+                                                <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.nombre} {n.alumnoXcursoXdivision?.usuario?.apellido}</td>
+                                                <td className="text-center col-md-1">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1"> {n.nota}</td>
-                                                <td className=" text-center col-md-3">{n.trimestre?.trimestre}</td>
+                                                <td className=" text-center col-md-1">{n.trimestre?.trimestre}</td>
                                             </tr>
                                         ))
                                     }

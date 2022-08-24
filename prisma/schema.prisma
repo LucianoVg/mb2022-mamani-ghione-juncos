@@ -338,7 +338,7 @@ model usuario {
   password              String?
   sexo                  String?
   nombre                String?
-  apellido              Decimal?
+  apellido              String?
   dni                   Decimal?
   correo                String?
   localidad             String?
