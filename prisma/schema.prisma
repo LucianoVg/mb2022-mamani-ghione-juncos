@@ -105,6 +105,8 @@ model enfermedad {
   id                   Int                    @id @default(autoincrement())
   descripcion          String?
   enfermedadesXusuario enfermedadesXusuario[]
+  usuario              usuario?               @relation(fields: [usuarioId], references: [id])
+  usuarioId            Int?
 }
 
 model enfermedadesXusuario {
@@ -338,8 +340,8 @@ model usuario {
   password              String?
   sexo                  String?
   nombre                String?
-  apellido              Decimal?
-  dni                   Decimal?
+  apellido              String?
+  dni                   String?
   correo                String?
   localidad             String?
   telefono              String?
@@ -361,4 +363,5 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacion          notificacion[]
   sancionXusuario       sancionXusuario[]
+  enfermedades          enfermedad[]
 }

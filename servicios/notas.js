@@ -1,4 +1,3 @@
-import { Prisma } from "./prisma";
 import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
@@ -21,6 +20,7 @@ export async function TraerNotas(idTrimestre) {
             idTrimestre: idTrimestre
         }
     })
+    console.log(notas);
     return notas
 }
 
@@ -29,7 +29,7 @@ export async function updateNota(idNota, nota) {
     const newNota = await prisma.nota.update({
         data: {
             nota: nota
-                   
+
         },
         where: {
             id: idNota

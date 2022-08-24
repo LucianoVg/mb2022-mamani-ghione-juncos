@@ -6,7 +6,7 @@ export default async function handler(
     res
 ) {
     try {
-        const {idTrimestre} = req.query
+        const { idTrimestre } = req.query
         const notas = await TraerNotas(Number.parseInt(idTrimestre))
         return res.status(200).json(notas)
     } catch (error) {
