@@ -19,7 +19,7 @@ export default function Notas() {
 
     })
 
-  
+
 
     useEffect(() => {
         defaultTrimestre()
@@ -30,6 +30,8 @@ export default function Notas() {
             .then(res => {
                 console.log(res.data);
                 setNotas(res.data)
+            }).catch(err => {
+                console.error(error);
             })
     }
 
@@ -72,7 +74,7 @@ export default function Notas() {
 
 
     const [nota, setNota] = useState(0);
-    const [columnName, setColumnName] = useState();
+    const [columnName, setColumnName] = useState("");
 
     const updateNota = (id, newNota, columnName) => {
         axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
@@ -86,11 +88,13 @@ export default function Notas() {
 
                 // fetch the updated data
                 defaultTrimestre();
+            }).catch(err => {
+                console.error(err);
             })
 
     }
 
-    const onSave = (id, newNota, columnName ) => {
+    const onSave = (id, newNota, columnName) => {
         updateNota(id, newNota, columnName);
     }
 
@@ -326,7 +330,7 @@ export default function Notas() {
                                                             <React.Fragment>
                                                                 <button
                                                                     className="btn-success "
-                                                                    onClick={() => onSave(n.id, nota, columnName )}
+                                                                    onClick={() => onSave(n.id, nota, columnName)}
                                                                 >
                                                                     Save
                                                                 </button>

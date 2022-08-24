@@ -6,9 +6,9 @@ export default async function handler(
 ) {
     try {
         const { idNota } = req.query
-        const { nota, columnName } = req.body
-        
-        const notas = await updateNota(Number.parseInt(idNota), Number.parseInt(nota), columnName)
+        const { nota, nombreColumna } = req.body
+
+        const notas = await updateNota(Number.parseInt(idNota), Number.parseInt(nota), nombreColumna)
         return res.status(200).json(notas)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
