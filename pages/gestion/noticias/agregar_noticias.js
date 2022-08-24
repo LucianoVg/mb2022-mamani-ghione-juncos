@@ -14,7 +14,7 @@ const AgregarNoticias = () => {
     })
     var hoy = new Date();
     const imgRef = useRef(null)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, email: '' })
     const router = useRouter()
 
     const handleForm = (e) => {
@@ -22,23 +22,22 @@ const AgregarNoticias = () => {
             ...noticia, [e.target.name]: e.target.value
         })
     }
-    const { loading, authUser } = useAuth()
+    const { authUser } = useAuth()
 
     useEffect(() => {
-        if (!loading && !authUser) {
+        if (!authUser) {
             router.push('/gestion/cuenta/login')
         }
         axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
             .then(res => {
-                if (res.data) {
-                    setUsuario({
-                        id: res.data.id
-                    })
-                }
+                setUsuario({
+                    id: res.data.id,
+                    email: res.data.correo
+                })
             }).catch(err => {
                 console.log(err);
             })
-    }, [loading, authUser])
+    }, [authUser])
 
 
     const onSubmitData = async (e) => {
@@ -59,7 +58,7 @@ const AgregarNoticias = () => {
                         }).then(res => {
                             console.log(res.data);
                         })
-                        router.push('/')
+                        router.push('/gestion/noticias')
                     })
             })
     }
@@ -86,7 +85,7 @@ const AgregarNoticias = () => {
 
 
                         <div className="form-group row">
-                            <div className="col-sm-10 m-1">
+                            <div className="col-sm-10">
                                 <button type="submit" className="btn btn-primary">Crear</button>
                             </div>
                         </div>

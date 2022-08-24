@@ -342,7 +342,6 @@ model usuario {
   apellido              String?
   dni                   String?
   correo                String?
-  sexo                  String?
   localidad             String?
   telefono              String?
   direccion             String?
