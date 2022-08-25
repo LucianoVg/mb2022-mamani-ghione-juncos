@@ -122,7 +122,24 @@ export default function Notas() {
 
     return (
         <Layout title={'Notas'}>
-            <h1><strong>Notas</strong></h1>
+
+
+            <div>
+                <h1><strong>Notas</strong></h1>
+
+                <div className="form-group row position-relative">
+                <div className="position-absolute">
+                <label for="inputMateria" className="col-form-label">Materia:</label>
+                    <div className="col-sm-2">
+                        <select className="form-control form-control-sm">
+                            <option>Small select</option>
+                        </select>
+                    </div>
+                </div>
+                </div>
+          
+            </div>
+
             <div>
                 <div>
                     <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{ flexDirection: 'inherit' }}>
@@ -206,7 +223,6 @@ export default function Notas() {
                                                 <td className="col-md-1 text-center">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
                                                 <td className="col-md-1">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                                 <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
-<<<<<<< Updated upstream
                                                 <td className="text-center col-md-1">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1">
                                                     {
@@ -300,11 +316,9 @@ export default function Notas() {
                                                     }
 
                                                 </td>
-                                                <td className="text-center col-md-1">
-=======
-                                                <td className="text-center col-md-3">{n.materia?.nombre}</td>
+
                                                 <td className="text-center col-md-1" >
->>>>>>> Stashed changes
+
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <input type="number"
@@ -371,7 +385,7 @@ export default function Notas() {
 
                 </div>
             </div>
-        </Layout>
+        </Layout >
 
     );
 
