@@ -299,7 +299,7 @@ export default function Notas() {
                                                     }
 
                                                 </td>
-                                                <td className="text-center col-md-1">
+                                                <td className="text-center col-md-1" >
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <input type="number"
