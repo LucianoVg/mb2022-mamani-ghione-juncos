@@ -19,7 +19,7 @@ export const Layout = ({ children, title }) => {
             <Navbar />
             <Sidenav />
 
-            <div className="height-100 bg-light">
+            <div className="height-100">
 
                 {children}
             </div>
