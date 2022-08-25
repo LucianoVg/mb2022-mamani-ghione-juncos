@@ -2,8 +2,31 @@ import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
 
-export async function TraerNotas(idTrimestre, idMateria) {
-    // export async function TraerNotas() {
+export async function ListarCurso() {
+
+    const cursos = await prisma.cursoXdivision.findMany({
+        include: {
+            curso: true,
+            division: true
+        }
+    })
+
+    return cursos
+}
+
+
+
+export async function ListarMaterias() {
+
+    const materias = await prisma.materia.findMany()
+
+    return materias
+}
+
+
+
+export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
+
     const notas = await prisma.nota.findMany({
 
         include: {
@@ -19,7 +42,23 @@ export async function TraerNotas(idTrimestre, idMateria) {
         where: {
             AND: [
                 { idTrimestre: idTrimestre },
-                { idMateria: 1 }
+                { idMateria: 1 },
+                {cursoXdivision: curso},
+                {
+                    usuario: {
+                        nombre: {
+                            contains: alumno
+                        }
+                    }
+                },
+                {
+                    usuario: {
+                        apellido: {
+                            contains: alumno
+                        }
+                    }
+                }
+
             ]
 
 

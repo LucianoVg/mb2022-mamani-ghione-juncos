@@ -23,7 +23,33 @@ export default function Notas() {
 
     useEffect(() => {
         defaultTrimestre()
+        listarMaterias()
+        listarCurso()
     }, [trimestre])
+
+
+    const [materia, setMateria] = useState()
+    const [curso, setCurso] = useState()
+
+    const listarCurso = () => {
+        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
+            .then(res => {
+                console.log(res.data);
+                setCurso(res.data)
+            }).catch(err => {
+                console.error(error);
+            })
+    }
+    const listarMaterias = () => {
+        axios.get(`http://localhost:3000/api/gestion/notas/materias`)
+            .then(res => {
+                console.log(res.data);
+                setMateria(res.data)
+            }).catch(err => {
+                console.error(error);
+            })
+    }
+
 
     const defaultTrimestre = () => {
         axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`)
@@ -126,14 +152,22 @@ export default function Notas() {
 
             <div>
                 <h1><strong>Notas</strong></h1>
-                <div className="mt-5 " style={{marginBottom: '20mm'}}>
+                <div className="mt-5 " style={{ marginBottom: '20mm' }}>
 
                     <div className="row" >
                         <div className="col-2 ">
                             <div className="hstack gap-1">
                                 <label className="fw-bold me-2" name="inputMateria">Materia: </label>
                                 <select className="form-select " id="inputMateria">
-                                    <option className="col-md-2">1</option>
+                                    {
+                                        materia && materia.map((m) => (
+
+                                            <option key={m.id} className="col-md-2">{m.nombre}</option>
+                                        ))
+
+
+                                    }
+
 
                                 </select>
                             </div>
@@ -142,7 +176,11 @@ export default function Notas() {
                             <div className="hstack gap-1 ">
                                 <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
                                 <select className="form-select " id="inputMateria">
-                                    <option className="col-md-2">1</option>
+                                  {
+                                    curso && curso.map((c)=> (
+                                        <option key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
+                                    ))
+                                  }
 
                                 </select>
                             </div>

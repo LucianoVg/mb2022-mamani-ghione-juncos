@@ -6,10 +6,8 @@ export default async function handler(
     res
 ) {
     try {
-        const { idTrimestre, idMateria, idCurso, alumno } = req.query
-        const notas = await TraerNotas(Number.parseInt(idTrimestre, idMateria,idCurso,alumno ))
         const materias = await ListarMaterias()
-        return res.status(200).json(notas)
+        return res.status(200).json(materias)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
