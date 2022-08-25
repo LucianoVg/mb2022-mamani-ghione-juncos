@@ -203,9 +203,10 @@ export default function Notas() {
 
                                             <tr className="align-justified " key={i}>
                                                 <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.dni}</td>
-                                                <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
+                                                <td className="col-md-1 text-center">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
                                                 <td className="col-md-1">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                                 <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
+<<<<<<< Updated upstream
                                                 <td className="text-center col-md-1">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1">
                                                     {
@@ -300,6 +301,10 @@ export default function Notas() {
 
                                                 </td>
                                                 <td className="text-center col-md-1">
+=======
+                                                <td className="text-center col-md-3">{n.materia?.nombre}</td>
+                                                <td className="text-center col-md-1" >
+>>>>>>> Stashed changes
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <input type="number"
