@@ -34,7 +34,7 @@ const Sidenav = () => {
     return (
 
         // scrolling-navbar
-        <div className="l-navbar " id="nav-bar">
+        <div  className="l-navbar " id="nav-bar">
 
             <nav className="nav " id='parent'>
 

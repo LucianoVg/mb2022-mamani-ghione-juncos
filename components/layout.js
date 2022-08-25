@@ -4,8 +4,8 @@ import Head from "next/head";
 export const Layout = ({ children, title }) => {
 
     return (
-        <>
-            <Head>
+        < >
+            <Head >
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -19,7 +19,7 @@ export const Layout = ({ children, title }) => {
             <Navbar />
             <Sidenav />
 
-            <div className="height-100 bg-light">
+            <div className="height-100 ">
 
                 {children}
             </div>

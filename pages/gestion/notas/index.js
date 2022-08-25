@@ -126,7 +126,7 @@ export default function Notas() {
 
             <div>
                 <h1><strong>Notas</strong></h1>
-                <div>
+                <div className="mt-5 " style={{marginBottom: '20mm'}}>
 
                     <div className="row" >
                         <div className="col-2 ">
@@ -147,23 +147,21 @@ export default function Notas() {
                                 </select>
                             </div>
                         </div>
-                        <div className="row">
-                        <div className="hstack gap-1">
+
+                    </div>
+
+                    <div className="hstack gap-1">
                         <label className="fw-bold me-2" >Buscar alumno: </label>
                         <div className="hstack gap-1">
                             <input className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
                             <button type="submit" className=" btn input-group-text btn-primary"><i className='bx bx-search me-1'></i> </button>
                         </div>
                     </div>
-                        </div>
-                    </div>
-
-               
                 </div>
 
 
 
-                <div>
+                <div className="mt-5">
                     <div>
                         <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{ flexDirection: 'inherit' }}>
                             <li className="nav-item" onClick={primerTrimestre} role="presentation">
