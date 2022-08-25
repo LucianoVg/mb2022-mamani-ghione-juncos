@@ -19,34 +19,22 @@ export default function Notas() {
 
     })
 
-<<<<<<< Updated upstream
-=======
-    const [alumno, setAlumno] = useState("")
-
-
->>>>>>> Stashed changes
     useEffect(() => {
+        defaultTrimestre()
         listarMaterias()
         listarCurso()
-<<<<<<< Updated upstream
         filtros()
-=======
-        defaultTrimestre()
->>>>>>> Stashed changes
     }, [trimestre])
 
 
-    const [materias, setMaterias] = useState()
-    const [materiaId, setMateriaId] = useState(1)
-
-    const [cursos, setCursos] = useState()
-    const [cursoId, setCursoId] = useState(1)
+    const [materia, setMateria] = useState()
+    const [curso, setCurso] = useState()
 
     const listarCurso = () => {
         axios.get(`http://localhost:3000/api/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
-                setCursos(res.data)
+                setCurso(res.data)
             }).catch(err => {
                 console.error(error);
             })
@@ -55,24 +43,12 @@ export default function Notas() {
         axios.get(`http://localhost:3000/api/gestion/notas/materias`)
             .then(res => {
                 console.log(res.data);
-                setMaterias(res.data)
+                setMateria(res.data)
             }).catch(err => {
                 console.error(error);
             })
     }
 
-    const handleMateria = (e) => {
-        setMateriaId(Number.parseInt(e.target.value))
-        defaultTrimestre()
-    }
-    const handleCurso = (e) => {
-        setCursoId(Number.parseInt(e.target.value))
-        defaultTrimestre()
-    }
-    const handleAlumno = (e) => {
-        setAlumno(e.target.value)
-        defaultTrimestre()
-    }
 
     const [idMateria, setIdMateria] = useState()
     const [alumno, setAlumno] = useState()
@@ -96,8 +72,7 @@ export default function Notas() {
     }
 
     const defaultTrimestre = () => {
-
-        axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}/${materiaId}/${alumno}/${cursoId}`)
+        axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`)
             .then(res => {
                 console.log(res.data);
                 setNotas(res.data)
@@ -199,7 +174,6 @@ export default function Notas() {
                 <h1><strong>Notas</strong></h1>
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
 
-<<<<<<< Updated upstream
                     <div className="row g-3" >
                         <div className="col-md-3 hstack">
                             <label className="fw-bold me-2" name="inputMateria">Materia: </label>
@@ -209,18 +183,6 @@ export default function Notas() {
 
                                         <option key={m.id} className="col-md-2">{m.nombre}</option>
                                     ))
-=======
-                    <div className="row" >
-                        <div className="col-2 ">
-                            <div className="hstack gap-1">
-                                <label className="fw-bold me-2" name="inputMateria">Materia: </label>
-                                <select value={materiaId} onChange={handleMateria} name="materia" className="form-select " id="inputMateria">
-                                    {
-                                        materias && materias.map((m) => (
-
-                                            <option value={m.id} key={m.id} className="col-md-2">{m.nombre}</option>
-                                        ))
->>>>>>> Stashed changes
 
 
                                 }
@@ -228,7 +190,6 @@ export default function Notas() {
 
                             </select>
                         </div>
-<<<<<<< Updated upstream
                         <div className="col-md-3 hstack">
                             <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
                             <select className="form-select " id="inputMateria" style={{ width: '20mm' }} >
@@ -237,37 +198,17 @@ export default function Notas() {
                                         <option key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
                                     ))
                                 }
-=======
-                        <div className="col-2 ">
-                            <div className="hstack gap-1 ">
-                                <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                                <select name="cursoId" value={cursoId} onChange={handleCurso} className="form-select " id="inputMateria">
-                                    {
-                                        cursos && cursos.map((c) => (
-                                            <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
-                                        ))
-                                    }
->>>>>>> Stashed changes
 
                             </select>
                         </div>
                         <div className="hstack" >
                         <label className="fw-bold me-2" >Buscar alumno: </label>
-<<<<<<< Updated upstream
                             <div className="hstack gap-1">
                                 <input className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" onSubmitCapture={setAlumno} />
                                 <button type="submit" className=" btn input-group-text btn-primary"
                                 >
                                     <i className='bx bx-search me-1'></i> </button>
                             </div>
-=======
-                        <div className="hstack gap-1">
-                            <input name="alumno" value={alumno} onChange={handleAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
-
-                            <button type="button" onClick={defaultTrimestre} className=" btn input-group-text btn-primary">
-                                <i className='bx bx-search me-1'></i>
-                            </button>
->>>>>>> Stashed changes
                         </div>
 
                     </div>
