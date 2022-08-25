@@ -203,9 +203,9 @@ export default function Notas() {
 
                                             <tr className="align-justified " key={i}>
                                                 <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.dni}</td>
-                                                <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
-                                                <td className="col-md-1">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                                <td className="col-md-1" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                                <td className="col-md-2 text-capitalize">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
+                                                <td className="col-md-1 text-capitalize">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                                <td className="col-md-1 text-capitalize" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
                                                 <td className="text-center col-md-1">{n.materia?.nombre}</td>
                                                 <td className="text-center col-md-1">
                                                     {
