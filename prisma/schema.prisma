@@ -76,7 +76,6 @@ model discapacidad {
   id                   Int                    @id @default(autoincrement())
   nombre               String
   discapacidadXusuario discapacidadXusuario[]
-  usuario              usuario[]
 }
 
 model discapacidadXusuario {
@@ -105,8 +104,9 @@ model docenteXmateria {
 model enfermedad {
   id                   Int                    @id @default(autoincrement())
   descripcion          String?
+  usuarioId            Int?
+  usuario              usuario?               @relation(fields: [usuarioId], references: [id])
   enfermedadesXusuario enfermedadesXusuario[]
-  usuario              usuario[]
 }
 
 model enfermedadesXusuario {
@@ -184,6 +184,7 @@ model nota {
   id                      Int                    @id @default(autoincrement())
   idAlumnoXcursoXdivision Int?
   idMateria               Int?
+<<<<<<< HEAD
   nota                    Int?
   fecha                   DateTime?
   idTrimestre             Int?
@@ -192,6 +193,20 @@ model nota {
   trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+=======
+  nota1                   Int?
+  nota2                   Int?
+  nota3                   Int?
+  nota4                   Int?
+  nota5                   Int?
+  idTrimestre             Int?
+  fecha                   DateTime?
+  idUsuario               Int?
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+>>>>>>> experimentTable
   reporteXtrimestre       reporteXtrimestre[]
 }
 
@@ -338,6 +353,7 @@ model usuario {
   id                    Int                     @id @default(autoincrement())
   login                 String?
   password              String?
+  sexo                  String?
   nombre                String?
   apellido              String?
   sexo                  String?
@@ -349,17 +365,14 @@ model usuario {
   alergias              String?
   idTutor               Int?
   idRol                 Int?
-  idEnfermedad          Int?
-  idDiscapacidad        Int?
-  tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  enfermedad            enfermedad?             @relation(fields: [idEnfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  discapacidad          discapacidad?           @relation(fields: [idDiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
   asistencia            asistencia[]
   asistenciaDocente     asistenciaDocente[]
   discapacidadXusuario  discapacidadXusuario[]
   docenteXmateria       docenteXmateria[]
+  enfermedades          enfermedad[]
   enfermedadesXusuario  enfermedadesXusuario[]
   fichaInstitucional    fichaInstitucional[]
   materialEstudio       materialEstudio[]
