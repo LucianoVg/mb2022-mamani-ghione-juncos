@@ -4,9 +4,17 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import styles from "../../../styles/notas.module.css";
 
-
 export default function Notas() {
     const [notas, setNotas] = useState([])
+
+    const [idMateria, setIdMateria] = useState(1)
+    const [idCurso, setIdCurso] = useState(1)
+    const [alumno, setAlumno] = useState("")
+
+    const [materias, setMaterias] = useState()
+    const [cursos, setCursos] = useState()
+    const [nota, setNota] = useState(0);
+    const [columnName, setColumnName] = useState("");
 
     const [inEditMode, setInEditMode] = useState({
         status: false,
@@ -22,19 +30,16 @@ export default function Notas() {
     useEffect(() => {
         defaultTrimestre()
         listarMaterias()
-        listarCurso()
-        filtros()
+        listarCursos()
+        // filtros()
     }, [trimestre])
 
 
-    const [materia, setMateria] = useState()
-    const [curso, setCurso] = useState()
-
-    const listarCurso = () => {
+    const listarCursos = () => {
         axios.get(`http://localhost:3000/api/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
-                setCurso(res.data)
+                setCursos(res.data)
             }).catch(err => {
                 console.error(error);
             })
@@ -43,36 +48,43 @@ export default function Notas() {
         axios.get(`http://localhost:3000/api/gestion/notas/materias`)
             .then(res => {
                 console.log(res.data);
-                setMateria(res.data)
+                setMaterias(res.data)
             }).catch(err => {
                 console.error(error);
             })
     }
 
+    // const filtros = () => {
+    //     axios.post(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`,
+    //         {
+    //             materia: idMateria,
+    //             curso: idCurso,
+    //             alumno: alumno
+    //         })
+    //         .then(res => {
+    //             console.log(res.data);
 
-    const [idMateria, setIdMateria] = useState()
-    const [alumno, setAlumno] = useState()
-    const [idCurso, setIdCurso] = useState()
+    //         }).catch(err => {
+    //             console.error(error);
+    //         })
+    // }
 
+    const handleMateria = (e) => {
+        setIdMateria(Number.parseInt(e.target.value))
+        defaultTrimestre()
+    }
 
-
-    const filtros = () => {
-        axios.post(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`,
-            {
-                materia: idMateria,
-                curso: idCurso,
-                alumno: alumno
-            })
-            .then(res => {
-                console.log(res.data);
-
-            }).catch(err => {
-                console.error(error);
-            })
+    const handleCurso = (e) => {
+        setIdCurso(Number.parseInt(e.target.value))
+        defaultTrimestre()
+    }
+    const handleAlumno = (e) => {
+        setAlumno(e.target.value)
+        defaultTrimestre()
     }
 
     const defaultTrimestre = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`)
+        axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
             .then(res => {
                 console.log(res.data);
                 setNotas(res.data)
@@ -114,13 +126,6 @@ export default function Notas() {
             rowKey: id
         })
     }
-
-
-
-
-
-    const [nota, setNota] = useState(0);
-    const [columnName, setColumnName] = useState("");
 
     const updateNota = (id, newNota, columnName) => {
         axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
@@ -173,41 +178,39 @@ export default function Notas() {
             <div>
                 <h1><strong>Notas</strong></h1>
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
-
                     <div className="row g-3" >
                         <div className="col-md-3 hstack">
                             <label className="fw-bold me-2" name="inputMateria">Materia: </label>
-                            <select className="form-select " id="inputMateria" style={{ width: '50mm' }} >
+                            <select name="idMateria" value={idMateria} onChange={handleMateria} className="form-select " id="inputMateria" style={{ width: '50mm' }} >
                                 {
-                                    materia && materia.map((m) => (
+                                    materias && materias.map((m) => (
 
-                                        <option key={m.id} className="col-md-2">{m.nombre}</option>
+                                        <option value={m.id} key={m.id} className="col-md-2">{m.nombre}</option>
                                     ))
-
-
                                 }
-
-
                             </select>
                         </div>
                         <div className="col-md-3 hstack">
                             <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                            <select className="form-select " id="inputMateria" style={{ width: '20mm' }} >
+                            <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputMateria" style={{ width: '20mm' }} >
                                 {
-                                    curso && curso.map((c) => (
-                                        <option key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
+                                    cursos && cursos.map((c) => (
+                                        <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
                                     ))
                                 }
-
                             </select>
                         </div>
                         <div className="hstack" >
-                        <label className="fw-bold me-2" >Buscar alumno: </label>
+                            <label className="fw-bold me-2" >Buscar alumno: </label>
                             <div className="hstack gap-1">
-                                <input className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" onSubmitCapture={setAlumno} />
-                                <button type="submit" className=" btn input-group-text btn-primary"
+                                <input name="alumno" value={alumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleAlumno}
+                                    onSubmitCapture={handleAlumno} />
+
+                                <button type="submit" className="btn input-group-text btn-primary"
                                 >
-                                    <i className='bx bx-search me-1'></i> </button>
+                                    <i className='bx bx-search me-1'></i>
+                                </button>
                             </div>
                         </div>
 
