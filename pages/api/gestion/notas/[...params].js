@@ -9,7 +9,7 @@ export default async function handler(
         const { params } = req.query
         console.log(params);
         // const notas = await TraerNotas(Number.parseInt(idTrimestre, materia, curso, alumno  ))
-        //         return res.status(200).json(notas)
+        return res.status(200).json([])
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
