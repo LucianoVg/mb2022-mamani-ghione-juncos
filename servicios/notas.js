@@ -63,7 +63,7 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
                     alumnoXcursoXdivision: {
                         usuario: {
                             apellido: {
-                                endsWith: alumno.split(' ')[1]
+                                startsWith: alumno.split(' ')[1]
                             }
                         }
                     },
