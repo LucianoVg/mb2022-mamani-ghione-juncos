@@ -71,7 +71,8 @@ export default function Notas() {
 
     const handleMateria = (e) => {
         setIdMateria(Number.parseInt(e.target.value))
-        defaultTrimestre()
+        console.log(idMateria);
+        // defaultTrimestre()
     }
 
     const handleCurso = (e) => {
@@ -87,7 +88,7 @@ export default function Notas() {
         axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
             .then(res => {
                 console.log(res.data);
-                setNotas(res.data)
+                // setNotas(res.data)
             }).catch(err => {
                 console.error(error);
             })
