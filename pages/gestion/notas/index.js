@@ -190,6 +190,7 @@ export default function Notas() {
                                 }
                             </select>
                         </div>
+
                         <div className="col-md-3 hstack">
                             <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
                             <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputMateria" style={{ width: '20mm' }} >
@@ -200,9 +201,14 @@ export default function Notas() {
                                 }
                             </select>
                         </div>
-                        <div className="hstack" >
-                            <label className="fw-bold me-2" >Buscar alumno: </label>
-                            <div className="hstack gap-1">
+                        <div className="row g-3" >
+                            <div>
+                                <label className="fw-bold me-2" >Buscar alumno: </label>
+                            </div>
+
+                            <div className="col-md-3 hstack me-5">
+
+                                <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
                                 <input name="alumno" value={alumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
                                     onChange={handleAlumno}
                                     onSubmitCapture={handleAlumno} />
@@ -212,11 +218,22 @@ export default function Notas() {
                                     <i className='bx bx-search me-1'></i>
                                 </button>
                             </div>
-                        </div>
 
+                            <div className="col-md-3 hstack">
+                                <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
+                                <input name="alumno" value={alumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleAlumno}
+                                    onSubmitCapture={handleAlumno} />
+
+                                <button type="submit" className="btn input-group-text btn-primary"
+                                >
+                                    <i className='bx bx-search me-1'></i>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-
 
 
                 <div className="mt-5">
@@ -279,7 +296,7 @@ export default function Notas() {
                                 <table className="table  nav-justified table-striped table-dark table-bordered">
                                     <thead>
                                         <tr className="text-center">
-                                            <th scope="col">Nro. de Documento</th>
+                                            <th scope="col">Documento</th>
                                             <th scope="col">Sexo</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Apellido</th>
@@ -426,24 +443,26 @@ export default function Notas() {
                                                             inEditMode.status && inEditMode.rowKey === i ? (
 
                                                                 <React.Fragment>
-                                                                    <button
-                                                                        className="btn-success "
-                                                                        onClick={() => onSave(n.id, nota, columnName)}
-                                                                    >
-                                                                        Save
-                                                                    </button>
+                                                                    <div className="hstack">
+                                                                        <button
+                                                                            className="btn btn-primary "
+                                                                            onClick={() => onSave(n.id, nota, columnName)}
+                                                                        >
+                                                                            Save
+                                                                        </button>
 
-                                                                    <button
-                                                                        className="btn-secondary"
-                                                                        style={{ marginLeft: 8 }}
-                                                                        onClick={() => onCancel()}
-                                                                    >
-                                                                        Cancel
-                                                                    </button>
+                                                                        <button
+                                                                            className="btn btn-secondary"
+                                                                            style={{ marginLeft: 8 }}
+                                                                            onClick={() => onCancel()}
+                                                                        >
+                                                                            Cancel
+                                                                        </button>
+                                                                    </div>
                                                                 </React.Fragment>
                                                             ) : (
                                                                 <button
-                                                                    className="btn-primary"
+                                                                    className=" btn btn-primary"
                                                                     onClick={() => setInEditMode({
                                                                         status: true,
                                                                         rowKey: i
