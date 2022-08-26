@@ -9,6 +9,9 @@ export default function Notas() {
 
     const [idMateria, setIdMateria] = useState(1)
     const [idCurso, setIdCurso] = useState(1)
+
+    const [nombreAlumno, setNombreAlumno] = useState("")
+    const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [alumno, setAlumno] = useState("")
 
     const [materias, setMaterias] = useState()
@@ -32,7 +35,7 @@ export default function Notas() {
         listarMaterias()
         listarCursos()
         // filtros()
-    }, [trimestre])
+    }, [trimestre, idMateria, alumno, idCurso])
 
 
     const listarCursos = () => {
@@ -54,33 +57,25 @@ export default function Notas() {
             })
     }
 
-    // const filtros = () => {
-    //     axios.post(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`,
-    //         {
-    //             materia: idMateria,
-    //             curso: idCurso,
-    //             alumno: alumno
-    //         })
-    //         .then(res => {
-    //             console.log(res.data);
-
-    //         }).catch(err => {
-    //             console.error(error);
-    //         })
-    // }
-
     const handleMateria = (e) => {
         setIdMateria(Number.parseInt(e.target.value))
         console.log(idMateria);
-        // defaultTrimestre()
+        defaultTrimestre()
     }
 
     const handleCurso = (e) => {
         setIdCurso(Number.parseInt(e.target.value))
         defaultTrimestre()
     }
-    const handleAlumno = (e) => {
-        setAlumno(e.target.value)
+    const handleNombreAlumno = (e) => {
+        setNombreAlumno(e.target.value)
+        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
+        defaultTrimestre()
+    }
+
+    const handleApellidoAlumno = (e) => {
+        setApellidoAlumno(e.target.value)
+        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
         defaultTrimestre()
     }
 
@@ -88,7 +83,7 @@ export default function Notas() {
         axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
             .then(res => {
                 console.log(res.data);
-                // setNotas(res.data)
+                setNotas(res.data)
             }).catch(err => {
                 console.error(error);
             })
@@ -210,9 +205,9 @@ export default function Notas() {
                             <div className="col-md-3 hstack me-5">
 
                                 <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
-                                <input name="alumno" value={alumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleAlumno}
-                                    onSubmitCapture={handleAlumno} />
+                                <input name="alumno" value={nombreAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleNombreAlumno}
+                                    onSubmitCapture={handleNombreAlumno} />
 
                                 <button type="submit" className="btn input-group-text btn-primary"
                                 >
@@ -220,11 +215,11 @@ export default function Notas() {
                                 </button>
                             </div>
 
-                            <div className="col-md-3 hstack">
+                            <div className="col-md-3 hstack me-5">
                                 <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
-                                <input name="alumno" value={alumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleAlumno}
-                                    onSubmitCapture={handleAlumno} />
+                                <input name="alumno" value={apellidoAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleApellidoAlumno}
+                                    onSubmitCapture={handleApellidoAlumno} />
 
                                 <button type="submit" className="btn input-group-text btn-primary"
                                 >

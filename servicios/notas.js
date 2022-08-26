@@ -50,29 +50,25 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
                         idCursoXdivision: curso
                     }
                 },
-                // {
-                //     alumnoXcursoXdivision: {
-                //         usuario: {
-                //             nombre: {
-                //                 contains: alumno
-                //             }
-                //         }
-                //     },
-                // },
+                {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            nombre: {
+                                startsWith: alumno.split(' ')[0]
+                            }
+                        }
+                    },
+                },
                 {
                     alumnoXcursoXdivision: {
                         usuario: {
                             apellido: {
-                          
+                                endsWith: alumno.split(' ')[1]
                             }
                         }
                     },
                 }
-
-
             ]
-
-
         }
     })
     console.log(notas);
