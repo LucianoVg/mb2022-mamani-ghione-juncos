@@ -1,3 +1,4 @@
+import { startsWith } from "lodash";
 import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
@@ -34,7 +35,8 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
             trimestre: true,
             alumnoXcursoXdivision: {
                 include: {
-                    usuario: true
+                    usuario: true,
+                    cursoXdivision: true
                 }
             }
 
@@ -42,22 +44,31 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
         where: {
             AND: [
                 { idTrimestre: idTrimestre },
-                { idMateria: 1 },
-                {cursoXdivision: curso},
+                { idMateria: idMateria },
                 {
-                    usuario: {
-                        nombre: {
-                            contains: alumno
-                        }
+                    alumnoXcursoXdivision: {
+                        idCursoXdivision: curso
                     }
                 },
+                // {
+                //     alumnoXcursoXdivision: {
+                //         usuario: {
+                //             nombre: {
+                //                 contains: alumno
+                //             }
+                //         }
+                //     },
+                // },
                 {
-                    usuario: {
-                        apellido: {
-                            contains: alumno
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            apellido: {
+                          
+                            }
                         }
-                    }
+                    },
                 }
+
 
             ]
 

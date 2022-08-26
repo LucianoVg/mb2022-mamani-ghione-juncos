@@ -19,12 +19,11 @@ export default function Notas() {
 
     })
 
-
-
     useEffect(() => {
         defaultTrimestre()
         listarMaterias()
         listarCurso()
+        filtros()
     }, [trimestre])
 
 
@@ -50,6 +49,27 @@ export default function Notas() {
             })
     }
 
+
+    const [idMateria, setIdMateria] = useState()
+    const [alumno, setAlumno] = useState()
+    const [idCurso, setIdCurso] = useState()
+
+
+
+    const filtros = () => {
+        axios.post(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`,
+            {
+                materia: idMateria,
+                curso: idCurso,
+                alumno: alumno
+            })
+            .then(res => {
+                console.log(res.data);
+
+            }).catch(err => {
+                console.error(error);
+            })
+    }
 
     const defaultTrimestre = () => {
         axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}`)
@@ -154,46 +174,43 @@ export default function Notas() {
                 <h1><strong>Notas</strong></h1>
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
 
-                    <div className="row" >
-                        <div className="col-2 ">
-                            <div className="hstack gap-1">
-                                <label className="fw-bold me-2" name="inputMateria">Materia: </label>
-                                <select className="form-select " id="inputMateria">
-                                    {
-                                        materia && materia.map((m) => (
+                    <div className="row g-3" >
+                        <div className="col-md-3 hstack">
+                            <label className="fw-bold me-2" name="inputMateria">Materia: </label>
+                            <select className="form-select " id="inputMateria" style={{ width: '50mm' }} >
+                                {
+                                    materia && materia.map((m) => (
 
-                                            <option key={m.id} className="col-md-2">{m.nombre}</option>
-                                        ))
-
-
-                                    }
+                                        <option key={m.id} className="col-md-2">{m.nombre}</option>
+                                    ))
 
 
-                                </select>
-                            </div>
+                                }
+
+
+                            </select>
                         </div>
-                        <div className="col-2 ">
-                            <div className="hstack gap-1 ">
-                                <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                                <select className="form-select " id="inputMateria">
-                                  {
-                                    curso && curso.map((c)=> (
+                        <div className="col-md-3 hstack">
+                            <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
+                            <select className="form-select " id="inputMateria" style={{ width: '20mm' }} >
+                                {
+                                    curso && curso.map((c) => (
                                         <option key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
                                     ))
-                                  }
+                                }
 
-                                </select>
+                            </select>
+                        </div>
+                        <div className="hstack" >
+                        <label className="fw-bold me-2" >Buscar alumno: </label>
+                            <div className="hstack gap-1">
+                                <input className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" onSubmitCapture={setAlumno} />
+                                <button type="submit" className=" btn input-group-text btn-primary"
+                                >
+                                    <i className='bx bx-search me-1'></i> </button>
                             </div>
                         </div>
 
-                    </div>
-
-                    <div className="hstack gap-1">
-                        <label className="fw-bold me-2" >Buscar alumno: </label>
-                        <div className="hstack gap-1">
-                            <input className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
-                            <button type="submit" className=" btn input-group-text btn-primary"><i className='bx bx-search me-1'></i> </button>
-                        </div>
                     </div>
                 </div>
 
