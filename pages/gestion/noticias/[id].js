@@ -59,7 +59,7 @@ export default function DetallesNoticia() {
             // router.push('/gestion/noticias')
         }
 
-        router.push('/gestion/noticias')
+        router.push('/')
 
         // location.replace('http://localhost:3000/')
 
