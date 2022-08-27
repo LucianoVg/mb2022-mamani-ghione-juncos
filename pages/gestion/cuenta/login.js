@@ -1,11 +1,8 @@
 import axios from "axios"
 import { NextPage } from "next"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap"
 import { Layout } from "../../../components/layout"
-import LoginLayout from "../../../components/loginLayout"
 import { cerrarSesion, iniciarSesion, registrarse } from "../../../servicios/cuenta"
 
 const Login = () => {
@@ -49,37 +46,42 @@ const Login = () => {
     }
 
     return (
-        <LoginLayout>
-            <h3 className="text-center">Ingrese con su cuenta</h3>
-            <Form onSubmit={onSubmitData}>
-                <FormGroup>
-                    <Label for="inputEmail">Correo Electronico</Label>
-                    <Input value={correo} id="inputEmail" type="email" name="email" placeholder="example@mail.com" onChange={handleCorreo} />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="inputPassword">Contraseña</Label>
-                    <Input value={password} id="inputPassword" type="password" name="password" placeholder="**********" onChange={handlePassword} />
-                </FormGroup>
-                <Button className="mt-4" type="submit" color="info" block>Ingresar</Button>
-                <p className="mt-4">
-                    No posee cuenta? <Link href={'/registro'}>
-                        <a style={{ textDecoration: 'none' }}>Registrarse</a>
-                    </Link>
-                </p>
-                <p className="mt-4">
-                    Olvido sus credenciales? <Link href={'/recuperarCredenciales'}>
-                        <a style={{ textDecoration: 'none' }}>Recuperar Cuenta</a>
-                    </Link>
-                </p>
-            </Form>
-            {
-                error !== "" && (
-                    <Alert color="warning">
-                        {error}
-                    </Alert>
-                )
-            }
-        </LoginLayout>
+        <Layout title={'Iniciar Sesion'}>
+            <div className="row justify-content-center">
+                <div className="col-lg-5">
+                    <div className="card shadow-lg border-0 rounded-lg mt-5">
+                        <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
+                        <div className="card-body">
+                            <form method="post" onSubmit={onSubmitData}>
+
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" value={correo} onChange={handleCorreo} name="correo" id="inputEmail" type="email" placeholder="correo@mail.com" />
+                                    <label>Correo electronico</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input className="form-control" value={password} onChange={handlePassword} name="password" id="inputPassword" type="password" placeholder="Password" />
+                                    <label>Password</label>
+                                </div>
+                                <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                    <a className="small" href="password.html">Forgot Password?</a>
+                                    <button type="submit" className="btn btn-primary">Iniciar Sesion</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="card-footer text-center py-3">
+                            <div className="small"><a type="button" onClick={() => router.push('registro')}>No posee cuenta? Registrese</a></div>
+                        </div>
+                        {
+                            error !== "" && (
+                                <div className="alert alert-warning">
+                                    {error}
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+        </Layout>
     )
 }
 export default Login
