@@ -1,15 +1,24 @@
 import axios from "axios"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useAuth } from "../../../components/context/authUserProvider"
-import { Layout } from "../../../components/layout"
+import LoginLayout from "../../../components/loginLayout"
+import styles from '../../../styles/loginLayout.module.css'
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
-    const { authUser, loading, iniciarSesion, registrarse } = useAuth()
+    const { iniciarSesion, registrarse, loading, authUser } = useAuth()
+
+    useEffect(() => {
+        if (!loading && authUser) {
+            router.push('/')
+        }
+    }, [loading, authUser])
+
 
     const handleCorreo = (e) => {
         setCorreo(e.target.value)
@@ -21,74 +30,65 @@ const Login = () => {
         e.preventDefault()
         const res = await axios.get(`${process.env.BASE_URL}/gestion/cuenta/${correo}`)
         if (res.data) {
-            registrarse(correo, password)
-                .then(authUser => {
-                    console.log(authUser);
+            iniciarSesion(correo, password)
+                .then(credencial => {
+                    console.log(credencial);
                     router.push('/')
                 }).catch(err => {
-                    iniciarSesion(correo, password)
-                        .then(authUser => {
-                            console.log(authUser);
-                            router.push('/')
-                        }).catch(err => {
-                            setError("Usuario y/o contraseña incorrectos")
-                            setTimeout(() => {
-                                setError("")
-                            }, 3000);
-                        })
+                    if (res.data.correo === correo && res.data.password === password) {
+                        registrarse(correo, password)
+                            .then(credencial => {
+                                router.push('/')
+                            }).catch(error => {
+                                console.log(error);
+                            })
+                    } else {
+                        setError("Usuario y/o contraseña incorrectos")
+                        setTimeout(() => {
+                            setError("")
+                        }, 3000);
+                    }
                 })
         } else {
-            setError("No se encontró al usuario en el sistema")
+            setError("Usuario no encontrado en el sistema, consulte con el administrador")
             setTimeout(() => {
                 setError("")
             }, 3000);
         }
     }
 
-    useEffect(() => {
-        if (!loading && authUser) {
-            router.push('/')
-        }
-    }, [authUser, loading])
-
-
     return (
-        <Layout title={'Iniciar Sesion'}>
-            <div className="row justify-content-center">
-                <div className="col-lg-5">
-                    <div className="card shadow-lg border-0 rounded-lg mt-5">
-                        <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
-                        <div className="card-body">
-                            <form method="post" onSubmit={onSubmitData}>
-
-                                <div className="form-floating mb-3">
-                                    <input className="form-control" value={correo} onChange={handleCorreo} name="correo" id="inputEmail" type="email" placeholder="correo@mail.com" />
-                                    <label>Correo electronico</label>
-                                </div>
-                                <div className="form-floating mb-3">
-                                    <input className="form-control" value={password} onChange={handlePassword} name="password" id="inputPassword" type="password" placeholder="Password" />
-                                    <label>Password</label>
-                                </div>
-                                <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    <a className="small" href="password.html">Forgot Password?</a>
-                                    <button type="submit" className="btn btn-primary">Iniciar Sesion</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div className="card-footer text-center py-3">
-                            <div className="small"><a type="button" onClick={() => router.push('registro')}>No posee cuenta? Registrese</a></div>
-                        </div>
-                        {
-                            error !== "" && (
-                                <div className="alert alert-warning">
-                                    {error}
-                                </div>
-                            )
-                        }
-                    </div>
+        <LoginLayout>
+            <h3 className="text-center">Ingrese con su cuenta</h3>
+            <form onSubmit={onSubmitData}>
+                <div className="form-group">
+                    <label htmlFor="inputEmail">Correo Electronico</label>
+                    <input className="form-control" value={correo} id="inputEmail" type="email" name="email" placeholder="example@mail.com" onChange={handleCorreo} />
                 </div>
-            </div>
-        </Layout>
+                <div>
+                    <label htmlFor="inputPassword">Contraseña</label>
+                    <input className="form-control" value={password} id="inputPassword" type="password" name="password" placeholder="**********" onChange={handlePassword} />
+                </div>
+                <button className={styles.btnSubmit} type="submit">Ingresar</button>
+                <p className="mt-4">
+                    No posee cuenta? <Link href={'/registro'}>
+                        <a style={{ textDecoration: 'none' }}>Registrarse</a>
+                    </Link>
+                </p>
+                <p className="mt-4">
+                    Olvido sus credenciales? <Link href={'/recuperarCredenciales'}>
+                        <a style={{ textDecoration: 'none' }}>Recuperar Cuenta</a>
+                    </Link>
+                </p>
+            </form>
+            {
+                error !== "" && (
+                    <div className="alert alert-warning">
+                        {error}
+                    </div>
+                )
+            }
+        </LoginLayout>
     )
 }
 export default Login
