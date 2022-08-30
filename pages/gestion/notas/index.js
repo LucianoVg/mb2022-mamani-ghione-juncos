@@ -169,8 +169,6 @@ export default function Notas() {
 
     return (
         <Layout title={'Notas'}>
-
-
             <div>
                 <h1><strong>Notas</strong></h1>
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
