@@ -147,20 +147,3 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
 
 }
-
-// export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
-
-//     const agregar = await prisma.noticiasYnovedades.create({
-//         data: {
-//             titulo: titulo,
-//             creadaEn: new Date(creadaEn),
-//             url: url,
-//             descripcion: descripcion,
-//             idUsuario: idUsuario
-//         }
-//     })
-
-//     return agregar
-// }
-
-

@@ -1,4 +1,4 @@
-import { traerSanciones } from "../../../../servicios/sanciones"
+import { generarSancion, traerSanciones } from "../../../../servicios/sanciones"
 
 export default async function handler(req, res) {
     try {
@@ -7,7 +7,10 @@ export default async function handler(req, res) {
             return res.status(200).json(sanciones)
         }
         if (req.method === 'POST') {
+            const { idUsuario, idCurso, idTipoSancion, motivo, fecha } = req.body
+            const sancion = await generarSancion(Number.parseInt(idUsuario), Number.parseInt(idCurso), motivo, Number.parseInt(idTipoSancion), fecha)
 
+            return res.status(200).json(sancion)
         }
     } catch (error) {
         return res.status(400).send(error)

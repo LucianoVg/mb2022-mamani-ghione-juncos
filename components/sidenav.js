@@ -27,12 +27,9 @@ const Sidenav = () => {
     }
 
     return (
-
         // scrolling-navbar
-        <div  className="l-navbar " id="nav-bar">
-
+        <div className="l-navbar " id="nav-bar">
             <nav className="nav " id='parent'>
-
                 <div id='child'  >
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
@@ -44,7 +41,7 @@ const Sidenav = () => {
                         authUser && (
                             <div>
                                 <ul className="list-unstyled ps-0 overflow-hidden">
-                                    <li >
+                                    <li className='text-white'>
                                         <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                                             <i className='bx bx-layer nav_icon'></i>
                                             Gestion
@@ -65,7 +62,7 @@ const Sidenav = () => {
                                         </div>
                                     </li>
 
-                                    <li >
+                                    <li className='text-white'>
                                         <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse-2" aria-expanded="false">
                                             <i className='bx bx-bar-chart-alt-2 nav_icon'></i>
                                             Reportes
@@ -86,7 +83,7 @@ const Sidenav = () => {
                                         </div>
                                     </li>
                                 </ul>
-                                <a style={{ cursor: 'pointer' }} onClick={logout} className="nav_link sb-sidenav-footer">
+                                <a style={{ cursor: 'pointer' }} onClick={logout} className="nav_link sb-sidenav-footer text-white">
                                     <i className='bx bx-log-out nav_icon'></i>
                                     <span className="nav_name">Cerrar Sesion</span>
                                 </a>

@@ -6,8 +6,9 @@ export class Prisma {
     }
 
     static newPrisma() {
-        if (!Prisma._instancia) {
+        if (Prisma._instancia === undefined || Prisma._instancia === null) {
             Prisma._instancia = new PrismaClient();
+            Prisma._instancia.$connect()
         }
 
         return Prisma._instancia;

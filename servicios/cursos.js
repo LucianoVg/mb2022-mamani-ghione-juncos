@@ -5,6 +5,7 @@ export async function traerCursosXDivision() {
         const cursosXDivision = await Prisma.newPrisma().cursoXdivision.findMany({
             distinct: ['idCurso', 'IdDivision'],
             select: {
+                id: true,
                 curso: {
                     select: {
                         id: true,

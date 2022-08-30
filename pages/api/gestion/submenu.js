@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { FiltrarMenu } from "../../../servicios/menu";
 
 export default async function handler(
