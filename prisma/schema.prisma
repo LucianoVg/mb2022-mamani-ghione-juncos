@@ -60,7 +60,6 @@ model curso {
   cursoXdivision cursoXdivision[]
   materia        materia[]
   notificacion   notificacion[]
-  sancion        sancion[]
 }
 
 model cursoXdivision {
@@ -70,6 +69,7 @@ model cursoXdivision {
   division              division?               @relation(fields: [IdDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
+  sancion               sancion[]
 }
 
 model discapacidad {
@@ -184,8 +184,6 @@ model nota {
   id                      Int                    @id @default(autoincrement())
   idAlumnoXcursoXdivision Int?
   idMateria               Int?
-<<<<<<< HEAD
-  nota                    Int?
   fecha                   DateTime?
   idTrimestre             Int?
   idUsuario               Int?
@@ -193,20 +191,11 @@ model nota {
   trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-=======
   nota1                   Int?
   nota2                   Int?
   nota3                   Int?
   nota4                   Int?
   nota5                   Int?
-  idTrimestre             Int?
-  fecha                   DateTime?
-  idUsuario               Int?
-  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
->>>>>>> experimentTable
   reporteXtrimestre       reporteXtrimestre[]
 }
 
@@ -286,14 +275,14 @@ model reporteXtrimestre {
 }
 
 model sancion {
-  id              Int               @id @default(autoincrement())
-  motivo          String?
-  fecha           DateTime?
-  idTipoSancion   Int?
-  idCurso         Int?
-  tipoSancion     tipoSancion?      @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  curso           curso?            @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sancionXusuario sancionXusuario[]
+  id               Int               @id @default(autoincrement())
+  motivo           String?
+  fecha            DateTime?
+  idTipoSancion    Int?
+  idCursoXDivision Int?
+  tipoSancion      tipoSancion?      @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXDivision   cursoXdivision?   @relation(fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancionXusuario  sancionXusuario[]
 }
 
 model sancionXusuario {
@@ -356,7 +345,6 @@ model usuario {
   sexo                  String?
   nombre                String?
   apellido              String?
-  sexo                  String?
   dni                   String?
   correo                String?
   localidad             String?

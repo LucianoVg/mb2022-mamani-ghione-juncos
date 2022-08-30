@@ -58,10 +58,12 @@ export default function NuevoUsuario() {
             const creado = res.data
             if (creado) {
                 setMensaje("Usuario creado!")
+                setTimeout(() => { router.push('/gestion/usuarios/mantenimiento_usuario') }, 1200)
             } else {
                 setMensaje("No se pudo crear al usuario")
+                setTimeout(() => { setMensaje("") }, 1200)
             }
-            setTimeout(() => { setMensaje("") }, 1200)
+
         }).catch(err => {
             console.log(err);
             setMensaje("Error al crear el usuario")

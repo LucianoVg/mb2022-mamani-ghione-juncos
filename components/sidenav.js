@@ -96,17 +96,12 @@ const Sidenav = () => {
                 </div >
 
                 {
-                    !authUser ? (
+                    !authUser && (
                         <a href="/gestion/cuenta/login" className="nav_link sb-sidenav-footer">
                             <i className='bx bx-log-out nav_icon'></i>
                             <span className="nav_name">Iniciar Sesion</span>
                         </a>
-                    ) :
-                        (
-                            <footer className='text-center text-white'>
-                                <p>Logeado como: {authUser?.email}</p>
-                            </footer>
-                        )
+                    )
                 }
             </nav>
         </div >
