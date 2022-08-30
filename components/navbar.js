@@ -3,7 +3,7 @@ import { useAuth } from "./context/authUserProvider"
 export const Navbar = () => {
     const { loading, authUser } = useAuth()
     return (
-        <header className="header" id="header">
+        <header  className="header " id="header">
             <div className="header_toggle">
                 <i className='bx bx-menu' id="header-toggle"></i>
             </div>
