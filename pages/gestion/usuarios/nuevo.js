@@ -9,9 +9,16 @@ export default function NuevoUsuario() {
     const [usuario, setUsuario] = useState({
         nombre: '', apellido: '', dni: '',
         correo: '', localidad: '', telefono: '', idRol: 0,
-        direccion: '', contrasenia: ''
+        direccion: '', contrasenia: '', idTutor: 0
     })
+    // Ver si hay que dejar al tutor como un rol o como un dato adicional
+    // del alumno
+    // const [tutor, setTutor] = useState({
+    //     nombre: '', apellido: '', dni: '',
+    //     correo: '', localidad: '', telefono: ''
+    // })
     const [mensaje, setMensaje] = useState("")
+    const [esAlumno, setEsAlumno] = useState(false)
 
     const [rol, setRol] = useState(0)
     const [roles, setRoles] = useState([{ id: 0, tipo: '' }])
@@ -37,6 +44,7 @@ export default function NuevoUsuario() {
     const handleSelect = (e) => {
         console.log(e.target.value);
         setRol(Number.parseInt(e.target.value))
+        setEsAlumno(e.target.value === '2')
     }
 
     const registrarUsuario = (e) => {
@@ -105,7 +113,7 @@ export default function NuevoUsuario() {
                             <div className="col-md-6">
                                 <div className="form-floating mb-3 mb-md-0">
                                     <input onChange={handleForm} value={usuario.dni} name="dni" className="form-control" id="inputFirstName" type="text" />
-                                    <label>Dni</label>
+                                    <label>Legajo</label>
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -148,6 +156,59 @@ export default function NuevoUsuario() {
                                     <label>Contraseña Temporal</label>
                                 </div>
                             </div>
+                            {
+                                esAlumno && (
+                                    <div className="mt-3">
+                                        <h3 className="text-center">Datos del Tutor</h3>
+                                        <div className="row mb-3">
+                                            <div className="col-md-6">
+                                                <div className="form-floating mb-3 mb-md-0">
+                                                    <input onChange={handleForm} value={usuario.nombre} name="nombre" className="form-control" id="inputFirstName" type="text" />
+                                                    <label>Nombre</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-floating">
+                                                    <input onChange={handleForm} value={usuario.apellido} name="apellido" className="form-control" id="inputLastName" type="text" />
+                                                    <label>Apellido</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-floating mb-3">
+                                            <input onChange={handleForm} value={usuario.correo} name="correo" className="form-control" id="inputEmail" type="email" />
+                                            <label>Correo electronico</label>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <div className="col-md-6">
+                                                <div className="form-floating mb-3 mb-md-0">
+                                                    <input onChange={handleForm} value={usuario.dni} name="dni" className="form-control" id="inputFirstName" type="text" />
+                                                    <label>Legajo</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-floating">
+                                                    <input onChange={handleForm} value={usuario.localidad} name="localidad" className="form-control" id="inputLastName" type="text" />
+                                                    <label>Localidad</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <div className="col-md-6">
+                                                <div className="form-floating mb-3 mb-md-0">
+                                                    <input onChange={handleForm} value={usuario.telefono} name="telefono" className="form-control" id="inputFirstName" type="tel" />
+                                                    <label>Telefono</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-floating">
+                                                    <input onChange={handleForm} value={usuario.direccion} name="direccion" className="form-control" id="inputLastName" type="address" />
+                                                    <label>Dirección</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
                         </div>
                         <div className="mt-4 mb-0">
                             <div className="d-grid"><button className="btn btn-primary btn-block" onClick={registrarUsuario}>Registrar Usuario</button></div>

@@ -1,17 +1,34 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 
 export default function NuevaSancion() {
-    const [sancion, setSancion] = useState({ idUsuario: 0, idCurso: 0, motivo: '', idTipoSancion: 1 })
+    const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 1 })
+
     const [alumnos, setAlumnos] = useState()
     const [cursos, setCursos] = useState()
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
+    const [usuario, setUsuario] = useState({ id: 0 })
+    const { loading, authUser } = useAuth()
 
     useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/')
+        }
+
+        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+            .then(res => {
+                if (res.data) {
+                    setUsuario({ id: res.data.id })
+                    console.log(usuario);
+                }
+            })
+
+
         axios.get(`${process.env.BASE_URL}/gestion/alumnos`)
             .then(res => {
                 if (res.data) {
@@ -31,16 +48,25 @@ export default function NuevaSancion() {
                     setTipoSanciones(res.data)
                 }
             })
-    }, [])
+    }, [loading, authUser, usuario.id])
     const handleSancion = (e) => {
         setSancion({ ...sancion, [e.target.name]: e.target.value })
     }
     const generarSancion = (e) => {
         e.preventDefault()
         console.log(sancion);
-        axios.post(`${process.env.BASE_URL}/gestion/sanciones`, {
-            idUsuario: sancion.idUsuario,
+        console.log({
+            idUsuario: usuario.id,
             idCurso: sancion.idCurso,
+            idAlumno: sancion.idAlumno,
+            idTipoSancion: sancion.idTipoSancion,
+            motivo: sancion.motivo,
+            fecha: new Date().toUTCString()
+        });
+        axios.post(`${process.env.BASE_URL}/gestion/sanciones`, {
+            idUsuario: usuario.id,
+            idCurso: sancion.idCurso,
+            idAlumno: sancion.idAlumno,
             idTipoSancion: sancion.idTipoSancion,
             motivo: sancion.motivo,
             fecha: new Date().toUTCString()
@@ -48,6 +74,8 @@ export default function NuevaSancion() {
             if (res.data) {
                 router.push('/gestion/sanciones')
             }
+        }).catch(err => {
+            console.error(err);
         })
     }
     return (
@@ -66,10 +94,10 @@ export default function NuevaSancion() {
                             !esSancionGrupal && (
                                 <div className="form-group row mb-3">
                                     <label htmlFor="inputAlumno"><strong>Alumno:</strong></label>
-                                    <select value={sancion.idUsuario} className="form-control" onChange={handleSancion} name="idUsuario" id="inputAlumno">
+                                    <select value={sancion.idAlumno} className="form-control" onChange={handleSancion} name="idAlumno" id="inputAlumno">
                                         {
                                             alumnos && alumnos.map((a, i) => (
-                                                <option key={i} value={a.usuario.id}>
+                                                <option key={i} value={a.id}>
                                                     {a.usuario.nombre} {a.usuario.apellido}
                                                 </option>
                                             ))

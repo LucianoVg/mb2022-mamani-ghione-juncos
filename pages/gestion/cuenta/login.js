@@ -70,16 +70,6 @@ const Login = () => {
                     <input className="form-control" value={password} id="inputPassword" type="password" name="password" placeholder="**********" onChange={handlePassword} />
                 </div>
                 <button className={styles.btnSubmit} type="submit">Ingresar</button>
-                {/* <p className="mt-4">
-                    No posee cuenta? <Link href={'/registro'}>
-                        <a style={{ textDecoration: 'none' }}>Registrarse</a>
-                    </Link>
-                </p> */}
-                {/* <p className="mt-4">
-                    Olvido sus credenciales? <Link href={'/recuperarCredenciales'}>
-                        <a style={{ textDecoration: 'none' }}>Recuperar Cuenta</a>
-                    </Link>
-                </p> */}
             </form>
             {
                 error !== "" && (

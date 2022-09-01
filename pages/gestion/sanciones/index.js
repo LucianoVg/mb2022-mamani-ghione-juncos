@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
@@ -14,21 +15,24 @@ const Sanciones = () => {
     const [idAlumno, setIdAlumno] = useState(1)
     const [alumnos, setAlumnos] = useState()
 
+
     const handleCurso = (e) => {
         setIdCurso(Number.parseInt(e.target.value))
     }
-
+    const handleAlumno = (e) => {
+        setIdAlumno(Number.parseInt(e.target.value))
+    }
     const buscarSanciones = (e) => {
         e.preventDefault()
         console.log(idCurso, idAlumno);
 
-        // axios.get(`${process.env.BASE_URL}/gestion/sanciones/${idCurso}`)
-        //     .then(res => {
-        //         if (res.data) {
-        //             console.log(res.data);
-        //             setSanciones(res.data)
-        //         }
-        //     })
+        axios.get(`${process.env.BASE_URL}/gestion/sanciones/buscar/${idCurso}/${idAlumno}`)
+            .then(res => {
+                if (res.data) {
+                    console.log(res.data);
+                    setSanciones(res.data)
+                }
+            })
     }
 
     useEffect(() => {
@@ -74,7 +78,7 @@ const Sanciones = () => {
                                         </label>
                                     </div>
                                     <div className="col-md-4">
-                                        <select value={idAlumno} onChange={(e) => setIdAlumno(Number.parseInt(e.target.value))} className="form-control" name="idAlumno" id="inputAlumno">
+                                        <select value={idAlumno} onChange={handleAlumno} className="form-control" name="idAlumno" id="inputAlumno">
                                             {
                                                 alumnos && alumnos.map((a, i) => (
                                                     <option key={i} value={a.id}>{a.usuario?.nombre} {a.usuario?.apellido}</option>
@@ -146,18 +150,28 @@ const Sanciones = () => {
                                 sanciones && sanciones.map((s, i) => (
                                     <tr key={i}>
                                         <td>{
-                                            s.usuario !== undefined ?
-                                                s.usuario?.nombre : '--'
+                                            s.alumnoXCursoXDivision?.usuario !== undefined ?
+                                                s.alumnoXCursoXDivision?.usuario?.nombre : '--'
                                         }</td>
                                         <td>{
-                                            s.usuario !== undefined ?
-                                                s.usuario?.apellido : '--'
+                                            s.alumnoXCursoXDivision?.usuario !== undefined ?
+                                                s.alumnoXCursoXDivision?.usuario?.apellido : '--'
                                         }</td>
-                                        <td>{s.cursoXDivision?.curso.nombre}</td>
-                                        <td>{s.cursoXDivision?.division.division}</td>
-                                        <td>{s.fecha}</td>
+                                        <td>{
+                                            s.cursoXDivision != undefined ?
+                                                s.cursoXDivision?.curso?.nombre
+                                                : '--'
+                                        }</td>
+                                        <td>{
+                                            s.cursoXDivision != undefined ?
+                                                s.cursoXDivision?.division?.division
+                                                : '--'
+                                        }</td>
+                                        <td>{new Date(s.fecha).toLocaleDateString()}</td>
                                         <td>
-                                            <button className="btn btn-info">Detalles</button>
+                                            <Link href={`/gestion/sanciones/${s.id}`}>
+                                                <a className="btn btn-info">Detalles</a>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))
