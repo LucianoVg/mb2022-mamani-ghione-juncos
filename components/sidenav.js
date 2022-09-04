@@ -32,12 +32,12 @@ const Sidenav = () => {
         <div className="l-navbar " id="nav-bar">
             <nav className="nav " id='parent'>
                 <div id='child'>
-                    <a className="nav_logo" href='/'>
-                        {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
-                        <Image style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
-                        <span className="nav_logo-name">Instituto <br />"El Salvador"</span>
-                    </a>
-
+                    <Link href={'/'}>
+                        <a className="nav_logo">
+                            <Image alt='logo' style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
+                            <span className="nav_logo-name">Instituto <br />&quot;El Salvador&quot;</span>
+                        </a>
+                    </Link>
                     {
                         authUser && (
                             <div>

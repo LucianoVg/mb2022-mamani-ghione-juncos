@@ -81,7 +81,7 @@ export default function EditarFicha() {
                     setCargando(false)
                 })
         }
-    }, [id, authUser, loading])
+    }, [id, authUser, loading, router])
 
     const cargarImagenes = () => {
 

@@ -33,7 +33,7 @@ export default function DetallesNoticia() {
             {
                 noticia.id !== 0 && (
                     <div className="container text-center">
-                        <Image src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={400} height={400} />
+                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={400} height={400} />
 
                         <h3 className="text-center">{noticia.titulo}</h3>
                         <p>{noticia.descripcion}</p>

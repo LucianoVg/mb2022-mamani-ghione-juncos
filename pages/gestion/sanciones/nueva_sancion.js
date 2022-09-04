@@ -48,7 +48,8 @@ export default function NuevaSancion() {
                     setTipoSanciones(res.data)
                 }
             })
-    }, [loading, authUser, usuario.id])
+    }, [loading, authUser, usuario.id, router])
+
     const handleSancion = (e) => {
         setSancion({ ...sancion, [e.target.name]: e.target.value })
     }
