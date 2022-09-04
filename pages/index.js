@@ -23,8 +23,6 @@ const Home = () => {
       .then(res => {
         console.log(res.data);
         setNoticias(res.data)
-      }).catch(err => {
-        console.log(err);
       })
   }, [])
 
