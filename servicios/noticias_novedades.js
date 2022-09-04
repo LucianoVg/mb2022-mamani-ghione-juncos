@@ -1,17 +1,22 @@
 import { Prisma } from "./prisma";
 
 export async function traerNoticia(id = 0) {
-    const noticias = id !== 0 ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
-        where: {
-            id: id
-        }
-    }) : await Prisma.newPrisma().noticiasYnovedades.findMany({
-        orderBy: {
-            creadaEn: 'desc'
-        }
-    })
-    Prisma.disconnect()
-    return noticias
+    try {
+        const noticias = id !== 0 ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
+            where: {
+                id: id
+            }
+        }) : await Prisma.newPrisma().noticiasYnovedades.findMany({
+            orderBy: {
+                creadaEn: 'desc'
+            }
+        })
+        return noticias
+    } catch (error) {
+        console.error(error);
+    } finally {
+        Prisma.disconnect()
+    }
 }
 
 export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
