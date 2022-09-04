@@ -2,6 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -34,12 +35,17 @@ model asistencia {
   id                      Int                    @id @default(autoincrement())
   fecha                   DateTime?
   justificado             Boolean?
-  idTipoAsistencia        Int?
   idAlumnoXcursoXdivision Int?
   idUsuario               Int?
-  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tipoAsistencia          tipoAsistencia?        @relation(fields: [idTipoAsistencia], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  presente                Boolean?
+  ausente                 Boolean?
+  ausenteJustificado      Boolean?
+  llegadaTarde            Boolean?
+  llegadaTardeJustificada Boolean?
+  mediaFalta              Boolean?
+  mediaFaltaJustificada   Boolean?
   usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model asistenciaDocente {
@@ -51,7 +57,6 @@ model asistenciaDocente {
   fecha             DateTime?
   docenteXmateria   docenteXmateria? @relation(fields: [idDocenteXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario           usuario?         @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tipoAsistencia    tipoAsistencia?  @relation(fields: [idTipoAsistencia], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model curso {
@@ -192,10 +197,10 @@ model nota {
   idTrimestre             Int?
   fecha                   DateTime?
   idUsuario               Int?
-  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   reporteXtrimestre       reporteXtrimestre[]
 }
 
@@ -297,14 +302,6 @@ model tipoArchivo {
   id      Int       @id @default(autoincrement())
   tipo    String?
   archivo archivo[]
-}
-
-model tipoAsistencia {
-  id                Int                 @id @default(autoincrement())
-  tipo              String?
-  valor             Float?
-  asistencia        asistencia[]
-  asistenciaDocente asistenciaDocente[]
 }
 
 model tipoReporte {

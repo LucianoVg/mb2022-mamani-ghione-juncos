@@ -17,22 +17,22 @@ export async function ListarCurso() {
 
 
 
-export async function ListarMaterias() {
+// export async function ListarMaterias() {
 
-    const materias = await prisma.materia.findMany()
+//     const materias = await prisma.materia.findMany()
 
-    return materias
-}
+//     return materias
+// }
 
 
 
-export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
+// export async function TraerAsistencias(idTrimestre, alumno, curso) {
+export async function TraerAsistencias() {
 
-    const notas = await prisma.nota.findMany({
+    const asistencias = await prisma.asistencia.findMany({
 
         include: {
-            materia: true,
-            trimestre: true,
+            usuario: true,
             alumnoXcursoXdivision: {
                 include: {
                     usuario: true,
@@ -41,41 +41,40 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
             }
 
         },
-        where: {
-            AND: [
-                { idTrimestre: idTrimestre },
-                { idMateria: idMateria },
-                {
-                    alumnoXcursoXdivision: {
-                        idCursoXdivision: curso
-                    }
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            nombre: {
-                                startsWith: alumno.split(' ')[0]
-                            }
-                        }
-                    },
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            apellido: {
-                                startsWith: alumno.split(' ')[1]
-                            }
-                        }
-                    },
-                }
-            ]
-        }
+
+        // where: {
+        //     AND: [
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 idCursoXdivision: curso
+        //             }
+        //         },
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 usuario: {
+        //                     nombre: {
+        //                         startsWith: alumno.split(' ')[0]
+        //                     }
+        //                 }
+        //             },
+        //         },
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 usuario: {
+        //                     apellido: {
+        //                         startsWith: alumno.split(' ')[1]
+        //                     }
+        //                 }
+        //             },
+        //         }
+        //     ]
+        // }
     })
-    console.log(notas);
-    return notas
+    console.log(asistencias);
+    return asistencias
 }
 
-export async function updateNota(idNota, notaNueva, columnName) {
+export async function updateAsistencia(idNota, notaNueva, columnName) {
 
     switch (columnName) {
         case 'nota1':
@@ -147,4 +146,20 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
 
 }
+
+// export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
+
+//     const agregar = await prisma.noticiasYnovedades.create({
+//         data: {
+//             titulo: titulo,
+//             creadaEn: new Date(creadaEn),
+//             url: url,
+//             descripcion: descripcion,
+//             idUsuario: idUsuario
+//         }
+//     })
+
+//     return agregar
+// }
+
 
