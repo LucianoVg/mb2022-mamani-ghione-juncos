@@ -9,10 +9,10 @@ import TarjetaNovedades from '../components/tarjeta_noticias'
 import paginate from '../utils/paginate'
 
 const Home = () => {
-  const [noticias, setNoticias] = useState([])
+  const [noticias, setNoticias] = useState()
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 5
-  const paginateNoticias = paginate(noticias, currentPage, pageSize)
+  const paginateNoticias = paginate(noticias || [], currentPage, pageSize)
   const { authUser } = useAuth()
   const handlerPageChange = (page) => {
     setCurrentPage(page)
@@ -21,8 +21,10 @@ const Home = () => {
   useEffect(() => {
     axios.get(`${process.env.BASE_URL}/gestion/noticias_novedades`)
       .then(res => {
-        console.log(res.data);
-        setNoticias(res.data)
+        if (res.data) {
+          console.log(res.data);
+          setNoticias(res.data)
+        }
       })
   }, [])
 
