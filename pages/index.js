@@ -19,12 +19,15 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log(process.env.BASE_URL);
     axios.get(`${process.env.BASE_URL}/gestion/noticias_novedades`)
       .then(res => {
         if (res.data) {
           console.log(res.data);
           setNoticias(res.data)
         }
+      }).catch(err => {
+        console.error(err);
       })
   }, [])
 
