@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['firebasestorage.googleapis.com']
+    domains: ['firebasestorage.googleapis.com', 'mb2022-mamani-ghione-juncos.vercel.app']
   },
   env: {
     BASE_URL: process.env.BASE_URL,
