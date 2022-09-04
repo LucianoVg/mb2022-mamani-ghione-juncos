@@ -15,7 +15,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path',
-        destination: `${process.env.BASE_URL}/:path`
+        destination: `https://mb2022-mamani-ghione-juncos.vercel.app/api/:path`
       }
     ]
   }
