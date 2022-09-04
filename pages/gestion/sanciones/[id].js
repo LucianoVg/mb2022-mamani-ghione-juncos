@@ -58,7 +58,7 @@ export default function DetalleSancion() {
                     setTipoSanciones(res.data)
                 }
             })
-    }, [loading, authUser, id, usuario.id, router])
+    }, [loading, authUser, id, usuario, router])
     const handleSancion = (e) => {
         setSancion({ ...sancion, [e.target.name]: e.target.value })
         setEditMode(true)

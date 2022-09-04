@@ -35,7 +35,7 @@ export default function Notas() {
         listarMaterias()
         listarCursos()
         // filtros()
-    }, [trimestre, idMateria, alumno, idCurso, defaultTrimestre])
+    }, [trimestre, idMateria, alumno, idCurso])
 
 
     const listarCursos = () => {
