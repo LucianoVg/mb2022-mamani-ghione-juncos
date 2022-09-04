@@ -10,14 +10,6 @@ const nextConfig = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path',
-        destination: `https://mb2022-mamani-ghione-juncos.vercel.app/api/:path`
-      }
-    ]
   }
 }
 
