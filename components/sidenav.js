@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from './context/authUserProvider'
@@ -30,7 +31,7 @@ const Sidenav = () => {
         // scrolling-navbar
         <div className="l-navbar " id="nav-bar">
             <nav className="nav " id='parent'>
-                <div id='child'  >
+                <div id='child'>
                     <a className="nav_logo" href='/'>
                         {/* <i className='bx bx-bus-school nav_logo-icon'></i> */}
                         <Image style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
@@ -42,7 +43,7 @@ const Sidenav = () => {
                             <div>
                                 <ul className="list-unstyled ps-0 overflow-hidden">
                                     <li className='text-white'>
-                                        <a className=" nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                        <a className="nav_link btn btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                                             <i className='bx bx-layer nav_icon'></i>
                                             Gestion
                                         </a>
@@ -52,7 +53,9 @@ const Sidenav = () => {
                                                     menus && menus.map((m, i) => (
                                                         !m.menu?.menuSistema.startsWith('Reporte') && (
                                                             <li key={i}>
-                                                                <a href={m.menu?.url} className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                <Link href={m.menu?.url}>
+                                                                    <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                </Link>
                                                             </li>
                                                         )
                                                     ))
@@ -73,12 +76,13 @@ const Sidenav = () => {
                                                     menus && menus.map((m, i) => (
                                                         m.menu?.menuSistema.startsWith('Reporte') && (
                                                             <li key={i}>
-                                                                <a href={m.menu?.url} className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                <Link href={m.menu?.url}>
+                                                                    <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                </Link>
                                                             </li>
                                                         )
                                                     ))
                                                 }
-
                                             </ul>
                                         </div>
                                     </li>
@@ -94,10 +98,12 @@ const Sidenav = () => {
 
                 {
                     !authUser && (
-                        <a href="/gestion/cuenta/login" className="nav_link sb-sidenav-footer">
-                            <i className='bx bx-log-out nav_icon'></i>
-                            <span className="nav_name">Iniciar Sesion</span>
-                        </a>
+                        <Link href={'/gestion/cuenta/login'}>
+                            <a className="nav_link sb-sidenav-footer">
+                                <i className='bx bx-log-out nav_icon'></i>
+                                <span className="nav_name">Iniciar Sesion</span>
+                            </a>
+                        </Link>
                     )
                 }
             </nav>

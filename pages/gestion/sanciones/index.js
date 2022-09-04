@@ -59,7 +59,7 @@ const Sanciones = () => {
                     setAlumnos(res.data)
                 }
             })
-    }, [loading, authUser])
+    }, [loading, authUser, router])
 
     return (
         <Layout title={'Sanciones'}>
@@ -158,13 +158,13 @@ const Sanciones = () => {
                                                 s.alumnoXCursoXDivision?.usuario?.apellido : '--'
                                         }</td>
                                         <td>{
-                                            s.cursoXDivision != undefined ?
-                                                s.cursoXDivision?.curso?.nombre
+                                            s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
+                                                s.alumnoXCursoXDivision?.cursoXDivision?.curso?.nombre
                                                 : '--'
                                         }</td>
                                         <td>{
-                                            s.cursoXDivision != undefined ?
-                                                s.cursoXDivision?.division?.division
+                                            s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
+                                                s.alumnoXCursoXDivision?.cursoXDivision?.division?.division
                                                 : '--'
                                         }</td>
                                         <td>{new Date(s.fecha).toLocaleDateString()}</td>

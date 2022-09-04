@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "../styles/tarjetaNoticias.module.css";
 import { useAuth } from "./context/authUserProvider";
 
@@ -7,8 +8,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     return (
         <div className={`${styles.card}`} >
             <div className={`${styles.overflow}`}>
-
-                <img className={`${styles.card_img_top}`}
+                <Image className={`${styles.card_img_top}`}
                     src={url}
                     alt="Card image cap" />
 

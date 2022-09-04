@@ -13,8 +13,9 @@ import { useEffect, useState } from 'react'
 export async function registrarUsuario(
     login, nombre, apellido, correo,
     dni, telefono, localidad,
-    direccion, idRol, contrasenia) {
-    const usuarioCreado = await Prisma.newPrisma().usuario.create({
+    direccion, idRol, idTutor = 0,
+    contrasenia, sexo, idCurso) {
+    const usuarioCreado = idTutor !== 0 ? await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
             nombre: nombre,
@@ -25,12 +26,37 @@ export async function registrarUsuario(
             telefono: telefono,
             direccion: direccion,
             idRol: idRol,
+            idTutor: idTutor,
+            sexo: sexo,
+            password: contrasenia,
+            alumnoXcursoXdivision: {
+                connectOrCreate: {
+                    create: {
+                        idCursoXDivision: idCurso,
+                        anoActual: new Date(),
+                        idEstadoAlumno: 1,
+                    }
+                }
+            }
+        }
+    }) : await Prisma.newPrisma().usuario.create({
+        data: {
+            login: login,
+            nombre: nombre,
+            apellido: apellido,
+            dni: dni,
+            correo: correo,
+            localidad: localidad,
+            telefono: telefono,
+            direccion: direccion,
+            idRol: idRol,
+            sexo: sexo,
             password: contrasenia
         }
     })
     Prisma.disconnect()
 
-    return usuarioCreado !== null
+    return usuarioCreado
 }
 
 const formatAuthUser = (user) => ({

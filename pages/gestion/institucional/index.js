@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Carrusel from "../../../components/carrusel";
 import { useAuth } from "../../../components/context/authUserProvider";
@@ -35,7 +36,9 @@ export default function Institucional() {
                         <h3 className="text-center">No hay ninguna ficha</h3>
                         {
                             authUser && (
-                                <a href="/gestion/institucional/generar_ficha_institucional" className="btn btn-primary m-2">Nueva Ficha Institucional</a>
+                                <Link href={'/gestion/institucional/generar_ficha_institucional'}>
+                                    <a className="btn btn-primary m-2">Nueva Ficha Institucional</a>
+                                </Link>
                             )
                         }
                     </div>
@@ -48,7 +51,9 @@ export default function Institucional() {
                         <Carrusel imagenes={fichaInstitucional.portadasFicha} />
                         {
                             authUser && (
-                                <a href={`/gestion/institucional/${fichaInstitucional.idUsuario}`} className="btn btn-primary">Editar Ficha</a>
+                                <Link href={`/gestion/institucional/${fichaInstitucional.idUsuario}`}>
+                                    <a className="btn btn-primary">Editar Ficha</a>
+                                </Link>
                             )
                         }
 

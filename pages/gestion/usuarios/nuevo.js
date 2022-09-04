@@ -8,19 +8,20 @@ export default function NuevoUsuario() {
     const router = useRouter()
     const [usuario, setUsuario] = useState({
         nombre: '', apellido: '', dni: '',
-        correo: '', localidad: '', telefono: '', idRol: 0,
-        direccion: '', contrasenia: '', idTutor: 0
+        correo: '', localidad: '', telefono: '', idRol: '',
+        direccion: '', contrasenia: '', idTutor: 0, sexo: 'M', idCurso: ''
     })
-    // Ver si hay que dejar al tutor como un rol o como un dato adicional
-    // del alumno
-    // const [tutor, setTutor] = useState({
-    //     nombre: '', apellido: '', dni: '',
-    //     correo: '', localidad: '', telefono: ''
-    // })
+    const [cursos, setCursos] = useState()
+    const [tutor, setTutor] = useState({
+        nombre: '', apellido: '', dni: '',
+        correo: '', localidad: '', telefono: '', idRol: 7,
+        direccion: '', contrasenia: '', sexo: 'M'
+    })
+    const [curso, setCurso] = useState('')
+    const [rol, setRol] = useState('')
+
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
-
-    const [rol, setRol] = useState(0)
     const [roles, setRoles] = useState([{ id: 0, tipo: '' }])
     const { loading, authUser } = useAuth()
 
@@ -35,48 +36,74 @@ export default function NuevoUsuario() {
                     setRoles(res.data)
                 }
             })
-    }, [authUser, loading])
+        axios.get(`${process.env.BASE_URL}/gestion/cursos`)
+            .then(res => {
+                if (res.data) {
+                    setCursos(res.data)
+                }
+            })
+    }, [authUser, loading, router])
 
-
+    const handleTutor = (e) => {
+        setTutor({ ...tutor, [e.target.name]: e.target.value })
+    }
     const handleForm = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value })
     }
-    const handleSelect = (e) => {
-        console.log(e.target.value);
-        setRol(Number.parseInt(e.target.value))
+
+    const handleRol = (e) => {
+        setRol(e.target.value)
         setEsAlumno(e.target.value === '2')
+    }
+    const handleCurso = (e) => {
+        setCurso(e.target.value)
     }
 
     const registrarUsuario = (e) => {
         e.preventDefault()
         usuario.idRol = rol
-        console.log(usuario);
-        axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
-            login: usuario.correo.split('@')[0],
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            dni: usuario.dni,
-            correo: usuario.correo,
-            localidad: usuario.localidad,
-            direccion: usuario.direccion,
-            telefono: usuario.telefono,
-            idRol: usuario.idRol,
-            contrasenia: usuario.contrasenia
-        }).then(res => {
-            const creado = res.data
-            if (creado) {
-                setMensaje("Usuario creado!")
-                setTimeout(() => { router.push('/gestion/usuarios/mantenimiento_usuario') }, 1200)
-            } else {
-                setMensaje("No se pudo crear al usuario")
-                setTimeout(() => { setMensaje("") }, 1200)
-            }
+        usuario.idCurso = curso
 
-        }).catch(err => {
-            console.log(err);
-            setMensaje("Error al crear el usuario")
-            setTimeout(() => { setMensaje("") }, 1200)
-        })
+        console.log("Tutor:", tutor);
+        console.log("Estudiante:", usuario);
+        // axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
+        //     login: tutor.correo.split('@')[0],
+        //     nombre: tutor.nombre,
+        //     apellido: tutor.apellido,
+        //     dni: tutor.dni,
+        //     telefono: tutor.telefono,
+        //     correo: tutor.correo,
+        //     direccion: tutor.direccion,
+        //     localidad: tutor.localidad,
+        //     idRol: tutor.idRol,
+        //     sexo: tutor.sexo,
+        //     contrasenia: tutor.contrasenia
+        // }).then(res => {
+        //     if (res.data) {
+        //         usuario.idTutor = res.data.id
+        //         axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
+        //             login: usuario.correo.split('@')[0],
+        //             nombre: usuario.nombre,
+        //             apellido: usuario.apellido,
+        //             dni: usuario.dni,
+        //             telefono: usuario.telefono,
+        //             correo: usuario.correo,
+        //             direccion: usuario.direccion,
+        //             localidad: usuario.localidad,
+        //             idRol: usuario.idRol,
+        //             idTutor: usuario.idTutor,
+        //             sexo: usuario.sexo,
+        //             contrasenia: usuario.contrasenia
+        //         }).then(res => {
+        //             if (res.data && res.data.id) {
+        //                 setMensaje("Usuario creado!")
+        //                 setTimeout(() => {
+        //                     router.push('/gestion/usuarios/mantenimiento_usuario')
+        //                 }, 1300);
+        //             }
+        //         })
+        //     }
+        // })
     }
     return (
         <Layout title={'Nuevo Usuario'}>
@@ -109,6 +136,20 @@ export default function NuevoUsuario() {
                             <input onChange={handleForm} value={usuario.correo} name="correo" className="form-control" id="inputEmail" type="email" />
                             <label>Correo electronico</label>
                         </div>
+                        {
+                            esAlumno && (
+                                <div className="form-floating row mb-3">
+                                    <select onChange={handleCurso} value={curso} name="curso" className="form-control">
+                                        {
+                                            cursos && cursos.map((c, i) => (
+                                                <option key={i} value={c.id}>{c.curso.nombre} {c.division.division}</option>
+                                            ))
+                                        }
+                                    </select>
+                                    <label>Curso</label>
+                                </div>
+                            )
+                        }
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <div className="form-floating mb-3 mb-md-0">
@@ -137,10 +178,19 @@ export default function NuevoUsuario() {
                                 </div>
                             </div>
                         </div>
+                        <div className="col-md-6">
+                            <div className="form-floating mb-3 mb-md-0">
+                                <select onChange={handleForm} value={usuario.sexo} name="sexo" className="form-control">
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                </select>
+                                <label>Sexo</label>
+                            </div>
+                        </div>
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <div className="form-floating mb-3 mb-md-0">
-                                    <select onChange={handleSelect} value={rol} name="idRol" className="form-control">
+                                    <select onChange={handleRol} value={rol} name="rol" className="form-control">
                                         {
                                             roles && roles.map((r, i) => (
                                                 <option key={i} value={r.id}>{r.tipo}</option>
@@ -163,31 +213,40 @@ export default function NuevoUsuario() {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <div className="form-floating mb-3 mb-md-0">
-                                                    <input onChange={handleForm} value={usuario.nombre} name="nombre" className="form-control" id="inputFirstName" type="text" />
+                                                    <input onChange={handleTutor} value={tutor.nombre} name="nombre" className="form-control" id="inputFirstName" type="text" />
                                                     <label>Nombre</label>
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-floating">
-                                                    <input onChange={handleForm} value={usuario.apellido} name="apellido" className="form-control" id="inputLastName" type="text" />
+                                                    <input onChange={handleTutor} value={tutor.apellido} name="apellido" className="form-control" id="inputLastName" type="text" />
                                                     <label>Apellido</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-floating mb-3">
-                                            <input onChange={handleForm} value={usuario.correo} name="correo" className="form-control" id="inputEmail" type="email" />
+                                            <input onChange={handleTutor} value={tutor.correo} name="correo" className="form-control" id="inputEmail" type="email" />
                                             <label>Correo electronico</label>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="form-floating mb-3 mb-md-0">
+                                                <select onChange={handleTutor} value={tutor.sexo} name="sexo" className="form-control">
+                                                    <option value="M">Masculino</option>
+                                                    <option value="F">Femenino</option>
+                                                </select>
+                                                <label>Sexo</label>
+                                            </div>
                                         </div>
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <div className="form-floating mb-3 mb-md-0">
-                                                    <input onChange={handleForm} value={usuario.dni} name="dni" className="form-control" id="inputFirstName" type="text" />
-                                                    <label>Legajo</label>
+                                                    <input onChange={handleTutor} value={tutor.dni} name="dni" className="form-control" id="inputFirstName" type="text" />
+                                                    <label>Dni</label>
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-floating">
-                                                    <input onChange={handleForm} value={usuario.localidad} name="localidad" className="form-control" id="inputLastName" type="text" />
+                                                    <input onChange={handleTutor} value={tutor.localidad} name="localidad" className="form-control" id="inputLastName" type="text" />
                                                     <label>Localidad</label>
                                                 </div>
                                             </div>
@@ -195,15 +254,21 @@ export default function NuevoUsuario() {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <div className="form-floating mb-3 mb-md-0">
-                                                    <input onChange={handleForm} value={usuario.telefono} name="telefono" className="form-control" id="inputFirstName" type="tel" />
+                                                    <input onChange={handleTutor} value={tutor.telefono} name="telefono" className="form-control" id="inputFirstName" type="tel" />
                                                     <label>Telefono</label>
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-floating">
-                                                    <input onChange={handleForm} value={usuario.direccion} name="direccion" className="form-control" id="inputLastName" type="address" />
+                                                    <input onChange={handleTutor} value={tutor.direccion} name="direccion" className="form-control" id="inputLastName" type="address" />
                                                     <label>Dirección</label>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="form-floating mb-3 mb-md-0">
+                                                <input onChange={handleTutor} value={tutor.contrasenia} name="contrasenia" className="form-control" id="inputPassword" type="password" />
+                                                <label>Contraseña Temporal</label>
                                             </div>
                                         </div>
                                     </div>

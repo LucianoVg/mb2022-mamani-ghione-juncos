@@ -11,15 +11,15 @@ datasource db {
 model alumnoXcursoXdivision {
   id               Int             @id @default(autoincrement())
   anoActual        DateTime?
-  idCursoXdivision Int?
   idUsuario        Int?
   idEstadoAlumno   Int?
   estadoAlumno     estadoAlumno?   @relation(fields: [idEstadoAlumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario          usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  cursoXdivision   cursoXdivision? @relation(fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXDivision   cursoXdivision? @relation(fields: [idCursoXDivision], references: [id])
   asistencia       asistencia[]
   nota             nota[]
   sancion          sancion[]
+  idCursoXDivision Int?
 }
 
 model archivo {
@@ -71,7 +71,6 @@ model cursoXdivision {
   division              division?               @relation(fields: [IdDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
-  sancion               sancion[]
 }
 
 model discapacidad {
@@ -285,8 +284,6 @@ model sancion {
   tipoSancion             tipoSancion?           @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sancionXusuario         sancionXusuario[]
   idAlumnoXCursoXDivision Int?
-  idCursoXDivision        Int?
-  cursoXDivision          cursoXdivision?        @relation(fields: [idCursoXDivision], references: [id])
 }
 
 model sancionXusuario {
@@ -330,18 +327,6 @@ model trimestre {
   reporteXtrimestre reporteXtrimestre[]
 }
 
-model tutor {
-  id        Int       @id @default(autoincrement())
-  nombre    String?
-  apellido  String?
-  dni       String?
-  correo    String?
-  localidad String?
-  telefono  String?
-  direccion String?
-  usuario   usuario[]
-}
-
 model usuario {
   id                    Int                     @id @default(autoincrement())
   login                 String?
@@ -356,9 +341,9 @@ model usuario {
   direccion             String?
   alergias              String?
   idTutor               Int?
+  tutor                 usuario?                @relation("usuarioToUsuario", fields: [idTutor], references: [id], onUpdate: Cascade, onDelete: Cascade)
   idRol                 Int?
   rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
   asistencia            asistencia[]
   asistenciaDocente     asistenciaDocente[]
@@ -372,4 +357,5 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacion          notificacion[]
   sancionXusuario       sancionXusuario[]
+  usuario               usuario[]               @relation("usuarioToUsuario")
 }

@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
@@ -29,7 +30,9 @@ const Home = () => {
     <Layout title={'Instituto "El Salvador"'}>
       {
         authUser && (
-          <a href="/gestion/noticias/agregar_noticias" className="btn btn-primary m-2">Agregar</a>
+          <Link href={'/gestion/noticias/agregar_noticias'}>
+            <a className="btn btn-primary m-2">Agregar</a>
+          </Link>
         )
       }
       <div className="row">

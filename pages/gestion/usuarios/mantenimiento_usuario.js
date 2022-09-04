@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
@@ -24,7 +25,9 @@ export default function MantenimientoUsuario() {
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
             <h1 className="text-center mt-1"><strong>Mantenimiento de Usuarios</strong></h1>
-            <a className="btn btn-primary m-2" href="/gestion/usuarios/nuevo">Nuevo Usuario</a>
+            <Link href={'/gestion/usuarios/nuevo'}>
+                <a className="btn btn-primary m-2" >Nuevo Usuario</a>
+            </Link>
 
             <div className="card mb-4">
                 <div className="card-header">
