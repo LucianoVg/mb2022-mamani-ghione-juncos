@@ -10,6 +10,9 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
             <div className={`${styles.overflow}`}>
                 <Image className={`${styles.card_img_top}`}
                     src={url}
+                    width={300}
+                    height={300}
+                    layout="responsive"
                     alt="Card image cap" />
 
                 {
