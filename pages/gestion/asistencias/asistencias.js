@@ -160,14 +160,17 @@ export default function Notas() {
             })
     }
 
-    const [presente, setPresente] = useState({ Boolean })
-    const [ausente, setAusente] = useState({ Boolean })
-    const [ausenteJus, setausenteJus] = useState({ Boolean })
-    const [llegadaTarde, setllegadaTarde] = useState({ Boolean })
-    const [llegadaTardeJus, setllegadaTardeJus] = useState({ Boolean })
-    const [mediaFalta, setmediaFalta] = useState({ Boolean })
-    const [mediaFaltaJus, setmediaFaltaJus] = useState({ Boolean })
+    const bloquearCheck = (a) => {
+        return  a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
+       
 
+    }
+
+const fecha = new Date()
+
+
+
+console.log()
     return (
         <Layout title={'Notas'}>
 
@@ -176,7 +179,7 @@ export default function Notas() {
                 <h1><strong>Asistencias</strong></h1>
 
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
-                    <div className="col-md-3 hstack me-3 " style={{marginBottom: '5mm'}}>
+                    <div className="col-md-3 hstack me-3 " style={{ marginBottom: '5mm' }}>
                         <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
                         <select name="idCurso" className="form-select " id="inputCurso" style={{ width: '20mm' }} >
 
@@ -185,8 +188,8 @@ export default function Notas() {
                         </select>
                     </div>
                     <div className="g-2" >
-                   
-                        <div className="col-ms-6 hstack" style={{marginBottom: '5mm'}}>
+
+                        <div className="col-ms-6 hstack" style={{ marginBottom: '5mm' }}>
                             <label for="date" className="fw-bold me-2">Fecha hasta:</label>
                             <div className="col-ms-5">
                                 <div className="input-group date" id="datepicker">
@@ -195,7 +198,7 @@ export default function Notas() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-ms-6 hstack" style={{marginBottom: '5mm'}}>
+                        <div className="col-ms-6 hstack" style={{ marginBottom: '5mm' }}>
                             <label for="date" className="fw-bold me-2">Fecha hasta:</label>
                             <div className="col-ms-5">
                                 <div className="input-group date" id="datepicker">
@@ -272,7 +275,7 @@ export default function Notas() {
 
                                     < tr key={i} >
 
-                                        <td className="col-md-1 text-capitalize">{a.fecha}</td>
+                                        <td className="col-md-1 text-capitalize">{new Date(a.fecha).toLocaleDateString()}</td>
                                         <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
                                         <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                         <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
@@ -281,7 +284,7 @@ export default function Notas() {
 
 
                                             <div className="form-check form-switch  ">
-                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" />
+                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
                                             </div>
 
 
@@ -289,7 +292,7 @@ export default function Notas() {
                                         </td>
                                         <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" />
+                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch"  disabled={bloquearCheck(a)}/>
                                                 {/* <input className="form-check-input" type="checkbox" role="switch" value={a.ausente} /> */}
                                             </div>
                                         </td>
@@ -297,32 +300,32 @@ export default function Notas() {
 
 
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.ausenteJustificado}  type="checkbox" role="switch" />
-                                             
+                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)}/>
+
                                             </div>
                                         </td>
                                         <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.llegadaTarde}  type="checkbox" role="switch" />
-                                        
+                                                <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
                                             </div>
                                         </td>
                                         <td className="col-md-1">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" />
-                                        
+                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
                                             </div>
                                         </td>
                                         <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input"  checked={a.mediaFalta} type="checkbox" role="switch" />
-                         
+                                                <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" />
+
                                             </div>
                                         </td>
                                         <td className="col-md-1">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.mediaFaltaJustificada}  type="checkbox" role="switch" />
-                                
+                                                <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" />
+
                                             </div>
                                         </td>
                                     </tr>
