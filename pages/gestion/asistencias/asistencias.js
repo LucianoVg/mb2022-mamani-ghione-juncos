@@ -175,6 +175,77 @@ export default function Notas() {
             <div>
                 <h1><strong>Asistencias</strong></h1>
 
+                <div className="mt-5 " style={{ marginBottom: '20mm' }}>
+                    <div className="col-md-3 hstack me-3 " style={{marginBottom: '5mm'}}>
+                        <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
+                        <select name="idCurso" className="form-select " id="inputCurso" style={{ width: '20mm' }} >
+
+                            <option className="col-md-2"> 1A </option>
+
+                        </select>
+                    </div>
+                    <div className="g-2" >
+                   
+                        <div className="col-ms-6 hstack" style={{marginBottom: '5mm'}}>
+                            <label for="date" className="fw-bold me-2">Fecha hasta:</label>
+                            <div className="col-ms-5">
+                                <div className="input-group date" id="datepicker">
+                                    <input type="date" className="form-control" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-ms-6 hstack" style={{marginBottom: '5mm'}}>
+                            <label for="date" className="fw-bold me-2">Fecha hasta:</label>
+                            <div className="col-ms-5">
+                                <div className="input-group date" id="datepicker">
+                                    <input type="date" className="form-control" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row g-3" >
+                            <div>
+                                <label className="fw-bold me-2" >Buscar alumno: </label>
+                            </div>
+                            <div className="col-md-3 hstack me-5">
+
+                                <label htmlFor="inputNombre" className="fw-bold me-2">Documento: </label>
+                                <input name="Documento" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
+
+
+                                <button type="submit" className="btn input-group-text btn-primary"
+                                >
+                                    <i className='bx bx-search me-1'></i>
+                                </button>
+                            </div>
+                            <div className="col-md-3 hstack me-3">
+
+                                <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
+                                <input name="alumno" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
+
+
+                                <button type="submit" className="btn input-group-text btn-primary"
+                                >
+                                    <i className='bx bx-search me-1'></i>
+                                </button>
+                            </div>
+
+                            <div className="col-md-3 hstack me-3">
+                                <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
+                                <input name="alumno" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
+
+
+                                <button type="submit" className="btn input-group-text btn-primary"
+                                >
+                                    <i className='bx bx-search me-1'></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
                 <div>
                     <table className="table">
@@ -210,42 +281,48 @@ export default function Notas() {
 
 
                                             <div className="form-check form-switch  ">
-                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" />
                                             </div>
 
 
 
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.ausente} />
+                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" />
+                                                {/* <input className="form-check-input" type="checkbox" role="switch" value={a.ausente} /> */}
                                             </div>
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1 ">
 
 
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.ausenteJustificado} />
+                                                <input className="form-check-input" checked={a.ausenteJustificado}  type="checkbox" role="switch" />
+                                             
                                             </div>
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.llegadaTarde} />
+                                                <input className="form-check-input" checked={a.llegadaTarde}  type="checkbox" role="switch" />
+                                        
                                             </div>
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.llegadaTardeJustificada} />
+                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" />
+                                        
                                             </div>
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1 ">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.mediaFalta} />
+                                                <input className="form-check-input"  checked={a.mediaFalta} type="checkbox" role="switch" />
+                         
                                             </div>
                                         </td>
-                                        <td className="col-md-1 text-capitalize">
+                                        <td className="col-md-1">
                                             <div className="form-check form-switch">
-                                                <input className="form-check-input" type="checkbox" role="switch" value={a.mediaFaltaJustificada} />
+                                                <input className="form-check-input" checked={a.mediaFaltaJustificada}  type="checkbox" role="switch" />
+                                
                                             </div>
                                         </td>
                                     </tr>

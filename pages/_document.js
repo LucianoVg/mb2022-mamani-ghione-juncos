@@ -11,6 +11,7 @@ export default function Document() {
 
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 
+
             </Head>
             <body id='body-pd' >
                 <Main />
