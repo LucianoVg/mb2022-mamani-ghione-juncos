@@ -32,8 +32,8 @@ const Sidenav = () => {
         <div className="l-navbar " id="nav-bar">
             <nav className="nav " id='parent'>
                 <div id='child'>
-                    <Link href={'/'}>
-                        <a className="nav_logo">
+                    <Link className="nav_logo" href={'/'}>
+                        <a>
                             <Image alt='logo' style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
                             <span className="nav_logo-name">Instituto <br />&quot;El Salvador&quot;</span>
                         </a>
@@ -76,8 +76,8 @@ const Sidenav = () => {
                                                     menus && menus.map((m, i) => (
                                                         m.menu?.menuSistema.startsWith('Reporte') && (
                                                             <li key={i}>
-                                                                <Link href={m.menu?.url}>
-                                                                    <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                <Link className="nav_link" href={m.menu?.url}>
+                                                                    <a>{m.menu?.menuSistema}</a>
                                                                 </Link>
                                                             </li>
                                                         )
@@ -98,8 +98,8 @@ const Sidenav = () => {
 
                 {
                     !authUser && (
-                        <Link href={'/gestion/cuenta/login'}>
-                            <a className="nav_link sb-sidenav-footer">
+                        <Link className="nav_link sb-sidenav-footer" href={'/gestion/cuenta/login'}>
+                            <a>
                                 <i className='bx bx-log-out nav_icon'></i>
                                 <span className="nav_name">Iniciar Sesion</span>
                             </a>
