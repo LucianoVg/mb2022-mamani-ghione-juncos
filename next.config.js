@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  headers: {
+    basePath: process.env.BASE_URL,
+    crossOrigin: '*'
+  },
   images: {
-    domains: ['firebasestorage.googleapis.com', 'mb2022-mamani-ghione-juncos.vercel.app']
+    domains: ['firebasestorage.googleapis.com']
   },
   env: {
     BASE_URL: process.env.BASE_URL,
