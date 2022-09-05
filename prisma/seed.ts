@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-// import { usuarios } from "./seeds/usuarios";
-// import { roles } from './seeds/roles';
+import { usuarios } from "./seeds/usuarios";
+import { roles } from './seeds/roles';
 import { materias } from './seeds/materias';
 import { cursos } from './seeds/cursos';
 import { divisiones } from './seeds/divisiones';
@@ -8,11 +8,17 @@ import { divisiones } from './seeds/divisiones';
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.cursoXdivision.create({
-        data: {
-            idCurso: 2,
-            IdDivision: 1
-        }
+    const roles = await prisma.rol.findMany()
+    usuarios.map(async (u, i) => {
+        await prisma.usuario.update({
+            data: {
+                correo: u.correo,
+                idRol: roles[i].id
+            },
+            where: {
+                id: i + 1
+            }
+        })
     })
 }
 
