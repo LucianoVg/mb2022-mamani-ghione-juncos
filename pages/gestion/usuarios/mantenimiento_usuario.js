@@ -16,7 +16,7 @@ export default function MantenimientoUsuario() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.BASE_URL}/gestion/usuarios`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios`)
             .then(res => {
                 setUsuarios(res.data)
             })

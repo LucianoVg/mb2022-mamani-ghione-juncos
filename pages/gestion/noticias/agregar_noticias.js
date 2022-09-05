@@ -28,7 +28,7 @@ const AgregarNoticias = () => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
             .then(res => {
                 if (res.data) {
                     setUsuario({

@@ -29,14 +29,14 @@ export default function NuevoUsuario() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.BASE_URL}/gestion/roles`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles`)
             .then(res => {
                 if (res.data) {
                     console.log(res.data);
                     setRoles(res.data)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/cursos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 if (res.data) {
                     setCursos(res.data)

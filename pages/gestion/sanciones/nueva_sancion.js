@@ -20,7 +20,7 @@ export default function NuevaSancion() {
             router.push('/')
         }
 
-        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
             .then(res => {
                 if (res.data) {
                     setUsuario({ id: res.data.id })
@@ -29,20 +29,20 @@ export default function NuevaSancion() {
             })
 
 
-        axios.get(`${process.env.BASE_URL}/gestion/alumnos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
             .then(res => {
                 if (res.data) {
                     setAlumnos(res.data)
                 }
             })
 
-        axios.get(`${process.env.BASE_URL}/gestion/cursos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 if (res.data) {
                     setCursos(res.data)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/sanciones/tipos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
             .then(res => {
                 if (res.data) {
                     setTipoSanciones(res.data)

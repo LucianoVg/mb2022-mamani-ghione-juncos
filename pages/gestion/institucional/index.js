@@ -15,7 +15,7 @@ export default function Institucional() {
 
     const traerFicha = () => {
         setCargando(true)
-        axios.get(`${process.env.BASE_URL}/gestion/institucional`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
             .then(res => {
                 setFichaInstitucional(res.data[0])
                 setCargando(false)

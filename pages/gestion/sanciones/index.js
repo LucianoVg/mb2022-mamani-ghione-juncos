@@ -40,20 +40,20 @@ const Sanciones = () => {
             router.push('/')
         }
 
-        axios.get(`${process.env.BASE_URL}/gestion/cursos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 if (res.data) {
                     setCursos(res.data)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/sanciones`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`)
             .then(res => {
                 if (res.data) {
                     console.log(res.data);
                     setSanciones(res.data)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/alumnos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
             .then(res => {
                 if (res.data) {
                     setAlumnos(res.data)

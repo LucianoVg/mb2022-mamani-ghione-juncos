@@ -24,14 +24,14 @@ export default function DetalleSancion() {
             router.push('/gestion/cuenta/login')
         }
 
-        axios.get(`${process.env.BASE_URL}/gestion/cuenta/${authUser?.email}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
             .then(res => {
                 if (res.data) {
                     setUsuario({ id: res.data.id })
                     console.log(usuario);
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/sanciones/${id}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/${id}`)
             .then(res => {
                 if (res.data) {
                     setSancion(res.data)
@@ -39,20 +39,20 @@ export default function DetalleSancion() {
                     setEsSancionGrupal(res.data.cursoXDivision)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/alumnos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
             .then(res => {
                 if (res.data) {
                     setAlumnos(res.data)
                 }
             })
 
-        axios.get(`${process.env.BASE_URL}/gestion/cursos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 if (res.data) {
                     setCursos(res.data)
                 }
             })
-        axios.get(`${process.env.BASE_URL}/gestion/sanciones/tipos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
             .then(res => {
                 if (res.data) {
                     setTipoSanciones(res.data)

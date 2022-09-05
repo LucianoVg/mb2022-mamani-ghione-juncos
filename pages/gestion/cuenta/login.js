@@ -27,7 +27,7 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        const res = await axios.get(`${process.env.BASE_URL}/gestion/cuenta/${correo}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}`)
         if (res.data) {
             iniciarSesion(correo, password)
                 .then(credencial => {

@@ -72,7 +72,7 @@ export default function EditarFicha() {
         }
         if (id) {
             setCargando(true)
-            axios.get(`${process.env.BASE_URL}/gestion/institucional/${id}`)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${id}`)
                 .then(res => {
                     if (res.data) {
                         console.log(res.data);

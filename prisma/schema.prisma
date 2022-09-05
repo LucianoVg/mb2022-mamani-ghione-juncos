@@ -1,11 +1,12 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model alumnoXcursoXdivision {
@@ -106,7 +107,7 @@ model enfermedad {
   id                   Int                    @id @default(autoincrement())
   descripcion          String?
   usuarioId            Int?
-  usuario              usuario?               @relation(fields: [usuarioId], references: [id])
+  usuario              usuario?               @relation(fields: [usuarioId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   enfermedadesXusuario enfermedadesXusuario[]
 }
 
@@ -341,7 +342,7 @@ model usuario {
   direccion             String?
   alergias              String?
   idTutor               Int?
-  tutor                 usuario?                @relation("usuarioToUsuario", fields: [idTutor], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  tutor                 usuario?                @relation("usuarioToUsuario", fields: [idTutor], references: [id], onUpdate: NoAction, onDelete: NoAction)
   idRol                 Int?
   rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]

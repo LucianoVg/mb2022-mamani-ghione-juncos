@@ -39,7 +39,7 @@ export default function Notas() {
 
 
     const listarCursos = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
                 setCursos(res.data)

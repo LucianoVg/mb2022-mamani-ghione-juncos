@@ -85,7 +85,7 @@ export default function DetallesNoticia() {
             router.push('/gestion/cuenta/login')
         }
         if (id) {
-            axios.get(`${process.env.BASE_URL}/gestion/noticias_novedades/${id}`)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${id}`)
                 .then(res => {
                     console.log(res.data);
                     setNoticia(res.data)
