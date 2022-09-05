@@ -32,8 +32,8 @@ const Sidenav = () => {
         <div className="l-navbar " id="nav-bar">
             <nav className="nav " id='parent'>
                 <div id='child'>
-                    <Link style={{ textDecoration: 'none' }} href={'/'}>
-                        <a className="nav_logo">
+                    <Link href={'/'} className="nav_logo">
+                        <a>
                             <Image alt='logo' style={{ borderRadius: 50 }} src={'/logo_instituto.png'} width={25} height={25} />
                             <span className="nav_logo-name">Instituto <br />&quot;El Salvador&quot;</span>
                         </a>
@@ -53,8 +53,8 @@ const Sidenav = () => {
                                                     menus && menus.map((m, i) => (
                                                         !m.menu?.menuSistema.startsWith('Reporte') && (
                                                             <li key={i}>
-                                                                <Link href={m.menu?.url}>
-                                                                    <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                <Link className="nav_link" href={m.menu?.url}>
+                                                                    {m.menu?.menuSistema}
                                                                 </Link>
                                                             </li>
                                                         )
@@ -76,8 +76,8 @@ const Sidenav = () => {
                                                     menus && menus.map((m, i) => (
                                                         m.menu?.menuSistema.startsWith('Reporte') && (
                                                             <li key={i}>
-                                                                <Link href={m.menu?.url}>
-                                                                    <a className="nav_link" >{m.menu?.menuSistema}</a>
+                                                                <Link className="nav_link" href={m.menu?.url}>
+                                                                    {m.menu?.menuSistema}
                                                                 </Link>
                                                             </li>
                                                         )

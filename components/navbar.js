@@ -8,8 +8,8 @@ export const Navbar = () => {
             <div className="header_toggle">
                 <i className='bx bx-menu' id="header-toggle"></i>
             </div>
-            <Link href={'/gestion/institucional'}>
-                <a className="ms-auto p-2">
+            <Link href={'/gestion/institucional'} className="ms-auto p-2">
+                <a>
                     Institucional
                 </a>
             </Link>
