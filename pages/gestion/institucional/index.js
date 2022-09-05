@@ -25,7 +25,7 @@ export default function Institucional() {
 
     useEffect(() => {
         traerFicha()
-    }, [fichaInstitucional])
+    }, [cargando, fichaInstitucional])
 
     return (
         <Layout title={'Ficha Institucional'}>
