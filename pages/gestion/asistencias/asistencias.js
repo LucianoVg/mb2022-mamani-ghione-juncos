@@ -160,6 +160,13 @@ export default function Notas() {
             })
     }
 
+    const [presente, setPresente] = useState({ Boolean })
+    const [ausente, setAusente] = useState({ Boolean })
+    const [ausenteJus, setausenteJus] = useState({ Boolean })
+    const [llegadaTarde, setllegadaTarde] = useState({ Boolean })
+    const [llegadaTardeJus, setllegadaTardeJus] = useState({ Boolean })
+    const [mediaFalta, setmediaFalta] = useState({ Boolean })
+    const [mediaFaltaJus, setmediaFaltaJus] = useState({ Boolean })
 
     return (
         <Layout title={'Notas'}>
@@ -191,6 +198,7 @@ export default function Notas() {
                         <tbody>
                             {
                                 asistencias && asistencias.map((a, i) => (
+
                                     < tr key={i} >
 
                                         <td className="col-md-1 text-capitalize">{a.fecha}</td>
@@ -199,19 +207,14 @@ export default function Notas() {
                                         <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
                                         <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td>
                                         <td className="col-md-1 ">
-                                            <select className="form-select" aria-label="Default select example">
-                                                <option value="" selected disabled hidden></option>
-                                                <option value="1">Presente</option>
-                                                <option value="2">Ausente</option>
-                                                <option value="3">Ausente Justificado</option>
-                                                <option value="4">Llegada Tarde</option>
-                                                <option value="5">Llegada Tarde Justificada</option>
-                                                <option value="6">Media Falta</option>
-                                                <option value="7">Media Falta Justificada</option>
-                                            </select>
-                                            {/* <div className="form-check form-switch  ">
-                                                <input className="form-check-input pd-1" type="checkbox" role="switch" value={a.presente} />
-                                            </div> */}
+
+
+                                            <div className="form-check form-switch  ">
+                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                            </div>
+
+
+
                                         </td>
                                         <td className="col-md-1 text-capitalize">
                                             <div className="form-check form-switch">
@@ -247,9 +250,7 @@ export default function Notas() {
                                         </td>
                                     </tr>
                                 ))
-
                             }
-
 
                         </tbody>
                     </table>
@@ -262,3 +263,17 @@ export default function Notas() {
 
 }
 
+
+
+// --- PARA LA PAGINA DE EDITAR
+
+// {/* <select className="form-select" aria-label="Default select example">
+//                                                 <option value="" selected disabled hidden></option>
+//                                                 <option value="1">Presente</option>
+//                                                 <option value="2">Ausente</option>
+//                                                 <option value="3">Ausente Justificado</option>
+//                                                 <option value="4">Llegada Tarde</option>
+//                                                 <option value="5">Llegada Tarde Justificada</option>
+//                                                 <option value="6">Media Falta</option>
+//                                                 <option value="7">Media Falta Justificada</option>
+//                                             </select> */}
