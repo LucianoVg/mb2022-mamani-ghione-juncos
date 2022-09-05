@@ -11,6 +11,9 @@
 
 }
 
+Link {
+    text-decoration: none;
+}
 
 #child {
     /* OCULTE LA BARRA DE SCROLL CON ESO */

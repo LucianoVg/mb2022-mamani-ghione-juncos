@@ -7,9 +7,7 @@ import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
 
 export default function Institucional() {
-    const [fichaInstitucional, setFichaInstitucional] = useState({
-        id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: []
-    })
+    const [fichaInstitucional, setFichaInstitucional] = useState()
     const [cargando, setCargando] = useState(true)
     const { authUser } = useAuth()
 
@@ -17,21 +15,22 @@ export default function Institucional() {
         setCargando(true)
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
             .then(res => {
+                console.log(res.data);
                 setFichaInstitucional(res.data[0])
-                setCargando(false)
             }).catch(err => {
                 console.error(err);
             })
+        setCargando(false)
     }
 
     useEffect(() => {
         traerFicha()
-    }, [])
+    }, [fichaInstitucional])
 
     return (
         <Layout title={'Ficha Institucional'}>
             {
-                !cargando && fichaInstitucional.id === 0 && (
+                !cargando && !fichaInstitucional && (
                     <div>
                         <h3 className="text-center">No hay ninguna ficha</h3>
                         {
@@ -46,32 +45,32 @@ export default function Institucional() {
             }
 
             {
-                fichaInstitucional.id !== 0 && (
+                fichaInstitucional && (
                     <div className="m-3">
-                        <Carrusel imagenes={fichaInstitucional.portadasFicha} />
+                        <Carrusel imagenes={fichaInstitucional?.portadasFicha} />
                         {
                             authUser && (
-                                <Link href={`/gestion/institucional/${fichaInstitucional.idUsuario}`}>
+                                <Link href={`/gestion/institucional/${fichaInstitucional?.idUsuario}`}>
                                     <a className="btn btn-primary">Editar Ficha</a>
                                 </Link>
                             )
                         }
 
-                        <h2>{fichaInstitucional.nombreInstitucion}</h2>
-                        <p>{fichaInstitucional.descripcion}</p>
+                        <h2>{fichaInstitucional?.nombreInstitucion}</h2>
+                        <p>{fichaInstitucional?.descripcion}</p>
                         <p></p>
 
                         <div className="line"></div>
 
                         <h2>Telefonos</h2>
-                        <p>Telefono 1: {fichaInstitucional.telefono1}</p>
-                        <p>Telefono 2: {fichaInstitucional.telefono2}</p>
+                        <p>Telefono 1: {fichaInstitucional?.telefono1}</p>
+                        <p>Telefono 2: {fichaInstitucional?.telefono2}</p>
 
                         <div className="line"></div>
 
                         <h2>Oficinas</h2>
-                        <p>Oficina 1: {fichaInstitucional.oficina1}</p>
-                        <p>Oficina 2: {fichaInstitucional.oficina2}</p>
+                        <p>Oficina 1: {fichaInstitucional?.oficina1}</p>
+                        <p>Oficina 2: {fichaInstitucional?.oficina2}</p>
 
                         <div className="line"></div>
                     </div>
