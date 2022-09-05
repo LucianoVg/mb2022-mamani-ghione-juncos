@@ -19,8 +19,8 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log(process.env.BASE_URL);
-    axios.get(`${process.env.BASE_URL}/gestion/noticias_novedades`)
+    console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
+    axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
       .then(res => {
         if (res.data) {
           console.log(res.data);
