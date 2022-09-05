@@ -66,7 +66,7 @@ export default function NuevoUsuario() {
 
         console.log("Tutor:", tutor);
         console.log("Estudiante:", usuario);
-        axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
+        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
             login: tutor.correo.split('@')[0],
             nombre: tutor.nombre,
             apellido: tutor.apellido,
