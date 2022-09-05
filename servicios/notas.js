@@ -36,7 +36,7 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
             alumnoXcursoXdivision: {
                 include: {
                     usuario: true,
-                    cursoXdivision: true
+                    cursoXDivision: true
                 }
             }
 
@@ -47,7 +47,7 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
                 { idMateria: idMateria },
                 {
                     alumnoXcursoXdivision: {
-                        idCursoXdivision: curso
+                        idCursoXDivision: curso
                     }
                 },
                 {

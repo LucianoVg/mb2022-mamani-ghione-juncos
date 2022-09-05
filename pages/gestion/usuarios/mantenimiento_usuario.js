@@ -35,7 +35,7 @@ export default function MantenimientoUsuario() {
                     Usuarios del Sistema
                 </div>
                 <div className="card-body">
-                    <table id="datatablesSimple" className="table table-active">
+                    <table id="datatablesSimple" className="table table-responsive">
                         <thead>
                             <tr>
                                 <th>Dni</th>

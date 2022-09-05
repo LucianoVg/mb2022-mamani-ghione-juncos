@@ -5,7 +5,7 @@ import axios from 'axios'
 import styles from "../../../styles/notas.module.css";
 
 export default function Notas() {
-    const [notas, setNotas] = useState([])
+    const [notas, setNotas] = useState()
 
     const [idMateria, setIdMateria] = useState(1)
     const [idCurso, setIdCurso] = useState(1)
@@ -80,7 +80,7 @@ export default function Notas() {
     }
 
     const defaultTrimestre = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
             .then(res => {
                 console.log(res.data);
                 setNotas(res.data)
@@ -124,7 +124,7 @@ export default function Notas() {
     }
 
     const updateNota = (id, newNota, columnName) => {
-        axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
+        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/update/${id}`, {
             nota: newNota,
             nombreColumna: columnName
         })
@@ -306,7 +306,7 @@ export default function Notas() {
                                     </thead>
                                     <tbody>
                                         {
-                                            notas && notas.map((n, i) => (
+                                            notas && notas?.map((n, i) => (
 
                                                 <tr className="align-justified " key={i}>
                                                     <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.dni}</td>

@@ -4,22 +4,30 @@ import { roles } from './seeds/roles';
 import { materias } from './seeds/materias';
 import { cursos } from './seeds/cursos';
 import { divisiones } from './seeds/divisiones';
+import { menus } from './seeds/menus';
+import { cursosXDivision } from './seeds/cursosXDivision';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    const roles = await prisma.rol.findMany()
-    usuarios.map(async (u, i) => {
-        await prisma.usuario.update({
+    const alumnos = await prisma.usuario.findMany({
+        where: {
+            rol: {
+                tipo: 'Estudiante'
+            }
+        }
+    })
+
+    alumnos.map(async (a) => {
+
+        await prisma.alumnoXcursoXdivision.create({
             data: {
-                correo: u.correo,
-                idRol: roles[i].id
-            },
-            where: {
-                id: i + 1
+                idUsuario: a.id,
+                idCursoXDivision: 1
             }
         })
     })
+
 }
 
 main()

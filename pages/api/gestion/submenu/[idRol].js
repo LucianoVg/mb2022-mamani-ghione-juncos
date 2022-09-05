@@ -1,4 +1,4 @@
-import { FiltrarMenu } from "../../../servicios/menu";
+import { FiltrarMenu } from "../../../../servicios/menu";
 
 export default async function handler(
     req,

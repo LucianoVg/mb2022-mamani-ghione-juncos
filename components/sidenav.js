@@ -12,10 +12,15 @@ const Sidenav = () => {
 
     useEffect(() => {
         if (!loading && authUser) {
-            axios.get(`http://localhost:3000/api/gestion/submenu?idRol=${1}`)
-                .then(r => {
-                    console.log(r.data);
-                    setMenus(r.data)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+                .then(res => {
+                    if (res.data) {
+                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}`)
+                            .then(r => {
+                                console.log(r.data);
+                                setMenus(r.data)
+                            })
+                    }
                 })
         }
     }, [authUser, loading])
