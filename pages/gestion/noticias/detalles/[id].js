@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
+import { Typography } from "@mui/material";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
@@ -29,14 +30,14 @@ export default function DetallesNoticia() {
 
 
     return (
-        <Layout title={'Detalles de la noticia'}>
+        <Layout>
             {
                 noticia.id !== 0 && (
                     <div className="container text-center">
-                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={400} height={400} />
+                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={500} height={400} />
 
-                        <h3 className="text-center">{noticia.titulo}</h3>
-                        <p>{noticia.descripcion}</p>
+                        <Typography component={'h1'} variant="h3">{noticia.titulo}</Typography>
+                        <Typography component={'p'} variant="p">{noticia.descripcion}</Typography>
                     </div>
                 )
             }

@@ -1,12 +1,15 @@
 
 import axios from 'axios'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
 import Pagination from '../components/pagination'
 import TarjetaNovedades from '../components/tarjeta_noticias'
 import paginate from '../utils/paginate'
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from 'next/router'
+import { Grid } from "@mui/material";
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -14,6 +17,8 @@ const Home = () => {
   const pageSize = 5
   const paginateNoticias = paginate(noticias || [], currentPage, pageSize)
   const { authUser } = useAuth()
+  const router = useRouter()
+
   const handlerPageChange = (page) => {
     setCurrentPage(page)
   }
@@ -32,23 +37,24 @@ const Home = () => {
   }, [])
 
   return (
-    <Layout title={'Instituto "El Salvador"'}>
+    <Layout>
       {
         authUser && (
-          <Link href={'/gestion/noticias/agregar_noticias'}>
-            <a className="btn btn-primary m-2">Agregar</a>
-          </Link>
+          <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
+            Agregar
+          </Button>
         )
       }
-      <div className="row">
+      <Grid container spacing={2}>
         {
           paginateNoticias.length > 0 && paginateNoticias.map((n, i) => (
-            <div key={i} className="col-md-4">
+            <Grid key={i} item xs={4}>
               <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-            </div>
+            </Grid>
           ))
         }
-      </div>
+      </Grid>
+
       {
         paginateNoticias.length > 0 && (
           <Pagination

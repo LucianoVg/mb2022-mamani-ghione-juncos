@@ -1,18 +1,10 @@
 import { editarNoticia, eliminarNoticia, traerNoticia } from "../../../../servicios/noticias_novedades"
-import NextCors from 'nextjs-cors';
 
 export default async function handler(
     req,
     res
 ) {
     try {
-        await NextCors(req, res, {
-            // Options
-            methods: ['GET', 'PUT', 'DELETE'],
-            origin: '*',
-            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        });
-
         const { id } = req.query
         switch (req.method) {
             case 'GET':

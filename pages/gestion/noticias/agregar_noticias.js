@@ -4,23 +4,34 @@ import { Layout } from '../../../components/layout';
 import { guardarImagen, traerImagen } from '../../../servicios/portada';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
+import { Typography, Box, TextField, Button } from "@mui/material";
+import { Grid } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import { CardActionArea } from '@mui/material';
 
 const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
         titulo: '',
         descripcion: '',
         url: '',
-        fecha: Date
+        fecha: ''
     })
     var hoy = new Date();
-    const imgRef = useRef(null)
+    const [imagen, setImagen] = useState(null)
     const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
+    const [imagenPrev, setImagenPrev] = useState("/assets/img/placeholder.png")
 
     const handleForm = (e) => {
         setNoticia({
             ...noticia, [e.target.name]: e.target.value
         })
+    }
+    const handleImagen = (e) => {
+        setImagen(e.currentTarget.files[0])
+        setImagenPrev(URL.createObjectURL(e.currentTarget.files[0]))
+        console.log(imagenPrev);
     }
     const { loading, authUser } = useAuth()
 
@@ -45,14 +56,15 @@ const AgregarNoticias = () => {
         e.preventDefault()
         // noticia.fecha = fecha
 
-        const imagen = imgRef.current.files[0]
+        console.log(imagen);
+        console.log(noticia);
         guardarImagen('imagenes_noticias/' + imagen.name, imagen)
             .then(result => {
                 traerImagen('imagenes_noticias/' + imagen.name)
                     .then(url => {
-                        axios.post(`${process.env.BASE_URL}/gestion/noticias_novedades`, {
+                        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`, {
                             titulo: noticia.titulo,
-                            creadaEn: hoy.toUTCString(),
+                            creadaEn: hoy.toLocaleDateString(),
                             url: url,
                             descripcion: noticia.descripcion,
                             idUsuario: usuario.id
@@ -65,35 +77,56 @@ const AgregarNoticias = () => {
     }
 
     return (
-        <Layout title={'Agregar Noticias'}>
-            <div className="row">
-                <div className="col-md-7">
-                    <form method='post' onSubmit={onSubmitData}>
-                        <div className="form-group">
-                            <label >Titulo</label>
-                            <input className='form-control' id='inputName' value={noticia.titulo} onChange={handleForm} type="text" name='titulo' />
-                        </div>
-                        <div className="form-group">
-                            <label >Link Imagen</label>
-                            <input className='form-control' id='inputName' value={noticia.url} ref={imgRef} onChange={handleForm} type="file" accept='image/*' name='url' />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Descripcion</label>
-                            <textarea className='form-control' id='inputSurname' value={noticia.descripcion} onChange={handleForm} name='descripcion' >
-                            </textarea>
-                        </div>
-
-
-                        <div className="form-group row">
-                            <div className="col-sm-10">
-                                <button type="submit" className="btn btn-primary">Crear</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
+        <Layout>
+            <Typography component={'h3'} variant="h4">Nueva Noticia</Typography>
+            <Box component={'form'} onSubmit={onSubmitData} sx={{ mt: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField
+                            margin='normal'
+                            required
+                            fullWidth
+                            id="titulo"
+                            label="Titulo de la noticia"
+                            name="titulo"
+                            autoFocus
+                            onChange={handleForm}
+                            value={noticia.titulo}
+                        />
+                        <TextField
+                            margin='normal'
+                            required
+                            fullWidth
+                            id="titulo"
+                            label="Descripcion de la noticia"
+                            name="descripcion"
+                            autoFocus
+                            multiline
+                            rows={3}
+                            onChange={handleForm}
+                            value={noticia.descripcion}
+                        />
+                        <Button variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Card sx={{ maxWidth: 345, height: 350 }}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    height="350"
+                                    image={imagenPrev}
+                                    alt="portada"
+                                    loading='lazy'
+                                />
+                            </CardActionArea>
+                        </Card>
+                        <Button sx={{ mt: 1 }} variant="outlined" component="label">
+                            Subir Portada
+                            <input hidden id='inputFile' value={noticia.url} onChange={handleImagen} type="file" accept='image/*' name='url' />
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
         </Layout>
     )
 }

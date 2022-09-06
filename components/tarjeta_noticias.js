@@ -1,12 +1,15 @@
 import Image from "next/image";
 import styles from "../styles/tarjetaNoticias.module.css";
 import { useAuth } from "./context/authUserProvider";
+import { Card, CardContent, CardActions, Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const { authUser } = useAuth()
+    const router = useRouter()
 
     return (
-        <div className={`${styles.card}`} >
+        <Card sx={{ maxWidth: 345 }} className={`${styles.card}`} >
             <div className={`${styles.overflow}`}>
                 <Image className={`${styles.card_img_top}`}
                     src={url}
@@ -24,12 +27,16 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 }
             </div>
 
-            <div className="card-body">
-                <h4 className="card-title"><strong>{titulo.substring(0, 20) + '...'}</strong></h4>
-                <p className="card-text">{descripcion.substring(0, 38) + '...'}</p>
-                <a href={`/gestion/noticias/detalles/${id}`} className="btn btn-primary">Más info</a>
-            </div>
-        </div>
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">{titulo.substring(0, 30) + '...'}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {descripcion.substring(0, 39) + '...'}
+                </Typography>
+                <CardActions>
+                    <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info</Button>
+                </CardActions>
+            </CardContent>
+        </Card>
     )
 }
 

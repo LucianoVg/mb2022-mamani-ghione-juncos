@@ -1,28 +1,56 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import * as React from 'react';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+// import createEmotionServer from '@emotion/server/create-instance';
+import theme from '../src/theme';
+import createEmotionCache from '../src/createEmotionCache';
 
-export default function Document() {
-    return (
-        <Html>
-            <Head>
-                <link rel="shortcut icon" href="/logo_instituto.png" type="image/x-icon" />
+export default class MyDocument extends Document {
+    render() {
+        return (
+            <Html lang="en">
+                <Head>
+                    <meta name="theme-color" content={theme.palette.primary.main} />
+                    <link rel="shortcut icon" href="/favicon.ico" />
+                    <meta charSet="utf-8" />
+                    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                    <meta name="description" content="Sistema academico realizado por los integrantes Nicolas Mamani, Luciano Ghione y Nicolas Juncos del colegio Manuel Belgrano." />
+                    <meta name="author" content="Nicolas Mamani, Luciano Ghione, Nicolas Juncos" />
 
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                    crossOrigin="anonymous" />
-
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-
-            </Head>
-            <body id='body-pd' >
-                <Main />
-                <NextScript />
-
-
-                <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-                <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-
-                <script defer src="/js/scripts.js"></script>
-            </body>
-        </Html>
-    )
+                    <link
+                        rel="stylesheet"
+                        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                    />
+                    <meta name="emotion-insertion-point" content="" />
+                    {this.props.emotionStyleTags}
+                </Head>
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        );
+    }
 }
+
+MyDocument.getInitialProps = async (ctx) => {
+    const originalRenderPage = ctx.renderPage;
+
+    const cache = createEmotionCache();
+    // const { extractCriticalToChunks } = createEmotionServer(cache);
+
+    ctx.renderPage = () =>
+        originalRenderPage({
+            enhanceApp: (App) =>
+                function EnhanceApp(props) {
+                    return <App emotionCache={cache} {...props} />;
+                },
+        });
+
+    const initialProps = await Document.getInitialProps(ctx);
+
+    return {
+        ...initialProps,
+        // emotionStyleTags,
+    };
+};

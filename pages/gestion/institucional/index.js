@@ -5,6 +5,8 @@ import Carrusel from "../../../components/carrusel";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
+import { Typography, Button } from "@mui/material";
+import { AddBoxRounded } from "@mui/icons-material";
 
 export default function Institucional() {
     const [fichaInstitucional, setFichaInstitucional] = useState()
@@ -32,11 +34,14 @@ export default function Institucional() {
             {
                 !cargando && !fichaInstitucional && (
                     <div>
-                        <h3 className="text-center">No hay ninguna ficha</h3>
+                        <Typography sx={{ mb: 3 }} component={'h3'} variant="h4">No hay ninguna ficha</Typography>
                         {
                             authUser && (
                                 <Link href={'/gestion/institucional/generar_ficha_institucional'}>
-                                    <a className="btn btn-primary m-2">Nueva Ficha Institucional</a>
+                                    <Button variant="outlined">
+                                        <AddBoxRounded />
+                                        Nueva Ficha Institucional
+                                    </Button>
                                 </Link>
                             )
                         }
