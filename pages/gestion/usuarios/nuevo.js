@@ -67,45 +67,45 @@ export default function NuevoUsuario() {
 
         console.log("Tutor:", tutor);
         console.log("Estudiante:", usuario);
-        // axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-        //     login: tutor.correo.split('@')[0],
-        //     nombre: tutor.nombre,
-        //     apellido: tutor.apellido,
-        //     dni: tutor.dni,
-        //     telefono: tutor.telefono,
-        //     correo: tutor.correo,
-        //     direccion: tutor.direccion,
-        //     localidad: tutor.localidad,
-        //     idRol: tutor.idRol,
-        //     sexo: tutor.sexo,
-        //     contrasenia: tutor.contrasenia
-        // }).then(res => {
-        //     if (res.data) {
-        //         usuario.idTutor = res.data.id
-        //         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-        //             login: usuario.correo.split('@')[0],
-        //             nombre: usuario.nombre,
-        //             apellido: usuario.apellido,
-        //             dni: usuario.dni,
-        //             telefono: usuario.telefono,
-        //             correo: usuario.correo,
-        //             direccion: usuario.direccion,
-        //             localidad: usuario.localidad,
-        //             idRol: usuario.idRol,
-        //             idTutor: usuario.idTutor,
-        //             idCurso: usuario.idCurso,
-        //             sexo: usuario.sexo,
-        //             contrasenia: usuario.contrasenia
-        //         }).then(res => {
-        //             if (res.data && res.data.id) {
-        //                 setMensaje("Usuario creado!")
-        //                 setTimeout(() => {
-        //                     router.push('/gestion/usuarios/mantenimiento_usuario')
-        //                 }, 1300);
-        //             }
-        //         })
-        //     }
-        // })
+        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
+            login: tutor.correo.split('@')[0],
+            nombre: tutor.nombre,
+            apellido: tutor.apellido,
+            dni: tutor.dni,
+            telefono: tutor.telefono,
+            correo: tutor.correo,
+            direccion: tutor.direccion,
+            localidad: tutor.localidad,
+            idRol: tutor.idRol,
+            sexo: tutor.sexo,
+            contrasenia: tutor.contrasenia
+        }).then(res => {
+            if (res.data) {
+                usuario.idTutor = res.data.id
+                axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
+                    login: usuario.correo.split('@')[0],
+                    nombre: usuario.nombre,
+                    apellido: usuario.apellido,
+                    dni: usuario.dni,
+                    telefono: usuario.telefono,
+                    correo: usuario.correo,
+                    direccion: usuario.direccion,
+                    localidad: usuario.localidad,
+                    idRol: usuario.idRol,
+                    idTutor: usuario.idTutor,
+                    idCurso: usuario.idCurso,
+                    sexo: usuario.sexo,
+                    contrasenia: usuario.contrasenia
+                }).then(res => {
+                    if (res.data && res.data.id) {
+                        setMensaje("Usuario creado!")
+                        setTimeout(() => {
+                            router.push('/gestion/usuarios/mantenimiento_usuario')
+                        }, 1300);
+                    }
+                })
+            }
+        })
     }
     return (
         <Layout title={'Nuevo Usuario'}>
