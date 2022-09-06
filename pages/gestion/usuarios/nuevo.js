@@ -84,7 +84,8 @@ export default function NuevoUsuario() {
                 contrasenia: tutor.contrasenia
             }).then(res => {
                 setTutor(res.data)
-                console.log(res.data);
+                setTutor(...res.data)
+                console.log(tutor);
             })
         }
 
