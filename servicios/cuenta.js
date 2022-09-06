@@ -14,8 +14,8 @@ export async function registrarUsuario(
     login, nombre, apellido, correo,
     dni, telefono, localidad,
     direccion, idRol, idTutor = 0,
-    contrasenia, sexo, idCurso) {
-    const usuarioCreado = idTutor !== 0 ? await Prisma.newPrisma().usuario.create({
+    contrasenia, sexo, idCurso = 0) {
+    const usuarioCreado = idTutor !== 0 && idCurso !== 0 ? await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
             nombre: nombre,
