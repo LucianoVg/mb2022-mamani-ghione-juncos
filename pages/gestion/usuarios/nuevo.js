@@ -54,7 +54,7 @@ export default function NuevoUsuario() {
 
     const handleRol = (e) => {
         setRol(e.target.value)
-        setEsAlumno(e.target.value === '2')
+        setEsAlumno(e.target.value === 'Estudiante')
     }
     const handleCurso = (e) => {
         setCurso(e.target.value)
@@ -200,7 +200,7 @@ export default function NuevoUsuario() {
                                     <select onChange={handleRol} value={rol} name="rol" className="form-control">
                                         {
                                             roles && roles.map((r, i) => (
-                                                <option key={i} value={r.id}>{r.tipo}</option>
+                                                <option key={i} value={r.tipo}>{r.tipo}</option>
                                             ))
                                         }
                                     </select>
