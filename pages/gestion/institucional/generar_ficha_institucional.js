@@ -26,7 +26,7 @@ const FichaInstitucional = () => {
                     id: res.data.id
                 })
             })
-    }, [authUser, usuario, loading, router])
+    }, [authUser, usuario, loading])
 
     const imgRef = useRef(null)
 

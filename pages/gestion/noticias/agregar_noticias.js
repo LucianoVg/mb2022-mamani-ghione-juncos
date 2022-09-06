@@ -38,7 +38,7 @@ const AgregarNoticias = () => {
             }).catch(err => {
                 console.log(err);
             })
-    }, [loading, authUser, router])
+    }, [loading, authUser])
 
 
     const onSubmitData = async (e) => {

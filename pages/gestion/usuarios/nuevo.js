@@ -26,6 +26,7 @@ export default function NuevoUsuario() {
     const { loading, authUser } = useAuth()
 
     useEffect(() => {
+        console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
@@ -42,7 +43,7 @@ export default function NuevoUsuario() {
                     setCursos(res.data)
                 }
             })
-    }, [authUser, loading, router])
+    }, [authUser, loading])
 
     const handleTutor = (e) => {
         setTutor({ ...tutor, [e.target.name]: e.target.value })

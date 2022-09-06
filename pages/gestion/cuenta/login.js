@@ -16,7 +16,7 @@ const Login = () => {
         if (!loading && authUser) {
             router.push('/')
         }
-    }, [loading, authUser, router])
+    }, [loading, authUser])
 
 
     const handleCorreo = (e) => {

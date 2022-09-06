@@ -20,7 +20,7 @@ export default function MantenimientoUsuario() {
             .then(res => {
                 setUsuarios(res.data)
             })
-    }, [authUser, loading, router])
+    }, [authUser, loading])
 
     return (
         <Layout title={'Mantenimiento de Usuarios'}>

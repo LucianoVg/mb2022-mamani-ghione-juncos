@@ -59,7 +59,7 @@ const Sanciones = () => {
                     setAlumnos(res.data)
                 }
             })
-    }, [loading, authUser, router])
+    }, [loading, authUser])
 
     return (
         <Layout title={'Sanciones'}>

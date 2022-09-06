@@ -93,7 +93,7 @@ export default function DetallesNoticia() {
                     console.error(err);
                 })
         }
-    }, [id, authUser, loading, router])
+    }, [id, authUser, loading])
 
     return (
         <Layout title={'Detalles de la noticia'}>
