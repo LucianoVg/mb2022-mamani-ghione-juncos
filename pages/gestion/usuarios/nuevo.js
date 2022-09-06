@@ -81,7 +81,7 @@ export default function NuevoUsuario() {
         }).then(res => {
             if (res.data) {
                 usuario.idTutor = res.data.id
-                axios.post(`${process.env.BASE_URL}/gestion/cuenta`, {
+                axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
                     login: usuario.correo.split('@')[0],
                     nombre: usuario.nombre,
                     apellido: usuario.apellido,
