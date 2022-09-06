@@ -275,7 +275,7 @@ console.log()
 
                                     < tr key={i} >
 
-                                        <td className="col-md-1 text-capitalize">{new Date(a.fecha).toLocaleDateString()}</td>
+                                        <td className="col-md-1 text-capitalize">{new Date(a.fecha).toLocaleDateString('en-GB')}</td>
                                         <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
                                         <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                         <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
