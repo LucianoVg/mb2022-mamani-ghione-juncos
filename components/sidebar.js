@@ -1,11 +1,8 @@
 import axios from 'axios'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from './context/authUserProvider'
 import MuiDrawer from '@mui/material/Drawer';
-import theme from '../src/theme'
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import { styled } from '@mui/material/styles';
@@ -15,8 +12,9 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import { HomeOutlined, InfoOutlined } from '@mui/icons-material';
 import { ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
+import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
 import React from 'react'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
