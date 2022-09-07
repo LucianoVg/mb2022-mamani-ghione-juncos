@@ -1,26 +1,27 @@
-
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
-import Pagination from '../components/pagination'
 import TarjetaNovedades from '../components/tarjeta_noticias'
 import paginate from '../utils/paginate'
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
-import { Grid } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
+import { usePagination } from '../components/hooks/paginationHook'
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
-  const [currentPage, setCurrentPage] = useState(1)
+  const [pagina, setPagina] = useState(1)
   const pageSize = 5
-  const paginateNoticias = paginate(noticias || [], currentPage, pageSize)
+  const cantidadPaginas = Math.ceil(noticias?.length / pageSize)
+  const paginacion = usePagination(noticias || [], pageSize)
   const { authUser } = useAuth()
   const router = useRouter()
 
-  const handlerPageChange = (page) => {
-    setCurrentPage(page)
+  const handlerCambioPagina = (e, pagina) => {
+    setPagina(pagina)
+    paginacion.saltar(pagina)
   }
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Home = () => {
       }
       <Grid container spacing={2}>
         {
-          paginateNoticias.length > 0 && paginateNoticias.map((n, i) => (
+          noticias && noticias?.map((n, i) => (
             <Grid key={i} item xs={4}>
               <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
             </Grid>
@@ -56,12 +57,14 @@ const Home = () => {
       </Grid>
 
       {
-        paginateNoticias.length > 0 && (
+        noticias && (
           <Pagination
-            items={noticias.length}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            onPageChange={handlerPageChange} />
+            count={cantidadPaginas}
+            size='large'
+            page={pagina}
+            variant="outlined"
+            shape='circular'
+            onChange={handlerCambioPagina} />
         )
       }
     </Layout>
