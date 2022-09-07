@@ -10,6 +10,18 @@ import { cursosXDivision } from './seeds/cursosXDivision';
 const prisma = new PrismaClient();
 
 async function main() {
+    roles.map(async (r) => {
+        await prisma.rol.create({
+            data: r
+        })
+    })
+
+    usuarios.map(async (u) => {
+        await prisma.usuario.create({
+            data: u
+        })
+    })
+
     // const alumnos = await prisma.usuario.findMany({
     //     where: {
     //         rol: {

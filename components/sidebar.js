@@ -100,7 +100,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                         )
                     }
                     {
-                        menus && menus.map((m, i) => (
+                        menus && menus?.map((m, i) => (
                             <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
                                 <ListItemIcon>
                                     {
