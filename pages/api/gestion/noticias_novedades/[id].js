@@ -1,3 +1,4 @@
+import NextCors from "nextjs-cors/dist";
 import { editarNoticia, eliminarNoticia, traerNoticia } from "../../../../servicios/noticias_novedades"
 
 export default async function handler(
@@ -5,6 +6,12 @@ export default async function handler(
     res
 ) {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'PUT', 'DELETE'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         const { id } = req.query
         switch (req.method) {
             case 'GET':

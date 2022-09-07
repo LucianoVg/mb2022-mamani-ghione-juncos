@@ -5,13 +5,13 @@ export default async function handler(
     req,
     res
 ) {
-    await NextCors(req, res, {
-        // Options
-        methods: ['GET', 'POST'],
-        origin: '*',
-        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    });
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'POST'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         switch (req.method) {
             case 'POST':
                 const { titulo, creadaEn, url, descripcion, idUsuario } = req.body

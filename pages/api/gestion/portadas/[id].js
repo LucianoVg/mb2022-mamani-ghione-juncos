@@ -2,13 +2,13 @@ import NextCors from "nextjs-cors/dist";
 import { editarPortadas, traerPortadas } from "../../../../servicios/ficha_institucional";
 
 export default async function handler(req, res) {
-    await NextCors(req, res, {
-        // Options
-        methods: ['GET', 'PUT'],
-        origin: '*',
-        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    });
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'PUT'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         const { id } = req.query
         if (req.method === 'PUT') {
             const { nombre, url, fichaInstitucionalId } = req.body
