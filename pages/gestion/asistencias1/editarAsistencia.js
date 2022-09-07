@@ -52,11 +52,12 @@ const EditarAsitencia = () => {
         if (asistencias.mediaFalta === 1) {
             setAsistenciaActual ='a.mediaFalta'
         }
-        if (asistencias.mediaFaltaJustificad === 1) {
+        if (asistencias.mediaFaltaJustificada === 1) {
             setAsistenciaActual = 'a.mediaFaltaJustificada '
         }
     }
 
+    
 
     return (
         <Layout title={'Editar Asistencia'}>
@@ -77,11 +78,24 @@ const EditarAsitencia = () => {
                                     <p style={{ fontSize: "20px" }}>{a.alumnoXcursoXdivision?.usuario?.apellido} {a.alumnoXcursoXdivision?.usuario?.nombre}</p>
 
                                 </div>
-                                <div className="form-group col-md-4" style={{ float: 'right' }}>
-                                    <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Cargado por</strong></label>
-                                    <p style={{ fontSize: "20px" }}>{a.usuario?.nombre} {a.usuario?.apellido}</p>
+                                {
+                                                a.motivo != null ? (
+                                                    <div className="form-group col-md-4" style={{ float: 'right' }}>
+                                                    <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Editado por</strong></label>
+                                                    <p style={{ fontSize: "20px" }}>{a.usuario?.nombre} {a.usuario?.apellido}</p>
+                
+                                                </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-group col-md-4" style={{ float: 'right' }}>
+                                                        <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Cargado por</strong></label>
+                                                        <p style={{ fontSize: "20px" }}>{a.usuario?.nombre} {a.usuario?.apellido}</p>
+                    
+                                                    </div>
 
-                                </div>
+                                                    )
+                                            }
+         
                             </div>
                             <div className='row g-3'>
 
