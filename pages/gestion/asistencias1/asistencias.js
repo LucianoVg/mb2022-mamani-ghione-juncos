@@ -336,7 +336,7 @@ export default function Notas() {
                                             </div>
                                         </td>
                                         <td>
-                                         <a className="btn btn-primary" href="http://localhost:3000/gestion/asistencias/editarAsistencia">Editar</a>
+                                         <a className="btn btn-primary" href="http://localhost:3000/gestion/asistencias1/editarAsistencia">Editar</a>
                                             
                                         </td>
                                     </tr>

@@ -74,6 +74,57 @@ export async function TraerAsistencias() {
     return asistencias
 }
 
+export async function TraerAsistenciasTest() {
+
+    const asistencias = await prisma.asistencia.findMany({
+
+        include: {
+            usuario: true,
+            alumnoXcursoXdivision: {
+                include: {
+                    usuario: true,
+                    cursoXdivision: true
+                }
+            }
+
+        },
+        where: {
+            id: 1
+        }
+        // where: {
+        //     AND: [
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 idCursoXdivision: curso
+        //             }
+        //         },
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 usuario: {
+        //                     nombre: {
+        //                         startsWith: alumno.split(' ')[0]
+        //                     }
+        //                 }
+        //             },
+        //         },
+        //         {
+        //             alumnoXcursoXdivision: {
+        //                 usuario: {
+        //                     apellido: {
+        //                         startsWith: alumno.split(' ')[1]
+        //                     }
+        //                 }
+        //             },
+        //         }
+        //     ]
+        // }
+    })
+    console.log(asistencias);
+    return asistencias
+}
+
+
+
 export async function updateAsistencia(idNota, notaNueva, columnName) {
 
     switch (columnName) {
