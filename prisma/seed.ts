@@ -10,23 +10,23 @@ import { cursosXDivision } from './seeds/cursosXDivision';
 const prisma = new PrismaClient();
 
 async function main() {
-    const alumnos = await prisma.usuario.findMany({
-        where: {
-            rol: {
-                tipo: 'Estudiante'
-            }
-        }
-    })
+    // const alumnos = await prisma.usuario.findMany({
+    //     where: {
+    //         rol: {
+    //             tipo: 'Estudiante'
+    //         }
+    //     }
+    // })
 
-    alumnos.map(async (a) => {
+    // alumnos.map(async (a) => {
 
-        await prisma.alumnoXcursoXdivision.create({
-            data: {
-                idUsuario: a.id,
-                idCursoXDivision: 1
-            }
-        })
-    })
+    //     await prisma.alumnoXcursoXdivision.create({
+    //         data: {
+    //             idUsuario: a.id,
+    //             idCursoXDivision: 1
+    //         }
+    //     })
+    // })
 
 }
 
