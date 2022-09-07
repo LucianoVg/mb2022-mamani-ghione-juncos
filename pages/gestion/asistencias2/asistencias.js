@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import styles from "../../../styles/notas.module.css";
+
 
 export default function Notas() {
     // const [notas, setNotas] = useState([])
@@ -15,7 +15,7 @@ export default function Notas() {
     // const [alumno, setAlumno] = useState("")
 
     // const [materias, setMaterias] = useState()
-    // const [cursos, setCursos] = useState()
+    const [cursos, setCursos] = useState()
     // const [nota, setNota] = useState(0);
     // const [columnName, setColumnName] = useState("");
 
@@ -38,15 +38,15 @@ export default function Notas() {
     // }, [trimestre, idMateria, alumno, idCurso])
 
 
-    // const listarCursos = () => {
-    //     axios.get(`http://localhost:3000/api/gestion/notas/curso`)
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setCursos(res.data)
-    //         }).catch(err => {
-    //             console.error(error);
-    //         })
-    // }
+    const listarCursos = () => {
+        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
+            .then(res => {
+                console.log(res.data);
+                setCursos(res.data)
+            }).catch(err => {
+                console.error(error);
+            })
+    }
     // const listarMaterias = () => {
     //     axios.get(`http://localhost:3000/api/gestion/notas/materias`)
     //         .then(res => {
@@ -146,7 +146,7 @@ export default function Notas() {
 
     useEffect(() => {
         listarAsistencias()
-
+        listarCursos()
     }, [])
 
     const [asistencias, setAsistencias] = useState([])
@@ -161,16 +161,38 @@ export default function Notas() {
     }
 
     const bloquearCheck = (a) => {
-        return  a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
-       
+        return (
+            a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
+        )
+
+
+    }
+    const [inEditMode, setInEditMode] = useState({
+        status: false,
+        rowKey: null
+    });
+    const onEdit = (id) => {
+        setInEditMode({
+            status: true,
+            rowKey: id
+        })
 
     }
 
-const fecha = new Date()
+    const onSave = (id, newNota, columnName) => {
+        updateNota(id, newNota, columnName);
+    }
 
+    const onCancel = () => {
+        // reset the inEditMode state value
+        setInEditMode({
+            status: false,
+            rowKey: null
+        })
+        // // reset the unit price state value
+        // setNota(0);
+    }
 
-
-console.log()
     return (
         <Layout title={'Notas'}>
 
@@ -182,8 +204,12 @@ console.log()
                     <div className="col-md-3 hstack me-3 " style={{ marginBottom: '5mm' }}>
                         <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
                         <select name="idCurso" className="form-select " id="inputCurso" style={{ width: '20mm' }} >
+                            {
+                                cursos && cursos.map((c) => (
+                                    <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
+                                ))
+                            }
 
-                            <option className="col-md-2"> 1A </option>
 
                         </select>
                     </div>
@@ -266,6 +292,7 @@ console.log()
                                 <th scope="col">Llegada Tarde Justificada</th>
                                 <th scope="col">Media Falta</th>
                                 <th scope="col">Media Falta Justificada</th>
+                                <th scope="col">Acción</th>
 
                             </tr>
                         </thead>
@@ -281,52 +308,163 @@ console.log()
                                         <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
                                         <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td>
                                         <td className="col-md-1 ">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                        </div>
 
+                                                    )
+                                            }
 
-                                            <div className="form-check form-switch  ">
-                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-                                            </div>
 
 
 
                                         </td>
                                         <td className="col-md-1 ">
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch"  disabled={bloquearCheck(a)}/>
-                                                {/* <input className="form-check-input" type="checkbox" role="switch" value={a.ausente} /> */}
-                                            </div>
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                            <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                        </div>
+
+                                                    )
+                                            }
+
+
                                         </td>
                                         <td className="col-md-1 ">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                        <input className="form-check-input" checked={a.ausenteJustificado}  type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+        
+                                                    </div>
 
+                                                    )
+                                            }
 
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)}/>
-
-                                            </div>
+                                        
                                         </td>
                                         <td className="col-md-1 ">
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                        {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                        <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+        
+                                                    </div>
 
-                                            </div>
+                                                    )
+                                            }
+                                            
                                         </td>
                                         <td className="col-md-1">
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                        {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                        <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+        
+                                                    </div>
 
-                                            </div>
+                                                    )
+                                            }
+                            
                                         </td>
                                         <td className="col-md-1 ">
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" />
+                                        {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                        <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+        
+                                                    </div>
 
-                                            </div>
+                                                    )
+                                            }
+                                         
                                         </td>
                                         <td className="col-md-1">
-                                            <div className="form-check form-switch">
-                                                <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" />
+                                        {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <div className="form-check form-switch  ">
+                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="form-check form-switch">
+                                                        <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+        
+                                                    </div>
 
-                                            </div>
+                                                    )
+                                            }
+                                      
+                                        </td>
+                                        <td>
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+
+                                                    <React.Fragment>
+                                                        <div className="hstack">
+                                                            <button 
+                                                                className="btn btn-primary "
+                                                            // onClick={() => onSave(n.id, nota, columnName)}
+                                                            >
+                                                                Save
+                                                            </button>
+
+                                                            <button
+                                                                className="btn btn-secondary"
+                                                                style={{ marginLeft: 8 }}
+                                                                onClick={() => onCancel()}
+                                                            >
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    </React.Fragment>
+                                                ) : (
+                                                    <button
+                                                        className=" btn btn-primary"
+                                                        onClick={() => setInEditMode({
+                                                            status: true,
+                                                            rowKey: i
+                                                        })}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                )
+                                            }
+
                                         </td>
                                     </tr>
                                 ))

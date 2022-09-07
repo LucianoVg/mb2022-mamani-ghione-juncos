@@ -44,8 +44,9 @@ model asistencia {
   llegadaTardeJustificada Boolean?
   mediaFalta              Boolean?
   mediaFaltaJustificada   Boolean?
-  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  motivo                  String?
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model asistenciaDocente {
