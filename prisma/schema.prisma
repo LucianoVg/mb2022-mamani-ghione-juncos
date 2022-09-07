@@ -136,14 +136,6 @@ model fechaExamen {
   materia   materia?  @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model portadaFicha {
-  id                   Int                 @id @default(autoincrement())
-  nombre               String
-  url                  String
-  fichaInstitucionalId Int?
-  fichaInstitucional   fichaInstitucional? @relation(fields: [fichaInstitucionalId], references: [id])
-}
-
 model fichaInstitucional {
   id                Int            @id @default(autoincrement())
   nombreInstitucion String?
@@ -182,6 +174,21 @@ model materialEstudio {
   idUsuario   Int?
   usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   archivo     archivo?  @relation(fields: [idArchivo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model menu {
+  id          Int        @id @default(autoincrement())
+  menuSistema String?
+  url         String?
+  menuXrol    menuXrol[]
+}
+
+model menuXrol {
+  id     Int   @id @default(autoincrement())
+  idRol  Int?
+  idMenu Int?
+  menu   menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model nota {
@@ -229,35 +236,20 @@ model permisos {
   permisosXrol permisosXrol[]
 }
 
-model menu {
-  id          Int        @id @default(autoincrement())
-  menuSistema String?
-  url         String?
-  menuXrol    menuXrol[]
-}
-
-model rol {
-  id           Int            @id @default(autoincrement())
-  tipo         String?
-  menuXrol     menuXrol[]
-  permisosXrol permisosXrol[]
-  usuario      usuario[]
-}
-
-model menuXrol {
-  id     Int   @id @default(autoincrement())
-  idRol  Int?
-  idMenu Int?
-  menu   menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
 model permisosXrol {
   id         Int       @id @default(autoincrement())
   idRol      Int?
   idPermisos Int?
   permisos   permisos? @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol        rol?      @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model portadaFicha {
+  id                   Int                 @id @default(autoincrement())
+  nombre               String
+  url                  String
+  fichaInstitucionalId Int?
+  fichaInstitucional   fichaInstitucional? @relation(fields: [fichaInstitucionalId], references: [id])
 }
 
 model reporte {
@@ -276,6 +268,14 @@ model reporteXtrimestre {
   reporte          reporte?   @relation(fields: [idReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trimestre        trimestre? @relation(fields: [IdTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   nota             nota?      @relation(fields: [IdAlumnoXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model rol {
+  id           Int            @id @default(autoincrement())
+  tipo         String?
+  menuXrol     menuXrol[]
+  permisosXrol permisosXrol[]
+  usuario      usuario[]
 }
 
 model sancion {
@@ -322,6 +322,18 @@ model trimestre {
   reporteXtrimestre reporteXtrimestre[]
 }
 
+model tutor {
+  id        Int       @id @default(autoincrement())
+  nombre    String?
+  apellido  String?
+  dni       String?
+  correo    String?
+  localidad String?
+  telefono  String?
+  direccion String?
+  usuario   usuario[]
+}
+
 model usuario {
   id                    Int                     @id @default(autoincrement())
   login                 String?
@@ -352,16 +364,4 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacion          notificacion[]
   sancionXusuario       sancionXusuario[]
-}
-
-model tutor {
-  id        Int       @id @default(autoincrement())
-  nombre    String?
-  apellido  String?
-  dni       String?
-  correo    String?
-  localidad String?
-  telefono  String?
-  direccion String?
-  usuario   usuario[]
 }
