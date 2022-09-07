@@ -1,7 +1,14 @@
+import NextCors from "nextjs-cors/dist";
 import { actualizarSancion, obtenerSancion } from "../../../../servicios/sanciones"
 
 export default async function handler(req, res) {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'PUT'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         if (req.method === 'GET') {
             const { id } = req.query
             const sancion = await obtenerSancion(Number.parseInt(id))

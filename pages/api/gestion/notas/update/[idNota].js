@@ -1,9 +1,16 @@
+import NextCors from "nextjs-cors/dist";
 import { updateNota } from "../../../../../servicios/notas"
 
 export default async function handler(
     req,
     res
 ) {
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
     try {
         const { idNota } = req.query
         const { nota, nombreColumna } = req.body

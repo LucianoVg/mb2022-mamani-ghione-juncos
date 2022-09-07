@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import NextCors from "nextjs-cors/dist";
 import { Prisma } from "../../../servicios/prisma"
 
 export default async function handler(
@@ -6,6 +6,12 @@ export default async function handler(
     res
 ) {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'POST'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         if (req.method === 'POST') {
 
         } else {
