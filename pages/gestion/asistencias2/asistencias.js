@@ -282,9 +282,9 @@ export default function Notas() {
                             <tr>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Documento</th>
-                                <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
-                                <th scope="col">Preceptor</th>
+                                <th scope="col">Nombre</th>
+                                {/* <th scope="col">Preceptor</th> */}
                                 <th scope="col">Presente</th>
                                 <th scope="col">Ausente</th>
                                 <th scope="col">Ausente Justificado</th>
@@ -300,173 +300,356 @@ export default function Notas() {
                             {
                                 asistencias && asistencias.map((a, i) => (
 
-                                    < tr key={i} >
+                                    a.motivo != null ? (
 
-                                        <td className="col-md-1 text-capitalize">{new Date(a.fecha).toLocaleDateString('en-GB')}</td>
-                                        <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
-                                        <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                        <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                        <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td>
-                                        <td className="col-md-1 ">
-                                            {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
+                                        < tr className="table-active" key={i} >
+
+                                            <td className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</td>
+                                            <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
+                                            <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                            <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                            {/* <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td> */}
+                                            <td className="col-md-1 ">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            </div>
 
-                                                    )
-                                            }
+                                                        )
+                                                }
 
 
 
 
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                            <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-
+                                            </td>
+                                            <td className="col-md-1 ">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
-                                                    )
-                                            }
+                                                            </div>
+
+                                                        )
+                                                }
 
 
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                        <input className="form-check-input" checked={a.ausenteJustificado}  type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-        
-                                                    </div>
+                                            </td>
+                                            <td className="col-md-1 ">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
-                                                    )
-                                            }
+                                                            </div>
 
-                                        
-                                        </td>
-                                        <td className="col-md-1 ">
-                                        {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                        <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-        
-                                                    </div>
+                                                        )
+                                                }
 
-                                                    )
-                                            }
-                                            
-                                        </td>
-                                        <td className="col-md-1">
-                                        {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                        <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-        
-                                                    </div>
 
-                                                    )
-                                            }
-                            
-                                        </td>
-                                        <td className="col-md-1 ">
-                                        {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                        <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-        
-                                                    </div>
+                                            </td>
+                                            <td className="col-md-1 ">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
-                                                    )
-                                            }
-                                         
-                                        </td>
-                                        <td className="col-md-1">
-                                        {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
-                                                    <div className="form-check form-switch  ">
-                                                        <input className="form-check-input pd-1"  type="checkbox" role="switch" />
-                                                    </div>
-                                                ) :
-                                                    (
-                                                        <div className="form-check form-switch">
-                                                        <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-        
-                                                    </div>
+                                                            </div>
 
-                                                    )
-                                            }
-                                      
-                                        </td>
-                                        <td>
-                                            {
-                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                        )
+                                                }
 
-                                                    <React.Fragment>
-                                                        <div className="hstack">
-                                                            <button 
-                                                                className="btn btn-primary "
-                                                            // onClick={() => onSave(n.id, nota, columnName)}
-                                                            >
-                                                                Save
-                                                            </button>
+                                            </td>
+                                            <td className="col-md-1">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
+                                                            </div>
+
+                                                        )
+                                                }
+
+                                            </td>
+                                            <td className="col-md-1 ">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                            </div>
+
+                                                        )
+                                                }
+
+                                            </td>
+                                            <td className="col-md-1">
+                                                {
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                        <div className="form-check form-switch  ">
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="form-check form-switch">
+                                                                <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                            </div>
+
+                                                        )
+                                                }
+
+                                            </td>
+                                            <td className="col-md-2">
+                                                {
+
+                                                    inEditMode.status && inEditMode.rowKey === i ? (
+
+                                                        <React.Fragment>
+                                                            <div className="hstack">
+                                                                <button
+                                                                    className="btn btn-primary "
+                                                                // onClick={() => onSave(n.id, nota, columnName)}
+                                                                >
+                                                                    Save
+                                                                </button>
+
+                                                                <button
+                                                                    className="btn btn-secondary"
+                                                                    style={{ marginLeft: 8 }}
+                                                                    onClick={() => onCancel()}
+                                                                >
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </React.Fragment>
+                                                    ) : (
+                                                        <div className="hstack gap-2">
                                                             <button
-                                                                className="btn btn-secondary"
-                                                                style={{ marginLeft: 8 }}
-                                                                onClick={() => onCancel()}
+                                                                className=" btn btn-primary"
+                                                                onClick={() => setInEditMode({
+                                                                    status: true,
+                                                                    rowKey: i
+                                                                })}
                                                             >
-                                                                Cancel
+                                                                Editar
                                                             </button>
-                                                        </div>
-                                                    </React.Fragment>
-                                                ) : (
-                                                    <button
-                                                        className=" btn btn-primary"
-                                                        onClick={() => setInEditMode({
-                                                            status: true,
-                                                            rowKey: i
-                                                        })}
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                )
-                                            }
 
-                                        </td>
-                                    </tr>
+                                                            <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias1/editarAsistencia">Info.</a>
+                                                        </div>
+                                                    )
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    ) :
+                                        (
+                                            < tr key={i} >
+
+                                                <td className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</td>
+                                                <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
+                                                <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                            <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                                {/* <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td> */}
+                                                <td className="col-md-1 ">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch  ">
+                                                                    <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                </div>
+
+                                                            )
+                                                    }
+
+
+
+
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="col-md-1">
+                                                    {
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            <div className="form-check form-switch  ">
+                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="form-check form-switch">
+                                                                    <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+
+                                                                </div>
+
+                                                            )
+                                                    }
+
+                                                </td>
+                                                <td className="col-md-2">
+                                                    {
+
+                                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                                            <React.Fragment>
+                                                                <div className="hstack">
+                                                                    <button
+                                                                        className="btn btn-primary "
+                                                                    // onClick={() => onSave(n.id, nota, columnName)}
+                                                                    >
+                                                                        Save
+                                                                    </button>
+
+                                                                    <button
+                                                                        className="btn btn-secondary"
+                                                                        style={{ marginLeft: 8 }}
+                                                                        onClick={() => onCancel()}
+                                                                    >
+                                                                        Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </React.Fragment>
+                                                        ) : (
+                                                            <div className="hstack gap-2">
+                                                                <button
+                                                                    className=" btn btn-primary"
+                                                                    onClick={() => setInEditMode({
+                                                                        status: true,
+                                                                        rowKey: i
+                                                                    })}
+                                                                >
+                                                                    Editar
+                                                                </button>
+
+                                                                <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias1/editarAsistencia">Info.</a>
+                                                            </div>
+                                                        )
+                                                    }
+
+                                                </td>
+                                            </tr>
+                                        )
+
                                 ))
                             }
 

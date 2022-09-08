@@ -36,7 +36,12 @@ export async function TraerAsistencias() {
             alumnoXcursoXdivision: {
                 include: {
                     usuario: true,
-                    cursoXdivision: true
+                    cursoXdivision: {
+                        include: {
+                            curso: true,
+                            division: true
+                        }
+                    }
                 }
             }
 
@@ -83,13 +88,18 @@ export async function TraerAsistenciasTest() {
             alumnoXcursoXdivision: {
                 include: {
                     usuario: true,
-                    cursoXdivision: true
+                    cursoXdivision: {
+                        include: {
+                            curso: true,
+                            division: true
+                        }
+                    }
                 }
             }
 
         },
         where: {
-            id: 1
+            id: 14
         }
         // where: {
         //     AND: [
