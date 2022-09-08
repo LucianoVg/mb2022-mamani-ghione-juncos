@@ -444,7 +444,7 @@ export default function Notas() {
                                                                             className="btn btn-primary "
                                                                             onClick={() => onSave(n.id, nota, columnName)}
                                                                         >
-                                                                            Save
+                                                                            Actualizar
                                                                         </button>
 
                                                                         <button
@@ -452,7 +452,7 @@ export default function Notas() {
                                                                             style={{ marginLeft: 8 }}
                                                                             onClick={() => onCancel()}
                                                                         >
-                                                                            Cancel
+                                                                            Cancelar
                                                                         </button>
                                                                     </div>
                                                                 </React.Fragment>
@@ -464,7 +464,7 @@ export default function Notas() {
                                                                         rowKey: i
                                                                     })}
                                                                 >
-                                                                    Edit
+                                                                    Editar
                                                                 </button>
                                                             )
                                                         }

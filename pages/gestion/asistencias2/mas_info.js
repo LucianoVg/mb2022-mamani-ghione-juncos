@@ -200,7 +200,7 @@ const EditarAsitencia = () => {
                             <div className='me-3'>
                                 <div className="form-label col-md-4" >
                                     {/* <div className="form-label col-md-4  has-validation" > */}
-                                    <label style={{ fontSize: "25px" }} ><strong>Motivo de Modificación</strong></label>
+                                    <label style={{ fontSize: "25px" }} ><strong>Justificación</strong></label>
                                     <textarea className="form-control" style={{resize: 'none', height: '200px', backgroundColor: 'white'}} rows="3" disabled value={a.motivo} ></textarea>
                                     {/* <textarea className="form-control " rows="3" required ></textarea> */}
                                     {/* <div className="invalid-feedback">

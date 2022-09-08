@@ -5,99 +5,13 @@ import axios from 'axios'
 
 
 export default function Notas() {
-    // const [notas, setNotas] = useState([])
+
 
     // const [idMateria, setIdMateria] = useState(1)
-    // const [idCurso, setIdCurso] = useState(1)
 
-    // const [nombreAlumno, setNombreAlumno] = useState("")
-    // const [apellidoAlumno, setApellidoAlumno] = useState("")
-    // const [alumno, setAlumno] = useState("")
 
-    // const [materias, setMaterias] = useState()
-    const [cursos, setCursos] = useState()
-    // const [nota, setNota] = useState(0);
     // const [columnName, setColumnName] = useState("");
 
-    // const [inEditMode, setInEditMode] = useState({
-    //     status: false,
-    //     rowKey: null
-    // });
-    // const [trimestre, setTrimestre] = useState({
-    //     id: "home0",
-    //     aria: "home-tab0",
-    //     idTrimestre: 1
-
-    // })
-
-    // useEffect(() => {
-    //     defaultTrimestre()
-    //     listarMaterias()
-    //     listarCursos()
-    //     // filtros()
-    // }, [trimestre, idMateria, alumno, idCurso])
-
-
-    const listarCursos = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
-            .then(res => {
-                console.log(res.data);
-                setCursos(res.data)
-            }).catch(err => {
-                console.error(error);
-            })
-    }
-    // const listarMaterias = () => {
-    //     axios.get(`http://localhost:3000/api/gestion/notas/materias`)
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setMaterias(res.data)
-    //         }).catch(err => {
-    //             console.error(error);
-    //         })
-    // }
-
-    // const handleMateria = (e) => {
-    //     setIdMateria(Number.parseInt(e.target.value))
-    //     console.log(idMateria);
-    //     defaultTrimestre()
-    // }
-
-    // const handleCurso = (e) => {
-    //     setIdCurso(Number.parseInt(e.target.value))
-    //     defaultTrimestre()
-    // }
-    // const handleNombreAlumno = (e) => {
-    //     setNombreAlumno(e.target.value)
-    //     setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-    //     defaultTrimestre()
-    // }
-
-    // const handleApellidoAlumno = (e) => {
-    //     setApellidoAlumno(e.target.value)
-    //     setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-    //     defaultTrimestre()
-    // }
-
-    // const listarAsistencias = () => {
-    //     axios.get(`http://localhost:3000/api/gestion/asistencias/${alumno}/${idCurso}`)
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setNotas(res.data)
-    //         }).catch(err => {
-    //             console.error(error);
-    //         })
-    // }
-
-
-
-
-    // const onEdit = (id) => {
-    //     setInEditMode({
-    //         status: true,
-    //         rowKey: id
-    //     })
-    // }
 
     // const updateNota = (id, newNota, columnName) => {
     //     axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
@@ -142,16 +56,28 @@ export default function Notas() {
     //     setNota(Number.parseInt(e.target.value))
     //     setColumnName(e.target.name)
     // }
+    const [idCurso, setIdCurso] = useState(1)
+
+    const [nombreAlumno, setNombreAlumno] = useState("")
+    const [apellidoAlumno, setApellidoAlumno] = useState("")
+    const [alumno, setAlumno] = useState("")
+
+
+    const [cursos, setCursos] = useState()
+
 
 
     useEffect(() => {
         listarAsistencias()
         listarCursos()
-    }, [])
+    }, [alumno, idCurso])
+
+
+
 
     const [asistencias, setAsistencias] = useState([])
     const listarAsistencias = () => {
-        axios.get(`http://localhost:3000/api/gestion/asistencias/asistencia_alumno`)
+        axios.get(`http://localhost:3000/api/gestion/asistencias/${alumno}/${idCurso}`)
             .then(res => {
                 console.log(res.data);
                 setAsistencias(res.data)
@@ -160,6 +86,31 @@ export default function Notas() {
             })
     }
 
+    
+    const listarCursos = () => {
+        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
+            .then(res => {
+                console.log(res.data);
+                setCursos(res.data)
+            }).catch(err => {
+                console.error(error);
+            })
+    }
+    const handleCurso = (e) => {
+        setIdCurso(Number.parseInt(e.target.value))
+        defaultTrimestre()
+    }
+    const handleNombreAlumno = (e) => {
+        setNombreAlumno(e.target.value)
+        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
+        defaultTrimestre()
+    }
+
+    const handleApellidoAlumno = (e) => {
+        setApellidoAlumno(e.target.value)
+        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
+        defaultTrimestre()
+    }
     const bloquearCheck = (a) => {
         return (
             a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
@@ -194,7 +145,7 @@ export default function Notas() {
     }
 
     return (
-        <Layout title={'Notas'}>
+        <Layout title={'Asistencias'}>
 
 
             <div>
@@ -203,14 +154,12 @@ export default function Notas() {
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
                     <div className="col-md-3 hstack me-3 " style={{ marginBottom: '5mm' }}>
                         <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                        <select name="idCurso" className="form-select " id="inputCurso" style={{ width: '20mm' }} >
+                        <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputCurso" style={{ width: '20mm' }} >
                             {
                                 cursos && cursos.map((c) => (
                                     <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
                                 ))
                             }
-
-
                         </select>
                     </div>
                     <div className="g-2" >
@@ -251,9 +200,11 @@ export default function Notas() {
                             </div>
                             <div className="col-md-3 hstack me-3">
 
-                                <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
-                                <input name="alumno" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
 
+                                <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
+                                <input name="alumno" value={nombreAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleNombreAlumno}
+                                    onSubmitCapture={handleNombreAlumno} />
 
                                 <button type="submit" className="btn input-group-text btn-primary"
                                 >
@@ -263,9 +214,9 @@ export default function Notas() {
 
                             <div className="col-md-3 hstack me-3">
                                 <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
-                                <input name="alumno" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
-
-
+                                <input name="alumno" value={apellidoAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleApellidoAlumno}
+                                    onSubmitCapture={handleApellidoAlumno} />
                                 <button type="submit" className="btn input-group-text btn-primary"
                                 >
                                     <i className='bx bx-search me-1'></i>
@@ -298,7 +249,7 @@ export default function Notas() {
                         </thead>
                         <tbody>
                             {
-                                asistencias && asistencias.map((a, i) => (
+                                asistencias && asistencia?.map((a, i) => (
 
                                     a.motivo != null ? (
 
@@ -312,7 +263,7 @@ export default function Notas() {
                                             <td className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
+                                                        <div className="form-check form-switch">
                                                             <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
                                                     ) :
@@ -481,7 +432,7 @@ export default function Notas() {
                                                 <td className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</td>
                                                 <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</td>
                                                 <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                            <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                                <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
                                                 {/* <td className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</td> */}
                                                 <td className="col-md-1 ">
                                                     {
@@ -650,7 +601,8 @@ export default function Notas() {
                                             </tr>
                                         )
 
-                                ))
+                                )
+                                )
                             }
 
                         </tbody>
