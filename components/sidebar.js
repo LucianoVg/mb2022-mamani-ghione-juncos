@@ -10,11 +10,16 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import { HomeOutlined, InfoOutlined } from '@mui/icons-material';
+import { HomeOutlined } from '@mui/icons-material';
 import { ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
+import DescriptionIcon from '@mui/icons-material/Description';
+import ReportIcon from '@mui/icons-material/Report';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import ArticleIcon from '@mui/icons-material/Article';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import React from 'react'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -22,7 +27,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
-            width: 240,
+            width: 280,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
@@ -44,7 +49,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const Sidebar = ({ open, toggleDrawer }) => {
-    const [menus, setMenus] = useState([])
+    const [menusGestion, setMenusGestion] = useState()
+    const [menusReportes, setMenusReportes] = useState()
     const router = useRouter()
     const { loading, authUser, cerrarSesion } = useAuth()
 
@@ -53,10 +59,20 @@ const Sidebar = ({ open, toggleDrawer }) => {
             axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
                 .then(res => {
                     if (res.data) {
-                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}`)
+                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/gestion`)
                             .then(r => {
-                                console.log(r.data);
-                                setMenus(r.data)
+                                if (r.data) {
+                                    console.log(r.data);
+                                    setMenusGestion(r.data)
+                                }
+                            })
+
+                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/reportes`)
+                            .then(r => {
+                                if (r.data) {
+                                    console.log(r.data);
+                                    setMenusReportes(r.data)
+                                }
                             })
                     }
                 })
@@ -71,7 +87,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
     }
 
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer sx={{ height: '100vh' }} variant="permanent" open={open}>
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -95,26 +111,81 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     <Divider sx={{ mt: 1, mb: 1 }} />
 
                     {
-                        menus && (
-                            <Typography ml={1} style={{ fontWeight: 'bold' }}>Gestion</Typography>
+                        menusGestion && (
+                            <>
+                                <Typography ml={1} style={{ fontWeight: 'bold' }}>Gestion</Typography>
+                                {
+                                    menusGestion?.map((m, i) => (
+
+                                        <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
+                                            <ListItemIcon>
+                                                {
+                                                    m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Asistencias' && (
+                                                        <ContentPasteSearchOutlinedIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Asistencia Docente' && (
+                                                        <ContentPasteSearchOutlinedIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Notas' && (
+                                                        <DescriptionIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Certificado de Servicio' && (
+                                                        <DescriptionIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Sanciones' && (
+                                                        <ReportIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Material de Estudio' && (
+                                                        <FileCopyIcon />
+                                                    )
+                                                }
+                                                {
+                                                    m?.menu?.menuSistema === 'Fecha de Examen' && (
+                                                        <ArticleIcon />
+                                                    )
+                                                }
+                                            </ListItemIcon>
+                                            <ListItemText primary={m?.menu?.menuSistema} />
+                                        </ListItemButton>
+                                    ))
+                                }
+                                <Divider sx={{ mt: 1, mb: 1 }} />
+                            </>
                         )
                     }
-                    {
-                        menus && menus?.map((m, i) => (
-                            <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
-                                <ListItemIcon>
-                                    {
-                                        m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
-                                    }
-                                    {
-                                        m?.menu?.menuSistema === 'Asistencias' && <ContentPasteSearchOutlinedIcon />
-                                    }
-                                </ListItemIcon>
-                                <ListItemText primary={m?.menu?.menuSistema} />
-                            </ListItemButton>
-                        ))
-                    }
 
+                    {
+                        menusReportes && (
+                            <>
+                                <Typography ml={1} style={{ fontWeight: 'bold' }}>Reportes</Typography>
+                                {
+                                    menusReportes?.map((m, i) => (
+
+                                        <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
+                                            <ListItemIcon>
+                                                <AssessmentIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary={m?.menu?.menuSistema} />
+                                        </ListItemButton>
+                                    ))
+                                }
+                                <Divider sx={{ mt: 1, mb: 1 }} />
+                            </>
+                        )
+                    }
                     {
                         authUser && (
                             <ListItemButton onClick={logout}>
@@ -135,19 +206,6 @@ const Sidebar = ({ open, toggleDrawer }) => {
                             </ListItemButton>
                         )
                     }
-                    {/* <Typography style={{ fontWeight: 'bold' }}>Reportes</Typography>
-            <ListItemButton onClick={() => router.push('/')}>
-                <ListItemIcon>
-                    <HomeOutlined />
-                </ListItemIcon>
-                <ListItemText primary="Usuarios" />
-            </ListItemButton>
-            <ListItemButton onClick={() => router.push('/about')}>
-                <ListItemIcon>
-                    <InfoOutlined />
-                </ListItemIcon>
-                <ListItemText primary="Sanciones" />
-            </ListItemButton> */}
                 </React.Fragment>
             </List>
         </Drawer>

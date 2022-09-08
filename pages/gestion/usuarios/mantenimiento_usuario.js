@@ -1,4 +1,5 @@
 
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -24,58 +25,39 @@ export default function MantenimientoUsuario() {
 
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
-            <h1 className="text-center mt-1"><strong>Mantenimiento de Usuarios</strong></h1>
             <Link href={'/gestion/usuarios/nuevo'}>
-                <a className="btn btn-primary m-2" >Nuevo Usuario</a>
+                <Button variant="outlined">Nuevo Usuario</Button>
             </Link>
+            <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
-            <div className="card mb-4">
-                <div className="card-header">
-                    <i className="fas fa-table me-1"></i>
-                    Usuarios del Sistema
-                </div>
-                <div className="card-body">
-                    <table id="datatablesSimple" className="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Dni</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Direccion</th>
-                                <th>Telefono</th>
-                                <th>Localidad</th>
-                                <th>Rol</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Dni</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Direccion</th>
-                                <th>Telefono</th>
-                                <th>Localidad</th>
-                                <th>Rol</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {
-                                usuarios && usuarios.map((u, i) => (
-                                    <tr key={i}>
-                                        <td>{u.dni}</td>
-                                        <td>{u.nombre}</td>
-                                        <td>{u.apellido}</td>
-                                        <td>{u.direccion}</td>
-                                        <td>{u.telefono}</td>
-                                        <td>{u.localidad}</td>
-                                        <td>{u.rol?.tipo}</td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>DNI</TableCell>
+                            <TableCell align="right">Nombre</TableCell>
+                            <TableCell align="right">Apellido</TableCell>
+                            <TableCell align="right">Direccion</TableCell>
+                            <TableCell align="right">Telefono</TableCell>
+                            <TableCell align="right">Localidad</TableCell>
+                            <TableCell align="right">Rol</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {usuarios.map((u, i) => (
+                            <TableRow key={i}>
+                                <TableCell component="th" scope="row">{u.dni}</TableCell>
+                                <TableCell align="right">{u.nombre}</TableCell>
+                                <TableCell align="right">{u.apellido}</TableCell>
+                                <TableCell align="right">{u.direccion}</TableCell>
+                                <TableCell align="right">{u.telefono}</TableCell>
+                                <TableCell align="right">{u.localidad}</TableCell>
+                                <TableCell align="right">{u.rol?.tipo}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Layout>
     )
 }

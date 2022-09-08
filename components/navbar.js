@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { useAuth } from "./context/authUserProvider"
-import { Toolbar, IconButton, Typography } from "@mui/material";
+import { Toolbar, IconButton, Typography, Badge } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import theme from "../src/theme";
+import { NotificationsRounded } from "@mui/icons-material";
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -16,8 +17,8 @@ const AppBar = styled(MuiAppBar, {
         duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
-        marginLeft: 240,
-        width: `calc(100% - ${240}px)`,
+        marginLeft: 280,
+        width: `calc(100% - ${280}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -64,6 +65,13 @@ export const Navbar = ({ toggleDrawer, open }) => {
                     {
                         !loading && authUser && (
                             <AccountCircleIcon />
+                        )
+                    }
+                    {
+                        !loading && authUser && (
+                            <Badge badgeContent={5} color="info">
+                                <NotificationsRounded sx={{ cursor: 'pointer' }} />
+                            </Badge>
                         )
                     }
                 </Toolbar>
