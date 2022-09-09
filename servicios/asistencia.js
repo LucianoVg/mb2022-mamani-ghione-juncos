@@ -1,4 +1,3 @@
-import { startsWith } from "lodash";
 import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
@@ -24,55 +23,64 @@ export async function ListarCurso() {
 //     return materias
 // }
 
-// export async function TraerAsistencias(idTrimestre, alumno, curso, fechaDesde, fechaHasta) {
-    export async function TraerAsistencias(alumno, curso ) {
-       
-        const asistencias = await prisma.asistencia.findMany({
-    
-            include: {
-                usuario: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
-                           
-                        
-                    }
+
+export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
+
+    const asistencias = await prisma.asistencia.findMany({
+        include: {
+            usuario: true,
+            alumnoXcursoXdivision: {
+                include: {
+                    usuario: true,
+                    cursoXdivision: true
                 }
-    
-            },
-    
-            where: {
-                OR: [
-                    {
-                        alumnoXcursoXdivision: {
-                            idCursoXdivision: curso
+            }
+
+        },
+
+        where: {
+            OR: [
+                {
+                    alumnoXcursoXdivision: {
+                        idCursoXdivision: curso
+                    }
+                },
+                {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            nombre: {
+                                startsWith: alumno.split(' ')[0]
+                            }
                         }
                     },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                nombre: {
-                                    startsWith: alumno.split(' ')[0]
-                                }
+                },
+                {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            apellido: {
+                                startsWith: alumno.split(' ')[1]
                             }
-                        },
+                        }
                     },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                apellido: {
-                                    startsWith: alumno.split(' ')[1]
-                                }
-                            }
-                        },
+                },
+                {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            dni: documento
+                        }
                     }
-                ]
-            }
-        })
-        console.log(asistencias);
-        return asistencias
-    }
+                },
+                {
+                    creadoEn: {
+                        gt: desde,
+                        lt: hasta
+                    }
+                }
+            ]
+        }
+    })
+    return asistencias
+}
 
 export async function TraerAsistencias2() {
 

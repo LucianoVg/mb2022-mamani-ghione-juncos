@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 
-export default function Notas() {
+export default function Asistencias() {
 
 
     // const [idMateria, setIdMateria] = useState(1)
@@ -57,66 +57,73 @@ export default function Notas() {
     //     setColumnName(e.target.name)
     // }
     const [idCurso, setIdCurso] = useState(1)
-
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
+    const [documento, setDocumento] = useState("")
     const [alumno, setAlumno] = useState("")
-
-
+    const [desde, setDesde] = useState(new Date().toISOString())
+    const [hasta, setHasta] = useState(new Date().toISOString())
     const [cursos, setCursos] = useState()
-
-
 
     useEffect(() => {
         listarAsistencias()
         listarCursos()
-    }, [alumno, idCurso])
+    }, [alumno, idCurso, documento, desde, hasta])
 
 
-
-
-    const [asistencias, setAsistencias] = useState([])
+    const [asistencias, setAsistencias] = useState()
     const listarAsistencias = () => {
-        axios.get(`http://localhost:3000/api/gestion/asistencias/${alumno}/${idCurso}`)
+        axios.get(`http://localhost:3000/api/gestion/asistencias/${alumno}/${idCurso}/${documento}/${new Date(desde).toISOString()}/${new Date(hasta).toISOString()}`)
             .then(res => {
                 console.log(res.data);
                 setAsistencias(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
 
-    
+
     const listarCursos = () => {
         axios.get(`http://localhost:3000/api/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
                 setCursos(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
     const handleCurso = (e) => {
         setIdCurso(Number.parseInt(e.target.value))
-        defaultTrimestre()
+        listarAsistencias()
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
         setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-        defaultTrimestre()
+        listarAsistencias()
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
         setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-        defaultTrimestre()
+        listarAsistencias()
     }
+    const handleDocumento = (e) => {
+        setDocumento(e.target.value)
+        listarAsistencias()
+    }
+    const handleDesde = (e) => {
+        setDesde(e.target.value || new Date().toISOString())
+        listarAsistencias()
+    }
+    const handleHasta = (e) => {
+        setHasta(e.target.value || new Date().toISOString())
+        listarAsistencias()
+    }
+
     const bloquearCheck = (a) => {
         return (
             a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
         )
-
-
     }
     const [inEditMode, setInEditMode] = useState({
         status: false,
@@ -146,14 +153,12 @@ export default function Notas() {
 
     return (
         <Layout title={'Asistencias'}>
-
-
             <div>
                 <h1><strong>Asistencias</strong></h1>
 
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
                     <div className="col-md-3 hstack me-3 " style={{ marginBottom: '5mm' }}>
-                        <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
+                        <label htmlFor="inputCurso" className="fw-bold me-2" name="inputMateria ">Curso: </label>
                         <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputCurso" style={{ width: '20mm' }} >
                             {
                                 cursos && cursos.map((c) => (
@@ -165,20 +170,19 @@ export default function Notas() {
                     <div className="g-2" >
 
                         <div className="col-ms-6 hstack" style={{ marginBottom: '5mm' }}>
-                            <label for="date" className="fw-bold me-2">Fecha hasta:</label>
+                            <label htmlFor="desde" className="fw-bold me-2">Fecha desde:</label>
                             <div className="col-ms-5">
-                                <div className="input-group date" id="datepicker">
-                                    <input type="date" className="form-control" />
+                                <div className="input-group date" id="desde">
+                                    <input name="desde" value={desde} type="date" className="form-control" onChange={handleDesde} />
 
                                 </div>
                             </div>
                         </div>
                         <div className="col-ms-6 hstack" style={{ marginBottom: '5mm' }}>
-                            <label for="date" className="fw-bold me-2">Fecha hasta:</label>
+                            <label htmlFor="hasta" className="fw-bold me-2">Fecha hasta:</label>
                             <div className="col-ms-5">
-                                <div className="input-group date" id="datepicker">
-                                    <input type="date" className="form-control" />
-
+                                <div className="input-group date" id="hasta">
+                                    <input name="hasta" value={hasta} onChange={handleHasta} type="date" className="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -190,10 +194,10 @@ export default function Notas() {
                             <div className="col-md-3 hstack me-5">
 
                                 <label htmlFor="inputNombre" className="fw-bold me-2">Documento: </label>
-                                <input name="Documento" className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
+                                <input name="documento" value={documento} onChange={handleDocumento} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search" />
 
 
-                                <button type="submit" className="btn input-group-text btn-primary"
+                                <button type="submit" onClick={listarAsistencias} className="btn input-group-text btn-primary"
                                 >
                                     <i className='bx bx-search me-1'></i>
                                 </button>
@@ -202,11 +206,10 @@ export default function Notas() {
 
 
                                 <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
-                                <input name="alumno" value={nombreAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleNombreAlumno}
-                                    onSubmitCapture={handleNombreAlumno} />
+                                <input name="nombreAlumno" value={nombreAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleNombreAlumno} />
 
-                                <button type="submit" className="btn input-group-text btn-primary"
+                                <button onClick={listarAsistencias} className="btn input-group-text btn-primary"
                                 >
                                     <i className='bx bx-search me-1'></i>
                                 </button>
@@ -214,10 +217,9 @@ export default function Notas() {
 
                             <div className="col-md-3 hstack me-3">
                                 <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
-                                <input name="alumno" value={apellidoAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleApellidoAlumno}
-                                    onSubmitCapture={handleApellidoAlumno} />
-                                <button type="submit" className="btn input-group-text btn-primary"
+                                <input name="apellidoAlumno" value={apellidoAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
+                                    onChange={handleApellidoAlumno} />
+                                <button onClick={listarAsistencias} className="btn input-group-text btn-primary"
                                 >
                                     <i className='bx bx-search me-1'></i>
                                 </button>
@@ -249,7 +251,7 @@ export default function Notas() {
                         </thead>
                         <tbody>
                             {
-                                asistencias && asistencia?.map((a, i) => (
+                                asistencias && asistencias?.map((a, i) => (
 
                                     a.motivo != null ? (
 
