@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -120,7 +120,7 @@ const Sanciones = () => {
             </Container>
             {
                 !loading && sanciones && (
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{ marginTop: 2 }}>
                         <Table sx={{ minWidth: 650 }}>
                             <TableHead>
                                 <TableRow>
@@ -137,28 +137,23 @@ const Sanciones = () => {
                                     sanciones?.map((s, i) => (
                                         <TableRow key={i}>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.usuario !== undefined ?
-                                                    s.alumnoXCursoXDivision?.usuario?.nombre : '--'
+                                                s.alumnoXCursoXDivision?.usuario?.nombre
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.usuario !== undefined ?
-                                                    s.alumnoXCursoXDivision?.usuario?.apellido : '--'
+                                                s.alumnoXCursoXDivision?.usuario?.apellido
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
-                                                    s.alumnoXCursoXDivision?.cursoXDivision?.curso?.nombre
-                                                    : '--'
+                                                s.alumnoXCursoXDivision?.cursoXdivision?.curso?.nombre
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
-                                                    s.alumnoXCursoXDivision?.cursoXDivision?.division?.division
-                                                    : '--'
+                                                s.alumnoXCursoXDivision?.cursoXdivision?.division?.division
                                             }</TableCell>
-                                            <TableCell align="right">{new Date(s.fecha).toLocaleDateString()}
-                                            </TableCell>
+                                            <TableCell align="right">{s.fecha}</TableCell>
                                             <TableCell align="right">
                                                 <Link href={`/gestion/sanciones/${s.id}`}>
-                                                    <a className="btn btn-info">Detalles</a>
+                                                    <Button variant="outlined" component="label" color="info">
+                                                        Detalles
+                                                    </Button>
                                                 </Link>
                                             </TableCell>
                                         </TableRow>

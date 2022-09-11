@@ -8,21 +8,21 @@ export async function traerSanciones(idCurso = 0, idAlumno = 0) {
                     alumnoXCursoXDivision: {
                         include: {
                             usuario: true,
-                            cursoXDivision: {
+                            cursoXdivision: {
                                 include: {
                                     curso: true,
                                     division: true
                                 }
                             }
                         }
-                    },
+                    }
                 }
             }) : await Prisma.newPrisma().sancion.findMany({
                 include: {
                     alumnoXCursoXDivision: {
                         include: {
                             usuario: true,
-                            cursoXDivision: {
+                            cursoXdivision: {
                                 include: {
                                     curso: true,
                                     division: true
@@ -35,7 +35,7 @@ export async function traerSanciones(idCurso = 0, idAlumno = 0) {
                     alumnoXCursoXDivision: {
                         OR: [
                             { id: idAlumno },
-                            { idCursoXDivision: idCurso }
+                            { idCursoXdivision: idCurso }
                         ]
                     }
                 }
@@ -57,7 +57,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                     id: true
                 },
                 where: {
-                    idCursoXDivision: idCurso
+                    idCursoXdivision: idCurso
                 }
             })
             alumnos.forEach(async (a) => {
@@ -73,7 +73,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
         } else {
             const sancion = await Prisma.newPrisma().sancion.create({
                 data: {
-                    fecha: new Date(fecha),
+                    fecha: fecha,
                     motivo: motivo,
                     tipoSancion: {
                         connect: {
@@ -116,7 +116,7 @@ export async function obtenerSancion(id) {
                 alumnoXCursoXDivision: {
                     include: {
                         usuario: true,
-                        cursoXDivision: {
+                        cursoXdivision: {
                             include: {
                                 curso: true,
                                 division: true
@@ -150,44 +150,60 @@ export async function actualizarSancion(
                     id: true
                 },
                 where: {
-                    idCursoXDivision: idCurso
+                    idCursoXdivision: idCurso
                 }
             })
 
+            let sancionCuenta = 0
             alumnos.forEach(async (a) => {
                 const sanciones = await Prisma.newPrisma().$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idTipoSancion = ${idTipoSancion}, idAlumnoXCursoXDivision = ${a.id} WHERE id = ${id}`
                 console.log(sanciones);
 
+                sancionCuenta += sanciones
                 // const sancionesXUsuario = await Prisma.newPrisma().$executeRaw`UPDATE sancionXusuario SET idSancion = ${}`
             })
+            return sancionCuenta
         } else {
+            const sancionXUsuario = await Prisma.newPrisma().sancionXusuario.findFirst({
+                where: {
+                    idSancion: id
+                }
+            })
+            console.log(sancionXUsuario);
             const sancion = await Prisma.newPrisma().sancion.update({
                 data: {
-                    fecha: new Date(fecha),
-                    tipoSancion: {
-                        update: {
-                            id: idTipoSancion
-                        }
-                    },
+                    fecha: fecha,
+                    motivo: motivo,
                     alumnoXCursoXDivision: {
-                        update: {
+                        connect: {
                             id: idAlumno
                         }
                     },
+                    tipoSancion: {
+                        connect: {
+                            id: idTipoSancion
+                        }
+                    },
                     sancionXusuario: {
+                        connect: {
+                            id: sancionXUsuario?.id
+                        },
                         update: {
                             data: {
                                 idUsuario: idUsuario
+                            },
+                            where: {
+                                id: sancionXUsuario?.id
                             }
                         }
-                    },
-                    motivo: motivo
+                    }
                 },
                 where: {
                     id: id
                 }
             })
             return sancion
+
         }
     } catch (error) {
         console.error(error);

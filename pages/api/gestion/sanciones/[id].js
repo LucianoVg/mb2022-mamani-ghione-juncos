@@ -9,15 +9,14 @@ export default async function handler(req, res) {
             origin: '*',
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
+        const { id } = req.query
         if (req.method === 'GET') {
-            const { id } = req.query
             const sancion = await obtenerSancion(Number.parseInt(id))
             if (sancion) {
                 return res.status(200).json(sancion)
             }
             return res.status(404).json({ mensaje: 'Sancion no encontrada' })
         } else {
-            const { id } = req.query
             const { idUsuario,
                 idCurso,
                 idAlumno,
@@ -29,8 +28,8 @@ export default async function handler(req, res) {
             const sancion = await actualizarSancion(
                 Number.parseInt(id),
                 Number.parseInt(idUsuario),
-                Number.parseInt(idCurso),
-                Number.parseInt(idAlumno),
+                idCurso !== undefined ? Number.parseInt(idCurso) : 0,
+                idAlumno !== undefined ? Number.parseInt(idAlumno) : 0,
                 Number.parseInt(idTipoSancion),
                 motivo,
                 fecha)

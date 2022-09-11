@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
+import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel } from "@mui/material";
 
 export default function NuevaSancion() {
     const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 1 })
@@ -62,15 +63,15 @@ export default function NuevaSancion() {
             idAlumno: sancion.idAlumno,
             idTipoSancion: sancion.idTipoSancion,
             motivo: sancion.motivo,
-            fecha: new Date().toUTCString()
+            fecha: new Date().toLocaleDateString('en-GB')
         });
-        axios.post(`${process.env.BASE_URL}/gestion/sanciones`, {
+        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
             idUsuario: usuario.id,
             idCurso: sancion.idCurso,
             idAlumno: sancion.idAlumno,
             idTipoSancion: sancion.idTipoSancion,
             motivo: sancion.motivo,
-            fecha: new Date().toUTCString()
+            fecha: new Date().toLocaleDateString('en-GB')
         }).then(res => {
             if (res.data) {
                 router.push('/gestion/sanciones')
@@ -80,71 +81,76 @@ export default function NuevaSancion() {
         })
     }
     return (
-        <Layout title={'Nueva Sancion'}>
-            <div className="card m-5">
-                <div className="card-header">
-                    <h3>Nueva Sancion</h3>
-                </div>
-                <div className="card-body p-5">
-                    <form method="post" onSubmit={generarSancion}>
-                        <div className="form-group mb-3">
-                            <label htmlFor="inputCheckbox">Sancion Grupal</label>
-                            <input type="checkbox" name="esSancionGrupal" id="inputCheckbox" className="form-check-input ms-3" value={esSancionGrupal} onChange={() => setEsSancionGrupal(!esSancionGrupal)} />
-                        </div>
+        <Layout>
+            <Container maxWidth={'md'}>
+                <Typography variant="h4">Nueva Sancion</Typography>
+                <Box component={'form'} onSubmit={generarSancion}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <FormControlLabel control={<Checkbox id="checkSancionGrupal" checked={esSancionGrupal} onChange={() => setEsSancionGrupal(!esSancionGrupal)} />} label="Sancion Grupal" />
+                        </Grid>
                         {
                             !esSancionGrupal && (
-                                <div className="form-group row mb-3">
-                                    <label htmlFor="inputAlumno"><strong>Alumno:</strong></label>
-                                    <select value={sancion.idAlumno} className="form-control" onChange={handleSancion} name="idAlumno" id="inputAlumno">
+                                <Grid item xs={6}>
+                                    <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                                    <Select value={sancion.idAlumno} fullWidth onChange={handleSancion} name="idAlumno" id="inputAlumno">
                                         {
                                             alumnos && alumnos.map((a, i) => (
-                                                <option key={i} value={a.id}>
+                                                <MenuItem key={i} value={a.id}>
                                                     {a.usuario.nombre} {a.usuario.apellido}
-                                                </option>
+                                                </MenuItem>
                                             ))
                                         }
-                                    </select>
-                                </div>
+                                    </Select>
+                                </Grid>
                             )
                         }
                         {
                             esSancionGrupal && (
-                                <div className="form-group row mb-3">
-                                    <label htmlFor="inputAlumno"><strong>Curso:</strong></label>
-                                    <select value={sancion.idCurso} className="form-control" onChange={handleSancion} name="idCurso" id="inputAlumno">
+                                <Grid item xs={6}>
+                                    <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                                    <Select value={sancion.idCurso} fullWidth onChange={handleSancion} name="idCurso" id="inputCurso">
                                         {
                                             cursos && cursos.map((c, i) => (
-                                                <option key={i} value={c.id}>
-                                                    {c.curso.nombre} {c.division.division}
-                                                </option>
+                                                <MenuItem key={i} value={c.id}>
+                                                    {c.curso?.nombre} {c.division?.division}
+                                                </MenuItem>
                                             ))
                                         }
-                                    </select>
-                                </div>
+                                    </Select>
+                                </Grid>
                             )
                         }
-                        <div className="form-group row mb-3">
-                            <label htmlFor="inputTipoSancion">
-                                <strong>Tipo Sancion:</strong>
-                            </label>
-                            <select className="form-control" onChange={handleSancion} name="idTipoSancion" value={sancion.idTipoSancion} id="inputTipoSancion">
+                        <Grid item xs={6}>
+                            <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
+                            <Select value={sancion.idTipoSancion} fullWidth onChange={handleSancion} name="idTipoSancion" id="inputTipoSancion">
                                 {
                                     tipoSanciones && tipoSanciones.map((t, i) => (
-                                        <option key={i} value={t.id}>{t.tipo}</option>
+                                        <MenuItem key={i} value={t.id}>
+                                            {t.tipo}
+                                        </MenuItem>
                                     ))
                                 }
-                            </select>
-                        </div>
-                        <div className="form-group row mb-3">
-                            <label htmlFor="inputMotivo">
-                                <strong>Motivo:</strong>
-                            </label>
-                            <textarea className="form-control" onChange={handleSancion} name="motivo" id="inputMotivo" cols="30" rows="5" value={sancion.motivo}></textarea>
-                        </div>
-                        <button className="btn btn-primary" type="submit">Generar Sancion</button>
-                    </form>
-                </div>
-            </div>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                margin="normal"
+                                fullWidth
+                                multiline
+                                rows={3}
+                                required
+                                name="motivo"
+                                value={sancion.motivo}
+                                label="Motivo"
+                                onChange={handleSancion} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button variant="contained" color="primary" type="submit">Generar Sancion</Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
         </Layout>
     )
 }
