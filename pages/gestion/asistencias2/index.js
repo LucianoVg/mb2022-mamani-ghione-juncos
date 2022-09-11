@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import $ from 'jQuery'
 
 export default function Asistencias() {
 
@@ -151,8 +151,13 @@ export default function Asistencias() {
         // setNota(0);
     }
 
+    document.querySelector(document).addEventListener('click', 'input[type="checkbox"]', function() {      
+        document.querySelector('input[type="checkbox"]').not(this).prop('checked', false);      
+    });
+
+
     return (
-        <Layout title={'Asistencias'}>
+        // <Layout title={'Asistencias'}>
             <div>
                 <h1><strong>Asistencias</strong></h1>
 
@@ -612,7 +617,7 @@ export default function Asistencias() {
 
                 </div>
             </div>
-        </Layout >
+        // </Layout >
 
     );
 
