@@ -5,6 +5,10 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
 
+
+import { Layout } from '../../../components/layout';
+
+
 export default class DemoApp extends React.Component {
 
   state = {
@@ -14,35 +18,37 @@ export default class DemoApp extends React.Component {
 
   render() {
     return (
-      <div className='demo-app'>
-        {this.renderSidebar()}
-        <div className='demo-app-main'>
-          <FullCalendar locales='es-Es'
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            }}
-            initialView='dayGridMonth'
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={this.state.weekendsVisible}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-            select={this.handleDateSelect}
-            eventContent={renderEventContent} // custom render function
-            eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+      <Layout>
+        <div className='demo-app'>
+          {this.renderSidebar()}
+          <div className='demo-app-main'>
+            <FullCalendar locales='ES' className='text-capitalize'
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              }}
+              initialView='dayGridMonth'
+              editable={true}
+              selectable={true}
+              selectMirror={true}
+              dayMaxEvents={true}
+              weekends={this.state.weekendsVisible}
+              initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+              select={this.handleDateSelect}
+              eventContent={renderEventContent} // custom render function
+              eventClick={this.handleEventClick}
+              eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
             /* you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
             eventRemove={function(){}}
             */
-          />
+            />
+          </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 
@@ -126,7 +132,7 @@ function renderEventContent(eventInfo) {
 function renderSidebarEvent(event) {
   return (
     <li key={event.id}>
-      <b>{formatDate(event.start, {year: 'numeric', month: 'short', day: 'numeric'})}</b>
+      <b>{formatDate(event.start, { year: 'numeric', month: 'short', day: 'numeric' })}</b>
       <i>{event.title}</i>
     </li>
   )
