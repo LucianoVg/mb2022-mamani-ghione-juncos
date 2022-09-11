@@ -13,14 +13,13 @@
     transition: all 0.2s ease-in-out;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
-    
 }
 
- .card_img_top:hover {
+.card_img_top:hover {
     transform: scale(1.8);
 }
+
 .overflow {
-  
     height: 50%;
     overflow: hidden;
 }
@@ -36,16 +35,14 @@
     position: absolute;
     background-color: transparent;
     color: black;
-    font-size: 16px;
     margin-top: 4mm;
     margin-left: -11mm;
     border: none;
     cursor: pointer;
     font-size: 6mm;
-    
-
 }
 
 .container .btn:hover {
-    background-color: blue;
+    background-color: rgb(62, 62, 223);
+    color: white;
 }

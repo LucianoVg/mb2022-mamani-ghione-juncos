@@ -13,23 +13,12 @@ import Head from 'next/head';
 import { Navbar } from './navbar';
 
 export function Layout({ children }) {
-    const [open, setOpen] = useState(true);
-    const router = useRouter()
+    const [open, setOpen] = useState(true)
 
-    const { loading, authUser, cerrarSesion } = useAuth()
     const toggleDrawer = () => {
-        setOpen(!open);
+        setOpen(!open)
     }
-    useEffect(() => {
 
-    }, [authUser, loading])
-
-    const logout = () => {
-        cerrarSesion()
-            .then(() => {
-                router.reload()
-            })
-    }
     return (
         <>
             <Head>

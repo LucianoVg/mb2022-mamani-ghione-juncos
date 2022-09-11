@@ -1,4 +1,3 @@
-import { startsWith } from "lodash";
 import { PrismaClient } from "prisma/prisma-client";
 
 const prisma = new PrismaClient()
@@ -29,14 +28,13 @@ export async function ListarMaterias() {
 export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
 
     const notas = await prisma.nota.findMany({
-
         include: {
             materia: true,
             trimestre: true,
             alumnoXcursoXdivision: {
                 include: {
                     usuario: true,
-                    cursoXDivision: true
+                    cursoXdivision: true
                 }
             }
 
@@ -47,7 +45,9 @@ export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
                 { idMateria: idMateria },
                 {
                     alumnoXcursoXdivision: {
-                        idCursoXDivision: curso
+                        cursoXdivision: {
+                            id: curso
+                        }
                     }
                 },
                 {

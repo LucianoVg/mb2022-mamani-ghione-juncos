@@ -5,7 +5,7 @@ import Carrusel from "../../../components/carrusel";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Container, Grid, Divider } from "@mui/material";
 import { AddBoxRounded } from "@mui/icons-material";
 
 export default function Institucional() {
@@ -14,10 +14,8 @@ export default function Institucional() {
     const { authUser } = useAuth()
 
     const traerFicha = () => {
-        setCargando(true)
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
             .then(res => {
-                console.log(res.data);
                 setFichaInstitucional(res.data[0])
             }).catch(err => {
                 console.error(err);
@@ -27,10 +25,10 @@ export default function Institucional() {
 
     useEffect(() => {
         traerFicha()
-    }, [cargando, fichaInstitucional])
+    }, [])
 
     return (
-        <Layout title={'Ficha Institucional'}>
+        <Layout>
             {
                 !cargando && !fichaInstitucional && (
                     <div>
@@ -51,34 +49,47 @@ export default function Institucional() {
 
             {
                 fichaInstitucional && (
-                    <div className="m-3">
-                        <Carrusel imagenes={fichaInstitucional?.portadasFicha} />
-                        {
-                            authUser && (
-                                <Link href={`/gestion/institucional/${fichaInstitucional?.idUsuario}`}>
-                                    <a className="btn btn-primary">Editar Ficha</a>
-                                </Link>
-                            )
-                        }
+                    <Container maxWidth={'md'}>
+                        <Carrusel imagenes={fichaInstitucional.portadasFicha} />
+                        <Typography variant="h3">{fichaInstitucional.nombreInstitucion}</Typography>
 
-                        <h2>{fichaInstitucional?.nombreInstitucion}</h2>
-                        <p>{fichaInstitucional?.descripcion}</p>
-                        <p></p>
+                        <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
 
-                        <div className="line"></div>
+                        <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
 
-                        <h2>Telefonos</h2>
-                        <p>Telefono 1: {fichaInstitucional?.telefono1}</p>
-                        <p>Telefono 2: {fichaInstitucional?.telefono2}</p>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Divider sx={{ mb: 1 }} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="h6">Datos de Contacto</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="body2"><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
+                                <Typography variant="body2"><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
+                            </Grid>
 
-                        <div className="line"></div>
-
-                        <h2>Oficinas</h2>
-                        <p>Oficina 1: {fichaInstitucional?.oficina1}</p>
-                        <p>Oficina 2: {fichaInstitucional?.oficina2}</p>
-
-                        <div className="line"></div>
-                    </div>
+                            <Grid item xs={6}>
+                                <Typography variant="body2">
+                                    <strong>Telefono 1:</strong> {fichaInstitucional.telefono1}
+                                </Typography>
+                                <Typography variant="body2">
+                                    <strong>Telefono 2:</strong> {fichaInstitucional.telefono2}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography variant="body2">
+                                    <strong>Oficina 1:</strong> {fichaInstitucional.oficina1}
+                                </Typography>
+                                <Typography variant="body2">
+                                    <strong>Oficina 2:</strong> {fichaInstitucional.oficina2}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Divider sx={{ mb: 1 }} />
+                            </Grid>
+                        </Grid>
+                    </Container>
                 )
             }
             {

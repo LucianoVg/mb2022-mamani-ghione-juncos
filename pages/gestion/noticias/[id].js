@@ -1,3 +1,4 @@
+import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -15,7 +16,6 @@ export default function DetallesNoticia() {
         idUsuario: 0
     })
     const [noticiaActualizar, setNoticiaActualizar] = useState({
-        id: 0,
         titulo: '',
         descripcion: '',
         url: '',
@@ -23,23 +23,25 @@ export default function DetallesNoticia() {
     })
     const router = useRouter()
     const hoy = new Date()
-    const imgRef = useRef(null)
+    const [imagen, setImagen] = useState(null)
+    const [imgUrl, setImgUrl] = useState()
 
+    const handleImagen = (e) => {
+        setImagen(e.target.files[0])
+        setImgUrl(URL.createObjectURL(e.target.files[0]))
+    }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        // noticia.fecha = fecha
-
-        if (imgRef.current.files.length > 0) {
-            const imagen = imgRef.current.files[0]
-            guardarImagen('imagenes_noticias/' + imagen.name, imagen)
+        if (imagen) {
+            guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
                 .then(result => {
-                    traerImagen('imagenes_noticias/' + imagen.name)
+                    traerImagen('imagenes_noticias/' + imagen?.name)
                         .then(url => {
-                            axios.put(`${process.env.BASE_URL}/gestion/noticias_novedades/${noticiaActualizar.id}`, {
+                            axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`, {
                                 titulo: noticiaActualizar.titulo,
                                 url: url,
                                 descripcion: noticiaActualizar.descripcion,
-                                actualizadaEn: hoy.toUTCString()
+                                actualizadaEn: hoy.toLocaleDateString('en-GB')
                             }).then(res => {
                                 console.log(res.data);
                                 router.push('/')
@@ -48,22 +50,20 @@ export default function DetallesNoticia() {
                 })
 
         } else {
-            axios.put(`${process.env.BASE_URL}/gestion/noticias_novedades/${noticiaActualizar.id}`, {
+            axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`, {
                 titulo: noticiaActualizar.titulo,
-                url: noticiaActualizar.url,
+                url: noticia.url,
                 descripcion: noticiaActualizar.descripcion,
-                actualizadaEn: hoy.toUTCString()
+                actualizadaEn: hoy.toLocaleDateString('en-GB')
             }).then(res => {
                 console.log(res.data);
             })
-            // router.push('/gestion/noticias')
         }
 
         router.push('/')
 
-        // location.replace('http://localhost:3000/')
-
     }
+
     const borrarNoticia = () => {
         if (confirm("Está seguro que desea eliminar la noticia?")) {
             axios.delete(`${process.env.BASE_URL}/gestion/noticias_novedades/${noticia.id}`).then(res => {
@@ -73,9 +73,7 @@ export default function DetallesNoticia() {
         }
     }
     const handleForm = (e) => {
-        setNoticiaActualizar({
-            ...noticia, [e.target.name]: e.target.value
-        })
+        setNoticiaActualizar({ ...noticiaActualizar, [e.target.name]: e.target.value })
     }
 
     const { loading, authUser } = useAuth()
@@ -85,7 +83,7 @@ export default function DetallesNoticia() {
             router.push('/gestion/cuenta/login')
         }
         if (id) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${id}`)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
                 .then(res => {
                     console.log(res.data);
                     setNoticia(res.data)
@@ -96,36 +94,52 @@ export default function DetallesNoticia() {
     }, [id, authUser, loading])
 
     return (
-        <Layout title={'Detalles de la noticia'}>
-            <h3 className="text-center">Detalles de la noticia</h3>
-            <div className="text-center">
-                <Image src={noticia.url !== '' && noticia.url !== null ? noticia.url : '/assets/img/placeholder.png'} width={200} height={200} className="m-auto" />
-            </div>
-            <form method='post' onSubmit={onSubmitData}>
-                <div className="form-group m-1">
-                    <label >Titulo</label>
-                    <input className='form-control' id='inputName' placeholder={noticia.titulo} onChange={handleForm} type="text" name='titulo' />
-                </div>
-                <div className="form-group m-1">
-                    <label >Link Imagen</label>
-                    <input className='form-control' id='inputName' ref={imgRef} onChange={handleForm} type="file" accept='image/*' name='url' />
-                </div>
+        <Layout>
+            <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2 }}>Detalles de la noticia</Typography>
 
-                <div className="form-group m-1">
-                    <label>Descripcion</label>
-                    <textarea className='form-control' id='inputSurname' placeholder={noticia.descripcion} onChange={handleForm} name='descripcion' >
-                    </textarea>
-                </div>
-
-                <div className="form-group row">
-                    <div className="col-sm-2 mt-1">
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
-                    </div>
-                    <div className="col-sm-2 mt-1">
-                        <button onClick={borrarNoticia} type="button" className="btn btn-danger">Eliminar</button>
-                    </div>
-                </div>
-            </form>
+            <Container maxWidth={'md'}>
+                <Box textAlign={'center'}>
+                    <Image src={imgUrl || noticia.url || '/assets/img/placeholder.png'} width={200} height={200} className="m-auto" />
+                </Box>
+                <Box textAlign={'center'} component={'form'} onSubmit={onSubmitData}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                margin="normal"
+                                name="titulo"
+                                fullWidth
+                                required
+                                label="Titulo"
+                                placeholder={noticia.titulo}
+                                value={noticiaActualizar.titulo}
+                                onChange={handleForm} />
+                            <TextField
+                                margin="normal"
+                                fullWidth
+                                name="descripcion"
+                                multiline
+                                rows={5}
+                                required
+                                label="Descripcion"
+                                value={noticiaActualizar.descripcion}
+                                placeholder={noticia.descripcion}
+                                onChange={handleForm} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button sx={{ marginTop: 2 }} variant="outlined" component="label">
+                                <input hidden onChange={handleImagen} type="file" accept='image/*' name='imagen' />
+                                Subir Imagen
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button type="submit" variant="contained" color="primary">Actualizar</Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button variant="contained" color="warning" onClick={borrarNoticia}>Eliminar</Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
         </Layout>
     )
 }

@@ -1,10 +1,11 @@
+import { Search } from "@mui/icons-material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import Loading from "../../../components/loading";
 
 const Sanciones = () => {
     const [sanciones, setSanciones] = useState()
@@ -26,7 +27,7 @@ const Sanciones = () => {
         e.preventDefault()
         console.log(idCurso, idAlumno);
 
-        axios.get(`${process.env.BASE_URL}/gestion/sanciones/buscar/${idCurso}/${idAlumno}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${idCurso}/${idAlumno}`)
             .then(res => {
                 if (res.data) {
                     console.log(res.data);
@@ -62,122 +63,110 @@ const Sanciones = () => {
     }, [loading, authUser])
 
     return (
-        <Layout title={'Sanciones'}>
-            <div className="card mt-3 mb-3">
-                <div className="card-header">
-                    <h3 className="card-title">Sanciones</h3>
-                </div>
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-md-10">
-                            <form method="post" >
-                                <div className="form-group row m-2">
-                                    <div className="col-md-4">
-                                        <label htmlFor="inputAlumno">
-                                            <strong>Alumno:</strong>
-                                        </label>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <select value={idAlumno} onChange={handleAlumno} className="form-control" name="idAlumno" id="inputAlumno">
-                                            {
-                                                alumnos && alumnos.map((a, i) => (
-                                                    <option key={i} value={a.id}>{a.usuario?.nombre} {a.usuario?.apellido}</option>
-                                                ))
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="form-group row m-2">
-                                    <div className="col-md-4">
-                                        <label htmlFor="inputCurso">
-                                            <strong>Curso:</strong>
-                                        </label>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <select id="inputCurso" onChange={handleCurso} className="form-control" name="idCurso" value={idCurso}>
-                                            {
-                                                cursos && cursos.map((c, i) => (
-                                                    <option key={i} value={c.id}>
-                                                        {c.curso?.nombre} {c.division.division}
-                                                    </option>
-                                                ))
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-4">
-                                        <button onClick={buscarSanciones} className="btn btn-info m-1">
-                                            <i className="fa fa-search"></i>
-                                            Buscar
-                                        </button>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <button onClick={(e) => {
-                                            e.preventDefault()
-                                            router.push('/gestion/sanciones/nueva_sancion')
-                                        }} type="button" className="btn btn-info m-1">
-                                            Nueva Sancion
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {
-                loading && (
-                    <Loading />
-                )
-            }
-            {
-                !loading && sanciones && (
-                    <table className="table table-active">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Curso</th>
-                                <th>Division</th>
-                                <th>Fecha</th>
-                                <th>Operaciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        <Layout>
+            <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
+            <Container maxWidth={'md'}>
+                <Grid container spacing={2} marginTop={1}>
+                    <Grid item xs={3}>
+                        <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                        <Select
+                            name="idAlumno"
+                            id="inputAlumno"
+                            onChange={handleAlumno}
+                            label="Alumno"
+                            value={idAlumno}
+                            fullWidth>
                             {
-                                sanciones && sanciones.map((s, i) => (
-                                    <tr key={i}>
-                                        <td>{
-                                            s.alumnoXCursoXDivision?.usuario !== undefined ?
-                                                s.alumnoXCursoXDivision?.usuario?.nombre : '--'
-                                        }</td>
-                                        <td>{
-                                            s.alumnoXCursoXDivision?.usuario !== undefined ?
-                                                s.alumnoXCursoXDivision?.usuario?.apellido : '--'
-                                        }</td>
-                                        <td>{
-                                            s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
-                                                s.alumnoXCursoXDivision?.cursoXDivision?.curso?.nombre
-                                                : '--'
-                                        }</td>
-                                        <td>{
-                                            s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
-                                                s.alumnoXCursoXDivision?.cursoXDivision?.division?.division
-                                                : '--'
-                                        }</td>
-                                        <td>{new Date(s.fecha).toLocaleDateString()}</td>
-                                        <td>
-                                            <Link href={`/gestion/sanciones/${s.id}`}>
-                                                <a className="btn btn-info">Detalles</a>
-                                            </Link>
-                                        </td>
-                                    </tr>
+                                alumnos && alumnos.map((a, i) => (
+                                    <MenuItem key={i} value={a.id}>
+                                        {a.usuario?.nombre} {a.usuario?.apellido}
+                                    </MenuItem>
                                 ))
                             }
-                        </tbody>
-                    </table>
+
+                        </Select>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                        <Select
+                            name="idCurso"
+                            id="inputCurso"
+                            onChange={handleCurso}
+                            label="Curso"
+                            value={idCurso}
+                            fullWidth>
+                            {
+                                cursos && cursos.map((c, i) => (
+                                    <MenuItem key={i} value={c.id}>
+                                        {c.curso?.nombre} {c.division.division}
+                                    </MenuItem>
+                                ))
+                            }
+
+                        </Select>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} marginTop={1}>
+                    <Grid item xs={3}>
+                        <Button startIcon={<Search />} variant="outlined" onClick={buscarSanciones}>Buscar</Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant="contained" onClick={(e) => {
+                            e.preventDefault()
+                            router.push('/gestion/sanciones/nueva_sancion')
+                        }}>Nueva Sancion</Button>
+                    </Grid>
+                </Grid>
+            </Container>
+            {
+                !loading && sanciones && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="right">Nombre</TableCell>
+                                    <TableCell align="right">Apellido</TableCell>
+                                    <TableCell align="right">Curso</TableCell>
+                                    <TableCell align="right">Division</TableCell>
+                                    <TableCell align="right">Fecha</TableCell>
+                                    <TableCell align="right">Operaciones</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    sanciones?.map((s, i) => (
+                                        <TableRow key={i}>
+                                            <TableCell align="right">{
+                                                s.alumnoXCursoXDivision?.usuario !== undefined ?
+                                                    s.alumnoXCursoXDivision?.usuario?.nombre : '--'
+                                            }</TableCell>
+                                            <TableCell align="right">{
+                                                s.alumnoXCursoXDivision?.usuario !== undefined ?
+                                                    s.alumnoXCursoXDivision?.usuario?.apellido : '--'
+                                            }</TableCell>
+                                            <TableCell align="right">{
+                                                s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
+                                                    s.alumnoXCursoXDivision?.cursoXDivision?.curso?.nombre
+                                                    : '--'
+                                            }</TableCell>
+                                            <TableCell align="right">{
+                                                s.alumnoXCursoXDivision?.cursoXDivision != undefined ?
+                                                    s.alumnoXCursoXDivision?.cursoXDivision?.division?.division
+                                                    : '--'
+                                            }</TableCell>
+                                            <TableCell align="right">{new Date(s.fecha).toLocaleDateString()}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Link href={`/gestion/sanciones/${s.id}`}>
+                                                    <a className="btn btn-info">Detalles</a>
+                                                </Link>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 )
             }
         </Layout>

@@ -3,6 +3,8 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import styles from "../../../styles/notas.module.css";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { ButtonUnstyled } from "@mui/base";
 
 export default function Notas() {
     const [notas, setNotas] = useState()
@@ -16,19 +18,16 @@ export default function Notas() {
 
     const [materias, setMaterias] = useState()
     const [cursos, setCursos] = useState()
-    const [nota, setNota] = useState(0);
+    const [nota, setNota] = useState(1);
+
     const [columnName, setColumnName] = useState("");
+    const [trimestre, setTrimestre] = useState(1)
+    const [index, setIndex] = useState(0)
 
     const [inEditMode, setInEditMode] = useState({
         status: false,
         rowKey: null
     });
-    const [trimestre, setTrimestre] = useState({
-        id: "home0",
-        aria: "home-tab0",
-        idTrimestre: 1
-
-    })
 
     useEffect(() => {
         defaultTrimestre()
@@ -80,39 +79,17 @@ export default function Notas() {
     }
 
     const defaultTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.idTrimestre}/${idMateria}/${alumno}/${idCurso}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre}/${idMateria}/${alumno}/${idCurso}`)
             .then(res => {
-                console.log(res.data);
                 setNotas(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
 
-    const primerTrimestre = () => {
-        setTrimestre({
-            id: "home0",
-            aria: "home-tab0",
-            idTrimestre: 1
-        })
-        defaultTrimestre()
-    }
-
-    const segundoTrimestre = () => {
-        setTrimestre({
-            id: "home1",
-            aria: "home-tab1",
-            idTrimestre: 2
-        })
-        defaultTrimestre()
-    }
-
-    const tercerTrimestre = () => {
-        setTrimestre({
-            id: "home2",
-            aria: "home-tab2",
-            idTrimestre: 3
-        })
+    const handleTrimestre = (e, value) => {
+        setIndex(value)
+        setTrimestre(value + 1)
         defaultTrimestre()
     }
 
@@ -168,316 +145,222 @@ export default function Notas() {
     }
 
     return (
-        <Layout title={'Notas'}>
-            <div>
-                <h1><strong>Notas</strong></h1>
-                <div className="mt-5 " style={{ marginBottom: '20mm' }}>
-                    <div className="row g-3" >
-                        <div className="col-md-3 hstack">
-                            <label className="fw-bold me-2" name="inputMateria">Materia: </label>
-                            <select name="idMateria" value={idMateria} onChange={handleMateria} className="form-select " id="inputMateria" style={{ width: '50mm' }} >
-                                {
-                                    materias && materias.map((m) => (
+        <Layout>
+            <Container maxWidth={'xl'}>
+                <Typography variant="h4">Notas</Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+                        <Select fullWidth id="inputMateria" name="idMateria" value={idMateria} onChange={handleMateria} >
+                            {
+                                materias && materias?.map((m, i) => (
 
-                                        <option value={m.id} key={m.id} className="col-md-2">{m.nombre}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                        <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                        <Select fullWidth id="inputCurso" name="idCurso" value={idCurso} onChange={handleCurso} >
+                            {
+                                cursos && cursos?.map((c, i) => (
 
-                        <div className="col-md-3 hstack">
-                            <label className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                            <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputMateria" style={{ width: '20mm' }} >
-                                {
-                                    cursos && cursos.map((c) => (
-                                        <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div className="row g-3" >
-                            <div>
-                                <label className="fw-bold me-2" >Buscar alumno: </label>
-                            </div>
+                                    <MenuItem key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField margin="normal"
+                            fullWidth
+                            name="nombreAlumno"
+                            value={nombreAlumno}
+                            onChange={handleNombreAlumno}
+                            label="Nombre del alumno" />
+                        <TextField margin="normal"
+                            fullWidth
+                            name="apellidoAlumno"
+                            value={apellidoAlumno}
+                            onChange={handleApellidoAlumno}
+                            label="Apellido del alumno" />
+                    </Grid>
+                </Grid>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={index} onChange={handleTrimestre}>
+                        <Tab label="Primer Trimestre" />
+                        <Tab label="Segundo Trimestre" />
+                        <Tab label="Tercer Trimestre" />
+                    </Tabs>
+                </Box>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 800 }}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="right">Legajo</TableCell>
+                                <TableCell align="right">Sexo</TableCell>
+                                <TableCell align="right">Nombre</TableCell>
+                                <TableCell align="right">Apellido</TableCell>
+                                <TableCell align="right">Materia</TableCell>
+                                <TableCell align="right">Nota 1</TableCell>
+                                <TableCell align="right">Nota 2</TableCell>
+                                <TableCell align="right">Nota 3</TableCell>
+                                <TableCell align="right">Nota 4</TableCell>
+                                <TableCell align="right">Nota 5</TableCell>
+                                <TableCell align="right">Trimestre</TableCell>
+                                <TableCell align="right">Operacion</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                notas && notas?.map((n, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.dni}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.sexo}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.nombre}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.apellido}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.materia?.nombre}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        margin="normal"
+                                                        variant="standard"
+                                                        name="nota1"
+                                                        placeholder={n.nota1}
+                                                        onChange={onChangeNotaColumna}
 
-                            <div className="col-md-3 hstack me-5">
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota1
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota2"
+                                                        variant="standard"
+                                                        placeholder={n.nota2}
+                                                        onChange={onChangeNotaColumna}
 
-                                <label htmlFor="inputNombre" className="fw-bold me-2">Nombre: </label>
-                                <input name="alumno" value={nombreAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleNombreAlumno}
-                                    onSubmitCapture={handleNombreAlumno} />
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota2
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota3"
+                                                        variant="standard"
+                                                        placeholder={n.nota3}
+                                                        onChange={onChangeNotaColumna}
 
-                                <button type="submit" className="btn input-group-text btn-primary"
-                                >
-                                    <i className='bx bx-search me-1'></i>
-                                </button>
-                            </div>
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota3
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota4"
+                                                        variant="standard"
+                                                        placeholder={n.nota4}
+                                                        onChange={onChangeNotaColumna}
 
-                            <div className="col-md-3 hstack me-5">
-                                <label htmlFor="inputApellido" className="fw-bold me-2" >Apellido: </label>
-                                <input name="alumno" value={apellidoAlumno} className="form-control my-2 text-capitalize " style={{ width: '50mm' }} type="search" placeholder="Search" aria-label="Search"
-                                    onChange={handleApellidoAlumno}
-                                    onSubmitCapture={handleApellidoAlumno} />
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota4
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota5"
+                                                        variant="standard"
+                                                        placeholder={n.nota5}
+                                                        onChange={onChangeNotaColumna}
 
-                                <button type="submit" className="btn input-group-text btn-primary"
-                                >
-                                    <i className='bx bx-search me-1'></i>
-                                </button>
-                            </div>
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota5
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {n.trimestre?.trimestre}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
 
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="mt-5">
-                    <div>
-                        <ul className="nav nav-tabs nav-justified mb-3" id="myTab0" role="tablist" style={{ flexDirection: 'inherit' }}>
-                            <li className="nav-item" onClick={primerTrimestre} role="presentation">
-                                <button
-                                    className="nav-link active"
-                                    id="home-tab0"
-                                    data-mdb-toggle="tab"
-                                    data-mdb-target="#home0"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="home"
-                                    aria-selected="true"
-                                >
-                                    Primer Trimestre
-                                </button>
-                            </li>
-                            <li className="nav-item" onClick={segundoTrimestre} role="presentation">
-                                <button
-                                    className="nav-link"
-                                    id="home-tab1"
-                                    data-mdb-toggle="tab"
-                                    data-mdb-target="#home1"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="profile"
-                                    aria-selected="false"
-                                >
-                                    Segundo Trimestre
-                                </button>
-                            </li>
-                            <li className="nav-item" onClick={tercerTrimestre} role="presentation">
-                                <button
-                                    className="nav-link"
-                                    id="home-tab2"
-                                    data-mdb-toggle="tab"
-                                    data-mdb-target="#home2"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="contact"
-                                    aria-selected="false"
-                                >
-                                    Tercer Trimestre
-                                </button>
-                            </li>
-                        </ul>
-
-                        <div className="tab-content" id="myTabContent0">
-                            <div
-                                className="tab-pane active"
-                                id={trimestre.id}
-                                role="tabpanel"
-                                aria-labelledby={trimestre.aria}
-                                onChange={defaultTrimestre}
-                            >
-
-
-                                <table className="table  nav-justified table-striped table-dark table-bordered">
-                                    <thead>
-                                        <tr className="text-center">
-                                            <th scope="col">Documento</th>
-                                            <th scope="col">Sexo</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Apellido</th>
-                                            <th scope="col">Materia</th>
-                                            <th scope="col">Nota 1</th>
-                                            <th scope="col">Nota 2</th>
-                                            <th scope="col">Nota 3</th>
-                                            <th scope="col">Nota 4</th>
-                                            <th scope="col">Nota 5</th>
-                                            <th scope="col">Trimestre</th>
-                                            <th scope="col">Editar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            notas && notas?.map((n, i) => (
-
-                                                <tr className="align-justified " key={i}>
-                                                    <td className="col-md-2">{n.alumnoXcursoXdivision?.usuario?.dni}</td>
-                                                    <td className="col-md-1 text-center text-capitalize">{n.alumnoXcursoXdivision?.usuario?.sexo}</td>
-                                                    <td className="col-md-1 text-capitalize">{n.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                                    <td className="col-md-1 text-capitalize" >{n.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                                    <td className="text-center col-md-1">{n.materia?.nombre}</td>
-                                                    <td className="text-center col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-                                                                <input type="number"
-                                                                    min="1"
-                                                                    max="10"
-                                                                    name="nota1"
-                                                                    className="text-center col-md-10"
-                                                                    placeholder={n.nota1}
-                                                                    onChange={(e) => {
-                                                                        setNota(Number.parseInt(e.target.value))
-                                                                        setColumnName(e.target.name)
-                                                                        console.log(nota);
-                                                                    }}
-
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    n.nota1
-                                                                )
-                                                        }
-
-                                                    </td>
-                                                    <td className="text-center col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-                                                                <input type="number"
-                                                                    min="1"
-                                                                    max="10"
-                                                                    name="nota2"
-                                                                    className="text-center col-md-10"
-                                                                    placeholder={n.nota2}
-                                                                    onChange={(e) => {
-                                                                        setNota(Number.parseInt(e.target.value))
-                                                                        setColumnName(e.target.name)
-                                                                        console.log(nota);
-                                                                    }}
-
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    n.nota2
-                                                                )
-                                                        }
-
-                                                    </td>
-                                                    <td className="text-center col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-                                                                <input type="number"
-                                                                    min="1"
-                                                                    max="10"
-                                                                    name="nota3"
-                                                                    className="text-center col-md-10"
-                                                                    placeholder={n.nota3}
-                                                                    onChange={(e) => {
-                                                                        setNota(Number.parseInt(e.target.value))
-                                                                        setColumnName(e.target.name)
-                                                                        console.log(nota);
-                                                                    }}
-
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    n.nota3
-                                                                )
-                                                        }
-
-                                                    </td>
-                                                    <td className="text-center col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-                                                                <input type="number"
-                                                                    min="1"
-                                                                    max="10"
-                                                                    name="nota4"
-                                                                    className="text-center col-md-10"
-                                                                    placeholder={n.nota4}
-                                                                    onChange={(e) => {
-                                                                        setNota(Number.parseInt(e.target.value))
-                                                                        setColumnName(e.target.name)
-                                                                        console.log(nota);
-                                                                    }}
-
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    n.nota4
-                                                                )
-                                                        }
-
-                                                    </td>
-
-                                                    <td className="text-center col-md-1" >
-
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-                                                                <input type="number"
-                                                                    min="1"
-                                                                    max="10"
-                                                                    name="nota5"
-                                                                    className="text-center col-md-10"
-                                                                    placeholder={n.nota5}
-                                                                    onChange={(e) => {
-                                                                        setNota(Number.parseInt(e.target.value))
-                                                                        setColumnName(e.target.name)
-                                                                        console.log(nota);
-                                                                    }}
-
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    n.nota5
-                                                                )
-                                                        }
-
-                                                    </td>
-                                                    <td className=" text-center col-md-3">{n.trimestre?.trimestre}</td>
-                                                    <td>
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                                <React.Fragment>
-                                                                    <div className="hstack">
-                                                                        <button
-                                                                            className="btn btn-primary "
-                                                                            onClick={() => onSave(n.id, nota, columnName)}
-                                                                        >
-                                                                            Save
-                                                                        </button>
-
-                                                                        <button
-                                                                            className="btn btn-secondary"
-                                                                            style={{ marginLeft: 8 }}
-                                                                            onClick={() => onCancel()}
-                                                                        >
-                                                                            Cancel
-                                                                        </button>
-                                                                    </div>
-                                                                </React.Fragment>
-                                                            ) : (
-                                                                <button
-                                                                    className=" btn btn-primary"
-                                                                    onClick={() => setInEditMode({
-                                                                        status: true,
-                                                                        rowKey: i
-                                                                    })}
+                                                    <React.Fragment>
+                                                        <Grid container spacing={11}>
+                                                            <Grid item xs={5} >
+                                                                <Button variant="contained"
+                                                                    color="primary"
+                                                                    size="small"
+                                                                    onClick={() => onSave(n.id, nota, columnName)}
                                                                 >
-                                                                    Edit
-                                                                </button>
-                                                            )
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+                                                                    Guardar
+                                                                </Button>
+                                                            </Grid>
+                                                            <Grid item xs={5}>
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    color="secondary"
+                                                                    size="small"
+                                                                    onClick={() => onCancel()}
+                                                                >
+                                                                    Cancelar
+                                                                </Button>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </React.Fragment>
+                                                ) : (
+                                                    <Button
+                                                        variant="contained"
+                                                        color="info"
+                                                        size="small"
+                                                        onClick={() => setInEditMode({
+                                                            status: true,
+                                                            rowKey: i
+                                                        })}
+                                                    >
+                                                        Editar
+                                                    </Button>
+                                                )
+                                            }
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Container>
         </Layout >
 
     );

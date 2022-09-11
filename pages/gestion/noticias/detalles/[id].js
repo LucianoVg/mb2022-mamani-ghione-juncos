@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
 import { Typography } from "@mui/material";
+import Loading from "../../../../components/loading";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
@@ -13,6 +14,7 @@ export default function DetallesNoticia() {
         url: '',
         idUsuario: 0
     })
+    const [cargando, setCargando] = useState(true)
     const router = useRouter()
     const { id } = router.query
     useEffect(() => {
@@ -25,8 +27,9 @@ export default function DetallesNoticia() {
                     console.error(err);
                 })
         }
+        setCargando(false)
 
-    }, [id])
+    }, [id, cargando])
 
 
     return (
@@ -39,6 +42,11 @@ export default function DetallesNoticia() {
                         <Typography component={'h1'} variant="h3">{noticia.titulo}</Typography>
                         <Typography component={'p'} variant="p">{noticia.descripcion}</Typography>
                     </div>
+                )
+            }
+            {
+                cargando && (
+                    <Loading />
                 )
             }
         </Layout>

@@ -14,8 +14,7 @@ const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
         titulo: '',
         descripcion: '',
-        url: '',
-        fecha: ''
+        url: ''
     })
     var hoy = new Date();
     const [imagen, setImagen] = useState(null)
@@ -58,9 +57,9 @@ const AgregarNoticias = () => {
 
         console.log(imagen);
         console.log(noticia);
-        guardarImagen('imagenes_noticias/' + imagen.name, imagen)
+        guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
             .then(result => {
-                traerImagen('imagenes_noticias/' + imagen.name)
+                traerImagen('imagenes_noticias/' + imagen?.name)
                     .then(url => {
                         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`, {
                             titulo: noticia.titulo,
@@ -71,9 +70,10 @@ const AgregarNoticias = () => {
                         }).then(res => {
                             console.log(res.data);
                         })
-                        router.push('/')
+
                     })
             })
+        router.push('/')
     }
 
     return (
@@ -106,7 +106,7 @@ const AgregarNoticias = () => {
                             onChange={handleForm}
                             value={noticia.descripcion}
                         />
-                        <Button variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
+                        <Button disabled={imagen === null} variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Card sx={{ maxWidth: 345, height: 350 }}>

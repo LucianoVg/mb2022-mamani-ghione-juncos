@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
 import TarjetaNovedades from '../components/tarjeta_noticias'
-import paginate from '../utils/paginate'
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
@@ -24,8 +23,7 @@ const Home = () => {
     paginacion.saltar(pagina)
   }
 
-  useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
+  const traerNoticias = () => {
     axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
       .then(res => {
         if (res.data) {
@@ -35,6 +33,11 @@ const Home = () => {
       }).catch(err => {
         console.error(err);
       })
+  }
+
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
+    traerNoticias()
   }, [])
 
   return (
@@ -48,8 +51,8 @@ const Home = () => {
       }
       <Grid container spacing={2}>
         {
-          noticias && noticias?.map((n, i) => (
-            <Grid key={i} item xs={4}>
+          paginacion.dataActual().map((n, i) => (
+            <Grid item key={i} xs={4}>
               <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
             </Grid>
           ))
