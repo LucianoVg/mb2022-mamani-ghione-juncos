@@ -9,6 +9,10 @@ import { useRouter } from 'next/router'
 import { Grid, Pagination } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 
+
+
+
+
 const Home = () => {
   const [noticias, setNoticias] = useState()
   const [pagina, setPagina] = useState(1)

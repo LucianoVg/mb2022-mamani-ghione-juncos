@@ -40,6 +40,7 @@ const Login = () => {
                     console.log(credencial);
                     router.push('/')
                 }).catch(err => {
+
                     if (res.data.correo === correo && res.data.password === password) {
                         registrarse(correo, password)
                             .then(credencial => {
@@ -53,6 +54,11 @@ const Login = () => {
                             setError("")
                         }, 3000);
                     }
+                    console.log(err);
+                    setError("Usuario y/o contraseña incorrectos")
+                    setTimeout(() => {
+                        setError("")
+                    }, 3000);
                 })
         } else {
             setError("Usuario no encontrado en el sistema, consulte con el administrador")

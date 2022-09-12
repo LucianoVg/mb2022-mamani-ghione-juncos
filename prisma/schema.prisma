@@ -33,8 +33,8 @@ model archivo {
 
 model asistencia {
   id                      Int                    @id @default(autoincrement())
-  fecha                   DateTime?
-  justificado             Boolean?
+  creadoEn                DateTime?
+  actualizadoEn           DateTime?
   idAlumnoXcursoXdivision Int?
   idUsuario               Int?
   presente                Boolean?
@@ -44,8 +44,9 @@ model asistencia {
   llegadaTardeJustificada Boolean?
   mediaFalta              Boolean?
   mediaFaltaJustificada   Boolean?
-  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  motivo                  String?
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXcursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model asistenciaDocente {

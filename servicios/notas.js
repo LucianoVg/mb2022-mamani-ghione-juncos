@@ -144,6 +144,4 @@ export async function updateNota(idNota, notaNueva, columnName) {
         default:
             break;
     }
-
-
 }
