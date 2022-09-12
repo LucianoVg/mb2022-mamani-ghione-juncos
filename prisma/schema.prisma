@@ -35,7 +35,6 @@ model asistencia {
   id                      Int                    @id @default(autoincrement())
   creadoEn                DateTime?
   actualizadoEn           DateTime?
-  justificado             Boolean?
   idAlumnoXcursoXdivision Int?
   idUsuario               Int?
   presente                Boolean?

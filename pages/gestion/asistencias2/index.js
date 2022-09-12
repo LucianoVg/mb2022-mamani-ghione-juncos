@@ -429,7 +429,7 @@ export default function Asistencias() {
                                                                 Editar
                                                             </button>
 
-                                                            <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias1/editarAsistencia">Info.</a>
+                                                            <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias2/mas_info">Info.</a>
                                                         </div>
                                                     )
                                                 }
@@ -603,7 +603,7 @@ export default function Asistencias() {
                                                                     Editar
                                                                 </button>
 
-                                                                <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias1/editarAsistencia">Info.</a>
+                                                                <a className="btn btn-info" href="http://localhost:3000/gestion/asistencias2/mas_info">Info.</a>
                                                             </div>
                                                         )
                                                     }
@@ -629,15 +629,3 @@ export default function Asistencias() {
 
 
 
-// --- PARA LA PAGINA DE EDITAR
-
-// {/* <select className="form-select" aria-label="Default select example">
-//                                                 <option value="" selected disabled hidden></option>
-//                                                 <option value="1">Presente</option>
-//                                                 <option value="2">Ausente</option>
-//                                                 <option value="3">Ausente Justificado</option>
-//                                                 <option value="4">Llegada Tarde</option>
-//                                                 <option value="5">Llegada Tarde Justificada</option>
-//                                                 <option value="6">Media Falta</option>
-//                                                 <option value="7">Media Falta Justificada</option>
-//                                             </select> */}
