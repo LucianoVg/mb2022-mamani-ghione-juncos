@@ -68,13 +68,13 @@ export default function Asistencias() {
     useEffect(() => {
         listarAsistencias()
         listarCursos()
-    
+
         // MARCAR UNO Y DESMARCAR LOS OTROS
         $(document).on('click', 'input[type="checkbox"]', function () {
             $('input[type="checkbox"]').not(this).prop('checked', false);
         });
-    
-   
+
+
     }, [alumno, idCurso, documento, desde, hasta])
 
 
@@ -167,16 +167,26 @@ export default function Asistencias() {
                 <h1><strong>Asistencias</strong></h1>
 
                 <div className="mt-5 " style={{ marginBottom: '20mm' }}>
-                    <div className="col-md-3 hstack me-3 " style={{ marginBottom: '5mm' }}>
-                        <label htmlFor="inputCurso" className="fw-bold me-2" name="inputMateria ">Curso: </label>
-                        <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputCurso" style={{ width: '20mm' }} >
-                            {
-                                cursos && cursos.map((c) => (
-                                    <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
-                                ))
-                            }
-                        </select>
+                    <div className='hstack gap-2  '>
+                        <div className="col-md-8 hstack me-3 " style={{ marginBottom: '5mm' }}>
+                            <label htmlFor="inputCurso" className="fw-bold me-2" name="inputMateria ">Curso: </label>
+                            <select name="idCurso" value={idCurso} onChange={handleCurso} className="form-select " id="inputCurso" style={{ width: '20mm' }} >
+                                {
+                                    cursos && cursos.map((c) => (
+                                        <option value={c.id} key={c.id} className="col-md-2">{c.curso?.nombre} {c.division?.division} </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className="col-md-5 hstack " >
+                        <h4 className="me-2" style={{fontSize: '15px'}}><strong>Asistencia modificada:</strong> </h4>
+                        <button className='btn btn-dark col-md-5 me-3' disabled  style={{ fontSize: '20px', color: 'transparent', opacity: '20%', marginTop: '-10px'}}>
+                            dasddas
+                        </button>
+                        </div>
+                      
                     </div>
+
                     <div className="g-2" >
 
                         <div className="col-ms-6 hstack" style={{ marginBottom: '5mm' }}>
@@ -276,12 +286,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch">
-                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
                                                             </div>
 
                                                         )
@@ -295,12 +305,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausente} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
                                                             </div>
 
@@ -313,12 +323,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
                                                             </div>
 
@@ -331,7 +341,7 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
                                                         </div>
                                                     ) :
                                                         (
