@@ -73,6 +73,7 @@ export default function Asistencias() {
         $(document).on('click', 'input[type="checkbox"]', function () {
             $('input[type="checkbox"]').not(this).prop('checked', false);
         });
+    
    
     }, [alumno, idCurso, documento, desde, hasta])
 
@@ -275,12 +276,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
                                                             </div>
 
                                                         )
@@ -294,12 +295,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input" checked={a.ausente} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
 
                                                             </div>
 
@@ -312,12 +313,12 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
                                                         </div>
                                                     ) :
                                                         (
                                                             <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox"  role="switch" disabled={bloquearCheck(a)} />
 
                                                             </div>
 
@@ -330,7 +331,7 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox"  role="switch" />
                                                         </div>
                                                     ) :
                                                         (
@@ -347,7 +348,7 @@ export default function Asistencias() {
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                            <input className="form-check-input pd-1" type="checkbox" id="1" role="switch" />
                                                         </div>
                                                     ) :
                                                         (

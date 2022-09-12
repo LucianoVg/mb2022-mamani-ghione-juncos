@@ -14,16 +14,6 @@ export async function ListarCurso() {
     return cursos
 }
 
-
-
-// export async function ListarMaterias() {
-
-//     const materias = await prisma.materia.findMany()
-
-//     return materias
-// }
-
-
 export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
 
     const asistencias = await prisma.asistencia.findMany({
@@ -135,7 +125,7 @@ export async function TraerAsistencias2() {
 }
 
 
-export async function TraerAsistenciasTest() {
+export async function DetalleAsistencia() {
 
     const asistencias = await prisma.asistencia.findMany({
 
@@ -157,33 +147,7 @@ export async function TraerAsistenciasTest() {
         where: {
             id: 14
         }
-        // where: {
-        //     AND: [
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 idCursoXdivision: curso
-        //             }
-        //         },
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 usuario: {
-        //                     nombre: {
-        //                         startsWith: alumno.split(' ')[0]
-        //                     }
-        //                 }
-        //             },
-        //         },
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 usuario: {
-        //                     apellido: {
-        //                         startsWith: alumno.split(' ')[1]
-        //                     }
-        //                 }
-        //             },
-        //         }
-        //     ]
-        // }
+      
     })
     console.log(asistencias);
     return asistencias
@@ -191,71 +155,149 @@ export async function TraerAsistenciasTest() {
 
 
 
-export async function updateAsistencia(idNota, notaNueva, columnName) {
+
+export async function updateAsistencia(idNota, notaNueva, columnName, addMotivo) {
 
     switch (columnName) {
-        case 'nota1':
-            const newNota1 = await prisma.nota.update({
+        case 'presente':
+            const presente = await prisma.nota.update({
                 data: {
-                    nota1: notaNueva
+                    presente: notaNueva,
+                    ausente: null,
+                    ausenteJustificado: null,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: null,
 
+                    motivo: addMotivo
                 },
                 where: {
                     id: idNota
                 }
 
             })
-            return newNota1
+            return presente
 
-        case 'nota2':
-            const newNota2 = await prisma.nota.update({
+        case 'ausente':
+            const ausente = await prisma.nota.update({
                 data: {
-                    nota2: notaNueva
+                    presente: null,
+                    ausente: notaNueva,
+                    ausenteJustificado: null,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: null,
+
+                    motivo: addMotivo
 
                 },
                 where: {
                     id: idNota
                 }
             })
-            return newNota2
+            return ausente
 
 
-        case 'nota3':
-            const newNota3 = await prisma.nota.update({
+        case 'ausenteJustificado':
+            const ausenteJustificado = await prisma.nota.update({
                 data: {
-                    nota3: notaNueva
+                    presente: null,
+                    ausente: null,
+                    ausenteJustificado: notaNueva,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: null,
+
+                    motivo: addMotivo
 
                 },
                 where: {
                     id: idNota
                 }
             })
-            return newNota3
+            return ausenteJustificado
 
-        case 'nota4':
-            const newNota4 = await prisma.nota.update({
+        case 'llegadaTarde':
+            const llegadaTarde = await prisma.nota.update({
                 data: {
-                    nota4: notaNueva
+                    presente: null,
+                    ausente: null,
+                    ausenteJustificado: null,
+                    llegadaTarde: notaNueva,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: null, 
+
+                    motivo: addMotivo
 
                 },
                 where: {
                     id: idNota
                 }
             })
-            return newNota4
+            return llegadaTarde
 
-        case 'nota5':
-            const newNota5 = await prisma.nota.update({
+        case 'llegadaTardeJustificada':
+            const llegadaTardeJustificada = await prisma.nota.update({
                 data: {
-                    nota5: notaNueva
+                    presente: null,
+                    ausente: null,
+                    ausenteJustificado: null,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: notaNueva,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: null,
+
+                    motivo: addMotivo
 
                 },
                 where: {
                     id: idNota
                 }
             })
-            return newNota5
+            return llegadaTardeJustificada
 
+        case 'mediaFalta':
+            const mediaFalta = await prisma.nota.update({
+                data: {
+                    presente: null,
+                    ausente: null,
+                    ausenteJustificado: null,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: notaNueva,
+                    mediaFaltaJustificada: null,
+
+
+                    motivo: addMotivo
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return mediaFalta
+
+        case 'mediaFaltaJustificada':
+            const mediaFaltaJustificada = await prisma.nota.update({
+                data: {
+                    presente: null,
+                    ausente: null,
+                    ausenteJustificado: null,
+                    llegadaTarde: null,
+                    llegadaTardeJustificada: null,
+                    mediaFalta: null,
+                    mediaFaltaJustificada: notaNueva,
+
+                    motivo: addMotivo
+                },
+                where: {
+                    id: idNota
+                }
+            })
+            return mediaFaltaJustificada
 
         default:
             break;

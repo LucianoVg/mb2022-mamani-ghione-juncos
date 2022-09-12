@@ -5,7 +5,7 @@ import { Layout } from '../../../components/layout';
 import { authStateChanged } from '../../../servicios/cuenta';
 import { useRouter } from 'next/router';
 
-const EditarAsitencia = () => {
+const DetalleAsistencia = () => {
 
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const EditarAsitencia = () => {
 
     const [asistencias, setAsistencias] = useState([])
     const listarAsistencias = () => {
-        axios.get(`http://localhost:3000/api/gestion/asistencias/editar_asistencias_test`)
+        axios.get(`http://localhost:3000/api/gestion/asistencias/detalle_asistencia`)
             .then(res => {
                 console.log(res.data);
                 setAsistencias(res.data)
@@ -103,7 +103,7 @@ const EditarAsitencia = () => {
                                             // </div>
                                         ) :
                                             (
-                                                <a className='btn btn-info col-md-3' style={{ fontSize: '20px' }}>
+                                                <a className='btn btn-primary col-md-3' style={{ fontSize: '20px' }}>
                                                     <strong> Creado por:</strong> {a.usuario?.nombre} {a.usuario?.apellido}
                                                 </a>
 
@@ -233,4 +233,4 @@ const EditarAsitencia = () => {
     )
 }
 
-export default EditarAsitencia
+export default DetalleAsistencia
