@@ -68,6 +68,12 @@ export default function Asistencias() {
     useEffect(() => {
         listarAsistencias()
         listarCursos()
+    
+        // MARCAR UNO Y DESMARCAR LOS OTROS
+        $(document).on('click', 'input[type="checkbox"]', function () {
+            $('input[type="checkbox"]').not(this).prop('checked', false);
+        });
+   
     }, [alumno, idCurso, documento, desde, hasta])
 
 
@@ -151,9 +157,7 @@ export default function Asistencias() {
         // setNota(0);
     }
 
-    // document.querySelector(document).addEventListener('click', 'input[type="checkbox"]', function() {      
-    //     document.querySelector('input[type="checkbox"]').not(this).prop('checked', false);      
-    // });
+
 
 
     return (
@@ -445,7 +449,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -464,7 +468,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -482,7 +486,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -500,7 +504,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -517,7 +521,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -534,7 +538,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
@@ -551,7 +555,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" type="checkbox" role="switch" />
+                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
                                                             </div>
                                                         ) :
                                                             (
