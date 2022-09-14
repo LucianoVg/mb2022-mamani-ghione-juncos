@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import $ from 'jQuery'
 import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-
+import { styled } from '@mui/material/styles';
 // DATEPICKER
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -177,36 +177,55 @@ export default function Asistencias() {
         setAge(e.target.value);
 
     }
+
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+          border: 0,
+        },
+      }));
+
+    //   const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    //     [`&.${tableCellClasses.head}`]: {
+    //       backgroundColor: theme.palette.common.black,
+    //       color: theme.palette.common.white,
+    //     },
+     
+    //   }));
+
+  
     return (
         <Layout title={'Asistencias'}>
-            <Container 
-            style={{ position: 'relative', }}
+            <Container
+                style={{ position: 'relative', }}
             >
                 <h1><strong>Asistencias</strong></h1>
-                <Box component="span" 
-                
-                >
+                <Box component="span">
                     <Grid container
-                        style={{ position: 'absolute',marginTop: '-100px' }}
+                        style={{ position: 'absolute', marginTop: '-100px' }}
                         direction="column"
                         justifyContent="flex-start"
                         alignItems="flex-end"
-                        
+
                     >
                         <Grid item >
-                            <Stack spacing={2} direction="row" >
-                                <h4 className="me-2" style={{ fontSize: '15px' }}><strong>Asistencia modificada:</strong> </h4>
-                                <Button variant="contained" disabled style={{ fontSize: '20px', color: 'transparent', opacity: '80%', height: '40px', marginTop: '10px' }}>Contained</Button>
+                            <Stack spacing={1} direction="row" >
+                                <h5 ><strong>Asistencia modificada:</strong> </h5>
+                                <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue',color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
                             </Stack >
-                            <h4 style={{ fontSize: '15px', marginTop: '-10px' }}>
-                                P: Presente  <br />
-                                A: Ausente <br />
-                                AJ: Ausente Justificado <br />
-                                LTJ: Llegada Tarde Justificada <br />
-                                LT: Llegada Tarde <br />
-                                MD: Media Falta <br />
-                                MDJ: Media Falta Justificada  <br />
-                            </h4>
+                            <h5 style={{ marginTop: '-10px' }}>
+                                <strong>P:</strong>Presente  <br />
+                                <strong>A:</strong>Ausente <br />
+                                <strong>AJ:</strong> Ausente Justificado <br />
+                                <strong>LT:</strong>Llegada Tarde <br />
+                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                                <strong>MD:</strong>Media Falta <br />
+                                <strong>MDJ:</strong> Media Falta Justificada  <br />
+                            </h5>
 
                         </Grid>
                     </Grid>
@@ -319,14 +338,15 @@ export default function Asistencias() {
 
                                     a.motivo != null ? (
 
-                                        < TableRow className="table-active" key={i} >
+                                        < StyledTableRow 
+                                       key={i} >
 
-                                            <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                            <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
-                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}}className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}}  className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
-                                            <TableCell className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch">
@@ -345,7 +365,7 @@ export default function Asistencias() {
 
 
                                             </TableCell>
-                                            <TableCell className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -363,7 +383,7 @@ export default function Asistencias() {
 
 
                                             </TableCell>
-                                            <TableCell className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -381,7 +401,7 @@ export default function Asistencias() {
 
 
                                             </TableCell>
-                                            <TableCell className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -398,7 +418,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                            <TableCell className="col-md-1">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -415,7 +435,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                            <TableCell className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -432,7 +452,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                            <TableCell className="col-md-1">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                         <div className="form-check form-switch  ">
@@ -449,7 +469,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                            <TableCell className="col-md-2">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-2">
                                                 {
 
                                                     inEditMode.status && inEditMode.rowKey === i ? (
@@ -491,7 +511,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                        </TableRow>
+                                        </StyledTableRow>
                                     ) :
                                         (
                                             < TableRow key={i} >
