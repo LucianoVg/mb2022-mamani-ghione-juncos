@@ -3,80 +3,37 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import $ from 'jQuery'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch, { SwitchProps } from '@mui/material/Switch';
+import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination } from "@mui/material";
+import Switch from '@mui/material/Switch';
 // DATEPICKER
-import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { color } from "@mui/system";
+import Select from '@mui/material/Select';
+import { usePagination } from "../../../components/hooks/paginationHook";
+import { Search } from "@mui/icons-material";
 
 
 export default function Asistencias() {
 
-
-
-    // const [idMateria, setIdMateria] = useState(1)
-
-
-    // const [columnName, setColumnName] = useState("");
-
-
-    // const updateNota = (id, newNota, columnName) => {
-    //     axios.put(`http://localhost:3000/api/gestion/notas/update/${id}`, {
-    //         nota: newNota,
-    //         nombreColumna: columnName
-    //     })
-    //         .then(res => {
-    //             console.log(res.data);
-    //             // reset inEditMode and unit price state values
-    //             onCancel();
-
-    //             // fetch the updated data
-    //             defaultTrimestre();
-    //         }).catch(err => {
-    //             console.error(err);
-    //         })
-
-    // }
-
-    // const onSave = (id, newNota, columnName) => {
-    //     updateNota(id, newNota, columnName);
-    // }
-
-    // const onCancel = () => {
-    //     // reset the inEditMode state value
-    //     setInEditMode({
-    //         status: false,
-    //         rowKey: null
-    //     })
-    //     // reset the unit price state value
-    //     setNota(0);
-    // }
-
-
-    // const select = () => {
-    //     var input = document.getElementById("select")
-    //     input.select();
-    //     input.focus();
-    // }
-
-    // const onChangeNotaColumna = (e) => {
-    //     setNota(Number.parseInt(e.target.value))
-    //     setColumnName(e.target.name)
-    // }
+    const [pagina, setPagina] = useState(1)
+    const pageSize = 5
+    const [presente, setPresente] = useState(false)
+    const [ausente, setAusente] = useState(false)
+    const [llegadaTarde, setLlegadaTarde] = useState(false)
+    const [aj, setAj] = useState(false)
+    const [ltj, setLtj] = useState(false)
+    const [mf, setMf] = useState(false)
+    const [mfj, setMfj] = useState(false)
+    const [asistencias, setAsistencias] = useState()
+    const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
+    const paginacion = usePagination(asistencias || [], pageSize)
     const [idCurso, setIdCurso] = useState(1)
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
     const [alumno, setAlumno] = useState("")
-    const [desde, setDesde] = useState(new Date().toISOString())
-    const [hasta, setHasta] = useState(new Date().toISOString())
+    const [fecha, setFecha] = useState(new Date().toISOString())
     const [cursos, setCursos] = useState()
 
     useEffect(() => {
@@ -84,20 +41,26 @@ export default function Asistencias() {
         listarCursos()
 
         // MARCAR UNO Y DESMARCAR LOS OTROS
-        $(document).on('click', 'Switch[type="checkbox"]', function () {
-            $('Switch[type="checkbox"]').not(this).prop('checked', false);
-        });
+        // $(document).on('click', 'Switch[type="checkbox"]', function () {
+        //     $('Switch[type="checkbox"]').not(this).prop('checked', false);
+        // });
 
 
-    }, [alumno, idCurso, documento, desde, hasta])
+    }, [alumno, idCurso, documento, fecha])
 
+    const handlerCambioPagina = (e, pagina) => {
+        setPagina(pagina)
+        paginacion.saltar(pagina)
+    }
 
-    const [asistencias, setAsistencias] = useState()
     const listarAsistencias = () => {
-        axios.get(`http://localhost:3000/api/gestion/asistencias/${alumno}/${idCurso}/${documento}/${new Date(desde).toISOString()}/${new Date(hasta).toISOString()}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${idCurso}/${fecha}/${alumno}/${documento}`)
             .then(res => {
-                console.log(res.data);
-                setAsistencias(res.data)
+                if (res.data) {
+                    console.log(res.data);
+                    setAsistencias(res.data)
+                }
+
             }).catch(err => {
                 console.error(err);
             })
@@ -105,7 +68,7 @@ export default function Asistencias() {
 
 
     const listarCursos = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/curso`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
                 setCursos(res.data)
@@ -115,30 +78,21 @@ export default function Asistencias() {
     }
     const handleCurso = (e) => {
         setIdCurso(Number.parseInt(e.target.value))
-        listarAsistencias()
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
         setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-        listarAsistencias()
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
         setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
-        listarAsistencias()
     }
     const handleDocumento = (e) => {
         setDocumento(e.target.value)
-        listarAsistencias()
     }
-    const handleDesde = (e) => {
-        setDesde(e.target.value || new Date().toISOString())
-        listarAsistencias()
-    }
-    const handleHasta = (e) => {
-        setHasta(e.target.value || new Date().toISOString())
-        listarAsistencias()
+    const handleFecha = (value) => {
+        setFecha(value || new Date().toISOString())
     }
 
     const bloquearCheck = (a) => {
@@ -150,13 +104,13 @@ export default function Asistencias() {
         status: false,
         rowKey: null
     });
-    const onEdit = (id) => {
-        setInEditMode({
-            status: true,
-            rowKey: id
-        })
+    // const onEdit = (id) => {
+    //     setInEditMode({
+    //         status: true,
+    //         rowKey: id
+    //     })
 
-    }
+    // }
 
     const onSave = (id, newNota, columnName) => {
         updateNota(id, newNota, columnName);
@@ -168,79 +122,85 @@ export default function Asistencias() {
             status: false,
             rowKey: null
         })
-        // // reset the unit price state value
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(false)
+        setMf(false)
+        setMfj(false)
+        // reset the unit price state value
         // setNota(0);
     }
 
-    const [value, setValue] = useState(dayjs());
 
-    const [age, setAge] = React.useState('');
 
-    const handleChange = (e) => {
-        setAge(e.target.value);
-
+    const handlePresente = (e, checked) => {
+        setPresente(checked)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(false)
+        setMf(false)
+        setMfj(false)
+    }
+    const handleAusente = (e, checked) => {
+        setPresente(false)
+        setAusente(checked)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(false)
+        setMf(false)
+        setMfj(false)
+    }
+    const handleLlegadaTarde = (e, checked) => {
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(checked)
+        setAj(false)
+        setLtj(false)
+        setMf(false)
+        setMfj(false)
+    }
+    const handleAj = (e, checked) => {
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(checked)
+        setLtj(false)
+        setMf(false)
+        setMfj(false)
+    }
+    const handleLtj = (e, checked) => {
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(checked)
+        setMf(false)
+        setMfj(false)
+    }
+    const handleMf = (e, checked) => {
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(false)
+        setMf(checked)
+        setMfj(false)
+    }
+    const handleMfj = (e, checked) => {
+        setPresente(false)
+        setAusente(false)
+        setLlegadaTarde(false)
+        setAj(false)
+        setLtj(false)
+        setMf(false)
+        setMfj(checked)
     }
 
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChecked = (e) =>  {
-        setChecked(event.target.checked);
-    };
-
-
-    // const IOSSwitch = styled((props = SwitchProps) => (
-    //     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-    // ))(({ theme }) => ({
-    //     width: 42,
-    //     height: 26,
-    //     padding: 0,
-    //     '& .MuiSwitch-switchBase': {
-    //         padding: 0,
-    //         margin: 2,
-    //         transitionDuration: '300ms',
-    //         '&.Mui-checked': {
-    //             transform: 'translateX(16px)',
-    //             color: '#fff',
-    //             '& + .MuiSwitch-track': {
-    //                 backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
-    //                 opacity: 1,
-    //                 border: 0,
-    //             },
-    //             '&.Mui-disabled + .MuiSwitch-track': {
-    //                 opacity: 0.5,
-    //             },
-    //         },
-    //         '&.Mui-focusVisible .MuiSwitch-thumb': {
-    //             color: '#33cf4d',
-    //             border: '6px solid #fff',
-    //         },
-    //         '&.Mui-disabled .MuiSwitch-thumb': {
-    //             color:
-    //                 theme.palette.mode === 'light'
-    //                     ? theme.palette.grey[100]
-    //                     : theme.palette.grey[600],
-    //         },
-    //         '&.Mui-disabled + .MuiSwitch-track': {
-    //             opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-    //         },
-    //     },
-    //     '& .MuiSwitch-thumb': {
-    //         boxSizing: 'border-box',
-    //         width: 22,
-    //         height: 22,
-    //     },
-    //     '& .MuiSwitch-track': {
-    //         borderRadius: 26 / 2,
-    //         backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
-    //         opacity: 1,
-    //         transition: theme.transitions.create(['background-color'], {
-    //             duration: 500,
-    //         }),
-    //     },
-    // }));
-
     return (
-        <Layout title={'Asistencias'}>
+        <Layout>
             <Container
                 style={{ position: 'relative', }}
             >
@@ -265,8 +225,8 @@ export default function Asistencias() {
                                 <strong>AJ:</strong> Ausente Justificado <br />
                                 <strong>LT:</strong>Llegada Tarde <br />
                                 <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                <strong>MD:</strong>Media Falta <br />
-                                <strong>MDJ:</strong> Media Falta Justificada  <br />
+                                <strong>MF:</strong>Media Falta <br />
+                                <strong>MFJ:</strong> Media Falta Justificada  <br />
                             </h5>
 
                         </Grid>
@@ -276,18 +236,16 @@ export default function Asistencias() {
 
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <FormControl sx={{ width: '18%' }}>
+                        <FormControl fullWidth sx={{ width: '18%' }}>
                             <InputLabel id="demo-simple-select-label">Curso</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={age}
+                                value={idCurso}
+                                name="idCurso"
                                 label="Curso"
-                                onChange={handleChange}
+                                onChange={handleCurso}
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
                                 {
                                     cursos && cursos.map((c) => (
                                         <MenuItem value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
@@ -302,34 +260,30 @@ export default function Asistencias() {
                     <Grid item xs={4}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <MobileDatePicker
-                                label="Fecha desde"
-                                value={value}
-                                onChange={(newValue) => {
-                                    setValue(newValue);
-                                }}
+                                label="Fecha"
+                                value={fecha}
+                                onChange={handleFecha}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={8}>
+                    {/* <Grid item xs={8}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <MobileDatePicker
                                 label="Fecha hasta"
-                                value={value}
-                                onChange={(newValue) => {
-                                    setValue(newValue);
-                                }}
+                                value={hasta}
+                                onChange={handleHasta}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12}>
                         <h4>Buscar Alumno:</h4>
                     </Grid>
                     <Grid item xs={4}>
                         <TextField
                             fullWidth
-                            name="nombreAlumno"
+                            name="documento"
                             value={documento}
                             onChange={handleDocumento}
                             label="Documento del alumno" />
@@ -351,10 +305,15 @@ export default function Asistencias() {
                             onChange={handleApellidoAlumno}
                             label="Apellido del alumno" />
                     </Grid>
+                    <Grid item xs={4}>
+                        <Button variant="outlined" onClick={listarAsistencias} startIcon={<Search />} color="info">
+                            Buscar
+                        </Button>
+                    </Grid>
                 </Grid>
 
 
-                <TableContainer component={Paper} fullWidth style={{ marginTop: '40px' }}>
+                <TableContainer component={Paper} style={{ marginTop: '40px' }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -376,7 +335,7 @@ export default function Asistencias() {
                         </TableHead>
                         <TableBody>
                             {
-                                asistencias && asistencias?.map((a, i) => (
+                                paginacion.dataActual().map((a, i) => (
 
                                     a.motivo != null ? (
 
@@ -393,12 +352,10 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.presente}
-                                                            onChange={handleChecked}
+                                                            name="presente"
+                                                            checked={presente}
+                                                            onChange={handlePresente}
                                                         />
-
-
 
                                                     ) :
                                                         (
@@ -406,6 +363,7 @@ export default function Asistencias() {
                                                             <Switch
                                                                 type="checkbox"
                                                                 checked={a.presente}
+                                                                defaultChecked={a.presente}
                                                                 disabled={bloquearCheck(a)}
                                                             />
 
@@ -424,9 +382,9 @@ export default function Asistencias() {
 
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.ausente}
-                                                            onChange={handleChecked}
+                                                            name="ausente"
+                                                            checked={ausente}
+                                                            onChange={handleAusente}
                                                         />
 
 
@@ -451,9 +409,9 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.ausenteJustificado}
-                                                            onChange={handleChecked}
+                                                            name="aj"
+                                                            checked={aj}
+                                                            onChange={handleAj}
                                                         />
 
                                                     ) :
@@ -475,9 +433,9 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.llegadaTarde}
-                                                            onChange={handleChecked}
+                                                            name="llegadaTarde"
+                                                            checked={llegadaTarde}
+                                                            onChange={handleLlegadaTarde}
                                                         />
 
 
@@ -499,9 +457,9 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.llegadaTardeJustificada}
-                                                            onChange={handleChecked}
+                                                            name="ltj"
+                                                            checked={ltj}
+                                                            onChange={handleLtj}
                                                         />
 
                                                     ) :
@@ -523,9 +481,9 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.mediaFalta}
-                                                            onChange={handleChecked}
+                                                            name="mf"
+                                                            checked={mf}
+                                                            onChange={handleMf}
                                                         />
 
                                                     ) :
@@ -546,12 +504,10 @@ export default function Asistencias() {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
 
                                                         <Switch
-                                                            type="checkbox"
-                                                            checked={a.mediaFaltaJustificada}
-                                                            onChange={handleChecked}
+                                                            name="mfj"
+                                                            checked={mfj}
+                                                            onChange={handleMfj}
                                                         />
-
-
                                                     ) :
                                                         (
                                                             <Switch
@@ -559,9 +515,6 @@ export default function Asistencias() {
                                                                 checked={a.mediaFaltaJustificada}
                                                                 disabled={bloquearCheck(a)}
                                                             />
-
-
-
                                                         )
                                                 }
 
@@ -600,7 +553,7 @@ export default function Asistencias() {
                                                             >Editar</Button>
                                                             <Button variant="contained"
                                                                 sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                href="http://localhost:3000/gestion/asistencias/mas_info">
+                                                                href={`/gestion/asistencias/mas_info`}>
                                                                 Info.
                                                             </Button>
                                                         </Stack>
@@ -623,9 +576,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.presente}
-                                                                onChange={handleChecked}
+                                                                name="presente"
+                                                                checked={presente}
+                                                                onChange={handlePresente}
                                                             />
 
 
@@ -651,15 +604,11 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
-
-
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausente}
-                                                                onChange={handleChecked}
+                                                                name="ausente"
+                                                                checked={ausente}
+                                                                onChange={handleAusente}
                                                             />
-
-
 
                                                         ) :
                                                             (
@@ -681,9 +630,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausenteJustificado}
-                                                                onChange={handleChecked}
+                                                                name="aj"
+                                                                checked={aj}
+                                                                onChange={handleAj}
                                                             />
 
                                                         ) :
@@ -705,9 +654,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTarde}
-                                                                onChange={handleChecked}
+                                                                name="llegadaTarde"
+                                                                checked={llegadaTarde}
+                                                                onChange={handleLlegadaTarde}
                                                             />
 
 
@@ -729,9 +678,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTardeJustificada}
-                                                                onChange={handleChecked}
+                                                                name="ltj"
+                                                                checked={ltj}
+                                                                onChange={handleLtj}
                                                             />
 
                                                         ) :
@@ -753,9 +702,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFalta}
-                                                                onChange={handleChecked}
+                                                                name="mf"
+                                                                checked={mf}
+                                                                onChange={handleMf}
                                                             />
 
                                                         ) :
@@ -776,9 +725,9 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFaltaJustificada}
-                                                                onChange={handleChecked}
+                                                                name="mfj"
+                                                                checked={mfj}
+                                                                onChange={handleMfj}
                                                             />
 
 
@@ -846,7 +795,18 @@ export default function Asistencias() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-
+                {
+                    asistencias && (
+                        <Pagination
+                            sx={{ marginTop: 2 }}
+                            count={cantidadPaginas}
+                            size='large'
+                            page={pagina}
+                            variant="outlined"
+                            shape='circular'
+                            onChange={handlerCambioPagina} />
+                    )
+                }
             </Container>
 
         </Layout >

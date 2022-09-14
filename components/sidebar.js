@@ -120,7 +120,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                                         <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
                                             <ListItemIcon>
                                                 {
-                                                    m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
+                                                    m?.menu?.menuSistema === 'Mantenimiento de Usuario' && <AssignmentIndOutlinedIcon />
                                                 }
                                                 {
                                                     m?.menu?.menuSistema === 'Asistencias' && (

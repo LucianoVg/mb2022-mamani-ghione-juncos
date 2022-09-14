@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { TraerAsistencias } from "../../../../servicios/asistencia";
 
 export default async function handler(
@@ -7,28 +6,27 @@ export default async function handler(
 ) {
     try {
         const { params } = req.query
-
+        console.log(params);
         const queryParams = {
             alumno: '',
             idCurso: 0,
             documento: '',
-            desde: '',
-            hasta: ''
+            fecha: ''
         }
+
+        queryParams.idCurso = Number.parseInt(params[0])
+        queryParams.fecha = params[1]
 
         if (params.length === 3) {
-            queryParams.idCurso = Number.parseInt(params[0])
-            queryParams.desde = params[1]
-            queryParams.hasta = params[2]
-        } else {
-            queryParams.alumno = params[0]
-            queryParams.idCurso = Number.parseInt(params[1])
-            queryParams.documento = params[2]
-            queryParams.desde = params[3]
-            queryParams.hasta = params[4]
+            queryParams.alumno = params[2]
         }
+        if (params.length === 4) {
+            queryParams.alumno = params[2]
+            queryParams.documento = params[3]
+        }
+        console.log(queryParams);
 
-        const asistencias = await TraerAsistencias(queryParams.alumno, queryParams.idCurso, queryParams.documento, queryParams.desde, queryParams.hasta)
+        const asistencias = await TraerAsistencias(queryParams.alumno, queryParams.idCurso, queryParams.documento, queryParams.fecha)
 
         return res.status(200).json(asistencias)
     } catch (error) {

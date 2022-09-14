@@ -2,25 +2,27 @@ import { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Layout } from '../../../components/layout';
 
-import { authStateChanged } from '../../../servicios/cuenta';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../../components/context/authUserProvider';
 
 const DetalleAsistencia = () => {
-
-
+    const router = useRouter()
+    const { loading, authUser } = useAuth()
     useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
         listarAsistencias()
-
-    }, [])
-
+    }, [loading, authUser])
+    const { id } = router.query
     const [asistencias, setAsistencias] = useState([])
     const listarAsistencias = () => {
-        axios.get(`http://localhost:3000/api/gestion/asistencias/detalle_asistencia`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
             .then(res => {
                 console.log(res.data);
                 setAsistencias(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
 
@@ -60,7 +62,7 @@ const DetalleAsistencia = () => {
 
 
     return (
-        <Layout title={'Detalle Asistencia'}>
+        <Layout>
             <div className='mt-5'>
                 <h1><strong>Mas información</strong></h1>
                 <div>

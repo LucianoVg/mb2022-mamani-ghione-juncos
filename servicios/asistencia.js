@@ -14,7 +14,8 @@ export async function ListarCurso() {
     return cursos
 }
 
-export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
+export async function TraerAsistencias(alumno = '', curso, documento = '', fecha) {
+    console.log(`Nombre: ${alumno.split(' ')[0]}`, `Apellido: ${alumno.split(' ')[1]}`, `Curso: ${curso}`, `Documento: ${documento}`, `Fecha: ${fecha}`);
 
     const asistencias = await prisma.asistencia.findMany({
         include: {
@@ -29,7 +30,7 @@ export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
         },
 
         where: {
-            OR: [
+            AND: [
                 {
                     alumnoXcursoXdivision: {
                         idCursoXdivision: curso
@@ -48,7 +49,7 @@ export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
                     alumnoXcursoXdivision: {
                         usuario: {
                             apellido: {
-                                startsWith: alumno.split(' ')[1]
+                                endsWith: alumno.split(' ')[1]
                             }
                         }
                     },
@@ -56,15 +57,14 @@ export async function TraerAsistencias(alumno, curso, documento, desde, hasta) {
                 {
                     alumnoXcursoXdivision: {
                         usuario: {
-                            dni: documento
+                            dni: {
+                                contains: documento
+                            }
                         }
                     }
                 },
                 {
-                    creadoEn: {
-                        gt: desde,
-                        lt: hasta
-                    }
+                    creadoEn: fecha
                 }
             ]
         }
@@ -90,45 +90,16 @@ export async function TraerAsistencias2() {
                 }
             }
 
-        },
-
-        // where: {
-        //     AND: [
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 idCursoXdivision: curso
-        //             }
-        //         },
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 usuario: {
-        //                     nombre: {
-        //                         startsWith: alumno.split(' ')[0]
-        //                     }
-        //                 }
-        //             },
-        //         },
-        //         {
-        //             alumnoXcursoXdivision: {
-        //                 usuario: {
-        //                     apellido: {
-        //                         startsWith: alumno.split(' ')[1]
-        //                     }
-        //                 }
-        //             },
-        //         }
-        //     ]
-        // }
+        }
     })
     console.log(asistencias);
     return asistencias
 }
 
 
-export async function DetalleAsistencia() {
+export async function DetalleAsistencia(id) {
 
-    const asistencias = await prisma.asistencia.findMany({
-
+    const asistencias = await prisma.asistencia.findUnique({
         include: {
             usuario: true,
             alumnoXcursoXdivision: {
@@ -145,9 +116,9 @@ export async function DetalleAsistencia() {
 
         },
         where: {
-            id: 14
+            id: id
         }
-      
+
     })
     console.log(asistencias);
     return asistencias
@@ -229,7 +200,7 @@ export async function updateAsistencia(idNota, notaNueva, columnName, addMotivo)
                     llegadaTarde: notaNueva,
                     llegadaTardeJustificada: null,
                     mediaFalta: null,
-                    mediaFaltaJustificada: null, 
+                    mediaFaltaJustificada: null,
 
                     motivo: addMotivo
 

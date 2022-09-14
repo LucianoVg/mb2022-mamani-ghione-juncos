@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { DetalleAsistencia } from "../../../../servicios/asistencia";
+import { DetalleAsistencia } from "../../../../../servicios/asistencia";
 
 export default async function handler(
     req,
     res
 ) {
     try {
-        const detalle = await DetalleAsistencia()
+        const { id } = req.query
+        const detalle = await DetalleAsistencia(Number(id))
         return res.status(200).json(detalle)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
