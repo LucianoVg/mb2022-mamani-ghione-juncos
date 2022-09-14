@@ -18,7 +18,6 @@ model alumnoXcursoXdivision {
   cursoXdivision   cursoXdivision? @relation(fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   asistencia       asistencia[]
   nota             nota[]
-  sancion          sancion[]
 }
 
 model archivo {
@@ -66,6 +65,7 @@ model curso {
   cursoXdivision cursoXdivision[]
   materia        materia[]
   notificacion   notificacion[]
+  sancion        sancion[]
 }
 
 model cursoXdivision {
@@ -280,14 +280,14 @@ model rol {
 }
 
 model sancion {
-  id                      Int                    @id @default(autoincrement())
-  motivo                  String?
-  fecha                   String?
-  idTipoSancion           Int?
-  idAlumnoXCursoXDivision Int?
-  alumnoXCursoXDivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tipoSancion             tipoSancion?           @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sancionXusuario         sancionXusuario[]
+  id              Int               @id @default(autoincrement())
+  motivo          String?
+  fecha           DateTime?
+  idTipoSancion   Int?
+  idCurso         Int?
+  tipoSancion     tipoSancion?      @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso           curso?            @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancionXusuario sancionXusuario[]
 }
 
 model sancionXusuario {

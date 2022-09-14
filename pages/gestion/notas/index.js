@@ -169,7 +169,7 @@ export default function Notas() {
                             }
                         </Select>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} style={{marginTop: '1.8mm'}}>
                         <TextField margin="normal"
                             fullWidth
                             name="nombreAlumno"
