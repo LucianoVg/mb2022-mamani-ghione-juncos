@@ -5,6 +5,9 @@ import axios from 'axios'
 import $ from 'jQuery'
 import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch, { SwitchProps } from '@mui/material/Switch';
 // DATEPICKER
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -81,8 +84,8 @@ export default function Asistencias() {
         listarCursos()
 
         // MARCAR UNO Y DESMARCAR LOS OTROS
-        $(document).on('click', 'input[type="checkbox"]', function () {
-            $('input[type="checkbox"]').not(this).prop('checked', false);
+        $(document).on('click', 'Switch[type="checkbox"]', function () {
+            $('Switch[type="checkbox"]').not(this).prop('checked', false);
         });
 
 
@@ -178,31 +181,70 @@ export default function Asistencias() {
 
     }
 
+    const [checked, setChecked] = React.useState(true);
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        '&:nth-of-type(odd)': {
-          backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        '&:last-child td, &:last-child th': {
-          border: 0,
-        },
-      }));
+    const handleChecked = (e) =>  {
+        setChecked(event.target.checked);
+    };
 
-    //   const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    //     [`&.${tableCellClasses.head}`]: {
-    //       backgroundColor: theme.palette.common.black,
-    //       color: theme.palette.common.white,
+
+    // const IOSSwitch = styled((props = SwitchProps) => (
+    //     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+    // ))(({ theme }) => ({
+    //     width: 42,
+    //     height: 26,
+    //     padding: 0,
+    //     '& .MuiSwitch-switchBase': {
+    //         padding: 0,
+    //         margin: 2,
+    //         transitionDuration: '300ms',
+    //         '&.Mui-checked': {
+    //             transform: 'translateX(16px)',
+    //             color: '#fff',
+    //             '& + .MuiSwitch-track': {
+    //                 backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+    //                 opacity: 1,
+    //                 border: 0,
+    //             },
+    //             '&.Mui-disabled + .MuiSwitch-track': {
+    //                 opacity: 0.5,
+    //             },
+    //         },
+    //         '&.Mui-focusVisible .MuiSwitch-thumb': {
+    //             color: '#33cf4d',
+    //             border: '6px solid #fff',
+    //         },
+    //         '&.Mui-disabled .MuiSwitch-thumb': {
+    //             color:
+    //                 theme.palette.mode === 'light'
+    //                     ? theme.palette.grey[100]
+    //                     : theme.palette.grey[600],
+    //         },
+    //         '&.Mui-disabled + .MuiSwitch-track': {
+    //             opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    //         },
     //     },
-     
-    //   }));
+    //     '& .MuiSwitch-thumb': {
+    //         boxSizing: 'border-box',
+    //         width: 22,
+    //         height: 22,
+    //     },
+    //     '& .MuiSwitch-track': {
+    //         borderRadius: 26 / 2,
+    //         backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+    //         opacity: 1,
+    //         transition: theme.transitions.create(['background-color'], {
+    //             duration: 500,
+    //         }),
+    //     },
+    // }));
 
-  
     return (
         <Layout title={'Asistencias'}>
             <Container
                 style={{ position: 'relative', }}
             >
+
                 <h1><strong>Asistencias</strong></h1>
                 <Box component="span">
                     <Grid container
@@ -215,7 +257,7 @@ export default function Asistencias() {
                         <Grid item >
                             <Stack spacing={1} direction="row" >
                                 <h5 ><strong>Asistencia modificada:</strong> </h5>
-                                <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue',color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
+                                <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
                             </Stack >
                             <h5 style={{ marginTop: '-10px' }}>
                                 <strong>P:</strong>Presente  <br />
@@ -338,25 +380,35 @@ export default function Asistencias() {
 
                                     a.motivo != null ? (
 
-                                        < StyledTableRow 
-                                       key={i} >
+                                        < TableRow
+                                            key={i} >
 
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}}className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}}  className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.presente}
+                                                            onChange={handleChecked}
+                                                        />
+
+
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch  ">
-                                                                <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.presente}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
+
 
                                                         )
                                                 }
@@ -365,111 +417,156 @@ export default function Asistencias() {
 
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.ausente}
+                                                            onChange={handleChecked}
+                                                        />
+
+
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
-                                                            </div>
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.ausente}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
+
 
                                                         )
                                                 }
 
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.ausenteJustificado}
+                                                            onChange={handleChecked}
+                                                        />
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.ausenteJustificado}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
 
-                                                            </div>
 
                                                         )
                                                 }
 
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.llegadaTarde}
+                                                            onChange={handleChecked}
+                                                        />
+
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.llegadaTarde}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
 
-                                                            </div>
 
                                                         )
                                                 }
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" id="1" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.llegadaTardeJustificada}
+                                                            onChange={handleChecked}
+                                                        />
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.llegadaTardeJustificada}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
 
-                                                            </div>
+
 
                                                         )
                                                 }
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1 ">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.mediaFalta}
+                                                            onChange={handleChecked}
+                                                        />
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.mediaFalta}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
 
-                                                            </div>
 
                                                         )
                                                 }
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-1">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
                                                 {
                                                     inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <div className="form-check form-switch  ">
-                                                            <input className="form-check-input pd-1" type="checkbox" role="switch" />
-                                                        </div>
+
+                                                        <Switch
+                                                            type="checkbox"
+                                                            checked={a.mediaFaltaJustificada}
+                                                            onChange={handleChecked}
+                                                        />
+
+
                                                     ) :
                                                         (
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.mediaFaltaJustificada}
+                                                                disabled={bloquearCheck(a)}
+                                                            />
 
-                                                            </div>
+
 
                                                         )
                                                 }
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black'}} className="col-md-2">
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-2">
                                                 {
 
                                                     inEditMode.status && inEditMode.rowKey === i ? (
@@ -511,7 +608,7 @@ export default function Asistencias() {
                                                 }
 
                                             </TableCell>
-                                        </StyledTableRow>
+                                        </TableRow>
                                     ) :
                                         (
                                             < TableRow key={i} >
@@ -524,14 +621,24 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.presente}
+                                                                onChange={handleChecked}
+                                                            />
+
+
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch  ">
-                                                                    <input className="form-check-input pd-1" checked={a.presente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
-                                                                </div>
+
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.presente}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
+
 
                                                             )
                                                     }
@@ -543,15 +650,26 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.ausente}
+                                                                onChange={handleChecked}
+                                                            />
+
+
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.ausente} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
 
-                                                                </div>
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.ausente}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
+
 
                                                             )
                                                     }
@@ -561,15 +679,21 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.ausenteJustificado}
+                                                                onChange={handleChecked}
+                                                            />
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.ausenteJustificado} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.ausenteJustificado}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
 
-                                                                </div>
 
                                                             )
                                                     }
@@ -579,15 +703,22 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.llegadaTarde}
+                                                                onChange={handleChecked}
+                                                            />
+
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.llegadaTarde} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.llegadaTarde}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
 
-                                                                </div>
 
                                                             )
                                                     }
@@ -596,15 +727,22 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.llegadaTardeJustificada}
+                                                                onChange={handleChecked}
+                                                            />
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.llegadaTardeJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.llegadaTardeJustificada}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
 
-                                                                </div>
+
 
                                                             )
                                                     }
@@ -613,15 +751,21 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.mediaFalta}
+                                                                onChange={handleChecked}
+                                                            />
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.mediaFalta} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.mediaFalta}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
 
-                                                                </div>
 
                                                             )
                                                     }
@@ -630,19 +774,26 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <div className="form-check form-switch  ">
-                                                                <input type="checkbox" className="form-check-input pd-1" role="switch" />
-                                                            </div>
+
+                                                            <Switch
+                                                                type="checkbox"
+                                                                checked={a.mediaFaltaJustificada}
+                                                                onChange={handleChecked}
+                                                            />
+
+
                                                         ) :
                                                             (
-                                                                <div className="form-check form-switch">
-                                                                    <input className="form-check-input" checked={a.mediaFaltaJustificada} type="checkbox" role="switch" disabled={bloquearCheck(a)} />
+                                                                <Switch
+                                                                    type="checkbox"
+                                                                    checked={a.mediaFaltaJustificada}
+                                                                    disabled={bloquearCheck(a)}
+                                                                />
 
-                                                                </div>
+
 
                                                             )
                                                     }
-
                                                 </TableCell>
                                                 <TableCell className="col-md-2">
                                                     {
