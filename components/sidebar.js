@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import { HomeOutlined } from '@mui/icons-material';
-import { ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { ListItemButton,ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
@@ -21,6 +21,9 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import ArticleIcon from '@mui/icons-material/Article';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import React from 'react'
+
+import SegmentIcon from '@mui/icons-material/Segment';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -47,6 +50,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         },
     }),
 );
+
 
 const Sidebar = ({ open, toggleDrawer }) => {
     const [menusGestion, setMenusGestion] = useState()
@@ -87,22 +91,21 @@ const Sidebar = ({ open, toggleDrawer }) => {
     }
 
     return (
-        <Drawer sx={{ height: '100vh' }} variant="permanent" open={open} > 
-            <Toolbar
+        <Drawer sx={{ height: '100vh' }} variant="permanent" open={open} >
+            <Toolbar id="parent"
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-end',
                     px: [1],
                 }}
-                variant="scrollable"    
-                orientation="vertical"
+
             >
                 <IconButton onClick={toggleDrawer}>
                     <ChevronLeftIcon />
                 </IconButton>
             </Toolbar>
-            <List component="nav">
+            <List id="child" component="nav">
                 <React.Fragment>
                     <ListItemButton onClick={() => router.push('/')}>
                         <ListItemIcon>
@@ -115,7 +118,20 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     {
                         menusGestion && (
                             <>
-                                <Typography ml={1} style={{ fontWeight: 'bold' }}>Gestion</Typography>
+
+                                <List>
+                                    <ListItem disablePadding>
+                                        <ListItemButton disabled style={{opacity: '200%'}}>
+                                            <ListItemIcon>
+                                                <SegmentIcon />
+                                            </ListItemIcon>
+                                          <Typography style={{ fontWeight: 'bold', fontSize: '20px'}} >
+                                            Gestion 
+                                          </Typography>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
+
                                 {
                                     menusGestion?.map((m, i) => (
 
@@ -172,7 +188,18 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     {
                         menusReportes && (
                             <>
-                                <Typography ml={1} style={{ fontWeight: 'bold' }}>Reportes</Typography>
+                               <List>
+                                    <ListItem disablePadding>
+                                        <ListItemButton disabled style={{opacity: '200%'}}>
+                                            <ListItemIcon>
+                                                <EqualizerIcon />
+                                            </ListItemIcon>
+                                          <Typography style={{ fontWeight: 'bold', fontSize: '20px'}} >
+                                            Reportes 
+                                          </Typography>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
                                 {
                                     menusReportes?.map((m, i) => (
 

@@ -13,7 +13,7 @@ import Loading from '../components/loading';
 import { useState } from 'react';
 import { Container } from '@mui/material';
 import { useEffect } from 'react';
-
+import '../styles/scroll.css'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
