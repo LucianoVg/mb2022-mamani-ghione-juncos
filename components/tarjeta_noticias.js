@@ -23,12 +23,12 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                         alt="Card image cap" />
                     {
                         authUser && (
-                            <a className={`${styles.btn}`} onClick={() => router.push(`/gestion/noticias/${id}`)}>>
+                            // <a className={`${styles.btn}`} onClick={() => router.push(`/gestion/noticias/${id}`)}>
+                            //     
+                            // </a>
+                            <IconButton className={`${styles.btn}`} onClick={() => router.push(`/gestion/noticias/${id}`)}>
                                 <Edit />
-                            </a>
-                            //     <IconButton component="a" 
-
-                            //     </IconButton>
+                            </IconButton>
                         )
                     }
 
