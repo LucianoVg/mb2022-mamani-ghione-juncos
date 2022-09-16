@@ -6,7 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import theme from "../src/theme";
-import { NotificationsRounded } from "@mui/icons-material";
+import Notificacion from '../components/notificacion_panel'
+import { Container } from "@mui/system";
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -61,19 +62,19 @@ export const Navbar = ({ toggleDrawer, open }) => {
                     <Typography href='/gestion/institucional' component={'a'} variant="body1" sx={{ mr: 1, textDecoration: 'none' }} color='white'>
                         Institucional
                     </Typography>
-
+                    {
+                        !loading && authUser && (
+                            <div style={{alignContent: 'right', marginLeft: '-30px' , marginRight: '-20px'}} >
+                                <Notificacion disablePadding/>
+                            </div>
+                        )
+                    }
                     {
                         !loading && authUser && (
                             <AccountCircleIcon />
                         )
                     }
-                    {
-                        !loading && authUser && (
-                            <Badge badgeContent={5} color="info">
-                                <NotificationsRounded sx={{ cursor: 'pointer' }} />
-                            </Badge>
-                        )
-                    }
+                   
                 </Toolbar>
             </AppBar>
         </>
