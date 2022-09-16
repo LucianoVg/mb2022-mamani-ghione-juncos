@@ -1,22 +1,22 @@
 export const materias = [
     {
-        nombre: 'Matematica I',
-        idCurso: 1
+        id: '6323da62b55f6a63d607e55c',
+        idCorrelativa: '6323da25e83ed2485ebaa42e'
     },
     {
-        nombre: 'Lengua I',
-        idCurso: 1
+        id: '6323da62b55f6a63d607e55d',
+        idCorrelativa: '6323da25e83ed2485ebaa42f'
     },
     {
-        nombre: 'Fisica I',
-        idCurso: 1
+        id: '6323da62b55f6a63d607e55e',
+        idCorrelativa: '6323da25e83ed2485ebaa430'
     },
     {
-        nombre: 'Quimica I',
-        idCurso: 1
+        id: '6323da62b55f6a63d607e55f',
+        idCorrelativa: '6323da25e83ed2485ebaa431'
     },
     {
-        nombre: 'Historia I',
-        idCurso: 1
+        id: '6323da62b55f6a63d607e560',
+        idCorrelativa: '6323da26e83ed2485ebaa432'
     }
 ]

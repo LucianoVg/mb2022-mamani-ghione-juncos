@@ -1,26 +1,38 @@
 export const usuarios = [
     {
-        login: 'admin',
-        password: 'admin',
-        nombre: 'Administrador',
-        apellido: 'Sistema',
-        dni: '39123321',
-        correo: 'admin@gmail.com'
+        login: 'jacinto',
+        password: '123456',
+        nombre: 'Jacinto',
+        apellido: 'Perez',
+        dni: '389292929',
+        correo: 'jacinto.perez@gmail.com',
+        idRol: '6323b06bb03a132b2c221c41'
     },
     {
-        login: 'roberto',
+        login: 'mariela',
         password: '123456',
-        nombre: 'Roberto',
+        nombre: 'Mariela',
         apellido: 'Lopez',
-        dni: '38991112',
-        correo: 'roberto@gmail.com'
+        dni: '37223331',
+        correo: 'mariela.lopez@gmail.com',
+        idRol: '6323b06bb03a132b2c221c41'
+    },
+    {
+        login: 'juan',
+        password: '123456',
+        nombre: 'Juan',
+        apellido: 'Dominguez',
+        dni: '35443332',
+        correo: 'juan.dominguez@gmail.com',
+        idRol: '6323b06bb03a132b2c221c41'
     },
     {
         login: 'laura',
         password: '123456',
         nombre: 'Laura',
-        apellido: 'Perez',
-        dni: '35443332',
-        correo: 'laura@gmail.com'
-    }
+        apellido: 'Juarez',
+        dni: '32221113',
+        correo: 'laura.juarez@gmail.com',
+        idRol: '6323b06bb03a132b2c221c41'
+    },
 ]

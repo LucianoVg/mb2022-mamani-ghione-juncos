@@ -1,20 +1,50 @@
 export const cursos = [
     {
-        nombre: '1'
+        idCurso: '6323be3207eac04390f84f5f',
+        idDivision: '6323bfa2c80c6b63f296fc73'
     },
     {
-        nombre: '2'
+        idCurso: '6323be3207eac04390f84f5f',
+        idDivision: '6323c0331b7aac41ac00cbbf'
     },
     {
-        nombre: '3'
+        idCurso: '6323be3207eac04390f84f5e',
+        idDivision: '6323bfa2c80c6b63f296fc73'
     },
     {
-        nombre: '4'
+        idCurso: '6323be3207eac04390f84f5e',
+        idDivision: '6323c0331b7aac41ac00cbbf'
     },
     {
-        nombre: '5'
+        idCurso: '6323be3307eac04390f84f63',
+        idDivision: '6323bfa2c80c6b63f296fc73'
     },
     {
-        nombre: '6'
+        idCurso: '6323be3307eac04390f84f63',
+        idDivision: '6323c0331b7aac41ac00cbbf'
+    },
+    {
+        idCurso: '6323be3307eac04390f84f62',
+        idDivision: '6323bfa2c80c6b63f296fc73'
+    },
+    {
+        idCurso: '6323be3307eac04390f84f62',
+        idDivision: '6323c0331b7aac41ac00cbbf'
+    },
+    {
+        idCurso: '6323be3207eac04390f84f61',
+        idDivision: '6323bfa2c80c6b63f296fc73'
+    },
+    {
+        idCurso: '6323be3207eac04390f84f61',
+        idDivision: '6323c0331b7aac41ac00cbbf'
+    },
+    {
+        idCurso: '6323be3207eac04390f84f60',
+        idDivision: '6323bfa2c80c6b63f296fc73'
+    },
+    {
+        idCurso: '6323be3207eac04390f84f60',
+        idDivision: '6323c0331b7aac41ac00cbbf'
     }
 ]
