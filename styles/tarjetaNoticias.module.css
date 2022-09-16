@@ -33,10 +33,10 @@
 /* Style the button and place it in the middle of the container/image */
 .btn {
     position: absolute;
-    background-color: transparent;
+    background-color: red;
     color: black;
     margin-top: 4mm;
-    margin-left: -11mm;
+    margin-left: -101mm;
     border: none;
     cursor: pointer;
     font-size: 6mm;
