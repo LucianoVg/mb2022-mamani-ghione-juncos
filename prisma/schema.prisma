@@ -63,13 +63,9 @@ model curso {
   id             String           @id @default(auto()) @map("_id") @db.ObjectId
   nombre         String?
   cursoXdivision cursoXdivision[]
-<<<<<<< Updated upstream
   materia        materia[]
-=======
   notificacion   notificacion[]
->>>>>>> Stashed changes
   sancion        sancion[]
-  materia        materia[]
 }
 
 model cursoXdivision {
@@ -228,22 +224,16 @@ model noticiasYnovedades {
 }
 
 model notificacion {
-<<<<<<< Updated upstream
-  id              Int             @id @default(autoincrement())
   asunto          String?
-  contenido       String?
-  idUsuario       Int?
-  idCursoDivision Int?
+  contenido       String?         @db.ObjectId
+  idUsuario       String?
+  idCursoDivision String?         @db.ObjectId
   cursoXdivision  cursoXdivision? @relation(fields: [idCursoDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario         usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-=======
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  descripcion String?
-  IdUsuario   String?  @db.ObjectId
-  IdCurso     String?  @db.ObjectId
-  usuario     usuario? @relation(fields: [IdUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  curso       curso?   @relation(fields: [IdCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
->>>>>>> Stashed changes
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  descripcion     String?
+  idCurso         String?         @db.ObjectId
+  curso           curso?          @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisos {
