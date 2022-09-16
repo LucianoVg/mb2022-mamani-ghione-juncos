@@ -1,45 +1,36 @@
 import { PrismaClient } from '@prisma/client';
-import { usuarios } from "./seeds/usuarios";
-import { roles } from './seeds/roles';
-import { materias } from './seeds/materias';
+// import { usuarios } from "./seeds/usuarios";
+// import { roles } from './seeds/roles';
+// import { materias } from './seeds/materias';
 import { cursos } from './seeds/cursos';
-import { divisiones } from './seeds/divisiones';
+import { ficha } from './seeds/ficha';
 import { menus } from './seeds/menus';
-import { cursosXDivision } from './seeds/cursosXDivision';
+import { trimestres } from './seeds/trimestres';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    roles.map(async (r) => {
-        await prisma.rol.create({
-            data: r
-        })
+    const fichaInstitucional = await prisma.fichaInstitucional.create({
+        include: {
+            portadasFicha: true
+        },
+        data: {
+            nombreInstitucion: ficha.nombreInstitucion,
+            descripcion: ficha.descripcion,
+            mail: ficha.mail,
+            telefono1: ficha.telefono1,
+            telefono2: ficha.telefono2,
+            oficina1: ficha.oficina1,
+            oficina2: ficha.oficina2,
+            ubicacion: ficha.ubicacion,
+            tipoInstitucion: ficha.tipoInstitucion,
+            idUsuario: ficha.idUsuario,
+            portadasFicha: {
+                create: ficha.portadasFicha
+            }
+        }
     })
-
-    usuarios.map(async (u) => {
-        await prisma.usuario.create({
-            data: u
-        })
-    })
-
-    // const alumnos = await prisma.usuario.findMany({
-    //     where: {
-    //         rol: {
-    //             tipo: 'Estudiante'
-    //         }
-    //     }
-    // })
-
-    // alumnos.map(async (a) => {
-
-    //     await prisma.alumnoXcursoXdivision.create({
-    //         data: {
-    //             idUsuario: a.id,
-    //             idCursoXDivision: 1
-    //         }
-    //     })
-    // })
-
+    console.log(fichaInstitucional);
 }
 
 main()
