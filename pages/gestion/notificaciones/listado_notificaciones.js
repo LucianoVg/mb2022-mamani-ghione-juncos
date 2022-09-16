@@ -9,39 +9,39 @@ import { useEffect, useState } from 'react'
 
 
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 5 }}>
-                    <Typography>{children}</Typography>
-                    <h1 style={{alignContent: 'center'}}>Asueto Docente</h1>
-                </Box>
-            )}
-        </div>
-    );
-}
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`vertical-tabpanel-${index}`}
+//             aria-labelledby={`vertical-tab-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box sx={{ p: 5 }}>
+//                     <Typography>{children}</Typography>
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
-    };
-}
+// TabPanel.propTypes = {
+//     children: PropTypes.node,
+//     index: PropTypes.number.isRequired,
+//     value: PropTypes.number.isRequired,
+// };
+
+// function a11yProps(index) {
+//     return {
+//         id: `vertical-tab-${index}`,
+//         'aria-controls': `vertical-tabpanel-${index}`,
+//     };
+// }
 
 export default function ListadoNotificaciones() {
     const [value, setValue] = useState(0);
@@ -53,35 +53,41 @@ export default function ListadoNotificaciones() {
     return (
         <Layout>
             <Box
-        
+
                 sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 500 }}
             >
                 <Tabs
-              
+
                     orientation="vertical"
                     variant="scrollable"
                     value={value}
                     onChange={handleChange}
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: 'divider', width: '400px' }}
-                    style={{ textAlign: 'left'}}
+
                 >
-                    <Tab label="Item One" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
-                    <Tab label="Item Four" {...a11yProps(3)} />
-                    <Tab label="Item Five" {...a11yProps(4)} />
-                    <Tab label="Item Six" {...a11yProps(5)} />
-                    <Tab label="Item Seven" {...a11yProps(6)} />
-                    <Tab label="Item Eight" {...a11yProps(7)} />
-                    <Tab label="Item Nine" {...a11yProps(8)} />
-                    <Tab label="Item Ten" {...a11yProps(9)} />
-         
+                    <Tab label="Item One" />
+                    <Tab label="Item Two" />
+                    <Tab label="Item Three" />
+                    <Tab label="Item Four" />
+                    <Tab label="Item Five" />
+                    <Tab label="Item Six" />
+                    <Tab label="Item Seven" />
+                    <Tab label="Item Eight" />
+                    <Tab label="Item Nine" />
+                    <Tab label="Item Ten" />
+                    <Tab label="Item Seven" />
+                    <Tab label="Item Eight" />
+                    <Tab label="Item Nine" />
+                    <Tab label="Item Ten" />
 
                 </Tabs>
-                <TabPanel value={value} index={0}>
+                {/* <TabPanel value={value} index={0}>
                     Item One
-                </TabPanel>
+             
+                       <h1 align="right">Asueto Docente</h1> */}
+
+                {/* </TabPanel>
                 <TabPanel value={value} index={1}>
                     Item Two
                 </TabPanel>
@@ -108,8 +114,23 @@ export default function ListadoNotificaciones() {
                 </TabPanel>
                 <TabPanel value={value} index={9}>
                     Item Ten
-                </TabPanel>
+                </TabPanel> */}
             </Box>
+            <div>
+                <div class="toast-container position-static">
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="..." class="rounded me-2" alt="..." />
+                            <strong class="me-auto">Bootstrap</strong>
+                            <small class="text-muted">just now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            See? Just like this.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </Layout>
     );
 }

@@ -87,7 +87,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
     }
 
     return (
-        <Drawer sx={{ height: '100vh' }} variant="permanent" open={open}>
+        <Drawer sx={{ height: '100vh' }} variant="permanent" open={open} > 
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -95,6 +95,8 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     justifyContent: 'flex-end',
                     px: [1],
                 }}
+                variant="scrollable"    
+                orientation="vertical"
             >
                 <IconButton onClick={toggleDrawer}>
                     <ChevronLeftIcon />
