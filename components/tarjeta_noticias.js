@@ -14,21 +14,25 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
             <Card sx={{ maxWidth: 300, maxHeight: 450, }} className={`${styles.card}`} >
                 <div className={` ${styles.overflow}`}>
 
-                    <div className={`${styles.container}`}>
-                        {
-                            authUser && (
-                                <IconButton className={`${styles.btn}`} onClick={() => router.push(`/gestion/noticias/${id}`)}>
-                                    <Edit />
-                                </IconButton>
-                            )
-                        }
-                        <Image className={`${styles.card_img_top}` } 
-                            src={url}
-                            width={300}
-                            height={300}
-                            layout="responsive"
-                            alt="Card image cap" />
-                    </div>
+
+                    <Image className={`${styles.card_img_top}`}
+                        src={url}
+                        width={300}
+                        height={300}
+                        layout="responsive"
+                        alt="Card image cap" />
+                    {
+                        authUser && (
+                            <a className={`${styles.btn}`} onClick={() => router.push(`/gestion/noticias/${id}`)}>>
+                                <Edit />
+                            </a>
+                            //     <IconButton component="a" 
+
+                            //     </IconButton>
+                        )
+                    }
+
+
                 </div>
 
                 <CardContent>
