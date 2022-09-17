@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 
 
 import { Layout } from "../../../components/layout";
-import { Box, Button, TextareaAutosize, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import { Notificacion } from '../../../components/notificacion_panel'
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from '@mui/material/Divider';
+import { Edit } from "@mui/icons-material";
+import Icon from '@mui/material/Icon';
 
-
-
- const Notificaciones = () => {
+const Notificaciones = () => {
 
 
     const [age, setAge] = useState('');
@@ -39,33 +39,34 @@ import Divider from '@mui/material/Divider';
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-end"
-                    
+
 
                 >
                     <Grid item xs={4}>
                         <h1>Notificaciones enviadas</h1>
-                        <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px'}}>
+                        <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
                             <ListItem disablePadding
-                             >
-                                <ListItemButton component="a" href="#simple-list">
-                                    <ListItemText primary="Trash" />
+                            >
+                                <ListItemButton   component="a" href="#simple-list">
+                                    <ListItemText primary="Trash"  />
+
                                 </ListItemButton>
                             </ListItem>
-                            <Divider/>
+                            <Divider />
                             <ListItem disablePadding
-                     >
+                            >
                                 <ListItemButton component="a" href="#simple-list">
                                     <ListItemText primary="Spam" />
                                 </ListItemButton>
                             </ListItem>
-                            <Divider/>
+                            <Divider />
                             <ListItem disablePadding>
-                                   
+
                                 <ListItemButton component="a" href="#simple-list" >
                                     <ListItemText primary="Asueto Docente" />
                                 </ListItemButton>
                             </ListItem>
-                            <Divider/>
+                            <Divider />
                         </List>
                     </Grid>
 
@@ -125,14 +126,14 @@ import Divider from '@mui/material/Divider';
 
                             style={{ width: '400px', height: '35px', resize: 'none', fontSize: '20px' }}
                         />
-                             <h2><strong>Contenido</strong></h2>
+                        <h2><strong>Contenido</strong></h2>
                         <TextareaAutosize
 
                             style={{ width: '400px', height: '200px', resize: 'none', fontSize: '20px' }}
                         />
                     </Grid>
-                                       <Grid item xs={12} disablePadding>
-                    <Button variant="contained">Enviar</Button>
+                    <Grid item xs={12} disablePadding>
+                        <Button variant="contained">Enviar</Button>
                     </Grid>
 
                 </Grid>
