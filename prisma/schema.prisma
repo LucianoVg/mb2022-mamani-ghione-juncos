@@ -2,15 +2,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "mongodb"
-//   url      = env("DATABASE_URL")
-// }
-
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+
 
 model alumnoXcursoXdivision {
   id               String          @id @default(auto()) @map("_id") @db.ObjectId

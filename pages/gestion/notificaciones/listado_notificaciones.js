@@ -2,143 +2,286 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import { Layout } from "../../../components/layout";
 import Divider from '@mui/material/Divider';
-import { Card, CardContent, CardActions, CardMedia } from "@mui/material";
 import PropTypes from 'prop-types';
+
+
 import { useEffect, useState } from 'react'
 
+import { Card, CardContent, CardActions, CardMedia } from "@mui/material";
 import { Edit } from "@mui/icons-material";
+import styles from "../../../styles/tarjetaNoticias.module.css";
 
 
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
-// function TabPanel(props) {
-//     const { children, value, index, ...other } = props;
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
 
-//     return (
-//         <div
-//             role="tabpanel"
-//             hidden={value !== index}
-//             id={`vertical-tabpanel-${index}`}
-//             aria-labelledby={`vertical-tab-${index}`}
-//             {...other}
-//         >
-//             {value === index && (
-//                 <Box sx={{ p: 5 }}>
-//                     <Typography>{children}</Typography>
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
 
-//                 </Box>
-//             )}
-//         </div>
-//     );
-// }
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
+}
 
-// TabPanel.propTypes = {
-//     children: PropTypes.node,
-//     index: PropTypes.number.isRequired,
-//     value: PropTypes.number.isRequired,
-// };
-
-// function a11yProps(index) {
-//     return {
-//         id: `vertical-tab-${index}`,
-//         'aria-controls': `vertical-tabpanel-${index}`,
-//     };
-// }
 
 export default function ListadoNotificaciones() {
+
     const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (e, newValue) => {
         setValue(newValue);
     };
 
     return (
         <Layout>
-            <Container>
+            <Container >
 
                 <Box
-                    // style={{ backgroundColor: 'red' }}
-                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 600, width: 300 }}
+                    // style={{ po}}
+                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
                 >
+
                     <Tabs
 
                         orientation="vertical"
                         variant="scrollable"
                         value={value}
                         onChange={handleChange}
+                        scrollButtons
                         aria-label="Vertical tabs example"
-                        sx={{ borderRight: 1, borderColor: 'divider', width: '400px' }}
-
+                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px' }}
                     >
-                        <Tab label="Item One" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" />
-                        <Tab label="Item Four" />
-                        <Tab label="Item Five" />
-                        <Tab label="Item Six" />
-                        <Tab label="Item Seven" />
-                        <Tab label="Item Eight" />
-                        <Tab label="Item Nine" />
-                        <Tab label="Item Ten" />
-                        <Tab label="Item Seven" />
-                        <Tab label="Item Eight" />
-                        <Tab label="Item Nine" />
-                        <Tab label="Item Ten" />
+
+
+                        <Tab label="Item One" {...a11yProps(0)} />
+                        <Tab label="Item Two" {...a11yProps(1)} />
+                        <Tab label="Item Three" {...a11yProps(2)} />
+                        <Tab label="Item Four" {...a11yProps(3)} />
+                        <Tab label="Item Five" {...a11yProps(4)} />
+                        <Tab label="Item Six" {...a11yProps(5)} />
+                        <Tab label="Item Seven" {...a11yProps(6)} />
+                        <Tab label="Item Five" {...a11yProps(7)} />
+                        <Tab label="Item Six" {...a11yProps(8)} />
+                        <Tab label="Item Seven" {...a11yProps(9)} />
+                        <Tab label="Item Five" {...a11yProps(10)} />
+                        <Tab label="Item Six" {...a11yProps(11)} />
+                        <Tab label="Item Seven" {...a11yProps(12)} />
 
                     </Tabs>
-                    {/* <TabPanel value={value} index={0}>
-                    Item One
-             
-                       <h1 align="right">Asueto Docente</h1> */}
+                    <TabPanel
+                        value={value}
+                        index={0}
+                        style={{ width: 680 }}
+                    >
 
-                    {/* </TabPanel>
-                <TabPanel value={value} index={1}>
-                    Item Two
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    Item Three
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    Item Four
-                </TabPanel>
-                <TabPanel value={value} index={4}>
-                    Item Five
-                </TabPanel>
-                <TabPanel value={value} index={5}>
-                    Item Six
-                </TabPanel>
-                <TabPanel value={value} index={6}>
-                    Item Seven
-                </TabPanel>
-                <TabPanel value={value} index={7}>
-                    Item Eight
-                </TabPanel>
-                <TabPanel value={value} index={8}>
-                    Item Nine
-                </TabPanel>
-                <TabPanel value={value} index={9}>
-                    Item Ten
-                </TabPanel> */}
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4}>
+
+                                <h1 style={{ textAlign: 'justify' }}> Item One</h1>
+
+
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+
+                            <Grid item disablePadding xs={12}>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+                                <h3>
+                                    Atte. Direccion
+                                </h3>
+                            </Grid>
+
+                        </Grid>
+
+                    </TabPanel>
+                    <TabPanel value={value}
+                        index={1}
+                        style={{ width: 680 }}
+                    >
+
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4}>
+
+                                <h1 style={{ textAlign: 'justify' }}> Item Two</h1>
+
+
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+
+                            <Grid item disablePadding xs={12}>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+                                <h3>
+                                    Atte. Direccion
+                                </h3>
+                            </Grid>
+
+                        </Grid>
+                    </TabPanel>
+                    <TabPanel 
+                    value={value} 
+                    index={2}
+                    style={{ width: 680}}
+                    >
+
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+                            <Grid item xs={4}>
+
+                                <h1 style={{ textAlign: 'justify' }}> Item Three</h1>
+
+
+
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
+
+                            </Grid>
+
+                            <Grid item disablePadding xs={12}>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+                                <h3>
+                                    Atte. Direccion
+                                </h3>
+                            </Grid>
+
+                        </Grid>
+                    </TabPanel>
+                    <TabPanel value={value} index={3}
+                 style={{ width: 680}}
+                 >
+
+                     <Grid container spacing={2}>
+                         <Grid item xs={12} disablePadding>
+
+                         </Grid>
+                         <Grid item xs={12} disablePadding>
+
+                         </Grid>
+                         <Grid item xs={4} disablePadding>
+
+                         </Grid>
+                         <Grid item xs={4}>
+
+                             <h1 style={{ textAlign: 'justify' }}> Item Four</h1>
+
+
+
+                         </Grid>
+                         <Grid item xs={4} disablePadding>
+
+                         </Grid>
+
+                         <Grid item disablePadding xs={12}>
+                             <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                         </Grid>
+                         <Grid item xs={12} disablePadding>
+                             <h3>
+                                 Atte. Direccion
+                             </h3>
+                         </Grid>
+
+                     </Grid>
+                    </TabPanel>
+                    <TabPanel value={value} index={4}>
+                        Item Five
+                    </TabPanel>
+                    <TabPanel value={value} index={5}>
+                        Item Six
+                    </TabPanel>
+                    <TabPanel value={value} index={6}>
+                        Item Seven
+                    </TabPanel>
+
                 </Box>
+
 
 
             </Container  >
 
-            <Container >
-                <Card sx={{ maxWidth: 345, height: 500 }}>
-                    <div style={{ position: 'relative' }}>
-                        <CardMedia
-                            component="img"
-                            height="300"
-                            image="https://v4.mui.com/static/images/cards/contemplative-reptile.jpg"
-                            alt="green iguana"
-                        />
-                        <a href="#/" style={{ position: 'absolute', left: 295, bottom: 250, }}>
-                            <IconButton  >
-                                <Edit style={{color: 'white'}} />
-                            </IconButton>
-                        </a>
+            <Container style={{ marginTop: 200 }}>
+                <Card
+                    sx={{ maxWidth: 300, maxHeight: 450 }}
+                    className={`${styles.card}`}
+
+                >
+
+                    <div style={{ position: 'relative', backgroundColor: 'blue' }}>
+
+                        <div className={` ${styles.overflow}`} >
+                            <CardMedia
+                                className={`${styles.card_img_top}`}
+                                component="img"
+                                height="300"
+                                image="https://v4.mui.com/static/images/cards/contemplative-reptile.jpg"
+                                alt="green iguana"
+
+                            />
+                            <a href="#/" style={{ position: 'absolute', left: 250, bottom: 235, }} >
+                                <IconButton  >
+                                    <Edit style={{ color: 'lightcyan', fontSize: '27px' }} />
+                                </IconButton>
+                            </a>
+                        </div>
                     </div>
-                    <CardContent>
+                    <CardContent  >
                         <Typography gutterBottom variant="h5" component="div">
                             Lizard
                         </Typography>
@@ -148,11 +291,13 @@ export default function ListadoNotificaciones() {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
+                        <Button size="big">Mas info.</Button>
+
                     </CardActions>
                 </Card>
             </Container>
+
+
         </Layout >
     );
 }
