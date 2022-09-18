@@ -60,6 +60,8 @@ export default function ListadoNotificaciones() {
 
                 <Box
                     // style={{ po}}
+                    className={`${styles.box}`}
+
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
                 >
 
@@ -69,25 +71,53 @@ export default function ListadoNotificaciones() {
                         variant="scrollable"
                         value={value}
                         onChange={handleChange}
-                        scrollButtons
-                        aria-label="Vertical tabs example"
-                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px' }}
+                        scrollButtons="auto"
+                        
+                   
+                        sx={{ borderRight: 1,  borderBottom: 1, borderColor: 'divider', width: '300px' }}
                     >
 
 
-                        <Tab label="Item One" {...a11yProps(0)} />
-                        <Tab label="Item Two" {...a11yProps(1)} />
-                        <Tab label="Item Three" {...a11yProps(2)} />
-                        <Tab label="Item Four" {...a11yProps(3)} />
-                        <Tab label="Item Five" {...a11yProps(4)} />
-                        <Tab label="Item Six" {...a11yProps(5)} />
-                        <Tab label="Item Seven" {...a11yProps(6)} />
-                        <Tab label="Item Five" {...a11yProps(7)} />
-                        <Tab label="Item Six" {...a11yProps(8)} />
-                        <Tab label="Item Seven" {...a11yProps(9)} />
-                        <Tab label="Item Five" {...a11yProps(10)} />
-                        <Tab label="Item Six" {...a11yProps(11)} />
-                        <Tab label="Item Seven" {...a11yProps(12)} />
+                        <Tab 
+                        label="Item One"  {...a11yProps(0)}  
+                        sx={{  borderBottom: 1 ,  borderColor: 'divider'}}/>
+                 
+                        <Tab 
+                        label="Item Two" {...a11yProps(1)} 
+                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}
+                        />
+                      
+                        <Tab label="Item Three" {...a11yProps(2)} 
+                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
+                                         
+                        <Tab label="Item Four" {...a11yProps(3)} 
+                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
+                        <Tab label="Item Five" {...a11yProps(4)} 
+                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
+                 
+                        <Tab label="Item Six" {...a11yProps(5)} 
+                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
+                       
+                        <Tab label="Item Seven" {...a11yProps(6)} 
+                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
+                        <Tab label="Item Five" {...a11yProps(7)} 
+                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
+                    
+                        <Tab label="Item Six" {...a11yProps(8)} 
+                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
+               
+                        <Tab label="Item Seven" {...a11yProps(9)} 
+                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
+             
+                        <Tab label="Item Five" {...a11yProps(10)} 
+                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
+       
+                        <Tab label="Item Six" {...a11yProps(11)} 
+                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}
+                        />
+            
+                        <Tab label="Item Seven" {...a11yProps(12)} 
+                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
 
                     </Tabs>
                     <TabPanel
