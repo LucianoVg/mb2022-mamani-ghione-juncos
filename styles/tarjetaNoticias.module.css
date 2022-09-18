@@ -11,6 +11,10 @@
     margin-left: 10mm;
 }
 
+.MenuItem {
+    display:inline-block
+}
+
 .card_img_top {
     height: 18rem;
     width: 21rem;
