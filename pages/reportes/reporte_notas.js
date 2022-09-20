@@ -125,7 +125,7 @@ export default function Notas() {
             <Grid container rowSpacing={5} spacing={2}>
 
 
-                <Grid item xs={6}>
+                <Grid item xs>
 
                     <h2>Notas por trimestre</h2>
                     <div sx={{ marginBottom: '100px' }}>
@@ -201,7 +201,7 @@ export default function Notas() {
                         </TableContainer>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs>
                     <h2>Promedio por trimestre</h2>
 
                     <div sx={{ marginTop: '200px' }}>
@@ -318,7 +318,13 @@ export default function Notas() {
                         </TableContainer>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+            </Grid>
+        </Layout >
+    );
+}
+
+
+{/* <Grid item xs={6}>
                     <h2>Notas por trimestre</h2>
                     <div sx={{ Top: '200px' }}>
                         <TableContainer component={Paper} >
@@ -551,11 +557,4 @@ export default function Notas() {
                         </TableContainer>
                     </div>
                 </Grid>
-            </Grid>
-
-
-
-
-        </Layout >
-    );
-}
+            </Grid> */}
