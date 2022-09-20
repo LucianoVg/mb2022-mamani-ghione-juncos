@@ -17,8 +17,8 @@ function createData(motivo, autoridad, fecha, tipo) {
 const rows = [
     createData('Tiro un papel en la cabeza un alumno', 'Docente', '2022-09-23', 'Firma'),
     createData('Falto el respeto a un profesor', 'Docente', '2022-09-23', 'Firma'),
-    createData('Golpeo a un compañero', 'Direccion','2022-09-23', 'Amonestacion')
- 
+    createData('Golpeo a un compañero', 'Direccion', '2022-09-23', 'Amonestacion')
+
 ];
 
 export default function Sancion() {
@@ -40,41 +40,35 @@ export default function Sancion() {
     }
     return (
         <Layout>
-            <Grid container spacing={2} sx={{ marginBottom: '50px' }}>
-                <Grid item xs={12}>
-                    <h3>Buscar Alumno</h3>
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="documento"
-                        value={documento}
-                        onChange={handleDocumento}
-                        label="Documento del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="nombreAlumno"
-                        value={nombreAlumno}
-                        onChange={handleNombreAlumno}
-                        label="Nombre del alumno" />
+            <h3>Buscar Alumno</h3>
 
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="apellidoAlumno"
-                        value={apellidoAlumno}
-                        onChange={handleApellidoAlumno}
-                        label="Apellido del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="outlined" startIcon={<Search />} color="info">
-                        Buscar
-                    </Button>
-                </Grid>
-            </Grid>
+            <Box direction="row" rowSpacing={2}>
+                <TextField
+                    sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                    name="documento"
+                    value={documento}
+                    onChange={handleDocumento}
+                    label="Documento" />
+                <TextField
+                    sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                    name="nombreAlumno"
+                    value={nombreAlumno}
+                    onChange={handleNombreAlumno}
+                    label="Nombre" />
+                <TextField
+                    sx={{ width: '200px' }}
+                    name="apellidoAlumno"
+                    value={apellidoAlumno}
+                    onChange={handleApellidoAlumno}
+                    label="Apellido" />
+
+            </Box>
+            <Box sx={{ marginBottom: '20px' }}>
+                <Button variant="outlined" startIcon={<Search />} color="info" >
+                    Buscar
+                </Button>
+            </Box>
+
 
             <div sx={{ marginTop: '200px' }}>
                 <TableContainer component={Paper} >
@@ -87,7 +81,7 @@ export default function Sancion() {
                                         backgroundColor: 'lightblue',
                                         borderRightColor: 'black',
                                         borderRight: 1,
-                                      
+
                                         borderBottom: 1,
                                         borderBottomColor: 'black'
                                     }}
@@ -100,7 +94,7 @@ export default function Sancion() {
                                         backgroundColor: 'lightblue',
                                         borderRightColor: 'black',
                                         borderRight: 1,
-                                      
+
                                         borderBottom: 1,
                                         borderBottomColor: 'black'
                                     }}
@@ -114,7 +108,7 @@ export default function Sancion() {
                                         backgroundColor: 'lightblue',
                                         borderRightColor: 'black',
                                         borderRight: 1,
-                                        
+
                                         borderBottom: 1,
                                         borderBottomColor: 'black'
                                     }}>
@@ -126,7 +120,7 @@ export default function Sancion() {
                                         backgroundColor: 'lightblue',
                                         borderRightColor: 'black',
                                         borderRight: 1,
-                                   
+
                                         borderBottom: 1,
                                         borderBottomColor: 'black'
                                     }}
