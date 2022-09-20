@@ -13,7 +13,7 @@ export default function DetalleSancion() {
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: '' })
     const { loading, authUser } = useAuth()
     const [loadSancion, setLoadSancion] = useState(true)
     const [editMode, setEditMode] = useState(false)

@@ -28,7 +28,7 @@ export default function Asistencias() {
     const [asistencias, setAsistencias] = useState()
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
-    const [idCurso, setIdCurso] = useState(1)
+    const [idCurso, setIdCurso] = useState("")
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
@@ -77,7 +77,7 @@ export default function Asistencias() {
             })
     }
     const handleCurso = (e) => {
-        setIdCurso(Number.parseInt(e.target.value))
+        setIdCurso(e.target.value)
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)

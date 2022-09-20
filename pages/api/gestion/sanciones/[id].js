@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         });
         const { id } = req.query
         if (req.method === 'GET') {
-            const sancion = await obtenerSancion(Number.parseInt(id))
+            const sancion = await obtenerSancion(id)
             if (sancion) {
                 return res.status(200).json(sancion)
             }
@@ -26,11 +26,11 @@ export default async function handler(req, res) {
             } = req.body
 
             const sancion = await actualizarSancion(
-                Number.parseInt(id),
-                Number.parseInt(idUsuario),
-                idCurso !== undefined ? Number.parseInt(idCurso) : 0,
-                idAlumno !== undefined ? Number.parseInt(idAlumno) : 0,
-                Number.parseInt(idTipoSancion),
+                id,
+                idUsuario,
+                idCurso !== undefined ? idCurso : '',
+                idAlumno !== undefined ? idAlumno : '',
+                idTipoSancion,
                 motivo,
                 fecha)
 

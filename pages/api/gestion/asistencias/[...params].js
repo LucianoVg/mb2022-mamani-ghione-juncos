@@ -9,12 +9,12 @@ export default async function handler(
         console.log(params);
         const queryParams = {
             alumno: '',
-            idCurso: 0,
+            idCurso: '',
             documento: '',
             fecha: ''
         }
 
-        queryParams.idCurso = Number.parseInt(params[0])
+        queryParams.idCurso = params[0]
         queryParams.fecha = params[1]
 
         if (params.length === 3) {

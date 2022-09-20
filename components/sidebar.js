@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import { HomeOutlined } from '@mui/icons-material';
-import { ListItemButton,ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { ListItemButton, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
@@ -121,13 +121,13 @@ const Sidebar = ({ open, toggleDrawer }) => {
 
                                 <List>
                                     <ListItem disablePadding>
-                                        <ListItemButton disabled style={{opacity: '200%'}}>
+                                        <ListItemButton disabled style={{ opacity: '200%' }}>
                                             <ListItemIcon>
                                                 <SegmentIcon />
                                             </ListItemIcon>
-                                          <Typography style={{ fontWeight: 'bold', fontSize: '20px'}} >
-                                            Gestion 
-                                          </Typography>
+                                            <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                                Gestion
+                                            </Typography>
                                         </ListItemButton>
                                     </ListItem>
                                 </List>
@@ -138,7 +138,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                                         <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
                                             <ListItemIcon>
                                                 {
-                                                    m?.menu?.menuSistema === 'Mantenimiento de Usuario' && <AssignmentIndOutlinedIcon />
+                                                    m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
                                                 }
                                                 {
                                                     m?.menu?.menuSistema === 'Asistencias' && (
@@ -188,15 +188,15 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     {
                         menusReportes && (
                             <>
-                               <List>
+                                <List>
                                     <ListItem disablePadding>
-                                        <ListItemButton disabled style={{opacity: '200%'}}>
+                                        <ListItemButton disabled style={{ opacity: '200%' }}>
                                             <ListItemIcon>
                                                 <EqualizerIcon />
                                             </ListItemIcon>
-                                          <Typography style={{ fontWeight: 'bold', fontSize: '20px'}} >
-                                            Reportes 
-                                          </Typography>
+                                            <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                                Reportes
+                                            </Typography>
                                         </ListItemButton>
                                     </ListItem>
                                 </List>

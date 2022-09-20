@@ -1,7 +1,7 @@
 import { Prisma } from "./prisma";
 
-export async function traerFichaInstitucional(id = 0) {
-    const fichaInstitucional = id !== 0 ? await Prisma.newPrisma().fichaInstitucional.findFirst({
+export async function traerFichaInstitucional(id = '') {
+    const fichaInstitucional = id !== '' ? await Prisma.newPrisma().fichaInstitucional.findFirst({
         where: {
             OR: [
                 { id: id },
@@ -57,7 +57,7 @@ export async function traerPortadas(idFicha) {
     Prisma.disconnect()
     return portadas
 }
-export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = false, descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
+export async function guardarFichaInstitucional(id = '', nombreInstitucion = '', ubicacion = '', tipoInstitucion = false, descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = '') {
 
     const guardado = await Prisma.newPrisma().fichaInstitucional.upsert({
         where: {

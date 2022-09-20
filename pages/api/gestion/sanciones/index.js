@@ -16,11 +16,11 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const { idUsuario, idAlumno, idCurso, idTipoSancion, motivo, fecha } = req.body
             const sancion = await generarSancion(
-                Number.parseInt(idUsuario),
-                Number.parseInt(idAlumno),
-                Number.parseInt(idCurso),
+                idUsuario,
+                idAlumno,
+                idCurso,
                 motivo,
-                Number.parseInt(idTipoSancion),
+                idTipoSancion,
                 fecha)
 
             return res.status(200).json(sancion)

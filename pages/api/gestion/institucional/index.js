@@ -15,12 +15,12 @@ export default async function handler(
         if (req.method === 'POST') {
             const { nombreInstitucion, ubicacion, tipoInstitucion, descripcion, telefono1, telefono2, oficina1, oficina2, mail, idUsuario } = req.body
 
-            const guardado = await guardarFichaInstitucional(0, nombreInstitucion, ubicacion, Boolean(tipoInstitucion), descripcion, telefono1, telefono2, oficina1, oficina2, mail, Number.parseInt(idUsuario))
+            const guardado = await guardarFichaInstitucional('', nombreInstitucion, ubicacion, tipoInstitucion, descripcion, telefono1, telefono2, oficina1, oficina2, mail, idUsuario)
 
             return res.status(200).json(guardado)
         }
         if (req.method === 'GET') {
-            const ficha = await traerFichaInstitucional(0)
+            const ficha = await traerFichaInstitucional()
             return res.status(200).json(ficha)
         }
     } catch (error) {

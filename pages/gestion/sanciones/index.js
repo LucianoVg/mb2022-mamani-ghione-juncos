@@ -12,16 +12,16 @@ const Sanciones = () => {
     const [cursos, setCursos] = useState()
     const { loading, authUser } = useAuth()
     const router = useRouter()
-    const [idCurso, setIdCurso] = useState(1)
-    const [idAlumno, setIdAlumno] = useState(1)
+    const [idCurso, setIdCurso] = useState('')
+    const [idAlumno, setIdAlumno] = useState('')
     const [alumnos, setAlumnos] = useState()
 
 
     const handleCurso = (e) => {
-        setIdCurso(Number.parseInt(e.target.value))
+        setIdCurso(e.target.value)
     }
     const handleAlumno = (e) => {
-        setIdAlumno(Number.parseInt(e.target.value))
+        setIdAlumno(e.target.value)
     }
     const buscarSanciones = (e) => {
         e.preventDefault()
@@ -76,6 +76,7 @@ const Sanciones = () => {
                             label="Alumno"
                             value={idAlumno}
                             fullWidth>
+                            <MenuItem value={idAlumno}>Seleccione un alumno</MenuItem>
                             {
                                 alumnos && alumnos.map((a, i) => (
                                     <MenuItem key={i} value={a.id}>
@@ -95,6 +96,7 @@ const Sanciones = () => {
                             label="Curso"
                             value={idCurso}
                             fullWidth>
+                            <MenuItem value={idCurso}>Seleccione un curso</MenuItem>
                             {
                                 cursos && cursos.map((c, i) => (
                                     <MenuItem key={i} value={c.id}>

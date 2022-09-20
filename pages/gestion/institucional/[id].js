@@ -11,7 +11,7 @@ import { guardarImagen, traerImagen } from "../../../servicios/portada";
 
 export default function EditarFicha() {
     const [ficha, setFicha] = useState({
-        id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: []
+        id: '', nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: '', portadasFicha: []
     })
     const [cargando, setCargando] = useState(false)
 
@@ -113,7 +113,7 @@ export default function EditarFicha() {
     return (
         <Layout>
             {
-                ficha && ficha.id !== 0 && (
+                ficha && ficha.id !== '' && (
                     <Box component={'form'}>
                         <Grid container spacing={2}>
                             <Grid item xs={2}>

@@ -10,9 +10,9 @@ import { Typography, TextField, Button, Select, Box, Grid, MenuItem, InputLabel 
 
 const FichaInstitucional = () => {
     const [fichaInstitucional, setFichaInstitucional] = useState({
-        id: 0, nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: 0, portadasFicha: []
+        id: '', nombreInstitucion: '', ubicacion: '', tipoInstitucion: '', descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: '', portadasFicha: []
     })
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
     const { loading, authUser } = useAuth()
     const [imagenes, setImagenes] = useState(null)
@@ -197,8 +197,8 @@ const FichaInstitucional = () => {
                             onChange={handleForm}
                             value={fichaInstitucional.tipoInstitucion}
                             name="tipoInstitucion">
-                            <MenuItem value={true}>Privada</MenuItem>
-                            <MenuItem value={false}>Publica</MenuItem>
+                            <MenuItem value={'Privada'}>Privada</MenuItem>
+                            <MenuItem value={'Publica'}>Publica</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={6}>

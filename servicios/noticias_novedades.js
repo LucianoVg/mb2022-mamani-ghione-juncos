@@ -1,8 +1,8 @@
 import { Prisma } from "./prisma";
 
-export async function traerNoticia(id = 0) {
+export async function traerNoticia(id = '') {
     try {
-        const noticias = id !== 0 ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
+        const noticias = id !== '' ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
             where: {
                 id: id
             }

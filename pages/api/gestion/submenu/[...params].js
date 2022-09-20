@@ -13,7 +13,7 @@ export default async function handler(
     });
     try {
         const { params } = req.query
-        const menuXrol = await FiltrarMenu(Number.parseInt(params[0]), params[1])
+        const menuXrol = await FiltrarMenu(params[0], params[1])
         return res.status(200).json(menuXrol)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })

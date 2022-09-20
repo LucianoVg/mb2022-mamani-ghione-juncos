@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { TraerNotas } from "../../../../servicios/notas";
 import { ListarCurso } from "../../../../servicios/notas";
 export default async function handler(

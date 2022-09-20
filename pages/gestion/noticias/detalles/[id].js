@@ -8,18 +8,18 @@ import Loading from "../../../../components/loading";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
-        id: 0,
+        id: '',
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: 0
+        idUsuario: ''
     })
     const [cargando, setCargando] = useState(true)
     const router = useRouter()
     const { id } = router.query
     useEffect(() => {
         if (id) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${id}`)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
                 .then(res => {
                     console.log(res.data);
                     setNoticia(res.data)
@@ -35,7 +35,7 @@ export default function DetallesNoticia() {
     return (
         <Layout>
             {
-                noticia.id !== 0 && (
+                noticia.id !== '' && (
                     <div className="container text-center">
                         <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={500} height={400} />
 

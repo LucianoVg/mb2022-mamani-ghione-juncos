@@ -9,17 +9,17 @@ import { guardarImagen, traerImagen } from "../../../servicios/portada"
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
-        id: 0,
+        id: '',
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: 0
+        idUsuario: ''
     })
     const [noticiaActualizar, setNoticiaActualizar] = useState({
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: 0
+        idUsuario: ''
     })
     const router = useRouter()
     const hoy = new Date()

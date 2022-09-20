@@ -12,15 +12,15 @@ export default async function handler(
             origin: '*',
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
-        if (req.method === 'POST') {
-
-        } else {
+        if (req.method === 'GET') {
             const usuarios = await Prisma.newPrisma().usuario.findMany({
                 include: {
                     rol: true
                 }
             })
             return res.status(200).json(usuarios)
+        } else {
+            return res.status(500).send("Metodo No Permitido")
         }
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })

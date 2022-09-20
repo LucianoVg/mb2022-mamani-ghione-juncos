@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
 import { Grid, Pagination } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
+import { Container } from '@mui/system'
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -60,14 +61,16 @@ const Home = () => {
       </Grid>
 
       {
-        noticias && (
-          <Pagination
-            count={cantidadPaginas}
-            size='large'
-            page={pagina}
-            variant="outlined"
-            shape='circular'
-            onChange={handlerCambioPagina} />
+        noticias && noticias.length > 0 && (
+          <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+            <Pagination
+              count={cantidadPaginas}
+              size='large'
+              page={pagina}
+              variant="outlined"
+              shape='circular'
+              onChange={handlerCambioPagina} />
+          </Container>
         )
       }
     </Layout>

@@ -18,7 +18,7 @@ const AgregarNoticias = () => {
     })
     var hoy = new Date();
     const [imagen, setImagen] = useState(null)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
     const [imagenPrev, setImagenPrev] = useState("/assets/img/placeholder.png")
 

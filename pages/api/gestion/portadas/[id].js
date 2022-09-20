@@ -12,11 +12,11 @@ export default async function handler(req, res) {
         const { id } = req.query
         if (req.method === 'PUT') {
             const { nombre, url, fichaInstitucionalId } = req.body
-            const portada = await editarPortadas(Number.parseInt(id), nombre, url, Number.parseInt(fichaInstitucionalId))
+            const portada = await editarPortadas(id, nombre, url, fichaInstitucionalId)
             return res.status(200).json(portada)
         }
         if (req.method === 'GET') {
-            const portadas = await traerPortadas(Number.parseInt(id))
+            const portadas = await traerPortadas(id)
             return res.status(200).json(portadas)
         }
     } catch (error) {

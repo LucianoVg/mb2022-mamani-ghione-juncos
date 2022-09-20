@@ -10,12 +10,12 @@ export default function NuevoUsuario() {
     const [usuario, setUsuario] = useState({
         nombre: '', apellido: '', dni: '',
         correo: '', localidad: '', telefono: '', idRol: '',
-        direccion: '', contrasenia: '', idTutor: 0, sexo: 'M', idCurso: ''
+        direccion: '', contrasenia: '', idTutor: '', sexo: 'M', idCurso: ''
     })
     const [cursos, setCursos] = useState()
     const [tutor, setTutor] = useState({
-        id: 0, nombre: '', apellido: '', dni: '',
-        correo: '', localidad: '', telefono: '', idRol: 7,
+        id: '', nombre: '', apellido: '', dni: '',
+        correo: '', localidad: '', telefono: '', idRol: roles?.find(r => r.tipo === 'Tutor')?.id,
         direccion: '', contrasenia: '', sexo: 'M'
     })
     const [curso, setCurso] = useState('')
@@ -23,7 +23,7 @@ export default function NuevoUsuario() {
 
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
-    const [roles, setRoles] = useState([{ id: 0, tipo: '' }])
+    const [roles, setRoles] = useState([{ id: '', tipo: '' }])
     const { loading, authUser } = useAuth()
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export default function NuevoUsuario() {
 
     const handleRol = (e) => {
         setRol(e.target.value)
-        setEsAlumno(e.target.value === 'Estudiante')
+        setEsAlumno(e.target.value === roles?.find(r => r.tipo === 'Estudiante')?.id)
     }
     const handleCurso = (e) => {
         setCurso(e.target.value)
@@ -232,7 +232,7 @@ export default function NuevoUsuario() {
                     <Grid item xs={4}>
                         <InputLabel id="select-label">Rol</InputLabel>
                         <Select labelId="select-label"
-                            name="sexo"
+                            name="rol"
                             label="Rol"
                             required
                             onChange={handleRol}
@@ -240,7 +240,7 @@ export default function NuevoUsuario() {
                             value={rol}>
                             {
                                 roles && roles.map((r, i) => (
-                                    <MenuItem key={i} value={r.tipo}>{r.tipo}</MenuItem>
+                                    <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
                                 ))
                             }
                         </Select>

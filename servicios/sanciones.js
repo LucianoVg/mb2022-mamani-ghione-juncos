@@ -1,8 +1,8 @@
 import { Prisma } from "./prisma";
 
-export async function traerSanciones(idCurso = 0, idAlumno = 0) {
+export async function traerSanciones(idCurso = '', idAlumno = '') {
     try {
-        const sanciones = idCurso === 0 || idAlumno === 0
+        const sanciones = idCurso === '' || idAlumno === ''
             ? await Prisma.newPrisma().sancion.findMany({
                 include: {
                     alumnoXCursoXDivision: {
@@ -48,9 +48,9 @@ export async function traerSanciones(idCurso = 0, idAlumno = 0) {
     }
 }
 
-export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motivo, idTipoSancion, fecha) {
+export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', motivo, idTipoSancion, fecha) {
     try {
-        if (idCurso !== 0) {
+        if (idCurso !== '') {
             const sanciones = []
             const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
                 select: {
@@ -138,13 +138,13 @@ export async function obtenerSancion(id) {
 export async function actualizarSancion(
     id,
     idUsuario,
-    idCurso = 0,
-    idAlumno = 0,
+    idCurso = '',
+    idAlumno = '',
     idTipoSancion,
     motivo,
     fecha) {
     try {
-        if (idCurso !== 0) {
+        if (idCurso !== '') {
             const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
                 select: {
                     id: true

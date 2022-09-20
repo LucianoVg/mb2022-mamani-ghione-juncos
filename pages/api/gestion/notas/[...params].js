@@ -14,18 +14,18 @@ export default async function handler(
         });
         const { params } = req.query
         const queryParams = {
-            idTrimestre: 0,
-            idMateria: 0,
+            idTrimestre: '',
+            idMateria: '',
             alumno: '',
-            idCurso: 0
+            idCurso: ''
         }
-        queryParams.idTrimestre = Number.parseInt(params[0])
-        queryParams.idMateria = Number.parseInt(params[1])
-        queryParams.idCurso = Number.parseInt(params[2])
+        queryParams.idTrimestre = params[0]
+        queryParams.idMateria = params[1]
+        queryParams.idCurso = params[2]
 
         if (params.length > 3) {
             queryParams.alumno = params[2]
-            queryParams.idCurso = Number.parseInt(params[3])
+            queryParams.idCurso = params[3]
         }
 
         console.log(queryParams);

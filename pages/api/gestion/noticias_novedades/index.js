@@ -15,7 +15,7 @@ export default async function handler(
         switch (req.method) {
             case 'POST':
                 const { titulo, creadaEn, url, descripcion, idUsuario } = req.body
-                const crear = await agregarNoticia(titulo, creadaEn, url, descripcion, Number.parseInt(idUsuario))
+                const crear = await agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario)
                 return res.status(200).json(crear)
             case 'GET':
                 const noticias = await traerNoticia()

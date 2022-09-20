@@ -6,14 +6,14 @@ import { Layout } from "../../../components/layout";
 import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel } from "@mui/material";
 
 export default function NuevaSancion() {
-    const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 1 })
+    const [sancion, setSancion] = useState({ idAlumno: '', idCurso: '', motivo: '', idTipoSancion: '' })
 
     const [alumnos, setAlumnos] = useState()
     const [cursos, setCursos] = useState()
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: '' })
     const { loading, authUser } = useAuth()
 
     useEffect(() => {

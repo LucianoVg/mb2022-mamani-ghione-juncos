@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
             const creado = await registrarUsuario(login, nombre, apellido,
                 correo, dni, telefono,
-                localidad, direccion, Number.parseInt(idRol), idTutor ? Number.parseInt(idTutor) : 0, contrasenia, sexo, idCurso ? Number.parseInt(idCurso) : 0)
+                localidad, direccion, idRol, idTutor ? idTutor : '', contrasenia, sexo, idCurso ? idCurso : '')
 
             return res.status(200).json(creado)
         } else {

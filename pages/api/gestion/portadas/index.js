@@ -13,7 +13,7 @@ export default async function handler(
     });
     if (req.method === 'POST') {
         const { nombre, url, fichaInstitucionalId } = req.body
-        const portadas = await guardarPortadas(nombre, url, Number.parseInt(fichaInstitucionalId))
+        const portadas = await guardarPortadas(nombre, url, fichaInstitucionalId)
         return res.status(200).json(portadas)
     }
 }

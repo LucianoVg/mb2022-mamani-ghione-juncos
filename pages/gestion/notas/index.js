@@ -2,15 +2,14 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import styles from "../../../styles/notas.module.css";
+// import styles from "../../../styles/notas.module.css";
 import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-import { ButtonUnstyled } from "@mui/base";
 
 export default function Notas() {
     const [notas, setNotas] = useState()
 
-    const [idMateria, setIdMateria] = useState(1)
-    const [idCurso, setIdCurso] = useState(1)
+    const [idMateria, setIdMateria] = useState("")
+    const [idCurso, setIdCurso] = useState("")
 
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
@@ -43,7 +42,7 @@ export default function Notas() {
                 console.log(res.data);
                 setCursos(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
     const listarMaterias = () => {
@@ -52,18 +51,18 @@ export default function Notas() {
                 console.log(res.data);
                 setMaterias(res.data)
             }).catch(err => {
-                console.error(error);
+                console.error(err);
             })
     }
 
     const handleMateria = (e) => {
-        setIdMateria(Number.parseInt(e.target.value))
+        setIdMateria(e.target.value)
         console.log(idMateria);
         defaultTrimestre()
     }
 
     const handleCurso = (e) => {
-        setIdCurso(Number.parseInt(e.target.value))
+        setIdCurso(e.target.value)
         defaultTrimestre()
     }
     const handleNombreAlumno = (e) => {
@@ -169,7 +168,7 @@ export default function Notas() {
                             }
                         </Select>
                     </Grid>
-                    <Grid item xs={6} style={{marginTop: '1.8mm'}}>
+                    <Grid item xs={6} style={{ marginTop: '1.8mm' }}>
                         <TextField margin="normal"
                             fullWidth
                             name="nombreAlumno"
