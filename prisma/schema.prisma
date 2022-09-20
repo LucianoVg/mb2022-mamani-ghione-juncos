@@ -293,17 +293,6 @@ model rol {
 }
 
 model sancion {
-<<<<<<< Updated upstream
-  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  motivo               String?
-  fecha                DateTime?
-  idTipoSancion        String?                @db.ObjectId
-  idCurso              String?                @db.ObjectId
-  tipoSancion          tipoSancion?           @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  curso                curso?                 @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sancionXusuario      sancionXusuario[]
-  notificacionXusuario notificacionXusuario[]
-=======
   id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
   motivo                  String?
   fecha                   String?
@@ -313,7 +302,7 @@ model sancion {
   idAlumnoXCursoXDivision String?                @db.ObjectId
   alumnoXCursoXDivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sancionXusuario         sancionXusuario[]
->>>>>>> Stashed changes
+  notificacionXusuario    notificacionXusuario[]
 }
 
 model sancionXusuario {
