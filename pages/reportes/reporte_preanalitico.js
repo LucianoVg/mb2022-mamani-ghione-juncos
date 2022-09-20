@@ -45,7 +45,7 @@ export default function Preanalitico() {
         <Layout>
             <h3>Buscar Alumno</h3>
 
-            <Box direction="row" rowSpacing={2}>
+            <Box direction="row">
                 <TextField
                     sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
                     name="documento"
@@ -75,7 +75,7 @@ export default function Preanalitico() {
 
             <div>
                 <TableContainer component={Paper} >
-                    <Table sx aria-label="customized table" >
+                    <Table aria-label="customized table" >
                         <TableHead  >
                             <TableRow >
                                 <TableCell align="center" colSpan={3}

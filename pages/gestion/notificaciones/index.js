@@ -67,7 +67,7 @@ const Notificaciones = () => {
                                     </Select>
 
                                 </FormControl>
-                                <FormControl fullWidth sx={{ width: '30%', marginRight: '20px' }}>
+                                <FormControl  sx={{ width: '30%', marginRight: '20px' }}>
                                     <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
@@ -87,16 +87,18 @@ const Notificaciones = () => {
                             </Box>
 
                           
-                            <h2><strong>Asunto</strong></h2>
+                         <Box xs>
+                         <h2><strong>Asunto</strong></h2>
                             <TextareaAutosize
 
-                                style={{ width: '400px', height: '35px', resize: 'none', fontSize: '20px' }}
+                                style={{ width: '350px', height: '35px', resize: 'none', fontSize: '20px' }}
                             />
                             <h2><strong>Contenido</strong></h2>
                             <TextareaAutosize
 
-                                style={{ width: '400px', height: '200px', resize: 'none', fontSize: '20px' }}
+                                style={{ width: '350px', height: '200px', resize: 'none', fontSize: '20px' }}
                             />
+                         </Box>
 
                           <Box xs={12}>
                           <Button variant="contained">Enviar</Button>
@@ -108,7 +110,8 @@ const Notificaciones = () => {
                     </Grid>
                     <Grid item xs={4}>
                         <h1>Notificaciones enviadas</h1>
-                        <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
+                       <Box sx={{width: '350px'}}>
+                       <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
                             <ListItem disablePadding
                             >
                                 <ListItemButton component="a" href="#simple-list">
@@ -132,6 +135,7 @@ const Notificaciones = () => {
                             </ListItem>
                             <Divider />
                         </List>
+                       </Box>
                     </Grid>
 
                 </Grid>
