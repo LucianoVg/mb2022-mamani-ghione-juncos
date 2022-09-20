@@ -59,7 +59,7 @@ export default function Preanalitico() {
                     onChange={handleNombreAlumno}
                     label="Nombre" />
                 <TextField
-                    sx={{ width: '200px' }}
+                    sx={{ width: '200px', marginBottom: '20px' }}
                     name="apellidoAlumno"
                     value={apellidoAlumno}
                     onChange={handleApellidoAlumno}

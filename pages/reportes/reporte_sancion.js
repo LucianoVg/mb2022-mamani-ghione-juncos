@@ -56,14 +56,14 @@ export default function Sancion() {
                     onChange={handleNombreAlumno}
                     label="Nombre" />
                 <TextField
-                    sx={{ width: '200px' }}
+                    sx={{ width: '200px', marginBottom: '20px' }}
                     name="apellidoAlumno"
                     value={apellidoAlumno}
                     onChange={handleApellidoAlumno}
                     label="Apellido" />
 
             </Box>
-            <Box sx={{ marginBottom: '20px' }}>
+            <Box sx={{ marginBottom: '20px', }}>
                 <Button variant="outlined" startIcon={<Search />} color="info" >
                     Buscar
                 </Button>
