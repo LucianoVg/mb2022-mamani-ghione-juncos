@@ -70,57 +70,55 @@ export default function Notas() {
 
 
 
-            <Grid container spacing={2} sx={{ marginBottom: '50px' }}>
-                <Grid item xs={12}>
-                    <FormControl sx={{ width: '150px' }}>
-                        <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={materia}
-                            label="Materia"
-                            onChange={handleMateria}
-                        >
-                            <MenuItem value={10}>Lengua</MenuItem>
-                            <MenuItem value={20}>Geografia</MenuItem>
-                            <MenuItem value={30}>Historia</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                    <h3>Buscar Alumno</h3>
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="documento"
-                        value={documento}
-                        onChange={handleDocumento}
-                        label="Documento del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="nombreAlumno"
-                        value={nombreAlumno}
-                        onChange={handleNombreAlumno}
-                        label="Nombre del alumno" />
+            <Box >
 
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="apellidoAlumno"
-                        value={apellidoAlumno}
-                        onChange={handleApellidoAlumno}
-                        label="Apellido del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="outlined" startIcon={<Search />} color="info">
-                        Buscar
-                    </Button>
-                </Grid>
-            </Grid>
+                <FormControl sx={{ width: '150px' }}>
+                    <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={materia}
+                        label="Materia"
+                        onChange={handleMateria}
+                    >
+                        <MenuItem value={10}>Lengua</MenuItem>
+                        <MenuItem value={20}>Geografia</MenuItem>
+                        <MenuItem value={30}>Historia</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+
+            <h3>Buscar Alumno</h3>
+
+            <Box direction="row" rowSpacing={2}>
+                <TextField
+                    sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                    name="documento"
+                    value={documento}
+                    onChange={handleDocumento}
+                    label="Documento" />
+                <TextField
+                    sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                    name="nombreAlumno"
+                    value={nombreAlumno}
+                    onChange={handleNombreAlumno}
+                    label="Nombre" />
+                <TextField
+                    sx={{ width: '200px' }}
+                    name="apellidoAlumno"
+                    value={apellidoAlumno}
+                    onChange={handleApellidoAlumno}
+                    label="Apellido" />
+
+            </Box>
+            <Button variant="outlined" startIcon={<Search />} color="info" sx={{marginTop: '20px'}}>
+                Buscar
+            </Button>
+
+
+
+
+
 
             <Grid container rowSpacing={5} spacing={2}>
 
