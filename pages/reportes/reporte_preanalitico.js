@@ -43,45 +43,39 @@ export default function Preanalitico() {
     }
     return (
         <Layout>
-            <Grid container spacing={2} sx={{ marginBottom: '50px' }}>
-                <Grid item xs={12}>
-                    <h3>Buscar Alumno</h3>
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="documento"
-                        value={documento}
-                        onChange={handleDocumento}
-                        label="Documento del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="nombreAlumno"
-                        value={nombreAlumno}
-                        onChange={handleNombreAlumno}
-                        label="Nombre del alumno" />
+            <h3>Buscar Alumno</h3>
 
-                </Grid>
-                <Grid item xs={4}>
-                    <TextField
-                        fullWidth
-                        name="apellidoAlumno"
-                        value={apellidoAlumno}
-                        onChange={handleApellidoAlumno}
-                        label="Apellido del alumno" />
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="outlined" startIcon={<Search />} color="info">
-                        Buscar
-                    </Button>
-                </Grid>
-            </Grid>
+            <Box direction="row" rowSpacing={2}>
+                <TextField
+                    sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                    name="documento"
+                    value={documento}
+                    onChange={handleDocumento}
+                    label="Documento" />
+                <TextField
+                    sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                    name="nombreAlumno"
+                    value={nombreAlumno}
+                    onChange={handleNombreAlumno}
+                    label="Nombre" />
+                <TextField
+                    sx={{ width: '200px' }}
+                    name="apellidoAlumno"
+                    value={apellidoAlumno}
+                    onChange={handleApellidoAlumno}
+                    label="Apellido" />
 
-            <div sx={{ marginTop: '200px' }}>
+            </Box>
+            <Box sx={{marginBottom: '20px'}}>
+                <Button variant="outlined" startIcon={<Search />} color="info" >
+                    Buscar
+                </Button>
+            </Box>
+
+
+            <div>
                 <TableContainer component={Paper} >
-                    <Table sx={{ minWidth: 650 }} aria-label="customized table" s >
+                    <Table sx aria-label="customized table" >
                         <TableHead  >
                             <TableRow >
                                 <TableCell align="center" colSpan={3}
@@ -157,7 +151,7 @@ export default function Preanalitico() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                            <TableCell colSpan={2}
+                                <TableCell colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -324,8 +318,8 @@ export default function Preanalitico() {
                                         borderBottomColor: 'black'
                                     }}>
                                     Nota
-                                </TableCell> 
-                                
+                                </TableCell>
+
                             </TableRow>
                         </TableHead>
                         <TableBody >
@@ -345,18 +339,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderRightColor: 'black',
+                                            borderRight: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                        <TableCell colSpan={2} component="th" scope="row"
+                                    <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
                                             borderRight: 1,
@@ -370,18 +364,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderRightColor: 'black',
+                                            borderRight: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                        <TableCell colSpan={2} component="th" scope="row"
+                                    <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
                                             borderRight: 1,
@@ -395,18 +389,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderRightColor: 'black',
+                                            borderRight: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                        <TableCell colSpan={2} component="th" scope="row"
+                                    <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
                                             borderRight: 1,
@@ -420,18 +414,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderRightColor: 'black',
+                                            borderRight: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                        <TableCell colSpan={2} component="th" scope="row"
+                                    <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
                                             borderRight: 1,
@@ -445,18 +439,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderRightColor: 'black',
+                                            borderRight: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                        <TableCell colSpan={2} component="th" scope="row"
+                                    <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
                                             borderRight: 1,
@@ -470,18 +464,18 @@ export default function Preanalitico() {
                                         {row.materia}
                                     </TableCell >
                                     <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        borderLeftColor: 'black',
-                                        borderLeftt: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
+                                        sx={{
+                                            borderLeftColor: 'black',
+                                            borderLeftt: 1,
+                                            borderTop: 1,
+                                            borderTopColor: 'black',
+                                            borderBottom: 1,
+                                            borderBottomColor: 'black'
 
-                                    }}
+                                        }}
                                     >
                                         {row.notaFinal}</TableCell>
-                                   
+
                                 </TableRow>
                             ))}
 
