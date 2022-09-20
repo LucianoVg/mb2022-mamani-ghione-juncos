@@ -96,148 +96,139 @@ const MaterialEstudio = () => {
                         </Grid>
                     </Grid>
                 </Box>
-                <Box >
-                    <Grid container sx={{ flexGrow: 1 }} spacing={2}>
-                        <Grid item xs={4} >
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs >
                             <h3>Primer Trimestre</h3>
 
-                            <Grid container rowSpacing={5} >
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                            </Grid>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
                         </Grid>
+                        <Grid item xs>
+                            <h3>Primer Trimestre</h3>
 
-                        <Grid item xs={4} >
-                            <h3>Segundo Trimestre</h3>
-                            <Grid container rowSpacing={5} >
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
 
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                            </Grid>
                         </Grid>
-                        <Grid item xs={4} >
-                            <h3>Tercer Trimestre</h3>
-                            <Grid container rowSpacing={5} >
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
+                        <Grid item xs >
+                            <h3>Primer Trimestre</h3>
 
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
+                            <Stack direction="row" mt={2}>
+                                <Button variant='outlined' component="label"
+                                    sx={{ width: '180px' }}
+                                    spacing={4}
+                                >
+                                    Subir apunte
+                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                </Button>
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
+                            </Stack>
 
-                                </Grid>
-                                <Grid item sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined' component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary" >
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                            </Grid>
                         </Grid>
-                    </Grid>
-                </Box>
+                   </Grid>
+            </Box>
 
-                <Button variant="contained" color="primary">
-                    Guardar
-                </Button>
+            <Box mt={2}>
+            <Button variant="contained" color="primary">
+                Guardar
+            </Button>
+
+            </Box>
 
 
         </Container>
