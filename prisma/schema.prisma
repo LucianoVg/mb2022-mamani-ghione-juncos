@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model alumnoXcursoXdivision {
   id               String          @id @default(auto()) @map("_id") @db.ObjectId
   anoActual        DateTime?
@@ -238,6 +236,14 @@ model notificacion {
   curso           curso?          @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model notificacionXusuario {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  idUsuario      String?  @db.ObjectId
+  idNotificacion String?  @db.ObjectId
+  usuario        usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  notificacion   sancion? @relation(fields: [idNotificacion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
 model permisos {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   casoDeUso    String?
@@ -287,14 +293,15 @@ model rol {
 }
 
 model sancion {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  motivo          String?
-  fecha           DateTime?
-  idTipoSancion   String?           @db.ObjectId
-  idCurso         String?           @db.ObjectId
-  tipoSancion     tipoSancion?      @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  curso           curso?            @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sancionXusuario sancionXusuario[]
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  motivo               String?
+  fecha                DateTime?
+  idTipoSancion        String?                @db.ObjectId
+  idCurso              String?                @db.ObjectId
+  tipoSancion          tipoSancion?           @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso                curso?                 @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancionXusuario      sancionXusuario[]
+  notificacionXusuario notificacionXusuario[]
 }
 
 model sancionXusuario {
@@ -372,4 +379,5 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacion          notificacion[]
   sancionXusuario       sancionXusuario[]
+  notificacionXusuario  notificacionXusuario[]
 }

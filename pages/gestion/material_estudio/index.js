@@ -30,8 +30,8 @@ const MaterialEstudio = () => {
 
     return (
         <Layout>
-            <Container>
-                <Box sx={{ width: '100%' }}>
+            <Container fullwidth>
+                <Box sx={{ flexGrow: 1 }}>
                     <Grid container rowSpacing={5} >
                         <Grid item xs={12}>
                             <FormControl sx={{ width: '100px' }}>
@@ -63,13 +63,13 @@ const MaterialEstudio = () => {
                                     <MenuItem value={3} sx={{ display: "inline-block" }}>2 A</MenuItem>
                                     <MenuItem value={4} sx={{ display: "inline-block" }}>2 B</MenuItem>
                                     <MenuItem value={5} sx={{ display: "inline-block" }}>3 A</MenuItem>
-                                    <MenuItem value={6} sx={{ display: "inline-block" }}>3 B</MenuItem>
+                                    <MenuItem value={64} sx={{ display: "inline-block" }}>3 B</MenuItem>
                                     <MenuItem value={5} sx={{ display: "inline-block" }}>4 A</MenuItem>
-                                    <MenuItem value={6} sx={{ display: "inline-block" }}>4 B</MenuItem>
-                                    <MenuItem value={5} sx={{ display: "inline-block" }}>5 A</MenuItem>
-                                    <MenuItem value={6} sx={{ display: "inline-block" }}>5 B</MenuItem>
-                                    <MenuItem value={5} sx={{ display: "inline-block" }}>6 A</MenuItem>
-                                    <MenuItem value={6} sx={{ display: "inline-block" }}>6 B</MenuItem>
+                                    <MenuItem value={6423} sx={{ display: "inline-block" }}>4 B</MenuItem>
+                                    <MenuItem value={5463} sx={{ display: "inline-block" }}>5 A</MenuItem>
+                                    <MenuItem value={6421} sx={{ display: "inline-block" }}>5 B</MenuItem>
+                                    <MenuItem value={535} sx={{ display: "inline-block" }}>6 A</MenuItem>
+                                    <MenuItem value={612} sx={{ display: "inline-block" }}>6 B</MenuItem>
 
 
 
@@ -94,11 +94,15 @@ const MaterialEstudio = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
+                    </Grid>
+                </Box>
+                <Box >
+                    <Grid container sx={{ flexGrow: 1 }} spacing={2}>
                         <Grid item xs={4} >
                             <h3>Primer Trimestre</h3>
 
                             <Grid container rowSpacing={5} >
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -111,7 +115,7 @@ const MaterialEstudio = () => {
                                     </IconButton>
 
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -124,7 +128,7 @@ const MaterialEstudio = () => {
                                     </IconButton>
 
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -143,7 +147,7 @@ const MaterialEstudio = () => {
                         <Grid item xs={4} >
                             <h3>Segundo Trimestre</h3>
                             <Grid container rowSpacing={5} >
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -156,7 +160,7 @@ const MaterialEstudio = () => {
                                     </IconButton>
 
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -169,8 +173,8 @@ const MaterialEstudio = () => {
                                     </IconButton>
 
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined'component="label"
+                                <Grid item sx={{ textAlign: 'left' }}>
+                                    <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
                                     >
@@ -187,20 +191,7 @@ const MaterialEstudio = () => {
                         <Grid item xs={4} >
                             <h3>Tercer Trimestre</h3>
                             <Grid container rowSpacing={5} >
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
-                                    <Button variant='outlined'component="label"
-                                        sx={{ width: '180px' }}
-                                        spacing={4}
-                                    >
-                                        Subir apunte
-                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                    </Button>
-                                    <IconButton spacing={4} color="primary">
-                                        <DownloadIcon />
-                                    </IconButton>
-
-                                </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -213,7 +204,20 @@ const MaterialEstudio = () => {
                                     </IconButton>
 
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'left' }}>
+                                <Grid item sx={{ textAlign: 'left' }}>
+                                    <Button variant='outlined' component="label"
+                                        sx={{ width: '180px' }}
+                                        spacing={4}
+                                    >
+                                        Subir apunte
+                                        <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
+                                    </Button>
+                                    <IconButton spacing={4} color="primary">
+                                        <DownloadIcon />
+                                    </IconButton>
+
+                                </Grid>
+                                <Grid item sx={{ textAlign: 'left' }}>
                                     <Button variant='outlined' component="label"
                                         sx={{ width: '180px' }}
                                         spacing={4}
@@ -228,14 +232,15 @@ const MaterialEstudio = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary">
-                                Guardar
-                            </Button>
-                        </Grid>
                     </Grid>
                 </Box>
-            </Container>
+
+                <Button variant="contained" color="primary">
+                    Guardar
+                </Button>
+
+
+        </Container>
 
 
         </Layout >

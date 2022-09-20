@@ -21,6 +21,7 @@ const rows = [
     createData('Geografia', 9),
     createData('Historia', 9),
     createData('Formacion Humana Cristiana', 9),
+    createData('Portugues', 9),
 ];
 
 export default function Preanalitico() {

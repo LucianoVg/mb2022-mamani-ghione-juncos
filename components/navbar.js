@@ -62,13 +62,12 @@ export const Navbar = ({ toggleDrawer, open }) => {
                     <Typography href='/gestion/institucional' component={'a'} variant="body1" sx={{ mr: 1, textDecoration: 'none' }} color='white'>
                         Institucional
                     </Typography>
-                    {
-                        !loading && authUser && (
+
+                 
                             <div style={{alignContent: 'right', marginLeft: '-30px' , marginRight: '-20px'}} >
                                 <Notificacion disablePadding/>
                             </div>
-                        )
-                    }
+               
                     {
                         !loading && authUser && (
                             <AccountCircleIcon />
