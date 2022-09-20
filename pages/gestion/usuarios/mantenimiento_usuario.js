@@ -7,11 +7,31 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
 
 export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
+
+  
+
+
+    const options = usuarios.map((usuario, i) => ({
+        id: usuario.id,
+        label: usuario.nombre
+    }))
+    const [value, setValue] = useState(null)
+    const handleValue = (e) => {
+        setValue(e.target.value);
+
+    };
+    console.log(value)
+
+
+
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -30,7 +50,18 @@ export default function MantenimientoUsuario() {
             </Link>
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
-            <TableContainer component={Paper}>
+            <Autocomplete
+
+                options={options}
+                sx={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Usuarios" />}
+                value={value}
+                onChange={(event, newValue) => {
+                    setValue(newValue)
+                }}
+            />
+
+            <TableContainer sx={{marginTop: '20px'}} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
