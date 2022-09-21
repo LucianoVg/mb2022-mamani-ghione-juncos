@@ -15,22 +15,26 @@ export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
+    const [options, setOptions] = useState([])
 
-  
+    const defaultOptions = {
+        options: options,
+        getOptionLabel: (option) => option?.nombre
+    }
 
+    const [value, setValue] = useState({
+        id: options[0]?.id,
+        nombre: options[0]?.nombre
+    })
 
-    const options = usuarios.map((usuario, i) => ({
-        id: usuario.id,
-        label: usuario.nombre
-    }))
-    const [value, setValue] = useState(null)
-    const handleValue = (e) => {
-        setValue(e.target.value);
-
+    const handleValue = (e, value, reason) => {
+        if (reason === 'selectOption') {
+            setValue(value)
+        } else if (reason === 'clear') {
+            setValue({ id: '', label: '' })
+        }
     };
     console.log(value)
-
-
 
 
     useEffect(() => {
@@ -41,6 +45,7 @@ export default function MantenimientoUsuario() {
             .then(res => {
                 setUsuarios(res.data)
             })
+        setOptions(usuarios.map(u => ({ id: u?.id, nombre: u?.nombre })))
     }, [authUser, loading])
 
     return (
@@ -51,17 +56,16 @@ export default function MantenimientoUsuario() {
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
             <Autocomplete
-
-                options={options}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Usuarios" />}
+                {...defaultOptions}
+                multiple={false}
+                id="autocomplete-usuario"
                 value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue)
-                }}
+                onChange={(e, newValue) => setValue(newValue)}
+                sx={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined" />}
             />
 
-            <TableContainer sx={{marginTop: '20px'}} component={Paper}>
+            <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
