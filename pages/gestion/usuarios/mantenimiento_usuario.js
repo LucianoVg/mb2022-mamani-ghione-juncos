@@ -15,26 +15,26 @@ export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
-    const [options, setOptions] = useState([])
+    // const [options, setOptions] = useState([])
 
-    const defaultOptions = {
-        options: options,
-        getOptionLabel: (option) => option?.nombre
-    }
+    // const defaultOptions = {
+    //     options: options,
+    //     getOptionLabel: (option) => option.user
+    // }
 
-    const [value, setValue] = useState({
-        id: options[0]?.id,
-        nombre: options[0]?.nombre
-    })
+    // const [value, setValue] = useState({
+    //     id: options[0]?.id,
+    //     nombre: options[0]?.nombre
+    // })
 
-    const handleValue = (e, value, reason) => {
-        if (reason === 'selectOption') {
-            setValue(value)
-        } else if (reason === 'clear') {
-            setValue({ id: '', label: '' })
-        }
-    };
-    console.log(value)
+    // const handleValue = (e, value, reason) => {
+    //     if (reason === 'selectOption') {
+    //         setValue(value)
+    //     } else if (reason === 'clear') {
+    //         setValue({ id: '', label: '' })
+    //     }
+    // };
+    // console.log(value)
 
 
     useEffect(() => {
@@ -45,9 +45,31 @@ export default function MantenimientoUsuario() {
             .then(res => {
                 setUsuarios(res.data)
             })
-        setOptions(usuarios.map(u => ({ id: u?.id, nombre: u?.nombre })))
+        // setOptions(usuarios.map(u => ({ id: u?.id, user: u?.nombre + ' ' + u?.apellido })))
     }, [authUser, loading])
 
+
+    const usuariosOptions = usuarios.map((usuario, i) => ({
+        id: usuario.id,
+        label: usuario.nombre + ' ' + usuario.apellido
+
+    }))
+
+    const defaultOptions = {
+        options: usuariosOptions,
+        getOptionLabel: (options) => options.label,
+       
+    }
+
+    const [value, setValue] = useState({
+        id: "",
+        label: ""
+    })
+    const handleValue = (e) => {
+        setValue(e.target.value);
+
+    };
+    console.log('usuario:', value)
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
             <Link href={'/gestion/usuarios/nuevo'}>
@@ -56,14 +78,22 @@ export default function MantenimientoUsuario() {
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
             <Autocomplete
+
                 {...defaultOptions}
+                freeSolo
+                // isOptionEqualToValue={(option, value) => option.id === value.id}
                 multiple={false}
-                id="autocomplete-usuario"
+                id="controlled-demo"
                 value={value}
-                onChange={(e, newValue) => setValue(newValue)}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined" />}
+                onChange={(event, newValue) => {
+                    setValue(newValue)
+                }}
+                
+                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined"/>}
+
             />
+
+
 
             <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
