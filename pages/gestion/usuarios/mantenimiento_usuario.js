@@ -58,7 +58,7 @@ export default function MantenimientoUsuario() {
     const defaultOptions = {
         options: usuariosOptions,
         getOptionLabel: (options) => options.label,
-       
+
     }
 
     const [value, setValue] = useState({
@@ -78,7 +78,7 @@ export default function MantenimientoUsuario() {
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
             <Autocomplete
-
+                sx={{width: '200px'}}
                 {...defaultOptions}
                 freeSolo
                 // isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -88,8 +88,8 @@ export default function MantenimientoUsuario() {
                 onChange={(event, newValue) => {
                     setValue(newValue)
                 }}
-                
-                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined"/>}
+
+                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined" />}
 
             />
 
