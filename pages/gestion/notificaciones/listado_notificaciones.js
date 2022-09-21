@@ -72,52 +72,52 @@ export default function ListadoNotificaciones() {
                         value={value}
                         onChange={handleChange}
                         scrollButtons="auto"
-                        
-                   
-                        sx={{ borderRight: 1,  borderBottom: 1, borderColor: 'divider', width: '300px' }}
+
+
+                        sx={{ borderRight: 1, borderBottom: 1, borderColor: 'divider', width: '300px' }}
                     >
 
 
-                        <Tab 
-                        label="Item One"  {...a11yProps(0)}  
-                        sx={{  borderBottom: 1 ,  borderColor: 'divider'}}/>
-                 
-                        <Tab 
-                        label="Item Two" {...a11yProps(1)} 
-                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}
+                        <Tab
+                            label="Item One"  {...a11yProps(0)}
+                            sx={{ borderBottom: 1, borderColor: 'divider' }} />
+
+                        <Tab
+                            label="Item Two" {...a11yProps(1)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }}
                         />
-                      
-                        <Tab label="Item Three" {...a11yProps(2)} 
-                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
-                                         
-                        <Tab label="Item Four" {...a11yProps(3)} 
-                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
-                        <Tab label="Item Five" {...a11yProps(4)} 
-                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
-                 
-                        <Tab label="Item Six" {...a11yProps(5)} 
-                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
-                       
-                        <Tab label="Item Seven" {...a11yProps(6)} 
-                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
-                        <Tab label="Item Five" {...a11yProps(7)} 
-                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
-                    
-                        <Tab label="Item Six" {...a11yProps(8)} 
-                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
-               
-                        <Tab label="Item Seven" {...a11yProps(9)} 
-                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}/>
-             
-                        <Tab label="Item Five" {...a11yProps(10)} 
-                        sx={{borderBottom: 2 ,  borderColor: 'divider'}}/>
-       
-                        <Tab label="Item Six" {...a11yProps(11)} 
-                        sx={{ borderBottom: 2 ,  borderColor: 'divider'}}
+
+                        <Tab label="Item Three" {...a11yProps(2)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Four" {...a11yProps(3)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+                        <Tab label="Item Five" {...a11yProps(4)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Six" {...a11yProps(5)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Seven" {...a11yProps(6)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+                        <Tab label="Item Five" {...a11yProps(7)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Six" {...a11yProps(8)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Seven" {...a11yProps(9)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Five" {...a11yProps(10)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
+
+                        <Tab label="Item Six" {...a11yProps(11)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }}
                         />
-            
-                        <Tab label="Item Seven" {...a11yProps(12)} 
-                        sx={{  borderBottom: 2 ,  borderColor: 'divider'}}/>
+
+                        <Tab label="Item Seven" {...a11yProps(12)}
+                            sx={{ borderBottom: 2, borderColor: 'divider' }} />
 
                     </Tabs>
                     <TabPanel
@@ -196,10 +196,10 @@ export default function ListadoNotificaciones() {
 
                         </Grid>
                     </TabPanel>
-                    <TabPanel 
-                    value={value} 
-                    index={2}
-                    style={{ width: 680}}
+                    <TabPanel
+                        value={value}
+                        index={2}
+                        style={{ width: 680 }}
                     >
 
                         <Grid container spacing={2}>
@@ -235,40 +235,40 @@ export default function ListadoNotificaciones() {
                         </Grid>
                     </TabPanel>
                     <TabPanel value={value} index={3}
-                 style={{ width: 680}}
-                 >
+                        style={{ width: 680 }}
+                    >
 
-                     <Grid container spacing={2}>
-                         <Grid item xs={12} disablePadding>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} disablePadding>
 
-                         </Grid>
-                         <Grid item xs={12} disablePadding>
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
 
-                         </Grid>
-                         <Grid item xs={4} disablePadding>
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
 
-                         </Grid>
-                         <Grid item xs={4}>
+                            </Grid>
+                            <Grid item xs={4}>
 
-                             <h1 style={{ textAlign: 'justify' }}> Item Four</h1>
+                                <h1 style={{ textAlign: 'justify' }}> Item Four</h1>
 
 
 
-                         </Grid>
-                         <Grid item xs={4} disablePadding>
+                            </Grid>
+                            <Grid item xs={4} disablePadding>
 
-                         </Grid>
+                            </Grid>
 
-                         <Grid item disablePadding xs={12}>
-                             <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
-                         </Grid>
-                         <Grid item xs={12} disablePadding>
-                             <h3>
-                                 Atte. Direccion
-                             </h3>
-                         </Grid>
+                            <Grid item disablePadding xs={12}>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                            </Grid>
+                            <Grid item xs={12} disablePadding>
+                                <h3>
+                                    Atte. Direccion
+                                </h3>
+                            </Grid>
 
-                     </Grid>
+                        </Grid>
                     </TabPanel>
                     <TabPanel value={value} index={4}>
                         Item Five
@@ -285,48 +285,6 @@ export default function ListadoNotificaciones() {
 
 
             </Container  >
-
-            <Container style={{ marginTop: 200 }}>
-                <Card
-                    sx={{ maxWidth: 300, maxHeight: 450 }}
-                    className={`${styles.card}`}
-
-                >
-
-                    <div style={{ position: 'relative', backgroundColor: 'blue' }}>
-
-                        <div className={` ${styles.overflow}`} >
-                            <CardMedia
-                                className={`${styles.card_img_top}`}
-                                component="img"
-                                height="300"
-                                image="https://v4.mui.com/static/images/cards/contemplative-reptile.jpg"
-                                alt="green iguana"
-
-                            />
-                            <a href="#/" style={{ position: 'absolute', left: 250, bottom: 235, }} >
-                                <IconButton  >
-                                    <Edit style={{ color: 'lightcyan', fontSize: '27px' }} />
-                                </IconButton>
-                            </a>
-                        </div>
-                    </div>
-                    <CardContent  >
-                        <Typography gutterBottom variant="h5" component="div">
-                            Lizard
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                            species, ranging across all continents except Antarctica
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="big">Mas info.</Button>
-
-                    </CardActions>
-                </Card>
-            </Container>
-
 
         </Layout >
     );
