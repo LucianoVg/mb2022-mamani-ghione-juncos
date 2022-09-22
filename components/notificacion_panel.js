@@ -13,6 +13,7 @@ import Popover from '@mui/material/Popover';
 
 export const Notificacion = () => {
 
+    
     const [listNotificaciones, setListNotificaciones] = useState()
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -31,7 +32,7 @@ export const Notificacion = () => {
 
     useEffect(() => {
         ListarNotificacion()
-
+    
         // filtros()
     }, [])
 
@@ -53,7 +54,7 @@ export const Notificacion = () => {
                     <IconButton onClick={handleClick}>
                         <Badge
 
-                            aria-describedby={id} variant="contained"
+                            aria-describedby={id} variant="contained" 
                             badgeContent={5}
 
                             color="info"
@@ -86,7 +87,7 @@ export const Notificacion = () => {
                 >
                     {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
                     <List>
-                        {
+                    {
                             listNotificaciones && listNotificaciones.map((n, i) => (
                                 <ListItem key={i}disablePadding>
                                     <ListItemButton component="a" href="#simple-list">
@@ -95,7 +96,15 @@ export const Notificacion = () => {
                                 </ListItem>
                             ))
                         }
-
+                    <ListItem disablePadding>
+                            <ListItemButton component="a" href="#simple-list" >
+                                <ListItemText>
+                                  <div style={{textAlign: 'center'}}>
+                                      <strong> Ver todo</strong>
+                                  </div>
+                                </ListItemText>
+                            </ListItemButton>
+                        </ListItem>
                     </List>
 
                 </Popover>

@@ -148,7 +148,7 @@ export default function ListadoNotificaciones() {
                             </Grid>
 
                             <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
                             </Grid>
                             <Grid item xs={12} disablePadding>
                                 <h3>
@@ -186,7 +186,7 @@ export default function ListadoNotificaciones() {
                             </Grid>
 
                             <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
                             </Grid>
                             <Grid item xs={12} disablePadding>
                                 <h3>
@@ -224,7 +224,7 @@ export default function ListadoNotificaciones() {
                             </Grid>
 
                             <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
                             </Grid>
                             <Grid item xs={12} disablePadding>
                                 <h3>
@@ -260,7 +260,7 @@ export default function ListadoNotificaciones() {
                             </Grid>
 
                             <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
                             </Grid>
                             <Grid item xs={12} disablePadding>
                                 <h3>
