@@ -61,12 +61,14 @@ export default function MantenimientoUsuario() {
 
     }
 
-    const [value, setValue] = useState({
-        id: "",
-        label: ""
-    })
-    const handleValue = (e) => {
-        setValue(e.target.value);
+    const [value, setValue] = useState(null)
+    // const [value, setValue] = useState({
+    //     id:'',
+    //     label: ''
+
+    // })
+    const handleValue = (e, newValue) => {
+        setValue(newValue)
 
     };
     console.log('usuario:', value)
@@ -78,16 +80,14 @@ export default function MantenimientoUsuario() {
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
             <Autocomplete
-                sx={{width: '200px'}}
+                sx={{ width: '200px' }}
                 {...defaultOptions}
                 freeSolo
                 // isOptionEqualToValue={(option, value) => option.id === value.id}
                 multiple={false}
                 id="controlled-demo"
                 value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue)
-                }}
+                onChange={handleValue}
 
                 renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined" />}
 
