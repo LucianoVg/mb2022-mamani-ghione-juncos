@@ -9,6 +9,8 @@ import theme from "../src/theme";
 import Notificacion from '../components/notificacion_panel'
 import { Container } from "@mui/system";
 
+
+
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -27,8 +29,10 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
+
 export const Navbar = ({ toggleDrawer, open }) => {
     const { loading, authUser } = useAuth()
+
     return (
         <>
             <AppBar position="absolute" open={open}>
@@ -63,17 +67,17 @@ export const Navbar = ({ toggleDrawer, open }) => {
                         Institucional
                     </Typography>
 
-                 
-                            <div style={{alignContent: 'right', marginLeft: '-30px' , marginRight: '-20px'}} >
-                                <Notificacion disablePadding/>
-                            </div>
-               
+
+                    <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
+                        <Notificacion disablePadding />
+                    </div>
+
                     {
                         !loading && authUser && (
                             <AccountCircleIcon />
                         )
                     }
-                   
+
                 </Toolbar>
             </AppBar>
         </>

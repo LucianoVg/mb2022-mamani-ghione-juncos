@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import axios from "axios";
 
 import { CircularProgress } from "@mui/material";
 import { Box, Button, Tooltip, IconButton, Container, Badge, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
@@ -11,6 +12,8 @@ import Popover from '@mui/material/Popover';
 
 
 export const Notificacion = () => {
+
+    const [listNotificaciones, setListNotificaciones] = useState()
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -26,6 +29,21 @@ export const Notificacion = () => {
     const id = open ? 'simple-popover' : undefined;
 
 
+    useEffect(() => {
+        ListarNotificacion()
+
+        // filtros()
+    }, [])
+
+    const ListarNotificacion = () => {
+        axios.get(`http://localhost:3000/api/gestion/notificaciones/`)
+            .then(res => {
+                console.log(res.data);
+                setListNotificaciones(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
     return (
         <Container>
 
@@ -35,7 +53,7 @@ export const Notificacion = () => {
                     <IconButton onClick={handleClick}>
                         <Badge
 
-                            aria-describedby={id} variant="contained" 
+                            aria-describedby={id} variant="contained"
                             badgeContent={5}
 
                             color="info"
@@ -68,31 +86,16 @@ export const Notificacion = () => {
                 >
                     {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
                     <List>
-                        <ListItem disablePadding>
-                            <ListItemButton component="a" href="#simple-list">
-                                <ListItemText primary="Trash" />
-                            </ListItemButton>
-                        </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemButton component="a" href="#simple-list">
-                                <ListItemText primary="Spam" />
-                            </ListItemButton>
-                        </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemButton component="a" href="#simple-list" >
-                                <ListItemText primary="Asueto Docente" />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                        <ListItem disablePadding>
-                            <ListItemButton component="a" href="#simple-list" >
-                                <ListItemText>
-                                  <div style={{textAlign: 'center'}}>
-                                      <strong> Ver todo</strong>
-                                  </div>
-                                </ListItemText>
-                            </ListItemButton>
-                        </ListItem>
+                        {
+                            listNotificaciones && listNotificaciones.map((n, i) => (
+                                <ListItem key={i}disablePadding>
+                                    <ListItemButton component="a" href="#simple-list">
+                                        <ListItemText primary={n.asunto} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))
+                        }
+
                     </List>
 
                 </Popover>

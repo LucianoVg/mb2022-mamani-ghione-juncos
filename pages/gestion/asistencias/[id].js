@@ -80,12 +80,12 @@ const DetalleAsistencia = () => {
                            } */}
                                 <div className='hstack gap-2  '>
                                     <div className="form-group col-md-3  " >
-                                        <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Alumno</strong></label>
+                                        <label  style={{ fontSize: "25px" }}><strong>Alumno</strong></label>
                                         <p style={{ fontSize: "20px" }}>{a.alumnoXcursoXdivision?.usuario?.apellido} {a.alumnoXcursoXdivision?.usuario?.nombre}</p>
 
                                     </div>
                                     <div className="form-group col-md-6  " >
-                                        <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Curso</strong></label>
+                                        <label  style={{ fontSize: "25px" }}><strong>Curso</strong></label>
                                         <p style={{ fontSize: "20px" }}>{a.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {a.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</p>
 
                                     </div>
@@ -117,7 +117,7 @@ const DetalleAsistencia = () => {
                                 </div>
                                 <div className='hstack gap-3 mt-4'>
                                     <div className="form-group col-md-3  " style={{ float: 'right' }}>
-                                        <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Asistencia actual</strong></label>
+                                        <label style={{ fontSize: "25px" }}><strong>Asistencia actual</strong></label>
 
                                         {
                                             a.presente && 1 ? (
@@ -159,21 +159,21 @@ const DetalleAsistencia = () => {
 
                                     </div>
                                     <div className="form-group col-md-2  " >
-                                        <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Creado en: </strong></label>
+                                        <label  style={{ fontSize: "25px" }}><strong>Creado en: </strong></label>
                                         <p style={{ fontSize: "20px" }}>{new Date(a.creadoEn).toLocaleDateString('en-GB')}</p>
 
                                     </div>
                                     {
                                         a.actualizadoEn != null ? (
                                             <div className="form-group col-md-2  " >
-                                                <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
+                                                <label  style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
                                                 <p style={{ fontSize: "20px" }}>{new Date(a.actualizadoEn).toLocaleDateString('en-GB')}</p>
 
                                             </div>
                                         ) :
                                             (
                                                 <div className="form-group col-md-4  " >
-                                                    <label for="exampleInputEmail1" style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
+                                                    <label  style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
                                                     <p style={{ fontSize: "20px" }}>--/--/----</p>
 
                                                 </div>

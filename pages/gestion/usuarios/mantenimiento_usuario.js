@@ -57,7 +57,7 @@ export default function MantenimientoUsuario() {
 
     const defaultOptions = {
         options: usuariosOptions,
-        getOptionLabel: (options) => options.label,
+        getOptionLabel: (option) => option.label,
 
     }
 
