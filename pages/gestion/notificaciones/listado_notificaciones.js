@@ -1,9 +1,13 @@
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, Tab, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { Layout } from "../../../components/layout";
 import Divider from '@mui/material/Divider';
 import PropTypes from 'prop-types';
 
+import Tabs, { tabsClasses } from '@mui/material/Tabs';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+// import TabPanel from '@mui/lab/TabPanel';
 
 import { useEffect, useState } from 'react'
 
@@ -54,9 +58,13 @@ export default function ListadoNotificaciones() {
         setValue(newValue);
     };
 
+
+
+
     return (
         <Layout>
             <Container >
+
 
                 <Box
                     // style={{ po}}
@@ -123,40 +131,21 @@ export default function ListadoNotificaciones() {
                     <TabPanel
                         value={value}
                         index={0}
-                        style={{ width: 680 }}
+                        style={{ width: '680px'}}
+                        container="true"
                     >
 
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} disablePadding>
+                        <Box  style={{height: '550px' }}>
+                            <div>
+                                <h1 style={{ textAlign: 'center' }}> Item One</h1>
 
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
-
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-                            <Grid item xs={4}>
-
-                                <h1 style={{ textAlign: 'justify' }}> Item One</h1>
-
-
-
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-
-                            <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
                                 <h3>
                                     Atte. Direccion
                                 </h3>
-                            </Grid>
+                            </div>
+                        </Box>
 
-                        </Grid>
 
                     </TabPanel>
                     <TabPanel value={value}
@@ -164,37 +153,17 @@ export default function ListadoNotificaciones() {
                         style={{ width: 680 }}
                     >
 
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} disablePadding>
 
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                        <Box>
+                            <div>
+                                <h1 style={{ textAlign: 'center' }}> Item Two</h1>
 
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-                            <Grid item xs={4}>
-
-                                <h1 style={{ textAlign: 'justify' }}> Item Two</h1>
-
-
-
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-
-                            <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
                                 <h3>
                                     Atte. Direccion
                                 </h3>
-                            </Grid>
-
-                        </Grid>
+                            </div>
+                        </Box>
                     </TabPanel>
                     <TabPanel
                         value={value}
@@ -202,73 +171,33 @@ export default function ListadoNotificaciones() {
                         style={{ width: 680 }}
                     >
 
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} disablePadding>
 
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                        <Box>
+                            <div>
+                                <h1 style={{ textAlign: 'center' }}> Item Three</h1>
 
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-                            <Grid item xs={4}>
-
-                                <h1 style={{ textAlign: 'justify' }}> Item Three</h1>
-
-
-
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-
-                            <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
                                 <h3>
                                     Atte. Direccion
                                 </h3>
-                            </Grid>
-
-                        </Grid>
+                            </div>
+                        </Box>
                     </TabPanel>
                     <TabPanel value={value} index={3}
                         style={{ width: 680 }}
                     >
 
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} disablePadding>
 
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                        <Box>
+                            <div>
+                                <h1 style={{ textAlign: 'center' }}> Item Four</h1>
 
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-                            <Grid item xs={4}>
-
-                                <h1 style={{ textAlign: 'justify' }}> Item Four</h1>
-
-
-
-                            </Grid>
-                            <Grid item xs={4} disablePadding>
-
-                            </Grid>
-
-                            <Grid item disablePadding xs={12}>
-                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</h3>
-                            </Grid>
-                            <Grid item xs={12} disablePadding>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
                                 <h3>
                                     Atte. Direccion
                                 </h3>
-                            </Grid>
-
-                        </Grid>
+                            </div>
+                        </Box>
                     </TabPanel>
                     <TabPanel value={value} index={4}>
                         Item Five

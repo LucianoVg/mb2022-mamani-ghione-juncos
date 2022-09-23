@@ -81,7 +81,7 @@ export const Notificacion = () => {
                         horizontal: 'right',
                     }}
                     PaperProps={{
-                        style: { width: '20%' },
+                        style: { width: '320px' },
                     }}
 
                 >
