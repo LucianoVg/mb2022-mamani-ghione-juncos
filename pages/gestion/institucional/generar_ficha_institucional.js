@@ -47,7 +47,7 @@ const FichaInstitucional = () => {
 
         fichaInstitucional.idUsuario = usuario.id
 
-        axios.post(`${process.env.BASE_URL}/gestion/institucional`, {
+        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`, {
             nombreInstitucion: fichaInstitucional.nombreInstitucion,
             ubicacion: fichaInstitucional.ubicacion,
             tipoInstitucion: fichaInstitucional.tipoInstitucion,
@@ -61,7 +61,7 @@ const FichaInstitucional = () => {
         }).then(res => {
             console.log(res.data);
             fichaInstitucional.portadasFicha.map(p => {
-                axios.post(`${process.env.BASE_URL}/gestion/portadas`, {
+                axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas`, {
                     nombre: p.name,
                     url: p.url,
                     fichaInstitucionalId: res.data.id

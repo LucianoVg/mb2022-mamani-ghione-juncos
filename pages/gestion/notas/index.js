@@ -46,7 +46,7 @@ export default function Notas() {
             })
     }
     const listarMaterias = () => {
-        axios.get(`http://localhost:3000/api/gestion/notas/materias`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/materias`)
             .then(res => {
                 console.log(res.data);
                 setMaterias(res.data)

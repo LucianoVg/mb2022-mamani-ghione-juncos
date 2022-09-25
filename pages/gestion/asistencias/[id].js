@@ -5,26 +5,26 @@ import { Layout } from '../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
 
-const DetalleAsistencia = () => {
+const DetalleAsistencia = ({ aData }) => {
     const router = useRouter()
     const { loading, authUser } = useAuth()
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        listarAsistencias()
+        setAsistencias(aData)
     }, [loading, authUser])
     const { id } = router.query
     const [asistencias, setAsistencias] = useState([])
-    const listarAsistencias = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
-            .then(res => {
-                console.log(res.data);
-                setAsistencias(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-    }
+    // const listarAsistencias = () => {
+    //     axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
+    //         .then(res => {
+    //             console.log(res.data);
+    //             setAsistencias(res.data)
+    //         }).catch(err => {
+    //             console.error(err);
+    //         })
+    // }
 
     const mostrarAsistencia = (a) => {
         return (

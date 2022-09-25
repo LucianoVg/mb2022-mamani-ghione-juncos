@@ -23,7 +23,7 @@ export default function EditarFicha() {
     const guardarFicha = (e) => {
         e.preventDefault()
 
-        axios.put(`${process.env.BASE_URL}/gestion/institucional/${ficha.id}`, {
+        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${ficha.id}`, {
             nombreInstitucion: ficha.nombreInstitucion,
             ubicacion: ficha.ubicacion,
             tipoInstitucion: ficha.tipoInstitucion,
@@ -38,7 +38,7 @@ export default function EditarFicha() {
             console.log(res.data);
             ficha.portadasFicha.map(p => {
                 if (p.id) {
-                    axios.put(`${process.env.BASE_URL}/gestion/portadas/${p.id}`, {
+                    axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas/${p.id}`, {
                         nombre: p.nombre,
                         url: p.url,
                         fichaInstitucionalId: p.fichaInstitucionalId
@@ -48,7 +48,7 @@ export default function EditarFicha() {
                         console.log(err);
                     })
                 } else {
-                    axios.post(`${process.env.BASE_URL}/gestion/portadas`, {
+                    axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas`, {
                         nombre: p.nombre,
                         url: p.url,
                         fichaInstitucionalId: p.fichaInstitucionalId

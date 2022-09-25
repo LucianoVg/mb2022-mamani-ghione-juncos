@@ -14,13 +14,13 @@ import DownloadIcon from '@mui/icons-material/Download';
 import styles from "../../../styles/tarjetaNoticias.module.css";
 
 const MaterialEstudio = () => {
-    const [curso, setCurso] = useState('Curso');
+    const [curso, setCurso] = useState('');
 
     const handleCurso = (e) => {
         setCurso(e.target.value);
     };
 
-    const [materia, setMateria] = useState('Curso');
+    const [materia, setMateria] = useState('');
 
     const handleMateria = (e) => {
         setMateria(e.target.value);
@@ -220,18 +220,18 @@ const MaterialEstudio = () => {
                             </Stack>
 
                         </Grid>
-                   </Grid>
-            </Box>
+                    </Grid>
+                </Box>
 
-            <Box mt={2}>
-            <Button variant="contained" color="primary">
-                Guardar
-            </Button>
+                <Box mt={2}>
+                    <Button variant="contained" color="primary">
+                        Guardar
+                    </Button>
 
-            </Box>
+                </Box>
 
 
-        </Container>
+            </Container>
 
 
         </Layout >

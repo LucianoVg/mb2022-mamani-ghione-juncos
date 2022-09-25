@@ -66,7 +66,7 @@ export default function DetallesNoticia() {
 
     const borrarNoticia = () => {
         if (confirm("Está seguro que desea eliminar la noticia?")) {
-            axios.delete(`${process.env.BASE_URL}/gestion/noticias_novedades/${noticia.id}`).then(res => {
+            axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`).then(res => {
                 console.log(res.data);
                 router.push('/')
             })

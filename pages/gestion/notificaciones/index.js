@@ -55,7 +55,7 @@ const Notificaciones = () => {
             })
     }
     const ListarNotificacion = () => {
-        axios.get(`http://localhost:3000/api/gestion/notificaciones/`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/`)
             .then(res => {
                 console.log(res.data);
                 setListNotificaciones(res.data)
@@ -66,11 +66,11 @@ const Notificaciones = () => {
     const CrearNotificacion = (e) => {
         e.preventDefault()
         console.log(notificacion);
-        console.log({ fecha: new Date().toLocaleDateString('en-GB') })
+        console.log({ fecha: new Date().toISOString() })
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
             asunto: notificacion.asunto,
             contenido: notificacion.contenido,
-            fecha: new Date().toLocaleDateString('en-GB')
+            fecha: new Date().toISOString()
         }).then(res => {
             if (res.data) {
                 router.push('/gestion/notificaciones')
@@ -79,7 +79,7 @@ const Notificaciones = () => {
             console.error(err);
         })
     }
-  
+
 
     return (
         <Layout title='Enviar Notificaciones'>
