@@ -8,12 +8,13 @@ import Divider from '@mui/material/Divider';
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Popover from '@mui/material/Popover';
+import { useAuth } from './context/authUserProvider';
 
 
 
 export const Notificacion = () => {
+    const { loading, authUser } = useAuth()
 
-    
     const [listNotificaciones, setListNotificaciones] = useState()
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -31,13 +32,14 @@ export const Notificacion = () => {
 
 
     useEffect(() => {
-        ListarNotificacion()
-    
+        if (!loading && authUser) {
+            ListarNotificacion()
+        }
         // filtros()
     }, [])
 
     const ListarNotificacion = () => {
-        axios.get(`http://localhost:3000/api/gestion/notificaciones/`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`)
             .then(res => {
                 console.log(res.data);
                 setListNotificaciones(res.data)
@@ -54,7 +56,7 @@ export const Notificacion = () => {
                     <IconButton onClick={handleClick}>
                         <Badge
 
-                            aria-describedby={id} variant="contained" 
+                            aria-describedby={id} variant="contained"
                             badgeContent={5}
 
                             color="info"
@@ -87,21 +89,21 @@ export const Notificacion = () => {
                 >
                     {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
                     <List>
-                    {
+                        {
                             listNotificaciones && listNotificaciones.map((n, i) => (
-                                <ListItem key={i}disablePadding>
+                                <ListItem key={i} disablePadding>
                                     <ListItemButton component="a" href="#simple-list">
                                         <ListItemText primary={n.asunto} />
                                     </ListItemButton>
                                 </ListItem>
                             ))
                         }
-                    <ListItem disablePadding>
+                        <ListItem disablePadding>
                             <ListItemButton component="a" href="#simple-list" >
                                 <ListItemText>
-                                  <div style={{textAlign: 'center'}}>
-                                      <strong> Ver todo</strong>
-                                  </div>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <strong> Ver todo</strong>
+                                    </div>
                                 </ListItemText>
                             </ListItemButton>
                         </ListItem>
