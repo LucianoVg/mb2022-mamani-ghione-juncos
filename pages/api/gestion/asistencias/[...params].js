@@ -43,18 +43,7 @@ export default async function handler(
 
         return res.status(200).json(asistencias)
     } catch (error) {
+        console.error(error);
         return res.status(200).json({ mensaje: error.message })
     }
 }
-
-// export default async function handler(
-//     req,
-//     res
-// ) {
-//     try {
-//         const cursos = await TraerAsistencias()
-//         return res.status(200).json(cursos)
-//     } catch (error) {
-//         return res.status(200).json({ mensaje: error.message })
-//     }
-// }
