@@ -18,58 +18,77 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
     console.log(`Nombre: ${alumno.split(' ')[0]}`, `Apellido: ${alumno.split(' ')[1]}`, `Curso: ${curso}`, `Documento: ${documento}`, `Fecha: ${fecha}`);
 
     try {
-        const asistencias = await prisma.asistencia.findMany({
-            include: {
-                usuario: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
+        const asistencias = curso.length && documento.length
+            && alumno.length ? await prisma.asistencia.findMany({
+                include: {
+                    usuario: true,
+                    alumnoXcursoXdivision: {
+                        include: {
+                            usuario: true,
+                            cursoXdivision: true
+                        }
                     }
+
+                },
+                where: {
+                    AND: [
+                        curso.length &&
+                        {
+                            alumnoXcursoXdivision: {
+                                idCursoXdivision: curso
+                            }
+                        },
+                        alumno.split(' ').length &&
+                        {
+                            alumnoXcursoXdivision: {
+                                usuario: {
+                                    nombre: {
+                                        startsWith: alumno.split(' ')[0]
+                                    }
+                                }
+                            },
+                        },
+                        alumno.split(' ').length &&
+                        {
+                            alumnoXcursoXdivision: {
+                                usuario: {
+                                    apellido: {
+                                        endsWith: alumno.split(' ')[1]
+                                    }
+                                }
+                            },
+                        },
+                        documento.length &&
+                        {
+                            alumnoXcursoXdivision: {
+                                usuario: {
+                                    legajo: {
+                                        contains: documento
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            creadoEn: fecha
+                        }
+                    ]
                 }
-
-            },
-
-            where: {
-                AND: [
-                    {
-                        alumnoXcursoXdivision: {
-                            idCursoXdivision: curso
+            }) : await prisma.asistencia.findMany({
+                include: {
+                    usuario: true,
+                    alumnoXcursoXdivision: {
+                        include: {
+                            usuario: true,
+                            cursoXdivision: true
                         }
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                nombre: {
-                                    startsWith: alumno.split(' ').length && alumno.split(' ')[0]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                apellido: {
-                                    endsWith: alumno.split(' ').length && alumno.split(' ')[1]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                legajo: {
-                                    contains: documento
-                                }
-                            }
-                        }
-                    },
-                    {
-                        creadoEn: fecha
                     }
-                ]
-            }
-        })
+
+                },
+                where: {
+                    creadoEn: fecha
+                }
+            })
+
         console.log(asistencias);
         return asistencias
     } catch (error) {

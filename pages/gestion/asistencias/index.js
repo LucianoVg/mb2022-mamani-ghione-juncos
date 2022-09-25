@@ -34,7 +34,7 @@ export default function Asistencias({ cData }) {
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
     const [alumno, setAlumno] = useState("")
-    const [fecha, setFecha] = useState(new Date().toISOString())
+    const [fecha, setFecha] = useState(new Date().toUTCString())
     const [cursos, setCursos] = useState()
     const [idCurso, setIdCurso] = useState("")
     const { loading, authUser } = useAuth()
@@ -75,7 +75,7 @@ export default function Asistencias({ cData }) {
         setDocumento(e.target.value)
     }
     const handleFecha = (value) => {
-        setFecha(value || new Date().toISOString())
+        setFecha(value || new Date().toUTCString())
     }
 
     const bloquearCheck = (a) => {
@@ -225,7 +225,6 @@ export default function Asistencias({ cData }) {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={idCurso}
-                                defaultValue={cursos && cursos[0]?.id}
                                 name="idCurso"
                                 label="Curso"
                                 onChange={handleCurso}
