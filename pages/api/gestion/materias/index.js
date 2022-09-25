@@ -1,7 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors/dist";
-import { TraerNotas } from "../../../../servicios/notas";
-import { ListarMaterias } from "../../../../servicios/notas";
+import { ListarMaterias } from "../../../../servicios/materias";
 export default async function handler(
     req,
     res

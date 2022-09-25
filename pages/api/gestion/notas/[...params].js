@@ -19,13 +19,27 @@ export default async function handler(
             alumno: '',
             idCurso: ''
         }
-        queryParams.idTrimestre = params[0]
-        queryParams.idMateria = params[1]
-        queryParams.idCurso = params[2]
-
-        if (params.length > 3) {
-            queryParams.alumno = params[2]
-            queryParams.idCurso = params[3]
+        if (params) {
+            switch (params.length) {
+                case 1:
+                    queryParams.idTrimestre = params[0]
+                    break;
+                case 2:
+                    queryParams.idTrimestre = params[0]
+                    queryParams.idMateria = params[1]
+                    break;
+                case 3:
+                    queryParams.idTrimestre = params[0]
+                    queryParams.idMateria = params[1]
+                    queryParams.idCurso = params[2]
+                    break;
+                case 4:
+                    queryParams.idTrimestre = params[0]
+                    queryParams.idMateria = params[1]
+                    queryParams.idCurso = params[2]
+                    queryParams.alumno = params[3]
+                    break;
+            }
         }
 
         console.log(queryParams);

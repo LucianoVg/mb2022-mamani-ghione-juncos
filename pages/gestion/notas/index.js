@@ -5,22 +5,20 @@ import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
 import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 
-export default function Notas() {
+export default function Notas({ cursos, materias, trimestres }) {
     const [notas, setNotas] = useState()
 
-    const [idMateria, setIdMateria] = useState("")
-    const [idCurso, setIdCurso] = useState("")
+    const [materia, setMateria] = useState({ id: "" })
+    const [curso, setCurso] = useState({ id: "" })
 
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [alumno, setAlumno] = useState("")
 
-    const [materias, setMaterias] = useState()
-    const [cursos, setCursos] = useState()
     const [nota, setNota] = useState(1);
 
     const [columnName, setColumnName] = useState("");
-    const [trimestre, setTrimestre] = useState(1)
+    const [trimestre, setTrimestre] = useState({ id: '' })
     const [index, setIndex] = useState(0)
 
     const [inEditMode, setInEditMode] = useState({
@@ -29,40 +27,21 @@ export default function Notas() {
     });
 
     useEffect(() => {
-        defaultTrimestre()
-        listarMaterias()
-        listarCursos()
-        // filtros()
-    }, [trimestre, idMateria, alumno, idCurso])
-
-
-    const listarCursos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
-            .then(res => {
-                console.log(res.data);
-                setCursos(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-    }
-    const listarMaterias = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/materias`)
-            .then(res => {
-                console.log(res.data);
-                setMaterias(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-    }
+        setTrimestre({ id: trimestres[0]?.id })
+        setCurso({ id: cursos[0]?.id })
+        setMateria({ id: materias[0]?.id })
+        if (trimestre || curso || materia) {
+            defaultTrimestre()
+        }
+    }, [trimestre.id, materia.id, alumno, curso.id])
 
     const handleMateria = (e) => {
-        setIdMateria(e.target.value)
-        console.log(idMateria);
+        setMateria({ id: e.target.value })
         defaultTrimestre()
     }
 
     const handleCurso = (e) => {
-        setIdCurso(e.target.value)
+        setCurso({ id: e.target.value })
         defaultTrimestre()
     }
     const handleNombreAlumno = (e) => {
@@ -77,19 +56,19 @@ export default function Notas() {
         defaultTrimestre()
     }
 
+    const handleTrimestre = (e, value) => {
+        setIndex(value)
+        setTrimestre({ id: trimestres[value].id })
+        defaultTrimestre()
+    }
+
     const defaultTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre}/${idMateria}/${alumno}/${idCurso}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.id}/${materia.id}/${alumno}/${curso.id}`)
             .then(res => {
                 setNotas(res.data)
             }).catch(err => {
                 console.error(err);
             })
-    }
-
-    const handleTrimestre = (e, value) => {
-        setIndex(value)
-        setTrimestre(value + 1)
-        defaultTrimestre()
     }
 
     const onEdit = (id) => {
@@ -150,7 +129,7 @@ export default function Notas() {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                        <Select fullWidth id="inputMateria" name="idMateria" value={idMateria} onChange={handleMateria} >
+                        <Select fullWidth id="inputMateria" value={materia.id} onChange={handleMateria} >
                             {
                                 materias && materias?.map((m, i) => (
 
@@ -159,7 +138,7 @@ export default function Notas() {
                             }
                         </Select>
                         <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                        <Select fullWidth id="inputCurso" name="idCurso" value={idCurso} onChange={handleCurso} >
+                        <Select fullWidth id="inputCurso" value={curso.id} onChange={handleCurso} >
                             {
                                 cursos && cursos?.map((c, i) => (
 
@@ -213,7 +192,7 @@ export default function Notas() {
                                 notas && notas?.map((n, i) => (
                                     <TableRow key={i}>
                                         <TableCell align="left">
-                                            {n.alumnoXcursoXdivision?.usuario?.dni}
+                                            {n.alumnoXcursoXdivision?.usuario?.legajo}
                                         </TableCell>
                                         <TableCell align="left">
                                             {n.alumnoXcursoXdivision?.usuario?.sexo}
@@ -364,5 +343,26 @@ export default function Notas() {
 
     );
 
+}
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps = async (ctx) => {
+    const cRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+    const cursos = cRes.data
+
+    const mRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+    const materias = mRes.data
+
+    const tRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`)
+    const trimestres = tRes.data
+
+    return {
+        props: {
+            trimestres,
+            materias,
+            cursos
+        }
+    }
 }
 

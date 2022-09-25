@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors/dist";
-import { Prisma } from "../../../servicios/prisma";
+import { Prisma } from "../../../../servicios/prisma";
 
 export default async function handler(
     req,

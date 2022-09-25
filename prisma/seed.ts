@@ -6,6 +6,7 @@ import { asistencias } from './seeds/asistencias';
 // import { cursos } from './seeds/cursos';
 import { ficha } from './seeds/ficha';
 import { menus } from './seeds/menus';
+import { notas } from './seeds/notas';
 import { noticias } from './seeds/noticias';
 import { tiposSancion } from './seeds/tiposSancion';
 import { trimestres } from './seeds/trimestres';
@@ -13,22 +14,22 @@ import { trimestres } from './seeds/trimestres';
 const prisma = new PrismaClient();
 
 async function main() {
-    asistencias.map(async (a) => {
-        const asistencia = await prisma.asistencia.create({
+    notas.map(async (n) => {
+        const nota = await prisma.nota.create({
             data: {
-                creadoEn: a.creadaEn,
-                idAlumnoXcursoXdivision: a.idAlumno,
-                presente: a.presente,
-                ausente: a.ausente,
-                llegadaTarde: a.llegadaTarde,
-                mediaFalta: a.mediaFalta,
-                mediaFaltaJustificada: a.mediaFaltaJustificada,
-                ausenteJustificado: a.ausenteJustificado,
-                llegadaTardeJustificada: a.llegadaTardeJustificada,
-                idUsuario: a.idUsuario
+                idAlumnoXcursoXdivision: n.idAlumno,
+                idMateria: n.idMateria,
+                idTrimestre: n.idTrimestre,
+                idUsuario: n.idUsuario,
+                nota1: n.nota1,
+                nota2: n.nota2,
+                nota3: n.nota3,
+                nota4: n.nota4,
+                nota5: n.nota5,
+                fecha: n.fecha
             }
         })
-        console.log(asistencia);
+        console.log(nota);
     })
 }
 

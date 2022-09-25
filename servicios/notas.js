@@ -1,147 +1,141 @@
-import { PrismaClient } from "prisma/prisma-client";
-
-const prisma = new PrismaClient()
-
-export async function ListarCurso() {
-
-    const cursos = await prisma.cursoXdivision.findMany({
-        include: {
-            curso: true,
-            division: true
-        }
-    })
-
-    return cursos
-}
+import { Prisma } from "./prisma";
 
 
 
-export async function ListarMaterias() {
+export async function TraerNotas(idTrimestre = "", idMateria = "", alumno = "", curso = "") {
+    try {
+        const notas = idTrimestre.length && idMateria.length && curso.length && alumno.length ? await Prisma.newPrisma().nota.findMany({
+            include: {
+                materia: true,
+                trimestre: true,
+                alumnoXcursoXdivision: {
+                    include: {
+                        usuario: true,
+                        cursoXdivision: true
+                    }
+                }
 
-    const materias = await prisma.materia.findMany()
-
-    return materias
-}
-
-
-
-export async function TraerNotas(idTrimestre, idMateria, alumno, curso) {
-
-    const notas = await prisma.nota.findMany({
-        include: {
-            materia: true,
-            trimestre: true,
-            alumnoXcursoXdivision: {
-                include: {
-                    usuario: true,
-                    cursoXdivision: true
+            },
+            where: {
+                OR: [
+                    { idTrimestre: idTrimestre },
+                    { idMateria: idMateria },
+                    {
+                        alumnoXcursoXdivision: {
+                            cursoXdivision: {
+                                id: curso
+                            }
+                        }
+                    },
+                    {
+                        alumnoXcursoXdivision: {
+                            usuario: {
+                                nombre: {
+                                    startsWith: alumno.split(' ')[0]
+                                }
+                            }
+                        },
+                    },
+                    {
+                        alumnoXcursoXdivision: {
+                            usuario: {
+                                apellido: {
+                                    startsWith: alumno.split(' ')[1]
+                                }
+                            }
+                        },
+                    }
+                ]
+            }
+        }) : await Prisma.newPrisma().nota.findMany({
+            include: {
+                materia: true,
+                trimestre: true,
+                alumnoXcursoXdivision: {
+                    include: {
+                        usuario: true,
+                        cursoXdivision: true
+                    }
                 }
             }
-
-        },
-        where: {
-            AND: [
-                { idTrimestre: idTrimestre },
-                { idMateria: idMateria },
-                {
-                    alumnoXcursoXdivision: {
-                        cursoXdivision: {
-                            id: curso
-                        }
-                    }
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            nombre: {
-                                startsWith: alumno.split(' ')[0]
-                            }
-                        }
-                    },
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            apellido: {
-                                startsWith: alumno.split(' ')[1]
-                            }
-                        }
-                    },
-                }
-            ]
-        }
-    })
-    console.log(notas);
-    return notas
+        })
+        return notas
+    } catch (error) {
+        console.error(error);
+    } finally {
+        Prisma.disconnect()
+    }
 }
 
 export async function updateNota(idNota, notaNueva, columnName) {
 
-    switch (columnName) {
-        case 'nota1':
-            const newNota1 = await prisma.nota.update({
-                data: {
-                    nota1: notaNueva
+    try {
+        switch (columnName) {
+            case 'nota1':
+                const newNota1 = await Prisma.newPrisma().nota.update({
+                    data: {
+                        nota1: notaNueva
 
-                },
-                where: {
-                    id: idNota
-                }
+                    },
+                    where: {
+                        id: idNota
+                    }
 
-            })
-            return newNota1
+                })
+                return newNota1
 
-        case 'nota2':
-            const newNota2 = await prisma.nota.update({
-                data: {
-                    nota2: notaNueva
+            case 'nota2':
+                const newNota2 = await Prisma.newPrisma().nota.update({
+                    data: {
+                        nota2: notaNueva
 
-                },
-                where: {
-                    id: idNota
-                }
-            })
-            return newNota2
-
-
-        case 'nota3':
-            const newNota3 = await prisma.nota.update({
-                data: {
-                    nota3: notaNueva
-
-                },
-                where: {
-                    id: idNota
-                }
-            })
-            return newNota3
-
-        case 'nota4':
-            const newNota4 = await prisma.nota.update({
-                data: {
-                    nota4: notaNueva
-
-                },
-                where: {
-                    id: idNota
-                }
-            })
-            return newNota4
-
-        case 'nota5':
-            const newNota5 = await prisma.nota.update({
-                data: {
-                    nota5: notaNueva
-
-                },
-                where: {
-                    id: idNota
-                }
-            })
-            return newNota5
+                    },
+                    where: {
+                        id: idNota
+                    }
+                })
+                return newNota2
 
 
-        default:
-            break;
+            case 'nota3':
+                const newNota3 = await Prisma.newPrisma().nota.update({
+                    data: {
+                        nota3: notaNueva
+
+                    },
+                    where: {
+                        id: idNota
+                    }
+                })
+                return newNota3
+
+            case 'nota4':
+                const newNota4 = await Prisma.newPrisma().nota.update({
+                    data: {
+                        nota4: notaNueva
+
+                    },
+                    where: {
+                        id: idNota
+                    }
+                })
+                return newNota4
+
+            case 'nota5':
+                const newNota5 = await Prisma.newPrisma().nota.update({
+                    data: {
+                        nota5: notaNueva
+
+                    },
+                    where: {
+                        id: idNota
+                    }
+                })
+                return newNota5
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        Prisma.disconnect()
     }
 }
