@@ -2,7 +2,6 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import $ from 'jQuery'
 import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
@@ -39,13 +38,6 @@ export default function Asistencias() {
     useEffect(() => {
         listarAsistencias()
         listarCursos()
-
-        // MARCAR UNO Y DESMARCAR LOS OTROS
-        // $(document).on('click', 'Switch[type="checkbox"]', function () {
-        //     $('Switch[type="checkbox"]').not(this).prop('checked', false);
-        // });
-
-
     }, [alumno, idCurso, documento, fecha])
 
     const handlerCambioPagina = (e, pagina) => {
