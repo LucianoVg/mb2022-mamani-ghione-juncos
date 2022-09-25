@@ -11,9 +11,11 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Select from '@mui/material/Select';
 import { usePagination } from "../../../components/hooks/paginationHook";
 import { Search } from "@mui/icons-material";
+import { useAuth } from "../../../components/context/authUserProvider";
+import { useRouter } from "next/router";
 
 
-export default function Asistencias() {
+export default function Asistencias({ cData }) {
 
     const [pagina, setPagina] = useState(1)
     const pageSize = 5
@@ -27,47 +29,36 @@ export default function Asistencias() {
     const [asistencias, setAsistencias] = useState()
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
-    const [idCurso, setIdCurso] = useState("")
+
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
     const [alumno, setAlumno] = useState("")
     const [fecha, setFecha] = useState(new Date().toISOString())
     const [cursos, setCursos] = useState()
+    const [idCurso, setIdCurso] = useState("")
+    const { loading, authUser } = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+
+        setCursos(cData)
         listarAsistencias()
-        listarCursos()
     }, [alumno, idCurso, documento, fecha])
 
+
+    const listarAsistencias = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${idCurso}/${fecha}/${alumno}/${documento}`)
+        setAsistencias(res.data)
+    }
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
         paginacion.saltar(pagina)
     }
 
-    const listarAsistencias = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${idCurso}/${fecha}/${alumno}/${documento}`)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data);
-                    setAsistencias(res.data)
-                }
-
-            }).catch(err => {
-                console.error(err);
-            })
-    }
-
-
-    const listarCursos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
-            .then(res => {
-                console.log(res.data);
-                setCursos(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-    }
     const handleCurso = (e) => {
         setIdCurso(e.target.value)
     }
@@ -234,6 +225,7 @@ export default function Asistencias() {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={idCurso}
+                                defaultValue={cursos && cursos[0]?.id}
                                 name="idCurso"
                                 label="Curso"
                                 onChange={handleCurso}
@@ -788,7 +780,7 @@ export default function Asistencias() {
                     </Table>
                 </TableContainer>
                 {
-                    asistencias && (
+                    asistencias && asistencias.length > 0 && (
                         <Pagination
                             sx={{ marginTop: 2 }}
                             count={cantidadPaginas}
@@ -807,5 +799,16 @@ export default function Asistencias() {
 
 }
 
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps = async (ctx) => {
+    const cRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+    const cData = cRes.data
+    return {
+        props: {
+            cData
+        }
+    }
+}
 
 

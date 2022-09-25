@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { asistencias } from './seeds/asistencias';
 // import { usuarios } from "./seeds/usuarios";
 // import { roles } from './seeds/roles';
 // import { materias } from './seeds/materias';
@@ -12,11 +13,22 @@ import { trimestres } from './seeds/trimestres';
 const prisma = new PrismaClient();
 
 async function main() {
-    tiposSancion.map(async (t) => {
-        const tiposSancion = await prisma.tipoSancion.create({
-            data: t
+    asistencias.map(async (a) => {
+        const asistencia = await prisma.asistencia.create({
+            data: {
+                creadoEn: a.creadaEn,
+                idAlumnoXcursoXdivision: a.idAlumno,
+                presente: a.presente,
+                ausente: a.ausente,
+                llegadaTarde: a.llegadaTarde,
+                mediaFalta: a.mediaFalta,
+                mediaFaltaJustificada: a.mediaFaltaJustificada,
+                ausenteJustificado: a.ausenteJustificado,
+                llegadaTardeJustificada: a.llegadaTardeJustificada,
+                idUsuario: a.idUsuario
+            }
         })
-        console.log(tiposSancion);
+        console.log(asistencia);
     })
 }
 

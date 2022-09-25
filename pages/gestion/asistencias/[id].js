@@ -80,12 +80,12 @@ const DetalleAsistencia = () => {
                            } */}
                                 <div className='hstack gap-2  '>
                                     <div className="form-group col-md-3  " >
-                                        <label  style={{ fontSize: "25px" }}><strong>Alumno</strong></label>
+                                        <label style={{ fontSize: "25px" }}><strong>Alumno</strong></label>
                                         <p style={{ fontSize: "20px" }}>{a.alumnoXcursoXdivision?.usuario?.apellido} {a.alumnoXcursoXdivision?.usuario?.nombre}</p>
 
                                     </div>
                                     <div className="form-group col-md-6  " >
-                                        <label  style={{ fontSize: "25px" }}><strong>Curso</strong></label>
+                                        <label style={{ fontSize: "25px" }}><strong>Curso</strong></label>
                                         <p style={{ fontSize: "20px" }}>{a.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {a.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</p>
 
                                     </div>
@@ -159,21 +159,21 @@ const DetalleAsistencia = () => {
 
                                     </div>
                                     <div className="form-group col-md-2  " >
-                                        <label  style={{ fontSize: "25px" }}><strong>Creado en: </strong></label>
+                                        <label style={{ fontSize: "25px" }}><strong>Creado en: </strong></label>
                                         <p style={{ fontSize: "20px" }}>{new Date(a.creadoEn).toLocaleDateString('en-GB')}</p>
 
                                     </div>
                                     {
                                         a.actualizadoEn != null ? (
                                             <div className="form-group col-md-2  " >
-                                                <label  style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
+                                                <label style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
                                                 <p style={{ fontSize: "20px" }}>{new Date(a.actualizadoEn).toLocaleDateString('en-GB')}</p>
 
                                             </div>
                                         ) :
                                             (
                                                 <div className="form-group col-md-4  " >
-                                                    <label  style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
+                                                    <label style={{ fontSize: "25px" }}><strong>Actualizado en: </strong></label>
                                                     <p style={{ fontSize: "20px" }}>--/--/----</p>
 
                                                 </div>
@@ -233,6 +233,18 @@ const DetalleAsistencia = () => {
 
         </Layout >
     )
+}
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps = async ({ query }) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${query.id}`)
+    const aData = res.data
+    return {
+        props: {
+            aData
+        }
+    }
 }
 
 export default DetalleAsistencia

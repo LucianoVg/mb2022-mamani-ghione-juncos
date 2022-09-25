@@ -14,62 +14,67 @@ export async function ListarCurso() {
     return cursos
 }
 
-export async function TraerAsistencias(alumno = '', curso, documento = '', fecha) {
+export async function TraerAsistencias(alumno = '', curso = '', documento = '', fecha = '') {
     console.log(`Nombre: ${alumno.split(' ')[0]}`, `Apellido: ${alumno.split(' ')[1]}`, `Curso: ${curso}`, `Documento: ${documento}`, `Fecha: ${fecha}`);
 
-    const asistencias = await prisma.asistencia.findMany({
-        include: {
-            usuario: true,
-            alumnoXcursoXdivision: {
-                include: {
-                    usuario: true,
-                    cursoXdivision: true
+    try {
+        const asistencias = await prisma.asistencia.findMany({
+            include: {
+                usuario: true,
+                alumnoXcursoXdivision: {
+                    include: {
+                        usuario: true,
+                        cursoXdivision: true
+                    }
                 }
+
+            },
+
+            where: {
+                AND: [
+                    {
+                        alumnoXcursoXdivision: {
+                            idCursoXdivision: curso
+                        }
+                    },
+                    {
+                        alumnoXcursoXdivision: {
+                            usuario: {
+                                nombre: {
+                                    startsWith: alumno.split(' ').length && alumno.split(' ')[0]
+                                }
+                            }
+                        },
+                    },
+                    {
+                        alumnoXcursoXdivision: {
+                            usuario: {
+                                apellido: {
+                                    endsWith: alumno.split(' ').length && alumno.split(' ')[1]
+                                }
+                            }
+                        },
+                    },
+                    {
+                        alumnoXcursoXdivision: {
+                            usuario: {
+                                legajo: {
+                                    contains: documento
+                                }
+                            }
+                        }
+                    },
+                    {
+                        creadoEn: fecha
+                    }
+                ]
             }
-
-        },
-
-        where: {
-            AND: [
-                {
-                    alumnoXcursoXdivision: {
-                        idCursoXdivision: curso
-                    }
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            nombre: {
-                                startsWith: alumno.split(' ')[0]
-                            }
-                        }
-                    },
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            apellido: {
-                                endsWith: alumno.split(' ')[1]
-                            }
-                        }
-                    },
-                },
-                {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            dni: {
-                                contains: documento
-                            }
-                        }
-                    }
-                },
-                {
-                    creadoEn: fecha
-                }
-            ]
-        }
-    })
-    return asistencias
+        })
+        console.log(asistencias);
+        return asistencias
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export async function TraerAsistencias2() {

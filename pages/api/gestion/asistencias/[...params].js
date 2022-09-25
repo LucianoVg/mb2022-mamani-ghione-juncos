@@ -14,16 +14,29 @@ export default async function handler(
             fecha: ''
         }
 
-        queryParams.idCurso = params[0]
-        queryParams.fecha = params[1]
+        if (params) {
+            switch (params.length) {
+                case 1:
+                    queryParams.fecha = params[0]
+                    break;
+                case 2:
+                    queryParams.idCurso = params[0]
+                    queryParams.fecha = params[1]
+                    break;
+                case 3:
+                    queryParams.idCurso = params[0]
+                    queryParams.fecha = params[1]
+                    queryParams.alumno = params[2]
+                    break;
+                case 4:
+                    queryParams.idCurso = params[0]
+                    queryParams.fecha = params[1]
+                    queryParams.alumno = params[2]
+                    queryParams.documento = params[3]
+                    break;
+            }
+        }
 
-        if (params.length === 3) {
-            queryParams.alumno = params[2]
-        }
-        if (params.length === 4) {
-            queryParams.alumno = params[2]
-            queryParams.documento = params[3]
-        }
         console.log(queryParams);
 
         const asistencias = await TraerAsistencias(queryParams.alumno, queryParams.idCurso, queryParams.documento, queryParams.fecha)
