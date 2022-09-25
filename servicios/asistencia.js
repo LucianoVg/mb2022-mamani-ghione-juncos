@@ -15,8 +15,6 @@ export async function ListarCurso() {
 }
 
 export async function TraerAsistencias(alumno = '', curso = '', documento = '', fecha = '') {
-    console.log(`Nombre: ${alumno.split(' ')[0]}`, `Apellido: ${alumno.split(' ')[1]}`, `Curso: ${curso}`, `Documento: ${documento}`, `Fecha: ${fecha}`);
-
     try {
         const asistencias = curso.length && documento.length
             && alumno.length ? await prisma.asistencia.findMany({
@@ -31,14 +29,14 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
 
                 },
                 where: {
-                    AND: [
-                        curso.length &&
+                    OR: [
                         {
                             alumnoXcursoXdivision: {
-                                idCursoXdivision: curso
+                                cursoXdivision: {
+                                    id: curso
+                                }
                             }
                         },
-                        alumno.split(' ').length &&
                         {
                             alumnoXcursoXdivision: {
                                 usuario: {
@@ -48,7 +46,6 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
                                 }
                             },
                         },
-                        alumno.split(' ').length &&
                         {
                             alumnoXcursoXdivision: {
                                 usuario: {
@@ -58,7 +55,6 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
                                 }
                             },
                         },
-                        documento.length &&
                         {
                             alumnoXcursoXdivision: {
                                 usuario: {
@@ -69,7 +65,7 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
                             }
                         },
                         {
-                            creadoEn: fecha
+                            creadoEn: fecha.split('T')[0]
                         }
                     ]
                 }
@@ -85,7 +81,7 @@ export async function TraerAsistencias(alumno = '', curso = '', documento = '', 
 
                 },
                 where: {
-                    creadoEn: fecha
+                    creadoEn: fecha.split('T')[0]
                 }
             })
 

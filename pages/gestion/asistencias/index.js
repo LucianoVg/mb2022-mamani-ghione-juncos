@@ -34,7 +34,7 @@ export default function Asistencias({ cData }) {
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
     const [alumno, setAlumno] = useState("")
-    const [fecha, setFecha] = useState(new Date().toUTCString())
+    const [fecha, setFecha] = useState(new Date().toISOString())
     const [cursos, setCursos] = useState()
     const [idCurso, setIdCurso] = useState("")
     const { loading, authUser } = useAuth()
@@ -44,7 +44,7 @@ export default function Asistencias({ cData }) {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-
+        console.log(fecha);
         setCursos(cData)
         listarAsistencias()
     }, [alumno, idCurso, documento, fecha])
@@ -269,7 +269,7 @@ export default function Asistencias({ cData }) {
                             name="documento"
                             value={documento}
                             onChange={handleDocumento}
-                            label="Documento del alumno" />
+                            label="Legajo del alumno" />
                     </Grid>
                     <Grid item xs={4}>
                         <TextField
@@ -301,7 +301,7 @@ export default function Asistencias({ cData }) {
                         <TableHead>
                             <TableRow>
                                 <TableCell scope="col">Fecha</TableCell>
-                                <TableCell scope="col">Documento</TableCell>
+                                <TableCell scope="col">Legajo</TableCell>
                                 <TableCell scope="col">Apellido</TableCell>
                                 <TableCell scope="col">Nombre</TableCell>
                                 {/* <TableCell scope="col">Preceptor</TableCell> */}
@@ -550,7 +550,7 @@ export default function Asistencias({ cData }) {
                                             < TableRow key={i} >
 
                                                 <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                                <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
+                                                <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                                 <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                                 <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                                 {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}

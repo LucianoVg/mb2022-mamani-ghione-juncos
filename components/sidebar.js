@@ -53,7 +53,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-const Sidebar = ({ open, toggleDrawer }) => {
+const Sidebar = ({ open, toggleDrawer }, { menus }) => {
     const [menusGestion, setMenusGestion] = useState()
     const [menusReportes, setMenusReportes] = useState()
     const router = useRouter()
@@ -176,7 +176,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                                                         <ArticleIcon />
                                                     )
                                                 }
-                                                   {
+                                                {
                                                     m?.menu?.menuSistema === 'Notificaciones' && (
                                                         <NotificationsRoundedIcon />
                                                     )
@@ -245,6 +245,16 @@ const Sidebar = ({ open, toggleDrawer }) => {
             </List>
         </Drawer>
     )
+}
+
+export const getServerSideProps = async (ctx) => {
+    const res = await axios.get()
+
+    return {
+        props: {
+            menus
+        }
+    }
 }
 
 export default Sidebar
