@@ -136,7 +136,7 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                                 {
                                     menusGestion?.map((m, i) => (
 
-                                        <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
+                                        <ListItemButton key={i} href={m?.menu?.url} >
                                             <ListItemIcon>
                                                 {
                                                     m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
@@ -209,7 +209,7 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                                 {
                                     menusReportes?.map((m, i) => (
 
-                                        <ListItemButton key={i} onClick={() => router.push(m?.menu?.url)}>
+                                        <ListItemButton key={i} href={m?.menu?.url}>
                                             <ListItemIcon>
                                                 <AssessmentIcon />
                                             </ListItemIcon>

@@ -46,7 +46,7 @@ export default function Asistencias({ cData }) {
         }
         console.log(fecha);
         setCursos(cData)
-        listarAsistencias()
+        // listarAsistencias()
     }, [alumno, idCurso, documento, fecha])
 
 
