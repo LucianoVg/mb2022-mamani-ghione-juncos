@@ -30,7 +30,7 @@ const MaterialEstudio = () => {
 
     return (
         <Layout>
-            <Container fullwidth>
+            <Container maxWidth={'md'}>
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container rowSpacing={5} >
                         <Grid item xs={12}>
@@ -139,7 +139,7 @@ const MaterialEstudio = () => {
                             </Stack>
                         </Grid>
                         <Grid item xs>
-                            <h3>Primer Trimestre</h3>
+                            <h3>Segundo Trimestre</h3>
 
                             <Stack direction="row" mt={2}>
                                 <Button variant='outlined' component="label"
@@ -180,7 +180,7 @@ const MaterialEstudio = () => {
 
                         </Grid>
                         <Grid item xs >
-                            <h3>Primer Trimestre</h3>
+                            <h3>Tercer Trimestre</h3>
 
                             <Stack direction="row" mt={2}>
                                 <Button variant='outlined' component="label"

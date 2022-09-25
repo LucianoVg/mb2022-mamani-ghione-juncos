@@ -13,7 +13,6 @@ export default function Notas({ cursos, materias, trimestres }) {
 
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
-    const [alumno, setAlumno] = useState("")
 
     const [nota, setNota] = useState(1);
 
@@ -30,10 +29,19 @@ export default function Notas({ cursos, materias, trimestres }) {
         setTrimestre({ id: trimestres[0]?.id })
         setCurso({ id: cursos[0]?.id })
         setMateria({ id: materias[0]?.id })
-        if (trimestre || curso || materia) {
+        if (trimestre && curso && materia) {
             defaultTrimestre()
         }
-    }, [trimestre.id, materia.id, alumno, curso.id])
+    }, [trimestre.id, materia.id, curso.id, nombreAlumno, apellidoAlumno])
+
+
+    const handleTrimestre = (e, value) => {
+        setIndex(value)
+        setTrimestre({ id: trimestres[value].id })
+        setTimeout(() => {
+            console.log(trimestre.id);
+        }, 1000);
+    }
 
     const handleMateria = (e) => {
         setMateria({ id: e.target.value })
@@ -46,24 +54,17 @@ export default function Notas({ cursos, materias, trimestres }) {
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
         defaultTrimestre()
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
         defaultTrimestre()
     }
 
-    const handleTrimestre = (e, value) => {
-        setIndex(value)
-        setTrimestre({ id: trimestres[value].id })
-        defaultTrimestre()
-    }
 
     const defaultTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.id}/${materia.id}/${alumno}/${curso.id}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.id}/${materia.id}/${curso.id}/${nombreAlumno}/${apellidoAlumno}`)
             .then(res => {
                 setNotas(res.data)
             }).catch(err => {

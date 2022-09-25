@@ -2,9 +2,9 @@ import { Prisma } from "./prisma";
 
 
 
-export async function TraerNotas(idTrimestre = "", idMateria = "", alumno = "", curso = "") {
+export async function TraerNotas(idTrimestre = "", idMateria = "", curso = "", nombreAlumno = "", apellidoAlumno = "") {
     try {
-        const notas = idTrimestre.length && idMateria.length && curso.length && alumno.length ? await Prisma.newPrisma().nota.findMany({
+        const notas = idTrimestre.length && idMateria.length && curso.length ? await Prisma.newPrisma().nota.findMany({
             include: {
                 materia: true,
                 trimestre: true,
@@ -14,7 +14,6 @@ export async function TraerNotas(idTrimestre = "", idMateria = "", alumno = "", 
                         cursoXdivision: true
                     }
                 }
-
             },
             where: {
                 OR: [
@@ -27,24 +26,24 @@ export async function TraerNotas(idTrimestre = "", idMateria = "", alumno = "", 
                             }
                         }
                     },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                nombre: {
-                                    startsWith: alumno.split(' ')[0]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                apellido: {
-                                    startsWith: alumno.split(' ')[1]
-                                }
-                            }
-                        },
-                    }
+                    // {
+                    //     alumnoXcursoXdivision: {
+                    //         usuario: {
+                    //             nombre: {
+                    //                 contains: nombreAlumno
+                    //             }
+                    //         }
+                    //     },
+                    // },
+                    // {
+                    //     alumnoXcursoXdivision: {
+                    //         usuario: {
+                    //             apellido: {
+                    //                 contains: apellidoAlumno
+                    //             }
+                    //         }
+                    //     },
+                    // }
                 ]
             }
         }) : await Prisma.newPrisma().nota.findMany({

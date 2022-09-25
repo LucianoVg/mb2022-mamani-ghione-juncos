@@ -47,7 +47,7 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
-    const [materia, setMateria] = useState('Curso');
+    const [materia, setMateria] = useState("");
 
     const handleMateria = (e) => {
         setMateria(e.target.value);
@@ -67,11 +67,7 @@ export default function Notas() {
     }
     return (
         <Layout>
-
-
-
-            <Box >
-
+            <Box>
                 <FormControl sx={{ width: '150px' }}>
                     <InputLabel id="demo-simple-select-label">Materia</InputLabel>
                     <Select
@@ -111,20 +107,12 @@ export default function Notas() {
                     label="Apellido" />
 
             </Box>
-            <Button variant="outlined" startIcon={<Search />} color="info" sx={{marginTop: '20px'}}>
+            <Button variant="outlined" startIcon={<Search />} color="info" sx={{ marginTop: '20px' }}>
                 Buscar
             </Button>
 
-
-
-
-
-
-            <Grid container rowSpacing={5} spacing={2}>
-
-
-                <Grid item xs>
-
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
                     <h2>Notas por trimestre</h2>
                     <div sx={{ marginBottom: '100px' }}>
                         <TableContainer>
@@ -199,245 +187,6 @@ export default function Notas() {
                         </TableContainer>
                     </div>
                 </Grid>
-                <Grid item xs>
-                    <h2>Promedio por trimestre</h2>
-
-                    <div sx={{ marginTop: '200px' }}>
-                        <TableContainer component={Paper} >
-                            <Table aria-label="customized table" s >
-                                <TableHead  >
-                                    <TableRow>
-                                        <TableCell align="center" colSpan={6}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Lengua
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell colSpan={2}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Primer Trimestre
-                                        </TableCell>
-                                        <TableCell colSpan={2}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Segundo Trimestre
-                                        </TableCell>
-
-                                        <TableCell colSpan={2} align="center"
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}>
-                                            Tercer Trimestre
-                                        </TableCell>
-
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody >
-                                    {promedio.map((row) => (
-                                        <TableRow key={row.nota1}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.promedio1}
-                                            </TableCell >
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.promedio2}
-                                            </TableCell >
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.promedio3}
-                                            </TableCell >
-
-                                        </TableRow>
-
-                                    ))}
-
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
-                </Grid>
-            </Grid>
-        </Layout >
-    );
-}
-
-
-{/* <Grid item xs={6}>
-                    <h2>Notas por trimestre</h2>
-                    <div sx={{ Top: '200px' }}>
-                        <TableContainer component={Paper} >
-                            <Table aria-label="customized table" s >
-                                <TableHead  >
-                                    <TableRow>
-                                        <TableCell align="center" colSpan={6}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Lengua
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell colSpan={2}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Primer Trimestre
-                                        </TableCell>
-                                        <TableCell colSpan={2}
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}
-                                        >
-                                            Segundo Trimestre
-                                        </TableCell>
-
-                                        <TableCell colSpan={2} align="center"
-                                            sx={{
-                                                color: 'black',
-                                                backgroundColor: 'lightblue',
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
-                                            }}>
-                                            Tercer Trimestre
-                                        </TableCell>
-
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody >
-                                    {notas.map((row) => (
-                                        <TableRow key={row.nota1}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.trimestre1}
-                                            </TableCell >
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.trimestre2}
-                                            </TableCell >
-                                            <TableCell colSpan={3} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {row.trimestre3}
-                                            </TableCell >
-
-                                        </TableRow>
-
-                                    ))}
-
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
-                </Grid>
                 <Grid item xs={6}>
                     <h2>Promedio por trimestre</h2>
 
@@ -500,7 +249,6 @@ export default function Notas() {
                                             }}>
                                             Tercer Trimestre
                                         </TableCell>
-
                                     </TableRow>
                                 </TableHead>
                                 <TableBody >
@@ -545,14 +293,14 @@ export default function Notas() {
                                             >
                                                 {row.promedio3}
                                             </TableCell >
-
                                         </TableRow>
-
                                     ))}
-
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </div>
                 </Grid>
-            </Grid> */}
+            </Grid>
+        </Layout >
+    );
+}

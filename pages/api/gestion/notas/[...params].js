@@ -16,8 +16,9 @@ export default async function handler(
         const queryParams = {
             idTrimestre: '',
             idMateria: '',
-            alumno: '',
-            idCurso: ''
+            idCurso: '',
+            nombreAlumno: '',
+            apellidoAlumno: ''
         }
         if (params) {
             switch (params.length) {
@@ -37,14 +38,21 @@ export default async function handler(
                     queryParams.idTrimestre = params[0]
                     queryParams.idMateria = params[1]
                     queryParams.idCurso = params[2]
-                    queryParams.alumno = params[3]
+                    queryParams.nombreAlumno = params[3]
+                    break;
+                case 5:
+                    queryParams.idTrimestre = params[0]
+                    queryParams.idMateria = params[1]
+                    queryParams.idCurso = params[2]
+                    queryParams.nombreAlumno = params[3]
+                    queryParams.apellidoAlumno = params[4]
                     break;
             }
         }
 
         console.log(queryParams);
 
-        const notas = await TraerNotas(queryParams.idTrimestre, queryParams.idMateria, queryParams.alumno, queryParams.idCurso)
+        const notas = await TraerNotas(queryParams.idTrimestre, queryParams.idMateria, queryParams.idCurso, queryParams.nombreAlumno, queryParams.apellidoAlumno)
 
         return res.status(200).json(notas)
     } catch (error) {
