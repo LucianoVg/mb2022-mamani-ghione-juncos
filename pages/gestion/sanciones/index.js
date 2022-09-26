@@ -125,7 +125,7 @@ const Sanciones = () => {
                 </FormControl>
                 <FormControl>
                     <Button variant="contained"
-
+sx={{width: '150px'}}
                         onClick={(e) => {
                             e.preventDefault()
                             router.push('/gestion/sanciones/nueva_sancion')
