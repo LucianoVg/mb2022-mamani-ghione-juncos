@@ -15,7 +15,7 @@ const MasInfo = () => {
 
     const [asistencias, setAsistencias] = useState([])
     const listarAsistencias = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/editar_asistencias_test`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles`)
             .then(res => {
                 console.log(res.data);
                 setAsistencias(res.data)

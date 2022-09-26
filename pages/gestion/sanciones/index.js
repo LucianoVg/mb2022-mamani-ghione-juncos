@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Button, Container, Box, Grid, InputLabel, MenuItem,FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Box, Grid, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -66,7 +66,7 @@ const Sanciones = () => {
         <Layout>
             <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
 
-            <Box sx={{ flexDirection: 'row' }}>
+            <Box direction='row' sx={{ marginBottom: '10px' }}>
                 <FormControl>
                     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
                     <Select
@@ -94,7 +94,7 @@ const Sanciones = () => {
                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                     <Select
 
-                        sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+                        sx={{ width: '100px', marginRight: '20px' }}
                         name="idCurso"
                         id="inputCurso"
                         onChange={handleCurso}
@@ -114,16 +114,24 @@ const Sanciones = () => {
                 </FormControl>
             </Box>
 
-            <Box sx={{ flexDirection: 'row' }}>
-                <Button startIcon={<Search />} variant="outlined"
-                    onClick={buscarSanciones}
-                    sx={{ marginRight: '20px' }}
-                >
-                    Buscar</Button>
-                <Button variant="contained" onClick={(e) => {
-                    e.preventDefault()
-                    router.push('/gestion/sanciones/nueva_sancion')
-                }}>Nueva Sancion</Button>
+            <Box direction='row'>
+                <FormControl sx={{ marginRight: '20px', marginBottom: '10px' }}>
+                    <Button startIcon={<Search />} variant="outlined"
+                        onClick={buscarSanciones}
+                        
+                    >
+                        Buscar
+                    </Button>
+                </FormControl>
+                <FormControl>
+                    <Button variant="contained"
+
+                        onClick={(e) => {
+                            e.preventDefault()
+                            router.push('/gestion/sanciones/nueva_sancion')
+                        }}>Nueva Sancion</Button>
+                </FormControl>
+
             </Box>
 
 
