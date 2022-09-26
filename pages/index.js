@@ -6,7 +6,7 @@ import TarjetaNovedades from '../components/tarjeta_noticias'
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
 
@@ -50,15 +50,17 @@ const Home = () => {
           </Button>
         )
       }
-      <Grid container spacing={2}>
-        {
-          paginacion.dataActual().map((n, i) => (
-            <Grid item key={i} xs={4}>
-              <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-            </Grid>
-          ))
-        }
-      </Grid>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container >
+          {
+            paginacion.dataActual().map((n, i) => (
+              <Grid item key={i} xs="auto">
+                <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+              </Grid>
+            ))
+          }
+        </Grid>
+      </Box>
 
       {
         noticias && noticias.length > 0 && (

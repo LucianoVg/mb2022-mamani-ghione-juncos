@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "../styles/tarjetaNoticias.module.css";
 import { useAuth } from "./context/authUserProvider";
-import { Card, CardContent, CardActions, Button, Typography, IconButton, Container, CardMedia } from "@mui/material";
+import { Card, CardContent, Box, CardActions, Button, Typography, IconButton, Container, CardMedia } from "@mui/material";
 import { useRouter } from "next/router";
 import { Edit } from "@mui/icons-material";
 
@@ -10,7 +10,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const router = useRouter()
 
     return (
-        <Container sx={{ mt: 3 }}>
+        <Box xs={4}>
             <Card
                 sx={{ maxWidth: 300, maxHeight: 450 }}
                 className={`${styles.card}`}
@@ -50,7 +50,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                     <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="big">Mas info.</Button>
                 </CardActions>
             </Card>
-        </Container>
+        </Box>
     )
 }
 
