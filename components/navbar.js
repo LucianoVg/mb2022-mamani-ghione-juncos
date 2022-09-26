@@ -5,11 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
-import theme from "../src/theme";
 import Notificacion from '../components/notificacion_panel'
-import { Container } from "@mui/system";
-
-
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -66,15 +62,14 @@ export const Navbar = ({ toggleDrawer, open }) => {
                     <Typography href='/gestion/institucional' component={'a'} variant="body1" sx={{ mr: 1, textDecoration: 'none' }} color='white'>
                         Institucional
                     </Typography>
-
-
-                    <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
-                        <Notificacion disablePadding />
-                    </div>
-
                     {
                         !loading && authUser && (
-                            <AccountCircleIcon />
+                            <>
+                                <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
+                                    <Notificacion disablePadding />
+                                </div>
+                                <AccountCircleIcon />
+                            </>
                         )
                     }
 

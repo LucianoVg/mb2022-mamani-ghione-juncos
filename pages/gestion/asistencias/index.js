@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination } from "@mui/material";
+import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -13,9 +13,10 @@ import { usePagination } from "../../../components/hooks/paginationHook";
 import { Search } from "@mui/icons-material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
+import { EditarAsistenciaModal } from "../../../components/editarAsistenciaModal";
 
 
-export default function Asistencias({ cData }) {
+export default function Asistencias() {
 
     const [pagina, setPagina] = useState(1)
     const pageSize = 5
@@ -38,21 +39,56 @@ export default function Asistencias({ cData }) {
     const [cursos, setCursos] = useState()
     const [idCurso, setIdCurso] = useState("")
     const { loading, authUser } = useAuth()
+    const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
+    const [asistenciaActual, setAsistenciaActual] = useState()
+
+    const [open, setOpen] = useState(false);
+    const toggleOpen = () => setOpen(!open)
+    const handleModal = (a) => {
+        setAsistenciaActual(a)
+        toggleOpen()
+        if (!open) {
+            listarAsistencias()
+        }
+    }
 
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        console.log(fecha);
-        setCursos(cData)
-        // listarAsistencias()
-    }, [alumno, idCurso, documento, fecha])
+        traerUsuario()
+        listarCursos()
+        listarAsistencias()
+    }, [loading, authUser, alumno, idCurso, documento, fecha, usuario.id])
 
+
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            console.log(res.data);
+            setUsuario({ id: res.data?.id })
+        }
+    }
+    const listarCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
+    }
 
     const listarAsistencias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${idCurso}/${fecha}/${alumno}/${documento}`)
-        setAsistencias(res.data)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias`)
+        if (res.data) {
+            setAsistencias(res.data)
+        }
+    }
+
+    const buscarAsistencias = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${fecha}/${idCurso}/${alumno}/${documento}`)
+        if (res.data) {
+            setAsistencias(res.data)
+        }
     }
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -87,16 +123,21 @@ export default function Asistencias({ cData }) {
         status: false,
         rowKey: null
     });
-    // const onEdit = (id) => {
-    //     setInEditMode({
-    //         status: true,
-    //         rowKey: id
-    //     })
 
-    // }
-
-    const onSave = (id, newNota, columnName) => {
-        updateNota(id, newNota, columnName);
+    const onSave = (id) => {
+        const res = axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
+            presente: presente,
+            ausente: ausente,
+            ausenteJustificado: aj,
+            llegadaTarde: llegadaTarde,
+            llegadaTardeJustificada: ltj,
+            mediaFalta: mf,
+            mediaFaltaJustificada: mfj,
+            idUsuario: usuario.id
+        })
+        console.log(res.data);
+        onCancel()
+        listarAsistencias()
     }
 
     const onCancel = () => {
@@ -112,11 +153,7 @@ export default function Asistencias({ cData }) {
         setLtj(false)
         setMf(false)
         setMfj(false)
-        // reset the unit price state value
-        // setNota(0);
     }
-
-
 
     const handlePresente = (e, checked) => {
         setPresente(checked)
@@ -188,7 +225,7 @@ export default function Asistencias({ cData }) {
                 style={{ position: 'relative', }}
             >
 
-                <h1><strong>Asistencias</strong></h1>
+                <Typography variant="h3">Asistencias</Typography>
                 <Box component="span">
                     <Grid container
                         style={{ position: 'absolute', marginTop: '-100px' }}
@@ -230,8 +267,8 @@ export default function Asistencias({ cData }) {
                                 onChange={handleCurso}
                             >
                                 {
-                                    cursos && cursos.map((c) => (
-                                        <MenuItem value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                    cursos && cursos.map((c, i) => (
+                                        <MenuItem selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
                                     ))
                                 }
                             </Select>
@@ -250,16 +287,6 @@ export default function Asistencias({ cData }) {
                             />
                         </LocalizationProvider>
                     </Grid>
-                    {/* <Grid item xs={8}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <MobileDatePicker
-                                label="Fecha hasta"
-                                value={hasta}
-                                onChange={handleHasta}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
-                    </Grid> */}
                     <Grid item xs={12}>
                         <h4>Buscar Alumno:</h4>
                     </Grid>
@@ -289,7 +316,7 @@ export default function Asistencias({ cData }) {
                             label="Apellido del alumno" />
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="outlined" onClick={listarAsistencias} startIcon={<Search />} color="info">
+                        <Button variant="outlined" onClick={buscarAsistencias} startIcon={<Search />} color="info">
                             Buscar
                         </Button>
                     </Grid>
@@ -326,7 +353,7 @@ export default function Asistencias({ cData }) {
                                             key={i} >
 
                                             <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.dni}</TableCell>
+                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                             <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                             <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
@@ -346,7 +373,6 @@ export default function Asistencias({ cData }) {
                                                             <Switch
                                                                 type="checkbox"
                                                                 checked={a.presente}
-                                                                defaultChecked={a.presente}
                                                                 disabled={bloquearCheck(a)}
                                                             />
 
@@ -510,8 +536,7 @@ export default function Asistencias({ cData }) {
                                                         <React.Fragment>
                                                             <Stack spacing={1} direction="row">
                                                                 <Button variant="contained" color="success"
-
-                                                                // onClick={() => onSave(n.id, nota, columnName)}
+                                                                    onClick={(e) => onSave(a?.id)}
                                                                 >
                                                                     Guardar
                                                                 </Button>
@@ -536,7 +561,7 @@ export default function Asistencias({ cData }) {
                                                             >Editar</Button>
                                                             <Button variant="contained"
                                                                 sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                href={`/gestion/asistencias/mas_info`}>
+                                                                onClick={(e) => handleModal(a)}>
                                                                 Info.
                                                             </Button>
                                                         </Stack>
@@ -735,8 +760,7 @@ export default function Asistencias({ cData }) {
                                                             <React.Fragment>
                                                                 <Stack spacing={1} direction="row">
                                                                     <Button variant="contained" color="success"
-
-                                                                    // onClick={() => onSave(n.id, nota, columnName)}
+                                                                        onClick={() => onSave(a?.id)}
                                                                     >
                                                                         Guardar
                                                                     </Button>
@@ -761,13 +785,12 @@ export default function Asistencias({ cData }) {
                                                                 >Editar</Button>
                                                                 <Button variant="contained"
                                                                     sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                    href="http://localhost:3000/gestion/asistencias/mas_info">
+                                                                    onClick={(e) => handleModal(a)}>
                                                                     Info.
                                                                 </Button>
                                                             </Stack>
                                                         )
                                                     }
-
                                                 </TableCell>
                                             </TableRow>
                                         )
@@ -791,23 +814,11 @@ export default function Asistencias({ cData }) {
                     )
                 }
             </Container>
-
+            <EditarAsistenciaModal open={open} toggleOpen={toggleOpen} asistencia={asistenciaActual} />
         </Layout >
 
     );
 
-}
-
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-export const getServerSideProps = async (ctx) => {
-    const cRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-    const cData = cRes.data
-    return {
-        props: {
-            cData
-        }
-    }
 }
 
 

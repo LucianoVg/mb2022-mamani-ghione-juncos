@@ -1,10 +1,10 @@
 export const asistencias = [
     {
-        creadaEn: new Date().toISOString(),
-        idAlumno: '63298567fd612fecc4ccfd73',
-        presente: true,
+        creadaEn: new Date().toISOString().split('T')[0],
+        idAlumno: '63298567fd612fecc4ccfd74',
+        presente: false,
         llegadaTarde: false,
-        ausente: false,
+        ausente: true,
         ausenteJustificado: false,
         llegadaTardeJustificada: false,
         mediaFalta: false,

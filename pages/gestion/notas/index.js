@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
 import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { useAuth } from "../../../components/context/authUserProvider";
+import { useRouter } from "next/router";
 
 export default function Notas({ cursos, materias, trimestres }) {
     const [notas, setNotas] = useState()
@@ -20,12 +22,18 @@ export default function Notas({ cursos, materias, trimestres }) {
     const [trimestre, setTrimestre] = useState({ id: '' })
     const [index, setIndex] = useState(0)
 
+    const { loading, authUser } = useAuth()
+    const router = useRouter()
+
     const [inEditMode, setInEditMode] = useState({
         status: false,
         rowKey: null
     });
 
     useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
         setTrimestre({ id: trimestres[0]?.id })
         setCurso({ id: cursos[0]?.id })
         setMateria({ id: materias[0]?.id })
