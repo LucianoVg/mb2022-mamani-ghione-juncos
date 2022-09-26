@@ -226,15 +226,79 @@ export default function Asistencias() {
             >
 
                 <Typography variant="h3">Asistencias</Typography>
-                <Box component="span">
-                    <Grid container
-                        style={{ position: 'absolute', marginTop: '-100px' }}
-                        direction="column"
-                        justifyContent="flex-start"
-                        alignItems="flex-end"
 
-                    >
-                        <Grid item >
+
+                <Grid container spacing={2}>
+
+                    <Grid item xs={8}>
+                        <Box sx={{marginBottom: '20px'}}>
+                            <FormControl>
+                                <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                                <Select
+                                    sx={{ width: '90px', marginRight: '20px' }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={idCurso}
+                                    name="idCurso"
+                                    label="Curso"
+                                    onChange={handleCurso}
+                                >
+                                    {
+                                        cursos && cursos.map((c, i) => (
+                                            <MenuItem selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+
+                            </FormControl>
+                         
+
+                        </Box>
+                        <Box>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <MobileDatePicker
+                                    label="Fecha"
+                                    value={fecha}
+                                    onChange={handleFecha}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                        </Box>
+
+                        <h4>Buscar Alumno:</h4>
+                        <Box direction='row'>
+                            <TextField
+                                sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+
+                                name="documento"
+                                value={documento}
+                                onChange={handleDocumento}
+                                label="Legajo" />
+                            <TextField
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+
+                                name="nombreAlumno"
+                                value={nombreAlumno}
+                                onChange={handleNombreAlumno}
+                                label="Nombre" />
+                            <TextField
+                                sx={{ width: '150px', marginRight: '20px' }}
+
+                                name="apellidoAlumno"
+                                value={apellidoAlumno}
+                                onChange={handleApellidoAlumno}
+                                label="Apellido" />
+                        </Box>
+                        <Box sx={{ marginTop: '20px' }}>
+                            <Button variant="outlined" onClick={buscarAsistencias} startIcon={<Search />} color="info">
+                                Buscar
+                            </Button>
+                        </Box>
+
+                    </Grid>
+                    <Grid item xs>
+                        <Box component="span">
+
                             <Stack spacing={1} direction="row" >
                                 <h5 ><strong>Asistencia modificada:</strong> </h5>
                                 <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
@@ -248,77 +312,7 @@ export default function Asistencias() {
                                 <strong>MF:</strong>Media Falta <br />
                                 <strong>MFJ:</strong> Media Falta Justificada  <br />
                             </h5>
-
-                        </Grid>
-                    </Grid>
-
-                </Box>
-
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <FormControl fullWidth sx={{ width: '18%' }}>
-                            <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={idCurso}
-                                name="idCurso"
-                                label="Curso"
-                                onChange={handleCurso}
-                            >
-                                {
-                                    cursos && cursos.map((c, i) => (
-                                        <MenuItem selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
-                                    ))
-                                }
-                            </Select>
-
-                        </FormControl>
-                    </Grid>
-
-
-                    <Grid item xs={4}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <MobileDatePicker
-                                label="Fecha"
-                                value={fecha}
-                                onChange={handleFecha}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <h4>Buscar Alumno:</h4>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            fullWidth
-                            name="documento"
-                            value={documento}
-                            onChange={handleDocumento}
-                            label="Legajo del alumno" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            fullWidth
-                            name="nombreAlumno"
-                            value={nombreAlumno}
-                            onChange={handleNombreAlumno}
-                            label="Nombre del alumno" />
-
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            fullWidth
-                            name="apellidoAlumno"
-                            value={apellidoAlumno}
-                            onChange={handleApellidoAlumno}
-                            label="Apellido del alumno" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="outlined" onClick={buscarAsistencias} startIcon={<Search />} color="info">
-                            Buscar
-                        </Button>
+                        </Box>
                     </Grid>
                 </Grid>
 

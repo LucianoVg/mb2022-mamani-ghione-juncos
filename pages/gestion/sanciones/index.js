@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Box, Grid, InputLabel, MenuItem,FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -65,61 +65,68 @@ const Sanciones = () => {
     return (
         <Layout>
             <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
-            <Container maxWidth={'md'}>
-                <Grid container spacing={2} marginTop={1}>
-                    <Grid item xs={3}>
-                        <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
-                        <Select
-                            name="idAlumno"
-                            id="inputAlumno"
-                            onChange={handleAlumno}
-                            label="Alumno"
-                            value={idAlumno}
-                            fullWidth>
-                            <MenuItem value={idAlumno}>Seleccione un alumno</MenuItem>
-                            {
-                                alumnos && alumnos.map((a, i) => (
-                                    <MenuItem key={i} value={a.id}>
-                                        {a.usuario?.nombre} {a.usuario?.apellido}
-                                    </MenuItem>
-                                ))
-                            }
 
-                        </Select>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                        <Select
-                            name="idCurso"
-                            id="inputCurso"
-                            onChange={handleCurso}
-                            label="Curso"
-                            value={idCurso}
-                            fullWidth>
-                            <MenuItem value={idCurso}>Seleccione un curso</MenuItem>
-                            {
-                                cursos && cursos.map((c, i) => (
-                                    <MenuItem key={i} value={c.id}>
-                                        {c.curso?.nombre} {c.division.division}
-                                    </MenuItem>
-                                ))
-                            }
+            <Box sx={{ flexDirection: 'row' }}>
+                <FormControl>
+                    <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                    <Select
 
-                        </Select>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={2} marginTop={1}>
-                    <Grid item xs={3}>
-                        <Button startIcon={<Search />} variant="outlined" onClick={buscarSanciones}>Buscar</Button>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Button variant="contained" onClick={(e) => {
-                            e.preventDefault()
-                            router.push('/gestion/sanciones/nueva_sancion')
-                        }}>Nueva Sancion</Button>
-                    </Grid>
-                </Grid>
-            </Container>
+                        sx={{ width: '230px', marginRight: '20px', marginBottom: '20px' }}
+                        name="idAlumno"
+                        id="inputAlumno"
+                        onChange={handleAlumno}
+                        label="Alumno"
+                        value={idAlumno}
+                    >
+                        <MenuItem value={idAlumno}>Seleccione un alumno</MenuItem>
+                        {
+                            alumnos && alumnos.map((a, i) => (
+                                <MenuItem key={i} value={a.id}>
+                                    {a.usuario?.nombre} {a.usuario?.apellido}
+                                </MenuItem>
+                            ))
+                        }
+
+                    </Select>
+                </FormControl>
+                <FormControl>
+
+                    <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                    <Select
+
+                        sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+                        name="idCurso"
+                        id="inputCurso"
+                        onChange={handleCurso}
+                        label="Curso"
+                        value={idCurso}
+                    >
+                        <MenuItem value={idCurso}>Seleccione un curso</MenuItem>
+                        {
+                            cursos && cursos.map((c, i) => (
+                                <MenuItem key={i} value={c.id}>
+                                    {c.curso?.nombre} {c.division.division}
+                                </MenuItem>
+                            ))
+                        }
+
+                    </Select>
+                </FormControl>
+            </Box>
+
+            <Box sx={{ flexDirection: 'row' }}>
+                <Button startIcon={<Search />} variant="outlined"
+                    onClick={buscarSanciones}
+                    sx={{ marginRight: '20px' }}
+                >
+                    Buscar</Button>
+                <Button variant="contained" onClick={(e) => {
+                    e.preventDefault()
+                    router.push('/gestion/sanciones/nueva_sancion')
+                }}>Nueva Sancion</Button>
+            </Box>
+
+
             {
                 !loading && sanciones && (
                     <TableContainer component={Paper} sx={{ marginTop: 2 }}>
