@@ -155,13 +155,13 @@ export default function Notas() {
         <Layout>
             <Container maxWidth={'xl'}>
                 <Typography variant="h4">Notas</Typography>
-                <Box sx={{marginTop: '20px' }} >
+                <Box sx={{ marginTop: '20px' }} >
                     <Box direction='row'>
 
                         <FormControl>
                             <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                             <Select id="inputMateria" name="idMateria" onChange={handleMateria}
-                            label="materia"
+                                label="materia"
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
                             >
                                 {
@@ -177,7 +177,7 @@ export default function Notas() {
                         <FormControl>
                             <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                             <Select id="inputCurso" name="idCurso" onChange={handleCurso}
-                            label="curso"
+                                label="curso"
                                 sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
                                 {
                                     cursos && cursos?.map((c, i) => (
@@ -192,15 +192,15 @@ export default function Notas() {
 
                     <Box direction='row'>
                         <TextField margin="normal"
-                           
+
                             name="nombreAlumno"
                             value={nombreAlumno}
                             onChange={handleNombreAlumno}
                             label="Nombre del alumno"
-                            sx={{marginRight: '20px', marginBottom: '20px'}} 
-                            />
+                            sx={{ marginRight: '20px', marginBottom: '20px' }}
+                        />
                         <TextField margin="normal"
-                       
+
                             name="apellidoAlumno"
                             value={apellidoAlumno}
                             onChange={handleApellidoAlumno}
@@ -210,7 +210,7 @@ export default function Notas() {
                 </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={index} onChange={handleTrimestre}
-                       variant="scrollable">
+                        variant="scrollable">
                         <Tab label="Primer Trimestre" />
                         <Tab label="Segundo Trimestre" />
                         <Tab label="Tercer Trimestre" />
