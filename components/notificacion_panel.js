@@ -99,7 +99,7 @@ export const Notificacion = () => {
                             ))
                         }
                         <ListItem disablePadding>
-                            <ListItemButton component="a" href="#simple-list" >
+                            <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >
                                 <ListItemText>
                                     <div style={{ textAlign: 'center' }}>
                                         <strong> Ver todo</strong>
