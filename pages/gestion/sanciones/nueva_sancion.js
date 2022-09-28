@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel } from "@mui/material";
+import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 
 export default function NuevaSancion() {
     const [sancion, setSancion] = useState({ idAlumno: '', idCurso: '', motivo: '', idTipoSancion: '' })
@@ -82,18 +82,25 @@ export default function NuevaSancion() {
     }
     return (
         <Layout>
-            <Container maxWidth={'md'}>
+            <div maxWidth={'md'}>
                 <Typography variant="h4">Nueva Sancion</Typography>
                 <Box component={'form'} onSubmit={generarSancion}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <FormControlLabel control={<Checkbox id="checkSancionGrupal" checked={esSancionGrupal} onChange={() => setEsSancionGrupal(!esSancionGrupal)} />} label="Sancion Grupal" />
-                        </Grid>
+
+                    <Box>
+                        <FormControlLabel control={<Checkbox id="checkSancionGrupal" checked={esSancionGrupal} onChange={() => setEsSancionGrupal(!esSancionGrupal)} />} label="Sancion Grupal" />
+
+                    </Box>
+                    <Box direction='row'>
                         {
                             !esSancionGrupal && (
-                                <Grid item xs={6}>
+                                <FormControl>
                                     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
-                                    <Select value={sancion.idAlumno} fullWidth onChange={handleSancion} name="idAlumno" id="inputAlumno">
+                                    <Select value={sancion.idAlumno}
+                                        onChange={handleSancion}
+                                        name="idAlumno"
+                                        id="inputAlumno"
+                                        sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                                    >
                                         {
                                             alumnos && alumnos.map((a, i) => (
                                                 <MenuItem key={i} value={a.id}>
@@ -102,14 +109,20 @@ export default function NuevaSancion() {
                                             ))
                                         }
                                     </Select>
-                                </Grid>
+                                </FormControl>
+
                             )
                         }
                         {
                             esSancionGrupal && (
-                                <Grid item xs={6}>
+                                <FormControl>
                                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                                    <Select value={sancion.idCurso} fullWidth onChange={handleSancion} name="idCurso" id="inputCurso">
+                                    <Select value={sancion.idCurso}
+                                        onChange={handleSancion}
+                                        name="idCurso"
+                                        id="inputCurso"
+                                        sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+                                    >
                                         {
                                             cursos && cursos.map((c, i) => (
                                                 <MenuItem key={i} value={c.id}>
@@ -118,12 +131,21 @@ export default function NuevaSancion() {
                                             ))
                                         }
                                     </Select>
-                                </Grid>
+                                </FormControl>
+
+
                             )
                         }
-                        <Grid item xs={6}>
+
+                        <FormControl>
+
                             <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
-                            <Select value={sancion.idTipoSancion} fullWidth onChange={handleSancion} name="idTipoSancion" id="inputTipoSancion">
+                            <Select value={sancion.idTipoSancion}
+                                onChange={handleSancion}
+                                name="idTipoSancion"
+                                id="inputTipoSancion"
+                                sx={{ width: '180px' }}
+                            >
                                 {
                                     tipoSanciones && tipoSanciones.map((t, i) => (
                                         <MenuItem key={i} value={t.id}>
@@ -132,25 +154,30 @@ export default function NuevaSancion() {
                                     ))
                                 }
                             </Select>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                margin="normal"
-                                fullWidth
-                                multiline
-                                rows={3}
-                                required
-                                name="motivo"
-                                value={sancion.motivo}
-                                label="Motivo"
-                                onChange={handleSancion} />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button variant="contained" color="primary" type="submit">Generar Sancion</Button>
-                        </Grid>
-                    </Grid>
+                        </FormControl>
+                    </Box>
+
+                    <Box sx={{marginBottom: '20px'}}>
+
+                        <TextField
+
+
+                            multiline
+                            rows={5}
+                            required
+                            name="motivo"
+                            value={sancion.motivo}
+                            label="Motivo"
+                            onChange={handleSancion}
+                            sx={{ width: '400px' }} />
+                    </Box>
+
+                    <Box >
+                        <Button variant="contained" color="primary" type="submit">Generar Sancion</Button>
+                    </Box>
+
                 </Box>
-            </Container>
+            </div>
         </Layout>
     )
 }
