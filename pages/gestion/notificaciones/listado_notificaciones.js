@@ -87,7 +87,7 @@ export default function ListadoNotificaciones() {
                         scrollButtons="auto"
                         minWidth={200}
 
-                        sx={{ borderRight: 1, borderBottom: 1, borderColor: 'divider', width: '300px' }}
+                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px' }}
                     >
 
                         {
