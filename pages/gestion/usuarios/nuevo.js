@@ -260,7 +260,7 @@ export default function NuevoUsuario() {
                                         required
                                         onChange={handleCurso}
                                         value={curso}
-                                        sx={{ width: '100px', marginBottom: '20px' }}
+                                        sx={{ width: '100px', marginBottom: '10px' }}
                                     >
 
                                         {
@@ -375,7 +375,9 @@ export default function NuevoUsuario() {
                                     onChange={handleTutor}
                                     label="Direccion"
                                     value={tutor.direccion}
-                                    required />
+                                    required 
+                                    sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                    />
                             </Box>
                             <Box direction='row'>
                                 <FormControl>
@@ -386,7 +388,7 @@ export default function NuevoUsuario() {
                                         required
                                         onChange={handleTutor}
                                         value={tutor.sexo}
-                                        sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                        sx={{ marginRight: '20px', marginBottom: '10px' }}
                                         >
 
                                         <MenuItem value="M">Masculino</MenuItem>
