@@ -30,7 +30,7 @@ const MaterialEstudio = () => {
 
     return (
         <Layout>
-            <Container maxWidth={'md'}>
+            <div >
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container rowSpacing={5} >
                         <Grid item xs={12}>
@@ -231,7 +231,7 @@ const MaterialEstudio = () => {
                 </Box>
 
 
-            </Container>
+            </div>
 
 
         </Layout >
