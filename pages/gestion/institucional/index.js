@@ -66,6 +66,10 @@ export default function Institucional() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2"><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
+                              
+                            </Grid>
+                            <Grid item xs={12}>
+                              
                                 <Typography variant="body2"><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
                             </Grid>
 
