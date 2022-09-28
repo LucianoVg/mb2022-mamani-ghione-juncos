@@ -246,37 +246,7 @@ export default function NuevoUsuario() {
                         </Select>
                     </FormControl>
 
-                    {
-                        esAlumno && (
-                            <Box>
-                                <h3>Seleccionar curso</h3>
-
-                                <FormControl>
-                                    <InputLabel id="select-label">Curso</InputLabel>
-                                    <Select
-                                        labelId="select-label"
-                                        name="curso"
-                                        label="Curso"
-                                        required
-                                        onChange={handleCurso}
-                                        value={curso}
-                                        sx={{ width: '100px', marginBottom: '10px' }}
-                                    >
-
-                                        {
-                                            cursos && cursos.map((c, i) => (
-                                                <MenuItem key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </FormControl>
-                            </Box>
-
-                        )
-                    }
                 </Box>
-
-
                 <Box>
 
                     <TextField
@@ -290,6 +260,35 @@ export default function NuevoUsuario() {
                         required />
 
                 </Box>
+
+                {
+                    esAlumno && (
+                        <Box>
+                            <h3>Seleccionar curso</h3>
+
+                            <FormControl>
+                                <InputLabel id="select-label">Curso</InputLabel>
+                                <Select
+                                    labelId="select-label"
+                                    name="curso"
+                                    label="Curso"
+                                    required
+                                    onChange={handleCurso}
+                                    value={curso}
+                                    sx={{ width: '100px', marginBottom: '10px' }}
+                                >
+
+                                    {
+                                        cursos && cursos.map((c, i) => (
+                                            <MenuItem key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Box>
+
+                    )
+                }
 
                 <Button sx={{ mt: 2 }} variant="contained" color="primary" type="submit">Registrar Usuario</Button>
             </Box>
@@ -307,9 +306,9 @@ export default function NuevoUsuario() {
                                     onChange={handleTutor}
                                     label="Nombre"
                                     value={tutor.nombre}
-                                    required 
+                                    required
                                     sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                    />
+                                />
 
                                 <TextField
 
@@ -330,9 +329,9 @@ export default function NuevoUsuario() {
                                     label="Correo"
                                     type={'email'}
                                     value={tutor.correo}
-                                    required 
-                                    
-                                    />
+                                    required
+
+                                />
 
                                 <TextField
 
@@ -352,9 +351,9 @@ export default function NuevoUsuario() {
                                     onChange={handleTutor}
                                     label="Localidad"
                                     value={tutor.localidad}
-                                    required 
+                                    required
                                     sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                    />
+                                />
 
                                 <TextField
 
@@ -364,9 +363,9 @@ export default function NuevoUsuario() {
                                     label="Telefono"
                                     value={tutor.telefono}
                                     type={'tel'}
-                                    required 
+                                    required
                                     sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                    />
+                                />
 
                                 <TextField
 
@@ -375,9 +374,9 @@ export default function NuevoUsuario() {
                                     onChange={handleTutor}
                                     label="Direccion"
                                     value={tutor.direccion}
-                                    required 
+                                    required
                                     sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                    />
+                                />
                             </Box>
                             <Box direction='row'>
                                 <FormControl>
@@ -389,7 +388,7 @@ export default function NuevoUsuario() {
                                         onChange={handleTutor}
                                         value={tutor.sexo}
                                         sx={{ marginRight: '20px', marginBottom: '10px' }}
-                                        >
+                                    >
 
                                         <MenuItem value="M">Masculino</MenuItem>
                                         <MenuItem value="F">Femenino</MenuItem>
@@ -405,9 +404,9 @@ export default function NuevoUsuario() {
                                     label="Contraseña Temporal"
                                     value={tutor.contrasenia}
                                     type={'password'}
-                                    required 
+                                    required
                                     sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                    />
+                                />
 
                             </Box>
                             <Box>
