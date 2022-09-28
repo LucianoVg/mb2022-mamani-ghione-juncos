@@ -7,20 +7,23 @@ import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab,
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 
-export default function Notas({ cursos, materias, trimestres }) {
+export default function Notas() {
     const [notas, setNotas] = useState()
 
-    const [materia, setMateria] = useState({ id: "" })
-    const [curso, setCurso] = useState({ id: "" })
-
+    const [idTrimestre, setIdTrimestre] = useState("")
+    const [idMateria, setIdMateria] = useState("")
+    const [idCurso, setIdCurso] = useState("")
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
     const [nota, setNota] = useState(1);
 
     const [columnName, setColumnName] = useState("");
-    const [trimestre, setTrimestre] = useState({ id: '' })
+
     const [index, setIndex] = useState(0)
+    const [cursos, setCursos] = useState()
+    const [materias, setMaterias] = useState()
+    const [trimestres, setTrimestres] = useState()
 
     const { loading, authUser } = useAuth()
     const router = useRouter()
@@ -34,30 +37,29 @@ export default function Notas({ cursos, materias, trimestres }) {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        setTrimestre({ id: trimestres[0]?.id })
-        setCurso({ id: cursos[0]?.id })
-        setMateria({ id: materias[0]?.id })
-        if (trimestre && curso && materia) {
-            defaultTrimestre()
-        }
-    }, [trimestre.id, materia.id, curso.id, nombreAlumno, apellidoAlumno])
+        traerCursos()
+        traerMaterias()
+        traerTrimestres()
+        setIdTrimestre(trimestres && trimestres[0]?.id)
+        setIdCurso(cursos && cursos[0]?.id)
+        setIdMateria(materias && materias[0]?.id)
+        defaultTrimestre()
+    }, [idTrimestre, idMateria, idCurso, nombreAlumno, apellidoAlumno])
 
 
     const handleTrimestre = (e, value) => {
         setIndex(value)
-        setTrimestre({ id: trimestres[value].id })
-        setTimeout(() => {
-            console.log(trimestre.id);
-        }, 1000);
+        setIdTrimestre(trimestres[index].id)
+        defaultTrimestre()
     }
 
     const handleMateria = (e) => {
-        setMateria({ id: e.target.value })
+        setIdMateria(e.target.value)
         defaultTrimestre()
     }
 
     const handleCurso = (e) => {
-        setCurso({ id: e.target.value })
+        setIdCurso(e.target.value)
         defaultTrimestre()
     }
     const handleNombreAlumno = (e) => {
@@ -70,9 +72,27 @@ export default function Notas({ cursos, materias, trimestres }) {
         defaultTrimestre()
     }
 
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
+    }
+    const traerMaterias = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+        if (res.data) {
+            setMaterias(res.data)
+        }
+    }
+    const traerTrimestres = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`)
+        if (res.data) {
+            setTrimestres(res.data)
+        }
+    }
 
     const defaultTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${trimestre.id}/${materia.id}/${curso.id}/${nombreAlumno}/${apellidoAlumno}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${idTrimestre}/${idMateria}/${idCurso}/${nombreAlumno}/${apellidoAlumno}`)
             .then(res => {
                 setNotas(res.data)
             }).catch(err => {
@@ -120,11 +140,11 @@ export default function Notas({ cursos, materias, trimestres }) {
     }
 
 
-    const select = () => {
-        var input = document.getElementById("select")
-        input.select();
-        input.focus();
-    }
+    // const select = () => {
+    //     var input = document.getElementById("select")
+    //     input.select();
+    //     input.focus();
+    // }
 
     const onChangeNotaColumna = (e) => {
         setNota(Number.parseInt(e.target.value))
@@ -138,20 +158,20 @@ export default function Notas({ cursos, materias, trimestres }) {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                        <Select fullWidth id="inputMateria" value={materia.id} onChange={handleMateria} >
+                        <Select fullWidth id="inputMateria" name="idMateria" onChange={handleMateria} >
                             {
                                 materias && materias?.map((m, i) => (
 
-                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                 ))
                             }
                         </Select>
                         <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                        <Select fullWidth id="inputCurso" value={curso.id} onChange={handleCurso} >
+                        <Select fullWidth id="inputCurso" name="idCurso" onChange={handleCurso} >
                             {
                                 cursos && cursos?.map((c, i) => (
 
-                                    <MenuItem key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                    <MenuItem selected={i === 0} key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
                                 ))
                             }
                         </Select>
@@ -353,25 +373,3 @@ export default function Notas({ cursos, materias, trimestres }) {
     );
 
 }
-
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-export const getServerSideProps = async (ctx) => {
-    const cRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-    const cursos = cRes.data
-
-    const mRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
-    const materias = mRes.data
-
-    const tRes = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`)
-    const trimestres = tRes.data
-
-    return {
-        props: {
-            trimestres,
-            materias,
-            cursos
-        }
-    }
-}
-

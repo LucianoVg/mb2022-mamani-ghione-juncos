@@ -17,6 +17,7 @@ export default async function handler(req, res) {
             return res.status(405).send("Metodo no permitido")
         }
     } catch (error) {
-
+        console.log(error);
+        return res.status(500).send(error)
     }
 }

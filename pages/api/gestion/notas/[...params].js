@@ -20,40 +20,15 @@ export default async function handler(
             nombreAlumno: '',
             apellidoAlumno: ''
         }
-        if (params) {
-            switch (params.length) {
-                case 1:
-                    queryParams.idTrimestre = params[0]
-                    break;
-                case 2:
-                    queryParams.idTrimestre = params[0]
-                    queryParams.idMateria = params[1]
-                    break;
-                case 3:
-                    queryParams.idTrimestre = params[0]
-                    queryParams.idMateria = params[1]
-                    queryParams.idCurso = params[2]
-                    break;
-                case 4:
-                    queryParams.idTrimestre = params[0]
-                    queryParams.idMateria = params[1]
-                    queryParams.idCurso = params[2]
-                    queryParams.nombreAlumno = params[3]
-                    break;
-                case 5:
-                    queryParams.idTrimestre = params[0]
-                    queryParams.idMateria = params[1]
-                    queryParams.idCurso = params[2]
-                    queryParams.nombreAlumno = params[3]
-                    queryParams.apellidoAlumno = params[4]
-                    break;
-            }
+
+        if (params && params.length === 3) {
+            queryParams.idTrimestre = params[0] !== 'undefined' && params[0]
+            queryParams.idMateria = params[1] !== 'undefined' && params[1]
+            queryParams.idCurso = params[2] !== 'undefined' && params[2]
+            console.log(queryParams);
         }
 
-        console.log(queryParams);
-
         const notas = await TraerNotas(queryParams.idTrimestre, queryParams.idMateria, queryParams.idCurso, queryParams.nombreAlumno, queryParams.apellidoAlumno)
-
         return res.status(200).json(notas)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })

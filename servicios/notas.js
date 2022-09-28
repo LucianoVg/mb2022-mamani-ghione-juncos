@@ -2,9 +2,9 @@ import { Prisma } from "./prisma";
 
 
 
-export async function TraerNotas(idTrimestre = "", idMateria = "", curso = "", nombreAlumno = "", apellidoAlumno = "") {
+export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "", apellidoAlumno = "") {
     try {
-        const notas = idTrimestre.length && idMateria.length && curso.length ? await Prisma.newPrisma().nota.findMany({
+        const notas = idTrimestre && idMateria && curso ? await Prisma.newPrisma().nota.findMany({
             include: {
                 materia: true,
                 trimestre: true,
