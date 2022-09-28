@@ -72,7 +72,7 @@ export default function ListadoNotificaciones() {
 
 
                 <Box
-                   minWidth={280}
+                    minWidth={280}
                     className={`${styles.box}`}
 
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
@@ -85,7 +85,7 @@ export default function ListadoNotificaciones() {
                         value={value}
                         onChange={handleChange}
                         scrollButtons="auto"
-
+                        minWidth={200}
 
                         sx={{ borderRight: 1, borderBottom: 1, borderColor: 'divider', width: '300px' }}
                     >
@@ -98,7 +98,7 @@ export default function ListadoNotificaciones() {
                                     sx={{ borderBottom: 1, borderColor: 'divider' }} />
                             ))
                         }
-                    
+
                     </Tabs>
                     {
                         listNotificaciones && listNotificaciones.map((n, i) => (
@@ -110,16 +110,16 @@ export default function ListadoNotificaciones() {
                                 container="true"
                             >
 
-                                
-                                    <div position='static'>
-                                        <h1 style={{ textAlign: 'center' }}>{n.asunto}</h1>
 
-                                        <p>{n.contenido}</p>
-                                        <h3>
-                                            Atte. Direccion
-                                        </h3>
-                                    </div>
-                              
+                                <div >
+                                    <h1 style={{ textAlign: 'center' }}>{n.asunto}</h1>
+
+                                    <p>{n.contenido}</p>
+                                    <h3>
+                                        Atte. Direccion
+                                    </h3>
+                                </div>
+
 
 
                             </TabPanel>
