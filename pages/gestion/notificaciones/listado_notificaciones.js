@@ -113,11 +113,11 @@ export default function ListadoNotificaciones() {
 
                                 <div >
                                     <h1 style={{ textAlign: 'center' }}>{n.asunto}</h1>
-
-                                    <p>{n.contenido}</p>
-                                    <h3>
-                                        Atte. Direccion
-                                    </h3>
+                                    <Typography component={'span'} variant={'body2'}>{n.contenido} </Typography>
+                                       
+                                        <h3>
+                                            Atte. Direccion
+                                        </h3>
                                 </div>
 
 
