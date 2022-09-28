@@ -88,7 +88,7 @@ const Notificaciones = () => {
 
                 <Grid container
                 >
-                    <Grid item xs>
+                    <Grid item xs={7}>
                         <h1 className="text-center">Enviar Notificacion</h1>
                         <Box direction="column">
                             <Box direction='row'>
@@ -160,7 +160,7 @@ const Notificaciones = () => {
 
 
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item >
                         <h1>Notificaciones enviadas</h1>
                         <Box sx={{ width: '350px' }}>
                             <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
