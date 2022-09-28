@@ -91,6 +91,7 @@ export default function NuevaSancion() {
 
                     </Box>
                     <Box direction='row'>
+                     
                         {
                             !esSancionGrupal && (
                                 <FormControl>
@@ -99,6 +100,7 @@ export default function NuevaSancion() {
                                         onChange={handleSancion}
                                         name="idAlumno"
                                         id="inputAlumno"
+                                        label="Alumno"
                                         sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
                                     >
                                         {
@@ -121,6 +123,7 @@ export default function NuevaSancion() {
                                         onChange={handleSancion}
                                         name="idCurso"
                                         id="inputCurso"
+                                        label="Curso"
                                         sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
                                     >
                                         {
@@ -138,12 +141,12 @@ export default function NuevaSancion() {
                         }
 
                         <FormControl>
-
                             <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
                             <Select value={sancion.idTipoSancion}
                                 onChange={handleSancion}
                                 name="idTipoSancion"
                                 id="inputTipoSancion"
+                                label="Tipo de Sancion"
                                 sx={{ width: '180px' }}
                             >
                                 {
@@ -157,11 +160,10 @@ export default function NuevaSancion() {
                         </FormControl>
                     </Box>
 
-                    <Box sx={{marginBottom: '20px'}}>
+                    <Box sx={{ marginBottom: '20px' }}>
 
                         <TextField
-
-
+                            margin="normal"
                             multiline
                             rows={5}
                             required
@@ -173,7 +175,7 @@ export default function NuevaSancion() {
                     </Box>
 
                     <Box >
-                        <Button variant="contained" sx={{width: '170px'}} color="primary" type="submit">Generar Sancion</Button>
+                        <Button variant="contained" sx={{ width: '170px' }} color="primary" type="submit">Generar Sancion</Button>
                     </Box>
 
                 </Box>

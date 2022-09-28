@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, FormControl, Box, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -84,75 +84,98 @@ export default function DetalleSancion() {
         <Layout>
             {
                 !loadSancion && (
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                    <Box >
+                        <Box >
                             <FormControlLabel control={<Checkbox id="checkSancionGrupal" checked={esSancionGrupal} onChange={() => setEsSancionGrupal(!esSancionGrupal)} />} label="Sancion Grupal" />
-                        </Grid>
-                        {
-                            !esSancionGrupal && (
-                                <Grid item xs={6}>
-                                    <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
-                                    <Select value={sancion?.idAlumnoXCursoXDivision} fullWidth onChange={handleSancion} name="idAlumnoXCursoXDivision" id="inputAlumno">
-                                        {
-                                            alumnos && alumnos.map((a, i) => (
-                                                <MenuItem key={i} value={a.id}>
-                                                    {a.usuario.nombre} {a.usuario.apellido}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </Grid>
-                            )
-                        }
-                        {
-                            esSancionGrupal && (
-                                <Grid item xs={6}>
-                                    <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                                    <Select value={sancion?.idCursoXDivision} fullWidth onChange={handleSancion} name="idCursoXDivision" id="inputCurso">
-                                        {
-                                            cursos && cursos.map((c, i) => (
-                                                <MenuItem key={i} value={c.id}>
-                                                    {c.curso?.nombre} {c.division?.division}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </Grid>
-                            )
-                        }
-                        <Grid item xs={6}>
-                            <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
-                            <Select value={sancion?.idTipoSancion} fullWidth onChange={handleSancion} name="idTipoSancion" id="inputTipoSancion">
-                                {
-                                    tipoSanciones && tipoSanciones.map((t, i) => (
-                                        <MenuItem key={i} value={t.id}>
-                                            {t.tipo}
-                                        </MenuItem>
-                                    ))
-                                }
-                            </Select>
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Box>
+                        <Box direction='row'>
+                            {
+                                !esSancionGrupal && (
+                                    <FormControl>
+                                        <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                                        <Select value={sancion?.idAlumnoXCursoXDivision} onChange={handleSancion}
+                                            name="idAlumnoXCursoXDivision" 
+                                            id="inputAlumno"
+                                            label="Alumno"
+                                            sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                                        >
+                                            {
+                                                alumnos && alumnos.map((a, i) => (
+                                                    <MenuItem key={i} value={a.id}>
+                                                        {a.usuario.nombre} {a.usuario.apellido}
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                        </Select>
+                                    </FormControl>
+                                )
+                            }
+                            {
+                                esSancionGrupal && (
+                                    <FormControl>
+                                        <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                                        <Select value={sancion?.idCursoXDivision} onChange={handleSancion}
+                                            name="idCursoXDivision" 
+                                            id="inputCurso"
+                                            label="Curso"
+                                            sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                                        >
+                                            {
+                                                cursos && cursos.map((c, i) => (
+                                                    <MenuItem key={i} value={c.id}>
+                                                        {c.curso?.nombre} {c.division?.division}
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                        </Select>
+                                    </FormControl>
+                                )
+                            }
+                            <FormControl>
+                                <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
+                                <Select value={sancion?.idTipoSancion}
+                                    onChange={handleSancion} 
+                                    name="idTipoSancion"
+                                    id="inputTipoSancion"
+                                    label="Tipo de Sancion"
+                                    sx={{ width: '180px' }}
+                                >
+                                    {
+                                        tipoSanciones && tipoSanciones.map((t, i) => (
+                                            <MenuItem key={i} value={t.id}>
+                                                {t.tipo}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Box>
+
+                        <Box sx={{ marginBottom: '20px' }}>
                             <TextField
-                                margin="normal"
-                                fullWidth
+
                                 multiline
-                                rows={3}
+                                rows={6}
                                 required
                                 name="motivo"
                                 value={sancion?.motivo}
                                 label="Motivo"
-                                onChange={handleSancion} />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button disabled={!editMode} variant="contained" color="primary" onClick={actualizarSancion}>Actualizar Sancion</Button>
-                        </Grid>
-                        <Grid item xs={6}>
+                                onChange={handleSancion}
+                                sx={{ width: '400px' }}
+                            />
+                        </Box>
+                        <Box direction='row'>
+                            <Button disabled={!editMode} variant="contained" 
+                            color="primary" 
+                            onClick={actualizarSancion}
+                            sx={{marginRight: '20px'}}
+                            >Actualizar Sancion</Button>
+
                             <Link href={'/gestion/sanciones'}>
                                 <Button variant="outlined" component="label">Volver</Button>
                             </Link>
-                        </Grid>
-                    </Grid>
+                        </Box>
+                    </Box>
                 )
             }
         </Layout>

@@ -101,7 +101,7 @@ const Notificaciones = () => {
                                         name="curso"
                                         label="Curso"
                                         onChange={handleCurso}
-                                        sx={{ width: '90px', marginRight: '20px' }}
+                                        sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}
                                     >
                                         <MenuItem value={10}>Todos</MenuItem>
                                         {
@@ -123,7 +123,7 @@ const Notificaciones = () => {
                                         name="nombre"
                                         label="nombre"
                                         onChange={handleNombre}
-                                        sx={{ width: '150px' }}
+                                        sx={{ width: '200px' }}
                                     >
                                         <MenuItem value={'JuanJuncos'}>Juan Juncos</MenuItem>
                                         <MenuItem value={'SamuelBertola'}>Samuel Bertola</MenuItem>
