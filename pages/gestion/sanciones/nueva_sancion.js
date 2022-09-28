@@ -171,7 +171,7 @@ export default function NuevaSancion() {
                             value={sancion.motivo}
                             label="Motivo"
                             onChange={handleSancion}
-                            sx={{ width: '400px' }} />
+                            sx={{ width: '350px' }} />
                     </Box>
 
                     <Box >
