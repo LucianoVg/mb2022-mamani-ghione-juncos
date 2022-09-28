@@ -173,7 +173,7 @@ export default function NuevaSancion() {
                     </Box>
 
                     <Box >
-                        <Button variant="contained" color="primary" type="submit">Generar Sancion</Button>
+                        <Button variant="contained" sx={{width: '170px'}} color="primary" type="submit">Generar Sancion</Button>
                     </Box>
 
                 </Box>
