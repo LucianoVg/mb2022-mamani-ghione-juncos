@@ -138,7 +138,7 @@ export default function DetalleSancion() {
                                     name="idTipoSancion"
                                     id="inputTipoSancion"
                                     label="Tipo de Sancion"
-                                    sx={{ width: '180px' }}
+                                    sx={{ width: '180px', marginBottom: '20px' }}
                                 >
                                     {
                                         tipoSanciones && tipoSanciones.map((t, i) => (
@@ -161,14 +161,15 @@ export default function DetalleSancion() {
                                 value={sancion?.motivo}
                                 label="Motivo"
                                 onChange={handleSancion}
-                                sx={{ width: '350px' }} />
-                            />
+                                sx={{ width: '350px', }} 
+                                />
+                            
                         </Box>
                         <Box direction='row'>
                             <Button disabled={!editMode} variant="contained" 
                             color="primary" 
                             onClick={actualizarSancion}
-                            sx={{marginRight: '20px'}}
+                            sx={{marginRight: '20px', marginBottom: '10px'}}
                             >Actualizar Sancion</Button>
 
                             <Link href={'/gestion/sanciones'}>

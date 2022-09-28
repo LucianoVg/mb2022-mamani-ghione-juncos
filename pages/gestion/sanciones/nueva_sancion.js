@@ -91,7 +91,7 @@ export default function NuevaSancion() {
 
                     </Box>
                     <Box direction='row'>
-                     
+
                         {
                             !esSancionGrupal && (
                                 <FormControl>
@@ -147,7 +147,7 @@ export default function NuevaSancion() {
                                 name="idTipoSancion"
                                 id="inputTipoSancion"
                                 label="Tipo de Sancion"
-                                sx={{ width: '180px' }}
+                                sx={{ width: '180px', marginBottom: '20px' }}
                             >
                                 {
                                     tipoSanciones && tipoSanciones.map((t, i) => (
@@ -171,7 +171,8 @@ export default function NuevaSancion() {
                             value={sancion.motivo}
                             label="Motivo"
                             onChange={handleSancion}
-                            sx={{ width: '350px' }} />
+                            sx={{ width: '350px' }}
+                        />
                     </Box>
 
                     <Box >
