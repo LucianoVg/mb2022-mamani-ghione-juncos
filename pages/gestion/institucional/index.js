@@ -51,11 +51,18 @@ export default function Institucional() {
                 fichaInstitucional && (
                     <div >
                         <Carrusel imagenes={fichaInstitucional.portadasFicha} />
-                        <Typography variant="h4">{fichaInstitucional.nombreInstitucion}</Typography>
+                        <Grid container spacing={2}>
 
-                        <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
-
-                        <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
+                            <Grid item xs={12}>
+                                <Typography variant="h5">{fichaInstitucional.nombreInstitucion}</Typography>
+                            </Grid>
+                            {/* <Grid item xs={12}>
+                                <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
+                            </Grid> */}
+                            <Grid item xs={12}>
+                                <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
+                            </Grid>
+                        </Grid>
 
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
@@ -66,10 +73,10 @@ export default function Institucional() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2"><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
-                              
+
                             </Grid>
                             <Grid item xs={12}>
-                              
+
                                 <Typography variant="body2"><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
                             </Grid>
 
@@ -78,7 +85,7 @@ export default function Institucional() {
                                     <strong>{fichaInstitucional.oficina1}</strong>
                                 </Typography>
                                 <Typography variant="body2">
-                                   {fichaInstitucional.telefono1}
+                                    {fichaInstitucional.telefono1}
                                 </Typography>
 
 
@@ -89,7 +96,7 @@ export default function Institucional() {
                                     <strong>{fichaInstitucional.oficina2}</strong>
                                 </Typography>
                                 <Typography variant="body2">
-                                   {fichaInstitucional.telefono2}
+                                    {fichaInstitucional.telefono2}
                                 </Typography>
 
                             </Grid>
