@@ -3,16 +3,8 @@ import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid
 import { Layout } from "../../../components/layout";
 import Divider from '@mui/material/Divider';
 import PropTypes from 'prop-types';
-
-import Tabs, { tabsClasses } from '@mui/material/Tabs';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-// import TabPanel from '@mui/lab/TabPanel';
-
+import Tabs from '@mui/material/Tabs';
 import { useEffect, useState } from 'react'
-
-import { Card, CardContent, CardActions, CardMedia } from "@mui/material";
-import { Edit } from "@mui/icons-material";
 import styles from "../../../styles/tarjetaNoticias.module.css";
 import axios from "axios";
 
@@ -80,7 +72,7 @@ export default function ListadoNotificaciones() {
 
 
                 <Box
-                    // style={{ po}}
+                   minWidth={280}
                     className={`${styles.box}`}
 
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
@@ -118,8 +110,8 @@ export default function ListadoNotificaciones() {
                                 container="true"
                             >
 
-                                <Box style={{ height: '550px' }}>
-                                    <div>
+                                
+                                    <div position='static'>
                                         <h1 style={{ textAlign: 'center' }}>{n.asunto}</h1>
 
                                         <p>{n.contenido}</p>
@@ -127,7 +119,7 @@ export default function ListadoNotificaciones() {
                                             Atte. Direccion
                                         </h3>
                                     </div>
-                                </Box>
+                              
 
 
                             </TabPanel>

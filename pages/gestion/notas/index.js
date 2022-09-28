@@ -210,7 +210,10 @@ export default function Notas() {
                 </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={index} onChange={handleTrimestre}
-                        variant="scrollable">
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                        >
                         <Tab label="Primer Trimestre" />
                         <Tab label="Segundo Trimestre" />
                         <Tab label="Tercer Trimestre" />
