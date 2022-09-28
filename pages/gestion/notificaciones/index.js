@@ -84,7 +84,7 @@ const Notificaciones = () => {
     return (
         <Layout title='Enviar Notificaciones'>
             {/* <Notificacion /> */}
-            <Container style={{ position: 'relative', }}>
+            <div>
 
                 <Grid container
                 >
@@ -188,7 +188,7 @@ const Notificaciones = () => {
                 </Grid>
 
 
-            </Container>
+            </div>
 
         </Layout >
     )
