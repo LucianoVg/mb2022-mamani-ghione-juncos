@@ -65,6 +65,7 @@ model curso {
   nombre         String?
   cursoXdivision cursoXdivision[]
   materia        materia[]
+  fechaExamen    fechaExamen[]
 }
 
 model cursoXdivision {
@@ -130,11 +131,14 @@ model estadoAlumno {
 
 model fechaExamen {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  titulo    String
   idUsuario String?  @db.ObjectId
   idCurso   String?  @db.ObjectId
   fecha     String?
   idMateria String?  @db.ObjectId
   materia   materia? @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario   usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso     curso?   @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model fichaInstitucional {
@@ -375,4 +379,5 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacionXusuario  notificacionXusuario[]
   sancionXusuario       sancionXusuario[]
+  fechaExamen           fechaExamen[]
 }

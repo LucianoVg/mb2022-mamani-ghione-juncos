@@ -12,15 +12,19 @@ export async function ListarNotificacion() {
     return listado
 }
 
-export async function CrearNotificacion(asunto, contenido, fecha) {
-
-
+export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso) {
     try {
         const crear = await Prisma.newPrisma().notificacion.create({
             data: {
                 asunto: asunto,
                 contenido: contenido,
-                fecha: fecha
+                fecha: fecha,
+                notificacionXusuario: {
+                    create: {
+                        idUsuario: idUsuario
+                    }
+                },
+                idCursoDivision: idCurso
             }
         })
         return crear
