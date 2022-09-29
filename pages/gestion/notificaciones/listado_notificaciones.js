@@ -72,7 +72,7 @@ export default function ListadoNotificaciones() {
 
 
                 <Box
-                    minWidth={280}
+                    minWidth='280px'
 
                     className={`${styles.box}`}
 
