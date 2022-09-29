@@ -49,47 +49,62 @@ export default function Institucional() {
 
             {
                 fichaInstitucional && (
-                    <Container maxWidth={'md'}>
+                    <div >
                         <Carrusel imagenes={fichaInstitucional.portadasFicha} />
-                        <Typography variant="h3">{fichaInstitucional.nombreInstitucion}</Typography>
+                        <Grid container spacing={2}>
 
-                        <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
-
-                        <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
+                            <Grid item xs={12}>
+                                <Typography variant="h5">{fichaInstitucional.nombreInstitucion}</Typography>
+                            </Grid>
+                            {/* <Grid item xs={12}>
+                                <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
+                            </Grid> */}
+                            <Grid item xs={12}>
+                                <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
+                            </Grid>
+                        </Grid>
 
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Divider sx={{ mb: 1 }} />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant="h6">Datos de Contacto</Typography>
+                                <Typography variant="h5">Datos de Contacto</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2"><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
+
+                            </Grid>
+                            <Grid item xs={12}>
+
                                 <Typography variant="body2"><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
                             </Grid>
 
-                            <Grid item xs={6}>
+                            <Grid item xs>
                                 <Typography variant="body2">
-                                    <strong>Telefono 1:</strong> {fichaInstitucional.telefono1}
+                                    <strong>{fichaInstitucional.oficina1}</strong>
                                 </Typography>
                                 <Typography variant="body2">
-                                    <strong>Telefono 2:</strong> {fichaInstitucional.telefono2}
+                                    {fichaInstitucional.telefono1}
                                 </Typography>
+
+
+
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={9}>
                                 <Typography variant="body2">
-                                    <strong>Oficina 1:</strong> {fichaInstitucional.oficina1}
+                                    <strong>{fichaInstitucional.oficina2}</strong>
                                 </Typography>
                                 <Typography variant="body2">
-                                    <strong>Oficina 2:</strong> {fichaInstitucional.oficina2}
+                                    {fichaInstitucional.telefono2}
                                 </Typography>
+
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider sx={{ mb: 1 }} />
                             </Grid>
                         </Grid>
-                    </Container>
+                    </div>
                 )
             }
             {

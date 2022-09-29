@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 
@@ -155,44 +155,65 @@ export default function Notas() {
         <Layout>
             <Container maxWidth={'xl'}>
                 <Typography variant="h4">Notas</Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                        <Select fullWidth id="inputMateria" name="idMateria" onChange={handleMateria} >
-                            {
-                                materias && materias?.map((m, i) => (
+                <Box sx={{ marginTop: '20px' }} >
+                    <Box direction='row'>
 
-                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                        <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                        <Select fullWidth id="inputCurso" name="idCurso" onChange={handleCurso} >
-                            {
-                                cursos && cursos?.map((c, i) => (
+                        <FormControl>
+                            <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+                            <Select id="inputMateria" name="idMateria" onChange={handleMateria}
+                                label="materia"
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                            >
+                                {
+                                    materias && materias?.map((m, i) => (
 
-                                    <MenuItem selected={i === 0} key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </Grid>
-                    <Grid item xs={6} style={{ marginTop: '1.8mm' }}>
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+
+                        </FormControl>
+
+                        <FormControl>
+                            <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                            <Select id="inputCurso" name="idCurso" onChange={handleCurso}
+                                label="curso"
+                                sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
+                                {
+                                    cursos && cursos?.map((c, i) => (
+
+                                        <MenuItem selected={i === 0} key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                    </Box>
+
+
+                    <Box direction='row'>
                         <TextField margin="normal"
-                            fullWidth
+
                             name="nombreAlumno"
                             value={nombreAlumno}
                             onChange={handleNombreAlumno}
-                            label="Nombre del alumno" />
+                            label="Nombre del alumno"
+                            sx={{ marginRight: '20px', marginBottom: '20px' }}
+                        />
                         <TextField margin="normal"
-                            fullWidth
+
                             name="apellidoAlumno"
                             value={apellidoAlumno}
                             onChange={handleApellidoAlumno}
                             label="Apellido del alumno" />
-                    </Grid>
-                </Grid>
+                    </Box>
+
+                </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={index} onChange={handleTrimestre}>
+                    <Tabs value={index} onChange={handleTrimestre}
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                        >
                         <Tab label="Primer Trimestre" />
                         <Tab label="Segundo Trimestre" />
                         <Tab label="Tercer Trimestre" />

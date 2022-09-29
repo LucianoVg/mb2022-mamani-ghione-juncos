@@ -112,7 +112,7 @@ export default function Notas() {
             </Button>
 
             <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs>
                     <h2>Notas por trimestre</h2>
                     <div sx={{ marginBottom: '100px' }}>
                         <TableContainer>
@@ -187,7 +187,7 @@ export default function Notas() {
                         </TableContainer>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs>
                     <h2>Promedio por trimestre</h2>
 
                     <div sx={{ marginTop: '200px' }}>

@@ -9,11 +9,10 @@ import Divider from '@mui/material/Divider';
 import { Edit } from "@mui/icons-material";
 import Icon from '@mui/material/Icon';
 import { CrearNotificacion } from '../../../servicios/notificaciones';
-import { useAuth } from '../../../components/context/authUserProvider';
 
 const Notificaciones = () => {
     const router = useRouter()
-    const { loading, authUser } = useAuth()
+
     const [notificacion, setNotificacion] = useState({
         asunto: '',
         contenido: ''
@@ -22,13 +21,16 @@ const Notificaciones = () => {
     const [cursos, setCursos] = useState('');
     const [idCurso, setIdCurso] = useState('');
     const [nombre, setNombre] = useState('');
-    const [usuario, setUsuario] = useState({ id: '' })
+
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
+
     };
+    console.log(idCurso)
     const handleNombre = (e) => {
         setNombre(e.target.value);
+
     };
 
     const handleNotificacion = (e) => {
@@ -37,23 +39,14 @@ const Notificaciones = () => {
 
 
     useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        traerUsuario()
         ListarNotificacion()
         listarCursos()
         // filtros()
-    }, [loading, authUser, usuario.id])
+    }, [])
 
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ id: res.data?.id })
-        }
-    }
+
     const listarCursos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
             .then(res => {
                 console.log(res.data);
                 setCursos(res.data)
@@ -73,12 +66,11 @@ const Notificaciones = () => {
     const CrearNotificacion = (e) => {
         e.preventDefault()
         console.log(notificacion);
+        console.log({ fecha: new Date().toISOString() })
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
             asunto: notificacion.asunto,
             contenido: notificacion.contenido,
-            fecha: new Date().toISOString().split('T')[0],
-            idCurso: idCurso,
-            idUsuario: usuario.id
+            fecha: new Date().toISOString()
         }).then(res => {
             if (res.data) {
                 router.push('/gestion/notificaciones')
@@ -90,40 +82,39 @@ const Notificaciones = () => {
 
 
     return (
-        <Layout>
+        <Layout title='Enviar Notificaciones'>
             {/* <Notificacion /> */}
-            <Container style={{ position: 'relative', }}>
+            <div>
 
                 <Grid container
                 >
-                    <Grid item xs>
-                        <Typography variant='h4' sx={{ textAlign: 'start', marginBottom: 2 }}>Enviar Notificacion</Typography>
+                    <Grid item xs={7}>
+                        <h1 className="text-center">Enviar Notificacion</h1>
                         <Box direction="column">
                             <Box direction='row'>
-                                <FormControl fullWidth>
+                                <FormControl>
                                     <InputLabel id="demo-simple-select-label">Curso</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={idCurso}
                                         name="curso"
-                                        fullWidth
                                         label="Curso"
                                         onChange={handleCurso}
-                                        sx={{ width: '90px', marginRight: '20px' }}
+                                        sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}
                                     >
-                                        <MenuItem value={''}>Todos</MenuItem>
+                                        <MenuItem value={10}>Todos</MenuItem>
                                         {
                                             cursos && cursos.map((c, i) => (
                                                 <MenuItem key={i} value={c.id}>{
-                                                    c.curso?.nombre} {c.division?.division}
+                                                    c.curso?.nombre}{c.division?.division}
                                                 </MenuItem>
                                             ))
                                         }
                                     </Select>
 
                                 </FormControl>
-                                {/* <FormControl sx={{ width: '30%', marginRight: '20px' }}>
+                                <FormControl sx={{ width: '30%', marginRight: '20px' }}>
                                     <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
@@ -132,14 +123,14 @@ const Notificaciones = () => {
                                         name="nombre"
                                         label="nombre"
                                         onChange={handleNombre}
-                                        sx={{ width: '150px' }}
+                                        sx={{ width: '200px' }}
                                     >
                                         <MenuItem value={'JuanJuncos'}>Juan Juncos</MenuItem>
                                         <MenuItem value={'SamuelBertola'}>Samuel Bertola</MenuItem>
                                         <MenuItem value={'LuisGarcia'}>Luis Garcia</MenuItem>
 
                                     </Select>
-                                </FormControl> */}
+                                </FormControl>
                             </Box>
 
 
@@ -149,14 +140,12 @@ const Notificaciones = () => {
                                     name="asunto"
                                     value={notificacion.asunto}
                                     onChange={handleNotificacion}
-                                    required
                                     style={{ width: '350px', height: '35px', resize: 'none', fontSize: '20px' }}
                                 />
                                 <h2><strong>Contenido</strong></h2>
                                 <TextareaAutosize
                                     name="contenido"
                                     value={notificacion.contenido}
-                                    required
                                     onChange={handleNotificacion}
                                     style={{ width: '350px', height: '200px', resize: 'none', fontSize: '20px' }}
                                 />
@@ -164,9 +153,14 @@ const Notificaciones = () => {
                                     <Button variant="contained" type="submit">Enviar</Button>
                                 </Box>
                             </Box>
+
+
+
                         </Box>
+
+
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item >
                         <h1>Notificaciones enviadas</h1>
                         <Box sx={{ width: '350px' }}>
                             <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
@@ -177,12 +171,16 @@ const Notificaciones = () => {
                                         >
                                             <ListItemButton component="a" href="#simple-list">
                                                 <ListItemText primary={n.asunto} />
+
                                             </ListItemButton>
                                             <Divider />
                                         </ListItem>
 
                                     ))
+
                                 }
+
+
                             </List>
                         </Box>
                     </Grid>
@@ -190,7 +188,7 @@ const Notificaciones = () => {
                 </Grid>
 
 
-            </Container>
+            </div>
 
         </Layout >
     )

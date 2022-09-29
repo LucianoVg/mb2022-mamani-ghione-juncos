@@ -30,78 +30,75 @@ const MaterialEstudio = () => {
 
     return (
         <Layout>
-            <Container maxWidth={'md'}>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container rowSpacing={5} >
-                        <Grid item xs={12}>
-                            <FormControl sx={{ width: '100px' }}>
-                                <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                                <Select
-                                    direction='row'
-                                    // PONER LA LISTA EN HORIZONTAL 
-                                    MenuProps={{
+            <div >
+                <Box sx={{marginBottom: '20px'}}>
 
-                                        anchorOrigin: {
-                                            vertical: 'center',
-                                            horizontal: 'right',
-                                        },
-                                        transformOrigin: {
-                                            vertical: 'center',
-                                            horizontal: 'left',
-                                        },
+                    <FormControl sx={{ width: '100px' }}>
+                        <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                        <Select
+                            direction='row'
+                            // PONER LA LISTA EN HORIZONTAL 
+                            MenuProps={{
 
-                                    }}
-                                    IconComponent={ArrowRightIcon}
-                                    value={curso}
-                                    label="Curso"
-                                    onChange={handleCurso}
+                                anchorOrigin: {
+                                    vertical: 'center',
+                                    horizontal: 'right',
+                                },
+                                transformOrigin: {
+                                    vertical: 'center',
+                                    horizontal: 'left',
+                                },
 
-                                >
+                            }}
+                            IconComponent={ArrowRightIcon}
+                            value={curso}
+                            label="Curso"
+                            onChange={handleCurso}
 
-                                    <MenuItem value={1} sx={{ display: "inline-block" }}>1 A</MenuItem>
-                                    <MenuItem value={2} sx={{ display: "inline-block" }}>1 B</MenuItem>
-                                    <MenuItem value={3} sx={{ display: "inline-block" }}>2 A</MenuItem>
-                                    <MenuItem value={4} sx={{ display: "inline-block" }}>2 B</MenuItem>
-                                    <MenuItem value={5} sx={{ display: "inline-block" }}>3 A</MenuItem>
-                                    <MenuItem value={64} sx={{ display: "inline-block" }}>3 B</MenuItem>
-                                    <MenuItem value={5} sx={{ display: "inline-block" }}>4 A</MenuItem>
-                                    <MenuItem value={6423} sx={{ display: "inline-block" }}>4 B</MenuItem>
-                                    <MenuItem value={5463} sx={{ display: "inline-block" }}>5 A</MenuItem>
-                                    <MenuItem value={6421} sx={{ display: "inline-block" }}>5 B</MenuItem>
-                                    <MenuItem value={535} sx={{ display: "inline-block" }}>6 A</MenuItem>
-                                    <MenuItem value={612} sx={{ display: "inline-block" }}>6 B</MenuItem>
+                        >
 
+                            <MenuItem value={1} sx={{ display: "inline-block" }}>1 A</MenuItem>
+                            <MenuItem value={2} sx={{ display: "inline-block" }}>1 B</MenuItem>
+                            <MenuItem value={3} sx={{ display: "inline-block" }}>2 A</MenuItem>
+                            <MenuItem value={4} sx={{ display: "inline-block" }}>2 B</MenuItem>
+                            <MenuItem value={5} sx={{ display: "inline-block" }}>3 A</MenuItem>
+                            <MenuItem value={64} sx={{ display: "inline-block" }}>3 B</MenuItem>
+                            <MenuItem value={5} sx={{ display: "inline-block" }}>4 A</MenuItem>
+                            <MenuItem value={6423} sx={{ display: "inline-block" }}>4 B</MenuItem>
+                            <MenuItem value={5463} sx={{ display: "inline-block" }}>5 A</MenuItem>
+                            <MenuItem value={6421} sx={{ display: "inline-block" }}>5 B</MenuItem>
+                            <MenuItem value={535} sx={{ display: "inline-block" }}>6 A</MenuItem>
+                            <MenuItem value={612} sx={{ display: "inline-block" }}>6 B</MenuItem>
 
 
 
-                                </Select>
-                            </FormControl>
 
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControl sx={{ width: '150px' }}>
-                                <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={materia}
-                                    label="Materia"
-                                    onChange={handleMateria}
-                                >
-                                    <MenuItem value={10}>Lengua</MenuItem>
-                                    <MenuItem value={20}>Geografia</MenuItem>
-                                    <MenuItem value={30}>Historia</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                        </Select>
+                    </FormControl>
+
+                </Box>
+                <Box>
+                    <FormControl sx={{ width: '150px' }}>
+                        <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={materia}
+                            label="Materia"
+                            onChange={handleMateria}
+                        >
+                            <MenuItem value={10}>Lengua</MenuItem>
+                            <MenuItem value={20}>Geografia</MenuItem>
+                            <MenuItem value={30}>Historia</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Box>
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                         <Grid item xs >
                             <h3>Primer Trimestre</h3>
 
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -113,7 +110,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -125,7 +122,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -141,7 +138,7 @@ const MaterialEstudio = () => {
                         <Grid item xs>
                             <h3>Segundo Trimestre</h3>
 
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -153,7 +150,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -165,7 +162,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -182,7 +179,7 @@ const MaterialEstudio = () => {
                         <Grid item xs >
                             <h3>Tercer Trimestre</h3>
 
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -194,7 +191,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -206,7 +203,7 @@ const MaterialEstudio = () => {
                                     <DownloadIcon />
                                 </IconButton>
                             </Stack>
-                            <Stack direction="row" mt={2}>
+                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
                                 <Button variant='outlined' component="label"
                                     sx={{ width: '180px' }}
                                     spacing={4}
@@ -231,7 +228,7 @@ const MaterialEstudio = () => {
                 </Box>
 
 
-            </Container>
+            </div>
 
 
         </Layout >
