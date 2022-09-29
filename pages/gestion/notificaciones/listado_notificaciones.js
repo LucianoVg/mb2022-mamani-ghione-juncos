@@ -21,7 +21,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -114,11 +114,11 @@ export default function ListadoNotificaciones() {
 
                                 <Typography textAlign="center" variant={'h6'}
                                     sx={{ marginBottom: '30px' }}
-                                >{n.asunto} </Typography>
+                                ><strong>{n.asunto}</strong> </Typography>
                                 <Typography variant={'body2'}
                                     sx={{ marginBottom: '30px' }}
                                 >{n.contenido} </Typography>
-                                <Typography variant={'h7'}> Atte. Direccion</Typography>
+                                <Typography variant="caption"> <strong>Atte. Direccion</strong></Typography>
 
 
 
