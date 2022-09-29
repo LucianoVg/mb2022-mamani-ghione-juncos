@@ -72,11 +72,11 @@ export default function ListadoNotificaciones() {
 
 
                 <Box
-                    minWidth='280px'
+            
 
                     className={`${styles.box}`}
 
-                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
+                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550, minWidth: '280px' }}
                 >
 
                     <Tabs
@@ -86,8 +86,8 @@ export default function ListadoNotificaciones() {
                         value={value}
                         onChange={handleChange}
                         scrollButtons="auto"
-                        minWidth={200}
-                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px' }}
+                       
+                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px', minWidth: '120px' }}
                     >
 
                         {
