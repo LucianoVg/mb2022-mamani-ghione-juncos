@@ -111,16 +111,16 @@ export default function ListadoNotificaciones() {
                             >
 
 
-                                <div >
-                                    <Typography  textAlign="center" variant={'h6'}
-                                    sx={{marginBottom: '30px'}}
-                                    >{n.asunto} </Typography>
-                                    <Typography variant={'body2'}
-                                    sx={{marginBottom: '30px'}}
-                                    >{n.contenido} </Typography>
-                                    <Typography  variant={'h7'}> Atte. Direccion</Typography>
 
-                                </div>
+                                <Typography textAlign="center" variant={'h6'}
+                                    sx={{ marginBottom: '30px' }}
+                                >{n.asunto} </Typography>
+                                <Typography variant={'body2'}
+                                    sx={{ marginBottom: '30px' }}
+                                >{n.contenido} </Typography>
+                                <Typography variant={'h7'}> Atte. Direccion</Typography>
+
+
 
 
 
