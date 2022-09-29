@@ -68,11 +68,12 @@ export default function ListadoNotificaciones() {
 
     return (
         <Layout>
-            <Container >
+            <div xs={12}>
 
 
                 <Box
                     minWidth={280}
+
                     className={`${styles.box}`}
 
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550 }}
@@ -86,7 +87,6 @@ export default function ListadoNotificaciones() {
                         onChange={handleChange}
                         scrollButtons="auto"
                         minWidth={200}
-
                         sx={{ borderRight: 1, borderColor: 'divider', width: '300px' }}
                     >
 
@@ -112,12 +112,14 @@ export default function ListadoNotificaciones() {
 
 
                                 <div >
-                                    <h1 style={{ textAlign: 'center' }}>{n.asunto}</h1>
-                                    <Typography component={'span'} variant={'body2'}>{n.contenido} </Typography>
-                                       
-                                        <h3>
-                                            Atte. Direccion
-                                        </h3>
+                                    <Typography  textAlign="center" variant={'h6'}
+                                    sx={{marginBottom: '30px'}}
+                                    >{n.asunto} </Typography>
+                                    <Typography variant={'body2'}
+                                    sx={{marginBottom: '30px'}}
+                                    >{n.contenido} </Typography>
+                                    <Typography  variant={'h7'}> Atte. Direccion</Typography>
+
                                 </div>
 
 
@@ -130,7 +132,7 @@ export default function ListadoNotificaciones() {
 
 
 
-            </Container  >
+            </div  >
 
         </Layout >
     );
