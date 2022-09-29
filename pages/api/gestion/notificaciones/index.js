@@ -15,8 +15,8 @@ export default async function handler(req, res) {
             return res.status(200).json(listar)
         }
         if (req.method === 'POST') {
-            const { asunto, contenido, fecha, idUsuario } = req.body
-            const crear = await CrearNotificacion(asunto, contenido, fecha, idUsuario)
+            const { asunto, contenido, fecha, idUsuario, idCurso } = req.body
+            const crear = await CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso)
 
 
             return res.status(200).json(crear)

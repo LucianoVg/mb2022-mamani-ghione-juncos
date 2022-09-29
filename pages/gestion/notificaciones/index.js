@@ -8,11 +8,11 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import { Edit } from "@mui/icons-material";
 import Icon from '@mui/material/Icon';
-import { CrearNotificacion } from '../../../servicios/notificaciones';
+import { useAuth } from '../../../components/context/authUserProvider';
 
 const Notificaciones = () => {
     const router = useRouter()
-
+    const { loading, authUser } = useAuth()
     const [notificacion, setNotificacion] = useState({
         asunto: '',
         contenido: ''
@@ -20,17 +20,16 @@ const Notificaciones = () => {
     const [listNotificaciones, setListNotificaciones] = useState()
     const [cursos, setCursos] = useState('');
     const [idCurso, setIdCurso] = useState('');
-    const [nombre, setNombre] = useState('');
+    // const [nombre, setNombre] = useState('');
+    const [usuario, setUsuario] = useState({ id: '' })
 
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
 
     };
-    console.log(idCurso)
     const handleNombre = (e) => {
         setNombre(e.target.value);
-
     };
 
     const handleNotificacion = (e) => {
@@ -39,14 +38,23 @@ const Notificaciones = () => {
 
 
     useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        traerUsuario()
         ListarNotificacion()
         listarCursos()
         // filtros()
-    }, [])
+    }, [usuario.id])
 
-
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ id: res.data?.id })
+        }
+    }
     const listarCursos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/curso`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 console.log(res.data);
                 setCursos(res.data)
@@ -55,7 +63,7 @@ const Notificaciones = () => {
             })
     }
     const ListarNotificacion = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`)
             .then(res => {
                 console.log(res.data);
                 setListNotificaciones(res.data)
@@ -70,7 +78,9 @@ const Notificaciones = () => {
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
             asunto: notificacion.asunto,
             contenido: notificacion.contenido,
-            fecha: new Date().toISOString()
+            fecha: new Date().toISOString().split('T')[0],
+            idCurso: idCurso,
+            idUsuario: usuario.id
         }).then(res => {
             if (res.data) {
                 router.push('/gestion/notificaciones')
@@ -114,7 +124,7 @@ const Notificaciones = () => {
                                     </Select>
 
                                 </FormControl>
-                                <FormControl sx={{ width: '30%', marginRight: '20px' }}>
+                                {/* <FormControl sx={{ width: '30%', marginRight: '20px' }}>
                                     <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
@@ -130,7 +140,7 @@ const Notificaciones = () => {
                                         <MenuItem value={'LuisGarcia'}>Luis Garcia</MenuItem>
 
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                             </Box>
 
 
@@ -169,7 +179,7 @@ const Notificaciones = () => {
                                         <ListItem disablePadding
                                             key={i} value={n.id}
                                         >
-                                            <ListItemButton component="a" href="#simple-list">
+                                            <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
                                                 <ListItemText primary={n.asunto} />
 
                                             </ListItemButton>
