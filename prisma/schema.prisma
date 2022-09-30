@@ -19,6 +19,7 @@ model alumnoXcursoXdivision {
   asistencia       asistencia[]
   nota             nota[]
   sancion          sancion[]
+  notificacion     notificacion[]
 }
 
 model archivo {
@@ -75,7 +76,6 @@ model cursoXdivision {
   division              division?               @relation(fields: [idDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
-  notificacionXusuario  notificacionXusuario[]
 }
 
 model discapacidad {
@@ -227,21 +227,21 @@ model noticiasYnovedades {
 }
 
 model notificacion {
-  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  asunto               String?
-  contenido            String?
-  fecha                String?
-  notificacionXusuario notificacionXusuario[]
+  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
+  asunto                  String?
+  contenido               String?
+  fecha                   String?
+  idAlumnoXCursoXDivision String?                @db.ObjectId
+  notificacionXusuario    notificacionXusuario[]
+  alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXCursoXDivision], references: [id])
 }
 
 model notificacionXusuario {
-  id               String          @id @default(auto()) @map("_id") @db.ObjectId
-  idUsuario        String?         @db.ObjectId
-  idNotificacion   String?         @db.ObjectId
-  idcursoXdivision String?         @db.ObjectId
-  usuario          usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  notificacion     notificacion?   @relation(fields: [idNotificacion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  cursoXdivision   cursoXdivision? @relation(fields: [idcursoXdivision], references: [id])
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  idUsuario      String?       @db.ObjectId
+  idNotificacion String?       @db.ObjectId
+  usuario        usuario?      @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  notificacion   notificacion? @relation(fields: [idNotificacion], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisos {

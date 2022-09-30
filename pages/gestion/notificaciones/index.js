@@ -26,7 +26,6 @@ const Notificaciones = () => {
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
-
     };
     const handleNombre = (e) => {
         setNombre(e.target.value);
@@ -42,14 +41,15 @@ const Notificaciones = () => {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        ListarNotificacion()
+        ListarNotificaciones()
         listarCursos()
         // filtros()
-    }, [usuario.id])
+    }, [usuario.id, loading, authUser])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
+            console.log(res.data);
             setUsuario({ id: res.data?.id })
         }
     }
@@ -62,19 +62,20 @@ const Notificaciones = () => {
                 console.error(err);
             })
     }
-    const ListarNotificacion = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`)
-            .then(res => {
-                console.log(res.data);
-                setListNotificaciones(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+    const ListarNotificaciones = () => {
+        if (usuario.id.length) {
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario?.id}`)
+                .then(res => {
+                    console.log(res.data);
+                    setListNotificaciones(res.data)
+                }).catch(err => {
+                    console.error(err);
+                })
+        }
     }
     const CrearNotificacion = (e) => {
         e.preventDefault()
         console.log(notificacion);
-        console.log({ fecha: new Date().toISOString() })
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
             asunto: notificacion.asunto,
             contenido: notificacion.contenido,
@@ -102,18 +103,18 @@ const Notificaciones = () => {
                         <h1 className="text-center">Enviar Notificacion</h1>
                         <Box direction="column">
                             <Box direction='row'>
-                                <FormControl>
+                                <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Curso</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={idCurso}
-                                        name="curso"
+                                        name="idCurso"
                                         label="Curso"
                                         onChange={handleCurso}
                                         sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}
                                     >
-                                        <MenuItem value={10}>Todos</MenuItem>
+                                        <MenuItem value={'todos'}>Todos</MenuItem>
                                         {
                                             cursos && cursos.map((c, i) => (
                                                 <MenuItem key={i} value={c.id}>{
@@ -179,9 +180,8 @@ const Notificaciones = () => {
                                         <ListItem disablePadding
                                             key={i} value={n.id}
                                         >
-                                            <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
-                                                <ListItemText primary={n.asunto} />
-
+                                            <ListItemButton component="a" href={`/gestion/notificaciones/listado_notificaciones`}>
+                                                <ListItemText primary={n.notificacion?.asunto} />
                                             </ListItemButton>
                                             <Divider />
                                         </ListItem>

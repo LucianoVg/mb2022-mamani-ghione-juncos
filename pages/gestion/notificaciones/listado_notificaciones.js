@@ -7,6 +7,8 @@ import Tabs from '@mui/material/Tabs';
 import { useEffect, useState } from 'react'
 import styles from "../../../styles/tarjetaNoticias.module.css";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useAuth } from "../../../components/context/authUserProvider";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -43,24 +45,34 @@ function a11yProps(index) {
 
 
 export default function ListadoNotificaciones() {
-
     const [value, setValue] = useState(0);
-
+    const router = useRouter()
+    const { loading, authUser } = useAuth()
+    const [usuario, setUsuario] = useState({ id: '' })
     const handleChange = (e, newValue) => {
         setValue(newValue);
     };
     useEffect(() => {
-        ListarNotificacion()
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        traerUsuario()
+        ListarNotificaciones()
+    }, [usuario.id, loading, authUser])
 
-        // filtros()
-    }, [])
-
-    const [listNotificaciones, setListNotificaciones] = useState()
-    const ListarNotificacion = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/`)
+    const [notificaciones, setNotificaciones] = useState()
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            console.log(res.data);
+            setUsuario({ id: res.data?.id })
+        }
+    }
+    const ListarNotificaciones = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario?.id}`)
             .then(res => {
                 console.log(res.data);
-                setListNotificaciones(res.data)
+                setNotificaciones(res.data)
             }).catch(err => {
                 console.error(err);
             })
@@ -69,39 +81,32 @@ export default function ListadoNotificaciones() {
     return (
         <Layout>
             <div xs={12}>
-
-
                 <Box
-            
-
                     className={`${styles.box}`}
 
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550, minWidth: '280px' }}
                 >
-
                     <Tabs
-
                         orientation="vertical"
                         variant="scrollable"
                         value={value}
                         onChange={handleChange}
                         scrollButtons="auto"
-                       
                         sx={{ borderRight: 1, borderColor: 'divider', width: '300px', minWidth: '120px' }}
                     >
 
                         {
-                            listNotificaciones && listNotificaciones.map((n, i) => (
+                            notificaciones && notificaciones.map((n, i) => (
                                 <Tab
                                     key={i}
-                                    label={n.asunto} {...a11yProps(i)}
+                                    label={n.notificacion?.asunto} {...a11yProps(i)}
                                     sx={{ borderBottom: 1, borderColor: 'divider' }} />
                             ))
                         }
 
                     </Tabs>
                     {
-                        listNotificaciones && listNotificaciones.map((n, i) => (
+                        notificaciones && notificaciones.map((n, i) => (
                             <TabPanel
                                 key={i}
                                 value={value}
@@ -109,31 +114,18 @@ export default function ListadoNotificaciones() {
                                 style={{ width: '680px' }}
                                 container="true"
                             >
-
-
-
                                 <Typography textAlign="center" variant={'h6'}
                                     sx={{ marginBottom: '30px' }}
-                                ><strong>{n.asunto}</strong> </Typography>
+                                ><strong>{n.notificacion?.asunto}</strong> </Typography>
                                 <Typography variant={'body2'}
                                     sx={{ marginBottom: '30px' }}
-                                >{n.contenido} </Typography>
-                                <Typography variant="caption"> <strong>Atte. Direccion</strong></Typography>
-
-
-
-
-
+                                >{n.notificacion?.contenido} </Typography>
+                                <Typography variant="caption"> <strong>Atte. {n.usuario?.rol?.tipo}</strong></Typography>
                             </TabPanel>
                         ))
                     }
-
                 </Box>
-
-
-
-            </div  >
-
+            </div>
         </Layout >
     );
 }
