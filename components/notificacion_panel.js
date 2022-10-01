@@ -16,11 +16,14 @@ export const Notificacion = () => {
     const { loading, authUser } = useAuth()
 
     const [listNotificaciones, setListNotificaciones] = useState()
-
+    const [usuario, setUsuario] = useState({ id: '' })
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
+        if (!localStorage.getItem('vistas')) {
+            localStorage.setItem('vistas', true)
+        }
     };
 
     const handleClose = () => {
@@ -30,34 +33,39 @@ export const Notificacion = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
     useEffect(() => {
         if (!loading && authUser) {
+            traerUsuario()
             ListarNotificacion()
         }
-        // filtros()
-    }, [])
+    }, [loading, authUser, usuario.id])
 
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ id: res.data?.id })
+        }
+    }
     const ListarNotificacion = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`)
-            .then(res => {
-                console.log(res.data);
-                setListNotificaciones(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+        if (usuario.id.length) {
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario.id}`)
+                .then(res => {
+                    setListNotificaciones(res.data)
+                }).catch(err => {
+                    console.error(err);
+                })
+        }
     }
     return (
         <Container>
-
-
             <div>
-                <Tooltip title='View Notification'>
+                <Tooltip title='Ver Notificacion'>
                     <IconButton onClick={handleClick}>
                         <Badge
 
                             aria-describedby={id} variant="contained"
-                            badgeContent={5}
+                            badgeContent={!Boolean(localStorage.getItem('vistas')) && listNotificaciones ?
+                                listNotificaciones.length : 0}
 
                             color="info"
                             style={{ float: 'right' }}  >
@@ -87,16 +95,22 @@ export const Notificacion = () => {
                     }}
 
                 >
-                    {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
                     <List>
                         {
                             listNotificaciones && listNotificaciones.map((n, i) => (
                                 <ListItem key={i} disablePadding>
                                     <ListItemButton component="a" href="#simple-list">
-                                        <ListItemText primary={n.asunto} />
+                                        <ListItemText primary={n.notificacion?.asunto} />
                                     </ListItemButton>
                                 </ListItem>
                             ))
+                        }
+                        {
+                            !listNotificaciones || !listNotificaciones.length && (
+                                <ListItem>
+                                    <ListItemText>No hay notificaciones</ListItemText>
+                                </ListItem>
+                            )
                         }
                         <ListItem disablePadding>
                             <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >

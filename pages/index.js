@@ -37,7 +37,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
     traerNoticias()
   }, [])
 

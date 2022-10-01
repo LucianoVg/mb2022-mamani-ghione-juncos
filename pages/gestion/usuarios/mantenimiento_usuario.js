@@ -99,7 +99,7 @@ export default function MantenimientoUsuario() {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>DNI</TableCell>
+                            <TableCell>Legajo</TableCell>
                             <TableCell align="right">Nombre</TableCell>
                             <TableCell align="right">Apellido</TableCell>
                             <TableCell align="right">Direccion</TableCell>
@@ -111,7 +111,7 @@ export default function MantenimientoUsuario() {
                     <TableBody>
                         {usuarios.map((u, i) => (
                             <TableRow key={i}>
-                                <TableCell component="th" scope="row">{u.dni}</TableCell>
+                                <TableCell component="th" scope="row">{u.legajo}</TableCell>
                                 <TableCell align="right">{u.nombre}</TableCell>
                                 <TableCell align="right">{u.apellido}</TableCell>
                                 <TableCell align="right">{u.direccion}</TableCell>

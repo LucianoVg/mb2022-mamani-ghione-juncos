@@ -18,7 +18,7 @@ export function Layout({ children }) {
     const toggleDrawer = () => {
         setOpen(!open)
     }
-
+    const width = screen.width
     return (
         <>
             <Head>
