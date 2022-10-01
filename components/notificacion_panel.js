@@ -10,8 +10,6 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Popover from '@mui/material/Popover';
 import { useAuth } from './context/authUserProvider';
 
-
-
 export const Notificacion = () => {
     const { loading, authUser } = useAuth()
 
@@ -58,77 +56,69 @@ export const Notificacion = () => {
     }
     return (
         <Container>
-            <div>
-                <Tooltip title='Ver Notificacion'>
-                    <IconButton onClick={handleClick}>
-                        <Badge
+            <Tooltip title='Ver Notificacion'>
+                <IconButton onClick={handleClick}>
+                    <Badge
 
-                            aria-describedby={id} variant="contained"
-                            badgeContent={!Boolean(localStorage.getItem('vistas')) && listNotificaciones ?
-                                listNotificaciones.length : 0}
+                        aria-describedby={id} variant="contained"
+                        badgeContent={!localStorage.getItem('vistas') && listNotificaciones ?
+                            listNotificaciones.length : null}
 
-                            color="info"
-                            style={{ float: 'right' }}  >
+                        color="info"
+                        style={{ float: 'right' }}  >
 
-                            <NotificationsRoundedIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                        <NotificationsRoundedIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                    </Badge>
+                </IconButton>
+            </Tooltip>
 
-                        </Badge>
-                    </IconButton>
-                </Tooltip>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                PaperProps={{
+                    style: { width: '320px' },
+                }}
 
-
-                <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    PaperProps={{
-                        style: { width: '320px' },
-                    }}
-
-                >
-                    <List>
-                        {
-                            listNotificaciones && listNotificaciones.map((n, i) => (
-                                <ListItem key={i} disablePadding>
-                                    <ListItemButton component="a" href="#simple-list">
-                                        <ListItemText primary={n.notificacion?.asunto} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))
-                        }
-                        {
-                            !listNotificaciones || !listNotificaciones.length && (
-                                <ListItem>
-                                    <ListItemText>No hay notificaciones</ListItemText>
-                                </ListItem>
-                            )
-                        }
-                        <ListItem disablePadding>
-                            <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >
-                                <ListItemText>
-                                    <div style={{ textAlign: 'center' }}>
-                                        <strong> Ver todo</strong>
-                                    </div>
-                                </ListItemText>
-                            </ListItemButton>
-                        </ListItem>
-                    </List>
-
-                </Popover>
-
-            </div >
-        </Container >
-
-
+            >
+                <List>
+                    {
+                        listNotificaciones && listNotificaciones.map((n, i) => (
+                            <ListItem key={i} disablePadding>
+                                <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
+                                    <ListItemText primary={n.notificacion?.asunto} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))
+                    }
+                    {
+                        !listNotificaciones || !listNotificaciones.length && (
+                            <ListItem>
+                                <ListItemText>No hay notificaciones</ListItemText>
+                            </ListItem>
+                        )
+                    }
+                    <ListItem disablePadding>
+                        <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >
+                            <ListItemText>
+                                <div style={{ textAlign: 'center' }}>
+                                    <strong>Ver todo</strong>
+                                </div>
+                            </ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Popover>
+        </Container>
     )
 }
 

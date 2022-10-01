@@ -12,26 +12,49 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import DownloadIcon from '@mui/icons-material/Download';
 
 import styles from "../../../styles/tarjetaNoticias.module.css";
+import axios from 'axios';
+import { useAuth } from '../../../components/context/authUserProvider';
+import { useRouter } from 'next/router';
 
 const MaterialEstudio = () => {
     const [curso, setCurso] = useState('');
-
+    const [materias, setMaterias] = useState()
+    const [cursos, setCursos] = useState()
     const handleCurso = (e) => {
         setCurso(e.target.value);
     };
 
+    const { loading, authUser } = useAuth()
     const [materia, setMateria] = useState('');
 
     const handleMateria = (e) => {
         setMateria(e.target.value);
     };
-
-    // const [files, setFiles] = useState<File[]>([])
+    const traerMaterias = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+        if (res.data) {
+            setMaterias(res.data)
+        }
+    }
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
+    }
+    const router = useRouter()
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        traerCursos()
+        traerMaterias()
+    }, [loading, authUser])
 
     return (
         <Layout>
             <div >
-                <Box sx={{marginBottom: '20px'}}>
+                <Box sx={{ marginBottom: '20px' }}>
 
                     <FormControl sx={{ width: '100px' }}>
                         <InputLabel id="demo-simple-select-label">Curso</InputLabel>
@@ -56,23 +79,13 @@ const MaterialEstudio = () => {
                             onChange={handleCurso}
 
                         >
-
-                            <MenuItem value={1} sx={{ display: "inline-block" }}>1 A</MenuItem>
-                            <MenuItem value={2} sx={{ display: "inline-block" }}>1 B</MenuItem>
-                            <MenuItem value={3} sx={{ display: "inline-block" }}>2 A</MenuItem>
-                            <MenuItem value={4} sx={{ display: "inline-block" }}>2 B</MenuItem>
-                            <MenuItem value={5} sx={{ display: "inline-block" }}>3 A</MenuItem>
-                            <MenuItem value={64} sx={{ display: "inline-block" }}>3 B</MenuItem>
-                            <MenuItem value={5} sx={{ display: "inline-block" }}>4 A</MenuItem>
-                            <MenuItem value={6423} sx={{ display: "inline-block" }}>4 B</MenuItem>
-                            <MenuItem value={5463} sx={{ display: "inline-block" }}>5 A</MenuItem>
-                            <MenuItem value={6421} sx={{ display: "inline-block" }}>5 B</MenuItem>
-                            <MenuItem value={535} sx={{ display: "inline-block" }}>6 A</MenuItem>
-                            <MenuItem value={612} sx={{ display: "inline-block" }}>6 B</MenuItem>
-
-
-
-
+                            {
+                                cursos && cursos?.map((c, i) => (
+                                    <MenuItem key={i} value={c.id} sx={{ display: "inline-block" }}>
+                                        {c.curso?.nombre} {c.division?.division}
+                                    </MenuItem>
+                                ))
+                            }
                         </Select>
                     </FormControl>
 
@@ -87,9 +100,11 @@ const MaterialEstudio = () => {
                             label="Materia"
                             onChange={handleMateria}
                         >
-                            <MenuItem value={10}>Lengua</MenuItem>
-                            <MenuItem value={20}>Geografia</MenuItem>
-                            <MenuItem value={30}>Historia</MenuItem>
+                            {
+                                materias && materias?.map((m, i) => (
+                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                ))
+                            }
                         </Select>
                     </FormControl>
                 </Box>
