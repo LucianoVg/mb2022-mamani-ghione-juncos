@@ -29,6 +29,32 @@ export async function ListarNotificaciones(idUsuario) {
         Prisma.disconnect()
     }
 }
+export async function DetalleNotificacion(idNotificacion) {
+    try {
+        const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
+            include: {
+                usuario: {
+                    include: {
+                        rol: true
+                    }
+                },
+                notificacion: true
+            },
+            where: {
+                notificacion: {
+                    id: idNotificacion
+                }
+            },
+
+        })
+
+        return listado
+    } catch (error) {
+        console.log(error);
+    } finally {
+        Prisma.disconnect()
+    }
+}
 
 export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso) {
     // console.log(asunto, contenido, fecha, idCurso, idUsuario);

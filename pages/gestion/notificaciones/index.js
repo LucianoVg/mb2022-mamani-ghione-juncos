@@ -180,7 +180,7 @@ const Notificaciones = () => {
                                         <ListItem disablePadding
                                             key={i} value={n.id}
                                         >
-                                            <ListItemButton component="a" href={`/gestion/notificaciones/listado_notificaciones`}>
+                                            <ListItemButton component="a" onClick={() => router.push(`/gestion/notificaciones/detalles/${n.notificacion?.id}`)}>
                                                 <ListItemText primary={n.notificacion?.asunto} />
                                             </ListItemButton>
                                             <Divider />
