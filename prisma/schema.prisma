@@ -22,16 +22,6 @@ model alumnoXcursoXdivision {
   notificacion     notificacion[]
 }
 
-model archivo {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  titulo          String?
-  descripcion     String?
-  url             String?
-  idTipoArchivo   String?           @db.ObjectId
-  tipoArchivo     tipoArchivo?      @relation(fields: [idTipoArchivo], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  materialEstudio materialEstudio[]
-}
-
 model asistencia {
   id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
   creadoEn                String?
@@ -76,6 +66,7 @@ model cursoXdivision {
   division              division?               @relation(fields: [idDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
+  materialEstudio       materialEstudio[]
 }
 
 model discapacidad {
@@ -168,17 +159,22 @@ model materia {
   nota            nota[]
   curso           curso?            @relation(fields: [idCurso], references: [id])
   idCurso         String?           @db.ObjectId
+  materialEstudio materialEstudio[]
 }
 
 model materialEstudio {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  titulo      String?
-  fecha       String?
-  descripcion String?
-  idArchivo   String?  @db.ObjectId
-  idUsuario   String?  @db.ObjectId
-  usuario     usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  archivo     archivo? @relation(fields: [idArchivo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  titulo           String?
+  fecha            String?
+  url              String?
+  idCursoXDivision String?         @db.ObjectId
+  idMateria        String?         @db.ObjectId
+  idTrimestre      String?         @db.ObjectId
+  idUsuario        String?         @db.ObjectId
+  usuario          usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXDivision   cursoXdivision? @relation(fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materia          materia?        @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trimestre        trimestre?      @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model menu {
@@ -312,12 +308,6 @@ model sancionXusuario {
   sancion   sancion? @relation(fields: [idSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model tipoArchivo {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  tipo    String?
-  archivo archivo[]
-}
-
 model tipoReporte {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
   tipo    String?
@@ -335,6 +325,7 @@ model trimestre {
   trimestre         String?
   nota              nota[]
   reporteXtrimestre reporteXtrimestre[]
+  materialEstudio   materialEstudio[]
 }
 
 model tutor {
