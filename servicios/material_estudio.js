@@ -7,26 +7,10 @@ export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso
                 titulo: titulo,
                 url: url,
                 fecha: fecha,
-                cursoXDivision: {
-                    connect: {
-                        id: idCurso
-                    }
-                },
-                materia: {
-                    connect: {
-                        id: idMateria
-                    }
-                },
-                trimestre: {
-                    connect: {
-                        id: idTrimestre
-                    }
-                },
-                usuario: {
-                    connect: {
-                        id: idUsuario
-                    }
-                }
+                idCursoXDivision: idCurso,
+                idMateria: idMateria,
+                idTrimestre: idTrimestre,
+                idUsuario: idUsuario
             }
         })
         console.log(materialEstudio);
