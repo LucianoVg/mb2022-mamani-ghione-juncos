@@ -23,8 +23,8 @@ export default function Calendar({ data, onDataChange }) {
 
     return (
         <div id="calendar">
-            <Scheduler firstDayOfWeek={1} locale={'es-AR'} data={data && data?.length || schedulerData}>
-                <ViewState currentDate={new Date().toISOString()} />
+            <Scheduler firstDayOfWeek={1} locale={'es-AR'} data={data}>
+                <ViewState currentDate={new Date()} />
                 <EditingState onCommitChanges={onDataChange} />
                 <IntegratedEditing />
                 <MonthView />

@@ -7,8 +7,8 @@ export default async function handler(req, res) {
             return res.status(200).json(fechasExamen)
         }
         if (req.method === 'POST') {
-            const { fecha, idCurso, idMateria, idUsuario } = req.body
-            const fechaExamen = await guardarFechaExamen(fecha, idCurso, idMateria, idUsuario)
+            const { titulo, fechaInicio, fechaFin, idUsuario } = req.body
+            const fechaExamen = await guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuario)
             return res.status(200).json(fechaExamen)
         }
     } catch (error) {
