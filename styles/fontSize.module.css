@@ -1,9 +1,12 @@
 .Typography {
     font-size: clamp(25px, 3vw, 50px);
+    line-height: clamp(25px, 3vw, 40px)
 }
+
 
 .Typography2 {
     font-size: clamp(15px, 2vw, 40px);
+    line-height: clamp(20px, 3vw, 40px)
 }
 
 .Typography3 {

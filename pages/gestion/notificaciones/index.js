@@ -158,7 +158,7 @@ const Notificaciones = () => {
                                     name="contenido"
                                     value={notificacion.contenido}
                                     onChange={handleNotificacion}
-                                    style={{ width: '350px', height: '200px', resize: 'none', fontSize: '20px' }}
+                                    style={{ width: '350px',maxLenght: '300', height: '200px', resize: 'none', fontSize: '20px' }}
                                 />
 
                             {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
