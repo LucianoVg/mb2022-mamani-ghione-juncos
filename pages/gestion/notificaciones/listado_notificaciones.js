@@ -92,7 +92,7 @@ export default function ListadoNotificaciones() {
                         value={value}
                         onChange={handleChange}
                         scrollButtons="auto"
-                        sx={{ borderRight: 1, borderColor: 'divider', width: '300px', minWidth: '120px' }}
+                        sx={{ borderRight: 1, borderColor: 'divider', width: '350px', minWidth: '100px' }}
                     >
 
                         {
@@ -116,11 +116,15 @@ export default function ListadoNotificaciones() {
                             >
                                 <Typography textAlign="center" variant={'h6'}
                                     sx={{ marginBottom: '30px' }}
+                                    className={`${styles.Typography}`}
                                 ><strong>{n.notificacion?.asunto}</strong> </Typography>
                                 <Typography variant={'body2'}
                                     sx={{ marginBottom: '30px' }}
+                                    className={`${styles.Typography2}`}
                                 >{n.notificacion?.contenido} </Typography>
-                                <Typography variant="caption"> <strong>Atte. {n.usuario?.rol?.tipo}</strong></Typography>
+                                <Typography variant="caption"
+                                className={`${styles.Typography3}`}
+                                > <strong>Atte. {n.usuario?.rol?.tipo}</strong></Typography>
                             </TabPanel>
                         ))
                     }

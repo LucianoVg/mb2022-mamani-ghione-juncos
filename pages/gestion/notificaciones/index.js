@@ -160,6 +160,8 @@ const Notificaciones = () => {
                                     onChange={handleNotificacion}
                                     style={{ width: '350px', height: '200px', resize: 'none', fontSize: '20px' }}
                                 />
+
+                            {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
                                 <Box xs={12}>
                                     <Button variant="contained" type="submit">Enviar</Button>
                                 </Box>
@@ -171,7 +173,7 @@ const Notificaciones = () => {
 
 
                     </Grid>
-                    <Grid item >
+                    <Grid item xs>
                         <h1>Notificaciones enviadas</h1>
                         <Box sx={{ width: '350px' }}>
                             <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
