@@ -6,7 +6,6 @@ import { Layout } from '../../../components/layout';
 
 
 export default function FechasExamen() {
-
   const [guardandoEvento, setGuardandoEvento] = useState(false)
   const [mensaje, setMensaje] = useState("")
   const [fechasExamen, setFechasExamen] = useState()
@@ -17,30 +16,28 @@ export default function FechasExamen() {
 
   const traerExamenes = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`)
-    if (res.data) {
-      setFechasExamen(res.data)
-    }
+    setFechasExamen(res.data)
   }
 
   /**
     * Propiedades basicas del item:
     * 
-    * label = Titulo del evento
-    * description = Descripcion del evento
-    * dateStart = Fecha de inicio
-    * dateEnd = Fecha de fin
-    * backgroundColor = Color del evento
+    * title = Titulo del evento
+    * startDate = Fecha de inicio
+    * endDate = Fecha de fin
     */
-  const handleItemChange = (e, action) => {
-    console.log(e, action);
-  }
-  const handleDelete = (id) => {
-    console.log(id);
+
+  const handleDataChange = (data) => {
+    if (data.hasOwnProperty('added')) {
+      console.log('Data added', data);
+    } else {
+      console.log('Data changed', data);
+    }
   }
   return (
     <Layout>
-      <Typography variant='h3' sx={{ textAlign: 'center' }}>Fechas de Examen</Typography>
-      <Calendar data={fechasExamen || []} onItemChange={null} onDeleteItem={null} />
+      <Typography variant='h4' sx={{ textAlign: 'center' }}>Fechas de Examen</Typography>
+      <Calendar data={fechasExamen} onDataChange={handleDataChange} />
     </Layout>
   )
 }

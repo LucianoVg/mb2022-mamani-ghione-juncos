@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aldabil/react-scheduler": "^2.3.1",
+    "@devexpress/dx-react-core": "^3.0.5",
+    "@devexpress/dx-react-scheduler": "^3.0.5",
+    "@devexpress/dx-react-scheduler-material-ui": "^3.0.5",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
@@ -21,8 +23,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-doom": "^1.0.0",
-    "react-material-ui-carousel": "^3.4.2",
-    "smart-webcomponents-react": "^14.4.0"
+    "react-material-ui-carousel": "^3.4.2"
   },
   "devDependencies": {
     "@types/node": "^18.7.10",

@@ -1,95 +1,36 @@
-import { Scheduler } from '@aldabil/react-scheduler'
-import { Container } from '@mui/material'
-export const EVENTS = [
+import {
+    Scheduler,
+    MonthView,
+    Appointments,
+    AppointmentForm
+} from '@devexpress/dx-react-scheduler-material-ui';
+import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+
+let dia = 0
+const schedulerData = [
     {
-        event_id: 1,
-        title: "Event 1",
-        start: new Date("2021 5 2 09:30"),
-        end: new Date("2021 5 2 10:30"),
-        disabled: true
+        startDate: new Date(2022, 9, ++dia, 6, 0, 0),
+        endDate: new Date(2022, 9, ++dia, 7, 0, 0),
+        title: 'Meeting'
     },
     {
-        event_id: 2,
-        title: "Event 2",
-        start: new Date("2021 5 4 10:00"),
-        end: new Date("2021 5 4 11:00"),
-        color: "green"
+        startDate: new Date(2022, 9, ++dia, 7, 0, 0),
+        endDate: new Date(2022, 9, ++dia, 7, 0, 0),
+        title: 'Go to a gym'
     },
-    {
-        event_id: 3,
-        title: "Event 3",
-        start: new Date("2021 4 27 09:00"),
-        end: new Date("2021 4 28 10:00")
-    },
-    {
-        event_id: 4,
-        title: "Event 4",
-        start: new Date("2021 5 4 9:00"),
-        end: new Date("2021 5 4 10:36")
-    },
-    {
-        event_id: 5,
-        title: "Event 5",
-        start: new Date("2021 5 1 10:00"),
-        end: new Date("2021 5 18 11:00")
-    },
-    {
-        event_id: 6,
-        title: "Event 6",
-        start: new Date("2021 5 2 11:00"),
-        end: new Date("2021 5 2 12:00")
-    },
-    {
-        event_id: 7,
-        title: "Event 7",
-        start: new Date("2021 5 1 12:00"),
-        end: new Date("2021 5 1 13:00")
-    },
-    {
-        event_id: 8,
-        title: "Event 8",
-        start: new Date("2021 5 1 13:00"),
-        end: new Date("2021 5 1 14:00")
-    },
-    {
-        event_id: 9,
-        title: "Event 11",
-        start: new Date("2021 5 5 16:00"),
-        end: new Date("2021 5 5 17:00")
-    },
-    {
-        event_id: 10,
-        title: "Event 9",
-        start: new Date("2021 5 6  15:00"),
-        end: new Date("2021 5 6 16:00")
-    },
-    {
-        event_id: 11,
-        title: "Event 10",
-        start: new Date("2021 5 6 14:00"),
-        end: new Date("2021 5 6 15:00")
-    }
 ];
-export default function Calendar({ data, onItemChange, onDeleteItem }) {
-    const onConfirm = (event, action) => {
-        try {
-            console.log(event, action);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    const onDelete = (id) => {
-        console.log(id);
-    }
+export default function Calendar({ data, onDataChange }) {
+
     return (
-        <Container maxWidth={'md'}>
-            <Scheduler
-                view="month"
-                events={EVENTS}
-                selectedDate={new Date()}
-                onConfirm={onConfirm}
-                onDelete={onDelete}
-            />
-        </Container>
+        <div id="calendar">
+            <Scheduler firstDayOfWeek={1} locale={'es-AR'} data={data && data?.length || schedulerData}>
+                <ViewState currentDate={new Date().toISOString()} />
+                <EditingState onCommitChanges={onDataChange} />
+                <IntegratedEditing />
+                <MonthView />
+                <Appointments />
+                <AppointmentForm />
+            </Scheduler>
+        </div>
     )
 }
