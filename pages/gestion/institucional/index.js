@@ -7,6 +7,8 @@ import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
 import { Typography, Button, Container, Grid, Divider } from "@mui/material";
 import { AddBoxRounded } from "@mui/icons-material";
+import styles from "../../../styles/fontSize.module.css"
+
 
 export default function Institucional() {
     const [fichaInstitucional, setFichaInstitucional] = useState()
@@ -54,13 +56,18 @@ export default function Institucional() {
                         <Grid container spacing={2}>
 
                             <Grid item xs={12}>
-                                <Typography variant="h5">{fichaInstitucional.nombreInstitucion}</Typography>
+                                <Typography variant="h5"
+                                sx={{marginTop: '30px'}}
+                                     className={`${styles.Typography}`}
+                                >{fichaInstitucional.nombreInstitucion}</Typography>
                             </Grid>
                             {/* <Grid item xs={12}>
                                 <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
                             </Grid> */}
                             <Grid item xs={12}>
-                                <Typography variant="overline">{fichaInstitucional.descripcion}</Typography>
+                                <Typography variant="body1"
+                                     className={`${styles.Typography2}`}
+                                >{fichaInstitucional.descripcion}</Typography>
                             </Grid>
                         </Grid>
 
@@ -69,22 +76,32 @@ export default function Institucional() {
                                 <Divider sx={{ mb: 1 }} />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant="h5">Datos de Contacto</Typography>
+                                <Typography variant="h5"
+                                     className={`${styles.Typography}`}
+                                >Datos de Contacto</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant="body2"><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                ><strong>Ubicación:</strong> {fichaInstitucional.ubicacion}</Typography>
 
                             </Grid>
                             <Grid item xs={12}>
 
-                                <Typography variant="body2"><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                ><strong>Correo:</strong> {fichaInstitucional.mail}</Typography>
                             </Grid>
 
                             <Grid item xs>
-                                <Typography variant="body2">
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                >
                                     <strong>{fichaInstitucional.oficina1}</strong>
                                 </Typography>
-                                <Typography variant="body2">
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                >
                                     {fichaInstitucional.telefono1}
                                 </Typography>
 
@@ -92,10 +109,14 @@ export default function Institucional() {
 
                             </Grid>
                             <Grid item xs={9}>
-                                <Typography variant="body2">
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                >
                                     <strong>{fichaInstitucional.oficina2}</strong>
                                 </Typography>
-                                <Typography variant="body2">
+                                <Typography variant="body2"
+                                    className={`${styles.Typography2}`}
+                                >
                                     {fichaInstitucional.telefono2}
                                 </Typography>
 

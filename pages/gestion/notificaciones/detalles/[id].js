@@ -32,16 +32,16 @@ export default function DetallesNoticia() {
                 notificacion && notificacion.map((n, i) => (
                     n.id !== '' && (
                         <div className="container text-center">
-                            <Card sx={{ minWidth: '275px', height: '400px', boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)', backgroundColor: 'white', borderRadius: '30px' }}>
+                            <Card sx={{ minWidth: '295px', height: '400px', boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)', backgroundColor: 'white', borderRadius: '30px' }}>
                                 <Typography textAlign="center" variant={'h6'}
-                                    sx={{ marginBottom: '30px', marginTop: '40px' }}
+                                    sx={{ marginBottom: '30px', marginTop: '40px',  marginLeft: '30px', marginRight: '30px'}}
                                     className={`${styles.Typography}`}
                                 ><strong>{n.notificacion?.asunto}</strong> </Typography>
                                 <Typography variant={'body2'}
-                                    sx={{ marginBottom: '30px', marginLeft: '20px' }}
+                                    sx={{ marginBottom: '30px', marginLeft: '30px', marginRight: '20px' }}
                                     className={`${styles.Typography2}`}
                                 >{n.notificacion?.contenido} </Typography>
-                                <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '20px' }}
+                                <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                     className={`${styles.Typography3}`}
                                 > <strong>Atte. {n.usuario?.rol?.tipo}</strong></Typography>
 
