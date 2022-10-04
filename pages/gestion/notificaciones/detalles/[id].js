@@ -7,14 +7,6 @@ import { Box, Button, Card, Stack, TextareaAutosize, Typography, TextField, Card
 import styles from "../../../../styles/fontSize.module.css"
 import React from 'react';
 
-// import { createStyles, makeStyles } from "@mui/styles";
-
-
-// const useStyles = makeStyles(
-//     createStyles({
-//         name: { "font-size": "50px" }
-//     })
-// );
 
 
 
@@ -79,8 +71,11 @@ export default function DetallesNoticia() {
         n.notificacion?.asunto
     )
 
+    // const [actualizar, setActualizar] = useState({
+    //     asunto: asuntoDetalle,
+    //     contenido: ''
+    //   })
 
-    // const classes = useStyles(props);
   const [actualizar, setActualizar] = useState({
     asunto: '',
     contenido: ''

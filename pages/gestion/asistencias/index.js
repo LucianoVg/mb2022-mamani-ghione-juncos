@@ -231,7 +231,7 @@ export default function Asistencias() {
                 <Grid container spacing={2}>
 
                     <Grid item xs={8}>
-                        <Box sx={{marginBottom: '20px'}}>
+                        <Box sx={{ marginBottom: '20px' }}>
                             <FormControl>
                                 <InputLabel id="demo-simple-select-label">Curso</InputLabel>
                                 <Select
@@ -251,11 +251,11 @@ export default function Asistencias() {
                                 </Select>
 
                             </FormControl>
-                         
+
 
                         </Box>
                         <Box>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
                                     label="Fecha"
                                     value={fecha}
@@ -341,456 +341,537 @@ export default function Asistencias() {
                             {
                                 paginacion.dataActual().map((a, i) => (
 
-                                    a.motivo != null ? (
+                                    a.presente, a.ausente, a.ausenteJustificado, a.llegadaTarde, a.llegadaTardeJustificada, a.mediaFalta, a.mediaFaltaJustificadaa != true ? (
+                                        < TableRow key={i} >
 
-                                        < TableRow
-                                            key={i} >
-
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                            <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                            <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
+                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
+                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1 ">
 
-                                                        <Switch
-                                                            name="presente"
-                                                            checked={presente}
-                                                            onChange={handlePresente}
-                                                        />
-
-                                                    ) :
-                                                        (
-
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.presente}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-
-
-
+                                                <Switch
+                                                    name="presente"
+                                                    checked={presente}
+                                                    onChange={handlePresente}
+                                                />
 
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1 ">
 
-
-
-                                                        <Switch
-                                                            name="ausente"
-                                                            checked={ausente}
-                                                            onChange={handleAusente}
-                                                        />
-
-
-
-                                                    ) :
-                                                        (
-
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausente}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-
-
+                                                <Switch
+                                                    name="ausente"
+                                                    checked={ausente}
+                                                    onChange={handleAusente}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1 ">
 
-                                                        <Switch
-                                                            name="aj"
-                                                            checked={aj}
-                                                            onChange={handleAj}
-                                                        />
-
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausenteJustificado}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-
-
+                                                <Switch
+                                                    name="aj"
+                                                    checked={aj}
+                                                    onChange={handleAj}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1 ">
 
-                                                        <Switch
-                                                            name="llegadaTarde"
-                                                            checked={llegadaTarde}
-                                                            onChange={handleLlegadaTarde}
-                                                        />
-
-
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTarde}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-
+                                                <Switch
+                                                    name="llegadaTarde"
+                                                    checked={llegadaTarde}
+                                                    onChange={handleLlegadaTarde}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1">
 
-                                                        <Switch
-                                                            name="ltj"
-                                                            checked={ltj}
-                                                            onChange={handleLtj}
-                                                        />
-
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTardeJustificada}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-
-                                                        )
-                                                }
-
+                                                <Switch
+                                                    name="ltj"
+                                                    checked={ltj}
+                                                    onChange={handleLtj}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1 ">
 
-                                                        <Switch
-                                                            name="mf"
-                                                            checked={mf}
-                                                            onChange={handleMf}
-                                                        />
-
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFalta}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-
+                                                <Switch
+                                                    name="mf"
+                                                    checked={mf}
+                                                    onChange={handleMf}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                            <TableCell className="col-md-1">
 
-                                                        <Switch
-                                                            name="mfj"
-                                                            checked={mfj}
-                                                            onChange={handleMfj}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFaltaJustificada}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-
+                                                <Switch
+                                                    name="mfj"
+                                                    checked={mfj}
+                                                    onChange={handleMfj}
+                                                />
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-2">
+                                            <TableCell className="col-md-2">
                                                 {
 
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                        <React.Fragment>
-                                                            <Stack spacing={1} direction="row">
-                                                                <Button variant="contained" color="success"
-                                                                    onClick={(e) => onSave(a?.id)}
-                                                                >
-                                                                    Guardar
-                                                                </Button>
-
-                                                                <Button variant="contained" color="error"
-
-                                                                    style={{ marginLeft: 8 }}
-                                                                    onClick={() => onCancel()}
-                                                                >
-                                                                    Cancelar
-                                                                </Button>
-                                                            </Stack>
-                                                        </React.Fragment>
-                                                    ) : (
-                                                        <Stack spacing={1} direction="row">
-
-                                                            <Button variant="contained"
-                                                                onClick={() => setInEditMode({
-                                                                    status: true,
-                                                                    rowKey: i
-                                                                })}
-                                                            >Editar</Button>
-                                                            <Button variant="contained"
-                                                                sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                onClick={(e) => handleModal(a)}>
-                                                                Info.
-                                                            </Button>
-                                                        </Stack>
-                                                    )
+                                                    <Stack spacing={1} direction="row">
+                                                        <Button variant="contained"
+                                                            sx={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                            onClick={(e) => handleModal(a)}>
+                                                            Guardar
+                                                        </Button>
+                                                    </Stack>
+                                                    
                                                 }
-
                                             </TableCell>
                                         </TableRow>
-                                    ) :
-                                        (
-                                            < TableRow key={i} >
+                                    ) : (
+                            a.motivo != null ? (
 
-                                                <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                                <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
-                                                {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
-                                                <TableCell className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                            < TableRow
+                                key={i} >
 
-                                                            <Switch
-                                                                name="presente"
-                                                                checked={presente}
-                                                                onChange={handlePresente}
-                                                            />
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
 
+                                            <Switch
+                                                name="presente"
+                                                checked={presente}
+                                                onChange={handlePresente}
+                                            />
 
+                                        ) :
+                                            (
 
-                                                        ) :
-                                                            (
-
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.presente}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-
-
-                                                            )
-                                                    }
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.presente}
+                                                    disabled={bloquearCheck(a)}
+                                                />
 
 
-
-
-                                                </TableCell>
-                                                <TableCell className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="ausente"
-                                                                checked={ausente}
-                                                                onChange={handleAusente}
-                                                            />
-
-                                                        ) :
-                                                            (
-
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.ausente}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-
-
-                                                            )
-                                                    }
-
-
-                                                </TableCell>
-                                                <TableCell className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="aj"
-                                                                checked={aj}
-                                                                onChange={handleAj}
-                                                            />
-
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.ausenteJustificado}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-
-
-                                                            )
-                                                    }
-
-
-                                                </TableCell>
-                                                <TableCell className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="llegadaTarde"
-                                                                checked={llegadaTarde}
-                                                                onChange={handleLlegadaTarde}
-                                                            />
-
-
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.llegadaTarde}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-
-
-                                                            )
-                                                    }
-
-                                                </TableCell>
-                                                <TableCell className="col-md-1">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="ltj"
-                                                                checked={ltj}
-                                                                onChange={handleLtj}
-                                                            />
-
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.llegadaTardeJustificada}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
+                                            )
+                                    }
 
 
 
-                                                            )
-                                                    }
 
-                                                </TableCell>
-                                                <TableCell className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="mf"
-                                                                checked={mf}
-                                                                onChange={handleMf}
-                                                            />
-
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.mediaFalta}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-
-
-                                                            )
-                                                    }
-
-                                                </TableCell>
-                                                <TableCell className="col-md-1">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="mfj"
-                                                                checked={mfj}
-                                                                onChange={handleMfj}
-                                                            />
-
-
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.mediaFaltaJustificada}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
 
 
 
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell className="col-md-2">
-                                                    {
+                                            <Switch
+                                                name="ausente"
+                                                checked={ausente}
+                                                onChange={handleAusente}
+                                            />
 
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
 
-                                                            <React.Fragment>
-                                                                <Stack spacing={1} direction="row">
-                                                                    <Button variant="contained" color="success"
-                                                                        onClick={() => onSave(a?.id)}
-                                                                    >
-                                                                        Guardar
-                                                                    </Button>
 
-                                                                    <Button variant="contained" color="error"
+                                        ) :
+                                            (
 
-                                                                        style={{ marginLeft: 8 }}
-                                                                        onClick={() => onCancel()}
-                                                                    >
-                                                                        Cancelar
-                                                                    </Button>
-                                                                </Stack>
-                                                            </React.Fragment>
-                                                        ) : (
-                                                            <Stack spacing={1} direction="row">
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.ausente}
+                                                    disabled={bloquearCheck(a)}
+                                                />
 
-                                                                <Button variant="contained"
-                                                                    onClick={() => setInEditMode({
-                                                                        status: true,
-                                                                        rowKey: i
-                                                                    })}
-                                                                >Editar</Button>
-                                                                <Button variant="contained"
-                                                                    sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                    onClick={(e) => handleModal(a)}>
-                                                                    Info.
-                                                                </Button>
-                                                            </Stack>
-                                                        )
-                                                    }
-                                                </TableCell>
-                                            </TableRow>
+
+                                            )
+                                    }
+
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="aj"
+                                                checked={aj}
+                                                onChange={handleAj}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.ausenteJustificado}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="llegadaTarde"
+                                                checked={llegadaTarde}
+                                                onChange={handleLlegadaTarde}
+                                            />
+
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.llegadaTarde}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="ltj"
+                                                checked={ltj}
+                                                onChange={handleLtj}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.llegadaTardeJustificada}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="mf"
+                                                checked={mf}
+                                                onChange={handleMf}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.mediaFalta}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-1">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="mfj"
+                                                checked={mfj}
+                                                onChange={handleMfj}
+                                            />
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.mediaFaltaJustificada}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: 'lightsteelblue', color: 'black' }} className="col-md-2">
+                                    {
+
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <React.Fragment>
+                                                <Stack spacing={1} direction="row">
+                                                    <Button variant="contained" color="success"
+                                                        onClick={(e) => onSave(a?.id)}
+                                                    >
+                                                        Guardar
+                                                    </Button>
+
+                                                    <Button variant="contained" color="error"
+
+                                                        style={{ marginLeft: 8 }}
+                                                        onClick={() => onCancel()}
+                                                    >
+                                                        Cancelar
+                                                    </Button>
+                                                </Stack>
+                                            </React.Fragment>
+                                        ) : (
+                                            <Stack spacing={1} direction="row">
+
+                                                <Button variant="contained"
+                                                    onClick={() => setInEditMode({
+                                                        status: true,
+                                                        rowKey: i
+                                                    })}
+                                                >Editar</Button>
+                                                <Button variant="contained"
+                                                    sx={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                    onClick={(e) => handleModal(a)}>
+                                                    Info.
+                                                </Button>
+                                            </Stack>
                                         )
+                                    }
 
-                                )
-                                )
+                                </TableCell>
+                            </TableRow>
+                            ) :
+                            (
+                            < TableRow key={i} >
+
+                                <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
+                                <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
+                                <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                <TableCell className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="presente"
+                                                checked={presente}
+                                                onChange={handlePresente}
+                                            />
+
+
+
+                                        ) :
+                                            (
+
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.presente}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+
+
+
+                                </TableCell>
+                                <TableCell className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="ausente"
+                                                checked={ausente}
+                                                onChange={handleAusente}
+                                            />
+
+                                        ) :
+                                            (
+
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.ausente}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+
+                                </TableCell>
+                                <TableCell className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="aj"
+                                                checked={aj}
+                                                onChange={handleAj}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.ausenteJustificado}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+
+                                </TableCell>
+                                <TableCell className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="llegadaTarde"
+                                                checked={llegadaTarde}
+                                                onChange={handleLlegadaTarde}
+                                            />
+
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.llegadaTarde}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell className="col-md-1">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="ltj"
+                                                checked={ltj}
+                                                onChange={handleLtj}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.llegadaTardeJustificada}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell className="col-md-1 ">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="mf"
+                                                checked={mf}
+                                                onChange={handleMf}
+                                            />
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.mediaFalta}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+                                            )
+                                    }
+
+                                </TableCell>
+                                <TableCell className="col-md-1">
+                                    {
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <Switch
+                                                name="mfj"
+                                                checked={mfj}
+                                                onChange={handleMfj}
+                                            />
+
+
+                                        ) :
+                                            (
+                                                <Switch
+                                                    type="checkbox"
+                                                    checked={a.mediaFaltaJustificada}
+                                                    disabled={bloquearCheck(a)}
+                                                />
+
+
+
+                                            )
+                                    }
+                                </TableCell>
+                                <TableCell className="col-md-2">
+                                    {
+
+                                        inEditMode.status && inEditMode.rowKey === i ? (
+
+                                            <React.Fragment>
+                                                <Stack spacing={1} direction="row">
+                                                    <Button variant="contained" color="success"
+                                                        onClick={() => onSave(a?.id)}
+                                                    >
+                                                        Guardar
+                                                    </Button>
+
+                                                    <Button variant="contained" color="error"
+
+                                                        style={{ marginLeft: 8 }}
+                                                        onClick={() => onCancel()}
+                                                    >
+                                                        Cancelar
+                                                    </Button>
+                                                </Stack>
+                                            </React.Fragment>
+                                        ) : (
+                                            <Stack spacing={1} direction="row">
+
+                                                <Button variant="contained"
+                                                    onClick={() => setInEditMode({
+                                                        status: true,
+                                                        rowKey: i
+                                                    })}
+                                                >Editar</Button>
+                                                <Button variant="contained"
+                                                    sx={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                    onClick={(e) => handleModal(a)}>
+                                                    Info.
+                                                </Button>
+                                            </Stack>
+                                        )
+                                    }
+                                </TableCell>
+                            </TableRow>
+                            )
+
+                            )
+                            )
+                            )
                             }
                         </TableBody>
                     </Table>
