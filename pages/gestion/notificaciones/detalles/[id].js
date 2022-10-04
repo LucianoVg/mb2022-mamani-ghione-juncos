@@ -81,8 +81,15 @@ export default function DetallesNoticia() {
 
 
     // const classes = useStyles(props);
-    const [asunto, setAsunto] = useState(asuntoDetalle);
-    console.log(asunto)
+  const [actualizar, setActualizar] = useState({
+    asunto: '',
+    contenido: ''
+  })
+  const handleActualizar = (e) => {
+    setActualizar({ ...Actualizar, [e.target.name]: e.target.value })
+}
+
+    console.log(actualizar)
     const [isNameFocused, setIsNamedFocused] = useState(false);
 
     return (
@@ -108,7 +115,7 @@ export default function DetallesNoticia() {
                                         <Box>
 
                                             <Button variant="contained"
-                                                sx={{ marginLeft: '40px', marginTop: '20px' }}
+                                                sx={{ marginLeft: '30px', marginTop: '20px' }}
                                                 onClick={() => {
                                                     setIsNamedFocused(true);
                                                 }}>
@@ -140,7 +147,7 @@ export default function DetallesNoticia() {
                                     ) : (
 
                                         <Box>
-                                            <Stack spacing={1} direction="row" sx={{ marginLeft: '40px', marginTop: '19px' }}>
+                                            <Stack spacing={1} direction="row" sx={{ marginLeft: '30px', marginTop: '19px' }}>
                                                 <Button variant="contained" color="success"
 
                                                     onClick={(e) => onSave(n.notificacion?.id)}
@@ -178,8 +185,9 @@ export default function DetallesNoticia() {
                                                             }
 
                                                         }
+                                                        name='asunto'
                                                         value={n.notificacion?.asunto}
-                                                        onChange={event => setAsunto(event.target.value)}
+                                                        onChange={handleActualizar}
 
                                                     />
                                                 </Grid>
@@ -201,8 +209,9 @@ export default function DetallesNoticia() {
                                                             }
 
                                                         }
+                                                        name='contenido'
                                                         value={n.notificacion?.contenido}
-                                                        onChange={event => setAsunto(event.target.value)}
+                                                        onChange={handleActualizar}
 
                                                     />
                                                 </Grid>
