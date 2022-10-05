@@ -52,8 +52,8 @@ export default function Institucional() {
             {
                 fichaInstitucional && (
                     <div >
-                        <Carrusel imagenes={fichaInstitucional.portadasFicha} />
-                        <Grid container spacing={2}>
+                        <Carrusel imagenes={fichaInstitucional.portadasFicha}  />
+                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
 
                             <Grid item xs={12}>
                                 <Typography variant="h5"
@@ -64,14 +64,14 @@ export default function Institucional() {
                             {/* <Grid item xs={12}>
                                 <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
                             </Grid> */}
-                            <Grid item xs={12}>
+                            <Grid item xs={12} >
                                 <Typography variant="body1"
                                      className={`${styles.Typography2}`}
                                 >{fichaInstitucional.descripcion}</Typography>
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
                             <Grid item xs={12}>
                                 <Divider sx={{ mb: 1 }} />
                             </Grid>
@@ -108,7 +108,7 @@ export default function Institucional() {
 
 
                             </Grid>
-                            <Grid item xs={9}>
+                            <Grid item xs={9} sx={{minWidth: '300px'}}>
                                 <Typography variant="body2"
                                     className={`${styles.Typography2}`}
                                 >
