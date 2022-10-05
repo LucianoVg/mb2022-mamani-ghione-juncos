@@ -93,7 +93,7 @@ const Notificaciones = () => {
 
 
     return (
-        <Layout title='Enviar Notificaciones'>
+        <Layout>
             {/* <Notificacion /> */}
             <div>
 
@@ -158,10 +158,10 @@ const Notificaciones = () => {
                                     name="contenido"
                                     value={notificacion.contenido}
                                     onChange={handleNotificacion}
-                                    style={{ width: '350px',maxLenght: '300', height: '200px', resize: 'none', fontSize: '20px' }}
+                                    style={{ width: '350px', maxLenght: '300', height: '200px', resize: 'none', fontSize: '20px' }}
                                 />
 
-                            {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
+                                {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
                                 <Box xs={12}>
                                     <Button variant="contained" type="submit">Enviar</Button>
                                 </Box>

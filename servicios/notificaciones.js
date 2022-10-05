@@ -31,24 +31,24 @@ export async function ListarNotificaciones(idUsuario) {
 }
 export async function DetalleNotificacion(idNotificacion) {
     try {
-        const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
+        const notificacion = await Prisma.newPrisma().notificacion.findUnique({
             include: {
-                usuario: {
+                notificacionXusuario: {
                     include: {
-                        rol: true
+                        usuario: {
+                            include: {
+                                rol: true
+                            }
+                        }
                     }
-                },
-                notificacion: true
-            },
-            where: {
-                notificacion: {
-                    id: idNotificacion
                 }
             },
-
+            where: {
+                id: idNotificacion
+            }
         })
-
-        return listado
+        console.log(notificacion);
+        return notificacion
     } catch (error) {
         console.log(error);
     } finally {
@@ -86,5 +86,32 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
         console.error(err);
     } finally {
         Prisma.disconnect()
+    }
+}
+
+export async function ActualizarNotificacion(id, asunto, contenido, idUsuario, idNotificacionXUsuario) {
+    try {
+        const actualizar = await Prisma.newPrisma().notificacion.update({
+            data: {
+                asunto: asunto,
+                contenido: contenido,
+                notificacionXusuario: {
+                    update: {
+                        data: {
+                            idUsuario: idUsuario
+                        },
+                        where: {
+                            id: idNotificacionXUsuario
+                        }
+                    }
+                }
+            },
+            where: {
+                id: id
+            }
+        })
+        return actualizar
+    } catch (error) {
+        console.log(error);
     }
 }
