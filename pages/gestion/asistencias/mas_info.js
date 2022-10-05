@@ -60,7 +60,7 @@ const MasInfo = () => {
 
 
     return (
-        <Layout title={'Editar Asistencia'}>
+        <Layout title={'Editar Asistencia'} >
             <div>
                 <h1><strong>Mas información</strong></h1>
                 {
