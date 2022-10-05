@@ -334,13 +334,11 @@ export default function Asistencias() {
                                 <TableCell scope="col">MF</TableCell>
                                 <TableCell scope="col">MFJ</TableCell>
                                 <TableCell scope="col">Acción</TableCell>
-
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
                                 paginacion.dataActual().map((a, i) => (
-
                                     !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
                                         < TableRow key={i} >
 
@@ -865,7 +863,6 @@ export default function Asistencias() {
                                                     </TableCell>
                                                 </TableRow>
                                             )
-
                                     )
                                 )
                                 )
@@ -887,10 +884,6 @@ export default function Asistencias() {
                 }
             </Container>
             <EditarAsistenciaModal open={open} toggleOpen={toggleOpen} asistencia={asistenciaActual} />
-        </Layout >
-
+        </Layout>
     );
-
 }
-
-
