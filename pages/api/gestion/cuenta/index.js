@@ -11,12 +11,18 @@ export default async function handler(req, res) {
         });
         if (req.method === 'POST') {
             const { login,
-                nombre, apellido, dni,
+                nombre, apellido, legajo,
                 telefono, correo, direccion,
                 localidad, idRol, idTutor, sexo, contrasenia, idCurso } = req.body
 
+            console.log({
+                login,
+                nombre, apellido, legajo,
+                telefono, correo, direccion,
+                localidad, idRol, idTutor, sexo, contrasenia, idCurso
+            });
             const creado = await registrarUsuario(login, nombre, apellido,
-                correo, dni, telefono,
+                correo, legajo, telefono,
                 localidad, direccion, idRol, idTutor ? idTutor : '', contrasenia, sexo, idCurso ? idCurso : '')
 
             return res.status(200).json(creado)

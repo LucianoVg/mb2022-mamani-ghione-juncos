@@ -15,63 +15,40 @@ export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
-    // const [options, setOptions] = useState([])
-
-    // const defaultOptions = {
-    //     options: options,
-    //     getOptionLabel: (option) => option.user
-    // }
-
-    // const [value, setValue] = useState({
-    //     id: options[0]?.id,
-    //     nombre: options[0]?.nombre
-    // })
-
-    // const handleValue = (e, value, reason) => {
-    //     if (reason === 'selectOption') {
-    //         setValue(value)
-    //     } else if (reason === 'clear') {
-    //         setValue({ id: '', label: '' })
-    //     }
-    // };
-    // console.log(value)
-
 
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios`)
-            .then(res => {
-                setUsuarios(res.data)
-            })
-        // setOptions(usuarios.map(u => ({ id: u?.id, user: u?.nombre + ' ' + u?.apellido })))
+        traerUsuarios()
     }, [authUser, loading])
 
-
+    const traerUsuarios = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios`)
+        if (res.data) {
+            setUsuarios(res.data)
+        }
+    }
     const usuariosOptions = usuarios.map((usuario, i) => ({
         id: usuario.id,
         label: usuario.nombre + ' ' + usuario.apellido
-
     }))
 
     const defaultOptions = {
         options: usuariosOptions,
         getOptionLabel: (option) => option.label,
-
     }
 
     const [value, setValue] = useState(null)
-    // const [value, setValue] = useState({
-    //     id:'',
-    //     label: ''
-
-    // })
     const handleValue = (e, newValue) => {
         setValue(newValue)
-
+        if (newValue) {
+            setUsuarios((usuarios) => usuarios.filter(u => u.id === newValue?.id))
+        } else {
+            traerUsuarios()
+        }
     };
-    console.log('usuario:', value)
+
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
             <Link href={'/gestion/usuarios/nuevo'}>

@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 
 export async function registrarUsuario(
     login, nombre, apellido, correo,
-    dni, telefono, localidad,
+    legajo, telefono, localidad,
     direccion, idRol, idTutor = 0,
     contrasenia, sexo, idCurso = 0) {
     const usuarioCreado = idTutor.length && idCurso.length ? await Prisma.newPrisma().usuario.create({
@@ -20,7 +20,7 @@ export async function registrarUsuario(
             login: login,
             nombre: nombre,
             apellido: apellido,
-            dni: dni,
+            legajo: legajo,
             correo: correo,
             localidad: localidad,
             telefono: telefono,
@@ -44,7 +44,7 @@ export async function registrarUsuario(
             login: login,
             nombre: nombre,
             apellido: apellido,
-            dni: dni,
+            legajo: legajo,
             correo: correo,
             localidad: localidad,
             telefono: telefono,

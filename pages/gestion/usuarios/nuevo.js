@@ -8,13 +8,13 @@ import { Layout } from "../../../components/layout";
 export default function NuevoUsuario() {
     const router = useRouter()
     const [usuario, setUsuario] = useState({
-        nombre: '', apellido: '', dni: '',
+        nombre: '', apellido: '', legajo: '',
         correo: '', localidad: '', telefono: '', idRol: '',
         direccion: '', contrasenia: '', idTutor: '', sexo: 'M', idCurso: ''
     })
     const [cursos, setCursos] = useState()
     const [tutor, setTutor] = useState({
-        id: '', nombre: '', apellido: '', dni: '',
+        id: '', nombre: '', apellido: '', legajo: '',
         correo: '', localidad: '', telefono: '', idRol: roles?.find(r => r.tipo === 'Tutor')?.id,
         direccion: '', contrasenia: '', sexo: 'M'
     })
@@ -23,6 +23,7 @@ export default function NuevoUsuario() {
 
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
+    const [esPreceptorODocente, setEsPreceptorODocente] = useState(false)
     const [roles, setRoles] = useState([{ id: '', tipo: '' }])
     const { loading, authUser } = useAuth()
 
@@ -56,6 +57,8 @@ export default function NuevoUsuario() {
     const handleRol = (e) => {
         setRol(e.target.value)
         setEsAlumno(e.target.value === roles?.find(r => r.tipo === 'Estudiante')?.id)
+        setEsPreceptorODocente(e.target.value === roles?.find(r => r.tipo === 'Preceptor')?.id
+            || e.target.value === roles?.find(r => r.tipo === 'Docente')?.id)
     }
     const handleCurso = (e) => {
         setCurso(e.target.value)
@@ -64,57 +67,89 @@ export default function NuevoUsuario() {
     const registrarUsuario = (e) => {
         e.preventDefault()
         usuario.idRol = rol
-        // tutor.nombre !== '' && tutor.apellido !== '' && tutor.correo !== ''
-        // && tutor.dni !== '' && tutor.localidad !== '' && tutor.sexo !== ''
-        // && tutor.telefono !== '' && tutor.contrasenia !== '' && tutor.idRol !== 0
-        // && tutor.direccion !== ''
-        if (esAlumno) {
+
+        if (esAlumno || esPreceptorODocente) {
+            usuario.idCurso = curso
+        }
+
+        if (!esAlumno) {
             axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-                login: tutor.correo.split('@')[0],
-                nombre: tutor.nombre,
-                apellido: tutor.apellido,
-                dni: tutor.dni,
-                telefono: tutor.telefono,
-                correo: tutor.correo,
-                direccion: tutor.direccion,
-                localidad: tutor.localidad,
-                idRol: tutor.idRol,
-                sexo: tutor.sexo,
-                contrasenia: tutor.contrasenia
+                login: usuario.correo.split('@')[0],
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                legajo: usuario.legajo,
+                telefono: usuario.telefono,
+                correo: usuario.correo,
+                direccion: usuario.direccion,
+                localidad: usuario.localidad,
+                idRol: usuario.idRol,
+                idCurso: usuario.idCurso,
+                sexo: usuario.sexo,
+                contrasenia: usuario.contrasenia
             }).then(res => {
-                usuario.idTutor = res.data?.id
-                usuario.idCurso = curso
-                console.log(res.data);
+                if (res.data && res.data.id) {
+                    setMensaje("Usuario creado!")
+                    setTimeout(() => {
+                        router.push('/gestion/usuarios/mantenimiento_usuario')
+                    }, 1300);
+                }
             })
         }
 
+        if (esAlumno && tutor.nombre !== '' && tutor.apellido !== '' && tutor.correo !== ''
+            && tutor.legajo !== '' && tutor.localidad !== '' && tutor.sexo !== ''
+            && tutor.telefono !== '' && tutor.contrasenia !== '' && tutor.idRol !== ''
+            && tutor.direccion !== '') {
+
+            axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
+                login: usuario.correo.split('@')[0],
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                legajo: usuario.legajo,
+                telefono: usuario.telefono,
+                correo: usuario.correo,
+                direccion: usuario.direccion,
+                localidad: usuario.localidad,
+                idRol: usuario.idRol,
+                idTutor: usuario.idTutor,
+                idCurso: usuario.idCurso,
+                sexo: usuario.sexo,
+                contrasenia: usuario.contrasenia
+            }).then(res => {
+                if (res.data && res.data.id) {
+                    setMensaje("Usuario creado!")
+                    setTimeout(() => {
+                        router.push('/gestion/usuarios/mantenimiento_usuario')
+                    }, 1300);
+                }
+            })
+        } else {
+            setMensaje('Complete los datos del tutor')
+        }
+    }
+    const registrarTutor = (e) => {
+        e.preventDefault()
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-            login: usuario.correo.split('@')[0],
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            dni: usuario.dni,
-            telefono: usuario.telefono,
-            correo: usuario.correo,
-            direccion: usuario.direccion,
-            localidad: usuario.localidad,
-            idRol: usuario.idRol,
-            idTutor: usuario.idTutor,
-            idCurso: usuario.idCurso,
-            sexo: usuario.sexo,
-            contrasenia: usuario.contrasenia
+            login: tutor.correo.split('@')[0],
+            nombre: tutor.nombre,
+            apellido: tutor.apellido,
+            legajo: tutor.legajo,
+            telefono: tutor.telefono,
+            correo: tutor.correo,
+            direccion: tutor.direccion,
+            localidad: tutor.localidad,
+            idRol: tutor.idRol,
+            sexo: tutor.sexo,
+            contrasenia: tutor.contrasenia
         }).then(res => {
-            if (res.data && res.data.id) {
-                setMensaje("Usuario creado!")
-                setTimeout(() => {
-                    router.push('/gestion/usuarios/mantenimiento_usuario')
-                }, 1300);
-            }
+            usuario.idTutor = res.data?.id
+            console.log(res.data);
         })
     }
     return (
         <Layout>
             {
-                mensaje !== "" && (
+                mensaje.length > 0 && (
                     <Alert color="success">
                         {mensaje}
                     </Alert>
@@ -125,7 +160,6 @@ export default function NuevoUsuario() {
 
                 <Box direction='row' >
                     <TextField
-
                         margin="normal"
                         name="nombre"
                         onChange={handleForm}
@@ -136,7 +170,6 @@ export default function NuevoUsuario() {
                     />
 
                     <TextField
-
                         margin="normal"
                         name="apellido"
                         onChange={handleForm}
@@ -149,7 +182,6 @@ export default function NuevoUsuario() {
                 <Box direction='row'>
 
                     <TextField
-
                         margin="normal"
                         name="correo"
                         onChange={handleForm}
@@ -160,12 +192,11 @@ export default function NuevoUsuario() {
                         sx={{ marginRight: '20px', marginBottom: '20px', width: '280px' }}
                     />
                     <TextField
-
                         margin="normal"
-                        name="dni"
+                        name="legajo"
                         onChange={handleForm}
                         label="Legajo"
-                        value={usuario.dni}
+                        value={usuario.legajo}
                         required
                         sx={{ marginRight: '20px', marginBottom: '20px' }}
                     />
@@ -173,7 +204,6 @@ export default function NuevoUsuario() {
 
                 <Box direction='row'>
                     <TextField
-
                         margin="normal"
                         name="localidad"
                         onChange={handleForm}
@@ -185,7 +215,6 @@ export default function NuevoUsuario() {
 
 
                     <TextField
-
                         margin="normal"
                         name="telefono"
                         onChange={handleForm}
@@ -198,7 +227,6 @@ export default function NuevoUsuario() {
 
 
                     <TextField
-
                         margin="normal"
                         name="direccion"
                         onChange={handleForm}
@@ -209,9 +237,7 @@ export default function NuevoUsuario() {
                     />
                 </Box>
                 <Box direction='row'>
-
                     <FormControl>
-
                         <InputLabel id="select-label">Sexo</InputLabel>
                         <Select labelId="select-label"
                             name="sexo"
@@ -219,9 +245,7 @@ export default function NuevoUsuario() {
                             required
                             onChange={handleForm}
                             value={usuario.sexo}
-                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                        >
-
+                            sx={{ marginRight: '20px', marginBottom: '20px' }}>
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Femenino</MenuItem>
                         </Select>
@@ -262,7 +286,7 @@ export default function NuevoUsuario() {
                 </Box>
 
                 {
-                    esAlumno && (
+                    esAlumno || esPreceptorODocente && (
                         <Box>
                             <h3>Seleccionar curso</h3>
 
@@ -296,7 +320,7 @@ export default function NuevoUsuario() {
                 esAlumno && (
                     <>
                         <Typography variant="h5" sx={{ mt: 2 }}>Datos del Tutor</Typography>
-                        <Box component={'form'}>
+                        <Box component={'form'} onSubmit={registrarTutor}>
 
                             <Box direction='row'>
                                 <TextField
@@ -383,7 +407,7 @@ export default function NuevoUsuario() {
                                     <InputLabel id="select-label">Sexo</InputLabel>
                                     <Select labelId="select-label"
                                         name="sexo"
-                                        label="sasdo"
+                                        label="Sexo"
                                         required
                                         onChange={handleTutor}
                                         value={tutor.sexo}
