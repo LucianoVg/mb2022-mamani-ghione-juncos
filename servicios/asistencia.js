@@ -105,7 +105,7 @@ export async function TraerAsistencias() {
 
 export async function DetalleAsistencia(id) {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findUnique({
+        const asistencia = await Prisma.newPrisma().asistencia.findUnique({
             include: {
                 usuario: true,
                 alumnoXcursoXdivision: {
@@ -119,15 +119,14 @@ export async function DetalleAsistencia(id) {
                         }
                     }
                 }
-
             },
             where: {
                 id: id
             }
 
         })
-        console.log(asistencias);
-        return asistencias
+        console.log(asistencia);
+        return asistencia
     } catch (error) {
         console.log(error);
     } finally {
