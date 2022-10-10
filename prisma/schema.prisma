@@ -43,10 +43,12 @@ model asistencia {
 model asistenciaDocente {
   id                String           @id @default(auto()) @map("_id") @db.ObjectId
   idDocenteXmateria String?          @db.ObjectId
-  idTipoAsistencia  String?          @db.ObjectId
-  justificado       Boolean?
   idUsuario         String?          @db.ObjectId
-  fecha             String?
+  presente          Boolean?
+  ausente           Boolean?
+  creadoEn          String?
+  actualizadoEn     String?
+  motivo            String?
   docenteXmateria   docenteXmateria? @relation(fields: [idDocenteXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario           usuario?         @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
