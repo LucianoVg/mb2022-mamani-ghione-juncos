@@ -201,7 +201,7 @@ export default function Asistencias() {
                 style={{ position: 'relative', }}
             >
 
-                <Typography variant="h3">Asistencias</Typography>
+                <Typography variant="h3" sx={{marginBottom:'20px'}}>Asistencia Docente</Typography>
 
 
                 <Grid container spacing={2}>
@@ -339,7 +339,7 @@ export default function Asistencias() {
                                                     <Stack spacing={1} direction="row">
                                                         <Button variant="contained"
                                                             sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                            onClick={(e) => handleModal(a)}>
+                                                            onClick={() => onSave(a?.id)}>
                                                             Guardar
                                                         </Button>
                                                     </Stack>

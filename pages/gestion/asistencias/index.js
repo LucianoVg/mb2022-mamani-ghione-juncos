@@ -24,6 +24,7 @@ export default function Asistencias() {
     const [ltj, setLtj] = useState(false)
     const [mf, setMf] = useState(false)
     const [mfj, setMfj] = useState(false)
+    const [motivo, setMotivo] = useState(false)
     const [asistencias, setAsistencias] = useState()
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
@@ -126,6 +127,23 @@ export default function Asistencias() {
         listarAsistencias()
     }
 
+    const onUpdate = async (id) => {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
+            presente: presente,
+            ausente: ausente,
+            ausenteJustificado: aj,
+            llegadaTarde: llegadaTarde,
+            llegadaTardeJustificada: ltj,
+            mediaFalta: mf,
+            mediaFaltaJustificada: mfj,
+            motivo: motivo,
+            idUsuario: usuario.id
+        })
+        console.log(res.data);
+        onCancel()
+        listarAsistencias()
+    }
+
     const onCancel = () => {
         // reset the inEditMode state value
         setInEditMode({
@@ -211,7 +229,7 @@ export default function Asistencias() {
                 style={{ position: 'relative', }}
             >
 
-                <Typography variant="h3">Asistencias</Typography>
+                <Typography variant="h3" sx={{marginBottom:'20px'}}>Asistencias</Typography>
 
 
                 <Grid container spacing={2}>
@@ -368,7 +386,7 @@ export default function Asistencias() {
                                                     <Stack spacing={1} direction="row">
                                                         <Button variant="contained"
                                                             sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                            onClick={(e) => handleModal(a)}>
+                                                            onClick={() => onSave(a?.id)}>
                                                             Guardar
                                                         </Button>
                                                     </Stack>
@@ -707,7 +725,7 @@ export default function Asistencias() {
                                                                     >Editar</Button>
                                                                     <Button variant="contained"
                                                                         sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                        onClick={(e) => handleModal(a)}>
+                                                                        onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
                                                                         Info.
                                                                     </Button>
                                                                 </Stack>
