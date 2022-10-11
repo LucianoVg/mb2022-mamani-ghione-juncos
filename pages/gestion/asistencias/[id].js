@@ -127,14 +127,14 @@ const MasInfo = () => {
                         </Box>
                         <Box component={'div'} sx={{ marginBottom: 2 }}>
                             <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
-                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{new Date(asistencia?.creadoEn).toLocaleDateString('es-AR')}</Typography>
+                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
                         </Box>
                         <Divider sx={{ width: '100%', marginBottom: 2 }} />
                         {
                             asistencia?.actualizadoEn != null ? (
                                 <Box component='div' sx={{ marginBottom: 2 }}>
                                     <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
-                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{new Date(asistencia?.actualizadoEn).toLocaleDateString('es-AR')}</Typography>
+                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
                                 </Box>
                             ) :
                                 (

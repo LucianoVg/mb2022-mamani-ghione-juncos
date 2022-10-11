@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Layout } from '../../../../components/layout';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../../components/context/authUserProvider';
+import { useAuth } from '../../../../components/context/authUserProvider';
 import { Box, Divider, TextField, Typography } from '@mui/material';
 
 const MasInfo = () => {
@@ -20,7 +20,7 @@ const MasInfo = () => {
 
     const listarAsistencia = async () => {
         if (id) {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/detalles/${id}`)
             if (res.data) {
                 setAsistencia(res.data)
             }
@@ -65,13 +65,10 @@ const MasInfo = () => {
                 <form className='needs-validation'>
                     <div className='hstack gap-2 '>
                         <Box component='div' sx={{ marginBottom: 2 }}>
-                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Alumno: </Typography>
-                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.usuario?.apellido} {asistencia?.alumnoXcursoXdivision?.usuario?.nombre}</Typography>
+                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Docente: </Typography>
+                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docenteXmateria?.usuario?.apellido} {asistencia?.docenteXmateria?.usuario?.nombre}</Typography>
                         </Box>
-                        <Box component='div' sx={{ marginBottom: 2 }}>
-                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Curso: </Typography>
-                            <Typography variant='body' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</Typography>
-                        </Box>
+      
                         {
                             asistencia?.motivo != null ? (
                                 <Box component={'div'} sx={{ marginBottom: 2 }}>
@@ -127,14 +124,14 @@ const MasInfo = () => {
                         </Box>
                         <Box component={'div'} sx={{ marginBottom: 2 }}>
                             <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
-                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{new Date(asistencia?.creadoEn).toLocaleDateString('es-AR')}</Typography>
+                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
                         </Box>
                         <Divider sx={{ width: '100%', marginBottom: 2 }} />
                         {
                             asistencia?.actualizadoEn != null ? (
                                 <Box component='div' sx={{ marginBottom: 2 }}>
                                     <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
-                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{new Date(asistencia?.actualizadoEn).toLocaleDateString('es-AR')}</Typography>
+                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
                                 </Box>
                             ) :
                                 (
