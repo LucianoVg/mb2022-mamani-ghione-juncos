@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Layout } from '../../../components/layout';
+import { Layout } from '../../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { Box, Divider, TextField, Typography } from '@mui/material';

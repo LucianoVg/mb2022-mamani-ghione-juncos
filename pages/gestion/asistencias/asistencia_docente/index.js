@@ -1,4 +1,4 @@
-import { Layout } from "../../../components/layout";
+import { Layout } from "../../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -9,9 +9,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Select from '@mui/material/Select';
-import { usePagination } from "../../../components/hooks/paginationHook";
+import { usePagination } from "../../../../components/hooks/paginationHook";
 import { Search } from "@mui/icons-material";
-import { useAuth } from "../../../components/context/authUserProvider";
+import { useAuth } from "../../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 
 export default function Asistencias() {
@@ -44,7 +44,6 @@ export default function Asistencias() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        listarCursos()
         listarAsistencias()
     }, [loading, authUser, docente, documento, fecha, usuario.id])
 
@@ -60,7 +59,7 @@ export default function Asistencias() {
     const listarAsistencias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente`)
         if (res.data) {
-            setDocente(res.data)
+            setAsistencias(res.data)
         }
     }
 
@@ -208,7 +207,7 @@ export default function Asistencias() {
                 <Grid container spacing={2}>
 
                     <Grid item xs={8}>
-                        
+
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
@@ -297,9 +296,9 @@ export default function Asistencias() {
                                     !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
                                         <TableRow key={i} >
                                             <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                            <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                            <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
+                                            <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
+                                            <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
                                                     onChange={handlePresente}
@@ -352,9 +351,9 @@ export default function Asistencias() {
                                             <TableRow
                                                 key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
                                                 <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                                <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                                <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
+                                                <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
+                                                <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
                                                 {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                 <TableCell className="col-md-1 ">
                                                     {
@@ -515,9 +514,9 @@ export default function Asistencias() {
                                                 < TableRow key={i} >
 
                                                     <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
-                                                    <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                                    <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
                                                     {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                     <TableCell className="col-md-1 ">
                                                         {
