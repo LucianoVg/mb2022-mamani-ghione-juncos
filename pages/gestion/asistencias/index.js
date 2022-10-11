@@ -342,7 +342,7 @@ export default function Asistencias() {
                                 paginacion.dataActual().map((a, i) => (
                                     !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
                                         <TableRow key={i} >
-                                            <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                            <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('es-AR')}</TableCell>
                                             <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                             <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                             <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
@@ -397,7 +397,7 @@ export default function Asistencias() {
                                         a.motivo ? (
                                             <TableRow
                                                 key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
-                                                <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                                <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('es-AR')}</TableCell>
                                                 <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                                 <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                                 <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
@@ -560,7 +560,7 @@ export default function Asistencias() {
                                             (
                                                 < TableRow key={i} >
 
-                                                    <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('en-GB')}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{new Date(a.creadoEn).toLocaleDateString('es-AR')}</TableCell>
                                                     <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                                     <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                                     <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>

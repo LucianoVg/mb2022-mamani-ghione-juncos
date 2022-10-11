@@ -148,7 +148,7 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 motivo: motivo,
                 fecha: fecha,
                 idUsuario: idUsuario,
-                actualizadoEn: new Date().toISOString().split('T')[0]
+                actualizadoEn: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
             where: {
                 id: id
