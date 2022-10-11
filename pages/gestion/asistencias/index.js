@@ -229,7 +229,7 @@ export default function Asistencias() {
                 style={{ position: 'relative', }}
             >
 
-                <Typography variant="h3" sx={{marginBottom:'20px'}}>Asistencias</Typography>
+                <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
 
 
                 <Grid container spacing={2}>
