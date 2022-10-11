@@ -28,13 +28,12 @@ export default function Asistencias() {
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
 
+
     const [nombreDocente, setNombreDocente] = useState("")
     const [apellidoDocente, setApellidoDocente] = useState("")
     const [documento, setDocumento] = useState("")
     const [docente, setDocente] = useState("")
     const [fecha, setFecha] = useState(new Date().toISOString())
-    const [cursos, setCursos] = useState()
-    const [idCurso, setIdCurso] = useState("")
     const { loading, authUser } = useAuth()
     const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
@@ -47,7 +46,7 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-    }, [loading, authUser, alumno, idCurso, documento, fecha, usuario.id])
+    }, [loading, authUser, docente, documento, fecha, usuario.id])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -61,12 +60,12 @@ export default function Asistencias() {
     const listarAsistencias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente`)
         if (res.data) {
-            setAsistencias(res.data)
+            setDocente(res.data)
         }
     }
 
     const buscarAsistencias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/${fecha}/${idCurso}/${alumno}/${documento}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/${fecha}/${docente}/${documento}`)
         if (res.data) {
             setAsistencias(res.data)
         }
@@ -78,12 +77,12 @@ export default function Asistencias() {
 
     const handleNombreDocente = (e) => {
         setNombreDocente(e.target.value)
-        setAlumno(`${nombreDocente} ${apellidoDocente}`)
+        setDocente(`${nombreDocente} ${apellidoDocente}`)
     }
 
     const handleApellidoDocente = (e) => {
-        setApellidoAlumno(e.target.value)
-        setAlumno(`${nombreDocente} ${apellidoDocente}`)
+        setApellidoDocente(e.target.value)
+        setDocente(`${nombreDocente} ${apellidoDocente}`)
     }
     const handleDocumento = (e) => {
         setDocumento(e.target.value)
@@ -209,26 +208,7 @@ export default function Asistencias() {
                 <Grid container spacing={2}>
 
                     <Grid item xs={8}>
-                        <Box sx={{ marginBottom: '20px' }}>
-                            <FormControl>
-                                <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                                <Select
-                                    sx={{ width: '90px', marginRight: '20px' }}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={idCurso}
-                                    name="idCurso"
-                                    label="Curso"
-                                    onChange={handleCurso}
-                                >
-                                    {
-                                        cursos && cursos.map((c, i) => (
-                                            <MenuItem selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
-                                        ))
-                                    }
-                                </Select>
-                            </FormControl>
-                        </Box>
+                        
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
@@ -240,7 +220,7 @@ export default function Asistencias() {
                             </LocalizationProvider>
                         </Box>
 
-                        <h4>Buscar Alumno:</h4>
+                        <h4>Buscar Docente:</h4>
                         <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
@@ -253,15 +233,15 @@ export default function Asistencias() {
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
 
                                 name="nombreAlumno"
-                                value={nombreAlumno}
-                                onChange={handleNombreAlumno}
+                                value={nombreDocente}
+                                onChange={handleNombreDocente}
                                 label="Nombre" />
                             <TextField
                                 sx={{ width: '150px', marginRight: '20px' }}
 
                                 name="apellidoAlumno"
-                                value={apellidoAlumno}
-                                onChange={handleApellidoAlumno}
+                                value={apellidoDocente}
+                                onChange={handleApellidoDocente}
                                 label="Apellido" />
                         </Box>
                         <Box sx={{ marginTop: '20px' }}>
