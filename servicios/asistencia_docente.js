@@ -20,7 +20,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
                         docenteXmateria: {
                             usuario: {
                                 nombre: {
-                                    startsWith: alumno.split(' ')[0]
+                                    startsWith: docente.split(' ')[0]
                                 }
                             }
                         },
@@ -29,7 +29,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
                         docenteXmateria: {
                             usuario: {
                                 apellido: {
-                                    endsWith: alumno.split(' ')[1]
+                                    endsWith: docente.split(' ')[1]
                                 }
                             }
                         },
