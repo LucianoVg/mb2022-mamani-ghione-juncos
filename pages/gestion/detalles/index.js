@@ -296,10 +296,16 @@ export default function Detalles() {
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={4}>
+                    <Grid item xs>
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Fecha de Ingreso</strong> <br />
                             23/03/2022
+                        </Typography>
+                    </Grid>
+                    <Grid item xs>
+                        <Typography variant="h5" sx={{ width: '250px' }} >
+                            <strong>Plan de Estudio</strong> <br />
+                            Ciencias Naturales
                         </Typography>
                     </Grid>
                 </Grid>
