@@ -1,7 +1,5 @@
 import { Prisma } from "./prisma";
 
-
-
 export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "", apellidoAlumno = "") {
     try {
         let trimestres = await Prisma.newPrisma().trimestre.findMany()

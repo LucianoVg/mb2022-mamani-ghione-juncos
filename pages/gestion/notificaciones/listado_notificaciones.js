@@ -123,8 +123,8 @@ export default function ListadoNotificaciones() {
                                     className={`${styles.Typography2}`}
                                 >{n.notificacion?.contenido} </Typography>
                                 <Typography variant="caption"
-                                className={`${styles.Typography3}`}
-                                > <strong>Atte. {n.usuario?.rol?.tipo}</strong></Typography>
+                                    className={`${styles.Typography3}`}
+                                > <strong>Atte. {n.usuario?.nombre} {n.usuario?.apellido} ({n.usuario?.rol?.tipo})</strong></Typography>
                             </TabPanel>
                         ))
                     }

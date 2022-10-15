@@ -14,6 +14,36 @@ export async function ListarNotificaciones(idUsuario) {
             },
             where: {
                 usuario: {
+                    id: {
+                        not: idUsuario
+                    }
+                }
+            },
+            orderBy: {
+                id: 'desc'
+            }
+        })
+
+        return listado
+    } catch (error) {
+        console.log(error);
+    } finally {
+        Prisma.disconnect()
+    }
+}
+export async function ListarNotificacionesDeUsuario(idUsuario) {
+    try {
+        const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
+            include: {
+                usuario: {
+                    include: {
+                        rol: true
+                    }
+                },
+                notificacion: true
+            },
+            where: {
+                usuario: {
                     id: idUsuario
                 }
             },

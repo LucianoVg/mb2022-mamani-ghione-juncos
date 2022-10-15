@@ -50,12 +50,9 @@ export default function Asistencias() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            console.log(res.data);
             setUsuario({ id: res.data?.id })
         }
     }
-
-
     const listarAsistencias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente`)
         if (res.data) {
@@ -111,7 +108,6 @@ export default function Asistencias() {
             mediaFaltaJustificada: mfj,
             idUsuario: usuario.id
         })
-        console.log(res.data);
         onCancel()
         listarAsistencias()
     }
@@ -198,16 +194,10 @@ export default function Asistencias() {
     return (
         <Layout>
             <Container
-                style={{ position: 'relative', }}
-            >
-
-                <Typography variant="h3" sx={{marginBottom:'20px'}}>Asistencia Docente</Typography>
-
-
+                style={{ position: 'relative', }}>
+                <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencia Docente</Typography>
                 <Grid container spacing={2}>
-
                     <Grid item xs={8}>
-
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
@@ -252,7 +242,6 @@ export default function Asistencias() {
                     </Grid>
                     <Grid item xs>
                         <Box component="span">
-
                             <Stack spacing={1} direction="row" >
                                 <h5 ><strong>Asistencia modificada:</strong> </h5>
                                 <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
@@ -269,7 +258,6 @@ export default function Asistencias() {
                         </Box>
                     </Grid>
                 </Grid>
-
 
                 <TableContainer component={Paper} style={{ marginTop: '40px' }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -354,7 +342,6 @@ export default function Asistencias() {
                                                 <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
                                                 <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
                                                 <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
-                                                {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                 <TableCell className="col-md-1 ">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (

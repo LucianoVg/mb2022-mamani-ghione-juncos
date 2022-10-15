@@ -64,7 +64,7 @@ const Notificaciones = () => {
     }
     const ListarNotificaciones = () => {
         if (usuario.id.length) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario?.id}`)
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${usuario?.id}`)
                 .then(res => {
                     console.log(res.data);
                     setListNotificaciones(res.data)

@@ -13,7 +13,7 @@ import { useAuth } from './context/authUserProvider';
 export const Notificacion = () => {
     const { loading, authUser } = useAuth()
 
-    const [listNotificaciones, setListNotificaciones] = useState()
+    const [notificaciones, setNotificaciones] = useState()
     const [usuario, setUsuario] = useState({ id: '' })
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -34,7 +34,7 @@ export const Notificacion = () => {
     useEffect(() => {
         if (!loading && authUser) {
             traerUsuario()
-            ListarNotificacion()
+            ListarNotificaciones()
         }
     }, [loading, authUser, usuario.id])
 
@@ -44,11 +44,11 @@ export const Notificacion = () => {
             setUsuario({ id: res.data?.id })
         }
     }
-    const ListarNotificacion = () => {
+    const ListarNotificaciones = () => {
         if (usuario.id.length) {
             axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario.id}`)
                 .then(res => {
-                    setListNotificaciones(res.data)
+                    setNotificaciones(res.data)
                 }).catch(err => {
                     console.error(err);
                 })
@@ -61,8 +61,8 @@ export const Notificacion = () => {
                     <Badge
 
                         aria-describedby={id} variant="contained"
-                        badgeContent={!localStorage.getItem('vistas') && listNotificaciones ?
-                            listNotificaciones.length : null}
+                        badgeContent={!localStorage.getItem('vistas') && notificaciones ?
+                            notificaciones.length : null}
 
                         color="info"
                         style={{ float: 'right' }}  >
@@ -92,7 +92,7 @@ export const Notificacion = () => {
             >
                 <List>
                     {
-                        listNotificaciones && listNotificaciones.map((n, i) => (
+                        notificaciones && notificaciones?.map((n, i) => (
                             <ListItem key={i} disablePadding>
                                 <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
                                     <ListItemText primary={n.notificacion?.asunto} />
@@ -101,7 +101,7 @@ export const Notificacion = () => {
                         ))
                     }
                     {
-                        !listNotificaciones || !listNotificaciones.length && (
+                        !notificaciones || !notificaciones?.length && (
                             <ListItem>
                                 <ListItemText>No hay notificaciones</ListItemText>
                             </ListItem>

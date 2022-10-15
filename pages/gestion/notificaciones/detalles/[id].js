@@ -110,10 +110,10 @@ export default function DetallesNoticia() {
                                                 >{notificacion?.contenido} </Typography>
                                             </Grid>
                                             <Grid item >
-
                                                 <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                                     className={`${styles.Typography3}`}
-                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo}</strong></Typography>
+                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario.nombre} {notificacion.notificacionXusuario[0]?.usuario?.apellido} ({notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo})</strong>
+                                                </Typography>
                                             </Grid>
                                         </Grid>
 
@@ -190,7 +190,7 @@ export default function DetallesNoticia() {
                                             <Grid item>
                                                 <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                                     className={`${styles.Typography3}`}
-                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo}</strong>
+                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario.nombre} {notificacion.notificacionXusuario[0]?.usuario?.apellido} ({notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo})</strong>
                                                 </Typography>
                                             </Grid>
                                         </Grid>
