@@ -83,67 +83,69 @@ export default function Detalles() {
             <div>
                 <h1> ver: https://thrysoee.dk/material-ui/</h1>
                 <Typography variant="h4" sx={{ marginBottom: '20px' }}>Datos Personales</Typography>
+
                 <Grid container direction='row' sx={{ marginBottom: '20px' }}>
-                    <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ width: '200px' }} >
+                    <Grid item xs={4} spacing={2}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Nombre</strong> <br />
                             Juan Fernando
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Apellido</strong> <br />
                             Castro
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Dni</strong> <br />
                             4564223
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid container direction='row' sx={{ marginBottom: '20px' }}>
-                    <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ width: '200px' }} >
+                    <Grid item xs={4} s>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Mail</strong> <br />
                             Juan@gmail.com
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Direccion</strong> <br />
                             Siempre Viva 950
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Telefono</strong> <br />
                             351-405033
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid container direction='row'>
                     <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ width: '200px' }} >
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Edad</strong> <br />
                             16
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '250px' }}>
+                        <Typography variant="h5" sx={{ width: '250px', marginBottom: '20px' }} >
                             <strong>Fecha de Nacimiento</strong> <br />
                             20/05/2005
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '250px' }}>
+                        <Typography variant="h5" sx={{ width: '250px', marginBottom: '20px' }} >
                             <strong>Curso</strong> <br />
                             4 "A"
                         </Typography>
                     </Grid>
+
                 </Grid>
-                <Typography variant="h4" sx={{ marginBottom: '20px' }}>Datos de salud</Typography>
+
+                <Divider sx={{ marginTop: '20px' }}></Divider>
+
+
+                <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>Datos de salud</Typography>
                 <Grid container direction='row'>
                     <Grid item xs={4}>
                         <Typography variant="h5" sx={{ width: '200px' }} >
@@ -160,7 +162,7 @@ export default function Detalles() {
 
 
                                     < TextField
-                                        sx={{ maxWidth: '300px' }}
+                                        sx={{ maxWidth: '280px' }}
                                         select
                                         name="list"
                                         id="list"
@@ -250,33 +252,31 @@ export default function Detalles() {
                 <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>Datos del Tutor</Typography>
                 <Grid container direction='row' sx={{ marginBottom: '20px' }}>
                     <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ width: '200px' }} >
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Nombre</strong> <br />
                             Jose Luis
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Apellido</strong> <br />
                             Castro
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Dni</strong> <br />
                             4564223
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid container direction='row' sx={{ marginBottom: '20px' }}>
                     <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ width: '200px' }} >
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Mail</strong> <br />
                             JoseLuis@gmail.com
                         </Typography>
                     </Grid>
                     <Grid item xs>
-                        <Typography variant="h5" sx={{ width: '200px' }}>
+                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Telefono</strong> <br />
                             351-404633
                         </Typography>
@@ -289,28 +289,26 @@ export default function Detalles() {
 
                 <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>Datos de Matriculacion</Typography>
                 <Grid container direction='row' sx={{ marginBottom: '20px' }}>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px'  }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Fecha de Matriculacion</strong> <br />
                             20/01/2002
                         </Typography>
                     </Grid>
 
-                    <Grid item xs>
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Fecha de Ingreso</strong> <br />
                             23/03/2022
                         </Typography>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Plan de Estudio</strong> <br />
                             Ciencias Naturales
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid container direction='row' sx={{ marginBottom: '20px' }}>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px'  }} >
                         <Typography variant="h5" sx={{ width: '200px' }}>
                             Repite?
                             <Checkbox
@@ -320,7 +318,7 @@ export default function Detalles() {
                             />
                         </Typography>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
                         <Typography variant="h5" sx={{ width: '300px' }}>
                             Viene de otra escuela?
                             <Checkbox
@@ -331,6 +329,7 @@ export default function Detalles() {
                         </Typography>
                     </Grid>
                 </Grid>
+               
             </div>
         </Layout >
     )
