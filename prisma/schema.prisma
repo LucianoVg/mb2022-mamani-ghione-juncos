@@ -77,7 +77,7 @@ model cursoXdivision {
 
 model discapacidad {
   id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  nombre               String
+  nombre               String?
   discapacidadXusuario discapacidadXusuario[]
 }
 
@@ -106,9 +106,7 @@ model docenteXmateria {
 
 model enfermedad {
   id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  descripcion          String?
-  usuarioId            String?                @db.ObjectId
-  usuario              usuario?               @relation(fields: [usuarioId], references: [id])
+  nombre               String?
   enfermedadesXusuario enfermedadesXusuario[]
 }
 
@@ -364,7 +362,6 @@ model usuario {
   asistenciaDocente     asistenciaDocente[]
   discapacidadXusuario  discapacidadXusuario[]
   docenteXmateria       docenteXmateria[]
-  enfermedad            enfermedad[]
   enfermedadesXusuario  enfermedadesXusuario[]
   fichaInstitucional    fichaInstitucional[]
   materialEstudio       materialEstudio[]

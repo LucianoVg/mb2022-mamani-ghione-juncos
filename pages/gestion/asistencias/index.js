@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
+import { Box,Autocomplete, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -25,7 +25,7 @@ export default function Asistencias() {
     const [mf, setMf] = useState(false)
     const [mfj, setMfj] = useState(false)
     const [motivo, setMotivo] = useState(false)
-    const [asistencias, setAsistencias] = useState()
+    const [asistencias, setAsistencias] = useState([])
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
 
@@ -223,6 +223,29 @@ export default function Asistencias() {
         setMfj(checked)
     }
 
+
+    // const usuariosOptions = asistencias.map((asistencia, i) => ({
+    //     id: asistencia.alumnoXcursoXdivision.usuario.id,
+    //     label: asistencia.alumnoXcursoXdivision.usuario.nombre + ' ' + asistencia.alumnoXcursoXdivision.usuario.apellido
+    // }))
+
+    // const defaultOptions = {
+    //     options: usuariosOptions,
+    //     getOptionLabel: (option) => option.label,
+    // }
+
+    // const [value, setValue] = useState(null)
+    // const handleValue = (e, newValue) => {
+    //     setValue(newValue)
+    //     if (newValue) {
+    //         setAsistencias((asistencia) => asistencia.filter(u => u.id === newValue?.id))
+    //     } else {
+    //         traerUsuarios()
+    //     }
+    // };
+
+
+
     return (
         <Layout>
             <Container
@@ -267,6 +290,21 @@ export default function Asistencias() {
                         </Box>
 
                         <h4>Buscar Alumno:</h4>
+
+                        {/* <Autocomplete
+                            sx={{ width: '200px' }}
+                            {...defaultOptions}
+                            freeSolo
+                            // isOptionEqualToValue={(option, value) => option.id === value.id}
+                            multiple={false}
+                            id="controlled-demo"
+                            value={value}
+                            onChange={handleValue}
+
+                            renderInput={(params) => <TextField {...params} label="Alumnos" variant="outlined" />}
+
+                        /> */}
+
                         <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
