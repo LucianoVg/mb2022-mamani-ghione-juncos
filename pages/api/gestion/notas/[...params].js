@@ -14,14 +14,14 @@ export default async function handler(
         });
         const { params } = req.query
         const queryParams = {
-            idTrimestre: '',
+            idTrimestre: 0,
             idMateria: '',
             idCurso: '',
             nombreAlumno: '',
             apellidoAlumno: ''
         }
 
-        if (params && params.length === 3) {
+        if (params) {
             queryParams.idTrimestre = params[0] !== 'undefined' && params[0]
             queryParams.idMateria = params[1] !== 'undefined' && params[1]
             queryParams.idCurso = params[2] !== 'undefined' && params[2]

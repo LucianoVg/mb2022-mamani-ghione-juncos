@@ -4,7 +4,8 @@ import { Prisma } from "./prisma";
 
 export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "", apellidoAlumno = "") {
     try {
-        const notas = idTrimestre && idMateria && curso ? await Prisma.newPrisma().nota.findMany({
+        let trimestres = await Prisma.newPrisma().trimestre.findMany()
+        const notas = idMateria && curso ? await Prisma.newPrisma().nota.findMany({
             include: {
                 materia: true,
                 trimestre: true,
@@ -16,8 +17,8 @@ export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "
                 }
             },
             where: {
-                OR: [
-                    { idTrimestre: idTrimestre },
+                AND: [
+                    { idTrimestre: trimestres[idTrimestre].id },
                     { idMateria: idMateria },
                     {
                         alumnoXcursoXdivision: {
@@ -56,6 +57,9 @@ export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "
                         cursoXdivision: true
                     }
                 }
+            },
+            where: {
+                idTrimestre: trimestres[idTrimestre].id
             }
         })
         return notas

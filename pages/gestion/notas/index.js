@@ -8,23 +8,20 @@ import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 
 export default function Notas() {
-    const [notas, setNotas] = useState()
+    const [notas, setNotas] = useState([])
 
-    const [idTrimestre, setIdTrimestre] = useState("")
+    const [index, setIndex] = useState(0)
+    // const [trimestres, setTrimestres] = useState([])
+    // const [idTrimestre, setIdTrimestre] = useState("")
     const [idMateria, setIdMateria] = useState("")
     const [idCurso, setIdCurso] = useState("")
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
     const [nota, setNota] = useState(1);
-
     const [columnName, setColumnName] = useState("");
-
-    const [index, setIndex] = useState(0)
-    const [cursos, setCursos] = useState()
-    const [materias, setMaterias] = useState()
-    const [trimestres, setTrimestres] = useState()
-
+    const [cursos, setCursos] = useState([])
+    const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
     const router = useRouter()
 
@@ -37,39 +34,39 @@ export default function Notas() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        traerCursos()
-        traerMaterias()
-        traerTrimestres()
-        setIdTrimestre(trimestres && trimestres[0]?.id)
-        setIdCurso(cursos && cursos[0]?.id)
-        setIdMateria(materias && materias[0]?.id)
-        defaultTrimestre()
-    }, [idTrimestre, idMateria, idCurso, nombreAlumno, apellidoAlumno])
+    }, [loading, authUser])
 
+    useEffect(() => {
+        traerCursos()
+    }, [])
+    useEffect(() => {
+        traerMaterias()
+    }, [])
+    // useEffect(() => {
+    //     traerTrimestres()
+    // }, [idTrimestre])
+    useEffect(() => {
+        traerNotas(index)
+    }, [index, idCurso, idMateria, nombreAlumno, apellidoAlumno])
 
     const handleTrimestre = (e, value) => {
         setIndex(value)
-        setIdTrimestre(trimestres[index].id)
-        defaultTrimestre()
+        traerNotas(value)
     }
 
     const handleMateria = (e) => {
-        setIdMateria(e.target.value)
-        defaultTrimestre()
+        setIdMateria(e.target.value, () => traerNotas())
     }
 
     const handleCurso = (e) => {
-        setIdCurso(e.target.value)
-        defaultTrimestre()
+        setIdCurso(e.target.value, () => traerNotas())
     }
     const handleNombreAlumno = (e) => {
-        setNombreAlumno(e.target.value)
-        defaultTrimestre()
+        setNombreAlumno(e.target.value, () => traerNotas())
     }
 
     const handleApellidoAlumno = (e) => {
-        setApellidoAlumno(e.target.value)
-        defaultTrimestre()
+        setApellidoAlumno(e.target.value, () => traerNotas())
     }
 
     const traerCursos = async () => {
@@ -84,28 +81,27 @@ export default function Notas() {
             setMaterias(res.data)
         }
     }
-    const traerTrimestres = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`)
+    // const traerTrimestres = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`)
+    //     if (res.data) {
+    //         setTrimestres(() => res.data)
+    //         setIdTrimestre(() => trimestres[index].id)
+    //     }
+    // }
+
+    const traerNotas = async (value) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${value}/${idMateria}/${idCurso}/${nombreAlumno}/${apellidoAlumno}`)
         if (res.data) {
-            setTrimestres(res.data)
+            setNotas(res.data)
         }
     }
 
-    const defaultTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${idTrimestre}/${idMateria}/${idCurso}/${nombreAlumno}/${apellidoAlumno}`)
-            .then(res => {
-                setNotas(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-    }
-
-    const onEdit = (id) => {
-        setInEditMode({
-            status: true,
-            rowKey: id
-        })
-    }
+    // const onEdit = (id) => {
+    //     setInEditMode({
+    //         status: true,
+    //         rowKey: id
+    //     })
+    // }
 
     const updateNota = (id, newNota, columnName) => {
         axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/update/${id}`, {
@@ -118,11 +114,10 @@ export default function Notas() {
                 onCancel();
 
                 // fetch the updated data
-                defaultTrimestre();
+                traerNotas(index)
             }).catch(err => {
                 console.error(err);
             })
-
     }
 
     const onSave = (id, newNota, columnName) => {
@@ -213,7 +208,7 @@ export default function Notas() {
                         variant="scrollable"
                         scrollButtons
                         allowScrollButtonsMobile
-                        >
+                    >
                         <Tab label="Primer Trimestre" />
                         <Tab label="Segundo Trimestre" />
                         <Tab label="Tercer Trimestre" />
