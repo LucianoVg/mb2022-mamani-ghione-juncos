@@ -136,7 +136,7 @@ export default function Detalles() {
                     <Grid item xs>
                         <Typography variant="h5" sx={{ width: '250px', marginBottom: '20px' }} >
                             <strong>Curso</strong> <br />
-                            4 "A"
+                            4 &quot;A&quot;
                         </Typography>
                     </Grid>
 
@@ -289,26 +289,26 @@ export default function Detalles() {
 
                 <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>Datos de Matriculacion</Typography>
                 <Grid container direction='row' sx={{ marginBottom: '20px' }}>
-                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px'  }} >
+                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px' }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Fecha de Matriculacion</strong> <br />
                             20/01/2002
                         </Typography>
                     </Grid>
 
-                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px' }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Fecha de Ingreso</strong> <br />
                             23/03/2022
                         </Typography>
                     </Grid>
-                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px' }} >
                         <Typography variant="h5" sx={{ width: '250px' }} >
                             <strong>Plan de Estudio</strong> <br />
                             Ciencias Naturales
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px'  }} >
+                    <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px' }} >
                         <Typography variant="h5" sx={{ width: '200px' }}>
                             Repite?
                             <Checkbox
@@ -318,7 +318,7 @@ export default function Detalles() {
                             />
                         </Typography>
                     </Grid>
-                    <Grid item xs sx={{ width: '200px', marginBottom: '20px'  }} >
+                    <Grid item xs sx={{ width: '200px', marginBottom: '20px' }} >
                         <Typography variant="h5" sx={{ width: '300px' }}>
                             Viene de otra escuela?
                             <Checkbox
@@ -329,7 +329,7 @@ export default function Detalles() {
                         </Typography>
                     </Grid>
                 </Grid>
-               
+
             </div>
         </Layout >
     )

@@ -153,8 +153,8 @@ export default function Detalles() {
                             <Grid item xs={4}>
                                 <Typography variant="h5" sx={{ width: '280px', marginBottom: '20px' }} >
                                     <strong>Curso/s</strong> <br />
-                                    *4 "A" <br />
-                                    *2 "A"<br />
+                                    *4 &quot;A&quot; <br />
+                                    *2 &quot;A&quot;<br />
                                 </Typography>
                             </Grid>
                             <Grid item xs>
