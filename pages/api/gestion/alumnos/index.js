@@ -1,5 +1,6 @@
 import NextCors from "nextjs-cors/dist";
 import traerAlumnos from "../../../../servicios/alumnos";
+import alumnoXcurso from "../../../../servicios/alumnos";
 
 export default async function handler(req, res) {
     try {
