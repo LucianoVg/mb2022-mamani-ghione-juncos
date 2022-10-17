@@ -106,7 +106,7 @@ model docenteXmateria {
 
 model enfermedad {
   id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  nombre               String?
+  descripcion          String?
   enfermedadesXusuario enfermedadesXusuario[]
 }
 
@@ -348,6 +348,7 @@ model usuario {
   nombre                String?
   apellido              String?
   legajo                String?
+  fechaNacimiento       String?
   correo                String?
   localidad             String?
   telefono              String?

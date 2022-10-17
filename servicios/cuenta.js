@@ -111,6 +111,16 @@ export async function traerUsuario(correo) {
         const usuario = await Prisma.newPrisma().usuario.findFirst({
             include: {
                 rol: true,
+                alumnoXcursoXdivision: {
+                    include: {
+                        cursoXdivision: {
+                            include: {
+                                curso: true,
+                                division: true
+                            }
+                        }
+                    }
+                }
             },
             where: {
                 correo: correo

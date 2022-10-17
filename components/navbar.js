@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Notificacion from '../components/notificacion_panel'
+import { useRouter } from "next/router";
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -28,7 +29,7 @@ const AppBar = styled(MuiAppBar, {
 
 export const Navbar = ({ toggleDrawer, open }) => {
     const { loading, authUser } = useAuth()
-
+    const router = useRouter()
     return (
         <>
             <AppBar position="absolute" open={open}>
@@ -68,7 +69,9 @@ export const Navbar = ({ toggleDrawer, open }) => {
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
                                 </div>
-                                <AccountCircleIcon />
+                                <IconButton onClick={() => router.push('/gestion/cuenta')}>
+                                    <AccountCircleIcon />
+                                </IconButton>
                             </>
                         )
                     }
