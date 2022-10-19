@@ -22,6 +22,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import React from 'react'
 
+import EventIcon from '@mui/icons-material/Event';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SegmentIcon from '@mui/icons-material/Segment';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
@@ -173,7 +174,7 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                                                 }
                                                 {
                                                     m?.menu?.menuSistema === 'Fecha de Examen' && (
-                                                        <ArticleIcon />
+                                                        <EventIcon />
                                                     )
                                                 }
                                                 {
