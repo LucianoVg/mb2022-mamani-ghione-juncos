@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box,Autocomplete, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
+import { Box, Autocomplete, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -444,6 +444,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={presente}
                                                                 onChange={handlePresente}
                                                             />
                                                         ) :
@@ -460,6 +461,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={ausente}
                                                                 onChange={handleAusente}
                                                             />
                                                         ) :
@@ -476,6 +478,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={aj}
                                                                 onChange={handleAj}
                                                             />
                                                         ) :
@@ -492,6 +495,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={llegadaTarde}
                                                                 onChange={handleLlegadaTarde}
                                                             />
                                                         ) :
@@ -511,6 +515,7 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <Switch
+                                                                checked={ltj}
                                                                 onChange={handleLtj}
                                                             />
 
@@ -529,6 +534,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={mf}
                                                                 onChange={handleMf}
                                                             />
                                                         ) :
@@ -546,6 +552,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
+                                                                checked={mfj}
                                                                 onChange={handleMfj}
                                                             />
                                                         ) :
