@@ -386,36 +386,43 @@ export default function Asistencias() {
                                             <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
+                                                    checked={presente}
                                                     onChange={handlePresente}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
+                                                    checked={ausente}
                                                     onChange={handleAusente}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
+                                                    checked={aj}
                                                     onChange={handleAj}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
+                                                    checked={llegadaTarde}
                                                     onChange={handleLlegadaTarde}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1">
                                                 <Switch
+                                                    checked={ltj}
                                                     onChange={handleLtj}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1 ">
                                                 <Switch
+                                                    checked={mf}
                                                     onChange={handleMf}
                                                 />
                                             </TableCell>
                                             <TableCell className="col-md-1">
                                                 <Switch
+                                                    checked={mfj}
                                                     onChange={handleMfj}
                                                 />
                                             </TableCell>
