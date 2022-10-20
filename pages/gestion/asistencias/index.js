@@ -451,7 +451,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
-                                                                checked={presente}
+                                                                checked={presente }
                                                                 onChange={handlePresente}
                                                             />
                                                         ) :
