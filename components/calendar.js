@@ -1,35 +1,42 @@
-import {
-    Scheduler,
-    MonthView,
-    Appointments,
-    AppointmentForm
-} from '@devexpress/dx-react-scheduler-material-ui';
-import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+// import {
+//     Scheduler,
+//     MonthView,
+//     Appointments,
+//     AppointmentForm,
+//     AppointmentTooltip
+// } from '@devexpress/dx-react-scheduler-material-ui';
+// import { ViewState, EditingState, IntegratedEditing, Scheduler, MonthView, AppointmentForm } from '@devexpress/dx-react-scheduler';
+import Scheduler, { Editing } from 'devextreme-react/scheduler'
 
-let dia = 0
-const schedulerData = [
-    {
-        startDate: new Date(2022, 9, ++dia, 6, 0, 0),
-        endDate: new Date(2022, 9, ++dia, 7, 0, 0),
-        title: 'Meeting'
-    },
-    {
-        startDate: new Date(2022, 9, ++dia, 7, 0, 0),
-        endDate: new Date(2022, 9, ++dia, 7, 0, 0),
-        title: 'Go to a gym'
-    },
-];
-export default function Calendar({ data, onDataChange }) {
+export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
+    const onFormOpening = (e) => {
+        e.popup.option('showTitle', true);
+        e.popup.option('title', e.appointmentData.text ?
+            e.appointmentData.text :
+            'Nueva Fecha de Examen');
 
+        const form = e.form;
+        let mainGroupItems = form.itemOption('mainGroup').items;
+        mainGroupItems = mainGroupItems.splice(0, 2)
+        form.itemOption('mainGroup', 'items', mainGroupItems);
+    }
     return (
         <div id="calendar">
-            <Scheduler firstDayOfWeek={1} locale={'es-AR'} data={data}>
-                <ViewState currentDate={new Date()} />
-                <EditingState onCommitChanges={onDataChange} />
-                <IntegratedEditing />
-                <MonthView />
-                <Appointments />
-                <AppointmentForm />
+            <Scheduler
+                firstDayOfWeek={1}
+                locale={'es-AR'}
+                dataSource={data}
+                defaultCurrentDate={new Date()}
+                defaultCurrentView={'week'}
+                onAppointmentFormOpening={onFormOpening}
+                onAppointmentAdded={(e) => onAdd(e.appointmentData)}
+                onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
+                onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
+
+                <Editing
+                    allowAdding={true}
+                    allowDeleting={true}
+                    allowUpdating={true} />
             </Scheduler>
         </div>
     )
