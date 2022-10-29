@@ -13,48 +13,50 @@ import { trimestres } from './seeds/trimestres';
 import { enfermedades } from "./seeds/enfermedad";
 import { usuarios } from "./seeds/usuarios";
 import { alumnoXcursoXdivision } from "./seeds/alumnoXcursoXdivision";
+import { alumnos, fechas } from "./seeds/alumnos";
+import { materias } from './seeds/materias';
 
 const prisma = new PrismaClient();
 
+// const getAsistencias = async () => {
+//     const asistencias = alumnos.map(a => (
+//         fechas.map(fecha => (
+//             {
+//                 idAlumnoXcursoXdivision: a.id,
+//                 creadoEn: fecha,
+//                 presente: false,
+//                 llegadaTarde: false,
+//                 ausente: false,
+//                 ausenteJustificado: false,
+//                 llegadaTardeJustificada: false,
+//                 mediaFalta: false,
+//                 mediaFaltaJustificada: false,
+//                 idUsuario: '6345ee8566a769b309bd9367'
+//             }
+//         ))
+//     ))
+//     return asistencias.flat(1)
+// }
 async function main() {
-    // enfermedades.map(async (e) => {
-    //     const enfermedad = await prisma.enfermedad.create({
-    //         data: {
-    //             descripcion: e.nombre,
-    //             usuarioId: e.idUsuario
-    //         }
-    //     })
-    //     console.log(enfermedad);
-    // })
-    alumnoXcursoXdivision.map(async (a) => {
-        const alumnoXcursoXdivision = await prisma.alumnoXcursoXdivision.create({
-            data: {
-                anoActual: a.anoActual,
-                idCursoXdivision: a.idCursoXdivision,
-                idUsuario: a.idUsuario,
-                idEstadoAlumno: a.idEstadoAlumno
-            }
+    materias && materias.map(m => {
+        trimestres && trimestres.map(t => {
+            alumnos && alumnos.map(async (a) => {
+                let nota = await prisma.nota.create({
+                    data: {
+                        idAlumnoXcursoXdivision: a.id,
+                        idMateria: m.id,
+                        idTrimestre: t.id,
+                        nota1: 0,
+                        nota2: 0,
+                        nota3: 0,
+                        nota4: 0,
+                        nota5: 0
+                    }
+                })
+                console.log(nota);
+            })
         })
-        console.log(alumnoXcursoXdivision);
     })
-    // usuarios.map(async (u) => {
-    //     const usuario = await prisma.usuario.create({
-    //         data: {
-    //             login: u.login,
-    //             password: u.password,
-    //             nombre: u.nombre,
-    //             apellido: u.apellido,
-    //             correo: u.correo,
-    //             idRol: u.idRol ,
-    //             legajo: u.legajo,
-    //             sexo: u.sexo,
-    //             localidad: u.localidad ,
-    //             telefono: u.telefono,
-    //             direccion: u.direccion
-    //         }
-    //     })
-    //     console.log(usuario);
-    // })
 }
 
 main()
