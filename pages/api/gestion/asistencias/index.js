@@ -13,3 +13,9 @@ export default async function handler(req, res) {
         return res.status(500).send(error)
     }
 }
+
+export const config = {
+    api: {
+        responseLimit: '8mb',
+    },
+}
