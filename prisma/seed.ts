@@ -16,7 +16,9 @@ import { alumnoXcursoXdivision } from "./seeds/alumnoXcursoXdivision";
 import { alumnos, fechas } from "./seeds/alumnos";
 import { materias } from './seeds/materias';
 
+
 const prisma = new PrismaClient();
+
 
 // const getAsistencias = async () => {
 //     const asistencias = alumnos.map(a => (
@@ -37,7 +39,10 @@ const prisma = new PrismaClient();
 //     ))
 //     return asistencias.flat(1)
 // }
+
 async function main() {
+
+  
     materias && materias.map(m => {
         trimestres && trimestres.map(t => {
             alumnos && alumnos.map(async (a) => {
@@ -57,7 +62,31 @@ async function main() {
             })
         })
     })
+
+
+    // alumnos && alumnos.map(t => {
+    //     fechas && fechas.map(async (fecha) => {
+    //         let asistencias = await prisma.asistencia.create({
+    //             data: {
+    //                 idAlumnoXcursoXdivision: a.id,
+    //                 creadoEn: fecha,
+    //                 presente: false,
+    //                 llegadaTarde: false,
+    //                 ausente: false,
+    //                 ausenteJustificado: false,
+    //                 llegadaTardeJustificada: false,
+    //                 mediaFalta: false,
+    //                 mediaFaltaJustificada: false,
+    //                 idUsuario: '6345ee8566a769b309bd9367'
+    //             }
+    //         })
+    //         console.log(asistencias);
+    //     })
+    // })
 }
+
+
+
 
 main()
     .catch((e) => {
