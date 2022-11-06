@@ -66,6 +66,7 @@ export default function Asistencias() {
 
     const listarAsistencias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias`)
+        // console.log(res);
         if (res.data) {
             setAsistencias(res.data)
         }
@@ -451,7 +452,7 @@ export default function Asistencias() {
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <Switch
-                                                                checked={presente }
+                                                                checked={presente}
                                                                 onChange={handlePresente}
                                                             />
                                                         ) :

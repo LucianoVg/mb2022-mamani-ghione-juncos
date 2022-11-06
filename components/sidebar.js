@@ -73,13 +73,13 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                                 }
                             })
 
-                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/reportes`)
-                            .then(r => {
-                                if (r.data) {
-                                    console.log(r.data);
-                                    setMenusReportes(r.data)
-                                }
-                            })
+                        // axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/reportes`)
+                        //     .then(r => {
+                        //         if (r.data) {
+                        //             console.log(r.data);
+                        //             setMenusReportes(r.data)
+                        //         }
+                        //     })
                     }
                 })
         }
@@ -192,7 +192,7 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                         )
                     }
 
-                    {
+                    {/* {
                         menusReportes && (
                             <>
                                 <List>
@@ -221,7 +221,7 @@ const Sidebar = ({ open, toggleDrawer }, { menus }) => {
                                 <Divider sx={{ mt: 1, mb: 1 }} />
                             </>
                         )
-                    }
+                    } */}
                     {
                         authUser && (
                             <ListItemButton onClick={logout}>
