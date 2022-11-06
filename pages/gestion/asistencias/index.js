@@ -339,9 +339,12 @@ export default function Asistencias() {
                     <Grid item xs>
                         <Box component="span">
 
-                            <Stack spacing={1} direction="row" >
-                                <h5 ><strong>Asistencia modificada:</strong> </h5>
-                                <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
+                            <Stack direction="row" spacing={2}>
+                                <h5 >
+                                    <strong>Asistencia modificada:</strong>
+                                    <Button variant="contained" disabled style={{ marginRight: '20px', fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
+                                </h5>
+
                             </Stack >
                             <h5 style={{ marginTop: '-10px' }}>
                                 <strong>P:</strong>Presente  <br />
