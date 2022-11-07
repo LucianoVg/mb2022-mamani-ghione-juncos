@@ -33,37 +33,33 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}/${password}`)
         if (res.data) {
-            iniciarSesion(correo, password)
-                .then(credencial => {
-                    console.log(credencial);
-                    router.push('/')
-                }).catch(err => {
-
-                    if (res.data.correo === correo && res.data.password === password) {
-                        registrarse(correo, password)
-                            .then(credencial => {
-                                router.push('/')
+            console.log(res.data);
+            iniciarSesion(res.data.correo, res.data.password)
+                .then(user => {
+                    console.log(user);
+                }).catch(error => {
+                    console.log(error);
+                    if (res.data.correo === correo
+                        && res.data.password === password) {
+                        registrarse(res.data.correo, res.data.password)
+                            .then(user => {
+                                console.log(user);
                             }).catch(error => {
                                 console.log(error);
                             })
                     } else {
-                        setError("Usuario y/o contraseña incorrectos")
+                        setError('Usuario y/o contraseña incorrectos')
                         setTimeout(() => {
-                            setError("")
+                            setError('')
                         }, 3000);
                     }
-                    console.log(err);
-                    setError("Usuario y/o contraseña incorrectos")
-                    setTimeout(() => {
-                        setError("")
-                    }, 3000);
                 })
         } else {
-            setError("Usuario no encontrado en el sistema, consulte con el administrador")
+            setError('No se encontró al usuario')
             setTimeout(() => {
-                setError("")
+                setError('')
             }, 3000);
         }
     }

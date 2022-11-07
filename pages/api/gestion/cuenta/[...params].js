@@ -13,9 +13,9 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            const { correo } = req.query
-            console.log(correo);
-            const usuario = await traerUsuario(correo)
+            const { params } = req.query
+            console.log(params);
+            const usuario = await traerUsuario(params[0], params[1])
             return res.status(200).json(usuario)
         }
     } catch (error) {

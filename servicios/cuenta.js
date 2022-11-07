@@ -13,8 +13,8 @@ import { useEffect, useState } from 'react'
 export async function registrarUsuario(
     login, nombre, apellido, correo,
     legajo, telefono, localidad,
-    direccion, idRol, idTutor = 0,
-    contrasenia, sexo, idCurso = 0) {
+    direccion, idRol, idTutor = '',
+    contrasenia, sexo, idCurso = '') {
     const usuarioCreado = idTutor.length && idCurso.length ? await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
@@ -106,7 +106,7 @@ export default function useFirebaseAuth() {
     }
 }
 
-export async function traerUsuario(correo) {
+export async function traerUsuario(correo, password) {
     try {
         const usuario = await Prisma.newPrisma().usuario.findFirst({
             include: {
@@ -123,7 +123,10 @@ export async function traerUsuario(correo) {
                 }
             },
             where: {
-                correo: correo
+                AND: [
+                    { correo: correo },
+                    { password: password }
+                ]
             }
         })
         return usuario
