@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Autocomplete, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
+import { Box, Autocomplete, Modal, TextareaAutosize, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -24,7 +24,7 @@ export default function Asistencias() {
     const [ltj, setLtj] = useState(false)
     const [mf, setMf] = useState(false)
     const [mfj, setMfj] = useState(false)
-    const [motivo, setMotivo] = useState(false)
+    const [motivo, setMotivo] = useState('')
     const [asistencias, setAsistencias] = useState([])
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
@@ -127,6 +127,8 @@ export default function Asistencias() {
         onCancel()
         listarAsistencias()
     }
+
+
 
     const onUpdate = async (id) => {
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
@@ -246,6 +248,19 @@ export default function Asistencias() {
     // };
 
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleMotivo = (e) => {
+        setMotivo(e.target.value)
+    }
+
+    console.log("Motivo:", motivo)
 
     return (
         <Layout>
@@ -254,6 +269,73 @@ export default function Asistencias() {
             >
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
+
+
+
+
+
+{/* MODAL----------------------------------------------------------------------------------------------------------- */}
+                <Button onClick={handleOpen} variant="contained">Actualizar</Button>
+                <Modal
+                    open={open}
+                    aria-labelledby="parent-modal-title"
+                    aria-describedby="parent-modal-description"
+                >
+                    <Box style={{
+                        backgroundColor: "white",
+                        height: "350px",
+                        width: "500px",
+                        position: 'absolute',
+                        top: '20%',
+                        left: '40%',
+                        borderRadius: "25px",
+                        boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+                    }}
+
+                    >
+                        <h1 style={{ textAlign: "center" }}>Ingrese motivo</h1>
+                        <TextareaAutosize
+                            style={{
+                                border: "2px solid #ccc",
+                                borderRadius: "10px",
+                                width: '400px',
+                                maxLenght: '300',
+                                height: '170px',
+                                resize: 'none',
+                                padding: "12px 20px",
+                                fontSize: '20px',
+                                marginLeft: "50px"
+                            }}
+                            name="motivo"
+                            value={motivo}
+                            onChange={handleMotivo}
+                        >
+
+                        </TextareaAutosize>
+                        <Box xs={12}>
+                            <Stack direction="row">
+
+                                <Button variant="contained" type="submit"
+                                    style={{ marginLeft: "48px", marginTop: "10px" }}
+                                    onClick={handleClose}
+                                // onClick={onUpdate(a?.id)}
+                                >
+                                    Guardar
+                                </Button>
+                                <Button variant="contained" color="error" type="submit"
+                                    style={{ marginLeft: "10px", marginTop: "10px" }}
+                                    onClick={handleClose}
+                                >
+                                    Cancelar
+                                </Button>
+                            </Stack>
+                        </Box>
+                    </Box>
+                </Modal>
+{/* MODAL------------------------------------------------------------------------------------------------- */}
+
+
+
 
 
                 <Grid container spacing={2}>
@@ -581,10 +663,14 @@ export default function Asistencias() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <React.Fragment>
                                                                 <Stack spacing={1} direction="row">
+
+ {/* IRIA ACA-------------------------------------------- */}
                                                                     <Button variant="contained" color="success"
                                                                         onClick={(e) => onSave(a?.id)}>
-                                                                        Guardar
+                                                                        Actualizar
                                                                     </Button>
+ {/* IRIA ACA-------------------------------------------- */}
+
 
                                                                     <Button variant="contained" color="error"
                                                                         style={{ marginLeft: 8 }}
@@ -756,11 +842,13 @@ export default function Asistencias() {
 
                                                                 <React.Fragment>
                                                                     <Stack spacing={1} direction="row">
+  {/* IRIA ACA-------------------------------------------- */}
                                                                         <Button variant="contained" color="success"
-                                                                            onClick={() => onSave(a?.id)}
-                                                                        >
-                                                                            Guardar
+                                                                            onClick={(e) => onSave(a?.id)}>
+                                                                            Actualizar
                                                                         </Button>
+  {/* IRIA ACA-------------------------------------------- */}
+
 
                                                                         <Button variant="contained" color="error"
                                                                             style={{ marginLeft: 8 }}
