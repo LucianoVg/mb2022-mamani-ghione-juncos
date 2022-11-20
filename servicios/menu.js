@@ -8,7 +8,7 @@ export async function FiltrarMenu(idRol, prefijoUrl) {
     },
     where: {
       AND: [
-        { idRol: idRol },
+        { idRol: Number(idRol) },
         {
           menu: {
             url: {
