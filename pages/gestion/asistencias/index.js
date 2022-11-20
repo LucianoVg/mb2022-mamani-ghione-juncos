@@ -274,20 +274,23 @@ export default function Asistencias() {
 
 
 
-{/* MODAL----------------------------------------------------------------------------------------------------------- */}
+                {/* MODAL----------------------------------------------------------------------------------------------------------- */}
                 <Button onClick={handleOpen} variant="contained">Actualizar</Button>
                 <Modal
                     open={open}
                     aria-labelledby="parent-modal-title"
                     aria-describedby="parent-modal-description"
+
                 >
                     <Box style={{
                         backgroundColor: "white",
-                        height: "350px",
-                        width: "500px",
-                        position: 'absolute',
-                        top: '20%',
-                        left: '40%',
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        height: "320px",
+                        width: "min(100% - 15px, 500px)",
+                        margin: "0 auto",
                         borderRadius: "25px",
                         boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
                     }}
@@ -298,13 +301,15 @@ export default function Asistencias() {
                             style={{
                                 border: "2px solid #ccc",
                                 borderRadius: "10px",
-                                width: '400px',
+                                height: "150px",
+                                width: "min(100% - 15px, 410px)",
+                                margin: "auto",
                                 maxLenght: '300',
-                                height: '170px',
-                                resize: 'none',
-                                padding: "12px 20px",
+                                resize: "none",
+                                display: "flex",
+                                alignItems: "center",
                                 fontSize: '20px',
-                                marginLeft: "50px"
+
                             }}
                             name="motivo"
                             value={motivo}
@@ -312,11 +317,15 @@ export default function Asistencias() {
                         >
 
                         </TextareaAutosize>
-                        <Box xs={12}>
-                            <Stack direction="row">
+
+                       
+                        
+                            <Stack direction="row"
+                         
+                            >
 
                                 <Button variant="contained" type="submit"
-                                    style={{ marginLeft: "48px", marginTop: "10px" }}
+                                    style={{ marginLeft:"48px", marginTop: "10px" }}
                                     onClick={handleClose}
                                 // onClick={onUpdate(a?.id)}
                                 >
@@ -329,10 +338,11 @@ export default function Asistencias() {
                                     Cancelar
                                 </Button>
                             </Stack>
-                        </Box>
+
+                     
                     </Box>
                 </Modal>
-{/* MODAL------------------------------------------------------------------------------------------------- */}
+                {/* MODAL------------------------------------------------------------------------------------------------- */}
 
 
 
@@ -664,12 +674,12 @@ export default function Asistencias() {
                                                             <React.Fragment>
                                                                 <Stack spacing={1} direction="row">
 
- {/* IRIA ACA-------------------------------------------- */}
+                                                                    {/* IRIA ACA-------------------------------------------- */}
                                                                     <Button variant="contained" color="success"
                                                                         onClick={(e) => onSave(a?.id)}>
                                                                         Actualizar
                                                                     </Button>
- {/* IRIA ACA-------------------------------------------- */}
+                                                                    {/* IRIA ACA-------------------------------------------- */}
 
 
                                                                     <Button variant="contained" color="error"
@@ -842,12 +852,12 @@ export default function Asistencias() {
 
                                                                 <React.Fragment>
                                                                     <Stack spacing={1} direction="row">
-  {/* IRIA ACA-------------------------------------------- */}
+                                                                        {/* IRIA ACA-------------------------------------------- */}
                                                                         <Button variant="contained" color="success"
                                                                             onClick={(e) => onSave(a?.id)}>
                                                                             Actualizar
                                                                         </Button>
-  {/* IRIA ACA-------------------------------------------- */}
+                                                                        {/* IRIA ACA-------------------------------------------- */}
 
 
                                                                         <Button variant="contained" color="error"

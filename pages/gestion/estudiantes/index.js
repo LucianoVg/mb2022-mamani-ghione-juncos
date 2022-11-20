@@ -58,7 +58,16 @@ export default function Estudiantes() {
                             // onChange={handleApellidoAlumno}
                             label="Legajo" />
                     </Box>
+                    <Box>
+                        <Button variant="contained"
+                            color="info"
+                            size="small"
+                        // onClick={() => onSave(n.id, nota, columnName)}
+                        >
+                            Buscar
+                        </Button>
 
+                    </Box>
                 </Box>
 
                 <TableContainer component={Paper}>
