@@ -43,7 +43,24 @@ async function main() {
     // const menus = await prisma.menu.findMany()
     // const roles = await prisma.rol.findMany()
     // console.log(menus, roles);
-
+    // usuarios.map(async (u) => {
+    //     const usuario = await prisma.usuario.create({
+    //         data: {
+    //             nombre: u.nombre,
+    //             apellido: u.apellido,
+    //             correo: u.correo,
+    //             idRol: u.idRol,
+    //             legajo: u.legajo,
+    //             login: u.login,
+    //             localidad: u.localidad,
+    //             password: u.password,
+    //             sexo: u.sexo,
+    //             telefono: u.telefono,
+    //             direccion: u.direccion
+    //         }
+    //     })
+    //     console.log(usuario);
+    // })
     // materias && materias.map(m => {
     //     trimestres && trimestres.map(t => {
     //         alumnos && alumnos.map(async (a) => {

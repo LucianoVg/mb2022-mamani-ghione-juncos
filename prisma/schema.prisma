@@ -354,10 +354,10 @@ model usuario {
   telefono              String?
   direccion             String?
   alergias              String?
-  idTutor               Int
+  idTutor               Int?
   idRol                 Int
   rol                   rol                     @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tutor                 tutor                   @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
   asistencia            asistencia[]
   asistenciaDocente     asistenciaDocente[]
