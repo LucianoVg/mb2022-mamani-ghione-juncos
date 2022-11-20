@@ -1,6 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors/dist";
-import { Prisma } from "../../../../servicios/prisma";
+import traerRoles from "../../../../servicios/roles";
 
 export default async function handler(
     req,
@@ -16,7 +15,7 @@ export default async function handler(
         if (req.method === 'POST') {
 
         } else {
-            const roles = await Prisma.newPrisma().rol.findMany()
+            const roles = await traerRoles()
             return res.status(200).json(roles)
         }
     } catch (error) {

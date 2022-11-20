@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { Prisma } from "../../../../servicios/prisma"
+import traerUsuarios from "../../../../servicios/usuarios";
 
 export default async function handler(
     req,
@@ -13,11 +13,7 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            const usuarios = await Prisma.newPrisma().usuario.findMany({
-                include: {
-                    rol: true
-                }
-            })
+            const usuarios = await traerUsuarios()
             return res.status(200).json(usuarios)
         } else {
             return res.status(500).send("Metodo No Permitido")
