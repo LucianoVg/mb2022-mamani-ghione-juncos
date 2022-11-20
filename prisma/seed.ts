@@ -57,11 +57,11 @@ async function main() {
     //         })
     //     })
     // })
-    const asistencias = await getAsistencias()
-    const creation = await prisma.asistencia.createMany({
-        data: asistencias
-    })
-    console.log(creation);
+    // const asistencias = await getAsistencias()
+    // const creation = await prisma.asistencia.createMany({
+    //     data: asistencias
+    // })
+    // console.log(creation);
 }
 
 main()
