@@ -1,9 +1,9 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "", apellidoAlumno = "") {
     try {
-        let trimestres = await Prisma.newPrisma().trimestre.findMany()
-        const notas = idMateria && curso ? await Prisma.newPrisma().nota.findMany({
+        let trimestres = await prisma.trimestre.findMany()
+        const notas = idMateria && curso ? await prisma.nota.findMany({
             include: {
                 materia: true,
                 trimestre: true,
@@ -45,7 +45,7 @@ export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "
                     // }
                 ]
             }
-        }) : await Prisma.newPrisma().nota.findMany({
+        }) : await prisma.nota.findMany({
             include: {
                 materia: true,
                 trimestre: true,
@@ -63,8 +63,6 @@ export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "
         return notas
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -73,7 +71,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
     try {
         switch (columnName) {
             case 'nota1':
-                const newNota1 = await Prisma.newPrisma().nota.update({
+                const newNota1 = await prisma.nota.update({
                     data: {
                         nota1: notaNueva
 
@@ -86,7 +84,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
                 return newNota1
 
             case 'nota2':
-                const newNota2 = await Prisma.newPrisma().nota.update({
+                const newNota2 = await prisma.nota.update({
                     data: {
                         nota2: notaNueva
 
@@ -99,7 +97,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
 
             case 'nota3':
-                const newNota3 = await Prisma.newPrisma().nota.update({
+                const newNota3 = await prisma.nota.update({
                     data: {
                         nota3: notaNueva
 
@@ -111,7 +109,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
                 return newNota3
 
             case 'nota4':
-                const newNota4 = await Prisma.newPrisma().nota.update({
+                const newNota4 = await prisma.nota.update({
                     data: {
                         nota4: notaNueva
 
@@ -123,7 +121,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
                 return newNota4
 
             case 'nota5':
-                const newNota5 = await Prisma.newPrisma().nota.update({
+                const newNota5 = await prisma.nota.update({
                     data: {
                         nota5: notaNueva
 
@@ -136,7 +134,5 @@ export async function updateNota(idNota, notaNueva, columnName) {
         }
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

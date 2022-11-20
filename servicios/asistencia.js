@@ -1,8 +1,8 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export async function ListarCurso() {
     try {
-        const cursos = await Prisma.newPrisma().cursoXdivision.findMany({
+        const cursos = await prisma.cursoXdivision.findMany({
             include: {
                 curso: true,
                 division: true
@@ -12,14 +12,12 @@ export async function ListarCurso() {
         return cursos
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function FiltrarAsistencias(alumno = '', curso = '', documento = '', fecha = '') {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany({
+        const asistencias = await prisma.asistencia.findMany({
             include: {
                 usuario: true,
                 alumnoXcursoXdivision: {
@@ -76,14 +74,12 @@ export async function FiltrarAsistencias(alumno = '', curso = '', documento = ''
         return asistencias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function TraerAsistencias() {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany({
+        const asistencias = await prisma.asistencia.findMany({
             include: {
                 usuario: true,
                 alumnoXcursoXdivision: {
@@ -98,14 +94,12 @@ export async function TraerAsistencias() {
         return asistencias
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function DetalleAsistencia(id) {
     try {
-        const asistencia = await Prisma.newPrisma().asistencia.findUnique({
+        const asistencia = await prisma.asistencia.findUnique({
             include: {
                 usuario: true,
                 alumnoXcursoXdivision: {
@@ -123,20 +117,17 @@ export async function DetalleAsistencia(id) {
             where: {
                 id: id
             }
-
         })
         console.log(asistencia);
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario, fecha) {
     try {
-        const asistencia = await Prisma.newPrisma().asistencia.update({
+        const asistencia = await prisma.asistencia.update({
             data: {
                 presente: presente,
                 ausente: ausente,
@@ -157,8 +148,6 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 

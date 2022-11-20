@@ -6,7 +6,7 @@ import {
     signOut
 } from 'firebase/auth'
 
-import { Prisma } from './prisma'
+import { prisma } from '../prisma/db'
 import { useEffect, useState } from 'react'
 
 
@@ -15,7 +15,7 @@ export async function registrarUsuario(
     legajo, telefono, localidad,
     direccion, idRol, idTutor = '',
     contrasenia, sexo, idCurso = '') {
-    const usuarioCreado = idTutor.length && idCurso.length ? await Prisma.newPrisma().usuario.create({
+    const usuarioCreado = idTutor.length && idCurso.length ? await prisma.usuario.create({
         data: {
             login: login,
             nombre: nombre,
@@ -39,7 +39,7 @@ export async function registrarUsuario(
                 }
             }
         }
-    }) : await Prisma.newPrisma().usuario.create({
+    }) : await prisma.usuario.create({
         data: {
             login: login,
             nombre: nombre,
@@ -54,7 +54,6 @@ export async function registrarUsuario(
             password: contrasenia
         }
     })
-    Prisma.disconnect()
 
     return usuarioCreado
 }
@@ -108,7 +107,7 @@ export default function useFirebaseAuth() {
 
 export async function traerUsuario(correo, password) {
     try {
-        const usuario = await Prisma.newPrisma().usuario.findFirst({
+        const usuario = await prisma.usuario.findFirst({
             include: {
                 rol: true,
                 alumnoXcursoXdivision: {

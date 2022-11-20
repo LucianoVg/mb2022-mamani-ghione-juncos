@@ -1,12 +1,12 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export async function traerNoticia(id = '') {
     try {
-        const noticias = id !== '' ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
+        const noticias = id !== '' ? await prisma.noticiasYnovedades.findUnique({
             where: {
                 id: id
             }
-        }) : await Prisma.newPrisma().noticiasYnovedades.findMany({
+        }) : await prisma.noticiasYnovedades.findMany({
             orderBy: {
                 creadaEn: 'desc'
             }
@@ -14,14 +14,11 @@ export async function traerNoticia(id = '') {
         return noticias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
-
-    const agregar = await Prisma.newPrisma().noticiasYnovedades.create({
+    const agregar = await prisma.noticiasYnovedades.create({
         data: {
             titulo: titulo,
             creadaEn: new Date(creadaEn),
@@ -30,13 +27,12 @@ export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuar
             idUsuario: idUsuario
         }
     })
-    Prisma.disconnect()
     return agregar
 }
 
 
 export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn) {
-    const editar = Prisma.newPrisma().noticiasYnovedades.update({
+    const editar = await prisma.noticiasYnovedades.update({
         data: {
             titulo: titulo,
             url: url,
@@ -47,16 +43,14 @@ export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn)
             id: id
         }
     })
-    Prisma.disconnect()
     return editar
 }
 
 export async function eliminarNoticia(id) {
-    const eliminar = await Prisma.newPrisma().noticiasYnovedades.delete({
+    const eliminar = await prisma.noticiasYnovedades.delete({
         where: {
             id: id
         }
     })
-    Prisma.disconnect()
     return eliminar
 }

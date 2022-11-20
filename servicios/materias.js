@@ -1,12 +1,10 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export async function ListarMaterias() {
     try {
-        const materias = await Prisma.newPrisma().materia.findMany()
+        const materias = await prisma.materia.findMany()
         return materias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

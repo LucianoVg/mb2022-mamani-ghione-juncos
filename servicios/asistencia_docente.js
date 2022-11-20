@@ -1,10 +1,8 @@
-import { Prisma } from "./prisma";
-
-
+import { prisma } from "./../prisma/db";
 
 export async function FiltrarAsistencias(docente = '', documento = '', fecha = '') {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany({
+        const asistencias = await prisma.asistenciaDocente.findMany({
             include: {
                 usuario: true,
                 docenteXmateria: {
@@ -53,14 +51,12 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
         return asistencias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function TraerAsistencias() {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany({
+        const asistencias = await prisma.asistenciaDocente.findMany({
             include: {
                 usuario: true,
                 docenteXmateria: {
@@ -74,14 +70,12 @@ export async function TraerAsistencias() {
         return asistencias
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function DetalleAsistencia(id) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciaDocente.findUnique({
+        const asistencia = await prisma.asistenciaDocente.findUnique({
             include: {
                 usuario: true,
                 docenteXmateria: {
@@ -99,14 +93,12 @@ export async function DetalleAsistencia(id) {
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
 export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario, fecha) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciaDocente.update({
+        const asistencia = await prisma.asistenciaDocente.update({
             data: {
                 presente: presente,
                 ausente: ausente,
@@ -127,8 +119,6 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 

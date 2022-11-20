@@ -1,9 +1,9 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export async function traerSanciones(idCurso = '', idAlumno = '') {
     try {
         const sanciones = idCurso === '' || idAlumno === ''
-            ? await Prisma.newPrisma().sancion.findMany({
+            ? await prisma.sancion.findMany({
                 include: {
                     alumnoXCursoXDivision: {
                         include: {
@@ -17,7 +17,7 @@ export async function traerSanciones(idCurso = '', idAlumno = '') {
                         }
                     }
                 }
-            }) : await Prisma.newPrisma().sancion.findMany({
+            }) : await prisma.sancion.findMany({
                 include: {
                     alumnoXCursoXDivision: {
                         include: {
@@ -40,8 +40,6 @@ export async function traerSanciones(idCurso = '', idAlumno = '') {
                     }
                 }
             })
-
-        Prisma.disconnect()
         return sanciones
     } catch (error) {
         console.error(error);
@@ -52,7 +50,7 @@ export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', mot
     try {
         if (idCurso !== '') {
             const sanciones = []
-            const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
+            const alumnos = await prisma.alumnoXcursoXdivision.findMany({
                 select: {
                     id: true
                 },
@@ -61,17 +59,17 @@ export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', mot
                 }
             })
             alumnos.forEach(async (a) => {
-                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion(fecha, motivo,idTipoSancion,idAlumnoXCursoXDivision) VALUES(${fecha}, ${motivo}, ${idTipoSancion}, ${a.id});`
+                const sancion = await prisma.$executeRaw`INSERT INTO sancion(fecha, motivo,idTipoSancion,idAlumnoXCursoXDivision) VALUES(${fecha}, ${motivo}, ${idTipoSancion}, ${a.id});`
                 console.log(sancion);
 
-                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idAlumnoXCursoXDivision = ${a.id}`
+                const idsSancion = await prisma.$queryRaw`SELECT id FROM sancion WHERE idAlumnoXCursoXDivision = ${a.id}`
 
-                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionXusuario (idSancion, idUsuario) VALUES(${idsSancion[0]?.id}, ${idUsuario})`
+                await prisma.$executeRaw`INSERT INTO sancionXusuario (idSancion, idUsuario) VALUES(${idsSancion[0]?.id}, ${idUsuario})`
             })
             return sanciones
 
         } else {
-            const sancion = await Prisma.newPrisma().sancion.create({
+            const sancion = await prisma.sancion.create({
                 data: {
                     fecha: fecha,
                     motivo: motivo,
@@ -101,7 +99,7 @@ export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', mot
 
 export async function traerTipoSanciones() {
     try {
-        const tipoSanciones = await Prisma.newPrisma().tipoSancion.findMany()
+        const tipoSanciones = await prisma.tipoSancion.findMany()
         return tipoSanciones
     } catch (error) {
         console.error(error);
@@ -110,7 +108,7 @@ export async function traerTipoSanciones() {
 
 export async function obtenerSancion(id) {
     try {
-        const sancion = await Prisma.newPrisma().sancion.findUnique({
+        const sancion = await prisma.sancion.findUnique({
             include: {
                 tipoSancion: true,
                 alumnoXCursoXDivision: {
@@ -145,7 +143,7 @@ export async function actualizarSancion(
     fecha) {
     try {
         if (idCurso !== '') {
-            const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
+            const alumnos = await prisma.alumnoXcursoXdivision.findMany({
                 select: {
                     id: true
                 },
@@ -156,7 +154,7 @@ export async function actualizarSancion(
 
             let sancionCuenta = 0
             alumnos.forEach(async (a) => {
-                const sanciones = await Prisma.newPrisma().$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idTipoSancion = ${idTipoSancion}, idAlumnoXCursoXDivision = ${a.id} WHERE id = ${id}`
+                const sanciones = await prisma.$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idTipoSancion = ${idTipoSancion}, idAlumnoXCursoXDivision = ${a.id} WHERE id = ${id}`
                 console.log(sanciones);
 
                 sancionCuenta += sanciones
@@ -164,13 +162,13 @@ export async function actualizarSancion(
             })
             return sancionCuenta
         } else {
-            const sancionXUsuario = await Prisma.newPrisma().sancionXusuario.findFirst({
+            const sancionXUsuario = await prisma.sancionXusuario.findFirst({
                 where: {
                     idSancion: id
                 }
             })
             console.log(sancionXUsuario);
-            const sancion = await Prisma.newPrisma().sancion.update({
+            const sancion = await prisma.sancion.update({
                 data: {
                     fecha: fecha,
                     motivo: motivo,

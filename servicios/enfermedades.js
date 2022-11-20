@@ -1,8 +1,8 @@
-import { Prisma } from "./prisma";
+import { prisma } from "../prisma/db";
 
 export default async function traerEnfermedades() {
     try {
-        const enfermedades = await Prisma.newPrisma().enfermedad.findMany()
+        const enfermedades = await prisma.enfermedad.findMany()
         return enfermedades
     } catch (error) {
         console.log(error);
