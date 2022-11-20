@@ -1,42 +1,58 @@
 export const menus = [
     {
-        idMenu: '6323cc1157bea65165cad083',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Sanciones",
+        url: "/gestion/sanciones"
     },
     {
-        idMenu: '6323cc1257bea65165cad084',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Usuarios",
+        url: "/gestion/usuarios/mantenimiento_usuario"
     },
     {
-        idMenu: '6323cc1257bea65165cad085',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Notas",
+        url: "/gestion/notas"
     },
     {
-        idMenu: '6323cc1257bea65165cad086',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Asistencias",
+        url: "/gestion/asistencias"
     },
     {
-        idMenu: '6323ce74824cebdafc01053c',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Mejor Promedio",
+        url: "/reportes/reporte_mejor_promedio"
     },
     {
-        idMenu: '6323ce74824cebdafc01053d',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Sanciones",
+        url: "/reportes/reporte_sanciones"
     },
     {
-        idMenu: '6323ce74824cebdafc01053e',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Preanalitico",
+        url: "/reportes/reporte_preanalitico"
     },
     {
-        idMenu: '6323ce74824cebdafc01053f',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Notas",
+        url: "/reportes/reporte_notas"
     },
     {
-        idMenu: '6323ce75824cebdafc010540',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Asistencia Docente",
+        url: "/reportes/reporte_asistencia_Docente"
     },
     {
-        idMenu: '6323ce75824cebdafc010541',
-        idRol: '6323b06bb03a132b2c221c43'
+        menuSistema: "Asistencias",
+        url: "/reportes/reporte_asistencias"
+    },
+    {
+        menuSistema: "Notificaciones",
+        url: "/gestion/notificaciones"
+    },
+    {
+        menuSistema: "Material de Estudio",
+        url: "/gestion/material_estudio"
+    },
+    {
+        menuSistema: "Asistencia Docente",
+        url: "/gestion/asistencias/asistencia_docente"
+    },
+    {
+        menuSistema: "Fecha de Examen",
+        url: "/gestion/examenes"
     }
 ]

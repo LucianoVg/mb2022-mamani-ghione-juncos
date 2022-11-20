@@ -5,7 +5,7 @@ import { asistencias } from './seeds/asistencias';
 // import { materias } from './seeds/materias';
 // import { cursos } from './seeds/cursos';
 import { ficha } from './seeds/ficha';
-import { menus } from './seeds/menus';
+// import { menus } from './seeds/menus';
 import { notas } from './seeds/notas';
 import { noticias } from './seeds/noticias';
 import { tiposSancion } from './seeds/tiposSancion';
@@ -15,6 +15,8 @@ import { usuarios } from "./seeds/usuarios";
 import { alumnoXcursoXdivision } from "./seeds/alumnoXcursoXdivision";
 import { alumnos, fechas } from "./seeds/alumnos";
 import { materias } from './seeds/materias';
+import { menuXRoles } from './seeds/menuXRol';
+// import { roles } from './seeds/roles';
 
 const prisma = new PrismaClient();
 
@@ -38,6 +40,10 @@ const getAsistencias = async () => {
     return asistencias.flat(1)
 }
 async function main() {
+    // const menus = await prisma.menu.findMany()
+    // const roles = await prisma.rol.findMany()
+    // console.log(menus, roles);
+
     // materias && materias.map(m => {
     //     trimestres && trimestres.map(t => {
     //         alumnos && alumnos.map(async (a) => {

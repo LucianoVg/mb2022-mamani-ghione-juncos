@@ -16,5 +16,8 @@ export const roles = [
     },
     {
         tipo: 'Preceptor',
+    },
+    {
+        tipo: 'Tutor',
     }
 ]
