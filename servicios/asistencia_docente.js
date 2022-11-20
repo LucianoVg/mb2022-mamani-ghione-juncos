@@ -91,7 +91,7 @@ export async function DetalleAsistencia(id) {
                 }
             },
             where: {
-                id: id
+                id: Number(id)
             }
 
         })
@@ -117,11 +117,11 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 mediaFaltaJustificada: mediaFaltaJustificada,
                 motivo: motivo,
                 fecha: fecha,
-                idUsuario: idUsuario,
+                idUsuario: Number(idUsuario),
                 actualizadoEn: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
             where: {
-                id: id
+                id: Number(id)
             }
         })
         return asistencia
