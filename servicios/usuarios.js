@@ -1,8 +1,8 @@
-import { prisma } from "../prisma/db";
+import { Prisma } from "./prisma";
 
 export default async function traerUsuarios() {
     try {
-        return prisma.usuario.findMany({
+        return Prisma.newPrisma().usuario.findMany({
             include: {
                 rol: true
             }
