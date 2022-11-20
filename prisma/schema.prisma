@@ -3,16 +3,16 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model alumnoXcursoXdivision {
-  id               Int             @id @default(autoincrement())
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
   anoActual        Int?
-  idCursoXdivision Int
-  idUsuario        Int
-  idEstadoAlumno   Int
+  idCursoXdivision String?         @db.ObjectId
+  idUsuario        String?         @db.ObjectId
+  idEstadoAlumno   String?         @db.ObjectId
   estadoAlumno     estadoAlumno?   @relation(fields: [idEstadoAlumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario          usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   cursoXdivision   cursoXdivision? @relation(fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -23,11 +23,11 @@ model alumnoXcursoXdivision {
 }
 
 model asistencia {
-  id                      Int                    @id @default(autoincrement())
+  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
   creadoEn                String?
   actualizadoEn           String?
-  idAlumnoXcursoXdivision Int
-  idUsuario               Int
+  idAlumnoXcursoXdivision String?                @db.ObjectId
+  idUsuario               String?                @db.ObjectId
   presente                Boolean?
   ausente                 Boolean?
   ausenteJustificado      Boolean?
@@ -41,9 +41,9 @@ model asistencia {
 }
 
 model asistenciaDocente {
-  id                      Int              @id @default(autoincrement())
-  idDocenteXmateria       Int
-  idUsuario               Int
+  id                      String           @id @default(auto()) @map("_id") @db.ObjectId
+  idDocenteXmateria       String?          @db.ObjectId
+  idUsuario               String?          @db.ObjectId
   creadoEn                String?
   actualizadoEn           String?
   presente                Boolean?
@@ -59,16 +59,16 @@ model asistenciaDocente {
 }
 
 model curso {
-  id             Int              @id @default(autoincrement())
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
   nombre         String?
   cursoXdivision cursoXdivision[]
   materia        materia[]
 }
 
 model cursoXdivision {
-  id                    Int                     @id @default(autoincrement())
-  idCurso               Int
-  idDivision            Int
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  idCurso               String?                 @db.ObjectId
+  idDivision            String?                 @db.ObjectId
   division              division?               @relation(fields: [idDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso                 curso?                  @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]
@@ -76,65 +76,65 @@ model cursoXdivision {
 }
 
 model discapacidad {
-  id                   Int                    @id @default(autoincrement())
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
   nombre               String?
   discapacidadXusuario discapacidadXusuario[]
 }
 
 model discapacidadXusuario {
-  id             Int           @id @default(autoincrement())
-  idDiscapacidad Int
-  idUsuario      Int
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  idDiscapacidad String?       @db.ObjectId
+  idUsuario      String?       @db.ObjectId
   discapacidad   discapacidad? @relation(fields: [idDiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario        usuario?      @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model division {
-  id             Int              @id @default(autoincrement())
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
   division       String?
   cursoXdivision cursoXdivision[]
 }
 
 model docenteXmateria {
-  id                Int                 @id @default(autoincrement())
-  idUsuario         Int
-  idMateria         Int
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  idUsuario         String?             @db.ObjectId
+  idMateria         String?             @db.ObjectId
   materia           materia?            @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario           usuario?            @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   asistenciaDocente asistenciaDocente[]
 }
 
 model enfermedad {
-  id                   Int                    @id @default(autoincrement())
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
   descripcion          String?
   enfermedadesXusuario enfermedadesXusuario[]
 }
 
 model enfermedadesXusuario {
-  id           Int         @id @default(autoincrement())
-  idEnfermedad Int
-  idUsuario    Int
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  idEnfermedad String?     @db.ObjectId
+  idUsuario    String?     @db.ObjectId
   usuario      usuario?    @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   enfermedad   enfermedad? @relation(fields: [idEnfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model estadoAlumno {
-  id                    Int                     @id @default(autoincrement())
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
   estado                String?
   alumnoXcursoXdivision alumnoXcursoXdivision[]
 }
 
 model fechaExamen {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   titulo      String
-  idUsuario   Int
+  idUsuario   String?   @db.ObjectId
   fechaInicio DateTime?
   fechaFin    DateTime?
   usuario     usuario?  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model fichaInstitucional {
-  id                Int            @id @default(autoincrement())
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
   nombreInstitucion String?
   ubicacion         String?
   tipoInstitucion   String?
@@ -144,33 +144,33 @@ model fichaInstitucional {
   oficina1          String?
   oficina2          String?
   mail              String?
-  idUsuario         Int
+  idUsuario         String?        @db.ObjectId
   usuario           usuario?       @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   portadasFicha     portadaFicha[]
 }
 
 model materia {
-  id              Int               @id @default(autoincrement())
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
   nombre          String?
-  idCorrelativa   Int
+  idCorrelativa   String?           @db.ObjectId
   materia         materia?          @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
   docenteXmateria docenteXmateria[]
   other_materia   materia[]         @relation("materiaTomateria")
   nota            nota[]
   curso           curso?            @relation(fields: [idCurso], references: [id])
-  idCurso         Int
+  idCurso         String?           @db.ObjectId
   materialEstudio materialEstudio[]
 }
 
 model materialEstudio {
-  id               Int             @id @default(autoincrement())
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
   titulo           String?
   fecha            String?
   url              String?
-  idCursoXDivision Int
-  idMateria        Int
-  idTrimestre      Int
-  idUsuario        Int
+  idCursoXDivision String?         @db.ObjectId
+  idMateria        String?         @db.ObjectId
+  idTrimestre      String?         @db.ObjectId
+  idUsuario        String?         @db.ObjectId
   usuario          usuario?        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   cursoXDivision   cursoXdivision? @relation(fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia          materia?        @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -178,32 +178,32 @@ model materialEstudio {
 }
 
 model menu {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   menuSistema String?
   url         String?
   menuXrol    menuXrol[]
 }
 
 model menuXrol {
-  id     Int   @id @default(autoincrement())
-  idRol  Int
-  idMenu Int
-  menu   menu? @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  rol    rol?  @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  idRol  String? @db.ObjectId
+  idMenu String? @db.ObjectId
+  menu   menu?   @relation(fields: [idMenu], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rol    rol?    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model nota {
-  id                      Int                    @id @default(autoincrement())
-  idAlumnoXcursoXdivision Int
-  idMateria               Int
+  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
+  idAlumnoXcursoXdivision String?                @db.ObjectId
+  idMateria               String?                @db.ObjectId
   nota1                   Int?
   nota2                   Int?
   nota3                   Int?
   nota4                   Int?
   nota5                   Int?
-  idTrimestre             Int
+  idTrimestre             String?                @db.ObjectId
   fecha                   String?
-  idUsuario               Int
+  idUsuario               String?                @db.ObjectId
   usuario                 usuario?               @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trimestre               trimestre?             @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia                 materia?               @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -212,76 +212,76 @@ model nota {
 }
 
 model noticiasYnovedades {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   titulo        String?
   creadaEn      String?
   actualizadaEn String?
   descripcion   String?
-  idUsuario     Int
+  idUsuario     String?  @db.ObjectId
   url           String?
   usuario       usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model notificacion {
-  id                      Int                    @id @default(autoincrement())
+  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
   asunto                  String?
   contenido               String?
   fecha                   String?
-  idAlumnoXCursoXDivision Int
+  idAlumnoXCursoXDivision String?                @db.ObjectId
   notificacionXusuario    notificacionXusuario[]
   alumnoXcursoXdivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXCursoXDivision], references: [id])
 }
 
 model notificacionXusuario {
-  id             Int           @id @default(autoincrement())
-  idUsuario      Int
-  idNotificacion Int
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  idUsuario      String?       @db.ObjectId
+  idNotificacion String?       @db.ObjectId
   usuario        usuario?      @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   notificacion   notificacion? @relation(fields: [idNotificacion], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisos {
-  id           Int            @id @default(autoincrement())
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
   casoDeUso    String?
   permisosXrol permisosXrol[]
 }
 
 model permisosXrol {
-  id         Int       @id @default(autoincrement())
-  idRol      Int
-  idPermisos Int
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  idRol      String?   @db.ObjectId
+  idPermisos String?   @db.ObjectId
   permisos   permisos? @relation(fields: [idPermisos], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rol        rol?      @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model portadaFicha {
-  id                   Int                 @id @default(autoincrement())
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
   nombre               String
   url                  String
-  idFichaInstitucional Int
+  idFichaInstitucional String?             @db.ObjectId
   fichaInstitucional   fichaInstitucional? @relation(fields: [idFichaInstitucional], references: [id])
 }
 
 model reporte {
-  id                Int                 @id @default(autoincrement())
-  idTipoReporte     Int
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  idTipoReporte     String?             @db.ObjectId
   fechaEmision      String?
   tipoReporte       tipoReporte?        @relation(fields: [idTipoReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
   reporteXtrimestre reporteXtrimestre[]
 }
 
 model reporteXtrimestre {
-  id               Int        @id @default(autoincrement())
-  idReporte        Int
-  idTrimestre      Int
-  idAlumnoXmateria Int
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  idReporte        String?    @db.ObjectId
+  idTrimestre      String?    @db.ObjectId
+  idAlumnoXmateria String?    @db.ObjectId
   reporte          reporte?   @relation(fields: [idReporte], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trimestre        trimestre? @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   nota             nota?      @relation(fields: [idAlumnoXmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model rol {
-  id           Int            @id @default(autoincrement())
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
   tipo         String?
   menuXrol     menuXrol[]
   permisosXrol permisosXrol[]
@@ -289,39 +289,39 @@ model rol {
 }
 
 model sancion {
-  id                      Int                    @id @default(autoincrement())
+  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
   motivo                  String?
   fecha                   String?
-  idTipoSancion           Int
-  idCurso                 Int
+  idTipoSancion           String?                @db.ObjectId
+  idCurso                 String?                @db.ObjectId
   tipoSancion             tipoSancion?           @relation(fields: [idTipoSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  idAlumnoXCursoXDivision Int
+  idAlumnoXCursoXDivision String?                @db.ObjectId
   alumnoXCursoXDivision   alumnoXcursoXdivision? @relation(fields: [idAlumnoXCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sancionXusuario         sancionXusuario[]
 }
 
 model sancionXusuario {
-  id        Int      @id @default(autoincrement())
-  idSancion Int
-  idUsuario Int
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  idSancion String?  @db.ObjectId
+  idUsuario String?  @db.ObjectId
   usuario   usuario? @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sancion   sancion? @relation(fields: [idSancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model tipoReporte {
-  id      Int       @id @default(autoincrement())
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
   tipo    String?
   reporte reporte[]
 }
 
 model tipoSancion {
-  id      Int       @id @default(autoincrement())
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
   tipo    String?
   sancion sancion[]
 }
 
 model trimestre {
-  id                Int                 @id @default(autoincrement())
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
   trimestre         String?
   nota              nota[]
   reporteXtrimestre reporteXtrimestre[]
@@ -329,7 +329,7 @@ model trimestre {
 }
 
 model tutor {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   nombre    String?
   apellido  String?
   dni       String?
@@ -341,7 +341,7 @@ model tutor {
 }
 
 model usuario {
-  id                    Int                     @id @default(autoincrement())
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
   login                 String?
   password              String?
   sexo                  String?
@@ -354,8 +354,8 @@ model usuario {
   telefono              String?
   direccion             String?
   alergias              String?
-  idTutor               Int
-  idRol                 Int
+  idTutor               String?                 @db.ObjectId
+  idRol                 String?                 @db.ObjectId
   rol                   rol?                    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tutor                 tutor?                  @relation(fields: [idTutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alumnoXcursoXdivision alumnoXcursoXdivision[]

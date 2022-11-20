@@ -1,7 +1,7 @@
-import { prisma } from "../prisma/db";
+import { Prisma } from "./prisma";
 
 export async function FiltrarMenu(idRol, prefijoUrl) {
-  const filtro = await prisma.menuXrol.findMany({
+  const filtro = await Prisma.newPrisma().menuXrol.findMany({
     include: {
       menu: true,
       rol: true
@@ -19,5 +19,6 @@ export async function FiltrarMenu(idRol, prefijoUrl) {
       ]
     }
   })
+  Prisma.disconnect()
   return filtro
 }

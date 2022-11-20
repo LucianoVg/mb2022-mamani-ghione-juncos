@@ -1,10 +1,12 @@
-import { prisma } from "../prisma/db";
+import { Prisma } from "./prisma";
 
 export async function traerTrimestres() {
     try {
-        const trimestres = await prisma.trimestre.findMany()
+        const trimestres = await Prisma.newPrisma().trimestre.findMany()
         return trimestres
     } catch (error) {
         console.log(error);
+    } finally {
+        Prisma.disconnect()
     }
 }

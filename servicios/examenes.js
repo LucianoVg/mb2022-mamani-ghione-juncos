@@ -1,8 +1,8 @@
-import { prisma } from "../prisma/db";
+import { Prisma } from "./prisma";
 
 export async function traerFechaExamenes() {
     try {
-        const examenes = await prisma.fechaExamen.findMany({
+        const examenes = await Prisma.newPrisma().fechaExamen.findMany({
             include: {
                 usuario: true
             }
@@ -10,12 +10,14 @@ export async function traerFechaExamenes() {
         return examenes
     } catch (error) {
         console.log(error);
+    } finally {
+        Prisma.disconnect()
     }
 }
 
 export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuario) {
     try {
-        const fechaExamen = await prisma.fechaExamen.create({
+        const fechaExamen = await Prisma.newPrisma().fechaExamen.create({
             data: {
                 titulo: titulo,
                 fechaInicio: fechaInicio,
@@ -26,12 +28,14 @@ export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuari
         return fechaExamen
     } catch (error) {
         console.log(error);
+    } finally {
+        Prisma.disconnect()
     }
 }
 
 export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsuario) {
     try {
-        const examen = await prisma.fechaExamen.update({
+        const examen = await Prisma.newPrisma().fechaExamen.update({
             data: {
                 titulo: titulo,
                 fechaInicio: fechaInicio,
@@ -45,12 +49,14 @@ export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsua
         return examen
     } catch (error) {
         console.log(error);
+    } finally {
+        Prisma.disconnect()
     }
 }
 
 export async function borrarExamen(id) {
     try {
-        const examen = await prisma.fechaExamen.delete({
+        const examen = await Prisma.newPrisma().fechaExamen.delete({
             where: {
                 id: id
             }

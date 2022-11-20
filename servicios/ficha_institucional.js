@@ -1,7 +1,7 @@
-import { prisma } from "../prisma/db";
+import { Prisma } from "./prisma";
 
 export async function traerFichaInstitucional(id = '') {
-    const fichaInstitucional = id !== '' ? await prisma.fichaInstitucional.findFirst({
+    const fichaInstitucional = id !== '' ? await Prisma.newPrisma().fichaInstitucional.findFirst({
         where: {
             OR: [
                 { id: id },
@@ -11,26 +11,28 @@ export async function traerFichaInstitucional(id = '') {
         include: {
             portadasFicha: true
         }
-    }) : await prisma.fichaInstitucional.findMany({
+    }) : await Prisma.newPrisma().fichaInstitucional.findMany({
         include: {
             portadasFicha: true
         }
     })
+    Prisma.disconnect()
     return fichaInstitucional
 }
 
 export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
-    const portada = await prisma.portadaFicha.create({
+    const portada = await Prisma.newPrisma().portadaFicha.create({
         data: {
             nombre: nombre,
             url: url,
             fichaInstitucionalId: fichaInstitucionalId
         },
     })
+    Prisma.disconnect()
     return portada
 }
 export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
-    const portada = await prisma.portadaFicha.update({
+    const portada = await Prisma.newPrisma().portadaFicha.update({
         where: {
             id: id
         },
@@ -40,10 +42,11 @@ export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
             fichaInstitucionalId: fichaInstitucionalId
         }
     })
+    Prisma.disconnect()
     return portada
 }
 export async function traerPortadas(idFicha) {
-    const portadas = await prisma.portadaFicha.findMany({
+    const portadas = await Prisma.newPrisma().portadaFicha.findMany({
         where: {
             fichaInstitucionalId: idFicha
         },
@@ -51,11 +54,12 @@ export async function traerPortadas(idFicha) {
             fichaInstitucional: true
         }
     })
+    Prisma.disconnect()
     return portadas
 }
 export async function guardarFichaInstitucional(id = '', nombreInstitucion = '', ubicacion = '', tipoInstitucion = false, descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = '') {
 
-    const guardado = await prisma.fichaInstitucional.upsert({
+    const guardado = await Prisma.newPrisma().fichaInstitucional.upsert({
         where: {
             id: id
         },
@@ -84,5 +88,6 @@ export async function guardarFichaInstitucional(id = '', nombreInstitucion = '',
             idUsuario: idUsuario
         }
     })
+    Prisma.disconnect()
     return guardado
 }

@@ -1,8 +1,9 @@
-import { prisma } from "./../prisma/db";
+import { orderBy } from "lodash";
+import { Prisma } from "./prisma";
 
 export default async function traerAlumnos() {
     try {
-        const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+        const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
             include: {
                 usuario: true
             }
