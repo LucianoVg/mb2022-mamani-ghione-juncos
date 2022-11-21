@@ -58,19 +58,9 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
     }
 }
 
-export async function TraerAsistencias() {
+export async function TraerAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany({
-            include: {
-                usuario: true,
-                docenteXmateria: {
-                    include: {
-                        usuario: true
-                    }
-                }
-
-            }
-        })
+        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany(options)
         return asistencias
     } catch (error) {
         console.log(error);
