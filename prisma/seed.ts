@@ -17,6 +17,7 @@ import { portadaFicha } from './seeds/portadaFicha';
 import { discapacidad } from './seeds/discapacidad';
 import { roles } from './seeds/roles';
 import { menus } from './seeds/menus';
+import { docentes } from './seeds/docentes';
 // import { roles } from './seeds/roles';
 
 const prisma = new PrismaClient();
@@ -42,6 +43,7 @@ const prisma = new PrismaClient();
 // }
 
 async function main() {
+<<<<<<< HEAD
 
 
     for (let i = 1; i < 7; i++) {
@@ -100,6 +102,77 @@ async function main() {
 
 
     // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
+    // usuarios.map(async (u) => {
+    //     const asistencia = await prisma.asistencia.create({
+    //         data: {
+    //             presente: false,
+    //             ausente: false,
+    //             ausenteJustificado: false,
+    //             llegadaTarde: false,
+    //             llegadaTardeJustificada: false,
+    //             mediaFalta: false,
+    //             mediaFaltaJustificada: false,
+    //             creadoEn: new Date().toISOString().split('T')[0],
+    //             motivo: '',
+    //             usuario: {
+    //                 connect: {
+    //                     id: 57
+    //                 }
+    //             },
+    //             alumnoXcursoXdivision: {
+    //                 create: {
+    //                     anoActual: 2022,
+    //                     idCursoXdivision: 1,
+    //                     idEstadoAlumno: 1,
+    //                     idUsuario: u.id,
+    //                 }
+    //             }
+    //         }
+    //     })
+    //     console.log(asistencia);
+    // })
+=======
+    const materias = await prisma.materia.findMany()
+    docentes.map(async (d) => {
+        const docente = await prisma.usuario.create({
+            data: d
+        })
+        console.log(docente);
+
+        materias.map(async (m) => {
+            const docenteXMateria = await prisma.docenteXmateria.create({
+                data: {
+                    usuario: {
+                        connect: {
+                            id: docente.id
+                        }
+                    },
+                    materia: {
+                        connect: {
+                            id: m.id
+                        }
+                    },
+                    asistenciaDocente: {
+                        create: {
+                            presente: false,
+                            ausente: false,
+                            ausenteJustificado: false,
+                            llegadaTarde: false,
+                            llegadaTardeJustificada: false,
+                            mediaFalta: false,
+                            mediaFaltaJustificada: false,
+                            motivo: "",
+                            idUsuario: 1
+                        }
+                    }
+                }
+            })
+            console.log(docenteXMateria);
+        })
+    })
+>>>>>>> 848eabdc9e3e3185be7c77b4d67b4d13e4b68429
+
+    // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
     //     const asistencia = await prisma.asistencia.create({
     //         data: {
