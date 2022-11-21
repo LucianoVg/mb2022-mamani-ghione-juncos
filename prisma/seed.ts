@@ -43,7 +43,6 @@ const prisma = new PrismaClient();
 // }
 
 async function main() {
-<<<<<<< HEAD
 
 
     for (let i = 1; i < 7; i++) {
@@ -131,46 +130,6 @@ async function main() {
     //     })
     //     console.log(asistencia);
     // })
-=======
-    const materias = await prisma.materia.findMany()
-    docentes.map(async (d) => {
-        const docente = await prisma.usuario.create({
-            data: d
-        })
-        console.log(docente);
-
-        materias.map(async (m) => {
-            const docenteXMateria = await prisma.docenteXmateria.create({
-                data: {
-                    usuario: {
-                        connect: {
-                            id: docente.id
-                        }
-                    },
-                    materia: {
-                        connect: {
-                            id: m.id
-                        }
-                    },
-                    asistenciaDocente: {
-                        create: {
-                            presente: false,
-                            ausente: false,
-                            ausenteJustificado: false,
-                            llegadaTarde: false,
-                            llegadaTardeJustificada: false,
-                            mediaFalta: false,
-                            mediaFaltaJustificada: false,
-                            motivo: "",
-                            idUsuario: 1
-                        }
-                    }
-                }
-            })
-            console.log(docenteXMateria);
-        })
-    })
->>>>>>> 848eabdc9e3e3185be7c77b4d67b4d13e4b68429
 
     // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
