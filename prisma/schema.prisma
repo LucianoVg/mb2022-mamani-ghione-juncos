@@ -13,7 +13,7 @@ model alumnoXcursoXdivision {
   idCursoXdivision Int
   idUsuario        Int
   idEstadoAlumno   Int
-  cursoXdivision   curso_division @relation("alumnoXcursoXdivisionTocursoXdivision", fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXdivision   cursoXdivision @relation(fields: [idCursoXdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   estadoAlumno     estadoAlumno   @relation(fields: [idEstadoAlumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario          usuario        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   asistencia       asistencia[]
@@ -61,8 +61,18 @@ model asistenciaDocente {
 model curso {
   id             Int              @id @default(autoincrement())
   nombre         String?
-  curso_division curso_division[]
+  cursoXdivision cursoXdivision[]
   materia        materia[]
+}
+
+model cursoXdivision {
+  id                    Int                     @id @default(autoincrement())
+  idCurso               Int
+  idDivision            Int
+  curso                 curso                   @relation(fields: [idCurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  division              division                @relation(fields: [idDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoXcursoXdivision alumnoXcursoXdivision[]
+  materialEstudio       materialEstudio[]
 }
 
 model discapacidad {
@@ -82,7 +92,7 @@ model discapacidadXusuario {
 model division {
   id             Int              @id @default(autoincrement())
   division       String?
-  curso_division curso_division[]
+  cursoXdivision cursoXdivision[]
 }
 
 model docenteXmateria {
@@ -144,8 +154,10 @@ model materia {
   nombre          String?
   idCorrelativa   Int
   idCurso         Int
+  materia         materia           @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso           curso             @relation(fields: [idCurso], references: [id])
   docenteXmateria docenteXmateria[]
+  other_materia   materia[]         @relation("materiaTomateria")
   materialEstudio materialEstudio[]
   nota            nota[]
 }
@@ -159,7 +171,7 @@ model materialEstudio {
   idMateria        Int
   idTrimestre      Int
   idUsuario        Int
-  cursoXDivision   curso_division @relation("cursoXdivisionTomaterialEstudio", fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoXDivision   cursoXdivision @relation(fields: [idCursoXDivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia          materia        @relation(fields: [idMateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trimestre        trimestre      @relation(fields: [idTrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario          usuario        @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -359,14 +371,4 @@ model usuario {
   noticiasYnovedades    noticiasYnovedades[]
   notificacionXusuario  notificacionXusuario[]
   sancionXusuario       sancionXusuario[]
-}
-
-model curso_division {
-  id                    Int                     @id @default(autoincrement())
-  id_curso              Int
-  id_division           Int
-  curso                 curso                   @relation(fields: [id_curso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  division              division                @relation(fields: [id_division], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  alumnoXcursoXdivision alumnoXcursoXdivision[] @relation("alumnoXcursoXdivisionTocursoXdivision")
-  materialEstudio       materialEstudio[]       @relation("cursoXdivisionTomaterialEstudio")
 }
