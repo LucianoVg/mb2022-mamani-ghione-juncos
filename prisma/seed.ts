@@ -7,7 +7,7 @@ import { ficha } from "./seeds/ficha";
 import { notas } from './seeds/notas';
 import { noticias } from './seeds/noticias';
 import { tiposSancion } from './seeds/tiposSancion';
-import { trimestres } from './seeds/trimestres';
+// import { trimestres } from './seeds/trimestres';
 import { enfermedades } from "./seeds/enfermedad";
 // import { usuarios } from "./seeds/usuarios";
 // import { alumnos, fechas } from "./seeds/alumnos";
@@ -40,44 +40,95 @@ const prisma = new PrismaClient();
 //     ))
 //     return asistencias.flat(1)
 // }
+
 async function main() {
-    const usuarios = await prisma.usuario.findMany({
-        where: {
-            rol: {
-                tipo: 'Estudiante'
-            }
-        }
-    })
-    // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
-    usuarios.map(async (u) => {
-        const asistencia = await prisma.asistencia.create({
-            data: {
-                presente: false,
-                ausente: false,
-                ausenteJustificado: false,
-                llegadaTarde: false,
-                llegadaTardeJustificada: false,
-                mediaFalta: false,
-                mediaFaltaJustificada: false,
-                creadoEn: new Date().toISOString().split('T')[0],
-                motivo: '',
-                usuario: {
-                    connect: {
-                        id: 57
-                    }
-                },
-                alumnoXcursoXdivision: {
-                    create: {
-                        anoActual: 2022,
-                        idCursoXdivision: 1,
-                        idEstadoAlumno: 1,
-                        idUsuario: u.id,
-                    }
+
+
+    for (let i = 1; i < 7; i++) {
+
+        const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+            include: {
+                cursoXdivision: true
+            },
+            where: {
+                cursoXdivision: {
+                    idCurso: i
                 }
             }
+
         })
-        console.log(asistencia);
-    })
+        // console.log(alumnos)
+        const materias = await prisma.materia.findMany({
+            where: {
+                idCurso: i
+            }
+
+        })
+        // console.log(materias)
+        const trimestres = await prisma.trimestre.findMany({
+        })
+
+        materias && materias.map(m => {
+            trimestres && trimestres.map(t => {
+                alumnos && alumnos.map(async (a) => {
+                    let nota = await prisma.nota.create({
+                        data: {
+                            idAlumnoXcursoXdivision: a.id,
+                            idMateria: m.id,
+                            idTrimestre: t.id,
+                            nota1: 0,
+                            nota2: 0,
+                            nota3: 0,
+                            nota4: 0,
+                            nota5: 0,
+                            fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+                            idUsuario: 1
+                        },
+                    })
+                    console.log(nota);
+                })
+
+            })
+
+        })
+
+
+
+    }
+
+
+
+
+    // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
+    // usuarios.map(async (u) => {
+    //     const asistencia = await prisma.asistencia.create({
+    //         data: {
+    //             presente: false,
+    //             ausente: false,
+    //             ausenteJustificado: false,
+    //             llegadaTarde: false,
+    //             llegadaTardeJustificada: false,
+    //             mediaFalta: false,
+    //             mediaFaltaJustificada: false,
+    //             creadoEn: new Date().toISOString().split('T')[0],
+    //             motivo: '',
+    //             usuario: {
+    //                 connect: {
+    //                     id: 57
+    //                 }
+    //             },
+    //             alumnoXcursoXdivision: {
+    //                 create: {
+    //                     anoActual: 2022,
+    //                     idCursoXdivision: 1,
+    //                     idEstadoAlumno: 1,
+    //                     idUsuario: u.id,
+    //                 }
+    //             }
+    //         }
+    //     })
+    //     console.log(asistencia);
+    // })
 
 
     // const menus = await prisma.menu.findMany()

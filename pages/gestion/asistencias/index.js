@@ -305,8 +305,8 @@ export default function Asistencias() {
 
                             <Button variant="contained" type="submit"
                                 style={{ marginLeft: "48px", marginTop: "10px" }}
-                                onClick={handleClose}
-                            // onClick={onUpdate(a?.id)}
+                                // onClick={handleClose}
+                                // onClick={onUpdate(a?.id)}
                             >
                                 Guardar
                             </Button>
@@ -643,7 +643,9 @@ export default function Asistencias() {
 
                                                                     {/* IRIA ACA-------------------------------------------- */}
                                                                     <Button variant="contained" color="success"
-                                                                        onClick={(e) => onSave(a?.id)}>
+                                                                        onClick={(e) => onSave(a?.id)}
+                                                                    
+                                                                    >
                                                                         Actualizar
                                                                     </Button>
                                                                     {/* IRIA ACA-------------------------------------------- */}
@@ -821,7 +823,9 @@ export default function Asistencias() {
                                                                     <Stack spacing={1} direction="row">
                                                                         {/* IRIA ACA-------------------------------------------- */}
                                                                         <Button variant="contained" color="success"
-                                                                            onClick={(e) => onSave(a?.id)}>
+                                                                            onClick={(e) => onSave(a?.id)}
+                                                              
+                                                                        >
                                                                             Actualizar
                                                                         </Button>
                                                                         {/* IRIA ACA-------------------------------------------- */}

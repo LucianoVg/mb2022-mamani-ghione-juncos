@@ -1,6 +1,6 @@
 export const asistencias = [
     {
-        creadaEn: new Date().toISOString().split('T')[0],
+        creadaEn: new Date().toLocaleDateString('es-AR').split('T')[0],
         idAlumno: '63298567fd612fecc4ccfd74',
         presente: false,
         llegadaTarde: false,
