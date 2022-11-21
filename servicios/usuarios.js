@@ -1,12 +1,8 @@
 import { Prisma } from "./prisma";
 
-export default async function traerUsuarios() {
+export default async function traerUsuarios(options) {
     try {
-        return Prisma.newPrisma().usuario.findMany({
-            include: {
-                rol: true
-            }
-        })
+        return Prisma.newPrisma().usuario.findMany(options)
     } catch (error) {
         console.log(error);
     }

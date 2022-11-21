@@ -1,20 +1,22 @@
 
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-
+import { Search } from "@mui/icons-material";
 
 export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
+    const [nombre, setNombre] = useState("")
+    const [apellido, setApellido] = useState("")
+    const [legajo, setLegajo] = useState("")
+    const queryParams = []
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -24,30 +26,41 @@ export default function MantenimientoUsuario() {
     }, [authUser, loading])
 
     const traerUsuarios = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios`)
+        if (legajo) {
+            queryParams.push({ legajo })
+        }
+        if (nombre) {
+            queryParams.push({ nombre })
+        }
+        if (apellido) {
+            queryParams.push({ apellido })
+        }
+        let params = ""
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                params += `${key}=${qp[key]}&`
+            }
+        })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?${params}`)
         if (res.data) {
             setUsuarios(res.data)
+            limpiarCampos()
         }
     }
-    const usuariosOptions = usuarios.map((usuario, i) => ({
-        id: usuario.id,
-        label: usuario.nombre + ' ' + usuario.apellido
-    }))
-
-    const defaultOptions = {
-        options: usuariosOptions,
-        getOptionLabel: (option) => option.label,
+    const limpiarCampos = () => {
+        setNombre("")
+        setApellido("")
+        setLegajo("")
     }
-
-    const [value, setValue] = useState(null)
-    const handleValue = (e, newValue) => {
-        setValue(newValue)
-        if (newValue) {
-            setUsuarios((usuarios) => usuarios.filter(u => u.id === newValue?.id))
-        } else {
-            traerUsuarios()
-        }
+    const handleNombre = (e) => {
+        setNombre(e.target.value)
     };
+    const handleLegajo = (e) => {
+        setLegajo(e.target.value)
+    }
+    const handleApellido = (e) => {
+        setApellido(e.target.value)
+    }
 
     return (
         <Layout title={'Mantenimiento de Usuarios'}>
@@ -56,21 +69,41 @@ export default function MantenimientoUsuario() {
             </Link>
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
-            <Autocomplete
-                sx={{ width: '200px' }}
-                {...defaultOptions}
-                freeSolo
-                // isOptionEqualToValue={(option, value) => option.id === value.id}
-                multiple={false}
-                id="controlled-demo"
-                value={value}
-                onChange={handleValue}
-
-                renderInput={(params) => <TextField {...params} label="Usuarios" variant="outlined" />}
-
-            />
-
-
+            <Grid container xs={12}>
+                <Grid item md={'auto'} m={1}>
+                    <TextField
+                        name="legajo"
+                        value={legajo}
+                        onChange={handleLegajo}
+                        variant="outlined"
+                        label="Legajo" />
+                </Grid>
+                <Grid item md={'auto'} m={1}>
+                    <TextField
+                        name="nombre"
+                        value={nombre}
+                        onChange={handleNombre}
+                        variant="outlined"
+                        label="Nombre" />
+                </Grid>
+                <Grid item md={'auto'} m={1}>
+                    <TextField
+                        name="apellido"
+                        value={apellido}
+                        onChange={handleApellido}
+                        variant="outlined"
+                        label="Apellido" />
+                </Grid>
+                <Grid item md={'auto'} m={1}>
+                    <Button
+                        variant="outlined"
+                        endIcon={<Search />}
+                        color="info"
+                        onClick={traerUsuarios}>
+                        Buscar
+                    </Button>
+                </Grid>
+            </Grid>
 
             <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
