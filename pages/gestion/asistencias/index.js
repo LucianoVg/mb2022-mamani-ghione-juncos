@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Autocomplete, Modal, TextareaAutosize, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
+import { Box, Modal, TextareaAutosize, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -29,17 +29,17 @@ export default function Asistencias() {
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
 
+    const [legajo, setLegajo] = useState("")
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
-    const [documento, setDocumento] = useState("")
-    const [alumno, setAlumno] = useState("")
-    const [fecha, setFecha] = useState(new Date().toISOString())
     const [cursos, setCursos] = useState()
+    const [fecha, setFecha] = useState(new Date())
     const [idCurso, setIdCurso] = useState("")
     const { loading, authUser } = useAuth()
     const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
     const [asistenciaActual, setAsistenciaActual] = useState()
+    let queryParams = []
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -48,12 +48,11 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-    }, [loading, authUser, alumno, idCurso, documento, fecha, usuario.id])
+    }, [loading, authUser, idCurso, usuario.id])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            console.log(res.data);
             setUsuario({ id: res.data?.id })
         }
     }
@@ -73,7 +72,24 @@ export default function Asistencias() {
     }
 
     const buscarAsistencias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/${fecha}/${idCurso}/${alumno}/${documento}`)
+        if (nombreAlumno) {
+            queryParams.push({ nombreAlumno })
+        }
+        if (apellidoAlumno) {
+            queryParams.push({ apellidoAlumno })
+        }
+        if (legajo) {
+            queryParams.push({ legajo })
+        }
+        let params = ""
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                params += `${key}=${qp[key]}&`
+            }
+        })
+        console.log(params);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias?${params}`)
+        console.log(res.data);
         if (res.data) {
             setAsistencias(res.data)
         }
@@ -84,22 +100,20 @@ export default function Asistencias() {
     }
 
     const handleCurso = (e) => {
-        setIdCurso(e.target.value)
+        queryParams.push({ idCurso: Number(e.target.value) })
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
-    const handleDocumento = (e) => {
-        setDocumento(e.target.value)
+    const handleLegajo = (e) => {
+        setLegajo(e.target.value)
     }
     const handleFecha = (value) => {
-        setFecha(value || new Date().toUTCString())
+
     }
 
     const bloquearCheck = (a) => {
@@ -226,28 +240,6 @@ export default function Asistencias() {
         setMfj(checked)
     }
 
-
-    // const usuariosOptions = asistencias.map((asistencia, i) => ({
-    //     id: asistencia.alumnoXcursoXdivision.usuario.id,
-    //     label: asistencia.alumnoXcursoXdivision.usuario.nombre + ' ' + asistencia.alumnoXcursoXdivision.usuario.apellido
-    // }))
-
-    // const defaultOptions = {
-    //     options: usuariosOptions,
-    //     getOptionLabel: (option) => option.label,
-    // }
-
-    // const [value, setValue] = useState(null)
-    // const handleValue = (e, newValue) => {
-    //     setValue(newValue)
-    //     if (newValue) {
-    //         setAsistencias((asistencia) => asistencia.filter(u => u.id === newValue?.id))
-    //     } else {
-    //         traerUsuarios()
-    //     }
-    // };
-
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -260,8 +252,6 @@ export default function Asistencias() {
         setMotivo(e.target.value)
     }
 
-    console.log("Motivo:", motivo)
-
     return (
         <Layout>
             <Container
@@ -270,18 +260,13 @@ export default function Asistencias() {
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
 
-
-
-
-
                 {/* MODAL----------------------------------------------------------------------------------------------------------- */}
-                <Button onClick={handleOpen} variant="contained">Actualizar</Button>
+                <Button onClick={handleOpen} sx={{ mb: 3 }} variant="contained">Actualizar</Button>
                 <Modal
                     open={open}
                     aria-labelledby="parent-modal-title"
-                    aria-describedby="parent-modal-description"
+                    aria-describedby="parent-modal-description">
 
-                >
                     <Box style={{
                         backgroundColor: "white",
                         position: "absolute",
@@ -293,9 +278,7 @@ export default function Asistencias() {
                         margin: "0 auto",
                         borderRadius: "25px",
                         boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
-                    }}
-
-                    >
+                    }}>
                         <h1 style={{ textAlign: "center" }}>Ingrese motivo</h1>
                         <TextareaAutosize
                             style={{
@@ -318,38 +301,27 @@ export default function Asistencias() {
 
                         </TextareaAutosize>
 
-                       
-                        
-                            <Stack direction="row"
-                         
+                        <Stack direction="row">
+
+                            <Button variant="contained" type="submit"
+                                style={{ marginLeft: "48px", marginTop: "10px" }}
+                                onClick={handleClose}
+                            // onClick={onUpdate(a?.id)}
                             >
-
-                                <Button variant="contained" type="submit"
-                                    style={{ marginLeft:"48px", marginTop: "10px" }}
-                                    onClick={handleClose}
-                                // onClick={onUpdate(a?.id)}
-                                >
-                                    Guardar
-                                </Button>
-                                <Button variant="contained" color="error" type="submit"
-                                    style={{ marginLeft: "10px", marginTop: "10px" }}
-                                    onClick={handleClose}
-                                >
-                                    Cancelar
-                                </Button>
-                            </Stack>
-
-                     
+                                Guardar
+                            </Button>
+                            <Button variant="contained" color="error" type="submit"
+                                style={{ marginLeft: "10px", marginTop: "10px" }}
+                                onClick={handleClose}
+                            >
+                                Cancelar
+                            </Button>
+                        </Stack>
                     </Box>
                 </Modal>
                 {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-
-
-
-
                 <Grid container spacing={2}>
-
                     <Grid item xs={8}>
                         <Box sx={{ marginBottom: '20px' }}>
                             <FormControl>
@@ -401,21 +373,18 @@ export default function Asistencias() {
                         <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
-
-                                name="documento"
-                                value={documento}
-                                onChange={handleDocumento}
+                                name="legajo"
+                                value={legajo}
+                                onChange={handleLegajo}
                                 label="Legajo" />
                             <TextField
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-
                                 name="nombreAlumno"
                                 value={nombreAlumno}
                                 onChange={handleNombreAlumno}
                                 label="Nombre" />
                             <TextField
                                 sx={{ width: '150px', marginRight: '20px' }}
-
                                 name="apellidoAlumno"
                                 value={apellidoAlumno}
                                 onChange={handleApellidoAlumno}
@@ -426,11 +395,9 @@ export default function Asistencias() {
                                 Buscar
                             </Button>
                         </Box>
-
                     </Grid>
                     <Grid item xs>
                         <Box component="span">
-
                             <Stack direction="row" spacing={2}>
                                 <h5 >
                                     <strong>Asistencia modificada:</strong>

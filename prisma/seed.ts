@@ -9,9 +9,8 @@ import { noticias } from './seeds/noticias';
 import { tiposSancion } from './seeds/tiposSancion';
 import { trimestres } from './seeds/trimestres';
 import { enfermedades } from "./seeds/enfermedad";
-import { usuarios } from "./seeds/usuarios";
-import { alumnoXcursoXdivision } from "./seeds/alumnoXcursoXdivision";
-import { alumnos, fechas } from "./seeds/alumnos";
+// import { usuarios } from "./seeds/usuarios";
+// import { alumnos, fechas } from "./seeds/alumnos";
 import { materias } from './seeds/materias';
 import { menuXRoles } from './seeds/menuXRol';
 import { portadaFicha } from './seeds/portadaFicha';
@@ -42,6 +41,45 @@ const prisma = new PrismaClient();
 //     return asistencias.flat(1)
 // }
 async function main() {
+    const usuarios = await prisma.usuario.findMany({
+        where: {
+            rol: {
+                tipo: 'Estudiante'
+            }
+        }
+    })
+    // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
+    usuarios.map(async (u) => {
+        const asistencia = await prisma.asistencia.create({
+            data: {
+                presente: false,
+                ausente: false,
+                ausenteJustificado: false,
+                llegadaTarde: false,
+                llegadaTardeJustificada: false,
+                mediaFalta: false,
+                mediaFaltaJustificada: false,
+                creadoEn: new Date().toISOString().split('T')[0],
+                motivo: '',
+                usuario: {
+                    connect: {
+                        id: 57
+                    }
+                },
+                alumnoXcursoXdivision: {
+                    create: {
+                        anoActual: 2022,
+                        idCursoXdivision: 1,
+                        idEstadoAlumno: 1,
+                        idUsuario: u.id,
+                    }
+                }
+            }
+        })
+        console.log(asistencia);
+    })
+
+
     // const menus = await prisma.menu.findMany()
     // const roles = await prisma.rol.findMany()
     // console.log(menus, roles);

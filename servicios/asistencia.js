@@ -17,61 +17,9 @@ export async function ListarCurso() {
     }
 }
 
-export async function FiltrarAsistencias(alumno = '', curso = '', documento = '', fecha = '') {
+export async function FiltrarAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany({
-            include: {
-                usuario: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
-                    }
-                }
-
-            },
-            where: {
-                OR: [
-                    {
-                        alumnoXcursoXdivision: {
-                            cursoXdivision: {
-                                id: curso
-                            }
-                        }
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                nombre: {
-                                    startsWith: alumno.split(' ')[0]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                apellido: {
-                                    endsWith: alumno.split(' ')[1]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        alumnoXcursoXdivision: {
-                            usuario: {
-                                legajo: {
-                                    contains: documento
-                                }
-                            }
-                        }
-                    },
-                    {
-                        creadoEn: fecha.split('T')[0]
-                    }
-                ]
-            }
-        })
+        const asistencias = await Prisma.newPrisma().asistencia.findMany(options)
         console.log(asistencias);
         return asistencias
     } catch (error) {
@@ -81,20 +29,9 @@ export async function FiltrarAsistencias(alumno = '', curso = '', documento = ''
     }
 }
 
-export async function TraerAsistencias() {
+export async function TraerAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany({
-            include: {
-                usuario: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
-                    }
-                }
-
-            }
-        })
+        const asistencias = await Prisma.newPrisma().asistencia.findMany(options)
         return asistencias
     } catch (error) {
         console.log(error);

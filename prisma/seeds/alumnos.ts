@@ -1,76 +1,65 @@
 export const alumnos = [
     {
-        id: '63298567fd612fecc4ccfd73',
         nombre: "Maria Concepcion",
         apellido: "Cortes",
         correo: "cariaconcepcion@gmail.com",
 
     },
     {
-        id: '63298567fd612fecc4ccfd74',
         nombre: "Hector",
         apellido: "Urbano",
         correo: "hector@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33e6',
         nombre: "Leonardo",
         apellido: "Trigo",
         correo: "leonardo@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33e7',
         nombre: "Mireia",
         apellido: "Lucena",
         correo: "lucena@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33e9',
         nombre: "Reyes ",
         apellido: "Gomis",
         correo: "gomis@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33e8',
         nombre: "Mariano",
         apellido: "Morillas",
         correo: "morillas@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33eb',
         nombre: "Iban ",
         apellido: "Puerta",
         correo: "iban@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33ea',
         nombre: "Patricia ",
         apellido: "Penalver",
         correo: "patricia@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33ec',
         nombre: "Noel ",
         apellido: "Crespo",
         correo: "crespo@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33ed',
         nombre: "Serafin ",
         apellido: "Galindo",
         correo: "galindo@gmail.com",
 
     },
     {
-        id: '634ddbd85f8a0c67e21c33ee',
         nombre: "Leonor ",
         apellido: "del Moral",
         correo: "leonor@gmail.com",

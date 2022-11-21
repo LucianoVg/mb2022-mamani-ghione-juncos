@@ -1,66 +1,8 @@
 import { Prisma } from "./prisma";
 
-export async function TraerNotas(idTrimestre, idMateria, curso, nombreAlumno = "", apellidoAlumno = "") {
+export async function TraerNotas(options) {
     try {
-        let trimestres = await Prisma.newPrisma().trimestre.findMany()
-        const notas = idMateria && curso ? await Prisma.newPrisma().nota.findMany({
-            include: {
-                materia: true,
-                trimestre: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
-                    }
-                }
-            },
-            where: {
-                AND: [
-                    { idTrimestre: trimestres[idTrimestre].id },
-                    { idMateria: idMateria },
-                    {
-                        alumnoXcursoXdivision: {
-                            cursoXdivision: {
-                                id: curso
-                            }
-                        }
-                    },
-                    // {
-                    //     alumnoXcursoXdivision: {
-                    //         usuario: {
-                    //             nombre: {
-                    //                 contains: nombreAlumno
-                    //             }
-                    //         }
-                    //     },
-                    // },
-                    // {
-                    //     alumnoXcursoXdivision: {
-                    //         usuario: {
-                    //             apellido: {
-                    //                 contains: apellidoAlumno
-                    //             }
-                    //         }
-                    //     },
-                    // }
-                ]
-            }
-        }) : await Prisma.newPrisma().nota.findMany({
-            include: {
-                materia: true,
-                trimestre: true,
-                alumnoXcursoXdivision: {
-                    include: {
-                        usuario: true,
-                        cursoXdivision: true
-                    }
-                }
-            },
-            where: {
-                idTrimestre: trimestres[idTrimestre].id
-            }
-        })
-        return notas
+        return await Prisma.newPrisma().nota.findMany(options)
     } catch (error) {
         console.error(error);
     } finally {

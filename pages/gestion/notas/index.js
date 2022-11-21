@@ -6,6 +6,7 @@ import axios from 'axios'
 import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
+import { SearchOutlined } from "@mui/icons-material";
 
 export default function Notas() {
     const [notas, setNotas] = useState([])
@@ -13,8 +14,8 @@ export default function Notas() {
     const [index, setIndex] = useState(0)
     // const [trimestres, setTrimestres] = useState([])
     // const [idTrimestre, setIdTrimestre] = useState("")
-    const [idMateria, setIdMateria] = useState("")
-    const [idCurso, setIdCurso] = useState("")
+    const [idMateria, setIdMateria] = useState(0)
+    const [idCurso, setIdCurso] = useState(0)
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
@@ -24,6 +25,7 @@ export default function Notas() {
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
     const router = useRouter()
+    let queryParams = []
 
     const [inEditMode, setInEditMode] = useState({
         status: false,
@@ -47,7 +49,7 @@ export default function Notas() {
     // }, [idTrimestre])
     useEffect(() => {
         traerNotas(index)
-    }, [index, idCurso, idMateria, nombreAlumno, apellidoAlumno])
+    }, [index])
 
     const handleTrimestre = (e, value) => {
         setIndex(value)
@@ -55,18 +57,18 @@ export default function Notas() {
     }
 
     const handleMateria = (e) => {
-        setIdMateria(e.target.value, () => traerNotas())
+        setIdMateria(Number(e.target.value))
     }
 
     const handleCurso = (e) => {
-        setIdCurso(e.target.value, () => traerNotas())
+        setIdCurso(Number(e.target.value))
     }
     const handleNombreAlumno = (e) => {
-        setNombreAlumno(e.target.value, () => traerNotas())
+        setNombreAlumno(e.target.value)
     }
 
     const handleApellidoAlumno = (e) => {
-        setApellidoAlumno(e.target.value, () => traerNotas())
+        setApellidoAlumno(e.target.value)
     }
 
     const traerCursos = async () => {
@@ -89,11 +91,29 @@ export default function Notas() {
     //     }
     // }
 
-    const traerNotas = async (value) => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/${value}/${idMateria}/${idCurso}/${nombreAlumno}/${apellidoAlumno}`)
-        if (res.data) {
-            setNotas(res.data)
+    const traerNotas = async (value = 1) => {
+        if (nombreAlumno) {
+            queryParams.push({ nombreAlumno })
         }
+        if (apellidoAlumno) {
+            queryParams.push({ apellidoAlumno })
+        }
+        if (idMateria) {
+            queryParams.push({ idMateria })
+        }
+        if (idCurso) {
+            queryParams.push({ idCurso })
+        }
+        let params = ''
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                params += `${key}=${qp[key]}&`
+            }
+        })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas?${params}`)
+        // if (res.data) {
+        //     setNotas(res.data)
+        // }
     }
 
     // const onEdit = (id) => {
@@ -134,13 +154,6 @@ export default function Notas() {
         setNota(0);
     }
 
-
-    // const select = () => {
-    //     var input = document.getElementById("select")
-    //     input.select();
-    //     input.focus();
-    // }
-
     const onChangeNotaColumna = (e) => {
         setNota(Number.parseInt(e.target.value))
         setColumnName(e.target.name)
@@ -152,13 +165,14 @@ export default function Notas() {
                 <Typography variant="h4">Notas</Typography>
                 <Box sx={{ marginTop: '20px' }} >
                     <Box direction='row'>
-
                         <FormControl>
                             <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                            <Select id="inputMateria" name="idMateria" onChange={handleMateria}
-                                label="materia"
-                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                            >
+                            <Select id="inputMateria"
+                                onChange={handleMateria}
+                                name="idMateria"
+                                value={idMateria}
+                                label="Materia"
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
                                 {
                                     materias && materias?.map((m, i) => (
 
@@ -171,8 +185,11 @@ export default function Notas() {
 
                         <FormControl>
                             <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                            <Select id="inputCurso" name="idCurso" onChange={handleCurso}
-                                label="curso"
+                            <Select id="inputCurso"
+                                name="idCurso"
+                                value={idCurso}
+                                onChange={handleCurso}
+                                label="Curso"
                                 sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
                                 {
                                     cursos && cursos?.map((c, i) => (
@@ -187,7 +204,6 @@ export default function Notas() {
 
                     <Box direction='row'>
                         <TextField margin="normal"
-
                             name="nombreAlumno"
                             value={nombreAlumno}
                             onChange={handleNombreAlumno}
@@ -195,13 +211,19 @@ export default function Notas() {
                             sx={{ marginRight: '20px', marginBottom: '20px' }}
                         />
                         <TextField margin="normal"
-
                             name="apellidoAlumno"
                             value={apellidoAlumno}
                             onChange={handleApellidoAlumno}
                             label="Apellido del alumno" />
-                    </Box>
 
+                        <Button endIcon={<SearchOutlined />}
+                            sx={{ mt: 3, ml: 2 }}
+                            color="info"
+                            variant="outlined"
+                            onClick={traerNotas}>
+                            Buscar
+                        </Button>
+                    </Box>
                 </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={index} onChange={handleTrimestre}
