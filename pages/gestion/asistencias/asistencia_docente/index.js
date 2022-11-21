@@ -28,16 +28,16 @@ export default function Asistencias() {
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
 
-
     const [nombreDocente, setNombreDocente] = useState("")
     const [apellidoDocente, setApellidoDocente] = useState("")
-    const [documento, setDocumento] = useState("")
-    const [docente, setDocente] = useState("")
+    const [legajo, setLegajo] = useState("")
+
     const [fecha, setFecha] = useState(new Date().toISOString())
     const { loading, authUser } = useAuth()
     const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
     const [asistenciaActual, setAsistenciaActual] = useState()
+    let queryParams = []
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -45,7 +45,7 @@ export default function Asistencias() {
         }
         traerUsuario()
         listarAsistencias()
-    }, [loading, authUser, docente, documento, fecha, usuario.id])
+    }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -61,7 +61,23 @@ export default function Asistencias() {
     }
 
     const buscarAsistencias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/${fecha}/${docente}/${documento}`)
+        if (nombreDocente) {
+            queryParams.push({ nombreDocente })
+        }
+        if (apellidoDocente) {
+            queryParams.push({ apellidoDocente })
+        }
+        if (legajo) {
+            queryParams.push({ legajo })
+        }
+        let params = ""
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                params += `${key}=${qp[key]}&`
+            }
+        })
+        console.log(params);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente?${params}`)
         if (res.data) {
             setAsistencias(res.data)
         }
@@ -73,15 +89,13 @@ export default function Asistencias() {
 
     const handleNombreDocente = (e) => {
         setNombreDocente(e.target.value)
-        setDocente(`${nombreDocente} ${apellidoDocente}`)
     }
 
     const handleApellidoDocente = (e) => {
         setApellidoDocente(e.target.value)
-        setDocente(`${nombreDocente} ${apellidoDocente}`)
     }
-    const handleDocumento = (e) => {
-        setDocumento(e.target.value)
+    const handleLegajo = (e) => {
+        setLegajo(e.target.value)
     }
     const handleFecha = (value) => {
         setFecha(value || new Date().toUTCString())
@@ -213,22 +227,19 @@ export default function Asistencias() {
                         <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
-
-                                name="documento"
-                                value={documento}
-                                onChange={handleDocumento}
+                                name="legajo"
+                                value={legajo}
+                                onChange={handleLegajo}
                                 label="Legajo" />
                             <TextField
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-
-                                name="nombreAlumno"
+                                name="nombreDocente"
                                 value={nombreDocente}
                                 onChange={handleNombreDocente}
                                 label="Nombre" />
                             <TextField
                                 sx={{ width: '150px', marginRight: '20px' }}
-
-                                name="apellidoAlumno"
+                                name="apellidoDocente"
                                 value={apellidoDocente}
                                 onChange={handleApellidoDocente}
                                 label="Apellido" />
