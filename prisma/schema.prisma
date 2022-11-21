@@ -154,10 +154,10 @@ model materia {
   nombre          String?
   idCorrelativa   Int
   idCurso         Int
-  materia         materia           @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // materia         materia           @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso           curso             @relation(fields: [idCurso], references: [id])
   docenteXmateria docenteXmateria[]
-  other_materia   materia[]         @relation("materiaTomateria")
+  // other_materia   materia[]         @relation("materiaTomateria")
   materialEstudio materialEstudio[]
   nota            nota[]
 }
