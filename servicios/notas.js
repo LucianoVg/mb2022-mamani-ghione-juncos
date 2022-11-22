@@ -9,6 +9,29 @@ export async function TraerNotas(options) {
         Prisma.disconnect()
     }
 }
+// export async function TraerNotas() {
+//     try {
+//         return await Prisma.newPrisma().nota.findMany({
+//             include: {
+//                 materia: true,
+//                 trimestre: true,
+//                 alumnoXcursoXdivision: {
+//                     include: {
+//                         usuario: true,
+//                         cursoXdivision: true
+//                     }
+//                 }
+//             },
+//             // where: {
+//             //     idTrimestre: 1
+//             // }
+//         })
+//     } catch (error) {
+//         console.error(error);
+//     } finally {
+//         Prisma.disconnect()
+//     }
+// }
 
 export async function updateNota(idNota, notaNueva, columnName) {
 

@@ -60,14 +60,14 @@ async function main() {
     const trimestres = await prisma.trimestre.findMany({
     })
 
-    const nota = await prisma.nota.findMany({
-        where: {
-            idMateria: 70
-        }
+    // const nota = await prisma.nota.findMany({
+    //     where: {
+    //         idMateria: 70
+    //     }
 
-    })
+    // })
 
-    console.log(nota)
+    // console.log(nota)
     // alumnos && alumnos.map(async (a) => {
 
     //     // console.log(alumnos)
@@ -284,61 +284,61 @@ async function main() {
 
 
 
-    // for (let i = 1; i < 7; i++) {
+    for (let i = 1; i < 7; i++) {
 
-    //     const alumnos = await prisma.alumnoXcursoXdivision.findMany({
-    //         include: {
-    //             cursoXdivision: true
-    //         },
-    //         where: {
-    //             cursoXdivision: {
-    //                 idCurso: i
-    //             }
-    //         }
+        const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+            include: {
+                cursoXdivision: true
+            },
+            where: {
+                cursoXdivision: {
+                    idCurso: i
+                }
+            }
 
-    //     })
-    //     // console.log(alumnos)
-    //     const materias = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: i
-    //         }
+        })
+        // console.log(alumnos)
+        const materias = await prisma.materia.findMany({
+            where: {
+                idCurso: i
+            }
 
-    //     })
-    //     // console.log(materias)
-    //     const trimestres = await prisma.trimestre.findMany({
-    //     })
+        })
+        // console.log(materias)
+        const trimestres = await prisma.trimestre.findMany({
+        })
 
-    //     // console.log(i)
+        // console.log(i)
 
 
-    //     materias && materias.map(m => {
-    //         // console.log("entro a materias.map")
-    //         trimestres && trimestres.map(t => {
-    //             // console.log("entro a trimestres.map")
-    //             alumnos && alumnos.map(async (a) => {
-    //                 // console.log("entro a alumnos.map")
-    //                 let nota = await prisma.nota.create({
-    //                     data: {
-    //                         idAlumnoXcursoXdivision: a.id,
-    //                         idMateria: m.id,
-    //                         idTrimestre: t.id,
-    //                         nota1: 0,
-    //                         nota2: 0,
-    //                         nota3: 0,
-    //                         nota4: 0,
-    //                         nota5: 0,
-    //                         fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                         idUsuario: 1
-    //                     },
-    //                 })
-    //                 console.log(nota);
-    //             })
+        materias && materias.map(m => {
+            // console.log("entro a materias.map")
+            trimestres && trimestres.map(t => {
+                // console.log("entro a trimestres.map")
+                alumnos && alumnos.map(async (a) => {
+                    // console.log("entro a alumnos.map")
+                    let nota = await prisma.nota.create({
+                        data: {
+                            idAlumnoXcursoXdivision: a.id,
+                            idMateria: m.id,
+                            idTrimestre: t.id,
+                            nota1: 0,
+                            nota2: 0,
+                            nota3: 0,
+                            nota4: 0,
+                            nota5: 0,
+                            fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+                            idUsuario: 1
+                        },
+                    })
+                    console.log(nota);
+                })
 
-    //         })
+            })
 
-    //     })
+        })
 
-    // }
+    }
 
 
 
