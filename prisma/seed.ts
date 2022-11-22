@@ -45,57 +45,300 @@ const prisma = new PrismaClient();
 async function main() {
 
 
-    for (let i = 1; i < 7; i++) {
+    const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+        include: {
+            cursoXdivision: true
+        },
+        // where: {
+        //     cursoXdivision: {
+        //         idCurso: i
+        //     }
+        // }
 
-        const alumnos = await prisma.alumnoXcursoXdivision.findMany({
-            include: {
-                cursoXdivision: true
-            },
-            where: {
-                cursoXdivision: {
-                    idCurso: i
-                }
-            }
+    })
 
-        })
-        // console.log(alumnos)
-        const materias = await prisma.materia.findMany({
-            where: {
-                idCurso: i
-            }
+    const trimestres = await prisma.trimestre.findMany({
+    })
 
-        })
-        // console.log(materias)
-        const trimestres = await prisma.trimestre.findMany({
-        })
+    const nota = await prisma.nota.findMany({
+        where: {
+            idMateria: 70
+        }
 
-        materias && materias.map(m => {
-            trimestres && trimestres.map(t => {
-                alumnos && alumnos.map(async (a) => {
-                    let nota = await prisma.nota.create({
-                        data: {
-                            idAlumnoXcursoXdivision: a.id,
-                            idMateria: m.id,
-                            idTrimestre: t.id,
-                            nota1: 0,
-                            nota2: 0,
-                            nota3: 0,
-                            nota4: 0,
-                            nota5: 0,
-                            fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-                            idUsuario: 1
-                        },
-                    })
-                    console.log(nota);
-                })
+    })
 
-            })
+    console.log(nota)
+    // alumnos && alumnos.map(async (a) => {
 
-        })
+    //     // console.log(alumnos)
+    //     switch (a.cursoXdivision.idCurso) {
+    //         case 1:
+    //             console.log("entro al switch 1")
+    //             const materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idCurso: 1
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias1 && materias1.map(m => {
+    //                 console.log("entro a materias.map")
+    //                 trimestres && trimestres.map (async (t) => {
+    //                     console.log("entro a trimestres.map")
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idAlumnoXcursoXdivision: a.id,
+    //                             idMateria: m.id,
+    //                             idTrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idUsuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         // case 2:
+    //     const materias2 = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: 2
+    //         }
+
+    //     })
+    //     // console.log(materias)
+
+    //     materias2 && materias.map(m => {
+    //         trimestres && trimestres.map(async (t) => {
+
+    //             let nota = await prisma.nota.create({
+    //                 data: {
+    //                     idAlumnoXcursoXdivision: a.id,
+    //                     idMateria: m.id,
+    //                     idTrimestre: t.id,
+    //                     nota1: 0,
+    //                     nota2: 0,
+    //                     nota3: 0,
+    //                     nota4: 0,
+    //                     nota5: 0,
+    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                     idUsuario: 1
+    //                 },
+    //             })
+    //             console.log(nota);
+
+    //         })
+
+    //     })
+    //     break;
+
+    // case 3:
+    //     const materias3 = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: 3
+    //         }
+
+    //     })
+    //     // console.log(materias)
+
+    //     materias3 && materias.map(m => {
+    //         trimestres && trimestres.map(async (t) => {
+
+    //             let nota = await prisma.nota.create({
+    //                 data: {
+    //                     idAlumnoXcursoXdivision: a.id,
+    //                     idMateria: m.id,
+    //                     idTrimestre: t.id,
+    //                     nota1: 0,
+    //                     nota2: 0,
+    //                     nota3: 0,
+    //                     nota4: 0,
+    //                     nota5: 0,
+    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                     idUsuario: 1
+    //                 },
+    //             })
+    //             console.log(nota);
+
+    //         })
+
+    //     })
+    //     break;
+
+    // case 4:
+    //     const materias4 = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: 4
+    //         }
+
+    //     })
+    //     // console.log(materias)
+
+    //     materias4 && materias.map(m => {
+    //         trimestres && trimestres.map(async (t) => {
+
+    //             let nota = await prisma.nota.create({
+    //                 data: {
+    //                     idAlumnoXcursoXdivision: a.id,
+    //                     idMateria: m.id,
+    //                     idTrimestre: t.id,
+    //                     nota1: 0,
+    //                     nota2: 0,
+    //                     nota3: 0,
+    //                     nota4: 0,
+    //                     nota5: 0,
+    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                     idUsuario: 1
+    //                 },
+    //             })
+    //             console.log(nota);
+
+    //         })
+
+    //     })
+    //     break;
+
+    // case 5:
+    //     const materias5 = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: 5
+    //         }
+
+    //     })
+    //     // console.log(materias)
+
+    //     materias5 && materias.map(m => {
+    //         trimestres && trimestres.map(async (t) => {
+
+    //             let nota = await prisma.nota.create({
+    //                 data: {
+    //                     idAlumnoXcursoXdivision: a.id,
+    //                     idMateria: m.id,
+    //                     idTrimestre: t.id,
+    //                     nota1: 0,
+    //                     nota2: 0,
+    //                     nota3: 0,
+    //                     nota4: 0,
+    //                     nota5: 0,
+    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                     idUsuario: 1
+    //                 },
+    //             })
+    //             console.log(nota);
+
+    //         })
+
+    //     })
+    //     break;
+
+    // case 6:
+    //     const materias6 = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: 6
+    //         }
+
+    //     })
+    //     // console.log(materias)
+
+    //     materias6 && materias.map(m => {
+    //         trimestres && trimestres.map(async t => {
+
+    //             let nota = await prisma.nota.create({
+    //                 data: {
+    //                     idAlumnoXcursoXdivision: a.id,
+    //                     idMateria: m.id,
+    //                     idTrimestre: t.id,
+    //                     nota1: 0,
+    //                     nota2: 0,
+    //                     nota3: 0,
+    //                     nota4: 0,
+    //                     nota5: 0,
+    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                     idUsuario: 1
+    //                 },
+    //             })
+    //             console.log(nota);
+
+    //         })
+
+    //     })
+    //     break;
+
+    //         default:
+    //             break;
+    //     }
+
+    // })
+
+
+    // console.log(alumnos)
 
 
 
-    }
+
+
+    // for (let i = 1; i < 7; i++) {
+
+    //     const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+    //         include: {
+    //             cursoXdivision: true
+    //         },
+    //         where: {
+    //             cursoXdivision: {
+    //                 idCurso: i
+    //             }
+    //         }
+
+    //     })
+    //     // console.log(alumnos)
+    //     const materias = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: i
+    //         }
+
+    //     })
+    //     // console.log(materias)
+    //     const trimestres = await prisma.trimestre.findMany({
+    //     })
+
+    //     // console.log(i)
+
+
+    //     materias && materias.map(m => {
+    //         // console.log("entro a materias.map")
+    //         trimestres && trimestres.map(t => {
+    //             // console.log("entro a trimestres.map")
+    //             alumnos && alumnos.map(async (a) => {
+    //                 // console.log("entro a alumnos.map")
+    //                 let nota = await prisma.nota.create({
+    //                     data: {
+    //                         idAlumnoXcursoXdivision: a.id,
+    //                         idMateria: m.id,
+    //                         idTrimestre: t.id,
+    //                         nota1: 0,
+    //                         nota2: 0,
+    //                         nota3: 0,
+    //                         nota4: 0,
+    //                         nota5: 0,
+    //                         fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                         idUsuario: 1
+    //                     },
+    //                 })
+    //                 console.log(nota);
+    //             })
+
+    //         })
+
+    //     })
+
+    // }
 
 
 

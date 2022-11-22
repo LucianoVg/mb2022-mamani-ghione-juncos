@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import { SearchOutlined } from "@mui/icons-material";
@@ -78,7 +78,7 @@ export default function Notas() {
         }
     }
     const traerMaterias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias/`)
         if (res.data) {
             setMaterias(res.data)
         }
@@ -159,6 +159,7 @@ export default function Notas() {
         setColumnName(e.target.name)
     }
 
+   
     return (
         <Layout>
             <Container maxWidth={'xl'}>
@@ -173,10 +174,76 @@ export default function Notas() {
                                 value={idMateria}
                                 label="Materia"
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
+                                <ListSubheader>Primero</ListSubheader>
                                 {
+                                 
                                     materias && materias?.map((m, i) => (
+                                       
+                                        m?.idCurso === 1 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    ))
+                                }
+                                  <ListSubheader>Segundo</ListSubheader>
+                                {
+                                 
+                                    materias && materias?.map((m, i) => (
+                                       
+                                        m?.idCurso === 2 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
+
+                                    ))
+                                }
+                                  <ListSubheader>Tercero</ListSubheader>
+                                {
+                                 
+                                    materias && materias?.map((m, i) => (
+                                       
+                                        m?.idcurso === 3 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
+
+                                    ))
+                                }
+                                  <ListSubheader>Cuarto</ListSubheader>
+                                {
+                                 
+                                    materias && materias?.map((m, i) => (
+                                       
+                                        m?.idCurso === 4 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
+
+                                    ))
+                                }
+                                  <ListSubheader>Quinto</ListSubheader>
+                                {
+                                 
+                                    materias && materias?.map((m, i) => (
+                                       
+                                        m?.idCurso === 5 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
+
+                                    ))
+                                }
+                                  <ListSubheader>Sexto</ListSubheader>
+                                {
+                                 
+                                    materias && materias?.map((m, i) => (
+                                       
+                                        m?.idCurso === 6 &&(
+                                            
+                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                        )
+
                                     ))
                                 }
                             </Select>
