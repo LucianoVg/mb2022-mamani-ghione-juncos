@@ -1,38 +1,39 @@
-import Link from "next/link"
 import { useAuth } from "./context/authUserProvider"
-import { Toolbar, IconButton, Typography, Badge } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuIcon from '@mui/icons-material/Menu'
-import MuiAppBar from '@mui/material/AppBar';
-import { styled } from '@mui/material/styles';
-import Notificacion from '../components/notificacion_panel'
 import { useRouter } from "next/router";
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: 280,
-        width: `calc(100% - ${280}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 export const Navbar = ({ toggleDrawer, open }) => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     return (
         <>
-            <AppBar position="absolute" open={open}>
+            <nav className="navbar navbar-expand-lg navbar-dark" style={{
+                paddingRight: '24px', // keep right padding when drawer closed
+                backgroundColor: '#3F51B5'
+            }}>
+                <a className="navbar-brand" href="/">Instituto Privado &quot;El Salvador&quot;</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div className="navbar-nav">
+                        <a className="nav-item nav-link active" href="/gestion/institucional">Insitucional <span className="sr-only">(current)</span></a>
+                        {
+                            !loading && authUser && (
+                                <>
+                                    <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
+                                        <FontAwesomeIcon
+                                            icon={faBell} />
+                                    </div>
+                                </>
+                            )
+                        }
+
+                    </div>
+                </div>
+            </nav>
+            {/* <AppBar position="absolute" open={open}>
                 <Toolbar
                     sx={{
                         pr: '24px', // keep right padding when drawer closed
@@ -77,7 +78,7 @@ export const Navbar = ({ toggleDrawer, open }) => {
                     }
 
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
         </>
     )
 }

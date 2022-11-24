@@ -1,0 +1,14 @@
+.forgetPwd {
+    color: #0062cc;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btnSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+}

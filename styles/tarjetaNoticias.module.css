@@ -1,48 +1,29 @@
-
-
-.Typography {
+.h5 {
     font-size: clamp(18px, 3vw, 40px);
 }
 
-.Typography2 {
-    font-size: clamp(14px, 2vw, 30px);
-}
-
-.Typography3 {
-    font-size: clamp(14px, 2vw, 30px);
-}
-
-.box{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 25px;
-}
 .card {
-    width: 21rem;
+    /* width: 21rem; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-bottom: 10mm;
     margin-top: 10mm;
     margin-left: 10mm;
-}
-
-.MenuItem {
-    display:inline-block
+    width: 300px;
+    height: 480px;
 }
 
 .card_img_top {
-    height: 18rem;
-    width: 21rem;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
-    
 }
 
- .card_img_top:hover {
+.card_img_top:hover {
     transform: scale(1.8);
 }
+
 .overflow {
-  
     height: 50%;
     overflow: hidden;
 }
@@ -55,19 +36,28 @@
 
 /* Style the button and place it in the middle of the container/image */
 .btn {
-    position: absolute;
+    position: relative;
     background-color: transparent;
-    color: black;
+    color: rgb(50, 93, 185);
     font-size: 16px;
-    margin-top: 4mm;
-    margin-left: -11mm;
+    transition: ease-out 0.2s;
     border: none;
+    padding: 5px;
+    margin-left: 10px;
     cursor: pointer;
-    font-size: 6mm;
-    
-
 }
 
-.container .btn:hover {
+.btn:hover {
     background-color: blue;
+    color: white;
+    border-radius: 20px;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding-left: 10px;
+    padding-right: 10px;
 }

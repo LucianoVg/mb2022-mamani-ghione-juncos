@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from "axios";
 
-import { CircularProgress } from "@mui/material";
-import { Box, Button, Tooltip, IconButton, Container, Badge, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-import { ButtonUnstyled } from "@mui/base";
-import Divider from '@mui/material/Divider';
+import { Tooltip, IconButton, Container, Badge } from "@mui/material";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Popover from '@mui/material/Popover';
@@ -14,7 +11,7 @@ export const Notificacion = () => {
     const { loading, authUser } = useAuth()
 
     const [notificaciones, setNotificaciones] = useState()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (e) => {

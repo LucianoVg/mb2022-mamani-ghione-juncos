@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react'
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Layout } from "../../../components/layout";
-import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-import { Notificacion } from '../../../components/notificacion_panel'
+import { Box, Button, TextareaAutosize, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from '@mui/material/Divider';
-import { Edit } from "@mui/icons-material";
-import Icon from '@mui/material/Icon';
 import { useAuth } from '../../../components/context/authUserProvider';
 
 const Notificaciones = () => {

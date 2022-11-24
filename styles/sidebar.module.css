@@ -1,0 +1,97 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    position: fixed;
+    width: 270px;
+    height: 100%;
+    min-height: 350px;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 10px;
+    transition: ease-in 0.3s;
+    z-index: 100;
+}
+
+.sidebar.hide {
+    width: 0;
+}
+
+.sidebar .sidebarHeader {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: 800;
+    overflow: hidden;
+}
+
+.sidebarMenu {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70%;
+    width: 100%;
+    list-style: none;
+    overflow: hidden;
+}
+
+.sidebarMenu .sidebarItem {
+    text-align: start;
+    width: 100%;
+}
+
+.sidebarMenu .sidebarItem,
+.sidebarLink {
+    display: inline-flex;
+    align-items: center;
+    width: 95%;
+    padding: 5px 15px;
+    color: white;
+    font-size: 18px;
+    transition: ease-in 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+}
+
+
+.sidebarMenu .sidebarItem:hover {
+    color: rgb(45, 209, 67);
+    border: 1px solid white;
+}
+
+.sidebarMenu .sidebarItem .sidebarLink:hover {
+    color: rgb(45, 209, 67);
+}
+
+.sidebarMenu .sidebarItem .sidebarLink .sidebarIcon {
+    margin: 0 18px;
+    width: 20px;
+}
+
+
+#toggleBtn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 18px;
+    right: -39px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 0 7px 7px 0;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: linear 0.2s;
+}
+
+#toggleBtn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    color: rgb(45, 209, 67);
+}
