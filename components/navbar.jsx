@@ -10,35 +10,34 @@ export const Navbar = ({ toggleDrawer, open }) => {
     return (
 
         <div className="nav-bar">
-            <div className="container">
-                <div className="row">
-                    <div className="col" style={{backgroundColor: "red"}}>
-                        <a className="navbar-brand" style={{ color: "white" }} href="#">Instituto Privado &quot;El Salvador&quot;</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div className="col">
-                            <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
-                        </div>
-                    <div className="row">
-                        <div className="col">
 
-                             {
-                                !loading && authUser && (
+            <div className="row">
+            <div className="col-md-auto" style={{ backgroundColor: "red" }}>
+                    <a className="navbar-brand" style={{ color: "white" }} href="#">Instituto Privado &quot;El Salvador&quot;</a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div className="col-md-auto">
+                    <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
+                </div>
 
-                                    <Notificaciones />
+                <div className="col-md-auto">
 
-                                 )
-                             }
-                        </div>
-                       
-                    </div>
+                    {
+                        !loading && authUser && (
+
+                            <Notificaciones />
+
+                        )
+                    }
                 </div>
 
             </div>
 
         </div>
+
+
 
 
 
