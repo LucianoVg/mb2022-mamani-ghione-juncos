@@ -2,38 +2,65 @@ import { useAuth } from "./context/authUserProvider"
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-
+import Notificaciones from "../components/notificacion_panel";
 export const Navbar = ({ toggleDrawer, open }) => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     return (
-        <>
-            <nav className="navbar navbar-expand-lg navbar-dark" style={{
-                paddingRight: '24px', // keep right padding when drawer closed
-                backgroundColor: '#3F51B5'
-            }}>
-                <a className="navbar-brand" href="/">Instituto Privado &quot;El Salvador&quot;</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+        <nav className="navbar navbar-expand-sm navbar-dark" style={{
+            paddingRight: '24px', // keep right padding when drawer closed
+            backgroundColor: '#3F51B5'
+        }}>
+
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#">Instituto Privado &quot;El Salvador&quot;</a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <a className="nav-item nav-link active" href="/gestion/institucional">Insitucional <span className="sr-only">(current)</span></a>
-                        {
-                            !loading && authUser && (
-                                <>
-                                    <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
-                                        <FontAwesomeIcon
-                                            icon={faBell} />
-                                    </div>
-                                </>
-                            )
-                        }
 
-                    </div>
+
+                <div className="collapse navbar-collapse d-flex justify-content-end">
+
+                    <ul className="nav navbar-nav justify-content-end">
+                        <li className="nav-item">
+                            {
+                                !loading && authUser && (
+
+                                    <Notificaciones />
+
+
+
+
+
+                                )
+                            }
+
+                        </li>
+                        <li className="nav-item">
+
+                            <a className="nav-link active" href="/gestion/institucional">Institucional <span className="sr-only">(current)</span></a>
+
+                        </li>
+
+
+
+
+                    </ul>
+
                 </div>
-            </nav>
-            {/* <AppBar position="absolute" open={open}>
+            </div>
+        </nav>
+
+
+
+
+    )
+}
+
+
+
+{/* <AppBar position="absolute" open={open}>
                 <Toolbar
                     sx={{
                         pr: '24px', // keep right padding when drawer closed
@@ -79,6 +106,3 @@ export const Navbar = ({ toggleDrawer, open }) => {
 
                 </Toolbar>
             </AppBar> */}
-        </>
-    )
-}
