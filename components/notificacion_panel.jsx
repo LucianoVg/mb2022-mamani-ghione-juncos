@@ -54,7 +54,7 @@ export const Notificacion = () => {
     return (
 
 
-        <a className="dropdown" style={{backgroundColor: "red"}}>
+        <a className="dropdown">
             <a className="dropdown" href="#" data-toggle="dropdown" role="button"
                 data-mdb-toggle="dropdown" >
                 <i className="fas fa-bell" style={{ color: "white", fontSize: "20px"}}
