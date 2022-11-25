@@ -46,7 +46,7 @@ const Sidebar = ({ isOpen, toggleMenu }) => {
     }
 
     return (
-        <nav className={`${styles.sidebar} ${!isOpen ? styles.hide : ''}`}>
+ <nav className={`${styles.sidebar} ${!isOpen ? styles.hide : ''}`}>
             <button onClick={toggleMenu} type="button" id={styles.toggleBtn}>
                 <FontAwesomeIcon icon={faBars} />
             </button>
@@ -131,8 +131,11 @@ const Sidebar = ({ isOpen, toggleMenu }) => {
                 }
             </ul>
         </nav>
+
     )
 }
 
 export default Sidebar
 
+
+       

@@ -18,3 +18,42 @@ a {
 .navbar-nav {
   margin-left: auto;
 }
+
+.topnav {
+  overflow: hidden;
+  background-color: #3F51B5;
+}
+
+.topnav a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
+
+/* Create a right-aligned (split) link inside the navigation bar */
+.split {
+  float: right;
+  color: white;
+}
+
+ul.nav {
+  float: right;
+
+}
+
+.nav-bar {
+  /* flex-direction: row; */
+  padding: 10px 10px;
+  width: 100%;
+  background-color: #3F51B5;
+  text-align: left;
+}
+
+
+Notificaciones {
+  float: right;
+}
