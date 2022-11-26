@@ -6,8 +6,6 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Popover from '@mui/material/Popover';
 import { useAuth } from './context/authUserProvider';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHome, faUser, faLock, faLockOpen, faListCheck, faChartPie, faUsers, faFileCircleCheck, faCheck, faCertificate, faWarning, faCalendar, faBell } from "@fortawesome/free-solid-svg-icons";
 
 export const Notificacion = () => {
     const { loading, authUser } = useAuth()
@@ -59,8 +57,8 @@ export const Notificacion = () => {
         <a className="dropdown">
             <a className="dropdown" href="#" data-toggle="dropdown" role="button"
                 data-mdb-toggle="dropdown" >
-                <FontAwesomeIcon icon={faBell}  style={{ color: "white", fontSize: "15px" }} />
-
+                <i className="fas fa-bell" style={{ color: "white", fontSize: "15px"}}
+                ></i>
                 <span className="badge rounded-pill notify-badge badge-notification bg-danger">1</span>
             </a>
 

@@ -1,7 +1,7 @@
 import { useAuth } from "./context/authUserProvider"
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHamburger } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Notificaciones from "../components/notificacion_panel";
 
 
@@ -20,17 +20,14 @@ export const Navbar = ({ toggleDrawer, open }) => {
 
         <div className="nav-bar">
             <div className="d-flex bd-highlight">
-                <div className="p-2 flex-fill bd-highlight" style={{ marginLeft: "-10px", marginRight: "10px" }} >
-                    <FontAwesomeIcon icon={faBars} style={{fontSize: "20px"}} />
-                </div>
-                <div className="p-2 w-100 bd-highlight" style={{ marginLeft: "-10px" }}  >
-                    <a className="navbar-brand" href="#" style={{ color: "white" }}> {title}</a>
+                <div className="p-2 w-100 bd-highlight" style={{marginLeft: "-10px"}} >
+                    <a className="navbar-brand" href="#" style={{color: "white"}}> {title}</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
                 </div>
-                <div className="p-2 flex-fill bd-highlight"  style={{ marginLeft: "-25px" }}>
+                <div className="p-2 flex-fill bd-highlight" >
                     {
                         !loading && authUser && (
 
