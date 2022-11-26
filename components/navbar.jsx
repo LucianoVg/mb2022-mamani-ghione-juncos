@@ -1,121 +1,66 @@
 import { useAuth } from "./context/authUserProvider"
 import Notificaciones from "../components/notificacion_panel";
-<<<<<<< Updated upstream
-
-
 import { useEffect, useState } from 'react'
-export const Navbar = ({ toggleDrawer, open }) => {
-    const { loading, authUser } = useAuth()
-    const router = useRouter()
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
 
-    if ($(window).width() < 960) {
-        setTitle = "El Salvador"
-    }
 
-    return (
-=======
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHamburger } from "@fortawesome/free-solid-svg-icons";
+
 export const Navbar = () => {
     const { loading, authUser } = useAuth()
     /* Set the width of the side navigation to 250px */
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
     }
->>>>>>> Stashed changes
-
+    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     return (
+
         <div className="nav-bar">
-<<<<<<< Updated upstream
             <div className="d-flex bd-highlight">
-                <div className="p-2 w-100 bd-highlight" style={{marginLeft: "-10px"}} >
-                    <a className="navbar-brand" href="#" style={{color: "white"}}> {title}</a>
-=======
-            <div className="row">
-                <div className="col-mr-auto">
-                    <a className="navbar-brand" style={{ color: "white" }} href="#">Instituto Privado &quot;El Salvador&quot;</a>
->>>>>>> Stashed changes
+                <div className="p-1 flex-fill bd-highlight" style={{ marginLeft: "-10px", marginRight: "10px", marginTop: '4px' }} >
+                  
+                        <button className="navbar-toggler" style={{fontSize: "20px"}} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon" onClick={openNav}>
+                                <FontAwesomeIcon
+                                    color="white"
+                                    icon={faBars} />
+                            </span>
+                        </button>
+
+                 
+                </div>
+                <div className="p-1 w-100 bd-highlight" style={{ marginLeft: "-10px", marginTop: "3px" }}  >
+                    <a className="navbar-brand" href="#" style={{ color: "white", fontSize: "15px" }}> {title}</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        {/* Use any element to open the sidenav */}
-                        <span className="navbar-toggler-icon" onClick={openNav}>
-                            <FontAwesomeIcon
-                                color="white"
-                                icon={faBars} />
-                        </span>
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-<<<<<<< Updated upstream
 
                 </div>
-                <div className="p-2 flex-fill bd-highlight" >
-=======
-                </div>
-                <div className="col-ml-auto">
-                    <a className="nav-link active split text-light ml-auto" href="/gestion/institucional">Institucional</a>
-                </div>
-
-                <div className="col-ml-auto">
->>>>>>> Stashed changes
+                <div className="p-2 flex-fill bd-highlight" style={{ marginLeft: "-25px" }}>
                     {
                         !loading && authUser && (
+
                             <Notificaciones />
+
                         )
                     }
 
                 </div>
                 <div className="p-2 flex-fill bd-highlight">
-                    <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
+                    <a className="nav-link active" style={{color: "white"}} href="/gestion/institucional">Institucional</a>
                 </div>
+
             </div>
+
         </div>
+
+
     )
 }
 
 
-// <nav className="navbar navbar-expand-sm navbar-dark" style={{
-//     paddingRight: '24px', // keep right padding when drawer closed
-//     backgroundColor: '#3F51B5'
-// }}>
 
-//     <div className="container-fluid">
-//         <a className="navbar-brand" href="#">Instituto Privado &quot;El Salvador&quot;</a>
-//         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-//             <span className="navbar-toggler-icon"></span>
-//         </button>
-
-
-//         <div className="collapse navbar-collapse d-flex justify-content-end">
-
-//             <ul className="nav navbar-nav justify-content-end" style={{ display: " inline-block" }}>
-//                 <li className="nav-item">
-//                     {
-//                         !loading && authUser && (
-
-//                             <Notificaciones />
-
-
-
-
-
-//                         )
-//                     }
-
-//                 </li>
-//                 <li className="nav-item">
-
-//                     <a className="nav-link active" href="/gestion/institucional">Institucional <span className="sr-only">(current)</span></a>
-
-//                 </li>
-
-
-
-
-//             </ul>
-
-//         </div>
-//     </div>
-// </nav>
 
 {/* <AppBar position="absolute" open={open}>
                 <Toolbar

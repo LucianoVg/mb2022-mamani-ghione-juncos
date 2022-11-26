@@ -50,15 +50,25 @@ const Sidebar = ({ children }) => {
     return (
         <>
 
-            <div id="mySidenav" className="sidenav">
+            {/* <div id="mySidenav" className="sidenav">
                 <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
                 <a href="#">Inicio</a>
                 <a href="#">Gestion</a>
                 <a href="#">Reportes</a>
                 <a href="#">Iniciar Sesion</a>
-            </div>
+            </div> */}
 
-
+<div class="offcanvas offcanvas-start" id="mySidenav">
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title">Heading</h1>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Some text lorem ipsum.</p>
+    <p>Some text lorem ipsum.</p>
+    <button class="btn btn-secondary" type="button">A Button</button>
+  </div>
+</div>
 
             {/* Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page  */}
             <div id="main">

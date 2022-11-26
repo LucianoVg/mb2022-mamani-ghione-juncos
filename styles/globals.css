@@ -16,14 +16,14 @@ a {
 } */
 .notify-badge {
   position: absolute;
-    right:-15px;
-    top:-5px;
-    background:red;
-    text-align: center;
-    border-radius: 30px 30px 30px 30px;
-    color:white;
-    padding:2.5px 5px;
-    font-size:10px;
+  right: -15px;
+  top: -5px;
+  background: red;
+  text-align: center;
+  border-radius: 30px 30px 30px 30px;
+  color: white;
+  padding: 2.5px 5px;
+  font-size: 10px;
 }
 
 /* .post{
@@ -62,7 +62,5 @@ ul.nav {
   padding: 3px 10px;
   width: 100%;
   background-color: #3F51B5;
-  text-align: left;
+  /* text-align: left; */
 }
-
-

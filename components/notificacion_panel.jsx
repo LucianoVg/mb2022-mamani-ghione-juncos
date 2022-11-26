@@ -61,7 +61,7 @@ export const Notificacion = () => {
                 data-mdb-toggle="dropdown" >
                 <FontAwesomeIcon icon={faBell}  style={{ color: "white", fontSize: "15px" }} />
 
-                <span className="badge rounded-pill notify-badge badge-notification bg-danger">1</span>
+                <span className="badge rounded-pill notify-badge badge-notification bg-danger">100</span>
             </a>
 
             <div className="dropdown-menu dropdown-menu-right" style={{ width: "250px", position: "absolute", inset: " 0px 0px auto auto", margin: "0px", transform: "translate3d(0px, 43.5px, 0px)", borderRadius: "5px" }}>
