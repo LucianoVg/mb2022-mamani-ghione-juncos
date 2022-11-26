@@ -11,7 +11,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
 
     return (
         <div className={styles.card}>
-            <div style={{ position: 'relative', backgroundColor: 'blue' }}>
+            <div style={{ position: 'relative' }} >
 
                 <div className={` ${styles.overflow}`} >
                     <Image
@@ -25,9 +25,10 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                     />
                     {
                         authUser && (
-                            <a className={styles.editButton} href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 250, bottom: 235, }} >
+                            <a className={styles.editButton} href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 260, bottom: 270, }} >
                                 <FontAwesomeIcon
-                                    icon={faEdit} />
+                                    icon={faEdit}
+                                    style={{ fontSize: "20px", color: "black" }} />
                             </a>
                         )
                     }
@@ -37,8 +38,8 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 <h5>{titulo}</h5>
                 <p>{descripcion}</p>
             </div>
-            <div className={styles.CardActions}>
-                <button className={styles.btn} onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info.</button>
+            <div className={styles.cardActions}>
+                <button type="button" style={{borderRadius: "30px"}} className="btn btn-info" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info.</button>
             </div>
         </div>
     )

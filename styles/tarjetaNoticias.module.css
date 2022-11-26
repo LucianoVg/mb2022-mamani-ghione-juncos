@@ -10,6 +10,7 @@
     margin-left: 10mm;
     width: 300px;
     height: 480px;
+    border-radius: 30px;
 }
 
 .card_img_top {
@@ -17,20 +18,25 @@
     transition: all 0.2s ease-in-out;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
+    border-radius: 30px  30px  0  0;
 }
 
 .card_img_top:hover {
     transform: scale(1.8);
+
 }
 
 .overflow {
     height: 50%;
     overflow: hidden;
+    border-radius: 30px  30px  0   0 ;
 }
 
 /**la imagen hace zoom pero no se ve en la pantalla, solo se ven el recuadro gracias al overflow:hidden **/
 
-
+.cardActions{
+    margin-left: 10px;
+}
 
 /* Make the image responsive */
 
@@ -54,10 +60,22 @@
 }
 
 .cardContent {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-evenly;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.editButton {
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+}
+
+.editButton:hover {
+    transform: scale(1.8);
 }
