@@ -3,18 +3,23 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from './context/authUserProvider'
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDashboard, faFileCircleCheck, faHome, faLockOpen, faPieChart } from '@fortawesome/free-solid-svg-icons'
 
 const Sidebar = ({ children }) => {
     const [menusGestion, setMenusGestion] = useState()
     const [menusReportes, setMenusReportes] = useState()
     const router = useRouter()
     const { loading, authUser, cerrarSesion } = useAuth()
+    const [usuario, setUsuario] = useState({ rol: '' })
 
     useEffect(() => {
+        // closeNav()
         if (!loading && authUser) {
             axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
                 .then(res => {
                     if (res.data) {
+                        setUsuario({ rol: res.data?.rol?.tipo })
                         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/gestion`)
                             .then(r => {
                                 if (r.data) {
@@ -46,35 +51,85 @@ const Sidebar = ({ children }) => {
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Docente'
+            || usuario.rol === 'Secretario'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+    }
     return (
-        <>
-
-            {/* <div id="mySidenav" className="sidenav">
-                <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
-                <a href="#">Inicio</a>
-                <a href="#">Gestion</a>
-                <a href="#">Reportes</a>
-                <a href="#">Iniciar Sesion</a>
-            </div> */}
-
-<div class="offcanvas offcanvas-start" id="mySidenav">
-  <div class="offcanvas-header">
-    <h1 class="offcanvas-title">Heading</h1>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-    <p>Some text lorem ipsum.</p>
-    <p>Some text lorem ipsum.</p>
-    <button class="btn btn-secondary" type="button">A Button</button>
-  </div>
-</div>
-
-            {/* Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page  */}
-            <div id="main">
-                {children}
+        <div className="container-fluid" id='mySidenav'>
+            <div className="row flex-nowrap">
+                <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                    <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                            <li className="nav-item">
+                                <a href="/" className="nav-link align-middle px-0">
+                                    <FontAwesomeIcon
+                                        icon={faHome} />
+                                    <span className="ms-1 d-none d-sm-inline">Inicio</span>
+                                </a>
+                            </li>
+                            {
+                                authUser
+                                && tienePermisos()
+                                && (
+                                    <li>
+                                        <a href="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle ">
+                                            <FontAwesomeIcon
+                                                icon={faFileCircleCheck} />
+                                            <span className="ms-1 d-none d-sm-inline">Gestion</span></a>
+                                        <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                                            {
+                                                menusGestion && menusGestion?.map(m => (
+                                                    <li key={m.id} className="w-100">
+                                                        <a href={m.menu?.url} className="nav-link px-0"> <span className="d-none d-sm-inline">{m.menu?.menuSistema}</span>
+                                                        </a>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </li>
+                                )
+                            }
+                            {/* <li>
+                                <a href="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                                    <FontAwesomeIcon
+                                        icon={faPieChart} />
+                                    <span className="ms-1 d-none d-sm-inline">Reportes</span> </a>
+                                <ul className="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                                    <li className="w-100">
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a>
+                                    </li>
+                                </ul>
+                            </li> */}
+                            <li>
+                                <a href="/gestion/cuenta/login" className="nav-link px-0 align-middle">
+                                    <FontAwesomeIcon
+                                        icon={faLockOpen} />
+                                    <span className="ms-1 d-none d-sm-inline">
+                                        Iniciar Sesion
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="col py-3">
+                    {children}
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 

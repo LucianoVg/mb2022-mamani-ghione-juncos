@@ -54,12 +54,10 @@ export const Notificacion = () => {
         }
     }
     return (
-
-
-        <a className="dropdown">
-            <a className="dropdown" href="#" data-toggle="dropdown" role="button"
-                data-mdb-toggle="dropdown" >
-                <FontAwesomeIcon icon={faBell}  style={{ color: "white", fontSize: "15px" }} />
+        <div id="dropdown">
+            <a className="dropdown" data-toggle="dropdown" role="button"
+                data-mdb-toggle="dropdown" onClick={handleClick}>
+                <FontAwesomeIcon icon={faBell} style={{ color: "white", fontSize: "15px" }} />
 
                 <span className="badge rounded-pill notify-badge badge-notification bg-danger">100</span>
             </a>
@@ -69,103 +67,28 @@ export const Notificacion = () => {
                 <a className="dropdown-item" href="#">
                     Some news
                     <p className="small mb-2"
-                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                        style={{ textTransform: "lowercase", fontSize: "11px" }}
                     ><strong>4/10/2022</strong></p>
                 </a>
 
 
                 <a className="dropdown-item" href="#">Another news
-                <p className="small mb-2"
-                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                    <p className="small mb-2"
+                        style={{ textTransform: "lowercase", fontSize: "11px" }}
                     ><strong>4/10/2022</strong></p>
                 </a>
 
 
                 <a className="dropdown-item" href="#">Something else here
-                <p className="small mb-2"
-                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                    <p className="small mb-2"
+                        style={{ textTransform: "lowercase", fontSize: "11px" }}
                     ><strong>4/10/2022</strong></p>
                 </a>
 
                 <div className="dropdown-divider"></div>
                 <a href="#" className="dropdown-item"><strong>Ver todo</strong></a>
             </div>
-
-        </a >
-        // <div className="dropdown">
-        //     <a className="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-        //         role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-        //         <i className="fas fa-bell" style={{color: "white"}}></i>
-        //         <span className="badge rounded-pill badge-notification bg-danger">1</span>
-        //     </a>
-        //    
-        // </div>
-
-
-        //     // <Container>
-        //     //     <Tooltip title='Ver Notificacion'>
-        //     //         <IconButton onClick={handleClick}>
-        //     //             <Badge
-
-        //     //                 aria-describedby={id} variant="contained"
-        //     //                 badgeContent={!localStorage.getItem('vistas') && notificaciones ?
-        //     //                     notificaciones.length : null}
-
-        //     //                 color="info"
-        //     //                 style={{ float: 'right' }}  >
-
-        //     //                 <NotificationsRoundedIcon sx={{ cursor: 'pointer', color: 'white' }} />
-        //     //             </Badge>
-        //     //         </IconButton>
-        //     //     </Tooltip>
-
-        //         /* <Popover
-        //             id={id}
-        //             open={open}
-        //             anchorEl={anchorEl}
-        //             onClose={handleClose}
-        //             anchorOrigin={{
-        //                 vertical: 'bottom',
-        //                 horizontal: 'center',
-        //             }}
-        //             transformOrigin={{
-        //                 vertical: 'top',
-        //                 horizontal: 'right',
-        //             }}
-        //             PaperProps={{
-        //                 style: { width: '320px' },
-        //             }}
-
-        //         > */
-        // /* <List>
-        //                 {
-        //                     notificaciones && notificaciones?.map((n, i) => (
-        //                         <ListItem key={i} disablePadding>
-        //                             <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
-        //                                 <ListItemText primary={n.notificacion?.asunto} />
-        //                             </ListItemButton>
-        //                         </ListItem>
-        //                     ))
-        //                 }
-        //                 {
-        //                     !notificaciones || !notificaciones?.length && (
-        //                         <ListItem>
-        //                             <ListItemText>No hay notificaciones</ListItemText>
-        //                         </ListItem>
-        //                     )
-        //                 }
-        //                 <ListItem disablePadding>
-        //                     <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >
-        //                         <ListItemText>
-        //                             <div style={{ textAlign: 'center' }}>
-        //                                 <strong>Ver todo</strong>
-        //                             </div>
-        //                         </ListItemText>
-        //                     </ListItemButton>
-        //                 </ListItem>
-        //             </List>
-        //         </Popover>
-        //     </Container> */
+        </div>
     )
 }
 

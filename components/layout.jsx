@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Sidebar from './sidebar';
-
 import Head from 'next/head';
 import { Navbar } from './navbar';
 
