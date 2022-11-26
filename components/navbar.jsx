@@ -1,8 +1,6 @@
 import { useAuth } from "./context/authUserProvider"
-import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Notificaciones from "../components/notificacion_panel";
+<<<<<<< Updated upstream
 
 
 import { useEffect, useState } from 'react'
@@ -17,22 +15,51 @@ export const Navbar = ({ toggleDrawer, open }) => {
     }
 
     return (
+=======
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faHamburger } from "@fortawesome/free-solid-svg-icons";
+export const Navbar = () => {
+    const { loading, authUser } = useAuth()
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+>>>>>>> Stashed changes
 
+    return (
         <div className="nav-bar">
+<<<<<<< Updated upstream
             <div className="d-flex bd-highlight">
                 <div className="p-2 w-100 bd-highlight" style={{marginLeft: "-10px"}} >
                     <a className="navbar-brand" href="#" style={{color: "white"}}> {title}</a>
+=======
+            <div className="row">
+                <div className="col-mr-auto">
+                    <a className="navbar-brand" style={{ color: "white" }} href="#">Instituto Privado &quot;El Salvador&quot;</a>
+>>>>>>> Stashed changes
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                        {/* Use any element to open the sidenav */}
+                        <span className="navbar-toggler-icon" onClick={openNav}>
+                            <FontAwesomeIcon
+                                color="white"
+                                icon={faBars} />
+                        </span>
                     </button>
+<<<<<<< Updated upstream
 
                 </div>
                 <div className="p-2 flex-fill bd-highlight" >
+=======
+                </div>
+                <div className="col-ml-auto">
+                    <a className="nav-link active split text-light ml-auto" href="/gestion/institucional">Institucional</a>
+                </div>
+
+                <div className="col-ml-auto">
+>>>>>>> Stashed changes
                     {
                         !loading && authUser && (
-
                             <Notificaciones />
-
                         )
                     }
 
@@ -40,15 +67,8 @@ export const Navbar = ({ toggleDrawer, open }) => {
                 <div className="p-2 flex-fill bd-highlight">
                     <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
                 </div>
-
             </div>
-
         </div>
-
-
-
-
-
     )
 }
 

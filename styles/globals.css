@@ -46,7 +46,6 @@ margin-right: 50px;
 }
 
 
-
 /* Create a right-aligned (split) link inside the navigation bar */
 .split {
   float: right;
@@ -69,5 +68,9 @@ ul.nav {
 
 /* Notificaciones {
   float: right;
+<<<<<<< Updated upstream
 }
  */
+=======
+}
+>>>>>>> Stashed changes
