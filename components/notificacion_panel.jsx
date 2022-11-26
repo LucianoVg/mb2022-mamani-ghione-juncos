@@ -55,14 +55,14 @@ export const Notificacion = () => {
     }
     return (
 <a className="dropdown">
-   <a className="dropdown" data-toggle="dropdown" role="button" id="dropdownMenuButton1"
+   <a className="dropdown" data-toggle="dropdown" role="button" id="dropdownMenu"
               data-bs-toggle="dropdown" onClick={handleClick}>
                 <FontAwesomeIcon icon={faBell} style={{ color: "white", fontSize: "15px" }} />
 
             <span className="badge rounded-pill notify-badge badge-notification bg-danger">100</span>
         </a>
      
-        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1" style={{ width: "250px", position: "absolute", inset: " 0px 0px auto auto", margin: "0px", transform: "translate3d(0px, 43.5px, 0px)", borderRadius: "5px" }}>
+        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu" style={{ width: "250px", position: "absolute", inset: " 0px 0px auto auto", margin: "0px", transform: "translate3d(0px, 43.5px, 0px)", borderRadius: "5px" }}>
 
             <a className="dropdown-item" href="#">
                 Some news
@@ -91,7 +91,6 @@ export const Notificacion = () => {
             <div className="dropdown-divider"></div>
             <a href="#" className="dropdown-item"><strong>Ver todo</strong></a>
         </div>
-
     </a >
 
     

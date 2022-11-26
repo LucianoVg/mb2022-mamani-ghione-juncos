@@ -8,9 +8,9 @@ import useWindowSize from "./hooks/windowSizeHook";
 export const Navbar = () => {
     const { loading, authUser } = useAuth()
     /* Set the width of the side navigation to 250px */
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-    }
+    // function openNav() {
+    //     document.getElementById("mySidenav").style.width = "250px";
+    // }
     const windowSize = useWindowSize()
 
     const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
@@ -33,11 +33,14 @@ export const Navbar = () => {
                 <div className="p-1 flex-fill bd-highlight" style={{ marginLeft: "-10px", marginRight: "10px", marginTop: '4px' }} >
 
                     <button className="navbar-toggler" style={{ fontSize: "20px" }} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" onClick={openNav}>
-                            <FontAwesomeIcon
-                                color="white"
-                                icon={faBars} />
-                        </span>
+                        <a href="#mySidenav" data-bs-toggle="offcanvas" >
+                            <span className="navbar-toggler-icon" data-bs-target="mySidenav">
+
+                                <FontAwesomeIcon
+                                    color="white"
+                                    icon={faBars} />
+                            </span>
+                        </a>
                     </button>
                 </div>
                 <div className="p-1 w-100 bd-highlight" style={{ marginLeft: "-10px", marginTop: "3px" }}  >

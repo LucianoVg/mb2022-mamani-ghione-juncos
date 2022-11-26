@@ -35,13 +35,14 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 </div>
             </div>
             <div className={styles.cardContent}>
-                <h5>{titulo}</h5>
-                <p>{descripcion}</p>
+                <h5 className="text" style={{color: "black"}} ><strong>{titulo}</strong> </h5>
+                <p className="text2" style={{color: "black"}} >{descripcion}</p>
             </div>
             <div className={styles.cardActions}>
-                <button type="button" style={{borderRadius: "30px"}} className="btn" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info.</button>
+                <button className="button-61" role="button" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info.</button>
+
             </div>
-            
+
         </div>
     )
 }

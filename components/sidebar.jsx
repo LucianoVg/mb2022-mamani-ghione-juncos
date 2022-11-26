@@ -59,41 +59,66 @@ const Sidebar = ({ children }) => {
             || usuario.rol === 'Vicedirector'
     }
     return (
-        <div className="container-fluid" id='mySidenav'>
-            <div className="row flex-nowrap">
-                <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                    <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <li className="nav-item">
-                                <a href="/" className="nav-link align-middle px-0">
-                                    <FontAwesomeIcon
-                                        icon={faHome} />
-                                    <span className="ms-1 d-none d-sm-inline">Inicio</span>
-                                </a>
-                            </li>
-                            {
-                                authUser
-                                && tienePermisos()
-                                && (
-                                    <li>
-                                        <a href="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle ">
-                                            <FontAwesomeIcon
-                                                icon={faFileCircleCheck} />
-                                            <span className="ms-1 d-none d-sm-inline">Gestion</span></a>
-                                        <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                            {
-                                                menusGestion && menusGestion?.map(m => (
-                                                    <li key={m.id} className="w-100">
-                                                        <a href={m.menu?.url} className="nav-link px-0"> <span className="d-none d-sm-inline">{m.menu?.menuSistema}</span>
-                                                        </a>
-                                                    </li>
-                                                ))
-                                            }
-                                        </ul>
-                                    </li>
-                                )
-                            }
-                            {/* <li>
+        <div className="offcanvas offcanvas-start" tabIndex="-1" id='mySidenav' aria-labelledby="mySidenavLabel"
+        style={{maxWidth: "250px"}}>
+            <div className="offcanvas-header">
+                <h5 className="offcanvas-title" id="mySidenavLabel">Offcanvas</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+                <div>
+                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                </div>
+                <div className="dropdown mt-3">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Dropdown button
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        // <div className="container-fluid" id='mySidenav'>
+        //     <div className="row flex-nowrap">
+        //         <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        //             <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+        //                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        //                     <li className="nav-item">
+        //                         <a href="/" className="nav-link align-middle px-0">
+        //                             <FontAwesomeIcon
+        //                                 icon={faHome} />
+        //                             <span className="ms-1 d-none d-sm-inline">Inicio</span>
+        //                         </a>
+        //                     </li>
+        //                     {
+        //                         authUser
+        //                         && tienePermisos()
+        //                         && (
+        //                             <li>
+        //                                 <a href="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle ">
+        //                                     <FontAwesomeIcon
+        //                                         icon={faFileCircleCheck} />
+        //                                     <span className="ms-1 d-none d-sm-inline">Gestion</span></a>
+        //                                 <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+        //                                     {
+        //                                         menusGestion && menusGestion?.map(m => (
+        //                                             <li key={m.id} className="w-100">
+        //                                                 <a href={m.menu?.url} className="nav-link px-0"> <span className="d-none d-sm-inline">{m.menu?.menuSistema}</span>
+        //                                                 </a>
+        //                                             </li>
+        //                                         ))
+        //                                     }
+        //                                 </ul>
+        //                             </li>
+        //                         )
+        //                     }
+                            /* <li>
                                 <a href="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                                     <FontAwesomeIcon
                                         icon={faPieChart} />
@@ -112,24 +137,24 @@ const Sidebar = ({ children }) => {
                                         <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a>
                                     </li>
                                 </ul>
-                            </li> */}
-                            <li>
-                                <a href="/gestion/cuenta/login" className="nav-link px-0 align-middle">
-                                    <FontAwesomeIcon
-                                        icon={faLockOpen} />
-                                    <span className="ms-1 d-none d-sm-inline">
-                                        Iniciar Sesion
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="col py-3">
-                    {children}
-                </div>
-            </div>
-        </div>
+                            </li> */
+        //                     <li>
+        //                         <a href="/gestion/cuenta/login" className="nav-link px-0 align-middle">
+        //                             <FontAwesomeIcon
+        //                                 icon={faLockOpen} />
+        //                             <span className="ms-1 d-none d-sm-inline">
+        //                                 Iniciar Sesion
+        //                             </span>
+        //                         </a>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </div>
+        //         <div className="col py-3">
+        //             {children}
+        //         </div>
+        //     </div>
+        // </div>
     )
 }
 
