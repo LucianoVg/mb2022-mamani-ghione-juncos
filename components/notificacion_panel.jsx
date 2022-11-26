@@ -57,12 +57,12 @@ export const Notificacion = () => {
         <a className="dropdown">
             <a className="dropdown" href="#" data-toggle="dropdown" role="button"
                 data-mdb-toggle="dropdown" >
-                <i className="fas fa-bell" style={{ color: "white", fontSize: "20px"}}
+                <i className="fas fa-bell" style={{ color: "white", fontSize: "15px"}}
                 ></i>
-                <span className="badge rounded-pill badge-notification bg-danger">1</span>
+                <span className="badge rounded-pill notify-badge badge-notification bg-danger">1</span>
             </a>
 
-            <div className="dropdown-menu dropdown-menu-end" style={{ width: "250px", position: "absolute", inset: " 0px 0px auto auto", margin: "0px", transform: "translate3d(0px, 43.5px, 0px)", borderRadius: "5px" }}>
+            <div className="dropdown-menu dropdown-menu-right" style={{ width: "250px", position: "absolute", inset: " 0px 0px auto auto", margin: "0px", transform: "translate3d(0px, 43.5px, 0px)", borderRadius: "5px" }}>
 
                 <a className="dropdown-item" href="#">
                     Some news

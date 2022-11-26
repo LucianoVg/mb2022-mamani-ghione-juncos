@@ -3,27 +3,31 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Notificaciones from "../components/notificacion_panel";
-import { styles } from "../styles/sidebar.module.css"
+
+
+import { useEffect, useState } from 'react'
 export const Navbar = ({ toggleDrawer, open }) => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
+
+    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
+
+    if ($(window).width() < 960) {
+        setTitle = "El Salvador"
+    }
+
     return (
 
         <div className="nav-bar">
-
-            <div className="row">
-            <div className="col-md-auto" style={{ backgroundColor: "red" }}>
-                    <a className="navbar-brand" style={{ color: "white" }} href="#">Instituto Privado &quot;El Salvador&quot;</a>
+            <div className="d-flex bd-highlight">
+                <div className="p-2 w-100 bd-highlight" style={{marginLeft: "-10px"}} >
+                    <a className="navbar-brand" href="#" style={{color: "white"}}> {title}</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                </div>
-                <div className="col-md-auto">
-                    <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
-                </div>
 
-                <div className="col-md-auto">
-
+                </div>
+                <div className="p-2 flex-fill bd-highlight" >
                     {
                         !loading && authUser && (
 
@@ -31,6 +35,10 @@ export const Navbar = ({ toggleDrawer, open }) => {
 
                         )
                     }
+
+                </div>
+                <div className="p-2 flex-fill bd-highlight">
+                    <a className="nav-link active split" href="/gestion/institucional">Institucional</a>
                 </div>
 
             </div>
