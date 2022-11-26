@@ -69,22 +69,22 @@ export const Notificacion = () => {
                 <a className="dropdown-item" href="#">
                     Some news
                     <p className="small mb-2"
-                        style={{ textTransform: "lowercase" }}
-                    >4/10/2022</p>
+                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                    ><strong>4/10/2022</strong></p>
                 </a>
 
 
                 <a className="dropdown-item" href="#">Another news
-                    <p className="small mb-2"
-                        style={{ textTransform: "lowercase" }}
-                    >4/10/2022</p>
+                <p className="small mb-2"
+                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                    ><strong>4/10/2022</strong></p>
                 </a>
 
 
                 <a className="dropdown-item" href="#">Something else here
-                    <p className="small mb-2"
-                        style={{ textTransform: "lowercase" }}
-                    >4/10/2022</p>
+                <p className="small mb-2"
+                        style={{ textTransform: "lowercase", fontSize: "11px"}}
+                    ><strong>4/10/2022</strong></p>
                 </a>
 
                 <div className="dropdown-divider"></div>
