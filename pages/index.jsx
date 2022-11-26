@@ -47,9 +47,7 @@ const Home = () => {
   return (
     <Layout>
       <div className='container' style={{ marginTop: "20px", marginBottom: "20px" }}>
-        <div>
-  
-        </div>
+     
         {
           authUser && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
