@@ -15,9 +15,18 @@ export const Navbar = () => {
 
     const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     useEffect(() => {
-        setTitle(windowSize.width <= 400 ? "\"El Salvador \"" : "Instituto Privado \"El Salvador\"")
+        setTitle(windowSize.width <= 440 ? "El Salvador" : "Instituto Privado \"El Salvador\"")
     }, [windowSize])
 
+
+    // const width = screen.width
+    // console.log("screen width:", width)
+    // const width2 = window.innerWidth
+    // console.log("window:",width2)
+
+    // if (window.innerWidth <= 450) {
+    //     setTitle("El Salvador")
+    // }
     return (
         <div className="nav-bar">
             <div className="d-flex bd-highlight">
@@ -32,7 +41,7 @@ export const Navbar = () => {
                     </button>
                 </div>
                 <div className="p-1 w-100 bd-highlight" style={{ marginLeft: "-10px", marginTop: "3px" }}  >
-                    <a className="navbar-brand" href="#" style={{ color: "white", fontSize: "15px" }}> {title}</a>
+                    <a className="navbar-brand" href="#" style={{ color: "white", fontSize: "15px" }}> <strong>{title}</strong></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -51,3 +60,52 @@ export const Navbar = () => {
         </div>
     )
 }
+
+
+
+{/* <AppBar position="absolute" open={open}>
+                <Toolbar
+                    sx={{
+                        pr: '24px', // keep right padding when drawer closed
+                    }}
+                >
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        sx={{
+                            marginRight: '36px',
+                            ...(open && { display: 'none' }),
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Instituto Privado &quot;El Salvador&quot;
+                    </Typography>
+
+                    <Typography href='/gestion/institucional' component={'a'} variant="body1" sx={{ mr: 1, textDecoration: 'none' }} color='white'>
+                        Institucional
+                    </Typography>
+                    {
+                        !loading && authUser && (
+                            <>
+                                <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
+                                    <Notificacion disablePadding />
+                                </div>
+                                <IconButton onClick={() => router.push('/gestion/cuenta')}>
+                                    <AccountCircleIcon />
+                                </IconButton>
+                            </>
+                        )
+                    }
+
+                </Toolbar>
+            </AppBar> */}

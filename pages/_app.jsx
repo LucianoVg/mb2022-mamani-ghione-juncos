@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import '../styles/scroll.css'
 import '../styles/globals.css'
-import 'devextreme/dist/css/dx.light.css';
+// import 'devextreme/dist/css/dx.light.css';
 
 export default function MyApp({ Component, pageProps }) {
   const [cargado, setCargado] = useState(false)

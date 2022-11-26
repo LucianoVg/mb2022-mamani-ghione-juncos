@@ -136,3 +136,155 @@ const Sidebar = ({ children }) => {
 export default Sidebar
 
 
+{/* <Drawer sx={{ height: '100vh' }} variant="permanent" open={open} >
+<Toolbar id="parent"
+    sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        px: [1],
+    }}
+
+>
+    <IconButton onClick={toggleDrawer}>
+        <ChevronLeftIcon />
+    </IconButton>
+</Toolbar>
+<List id="child" component="nav">
+    <React.Fragment>
+        <ListItemButton onClick={() => router.push('/')}>
+            <ListItemIcon>
+                <HomeOutlined />
+            </ListItemIcon>
+            <ListItemText primary="Inicio" />
+        </ListItemButton>
+        <Divider sx={{ mt: 1, mb: 1 }} />
+
+        {
+            menusGestion && (
+                <>
+
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton disabled style={{ opacity: '200%' }}>
+                                <ListItemIcon>
+                                    <SegmentIcon />
+                                </ListItemIcon>
+                                <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                    Gestion
+                                </Typography>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+
+                    {
+                        menusGestion?.map((m, i) => (
+
+                            <ListItemButton key={i} href={m?.menu?.url} >
+                                <ListItemIcon>
+                                    {
+                                        m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Asistencias' && (
+                                            <ContentPasteSearchOutlinedIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Asistencia Docente' && (
+                                            <ContentPasteSearchOutlinedIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Notas' && (
+                                            <DescriptionIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Certificado de Servicio' && (
+                                            <DescriptionIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Sanciones' && (
+                                            <ReportIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Material de Estudio' && (
+                                            <FileCopyIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Fecha de Examen' && (
+                                            <EventIcon />
+                                        )
+                                    }
+                                    {
+                                        m?.menu?.menuSistema === 'Notificaciones' && (
+                                            <NotificationsRoundedIcon />
+                                        )
+                                    }
+                                </ListItemIcon>
+                                <ListItemText primary={m?.menu?.menuSistema} />
+                            </ListItemButton>
+                        ))
+                    }
+                    <Divider sx={{ mt: 1, mb: 1 }} />
+                </>
+            )
+        }
+
+        {/* {
+            menusReportes && (
+                <>
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton disabled style={{ opacity: '200%' }}>
+                                <ListItemIcon>
+                                    <EqualizerIcon />
+                                </ListItemIcon>
+                                <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                    Reportes
+                                </Typography>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                    {
+                        menusReportes?.map((m, i) => (
+
+                            <ListItemButton key={i} href={m?.menu?.url}>
+                                <ListItemIcon>
+                                    <AssessmentIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={m?.menu?.menuSistema} />
+                            </ListItemButton>
+                        ))
+                    }
+                    <Divider sx={{ mt: 1, mb: 1 }} />
+                </>
+            )
+        } */}
+//         {
+//             authUser && (
+//                 <ListItemButton onClick={logout}>
+//                     <ListItemIcon>
+//                         <LogoutIcon />
+//                     </ListItemIcon>
+//                     <ListItemText primary="Cerrar Sesion" />
+//                 </ListItemButton>
+//             )
+//         }
+//         {
+//             !authUser && (
+//                 <ListItemButton onClick={() => router.push('/gestion/cuenta/login')}>
+//                     <ListItemIcon>
+//                         <LoginIcon />
+//                     </ListItemIcon>
+//                     <ListItemText primary="Iniciar Sesion" />
+//                 </ListItemButton>
+//             )
+//         }
+//     </React.Fragment>
+// </List>
+// </Drawer> */}

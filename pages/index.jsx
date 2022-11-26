@@ -9,6 +9,10 @@ import { useRouter } from 'next/router'
 import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
+import Notificaciones from "../components/notificacion_panel";
+
+
+
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -42,40 +46,43 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className='container' style={{marginTop: "20px", marginBottom: "20px"}}>
-      {
-        authUser && (
-          <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
-            Agregar
-          </Button>
-        )
-      }
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container >
-          {
-            paginacion.dataActual().map((n, i) => (
-              <Grid item key={i} xs="auto">
-                <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-              </Grid>
-            ))
-          }
-        </Grid>
-      </Box>
+      <div className='container' style={{ marginTop: "20px", marginBottom: "20px" }}>
+        <div>
+  
+        </div>
+        {
+          authUser && (
+            <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
+              Agregar
+            </Button>
+          )
+        }
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container >
+            {
+              paginacion.dataActual().map((n, i) => (
+                <Grid item key={i} xs="auto">
+                  <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Box>
 
-   
-      {
-        noticias && noticias.length > 0 && (
-          <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
-            <Pagination
-              count={cantidadPaginas}
-              size='large'
-              page={pagina}
-              variant="outlined"
-              shape='circular'
-              onChange={handlerCambioPagina} />
-          </Container>
-        )
-      }
+
+        {
+          noticias && noticias.length > 0 && (
+            <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+              <Pagination
+                count={cantidadPaginas}
+                size='large'
+                page={pagina}
+                variant="outlined"
+                shape='circular'
+                onChange={handlerCambioPagina} />
+            </Container>
+          )
+        }
       </div>
     </Layout>
   )
