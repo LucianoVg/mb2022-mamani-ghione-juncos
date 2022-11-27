@@ -1,10 +1,14 @@
-/* html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Roboto, sans-serif;
+  font-size: .875rem;
+  font-weight: 500;
+  width: 100%;
 }
+
+/* html,
+
 
 a {
   color: inherit;
@@ -14,6 +18,29 @@ a {
 * {
   box-sizing: border-box;
 } */
+
+.form-group>label {
+  bottom: 32px;
+  left: 15px;
+  position: relative;
+  background-color: white;
+  padding: 0px 5px 0px 5px;
+  font-size: 1.1em;
+  transition: 0.2s;
+  pointer-events: none;
+
+}
+
+.form-control:focus~label {
+  bottom: 55px;
+  font-size: 0.8em;
+}
+
+.form-control:valid~label {
+  bottom: 55px;
+  font-size: 0.8em;
+}
+
 .notify-badge {
   position: absolute;
   right: -15px;
@@ -26,16 +53,7 @@ a {
   font-size: 10px;
 }
 
-/* .post{
-position: absolute;
-margin-right: 50px;
-} */
 
-
-.topnav {
-  overflow: hidden;
-  background-color: #3F51B5;
-}
 
 .topnav a {
   float: left;
@@ -62,15 +80,20 @@ ul.nav {
   padding: 3px 10px;
   width: 100%;
   background-color: #3F51B5;
-  /* text-align: left; */
+  /* nabvar no desaparece cuando hacemos scroll  */
+  position: relative;
+  top: 0
+    /* --------------------------------------------- */
+
 }
 
 .text {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 1; /* number of lines to show */
-          
+  -webkit-line-clamp: 1;
+  /* number of lines to show */
+
   -webkit-box-orient: vertical;
 }
 
@@ -78,8 +101,9 @@ ul.nav {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines to show */
-          
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+
   -webkit-box-orient: vertical;
 }
 
@@ -89,17 +113,17 @@ ul.nav {
   appearance: none;
   border-radius: 14px;
   border-style: none;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px,rgba(0, 0, 0, .14) 0 2px 2px 0,rgba(0, 0, 0, .12) 0 1px 5px 0;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px, rgba(0, 0, 0, .14) 0 2px 2px 0, rgba(0, 0, 0, .12) 0 1px 5px 0;
   box-sizing: border-box;
   color: rgb(0, 0, 0);
   cursor: pointer;
   display: inline-flex;
-  font-family: Roboto,sans-serif;
+  font-family: Roboto;
   font-size: .875rem;
   font-weight: 500;
   height: 36px;
   justify-content: center;
-  letter-spacing: .0892857em;
+
   line-height: normal;
   min-width: 64px;
   outline: none;
@@ -114,7 +138,7 @@ ul.nav {
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
-  will-change: transform,opacity;
+  will-change: transform, opacity;
 }
 
 .button-61:hover {

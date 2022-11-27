@@ -5,12 +5,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
 
 const MasInfo = () => {
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        listarAsistencia()
-    }, [id, loading, authUser])
+
 
     const { loading, authUser } = useAuth()
     const router = useRouter()
@@ -21,6 +16,7 @@ const MasInfo = () => {
         if (id) {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
             if (res.data) {
+                console.log(res.data)
                 setAsistencia(res.data)
             }
         }
@@ -56,40 +52,47 @@ const MasInfo = () => {
             setAsistenciaActual = 'Media Falta Justificada '
         }
     }
-
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        listarAsistencia()
+    }, [id, loading, authUser])
     return (
         <Layout>
-            <div>
-                <h4>Mas Información</h4>
-                <form className='needs-validation'>
-                    <div className='hstack gap-2 '>
-                        <div className='mb-2'>
-                            <h5><strong>Alumno: </strong></h5>
-                            <span>{asistencia?.alumnoXcursoXdivision?.usuario?.apellido} {asistencia?.alumnoXcursoXdivision?.usuario?.nombre}</span>
+            <div className="container">
+                <h1>Mas Información</h1>
+                <form className='needs-validation '>
+                    <div className="row g-3">
+                        <div className="col-md-2">
+                            <h3><strong>Curso: </strong></h3>
+                            <h4>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</h4>
                         </div>
-                        <div className='mb-2'>
-                            <h5><strong>Curso: </strong></h5>
-                            <span>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</span>
+
+                        <div className="col-md-7">
+                            <h3><strong>Curso: </strong></h3>
+                            <h4>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</h4>
                         </div>
-                        {
-                            asistencia?.motivo ? (
-                                <div className='mb-2'>
-                                    <h5><strong>Editado por: </strong></h5>
-                                    <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
-                                </div>
-                            ) :
-                                (
+
+                        <div className="col-md-3">
+                            {
+                                asistencia?.motivo ? (
                                     <div className='mb-2'>
-                                        <h5><strong>Creado por:</strong></h5>
-                                        <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
+                                        <h3><strong>Editado por: </strong></h3>
+                                        <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
                                     </div>
-                                )
-                        }
-                    </div>
-                    <hr className="mb-2" />
-                    <div className='hstack gap-3'>
-                        <div className='mb-2'>
-                            <h5><strong>Asistencia Actual</strong></h5>
+                                ) :
+                                    (
+                                        <div className='mb-2'>
+                                            <h3><strong>Creado por:</strong></h3>
+                                            <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                        <hr className="mb-2" />
+                        <div className="col-md-3">
+                            <h3><strong>Asistencia Actual</strong></h3>
                             {
                                 asistencia?.presente ? (
                                     <p style={{ fontSize: "20px" }}>Presente</p>
@@ -124,33 +127,35 @@ const MasInfo = () => {
                                     )
                             }
                         </div>
-                        <div className='mb-2'>
-                            <h5><strong>Creado el: </strong></h5>
-                            <span>{asistencia?.creadoEn}</span>
+                        <div className="col-md-3">
+                            <h3><strong>Creado el: </strong></h3>
+                            <h4>{asistencia?.creadoEn}</h4>
+                        </div>
+                        <div className="col-md-6">
+                            {
+                                asistencia?.actualizadoEn ? (
+                                    <div className='mb-2'>
+                                        <h3><strong>Actualizado el:</strong></h3>
+                                        <h4>{asistencia?.actualizadoEn}</h4>
+                                    </div>
+                                ) :
+                                    (
+                                        <div className='mb-2'>
+                                            <h3><strong>Actualizado en:</strong></h3>
+                                            <h4>--/--/----</h4>
+                                        </div>
+                                    )
+                            }
                         </div>
                         <hr className='mb-2' />
-                        {
-                            asistencia?.actualizadoEn != null ? (
-                                <div className='mb-2'>
-                                    <h5><strong>Actualizado el:</strong></h5>
-                                    <span>{asistencia?.actualizadoEn}</span>
-                                </div>
-                            ) :
-                                (
-                                    <div className='mb-2'>
-                                        <h5><strong>Actualizado en:</strong></h5>
-                                        <span>--/--/----</span>
-                                    </div>
-                                )
-                        }
+                        <div className='col-md-5'>
+                            <h3><strong>Motivo</strong></h3>
+                            <h4>{asistencia?.motivo}</h4>
+                        </div>
                     </div>
 
-                    <div className='m-auto'>
-                        <h5><strong>Motivo</strong></h5>
-                        <span>{asistencia?.motivo}</span>
-                    </div>
-                </form>
-            </div>
+                </form >
+            </div >
         </Layout >
     )
 }

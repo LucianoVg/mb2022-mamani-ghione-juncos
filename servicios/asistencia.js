@@ -58,7 +58,7 @@ export async function DetalleAsistencia(id) {
                 }
             },
             where: {
-                id: id
+                id: Number(id)
             }
 
         })
