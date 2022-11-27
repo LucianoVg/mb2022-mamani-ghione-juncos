@@ -71,7 +71,7 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-        setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\", marginLeft: \"-150px\", marginTop: \"-40px\"")
+        setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\"; marginLeft: \"-150px\"; marginTop: \"-40px\";")
     }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
@@ -363,8 +363,7 @@ export default function Asistencias() {
                 </Modal> */}
                 {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-                <form className="row g-3">
-
+                <form className="row mt-3 g-3">
                     <div className="col-md-2">
                         <label htmlFor="demo-simple-select">Curso</label>
                         <select
@@ -383,7 +382,6 @@ export default function Asistencias() {
                         </select>
                     </div>
                     <div className="col-md-2">
-
                         <label htmlFor="inputFecha">Fecha</label>
                         <input
                             id="inputFecha"
@@ -398,9 +396,9 @@ export default function Asistencias() {
                     </div>
 
                     <div className="col-md-12">
-                        <h4>Buscar Alumno:</h4>
+                        <h5>Buscar Alumno:</h5>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="legajo"
@@ -412,7 +410,7 @@ export default function Asistencias() {
                             <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="nombreAlumno"
@@ -423,7 +421,7 @@ export default function Asistencias() {
                             <label>Nombre Alumno</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input
                                 className="form-control"
@@ -440,8 +438,8 @@ export default function Asistencias() {
                     <div className="col-md-12">
                         <button onClick={buscarAsistencias} className="button-61">
                             <FontAwesomeIcon
-                                icon={faSearch} style={{marginRight: "5px"}} />
-                             Buscar
+                                icon={faSearch} style={{ marginRight: "5px" }} />
+                            Buscar
                         </button>
                     </div>
 
@@ -474,10 +472,6 @@ export default function Asistencias() {
                         </div>
                     </div>
                 </form>
-
-
-
-
 
                 {
                     cargando && (
