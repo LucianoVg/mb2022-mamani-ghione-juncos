@@ -8,6 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import Loading from "../../../../components/loading";
+import useWindowSize from "../../../../components/hooks/windowSizeHook";
+
+
+
 
 export default function Asistencias() {
     const [pagina, setPagina] = useState(0)
@@ -43,6 +47,72 @@ export default function Asistencias() {
         mfj: false,
         motivo: ''
     })
+
+    const IndicePc = <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
+
+        <div className="bd-highlight">
+
+            <div className="d-flex flex-row bd-highlight">
+                <div className="p-2 bd-highlight">
+                    <h6 >
+                        <strong>Asistencia modificada:</strong>
+                    </h6>
+                </div>
+                <div className="p-2 bd-highlight">
+                    <button className="btn btn-primary"
+                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                    ></button>
+                </div>
+
+            </div>
+            <h6 className="p-2" style={{ marginTop: "-10px" }}>
+                <strong>P:</strong>Presente  <br />
+                <strong>A:</strong>Ausente <br />
+                <strong>AJ:</strong> Ausente Justificado <br />
+                <strong>LT:</strong>Llegada Tarde <br />
+                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                <strong>MF:</strong>Media Falta <br />
+                <strong>MFJ:</strong> Media Falta Justificada  <br />
+            </h6>
+        </div>
+    </div>
+
+    const indiceMobile = <div className="col-md-4" >
+
+        <div className="bd-highlight">
+
+            <div className="d-flex flex-row bd-highlight">
+                <div className="p-2 bd-highlight">
+                    <h6 >
+                        <strong>Asistencia modificada:</strong>
+                    </h6>
+                </div>
+                <div className="p-2 bd-highlight">
+                    <button className="btn btn-primary"
+                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                    ></button>
+                </div>
+
+            </div>
+            <h6 className="p-2" style={{ marginTop: "-10px" }}>
+                <strong>P:</strong>Presente  <br />
+                <strong>A:</strong>Ausente <br />
+                <strong>AJ:</strong> Ausente Justificado <br />
+                <strong>LT:</strong>Llegada Tarde <br />
+                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                <strong>MF:</strong>Media Falta <br />
+                <strong>MFJ:</strong> Media Falta Justificada  <br />
+            </h6>
+        </div>
+    </div>
+
+    const windowSize = useWindowSize()
+    const [indice, setIndice] = useState(IndicePc)
+
+    useEffect(() => {
+        setIndice(windowSize.width < 1250 ? indiceMobile : IndicePc)
+    }, [windowSize])
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -245,7 +315,7 @@ export default function Asistencias() {
                     <div className="col-md-12">
                         <h5>Buscar Docente:</h5>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="legajo"
@@ -257,7 +327,7 @@ export default function Asistencias() {
                             <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="nombreAlumno"
@@ -268,7 +338,7 @@ export default function Asistencias() {
                             <label>Nombre Docente</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input
                                 className="form-control"
@@ -290,34 +360,9 @@ export default function Asistencias() {
                         </button>
                     </div>
 
-                    <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
-
-                        <div className="bd-highlight">
-
-                            <div className="d-flex flex-row bd-highlight">
-                                <div className="p-2 bd-highlight">    <h5 >
-                                    <strong>Asistencia modificada:</strong>
-                                </h5></div>
-                                <div className="p-2 bd-highlight">
-                                    <button className="btn btn-primary"
-                                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
-                                    ></button>
-                                </div>
-
-                            </div>
-                            <h5 className="p-2" style={{ marginTop: "-10px" }}>
-                                <strong>P:</strong>Presente  <br />
-                                <strong>A:</strong>Ausente <br />
-                                <strong>AJ:</strong> Ausente Justificado <br />
-                                <strong>LT:</strong>Llegada Tarde <br />
-                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                <strong>MF:</strong>Media Falta <br />
-                                <strong>MFJ:</strong> Media Falta Justificada  <br />
-                            </h5>
-                        </div>
-
-
-                    </div>
+                    {
+                        indice
+                    }
                 </form>
 
                 {

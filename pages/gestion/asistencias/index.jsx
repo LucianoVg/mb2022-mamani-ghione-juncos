@@ -464,37 +464,37 @@ export default function Asistencias() {
                     <div className="col-md-12">
                         <h5>Buscar Alumno:</h5>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="legajo"
                                 value={legajo}
                                 onChange={handleLegajo}
-                                style={{ width: "200px" }}
+                                style={{ width: "170px" }}
                                 required
                             />
                             <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <div className="form-group">
                             <input className="form-control"
                                 name="nombreAlumno"
                                 value={nombreAlumno}
                                 onChange={handleNombreAlumno}
-                                style={{ width: "200px" }}
+                                style={{ width: "170px" }}
                                 required />
                             <label>Nombre Alumno</label>
                         </div>
                     </div>
-                    <div className="col-md-2 ">
+                    <div className="col-md-3 ">
                         <div className="form-group">
                             <input
                                 className="form-control"
                                 name="apellidoAlumno"
                                 value={apellidoAlumno}
                                 onChange={handleApellidoAlumno}
-                                style={{ width: "200px" }}
+                                style={{ width: "170px" }}
                                 required
                             />
                             <label>Apellido Alumno</label>
