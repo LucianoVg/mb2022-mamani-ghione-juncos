@@ -32,13 +32,13 @@ a {
 }
 
 .form-control:focus~label {
-  bottom: 55px;
-  font-size: 0.8em;
+  bottom: 50px;
+  font-size: 0.9em;
 }
 
 .form-control:valid~label {
-  bottom: 55px;
-  font-size: 0.8em;
+  bottom: 50px;
+  font-size: 0.9em;
 }
 
 .notify-badge {
