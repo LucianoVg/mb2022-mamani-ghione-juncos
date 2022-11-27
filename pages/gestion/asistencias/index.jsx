@@ -398,7 +398,7 @@ export default function Asistencias() {
                     <div className="col-md-12">
                         <h5>Buscar Alumno:</h5>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="form-group">
                             <input className="form-control"
                                 name="legajo"
@@ -410,7 +410,7 @@ export default function Asistencias() {
                             <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="form-group">
                             <input className="form-control"
                                 name="nombreAlumno"
@@ -421,7 +421,7 @@ export default function Asistencias() {
                             <label>Nombre Alumno</label>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="form-group">
                             <input
                                 className="form-control"
@@ -443,8 +443,8 @@ export default function Asistencias() {
                         </button>
                     </div>
 
-                    <div className="col-md-12" style={{ indice }} >
-                        <div className="d-flex flex-row-reverse bd-highlight mb-1">
+                    <div className="col-md-4" style={{position: "absolute", marginLeft: "800px", marginTop: "-40px"}} >
+                     
                             <div className="bd-highlight">
 
                                 <div className="d-flex flex-row bd-highlight">
@@ -469,7 +469,7 @@ export default function Asistencias() {
                                 </h5>
                             </div>
 
-                        </div>
+                   
                     </div>
                 </form>
 
@@ -484,7 +484,7 @@ export default function Asistencias() {
                 }
                 {
                     !cargando && (
-                        <div className="table-responsive w-auto">
+                        <div className="table-responsive w-auto" style={{marginTop: "20px"}}>
                             <table className="table table-striped table-hover" aria-label="simple table">
                                 <thead>
                                     <tr>
