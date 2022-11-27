@@ -75,6 +75,7 @@ async function main() {
                 }
 
             })
+            console.log(asistencia)
         })
     })
 
