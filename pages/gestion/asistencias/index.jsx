@@ -72,9 +72,11 @@ export default function Asistencias() {
         <div className="bd-highlight">
 
             <div className="d-flex flex-row bd-highlight">
-                <div className="p-2 bd-highlight">    <h5 >
+                <div className="p-2 bd-highlight">   
+                 <h6 >
                     <strong>Asistencia modificada:</strong>
-                </h5></div>
+                </h6>
+                </div>
                 <div className="p-2 bd-highlight">
                     <button className="btn btn-primary"
                         style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
@@ -82,7 +84,7 @@ export default function Asistencias() {
                 </div>
 
             </div>
-            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+            <h6 className="p-2" style={{ marginTop: "-10px" }}>
                 <strong>P:</strong>Presente  <br />
                 <strong>A:</strong>Ausente <br />
                 <strong>AJ:</strong> Ausente Justificado <br />
@@ -90,7 +92,7 @@ export default function Asistencias() {
                 <strong>LTJ:</strong> Llegada Tarde Justificada <br />
                 <strong>MF:</strong>Media Falta <br />
                 <strong>MFJ:</strong> Media Falta Justificada  <br />
-            </h5>
+            </h6>
         </div>
     </div>
 
@@ -99,9 +101,11 @@ export default function Asistencias() {
         <div className="bd-highlight">
 
             <div className="d-flex flex-row bd-highlight">
-                <div className="p-2 bd-highlight">    <h5 >
+                <div className="p-2 bd-highlight">    
+                <h6 >
                     <strong>Asistencia modificada:</strong>
-                </h5></div>
+                </h6>
+                </div>
                 <div className="p-2 bd-highlight">
                     <button className="btn btn-primary"
                         style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
@@ -109,7 +113,7 @@ export default function Asistencias() {
                 </div>
 
             </div>
-            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+            <h6 className="p-2" style={{ marginTop: "-10px" }}>
                 <strong>P:</strong>Presente  <br />
                 <strong>A:</strong>Ausente <br />
                 <strong>AJ:</strong> Ausente Justificado <br />
@@ -117,7 +121,7 @@ export default function Asistencias() {
                 <strong>LTJ:</strong> Llegada Tarde Justificada <br />
                 <strong>MF:</strong>Media Falta <br />
                 <strong>MFJ:</strong> Media Falta Justificada  <br />
-            </h5>
+            </h6>
         </div>
     </div>
 
@@ -466,7 +470,7 @@ export default function Asistencias() {
                                 name="legajo"
                                 value={legajo}
                                 onChange={handleLegajo}
-                                style={{ width: "170px" }}
+                                style={{ width: "200px" }}
                                 required
                             />
                             <label>Legajo</label>
@@ -478,19 +482,19 @@ export default function Asistencias() {
                                 name="nombreAlumno"
                                 value={nombreAlumno}
                                 onChange={handleNombreAlumno}
-                                style={{ width: "170px" }}
+                                style={{ width: "200px" }}
                                 required />
                             <label>Nombre Alumno</label>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-2 ">
                         <div className="form-group">
                             <input
                                 className="form-control"
                                 name="apellidoAlumno"
                                 value={apellidoAlumno}
                                 onChange={handleApellidoAlumno}
-                                style={{ width: "170px" }}
+                                style={{ width: "200px" }}
                                 required
                             />
                             <label>Apellido Alumno</label>
