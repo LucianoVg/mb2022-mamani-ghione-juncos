@@ -62,8 +62,68 @@ export default function Asistencias() {
         }
     }
 
+
+
+
     const windowSize = useWindowSize()
-    const [indice, setIndice] = useState("")
+   
+
+    const IndicePc = <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
+
+        <div className="bd-highlight">
+
+            <div className="d-flex flex-row bd-highlight">
+                <div className="p-2 bd-highlight">    <h5 >
+                    <strong>Asistencia modificada:</strong>
+                </h5></div>
+                <div className="p-2 bd-highlight">
+                    <button className="btn btn-primary"
+                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                    ></button>
+                </div>
+
+            </div>
+            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+                <strong>P:</strong>Presente  <br />
+                <strong>A:</strong>Ausente <br />
+                <strong>AJ:</strong> Ausente Justificado <br />
+                <strong>LT:</strong>Llegada Tarde <br />
+                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                <strong>MF:</strong>Media Falta <br />
+                <strong>MFJ:</strong> Media Falta Justificada  <br />
+            </h5>
+        </div>
+    </div>
+
+    const indiceMobile = <div className="col-md-4" >
+
+        <div className="bd-highlight">
+
+            <div className="d-flex flex-row bd-highlight">
+                <div className="p-2 bd-highlight">    <h5 >
+                    <strong>Asistencia modificada:</strong>
+                </h5></div>
+                <div className="p-2 bd-highlight">
+                    <button className="btn btn-primary"
+                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                    ></button>
+                </div>
+
+            </div>
+            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+                <strong>P:</strong>Presente  <br />
+                <strong>A:</strong>Ausente <br />
+                <strong>AJ:</strong> Ausente Justificado <br />
+                <strong>LT:</strong>Llegada Tarde <br />
+                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                <strong>MF:</strong>Media Falta <br />
+                <strong>MFJ:</strong> Media Falta Justificada  <br />
+            </h5>
+        </div>
+    </div>
+
+const [indice, setIndice] = useState(IndicePc)
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -71,7 +131,7 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-        setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\"; marginLeft: \"-150px\"; marginTop: \"-40px\";")
+        setIndice(windowSize.width <= 440 ? setIndice(indiceMobile) : setIndice(IndicePc))
     }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
@@ -443,34 +503,39 @@ export default function Asistencias() {
                         </button>
                     </div>
 
-                    <div className="col-md-4" style={{position: "absolute", marginLeft: "800px", marginTop: "-40px"}} >
-                     
-                            <div className="bd-highlight">
+                    {
+                        indice
+                    }
+                  
 
-                                <div className="d-flex flex-row bd-highlight">
-                                    <div className="p-2 bd-highlight">    <h5 >
-                                        <strong>Asistencia modificada:</strong>
-                                    </h5></div>
-                                    <div className="p-2 bd-highlight">
-                                        <button className="btn btn-primary"
-                                            style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
-                                        ></button>
-                                    </div>
 
+                    {/* <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
+
+                        <div className="bd-highlight">
+
+                            <div className="d-flex flex-row bd-highlight">
+                                <div className="p-2 bd-highlight">    <h5 >
+                                    <strong>Asistencia modificada:</strong>
+                                </h5></div>
+                                <div className="p-2 bd-highlight">
+                                    <button className="btn btn-primary"
+                                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                                    ></button>
                                 </div>
-                                <h5 className="p-2" style={{ marginTop: "-10px" }}>
-                                    <strong>P:</strong>Presente  <br />
-                                    <strong>A:</strong>Ausente <br />
-                                    <strong>AJ:</strong> Ausente Justificado <br />
-                                    <strong>LT:</strong>Llegada Tarde <br />
-                                    <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                    <strong>MF:</strong>Media Falta <br />
-                                    <strong>MFJ:</strong> Media Falta Justificada  <br />
-                                </h5>
-                            </div>
 
-                   
-                    </div>
+                            </div>
+                            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+                                <strong>P:</strong>Presente  <br />
+                                <strong>A:</strong>Ausente <br />
+                                <strong>AJ:</strong> Ausente Justificado <br />
+                                <strong>LT:</strong>Llegada Tarde <br />
+                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                                <strong>MF:</strong>Media Falta <br />
+                                <strong>MFJ:</strong> Media Falta Justificada  <br />
+                            </h5>
+                        </div>
+                    </div> */}
+
                 </form>
 
                 {
@@ -484,7 +549,7 @@ export default function Asistencias() {
                 }
                 {
                     !cargando && (
-                        <div className="table-responsive w-auto" style={{marginTop: "20px"}}>
+                        <div className="table-responsive w-auto" style={{ marginTop: "20px" }}>
                             <table className="table table-striped table-hover" aria-label="simple table">
                                 <thead>
                                     <tr>
