@@ -3,7 +3,10 @@
     height: 80px;
     border-radius: 50%;
     position: relative;
-    animation: rotate 1s linear infinite
+    animation: rotate 1s linear infinite;
+  
+    margin-top: 30%;
+    margin-left: 40%;
 }
 
 .loader::before,
