@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { asistencias } from './seeds/asistencias';
+import { asistencias, fechas } from './seeds/asistencias';
 
 import { cursos } from './seeds/cursos';
 import { ficha } from "./seeds/ficha";
@@ -44,7 +44,6 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-
     const alumnos = await prisma.alumnoXcursoXdivision.findMany({
         include: {
             cursoXdivision: true
@@ -56,6 +55,32 @@ async function main() {
         // }
 
     })
+
+    fechas && fechas.map((fecha) => {
+        alumnos && alumnos.map(async (a) => {
+            const asistencia = await prisma.asistencia.create({
+                data: {
+                    idAlumnoXcursoXdivision: a.id,
+                    presente: false,
+                    ausente: false,
+                    ausenteJustificado: false,
+                    llegadaTarde: false,
+                    llegadaTardeJustificada: false,
+                    mediaFalta: false,
+                    mediaFaltaJustificada: false,
+                    motivo: "",
+                    creadoEn: fecha,
+                    idUsuario: 1,
+                    actualizadoEn: ""
+                }
+
+            })
+        })
+    })
+
+
+
+
 
     const trimestres = await prisma.trimestre.findMany({
     })
