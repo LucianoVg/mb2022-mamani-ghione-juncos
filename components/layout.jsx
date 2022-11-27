@@ -12,9 +12,8 @@ export function Layout({ children }) {
                 <title>Instituto Privado &quot;El Salvador&quot;</title>
             </Head>
             <Navbar />
-            <Sidebar>
-                {children}
-            </Sidebar>
+            <Sidebar />
+            {children}
         </>
     );
 }

@@ -18,6 +18,13 @@ export default async function handler(req, res) {
                     }
 
                 },
+                orderBy: {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            apellido: 'asc'
+                        }
+                    }
+                }
             }
             if (legajo) {
                 OR.push({
@@ -29,12 +36,6 @@ export default async function handler(req, res) {
                         }
                     }
                 })
-                options = {
-                    ...options,
-                    where: {
-                        OR: OR
-                    }
-                }
             }
             if (nombreAlumno) {
                 OR.push({
@@ -46,12 +47,6 @@ export default async function handler(req, res) {
                         }
                     }
                 })
-                options = {
-                    ...options,
-                    where: {
-                        OR: OR
-                    }
-                }
             }
             if (apellidoAlumno) {
                 OR.push({
@@ -63,6 +58,8 @@ export default async function handler(req, res) {
                         }
                     }
                 })
+            }
+            if (OR.length) {
                 options = {
                     ...options,
                     where: {
@@ -79,11 +76,5 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error);
         return res.status(500).send(error)
-    }
-}
-
-export const config = {
-    api: {
-        responseLimit: false
     }
 }

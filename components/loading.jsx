@@ -1,7 +1,7 @@
 import style from '../styles/loading.module.css';
 
-export default function Loading({ size = 100 }) {
+export default function Loading() {
     return (
-        <span className={style.loader} style={{ width: size }}></span>
+        <div className={style.loader}></div>
     )
 }

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Layout } from '../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
-import { Box, Divider, TextField, Typography } from '@mui/material';
 
 const MasInfo = () => {
     useEffect(() => {
@@ -61,36 +60,36 @@ const MasInfo = () => {
     return (
         <Layout>
             <div>
-                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                <h4>Mas Información</h4>
                 <form className='needs-validation'>
                     <div className='hstack gap-2 '>
-                        <Box component='div' sx={{ marginBottom: 2 }}>
-                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Alumno: </Typography>
-                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.usuario?.apellido} {asistencia?.alumnoXcursoXdivision?.usuario?.nombre}</Typography>
-                        </Box>
-                        <Box component='div' sx={{ marginBottom: 2 }}>
-                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Curso: </Typography>
-                            <Typography variant='body' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</Typography>
-                        </Box>
+                        <div className='mb-2'>
+                            <h5><strong>Alumno: </strong></h5>
+                            <span>{asistencia?.alumnoXcursoXdivision?.usuario?.apellido} {asistencia?.alumnoXcursoXdivision?.usuario?.nombre}</span>
+                        </div>
+                        <div className='mb-2'>
+                            <h5><strong>Curso: </strong></h5>
+                            <span>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</span>
+                        </div>
                         {
-                            asistencia?.motivo != null ? (
-                                <Box component={'div'} sx={{ marginBottom: 2 }}>
-                                    <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Editado por: </Typography>
-                                    <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
-                                </Box>
+                            asistencia?.motivo ? (
+                                <div className='mb-2'>
+                                    <h5><strong>Editado por: </strong></h5>
+                                    <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
+                                </div>
                             ) :
                                 (
-                                    <Box component='div' sx={{ marginBottom: 2 }}>
-                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Creado por:</Typography>
-                                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
-                                    </Box>
+                                    <div className='mb-2'>
+                                        <h5><strong>Creado por:</strong></h5>
+                                        <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
+                                    </div>
                                 )
                         }
                     </div>
-                    <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                    <hr className="mb-2" />
                     <div className='hstack gap-3'>
-                        <Box component={'div'} sx={{ marginBottom: 2 }}>
-                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
+                        <div className='mb-2'>
+                            <h5><strong>Asistencia Actual</strong></h5>
                             {
                                 asistencia?.presente ? (
                                     <p style={{ fontSize: "20px" }}>Presente</p>
@@ -124,32 +123,32 @@ const MasInfo = () => {
                                             )
                                     )
                             }
-                        </Box>
-                        <Box component={'div'} sx={{ marginBottom: 2 }}>
-                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
-                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
-                        </Box>
-                        <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                        </div>
+                        <div className='mb-2'>
+                            <h5><strong>Creado el: </strong></h5>
+                            <span>{asistencia?.creadoEn}</span>
+                        </div>
+                        <hr className='mb-2' />
                         {
                             asistencia?.actualizadoEn != null ? (
-                                <Box component='div' sx={{ marginBottom: 2 }}>
-                                    <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
-                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
-                                </Box>
+                                <div className='mb-2'>
+                                    <h5><strong>Actualizado el:</strong></h5>
+                                    <span>{asistencia?.actualizadoEn}</span>
+                                </div>
                             ) :
                                 (
-                                    <Box component='div' sx={{ marginBottom: 2 }}>
-                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado en:</Typography>
-                                        <Typography variant={'body1'} sx={{ fontSize: 18 }}>--/--/----</Typography>
-                                    </Box>
+                                    <div className='mb-2'>
+                                        <h5><strong>Actualizado en:</strong></h5>
+                                        <span>--/--/----</span>
+                                    </div>
                                 )
                         }
                     </div>
 
-                    <Box component={'div'} sx={{ margin: 'auto' }}>
-                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
-                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo}</Typography>
-                    </Box>
+                    <div className='m-auto'>
+                        <h5><strong>Motivo</strong></h5>
+                        <span>{asistencia?.motivo}</span>
+                    </div>
                 </form>
             </div>
         </Layout >

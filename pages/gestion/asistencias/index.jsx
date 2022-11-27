@@ -2,32 +2,23 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-// import { Box, Modal, TextareaAutosize, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
-// import Switch from '@mui/material/Switch';
-// DATEPICKER
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import Select from '@mui/material/Select';
-// import { usePagination } from "../../../components/hooks/paginationHook";
-// import { Search } from "@mui/icons-material";
+
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import Pagination from "../../../components/Pagination/Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Loading from '../../../components/loading';
 
 export default function Asistencias() {
-    // const [pagina, setPagina] = useState(1)
-    // const pageSize = 5
-    const [presente, setPresente] = useState(false)
-    const [ausente, setAusente] = useState(false)
-    const [llegadaTarde, setLlegadaTarde] = useState(false)
-    const [aj, setAj] = useState(false)
-    const [ltj, setLtj] = useState(false)
-    const [mf, setMf] = useState(false)
-    const [mfj, setMfj] = useState(false)
-    const [motivo, setMotivo] = useState('')
+    // const [presente, setPresente] = useState(false)
+    // const [ausente, setAusente] = useState(false)
+    // const [llegadaTarde, setLlegadaTarde] = useState(false)
+    // const [aj, setAj] = useState(false)
+    // const [ltj, setLtj] = useState(false)
+    // const [mf, setMf] = useState(false)
+    // const [mfj, setMfj] = useState(false)
+    // const [motivo, setMotivo] = useState('')
     const [asistencias, setAsistencias] = useState([])
 
     const [legajo, setLegajo] = useState("")
@@ -35,26 +26,37 @@ export default function Asistencias() {
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [cursos, setCursos] = useState()
     const [fecha, setFecha] = useState(new Date())
-    const [idCurso, setIdCurso] = useState("")
+    const [idCurso, setIdCurso] = useState(0)
     const { loading, authUser } = useAuth()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
-    const [asistenciaActual, setAsistenciaActual] = useState()
+    const [asistenciaActual, setAsistenciaActual] = useState({
+        id: 0,
+        presente: false,
+        ausente: false,
+        llegadaTarde: false,
+        aj: false,
+        ltj: false,
+        mf: false,
+        mfj: false,
+        motivo: ''
+    })
     let queryParams = []
     const [page, setPage] = useState(0)
-
+    const [cargando, setCargando] = useState(false)
+    const pageSize = 5
     const paginatedAsistencias = () => {
-        return asistencias?.slice(page, 10)
+        return asistencias?.slice(page, page + pageSize)
     }
 
     const nextPage = () => {
-        if (countries.length > page + 10) {
-            setPage(page => page + 10)
+        if (asistencias.length > page + pageSize) {
+            setPage(page => page + pageSize)
         }
     }
     const prevPage = () => {
         if (page > 0) {
-            setPage(page => page - 10)
+            setPage(page => page - pageSize)
         }
     }
 
@@ -65,7 +67,7 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-    }, [loading, authUser, idCurso, usuario.id])
+    }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -81,11 +83,13 @@ export default function Asistencias() {
     }
 
     const listarAsistencias = async () => {
+        setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias`)
         // console.log(res);
         if (res.data) {
             setAsistencias(res.data)
         }
+        setCargando(false)
     }
 
     const buscarAsistencias = async () => {
@@ -105,11 +109,13 @@ export default function Asistencias() {
             }
         })
         console.log(params);
+        setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias?${params}`)
         console.log(res.data);
         if (res.data) {
             setAsistencias(res.data)
         }
+        setCargando(false)
     }
 
     const handleCurso = (e) => {
@@ -139,36 +145,32 @@ export default function Asistencias() {
         rowKey: null
     });
 
-    const onSave = async (id) => {
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
-            presente: presente,
-            ausente: ausente,
-            ausenteJustificado: aj,
-            llegadaTarde: llegadaTarde,
-            llegadaTardeJustificada: ltj,
-            mediaFalta: mf,
-            mediaFaltaJustificada: mfj,
+    const onUpdate = async () => {
+        console.log(asistenciaActual);
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${asistenciaActual.id}`, {
+            presente: asistenciaActual.presente,
+            ausente: asistenciaActual.ausente,
+            ausenteJustificado: asistenciaActual.aj,
+            llegadaTarde: asistenciaActual.llegadaTarde,
+            llegadaTardeJustificada: asistenciaActual.ltj,
+            mediaFalta: asistenciaActual.mf,
+            mediaFaltaJustificada: asistenciaActual.mfj,
+            motivo: asistenciaActual.motivo,
             idUsuario: usuario.id
         })
         console.log(res.data);
-        onCancel()
-        listarAsistencias()
-    }
-
-    const onUpdate = async (id) => {
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
-            presente: presente,
-            ausente: ausente,
-            ausenteJustificado: aj,
-            llegadaTarde: llegadaTarde,
-            llegadaTardeJustificada: ltj,
-            mediaFalta: mf,
-            mediaFaltaJustificada: mfj,
-            motivo: motivo,
-            idUsuario: usuario.id
-        })
-        console.log(res.data);
-        onCancel()
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: 0,
+            presente: false,
+            ausente: false,
+            llegadaTarde: false,
+            aj: false,
+            ltj: false,
+            mf: false,
+            mfj: false,
+            motivo: ''
+        }))
         listarAsistencias()
     }
 
@@ -186,68 +188,97 @@ export default function Asistencias() {
         setMf(false)
         setMfj(false)
     }
-    const handlePresente = (e, checked) => {
-        setPresente(checked)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(false)
-        setMf(false)
-        setMfj(false)
+    const handlePresente = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, presente: Boolean(e.target.value)
+        }))
+
+        // setPresente(asistencia.presente)
+        // setAusente(false)
+        // setLlegadaTarde(false)
+        // setAj(false)
+        // setLtj(false)
+        // setMf(false)
+        // setMfj(false)
     }
-    const handleAusente = (e, checked) => {
-        setPresente(false)
-        setAusente(checked)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(false)
-        setMf(false)
-        setMfj(false)
+    const handleAusente = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, ausente: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(Boolean(e.target.value))
+        // setLlegadaTarde(false)
+        // setAj(false)
+        // setLtj(false)
+        // setMf(false)
+        // setMfj(false)
     }
-    const handleLlegadaTarde = (e, checked) => {
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(checked)
-        setAj(false)
-        setLtj(false)
-        setMf(false)
-        setMfj(false)
+    const handleLlegadaTarde = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, llegadaTarde: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(false)
+        // setLlegadaTarde(Boolean(e.target.value))
+        // setAj(false)
+        // setLtj(false)
+        // setMf(false)
+        // setMfj(false)
     }
-    const handleAj = (e, checked) => {
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(checked)
-        setLtj(false)
-        setMf(false)
-        setMfj(false)
+    const handleAj = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, aj: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(false)
+        // setLlegadaTarde(false)
+        // setAj(Boolean(e.target.value))
+        // setLtj(false)
+        // setMf(false)
+        // setMfj(false)
     }
-    const handleLtj = (e, checked) => {
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(checked)
-        setMf(false)
-        setMfj(false)
+    const handleLtj = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, ltj: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(false)
+        // setLlegadaTarde(false)
+        // setAj(false)
+        // setLtj(Boolean(e.target.value))
+        // setMf(false)
+        // setMfj(false)
     }
-    const handleMf = (e, checked) => {
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(false)
-        setMf(checked)
-        setMfj(false)
+    const handleMf = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, mf: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(false)
+        // setLlegadaTarde(false)
+        // setAj(false)
+        // setLtj(false)
+        // setMf(Boolean(e.target.value))
+        // setMfj(false)
     }
-    const handleMfj = (e, checked) => {
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(false)
-        setMf(false)
-        setMfj(checked)
+    const handleMfj = (e, asistencia) => {
+        setAsistenciaActual((asistenciaActual) => ({
+            ...asistenciaActual,
+            id: asistencia.id, mfj: Boolean(e.target.value)
+        }))
+        // setPresente(false)
+        // setAusente(false)
+        // setLlegadaTarde(false)
+        // setAj(false)
+        // setLtj(false)
+        // setMf(false)
+        // setMfj(Boolean(e.target.value))
     }
 
     const [open, setOpen] = useState(false);
@@ -263,10 +294,7 @@ export default function Asistencias() {
     }
     return (
         <Layout>
-            <Container
-                style={{ position: 'relative', }}
-            >
-
+            <div className="container">
                 <h3>Asistencias</h3>
 
                 {/* MODAL----------------------------------------------------------------------------------------------------------- */}
@@ -330,538 +358,685 @@ export default function Asistencias() {
                 </Modal> */}
                 {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-                <div className="row">
+                <div className="row m-1">
                     <div className="col">
                         <div className="form-group">
                             <label htmlFor="demo-simple-select">Curso</label>
                             <select
-                                sx={{ width: '90px', marginRight: '20px' }}
-                                labelId="demo-simple-select-label"
+                                className="form-select"
+                                style={{ width: '90px', marginRight: '20px' }}
                                 id="demo-simple-select"
                                 value={idCurso}
                                 name="idCurso"
-                                label="Curso"
                                 onChange={handleCurso}
                             >
                                 {
                                     cursos && cursos.map((c, i) => (
-                                        <option selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</option>
+                                        <option value={i === 0} key={c.id}>{c.curso?.nombre} {c.division?.division}</option>
                                     ))
                                 }
                             </select>
                         </div>
                     </div>
                     <div className="col">
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <MobileDatePicker
-                                label="Fecha"
-                                value={fecha}
-                                onChange={handleFecha}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
+                        <label htmlFor="inputFecha">Fecha</label>
+                        <input
+                            id="inputFecha"
+                            className="form-control"
+                            type={'date'}
+                            placeholder="Fecha"
+                            value={fecha}
+                            onChange={handleFecha}
+                        />
                     </div>
 
                     <h4>Buscar Alumno:</h4>
 
                     <div className='row'>
-                        <input className="form-control"
+                        <input className="col m-1 form-control"
                             name="legajo"
                             value={legajo}
                             onChange={handleLegajo}
                             placeholder="Legajo" />
-                        <input className="form-control"
+                        <input className="col m-1 form-control"
                             name="nombreAlumno"
                             value={nombreAlumno}
                             onChange={handleNombreAlumno}
                             placeholder="Nombre" />
                         <input
-                            className="form-control"
+                            className="col m-1 form-control"
                             name="apellidoAlumno"
                             value={apellidoAlumno}
                             onChange={handleApellidoAlumno}
                             placeholder="Apellido" />
 
-                        <button onClick={buscarAsistencias} className="btn btn-info">
+                        <button onClick={buscarAsistencias} className="col m-1 btn btn-info">
                             <FontAwesomeIcon
                                 icon={faSearch} />
                             Buscar
                         </button>
                     </div>
-                    <div className="row">
+                    <div className="row my-3">
                         <div className="row">
-                            <h5 >
-                                <strong>Asistencia modificada:</strong>
-                            </h5>
-                            <button disabled className="btn btn-outline-info">Contained</button>
+                            <div className="col-md-6">
+                                <h5 >
+                                    <strong>Asistencia modificada:</strong>
+                                </h5>
+                                <button disabled className="btn btn-outline-info">Contained</button>
+                            </div>
 
-                            <h5 style={{ marginTop: '-10px' }}>
-                                <strong>P:</strong>Presente  <br />
-                                <strong>A:</strong>Ausente <br />
-                                <strong>AJ:</strong> Ausente Justificado <br />
-                                <strong>LT:</strong>Llegada Tarde <br />
-                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                <strong>MF:</strong>Media Falta <br />
-                                <strong>MFJ:</strong> Media Falta Justificada  <br />
-                            </h5>
+                            <div className="col-md-6">
+                                <h5 style={{ marginTop: '-10px' }}>
+                                    <strong>P:</strong>Presente  <br />
+                                    <strong>A:</strong>Ausente <br />
+                                    <strong>AJ:</strong> Ausente Justificado <br />
+                                    <strong>LT:</strong>Llegada Tarde <br />
+                                    <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                                    <strong>MF:</strong>Media Falta <br />
+                                    <strong>MFJ:</strong> Media Falta Justificada  <br />
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <table className="table table-responsive" aria-label="simple table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Legajo</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Nombre</th>
-                            {/* <TableCell scope="col">Preceptor</TableCell> */}
-                            <th scope="col">P</th>
-                            <th scope="col">A</th>
-                            <th scope="col">AJ</th>
-                            <th scope="col">LT</th>
-                            <th scope="col">LTJ</th>
-                            <th scope="col">MF</th>
-                            <th scope="col">MFJ</th>
-                            <th scope="col">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            paginatedAsistencias().map((a, i) => (
-                                !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
-                                    <tr key={i} >
-                                        <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
-                                        <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
-                                        <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                        <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                        <td className="col-md-1 ">
-                                            <Switch
-                                                checked={presente}
-                                                onChange={handlePresente}
-                                            />
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            <Switch
-                                                checked={ausente}
-                                                onChange={handleAusente}
-                                            />
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            <Switch
-                                                checked={aj}
-                                                onChange={handleAj}
-                                            />
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            <Switch
-                                                checked={llegadaTarde}
-                                                onChange={handleLlegadaTarde}
-                                            />
-                                        </td>
-                                        <td className="col-md-1">
-                                            <Switch
-                                                checked={ltj}
-                                                onChange={handleLtj}
-                                            />
-                                        </td>
-                                        <td className="col-md-1 ">
-                                            <Switch
-                                                checked={mf}
-                                                onChange={handleMf}
-                                            />
-                                        </td>
-                                        <td className="col-md-1">
-                                            <Switch
-                                                checked={mfj}
-                                                onChange={handleMfj}
-                                            />
-                                        </td>
-                                        <td className="col-md-2">
-                                            {
-                                                <Stack spacing={1} direction="row">
-                                                    <Button variant="contained"
-                                                        sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                        onClick={() => onSave(a?.id)}>
-                                                        Guardar
-                                                    </Button>
-                                                </Stack>
-                                            }
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    a.motivo ? (
-                                        <tr
-                                            key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
-                                            <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
-                                            <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
-                                            <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
-                                            <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                            {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
-                                            <td className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={presente}
-                                                            onChange={handlePresente}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.presente}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-                                            </td>
-                                            <td className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={ausente}
-                                                            onChange={handleAusente}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausente}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-                                            </td>
-                                            <td className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={aj}
-                                                            onChange={handleAj}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.ausenteJustificado}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-                                            </td>
-                                            <td className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={llegadaTarde}
-                                                            onChange={handleLlegadaTarde}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTarde}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-
-
-                                                        )
-                                                }
-                                            </td>
-                                            <td className="col-md-1">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                        <Switch
-                                                            checked={ltj}
-                                                            onChange={handleLtj}
-                                                        />
-
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.llegadaTardeJustificada}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-
-                                            </td>
-                                            <td className="col-md-1 ">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={mf}
-                                                            onChange={handleMf}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFalta}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-
-                                            </td>
-                                            <td className="col-md-1">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <Switch
-                                                            checked={mfj}
-                                                            onChange={handleMfj}
-                                                        />
-                                                    ) :
-                                                        (
-                                                            <Switch
-                                                                type="checkbox"
-                                                                checked={a.mediaFaltaJustificada}
-                                                                disabled={bloquearCheck(a)}
-                                                            />
-                                                        )
-                                                }
-                                            </td>
-                                            <td className="col-md-2">
-                                                {
-                                                    inEditMode.status && inEditMode.rowKey === i ? (
-                                                        <React.Fragment>
-                                                            <Stack spacing={1} direction="row">
-
-                                                                {/* IRIA ACA-------------------------------------------- */}
-                                                                <Button variant="contained" color="success"
-                                                                    onClick={(e) => onSave(a?.id)}
-
-                                                                >
-                                                                    Actualizar
-                                                                </Button>
-                                                                {/* IRIA ACA-------------------------------------------- */}
-
-
-                                                                <Button variant="contained" color="error"
-                                                                    style={{ marginLeft: 8 }}
-                                                                    onClick={() => onCancel()}
-                                                                >
-                                                                    Cancelar
-                                                                </Button>
-                                                            </Stack>
-                                                        </React.Fragment>
-                                                    ) : (
-                                                        <Stack spacing={1} direction="row">
-                                                            <Button variant="contained"
-                                                                onClick={() => setInEditMode({
-                                                                    status: true,
-                                                                    rowKey: i
-                                                                })}
-                                                            >Editar</Button>
-                                                            <Button variant="contained"
-                                                                sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
-                                                                Info.
-                                                            </Button>
-                                                        </Stack>
-                                                    )
-                                                }
-                                            </td>
-                                        </tr>
-                                    ) :
-                                        (
+                {
+                    cargando && (
+                        <div className="row">
+                            <div className="col-md-4 m-auto">
+                                <Loading />
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    !cargando && (
+                        <table className="table table-responsive" aria-label="simple table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Legajo</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Nombre</th>
+                                    {/* <TableCell scope="col">Preceptor</TableCell> */}
+                                    <th scope="col">P</th>
+                                    <th scope="col">A</th>
+                                    <th scope="col">AJ</th>
+                                    <th scope="col">LT</th>
+                                    <th scope="col">LTJ</th>
+                                    <th scope="col">MF</th>
+                                    <th scope="col">MFJ</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    paginatedAsistencias().map((a, i) => (
+                                        !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
                                             <tr key={i} >
-
                                                 <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
                                                 <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
                                                 <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
                                                 <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
-                                                {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                 <td className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="presente"
-                                                                checked={presente}
-                                                                onChange={handlePresente}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.presente}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="presente"
+                                                        value={asistenciaActual.presente}
+                                                        onChange={(e) => handlePresente(e, a)}
+                                                    />
                                                 </td>
                                                 <td className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <Switch
-                                                                name="ausente"
-                                                                checked={ausente}
-                                                                onChange={handleAusente}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.ausente}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
-                                                </td>
-                                                <td className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <Switch
-                                                                checked={aj}
-                                                                onChange={handleAj}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.ausenteJustificado}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
-                                                </td>
-                                                <td className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="llegadaTarde"
-                                                                checked={llegadaTarde}
-                                                                onChange={handleLlegadaTarde}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.llegadaTarde}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="ausente"
+                                                        value={asistenciaActual.ausente}
+                                                        onChange={(e) => handleAusente(e, a)}
+                                                    />
                                                 </td>
                                                 <td className="col-md-1">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <Switch
-                                                                name="ltj"
-                                                                checked={ltj}
-                                                                onChange={handleLtj}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.llegadaTardeJustificada}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="aj"
+                                                        value={asistenciaActual.aj}
+                                                        onChange={(e) => handleAj(e, a)}
+                                                    />
                                                 </td>
                                                 <td className="col-md-1 ">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <Switch
-                                                                name="mf"
-                                                                checked={mf}
-                                                                onChange={handleMf}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.mediaFalta}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="llegadaTarde"
+                                                        value={asistenciaActual.llegadaTarde}
+                                                        onChange={(e) => handleLlegadaTarde(e, a)}
+                                                    />
                                                 </td>
                                                 <td className="col-md-1">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <Switch
-                                                                name="mfj"
-                                                                checked={mfj}
-                                                                onChange={handleMfj}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                <Switch
-                                                                    type="checkbox"
-                                                                    checked={a.mediaFaltaJustificada}
-                                                                    disabled={bloquearCheck(a)}
-                                                                />
-                                                            )
-                                                    }
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="ltj"
+                                                        value={asistenciaActual.ltj}
+                                                        onChange={(e) => handleLtj(e, a)}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="mf"
+                                                        value={asistenciaActual.mf}
+                                                        onChange={(e) => handleMf(e, a)}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        name="mfj"
+                                                        value={asistenciaActual.mfj}
+                                                        onChange={(e) => handleMfj(e, a)}
+                                                    />
                                                 </td>
                                                 <td className="col-md-2">
                                                     {
-
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <React.Fragment>
-                                                                <Stack spacing={1} direction="row">
-                                                                    {/* IRIA ACA-------------------------------------------- */}
-                                                                    <Button variant="contained" color="success"
-                                                                        onClick={(e) => onSave(a?.id)}
-
-                                                                    >
-                                                                        Actualizar
-                                                                    </Button>
-                                                                    {/* IRIA ACA-------------------------------------------- */}
-
-
-                                                                    <Button variant="contained" color="error"
-                                                                        style={{ marginLeft: 8 }}
-                                                                        onClick={() => onCancel()}
-                                                                    >
-                                                                        Cancelar
-                                                                    </Button>
-                                                                </Stack>
-                                                            </React.Fragment>
-                                                        ) : (
-                                                            <Stack spacing={1} direction="row">
-
-                                                                <Button variant="contained"
-                                                                    onClick={() => setInEditMode({
-                                                                        status: true,
-                                                                        rowKey: i
-                                                                    })}
-                                                                >Editar</Button>
-                                                                <Button variant="contained"
-                                                                    sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                    onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
-                                                                    Info.
-                                                                </Button>
-                                                            </Stack>
-                                                        )
+                                                        <button className="btn btn-outline-secondary"
+                                                            style={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                            onClick={onUpdate}>
+                                                            Guardar
+                                                        </button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            <tr key={i} >
+                                                <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
+                                                <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
+                                                <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                                <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                                <td className="col-md-1 ">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.presente}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.ausente}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.ausenteJustificado}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.llegadaTarde}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.llegadaTardeJustificada}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1 ">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.mediaFalta}
+                                                    />
+                                                </td>
+                                                <td className="col-md-1">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type={'checkbox'}
+                                                        checked={a?.mediaFaltaJustificada}
+                                                    />
+                                                </td>
+                                                <td className="col-md-2">
+                                                    {
+                                                        <button className="btn btn-outline-secondary"
+                                                            style={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                            onClick={onUpdate}>
+                                                            Guardar
+                                                        </button>
                                                     }
                                                 </td>
                                             </tr>
                                         )
-                                )
-                            )
-                            )
-                        }
-                    </tbody>
-                </table>
-                {
-                    asistencias && asistencias.length > 0 && (
-                        <Pagination
-                            onNextPage={nextPage}
-                            onPrevPage={prevPage} />
+                                        // ) : (
+                                        //     a.motivo ? (
+                                        //         <tr
+                                        //             key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
+                                        //             <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
+                                        //             <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
+                                        //             <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                        //             <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                        //             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                        //             <td className="col-md-1 ">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={presente}
+                                        //                             onChange={handlePresente}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.presente}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+                                        //             </td>
+                                        //             <td className="col-md-1 ">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={ausente}
+                                        //                             onChange={handleAusente}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.ausente}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+                                        //             </td>
+                                        //             <td className="col-md-1 ">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={aj}
+                                        //                             onChange={handleAj}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.ausenteJustificado}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+                                        //             </td>
+                                        //             <td className="col-md-1 ">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={llegadaTarde}
+                                        //                             onChange={handleLlegadaTarde}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.llegadaTarde}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+                                        //             </td>
+                                        //             <td className="col-md-1">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={ltj}
+                                        //                             onChange={handleLtj}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.llegadaTardeJustificada}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+
+                                        //             </td>
+                                        //             <td className="col-md-1 ">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={mf}
+                                        //                             onChange={handleMf}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.mediaFalta}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+
+                                        //             </td>
+                                        //             <td className="col-md-1">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <input
+                                        //                             className="form-check-input"
+                                        //                             type={'checkbox'}
+                                        //                             checked={mfj}
+                                        //                             onChange={handleMfj}
+                                        //                         />
+                                        //                     ) :
+                                        //                         (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 type={'checkbox'}
+                                        //                                 checked={a.mediaFaltaJustificada}
+                                        //                                 disabled={bloquearCheck(a)}
+                                        //                             />
+                                        //                         )
+                                        //                 }
+                                        //             </td>
+                                        //             <td className="col-md-2">
+                                        //                 {
+                                        //                     inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                         <React.Fragment>
+                                        //                             <div className="row">
+                                        //                                 {/* IRIA ACA-------------------------------------------- */}
+                                        //                                 <div className="col-md-6">
+                                        //                                     <button
+                                        //                                         className="btn btn-success"
+                                        //                                         onClick={(e) => onUpdate(a?.id)}
+                                        //                                     >
+                                        //                                         Actualizar
+                                        //                                     </button>
+                                        //                                 </div>
+                                        //                                 {/* IRIA ACA-------------------------------------------- */}
+                                        //                                 <div className="col-md-6">
+                                        //                                     <button
+                                        //                                         className="btn btn-danger"
+                                        //                                         style={{ marginLeft: 8 }}
+                                        //                                         onClick={() => onCancel()}
+                                        //                                     >
+                                        //                                         Cancelar
+                                        //                                     </button>
+                                        //                                 </div>
+                                        //                             </div>
+                                        //                         </React.Fragment>
+                                        //                     ) : (
+                                        //                         <React.Fragment>
+                                        //                             <div className="row">
+                                        //                                 <div className="col-md-6">
+                                        //                                     <button
+                                        //                                         className="btn btn-outline-secondary"
+                                        //                                         onClick={() => setInEditMode({
+                                        //                                             status: true,
+                                        //                                             rowKey: i
+                                        //                                         })}
+                                        //                                     >Editar</button>
+                                        //                                 </div>
+                                        //                                 <div className="col-md-6">
+                                        //                                     <button
+                                        //                                         className="btn btn-outline-info"
+                                        //                                         style={{ backgroundColor: 'lightblue', color: 'black' }}
+                                        //                                         onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                        //                                         Info.
+                                        //                                     </button>
+                                        //                                 </div>
+                                        //                             </div>
+                                        //                         </React.Fragment>
+                                        //                     )
+                                        //                 }
+                                        //             </td>
+                                        //         </tr>
+                                        //     ) :
+                                        //         (
+                                        //             <tr key={i} >
+                                        //                 <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
+                                        //                 <td className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</td>
+                                        //                 <td className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </td>
+                                        //                 <td className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</td>
+                                        //                 {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                        //                 <td className="col-md-1 ">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="presente"
+                                        //                                 checked={presente}
+                                        //                                 onChange={handlePresente}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.presente}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1 ">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="ausente"
+                                        //                                 checked={ausente}
+                                        //                                 onChange={handleAusente}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.ausente}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1 ">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 checked={aj}
+                                        //                                 onChange={handleAj}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.ausenteJustificado}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1 ">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="llegadaTarde"
+                                        //                                 checked={llegadaTarde}
+                                        //                                 onChange={handleLlegadaTarde}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.llegadaTarde}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="ltj"
+                                        //                                 checked={ltj}
+                                        //                                 onChange={handleLtj}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.llegadaTardeJustificada}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1 ">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="mf"
+                                        //                                 checked={mf}
+                                        //                                 onChange={handleMf}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.mediaFalta}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-1">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+
+                                        //                             <input
+                                        //                                 className="form-check-input"
+                                        //                                 name="mfj"
+                                        //                                 checked={mfj}
+                                        //                                 onChange={handleMfj}
+                                        //                             />
+                                        //                         ) :
+                                        //                             (
+                                        //                                 <input
+                                        //                                     className="form-check-input"
+                                        //                                     type="checkbox"
+                                        //                                     checked={a.mediaFaltaJustificada}
+                                        //                                     disabled={bloquearCheck(a)}
+                                        //                                 />
+                                        //                             )
+                                        //                     }
+                                        //                 </td>
+                                        //                 <td className="col-md-2">
+                                        //                     {
+                                        //                         inEditMode.status && inEditMode.rowKey === i ? (
+                                        //                             <React.Fragment>
+                                        //                                 <div className="row">
+                                        //                                     <div className="col-md-6">
+                                        //                                         {/* IRIA ACA-------------------------------------------- */}
+                                        //                                         <button
+                                        //                                             className="btn btn-outline-secondary" color="success"
+                                        //                                             onClick={(e) => onUpdate(a?.id)}>
+                                        //                                             Actualizar
+                                        //                                         </button>
+                                        //                                     </div>
+                                        //                                     <div className="col-md-6">
+                                        //                                         {/* IRIA ACA-------------------------------------------- */}
+                                        //                                         <button className="btn btn-outline-secondary" color="error"
+                                        //                                             style={{ marginLeft: 8 }}
+                                        //                                             onClick={() => onCancel()}>
+                                        //                                             Cancelar
+                                        //                                         </button>
+                                        //                                     </div>
+                                        //                                 </div>
+                                        //                             </React.Fragment>
+                                        //                         ) : (
+                                        //                             <React.Fragment>
+                                        //                                 <div className="row">
+                                        //                                     <div className="col-md-6">
+                                        //                                         <button className="btn btn-outline-secondary"
+                                        //                                             onClick={() => setInEditMode({
+                                        //                                                 status: true,
+                                        //                                                 rowKey: i
+                                        //                                             })}
+                                        //                                         >Editar</button>
+                                        //                                     </div>
+                                        //                                     <div className="col-md-6">
+                                        //                                         <button className="btn btn-outline-secondary"
+                                        //                                             style={{ backgroundColor: 'lightblue', color: 'black' }}
+                                        //                                             onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                        //                                             Info.
+                                        //                                         </button>
+                                        //                                     </div>
+                                        //                                 </div>
+                                        //                             </React.Fragment>
+                                        //                         )
+                                        //                     }
+                                        //                 </td>
+                                        //             </tr>
+                                        //         )
+                                        // )
+                                    )
+                                    )
+                                }
+                            </tbody>
+                        </table>
                     )
                 }
-            </Container>
-
+                {
+                    !cargando && asistencias.length > 0 && (
+                        <div className="row">
+                            <div className="col-md-4 m-auto">
+                                <Pagination
+                                    onNextPage={nextPage}
+                                    onPrevPage={prevPage} />
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
         </Layout>
     );
 }
