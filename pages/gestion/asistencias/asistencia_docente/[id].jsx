@@ -5,12 +5,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../../../../components/context/authUserProvider';
 
 const MasInfo = () => {
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        listarAsistencia()
-    }, [id, loading, authUser])
+
 
     const { loading, authUser } = useAuth()
     const router = useRouter()
@@ -32,7 +27,12 @@ const MasInfo = () => {
         )
 
     }
-
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        listarAsistencia()
+    }, [id, loading, authUser])
     // const mostrarAsistencia2 = (a) => {
     //     if (a.presente && 1) {
     //         setAsistenciaActual = 'Presente'
@@ -59,60 +59,60 @@ const MasInfo = () => {
 
     return (
         <Layout>
-            <div>
-                <h4>Mas Información</h4>
-                <form className='needs-validation'>
-                    <div className='hstack gap-2 '>
-                        <div className='mb-2'>
-                            <h5><strong>Docente: </strong></h5>
-                            <span>{asistencia?.docenteXmateria?.usuario?.apellido} {asistencia?.docenteXmateria?.usuario?.nombre}</span>
+            <div className="container">
+                <h1>Mas Información</h1>
+                <form className='needs-validation '>
+                    <div className="row g-3">
+                        <div className="col-md-9">
+                            <h3><strong>Docente: </strong></h3>
+                            <h4>{asistencia?.docenteXmateria?.usuario?.apellido} {asistencia?.docenteXmateria?.usuario?.nombre}</h4>
                         </div>
 
-                        {
-                            asistencia?.motivo != null ? (
-                                <div>
-                                    <h5><strong>Editado por: </strong></h5>
-                                    <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
-                                </div>
-                            ) :
-                                (
+                        <div className="col-md-3">
+                            {
+                                asistencia?.motivo ? (
                                     <div className='mb-2'>
-                                        <h5><strong>Creado por:</strong></h5>
-                                        <span>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</span>
+                                        <h3><strong>Editado por: </strong></h3>
+                                        <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
                                     </div>
-                                )
-                        }
-                    </div>
-                    <hr className='mb-2' />
-                    <div className='hstack gap-3'>
-                        <div className='mb-2'>
-                            <h5><strong>Asistencia Actual</strong></h5>
+                                ) :
+                                    (
+                                        <div className='mb-2'>
+                                            <h3><strong>Creado por:</strong></h3>
+                                            <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                        <hr className="mb-2" />
+                        <div className="col-md-4">
+                            <h3><strong>Asistencia Actual</strong></h3>
                             {
                                 asistencia?.presente ? (
-                                    <p style={{ fontSize: "20px" }}>Presente</p>
+                                    <h4>Presente</h4>
                                 ) :
                                     (
                                         asistencia?.ausente ? (
-                                            <p style={{ fontSize: "20px" }}>Ausente</p>
+                                            <h4>Ausente</h4>
                                         ) :
                                             (
                                                 asistencia?.ausenteJustificado ? (
-                                                    <p style={{ fontSize: "20px" }}>Ausente Justificado</p>
+                                                    <h4>Ausente Justificado</h4>
                                                 ) :
                                                     (
                                                         asistencia?.llegadaTarde ? (
-                                                            <p style={{ fontSize: "20px" }}>Llegada Tarde</p>
+                                                            <h4>Llegada Tarde</h4>
                                                         ) :
                                                             (
                                                                 asistencia?.llegadaTardeJustificada ? (
-                                                                    <p style={{ fontSize: "20px" }}>llegada Tarde Justificada</p>
+                                                                    <h4>llegada Tarde Justificada</h4>
                                                                 ) :
                                                                     (
                                                                         asistencia?.mediaFalta ? (
-                                                                            <p style={{ fontSize: "20px" }}>Media Falta</p>
+                                                                            <h4>Media Falta</h4>
                                                                         ) :
                                                                             (
-                                                                                <p style={{ fontSize: "20px" }}>Media Falta Justificada</p>
+                                                                                <h4>-</h4>
                                                                             )
                                                                     )
                                                             )
@@ -121,34 +121,37 @@ const MasInfo = () => {
                                     )
                             }
                         </div>
-                        <div>
-                            <h5><strong>Creado el: </strong></h5>
-                            <span>{asistencia?.creadoEn}</span>
+                        <div className="col-md-3">
+                            <h3><strong>Creado el: </strong></h3>
+                            <h4>{asistencia?.creadoEn}</h4>
                         </div>
-                        <hr className="mb-2" />
-                        {
-                            asistencia?.actualizadoEn != null ? (
-                                <div className='mb-2'>
-                                    <h5><strong>Actualizado el:</strong></h5>
-                                    <span>{asistencia?.actualizadoEn}</span>
-                                </div>
-                            ) :
-                                (
+                        <div className="col-md-5">
+                            {
+                                asistencia?.actualizadoEn ? (
                                     <div className='mb-2'>
-                                        <h5><strong>Actualizado en:</strong></h5>
-                                        <span>--/--/----</span>
+                                        <h3><strong>Actualizado el:</strong></h3>
+                                        <h4>{asistencia?.actualizadoEn}</h4>
                                     </div>
-                                )
-                        }
+                                ) :
+                                    (
+                                        <div className='mb-2'>
+                                            <h3><strong>Actualizado en:</strong></h3>
+                                            <h4>--/--/----</h4>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                        <hr className='mb-2' />
+                        <div className='col-md-5'>
+                            <h3><strong>Motivo</strong></h3>
+                            <h4>{asistencia?.motivo}</h4>
+                        </div>
                     </div>
 
-                    <div className='mb-2'>
-                        <h5><strong>Motivo</strong></h5>
-                        <span>{asistencia?.motivo}</span>
-                    </div>
-                </form>
-            </div>
-        </Layout>
+                </form >
+            </div >
+        </Layout >
+
     )
 }
 

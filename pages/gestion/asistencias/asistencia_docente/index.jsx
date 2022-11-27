@@ -227,94 +227,127 @@ export default function Asistencias() {
         <Layout>
             <div className="container">
                 <h3 className="mb-2">Asistencia Docente</h3>
-                <div className="row">
-                    <div className="col-md-4">
+                <form className="row mt-3 g-3">
+                    <div className="col-md-2">
+                        <label htmlFor="inputFecha">Fecha</label>
+                        <input
+                            id="inputFecha"
+                            className="form-control"
+                            type={'date'}
+                            placeholder="Fecha"
+                            value={fecha}
+                            onChange={handleFecha}
+                            style={{ width: "170px" }}
+                        />
+
+                    </div>
+
+                    <div className="col-md-12">
+                        <h5>Buscar Docente:</h5>
+                    </div>
+                    <div className="col-md-2">
                         <div className="form-group">
-                            <label htmlFor="inputFecha">Fecha</label>
-                            <input id="inputFecha" className="form-control" type="date" name="fecha" value={fecha} onChange={handleFecha} />
-                        </div>
-
-                        <h5 className="mt-2">Buscar Docente:</h5>
-                        <div className="row">
-                            <div className="form-group col-md-4">
-                                <input name="legajo"
-                                    value={legajo}
-                                    onChange={handleLegajo}
-                                    type="text"
-                                    placeholder="Legajo"
-                                    className="form-control" />
-                            </div>
-                            <div className="form-group col-md-4">
-                                <input
-                                    name="nombreDocente"
-                                    value={nombreDocente}
-                                    onChange={handleNombreDocente}
-                                    type="text"
-                                    placeholder="Nombre"
-                                    className="form-control" />
-                            </div>
-                            <div className="form-group col-md-4">
-                                <input
-                                    name="apellidoDocente"
-                                    value={apellidoDocente}
-                                    onChange={handleApellidoDocente}
-                                    type="text"
-                                    placeholder="Apellido"
-                                    className="form-control" />
-                            </div>
-                        </div>
-                        <div className="form-group col-md-4">
-                            <button
-                                className="btn btn-outline-primary mt-2"
-                                onClick={buscarAsistencias}>
-                                <FontAwesomeIcon
-                                    icon={faSearch} />
-                                Buscar
-                            </button>
+                            <input className="form-control"
+                                name="legajo"
+                                value={legajo}
+                                onChange={handleLegajo}
+                                style={{ width: "170px" }}
+                                required
+                            />
+                            <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-8">
-                        <div className="row">
-                            <div className="col-md-3">
-                                <h5 ><strong>Asistencia modificada:</strong> </h5>
-                            </div>
-                            <div className="col-md-3">
-                                <button disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</button>
-                            </div>
-                            <div className="col-md-6">
-                                <h5 style={{ marginTop: '-10px' }}>
-                                    <strong>P:</strong>Presente  <br />
-                                    <strong>A:</strong>Ausente <br />
-                                    <strong>AJ:</strong> Ausente Justificado <br />
-                                    <strong>LT:</strong>Llegada Tarde <br />
-                                    <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                    <strong>MF:</strong>Media Falta <br />
-                                    <strong>MFJ:</strong> Media Falta Justificada  <br />
-                                </h5>
-                            </div>
+                    <div className="col-md-2">
+                        <div className="form-group">
+                            <input className="form-control"
+                                name="nombreAlumno"
+                                value={nombreDocente}
+                                onChange={handleNombreDocente}
+                                style={{ width: "170px" }}
+                                required />
+                            <label>Nombre Docente</label>
                         </div>
                     </div>
-                </div>
+                    <div className="col-md-2">
+                        <div className="form-group">
+                            <input
+                                className="form-control"
+                                name="apellidoDocente"
+                                value={apellidoDocente}
+                                onChange={handleApellidoDocente}
+                                style={{ width: "170px" }}
+                                required
+                            />
+                            <label>Apellido Docente</label>
+                        </div>
+                    </div>
 
-                <div className="container-fluid mt-2">
-                    {
-                        !cargando && (
-                            <table className="table table-responsive">
+                    <div className="col-md-12">
+                        <button onClick={buscarAsistencias} className="button-61">
+                            <FontAwesomeIcon
+                                icon={faSearch} style={{ marginRight: "5px" }} />
+                            Buscar
+                        </button>
+                    </div>
+
+                    <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
+
+                        <div className="bd-highlight">
+
+                            <div className="d-flex flex-row bd-highlight">
+                                <div className="p-2 bd-highlight">    <h5 >
+                                    <strong>Asistencia modificada:</strong>
+                                </h5></div>
+                                <div className="p-2 bd-highlight">
+                                    <button className="btn btn-primary"
+                                        style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                                    ></button>
+                                </div>
+
+                            </div>
+                            <h5 className="p-2" style={{ marginTop: "-10px" }}>
+                                <strong>P:</strong>Presente  <br />
+                                <strong>A:</strong>Ausente <br />
+                                <strong>AJ:</strong> Ausente Justificado <br />
+                                <strong>LT:</strong>Llegada Tarde <br />
+                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                                <strong>MF:</strong>Media Falta <br />
+                                <strong>MFJ:</strong> Media Falta Justificada  <br />
+                            </h5>
+                        </div>
+
+
+                    </div>
+                </form>
+
+                {
+                    cargando && (
+                        <div className="row">
+                            <div className="col-md-4 m-auto">
+                                <Loading />
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    !cargando && (
+                        <div className="table-responsive w-auto" style={{ marginTop: "20px" }}>
+                            <table className="table table-striped table-hover" aria-label="simple table">
                                 <thead>
                                     <tr>
-                                        <td scope="col">Fecha</td>
-                                        <td scope="col">Legajo</td>
-                                        <td scope="col">Apellido</td>
-                                        <td scope="col">Nombre</td>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Legajo</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Nombre</th>
                                         {/* <TableCell scope="col">Preceptor</TableCell> */}
-                                        <td scope="col">P</td>
-                                        <td scope="col">A</td>
-                                        <td scope="col">AJ</td>
-                                        <td scope="col">LT</td>
-                                        <td scope="col">LTJ</td>
-                                        <td scope="col">MF</td>
-                                        <td scope="col">MFJ</td>
-                                        <td scope="col">Acción</td>
+                                        <th scope="col">P</th>
+                                        <th scope="col">A</th>
+                                        <th scope="col">AJ</th>
+                                        <th scope="col">LT</th>
+                                        <th scope="col">LTJ</th>
+                                        <th scope="col">MF</th>
+                                        <th scope="col">MFJ</th>
+                                        <th scope="col">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -327,160 +360,619 @@ export default function Asistencias() {
                                                     <td className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </td>
                                                     <td className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</td>
                                                     <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="presente"
-                                                            value={asistenciaActual.presente}
-                                                            onChange={(e) => handlePresente(e, a)}
-                                                        />
+
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="presente"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.presente}
+                                                                onChange={(e) => handlePresente(e, a)}
+
+                                                            />
+                                                        </div>
+
                                                     </td>
                                                     <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="ausente"
-                                                            value={asistenciaActual.ausente}
-                                                            onChange={(e) => handleAusente(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="ausente"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.ausente}
+                                                                onChange={(e) => handleAusente(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="aj"
-                                                            value={asistenciaActual.aj}
-                                                            onChange={(e) => handleAj(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="aj"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.aj}
+                                                                onChange={(e) => handleAj(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="llegadaTarde"
-                                                            value={asistenciaActual.llegadaTarde}
-                                                            onChange={(e) => handleLlegadaTarde(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="llegadaTarde"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.llegadaTarde}
+                                                                onChange={(e) => handleLlegadaTarde(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="ltj"
-                                                            value={asistenciaActual.ltj}
-                                                            onChange={(e) => handleLtj(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="ltj"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.ltj}
+                                                                onChange={(e) => handleLtj(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="mf"
-                                                            value={asistenciaActual.mf}
-                                                            onChange={(e) => handleMf(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="mf"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.mf}
+                                                                onChange={(e) => handleMf(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            name="mfj"
-                                                            value={asistenciaActual.mfj}
-                                                            onChange={(e) => handleMfj(e, a)}
-                                                        />
+                                                        <div className="form-check form-switch">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type={'checkbox'}
+                                                                name="mfj"
+                                                                role={"switch"}
+                                                                value={asistenciaActual.mfj}
+                                                                onChange={(e) => handleMfj(e, a)}
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td className="col-md-2">
                                                         {
-                                                            <button className="btn btn-outline-secondary"
-                                                                style={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                onClick={onUpdate}>
-                                                                Guardar
-                                                            </button>
+                                                            <div className="bd-highlight">
+                                                                <button className="button-61"
+                                                                    style={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                                    onClick={onUpdate}>
+                                                                    Guardar
+                                                                </button>
+                                                            </div>
                                                         }
                                                     </td>
                                                 </tr>
                                             ) : (
-                                                <tr key={i} >
-                                                    <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
-                                                    <td className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</td>
-                                                    <td className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </td>
-                                                    <td className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</td>
-                                                    <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.presente}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.ausente}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.ausenteJustificado}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.llegadaTarde}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.llegadaTardeJustificada}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1 ">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.mediaFalta}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-1">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type={'checkbox'}
-                                                            checked={a?.mediaFaltaJustificada}
-                                                        />
-                                                    </td>
-                                                    <td className="col-md-2">
-                                                        {
-                                                            <button className="btn btn-outline-secondary"
-                                                                style={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                onClick={onUpdate}>
-                                                                Guardar
-                                                            </button>
-                                                        }
-                                                    </td>
-                                                </tr>
+
+                                                a.motivo ? (
+                                                    < tr key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
+                                                        <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
+                                                        <td className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</td>
+                                                        <td className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </td>
+                                                        <td className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</td>
+                                                        {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={presente}
+                                                                            onChange={handlePresente}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.presente}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={ausente}
+                                                                            onChange={handleAusente}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.ausente}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={aj}
+                                                                            onChange={handleAj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.ausenteJustificado}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={llegadaTarde}
+                                                                            onChange={handleLlegadaTarde}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.llegadaTarde}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1">
+                                                            {
+
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={ltj}
+                                                                            onChange={handleLtj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.llegadaTardeJustificada}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={mf}
+                                                                            onChange={handleMf}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.mediaFalta}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+
+                                                        </td>
+                                                        <td className="col-md-1">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            type={'checkbox'}
+                                                                            checked={mfj}
+                                                                            onChange={handleMfj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type={'checkbox'}
+                                                                                checked={a.mediaFaltaJustificada}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-2">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <React.Fragment>
+                                                                        <div className="d-flex bd-highlight mb-2">
+                                                                            <div className="bd-highlight">
+                                                                                {/* IRIA ACA-------------------------------------------- */}
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue", marginRight: "5px" }}
+                                                                                    onClick={(e) => onUpdate(a?.id)}
+                                                                                >
+                                                                                    Actualizar
+                                                                                </button>
+                                                                                {/* IRIA ACA-------------------------------------------- */}
+                                                                            </div>
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "red" }}
+                                                                                    onClick={() => onCancel()}
+                                                                                >
+                                                                                    Cancelar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </React.Fragment>
+                                                                ) : (
+                                                                    <React.Fragment>
+                                                                        <div className="d-flex bd-highlight mb-2">
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue", marginRight: "5px" }}
+                                                                                    onClick={() => setInEditMode({
+                                                                                        status: true,
+                                                                                        rowKey: i
+                                                                                    })}
+                                                                                >Actualizar</button>
+                                                                            </div>
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue" }}
+                                                                                    onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                                                                    Info.
+                                                                                </button>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </React.Fragment>
+                                                                )
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                ) : (
+                                                    <tr key={i} >
+                                                        <td className="col-md-1 text-capitalize">{a.creadoEn}</td>
+                                                        <td className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</td>
+                                                        <td className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </td>
+                                                        <td className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</td>
+
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="presente"
+                                                                            checked={presente}
+                                                                            onChange={handlePresente}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.presente}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="ausente"
+                                                                            checked={ausente}
+                                                                            onChange={handleAusente}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.ausente}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            checked={aj}
+                                                                            onChange={handleAj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.ausenteJustificado}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="llegadaTarde"
+                                                                            checked={llegadaTarde}
+                                                                            onChange={handleLlegadaTarde}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.llegadaTarde}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="ltj"
+                                                                            checked={ltj}
+                                                                            onChange={handleLtj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.llegadaTardeJustificada}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1 ">
+                                                            {
+
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="mf"
+                                                                            checked={mf}
+                                                                            onChange={handleMf}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.mediaFalta}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-1">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <div className="form-check form-switch">
+                                                                        <input
+                                                                            className="form-check-input"
+                                                                            name="mfj"
+                                                                            checked={mfj}
+                                                                            onChange={handleMfj}
+                                                                            role={"switch"}
+                                                                        />
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="form-check form-switch">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                checked={a.mediaFaltaJustificada}
+                                                                                disabled={bloquearCheck(a)}
+                                                                                role={"switch"}
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                        </td>
+                                                        <td className="col-md-2">
+                                                            {
+                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    <React.Fragment>
+                                                                        <div className="d-flex bd-highlight mb-2">
+                                                                            <div className="bd-highlight">
+                                                                                {/* IRIA ACA-------------------------------------------- */}
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue", marginRight: "5px" }}
+                                                                                    onClick={(e) => onUpdate(a?.id)}
+                                                                                >
+                                                                                    Actualizar
+                                                                                </button>
+                                                                                {/* IRIA ACA-------------------------------------------- */}
+                                                                            </div>
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "red", marginLeft: 8 }}
+                                                                                    onClick={() => onCancel()}
+                                                                                >
+                                                                                    Cancelar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </React.Fragment>
+                                                                ) : (
+                                                                    <React.Fragment>
+                                                                        <div className="d-flex bd-highlight mb-2">
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue", marginRight: "5px" }}
+                                                                                    onClick={() => setInEditMode({
+                                                                                        status: true,
+                                                                                        rowKey: i
+                                                                                    })}
+                                                                                >Actualizar</button>
+                                                                            </div>
+                                                                            <div className="bd-highlight">
+                                                                                <button
+                                                                                    className="button-61"
+                                                                                    style={{ color: "black", backgroundColor: "lightblue" }}
+                                                                                    onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                                                                    Info.
+                                                                                </button>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </React.Fragment>
+                                                                )
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                )
+
                                             )
-                                        ))
+                                        )
+                                        )
+
                                     }
                                 </tbody>
                             </table>
-                        )
-                    }
-                    {
-                        cargando && (
-                            <div className="row">
-                                <div className="col-md-4 m-auto">
-                                    <Loading />
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
+                        </div>
+
+
+                    )
+                }
+
+
+
                 {
                     !cargando && asistencias.length > 0 && (
                         <div className="row">

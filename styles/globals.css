@@ -30,10 +30,32 @@ a {
   pointer-events: none;
 
 }
+/* .form-control:valid {
+  border-color: red;
+  box-shadow: none;
+ 
+} */
+
+.form-select:focus {
+  border-color: lightblue;
+
+box-shadow: 0 0 5px 2px lightblue;
+  transition: 0.2ms;
+ 
+}
+
+.form-control:focus {
+  border-color: lightblue;
+
+box-shadow: 0 0 5px 2px lightblue;
+  transition: 0.2ms;
+ 
+}
 
 .form-control:focus~label {
   bottom: 50px;
   font-size: 0.9em;
+
 }
 
 .form-control:valid~label {
