@@ -65,7 +65,7 @@ const Home = () => {
             </div>
           )
         }
-        <div className="row">
+        <div className="row  g-3">
           {
             noticias && paginatedNoticias().map((n, i) => (
               <div key={i} className="col-md-4">
