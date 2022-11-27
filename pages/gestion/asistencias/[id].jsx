@@ -91,34 +91,34 @@ const MasInfo = () => {
                             }
                         </div>
                         <hr className="mb-2" />
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <h3><strong>Asistencia Actual</strong></h3>
                             {
                                 asistencia?.presente ? (
-                                    <p style={{ fontSize: "20px" }}>Presente</p>
+                                    <h4>Presente</h4>
                                 ) :
                                     (
                                         asistencia?.ausente ? (
-                                            <p style={{ fontSize: "20px" }}>Ausente</p>
+                                            <h4>Ausente</h4>
                                         ) :
                                             (
                                                 asistencia?.ausenteJustificado ? (
-                                                    <p style={{ fontSize: "20px" }}>Ausente Justificado</p>
+                                                    <h4>Ausente Justificado</h4>
                                                 ) :
                                                     (
                                                         asistencia?.llegadaTarde ? (
-                                                            <p style={{ fontSize: "20px" }}>Llegada Tarde</p>
+                                                            <h4>Llegada Tarde</h4>
                                                         ) :
                                                             (
                                                                 asistencia?.llegadaTardeJustificada ? (
-                                                                    <p style={{ fontSize: "20px" }}>llegada Tarde Justificada</p>
+                                                                    <h4>llegada Tarde Justificada</h4>
                                                                 ) :
                                                                     (
                                                                         asistencia?.mediaFalta ? (
-                                                                            <p style={{ fontSize: "20px" }}>Media Falta</p>
+                                                                            <h4>Media Falta</h4>
                                                                         ) :
                                                                             (
-                                                                                <p style={{ fontSize: "20px" }}>Media Falta Justificada</p>
+                                                                                <h4>-</h4>
                                                                             )
                                                                     )
                                                             )
@@ -131,7 +131,7 @@ const MasInfo = () => {
                             <h3><strong>Creado el: </strong></h3>
                             <h4>{asistencia?.creadoEn}</h4>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-5">
                             {
                                 asistencia?.actualizadoEn ? (
                                     <div className='mb-2'>

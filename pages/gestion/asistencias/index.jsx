@@ -440,8 +440,8 @@ export default function Asistencias() {
                     <div className="col-md-12">
                         <button onClick={buscarAsistencias} className="button-61">
                             <FontAwesomeIcon
-                                icon={faSearch} />
-                            Buscar
+                                icon={faSearch} style={{marginRight: "5px"}} />
+                             Buscar
                         </button>
                     </div>
 
