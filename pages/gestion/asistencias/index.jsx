@@ -9,7 +9,6 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Loading from '../../../components/loading';
-import { lightBlue } from "@mui/material/colors";
 import useWindowSize from "../../../components/hooks/windowSizeHook";
 
 export default function Asistencias() {
@@ -71,7 +70,7 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
-        setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\"; marginLeft: \"-150px\"; marginTop: \"-40px\";")
+        // setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\"; marginLeft: \"-150px\"; marginTop: \"-40px\";")
     }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
@@ -362,116 +361,118 @@ export default function Asistencias() {
                     </Box>
                 </Modal> */}
                 {/* MODAL------------------------------------------------------------------------------------------------- */}
-
-                <form className="row mt-3 g-3">
-                    <div className="col-md-2">
-                        <label htmlFor="demo-simple-select">Curso</label>
-                        <select
-                            className="form-select"
-                            style={{ width: '90px', marginRight: '20px' }}
-                            id="demo-simple-select"
-                            value={idCurso}
-                            name="idCurso"
-                            onChange={handleCurso}
-                        >
-                            {
-                                cursos && cursos.map((c, i) => (
-                                    <option value={i === 0} key={c.id}>{c.curso?.nombre} {c.division?.division}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-                    <div className="col-md-2">
-                        <label htmlFor="inputFecha">Fecha</label>
-                        <input
-                            id="inputFecha"
-                            className="form-control"
-                            type={'date'}
-                            placeholder="Fecha"
-                            value={fecha}
-                            onChange={handleFecha}
-                            style={{ width: "170px" }}
-                        />
-
-                    </div>
-
-                    <div className="col-md-12">
-                        <h5>Buscar Alumno:</h5>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-group">
-                            <input className="form-control"
-                                name="legajo"
-                                value={legajo}
-                                onChange={handleLegajo}
-                                style={{ width: "170px" }}
-                                required
-                            />
-                            <label>Legajo</label>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-group">
-                            <input className="form-control"
-                                name="nombreAlumno"
-                                value={nombreAlumno}
-                                onChange={handleNombreAlumno}
-                                style={{ width: "170px" }}
-                                required />
-                            <label>Nombre Alumno</label>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-group">
-                            <input
-                                className="form-control"
-                                name="apellidoAlumno"
-                                value={apellidoAlumno}
-                                onChange={handleApellidoAlumno}
-                                style={{ width: "170px" }}
-                                required
-                            />
-                            <label>Apellido Alumno</label>
-                        </div>
-                    </div>
-
-                    <div className="col-md-12">
-                        <button onClick={buscarAsistencias} className="button-61">
-                            <FontAwesomeIcon
-                                icon={faSearch} style={{ marginRight: "5px" }} />
-                            Buscar
-                        </button>
-                    </div>
-
-                    <div className="col-md-12" style={{ indice }} >
-                        <div className="d-flex flex-row-reverse bd-highlight mb-1">
-                            <div className="bd-highlight">
-
-                                <div className="d-flex flex-row bd-highlight">
-                                    <div className="p-2 bd-highlight">    <h5 >
-                                        <strong>Asistencia modificada:</strong>
-                                    </h5></div>
-                                    <div className="p-2 bd-highlight">
-                                        <button className="btn btn-primary"
-                                            style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
-                                        ></button>
+                <div className="row">
+                    <div className="col-md-6">
+                        <form className="mt-3">
+                            <div className="col-md-3">
+                                <div className="row mb-2">
+                                    <div className="col-md-4">
+                                        <label htmlFor="demo-simple-select">Curso</label>
                                     </div>
-
+                                    <div className="col-md-4">
+                                        <select
+                                            className="form-select"
+                                            style={{ width: '90px', marginRight: '20px' }}
+                                            id="demo-simple-select"
+                                            value={idCurso}
+                                            name="idCurso"
+                                            onChange={handleCurso}
+                                        >
+                                            {
+                                                cursos && cursos.map((c, i) => (
+                                                    <option value={i === 0} key={c.id}>{c.curso?.nombre} {c.division?.division}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-                                <h5 className="p-2" style={{ marginTop: "-10px" }}>
-                                    <strong>P:</strong>Presente  <br />
-                                    <strong>A:</strong>Ausente <br />
-                                    <strong>AJ:</strong> Ausente Justificado <br />
-                                    <strong>LT:</strong>Llegada Tarde <br />
-                                    <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                    <strong>MF:</strong>Media Falta <br />
-                                    <strong>MFJ:</strong> Media Falta Justificada  <br />
-                                </h5>
+                                <div className="row mb-2">
+                                    <div className="col-4">
+                                        <label htmlFor="inputFecha">Fecha</label>
+                                    </div>
+                                    <div className="col-4">
+                                        <input
+                                            id="inputFecha"
+                                            className="form-control"
+                                            type={'date'}
+                                            placeholder="Fecha"
+                                            value={fecha}
+                                            onChange={handleFecha}
+                                            style={{ width: "170px" }}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <input className="form-control"
+                                        name="legajo"
+                                        value={legajo}
+                                        onChange={handleLegajo}
+                                        style={{ width: "170px" }}
+                                        required
+                                    />
+                                    <label>Legajo</label>
+                                </div>
+                                <div className="form-group">
+                                    <input className="form-control"
+                                        name="nombreAlumno"
+                                        value={nombreAlumno}
+                                        onChange={handleNombreAlumno}
+                                        style={{ width: "170px" }}
+                                        required />
+                                    <label>Nombre Alumno</label>
+                                </div>
+                                <div className="form-group">
+                                    <input
+                                        className="form-control"
+                                        name="apellidoAlumno"
+                                        value={apellidoAlumno}
+                                        onChange={handleApellidoAlumno}
+                                        style={{ width: "170px" }}
+                                        required
+                                    />
+                                    <label>Apellido Alumno</label>
+                                </div>
+                                <button onClick={buscarAsistencias} className="button-61">
+                                    <FontAwesomeIcon
+                                        icon={faSearch}
+                                        style={{ marginRight: "5px" }} />
+                                    Buscar
+                                </button>
                             </div>
+                        </form>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="col-md-4" >
+                            <div className="d-flex flex-row-reverse bd-highlight mb-1">
+                                <div className="bd-highlight">
 
+                                    <div className="d-flex flex-row bd-highlight">
+                                        <div className="p-2 bd-highlight">    <h5 >
+                                            <strong>Asistencia modificada:</strong>
+                                        </h5></div>
+                                        <div className="p-2 bd-highlight">
+                                            <button className="btn btn-primary"
+                                                style={{ width: "170px", height: "40px", marginTop: "-7px", backgroundColor: "lightBlue", border: "none" }}
+                                            ></button>
+                                        </div>
+
+                                    </div>
+                                    <h5 className="p-2" style={{ marginTop: "-10px" }}>
+                                        <strong>P:</strong>Presente  <br />
+                                        <strong>A:</strong>Ausente <br />
+                                        <strong>AJ:</strong> Ausente Justificado <br />
+                                        <strong>LT:</strong>Llegada Tarde <br />
+                                        <strong>LTJ:</strong> Llegada Tarde Justificada <br />
+                                        <strong>MF:</strong>Media Falta <br />
+                                        <strong>MFJ:</strong> Media Falta Justificada  <br />
+                                    </h5>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </form>
+                </div>
+
 
                 {
                     cargando && (
