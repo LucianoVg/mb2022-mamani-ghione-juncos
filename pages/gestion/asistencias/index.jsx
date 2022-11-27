@@ -9,7 +9,6 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Loading from '../../../components/loading';
-import { lightBlue } from "@mui/material/colors";
 import useWindowSize from "../../../components/hooks/windowSizeHook";
 
 export default function Asistencias() {
@@ -537,6 +536,7 @@ const [indice, setIndice] = useState(IndicePc)
                     </div> */}
 
                 </form>
+
 
                 {
                     cargando && (
