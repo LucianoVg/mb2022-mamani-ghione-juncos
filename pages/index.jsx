@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
-import Notificaciones from "../components/notificacion_panel";
+import Loading from '../components/loading';
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -19,21 +19,24 @@ const Home = () => {
   const paginacion = usePagination(noticias || [], pageSize)
   const { authUser } = useAuth()
   const router = useRouter()
-
+  const [cargandoInfo, setCargandoInfo] = useState(false)
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
     paginacion.saltar(pagina)
   }
 
   const traerNoticias = () => {
+    setCargandoInfo(true)
     axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
       .then(res => {
         if (res.data) {
           console.log(res.data);
           setNoticias(res.data)
+          setCargandoInfo(false)
         }
       }).catch(err => {
         console.error(err);
+        setCargandoInfo(false)
       })
   }
 
@@ -54,20 +57,10 @@ const Home = () => {
         }
         {
           cargandoInfo && (
-            <div className="col-md-4 m-auto">
-              <Loading />
-            </div>
+            <Loading />
           )
         }
-        <div className="row  g-3">
-          {
-            noticias && paginatedNoticias().map((n, i) => (
-              <div key={i} className="col-md-4">
-                <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-              </div>
-            ))
-          }
-        </div>
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid container >
             {

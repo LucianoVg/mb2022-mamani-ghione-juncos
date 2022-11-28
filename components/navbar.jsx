@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
 
+const navWidth = 285;
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -16,8 +17,8 @@ const AppBar = styled(MuiAppBar, {
         duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
-        marginLeft: 280,
-        width: `calc(100% - ${280}px)`,
+        marginLeft: navWidth,
+        width: `calc(100% - ${navWidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -26,7 +27,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-export const Navbar = () => {
+export const Navbar = ({ open, toggleDrawer }) => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     return (

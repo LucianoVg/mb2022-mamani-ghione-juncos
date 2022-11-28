@@ -1,10 +1,10 @@
 import { Prisma } from "./prisma";
 
-export async function traerNoticia(id = '') {
+export async function traerNoticia(id = 0) {
     try {
-        const noticias = id !== '' ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
+        const noticias = id !== 0 ? await Prisma.newPrisma().noticiasYnovedades.findUnique({
             where: {
-                id: id
+                id: Number(id)
             }
         }) : await Prisma.newPrisma().noticiasYnovedades.findMany({
             orderBy: {

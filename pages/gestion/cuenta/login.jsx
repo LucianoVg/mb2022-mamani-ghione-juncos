@@ -100,7 +100,12 @@ const Login = () => {
                 </Button>
                 <Grid container>
                     <Grid item xs>
-                        <Typography component={'a'} variant="a" onClick={() => setMensaje("Consulte con el administrador del sistema")} sx={{ cursor: 'pointer' }}>
+                        <Typography onClick={() => {
+                            setMensaje("Consulte con el administrador del sistema");
+                            setTimeout(() => {
+                                setMensaje("")
+                            }, 2000);
+                        }} sx={{ cursor: 'pointer' }}>
                             Olvidó sus credenciales?
                         </Typography>
                     </Grid>

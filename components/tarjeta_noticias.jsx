@@ -9,22 +9,16 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const router = useRouter()
 
     return (
-        <Box xs={4}>
+        <Box xs={3}>
             <Card
-                sx={{ maxWidth: 300, maxHeight: 450 }}
-                className={`${styles.card}`}
-
-            >
-                <div style={{ position: 'relative', backgroundColor: 'blue' }}>
-
+                className={`${styles.card}`}>
+                <div style={{ position: 'relative' }}>
                     <div className={` ${styles.overflow}`} >
                         <CardMedia
                             className={`${styles.card_img_top}`}
                             component="img"
-                            height="300"
                             image={url}
                             alt="imagen"
-
                         />
                         {
                             authUser && (
@@ -42,11 +36,11 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                         {titulo}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {descripcion}
+                        {`${descripcion.substring(0, 30)}...`}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="big">Mas info.</Button>
+                    <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="small" sx={{ mb: 2 }}>Mas info.</Button>
                 </CardActions>
             </Card>
         </Box>
