@@ -44,47 +44,41 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-    const alumnos = await prisma.alumnoXcursoXdivision.findMany({
-        include: {
-            cursoXdivision: true
-        },
-        // where: {
-        //     cursoXdivision: {
-        //         idCurso: i
-        //     }
-        // }
+    // const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+    //     include: {
+    //         cursoXdivision: true
+    //     }
+    // })
 
-    })
+    // fechas && fechas.map((fecha) => {
+    //     alumnos && alumnos.map(async (a) => {
+    //         const asistencia = await prisma.asistencia.create({
+    //             data: {
+    //                 idAlumnoXcursoXdivision: a.id,
+    //                 presente: false,
+    //                 ausente: false,
+    //                 ausenteJustificado: false,
+    //                 llegadaTarde: false,
+    //                 llegadaTardeJustificada: false,
+    //                 mediaFalta: false,
+    //                 mediaFaltaJustificada: false,
+    //                 motivo: "",
+    //                 creadoEn: fecha,
+    //                 idUsuario: 1,
+    //                 actualizadoEn: ""
+    //             }
 
-    fechas && fechas.map((fecha) => {
-        alumnos && alumnos.map(async (a) => {
-            const asistencia = await prisma.asistencia.create({
-                data: {
-                    idAlumnoXcursoXdivision: a.id,
-                    presente: false,
-                    ausente: false,
-                    ausenteJustificado: false,
-                    llegadaTarde: false,
-                    llegadaTardeJustificada: false,
-                    mediaFalta: false,
-                    mediaFaltaJustificada: false,
-                    motivo: "",
-                    creadoEn: fecha,
-                    idUsuario: 1,
-                    actualizadoEn: ""
-                }
-
-            })
-            console.log(asistencia)
-        })
-    })
+    //         })
+    //         console.log(asistencia)
+    //     })
+    // })
 
 
 
 
 
-    const trimestres = await prisma.trimestre.findMany({
-    })
+    // const trimestres = await prisma.trimestre.findMany({
+    // })
 
     // const nota = await prisma.nota.findMany({
     //     where: {
@@ -306,12 +300,7 @@ async function main() {
 
     // console.log(alumnos)
 
-
-
-
-
     for (let i = 1; i < 7; i++) {
-
         const alumnos = await prisma.alumnoXcursoXdivision.findMany({
             include: {
                 cursoXdivision: true
@@ -335,8 +324,6 @@ async function main() {
         })
 
         // console.log(i)
-
-
         materias && materias.map(m => {
             // console.log("entro a materias.map")
             trimestres && trimestres.map(t => {
@@ -363,11 +350,7 @@ async function main() {
             })
 
         })
-
     }
-
-
-
 
     // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
