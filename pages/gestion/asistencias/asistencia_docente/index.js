@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 import { Layout } from "../../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
@@ -20,8 +19,6 @@ export default function Asistencias() {
     const pageSize = 5
 
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
@@ -41,9 +38,6 @@ import { useRouter } from "next/router";
 export default function Asistencias() {
     const [pagina, setPagina] = useState(1)
     const pageSize = 5
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const [presente, setPresente] = useState(false)
     const [ausente, setAusente] = useState(false)
@@ -52,7 +46,6 @@ export default function Asistencias() {
     const [ltj, setLtj] = useState(false)
     const [mf, setMf] = useState(false)
     const [mfj, setMfj] = useState(false)
-<<<<<<< HEAD
 <<<<<<< HEAD
     const [asistencias, setAsistencias] = useState([])
 
@@ -143,8 +136,6 @@ export default function Asistencias() {
         setIndice(windowSize.width < 1250 ? indiceMobile : IndicePc)
     }, [windowSize])
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const [motivo, setMotivo] = useState('')
     const [asistencias, setAsistencias] = useState([])
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
@@ -161,9 +152,6 @@ export default function Asistencias() {
     const router = useRouter()
     const [asistenciaActual, setAsistenciaActual] = useState()
     let queryParams = []
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 
     useEffect(() => {
@@ -171,7 +159,6 @@ export default function Asistencias() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-<<<<<<< HEAD
 <<<<<<< HEAD
         listarAsistencias()
     }, [loading, authUser, usuario.id])
@@ -196,11 +183,6 @@ export default function Asistencias() {
         listarAsistencias()
     }, [loading, authUser, idCurso, usuario.id])
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
-        listarCursos()
-        listarAsistencias()
-    }, [loading, authUser, idCurso, usuario.id])
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -208,7 +190,6 @@ export default function Asistencias() {
             setUsuario({ id: res.data?.id })
         }
     }
-<<<<<<< HEAD
 <<<<<<< HEAD
     const listarAsistencias = async () => {
         setCargando(true)
@@ -226,8 +207,6 @@ export default function Asistencias() {
         if (apellidoDocente) {
             queryParams.push({ apellidoDocente })
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const listarCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
         if (res.data) {
@@ -249,9 +228,6 @@ export default function Asistencias() {
         }
         if (apellidoAlumno) {
             queryParams.push({ apellidoAlumno })
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
         }
         if (legajo) {
@@ -265,12 +241,7 @@ export default function Asistencias() {
         })
         console.log(params);
 <<<<<<< HEAD
-<<<<<<< HEAD
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente?${params}`)
-=======
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias?${params}`)
-        console.log(res.data);
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 =======
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias?${params}`)
         console.log(res.data);
@@ -280,7 +251,6 @@ export default function Asistencias() {
         }
     }
 <<<<<<< HEAD
-<<<<<<< HEAD
 
     const handleNombreDocente = (e) => {
         setNombreDocente(e.target.value)
@@ -289,8 +259,6 @@ export default function Asistencias() {
     const handleApellidoDocente = (e) => {
         setApellidoDocente(e.target.value)
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
         paginacion.saltar(pagina)
@@ -305,9 +273,6 @@ export default function Asistencias() {
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     }
     const handleLegajo = (e) => {
@@ -315,11 +280,7 @@ export default function Asistencias() {
     }
     const handleFecha = (value) => {
 <<<<<<< HEAD
-<<<<<<< HEAD
         setFecha(value || new Date().toUTCString())
-=======
-
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 =======
 
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
@@ -336,7 +297,6 @@ export default function Asistencias() {
     });
 
 <<<<<<< HEAD
-<<<<<<< HEAD
     const onUpdate = async () => {
         // const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/update/${id}`, {
         //     presente: presente,
@@ -351,8 +311,6 @@ export default function Asistencias() {
         // onCancel()
         // listarAsistencias()
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const onSave = async (id) => {
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
             presente: presente,
@@ -386,9 +344,6 @@ export default function Asistencias() {
         console.log(res.data);
         onCancel()
         listarAsistencias()
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     }
 
@@ -471,7 +426,6 @@ export default function Asistencias() {
         setMfj(checked)
     }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
     return (
         <Layout>
@@ -1211,8 +1165,6 @@ export default function Asistencias() {
                 }
             </div>
 =======
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -1852,9 +1804,6 @@ export default function Asistencias() {
                     )
                 }
             </Container>
-<<<<<<< HEAD
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
-=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 
         </Layout>
