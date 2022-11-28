@@ -1,5 +1,5 @@
 
-import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import TextField from '@mui/material/TextField';
 import { Search } from "@mui/icons-material";
+import Loading from "../../../components/loading";
+import { usePagination } from "../../../components/hooks/paginationHook";
 
 export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
@@ -17,7 +19,16 @@ export default function MantenimientoUsuario() {
     const [apellido, setApellido] = useState("")
     const [legajo, setLegajo] = useState("")
     const queryParams = []
+    const pageSize = 5
+    const cantidadPaginas = Math.ceil(usuarios?.length / pageSize)
+    const paginacion = usePagination(usuarios || [], pageSize)
+    const [pagina, setPagina] = useState(1)
+    const [cargandoInfo, setCargandoInfo] = useState(false)
 
+    const handlerCambioPagina = (e, pagina) => {
+        setPagina(pagina)
+        paginacion.saltar(pagina)
+    }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -41,11 +52,13 @@ export default function MantenimientoUsuario() {
                 params += `${key}=${qp[key]}&`
             }
         })
+        setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?${params}`)
         if (res.data) {
             setUsuarios(res.data)
             limpiarCampos()
         }
+        setCargandoInfo(false)
     }
     const limpiarCampos = () => {
         setNombre("")
@@ -119,7 +132,7 @@ export default function MantenimientoUsuario() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {usuarios.map((u, i) => (
+                        {paginacion.dataActual().map((u, i) => (
                             <TableRow key={i}>
                                 <TableCell component="th" scope="row">{u.legajo}</TableCell>
                                 <TableCell align="right">{u.nombre}</TableCell>
@@ -133,6 +146,24 @@ export default function MantenimientoUsuario() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {
+                cargandoInfo && (
+                    <Loading size={80} />
+                )
+            }
+            {
+                usuarios.length > 0 && (
+                    <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+                        <Pagination
+                            count={cantidadPaginas}
+                            size='large'
+                            page={pagina}
+                            variant="outlined"
+                            shape='circular'
+                            onChange={handlerCambioPagina} />
+                    </Container>
+                )
+            }
         </Layout>
     )
 }
