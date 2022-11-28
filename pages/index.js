@@ -4,6 +4,7 @@ import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
 import TarjetaNovedades from '../components/tarjeta_noticias'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useRouter } from 'next/router'
 import Pagination from '../components/Pagination/Pagination'
 import Loading from '../components/loading'
@@ -29,6 +30,8 @@ const Home = () => {
   const traerNoticias = () => {
     setCargandoInfo(true)
 =======
+=======
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
@@ -51,6 +54,9 @@ const Home = () => {
   }
 
   const traerNoticias = () => {
+<<<<<<< HEAD
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
+=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
       .then(res => {
@@ -58,11 +64,17 @@ const Home = () => {
           console.log(res.data);
           setNoticias(res.data)
 <<<<<<< HEAD
+<<<<<<< HEAD
           setCargandoInfo(false)
         }
       }).catch(err => {
         console.error(err);
         setCargandoInfo(false)
+=======
+        }
+      }).catch(err => {
+        console.error(err);
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 =======
         }
       }).catch(err => {
@@ -77,6 +89,7 @@ const Home = () => {
 
   return (
     <Layout>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <div className='container' style={{ marginTop: "20px", marginBottom: "20px" }}>
         {
@@ -118,6 +131,8 @@ const Home = () => {
         }
       </div>
 =======
+=======
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
       {
         authUser && (
           <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
@@ -150,6 +165,9 @@ const Home = () => {
           </Container>
         )
       }
+<<<<<<< HEAD
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
+=======
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     </Layout>
   )
