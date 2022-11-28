@@ -11,9 +11,6 @@ import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
 import Notificaciones from "../components/notificacion_panel";
 
-
-
-
 const Home = () => {
   const [noticias, setNoticias] = useState()
   const [pagina, setPagina] = useState(1)
@@ -47,7 +44,7 @@ const Home = () => {
   return (
     <Layout>
       <div className='container' style={{ marginTop: "20px", marginBottom: "20px" }}>
-     
+
         {
           authUser && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
@@ -55,7 +52,6 @@ const Home = () => {
             </Button>
           )
         }
-<<<<<<< HEAD:pages/index.js
         {
           cargandoInfo && (
             <div className="col-md-4 m-auto">
@@ -72,7 +68,6 @@ const Home = () => {
             ))
           }
         </div>
-=======
         <Box sx={{ flexGrow: 1 }}>
           <Grid container >
             {
@@ -85,8 +80,6 @@ const Home = () => {
           </Grid>
         </Box>
 
-
->>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/index.jsx
         {
           noticias && noticias.length > 0 && (
             <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
@@ -100,8 +93,8 @@ const Home = () => {
             </Container>
           )
         }
-      </div>
-    </Layout>
+      </div >
+    </Layout >
   )
 }
 

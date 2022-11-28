@@ -6,7 +6,7 @@ import { Layout } from "../../../components/layout";
 import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 
 export default function NuevaSancion() {
-    const [sancion, setSancion] = useState({ idAlumno: '', idCurso: '', motivo: '', idTipoSancion: '' })
+    const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: '', motivo: '', idTipoSancion: 0 })
 
     const [alumnos, setAlumnos] = useState()
     const [cursos, setCursos] = useState()

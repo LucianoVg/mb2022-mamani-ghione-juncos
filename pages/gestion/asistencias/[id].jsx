@@ -61,41 +61,6 @@ const MasInfo = () => {
     }, [id, loading, authUser])
     return (
         <Layout>
-<<<<<<< HEAD:pages/gestion/asistencias/[id].js
-            <div className="container">
-                <h1>Mas Información</h1>
-                <form className='needs-validation '>
-                    <div className="row g-3">
-                        <div className="col-md-2">
-                            <h3><strong>Curso: </strong></h3>
-                            <h4>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</h4>
-                        </div>
-
-                        <div className="col-md-7">
-                            <h3><strong>Curso: </strong></h3>
-                            <h4>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</h4>
-                        </div>
-
-                        <div className="col-md-3">
-                            {
-                                asistencia?.motivo ? (
-                                    <div className='mb-2'>
-                                        <h3><strong>Editado por: </strong></h3>
-                                        <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
-                                    </div>
-                                ) :
-                                    (
-                                        <div className='mb-2'>
-                                            <h3><strong>Creado por:</strong></h3>
-                                            <h4>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</h4>
-                                        </div>
-                                    )
-                            }
-                        </div>
-                        <hr className="mb-2" />
-                        <div className="col-md-4">
-                            <h3><strong>Asistencia Actual</strong></h3>
-=======
             <div>
                 <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
                 <form className='needs-validation'>
@@ -127,7 +92,6 @@ const MasInfo = () => {
                     <div className='hstack gap-3'>
                         <Box component={'div'} sx={{ marginBottom: 2 }}>
                             <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
->>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/[id].jsx
                             {
                                 asistencia?.presente ? (
                                     <h4>Presente</h4>
@@ -161,38 +125,6 @@ const MasInfo = () => {
                                             )
                                     )
                             }
-<<<<<<< HEAD:pages/gestion/asistencias/[id].js
-                        </div>
-                        <div className="col-md-3">
-                            <h3><strong>Creado el: </strong></h3>
-                            <h4>{asistencia?.creadoEn}</h4>
-                        </div>
-                        <div className="col-md-5">
-                            {
-                                asistencia?.actualizadoEn ? (
-                                    <div className='mb-2'>
-                                        <h3><strong>Actualizado el:</strong></h3>
-                                        <h4>{asistencia?.actualizadoEn}</h4>
-                                    </div>
-                                ) :
-                                    (
-                                        <div className='mb-2'>
-                                            <h3><strong>Actualizado en:</strong></h3>
-                                            <h4>--/--/----</h4>
-                                        </div>
-                                    )
-                            }
-                        </div>
-                        <hr className='mb-2' />
-                        <div className='col-md-5'>
-                            <h3><strong>Motivo</strong></h3>
-                            <h4>{asistencia?.motivo}</h4>
-                        </div>
-                    </div>
-
-                </form >
-            </div >
-=======
                         </Box>
                         <Box component={'div'} sx={{ marginBottom: 2 }}>
                             <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
@@ -221,7 +153,6 @@ const MasInfo = () => {
                     </Box>
                 </form>
             </div>
->>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/[id].jsx
         </Layout >
     )
 }

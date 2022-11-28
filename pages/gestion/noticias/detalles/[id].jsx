@@ -8,7 +8,7 @@ import Loading from "../../../../components/loading";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
-        id: '',
+        id: 0,
         titulo: '',
         descripcion: '',
         url: '',

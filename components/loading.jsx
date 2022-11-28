@@ -1,7 +1,7 @@
-import style from '../styles/loading.module.css';
+import { CircularProgress } from "@mui/material";
 
 export default function Loading({ size = 100 }) {
     return (
-        <span className={style.loader} style={{ width: size }}></span>
+        <CircularProgress sx={{ margin: 'auto' }} size={size} color="secondary" />
     )
 }

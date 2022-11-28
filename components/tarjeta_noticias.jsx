@@ -1,94 +1,56 @@
-import Image from "next/image";
 import styles from "../styles/tarjetaNoticias.module.css";
 import { useAuth } from "./context/authUserProvider";
+import { Card, CardContent, Box, CardActions, Button, Typography, IconButton, CardMedia } from "@mui/material";
 import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Edit } from "@mui/icons-material";
 
 const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const { authUser } = useAuth()
     const router = useRouter()
 
     return (
-        <div className={styles.card}>
-            <div style={{ position: 'relative' }} >
+        <Box xs={4}>
+            <Card
+                sx={{ maxWidth: 300, maxHeight: 450 }}
+                className={`${styles.card}`}
 
-                <div className={` ${styles.overflow}`} >
-                    <Image
-                        className={`${styles.card_img_top}`}
-                        component="img"
-                        width={300}
-                        height={310}
-                        layout="responsive"
-                        src={url}
-                        alt="imagen"
-                    />
-                    {
-                        authUser && (
-                            <a className={styles.editButton} href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 260, bottom: 270, }} >
-                                <FontAwesomeIcon
-                                    icon={faEdit}
-                                    style={{ fontSize: "20px", color: "black" }} />
-                            </a>
-                        )
-                    }
+            >
+                <div style={{ position: 'relative', backgroundColor: 'blue' }}>
+
+                    <div className={` ${styles.overflow}`} >
+                        <CardMedia
+                            className={`${styles.card_img_top}`}
+                            component="img"
+                            height="300"
+                            image={url}
+                            alt="imagen"
+
+                        />
+                        {
+                            authUser && (
+                                <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 250, bottom: 235, }} >
+                                    <IconButton  >
+                                        <Edit style={{ color: 'black', fontSize: '27px' }} />
+                                    </IconButton>
+                                </a>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className={styles.cardContent}>
-                <h5 className="text" style={{color: "black"}} ><strong>{titulo}</strong> </h5>
-                <p className="text2" style={{color: "black"}} >{descripcion}</p>
-            </div>
-            <div className={styles.cardActions}>
-                <button className="button-61" role="button" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)}>Mas info.</button>
-
-            </div>
-
-        </div>
+                <CardContent  >
+                    <Typography gutterBottom variant="h5" component="div">
+                        {titulo}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {descripcion}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="big">Mas info.</Button>
+                </CardActions>
+            </Card>
+        </Box>
     )
 }
 
 export default TarjetaNovedades
-
-
-
-// <Box xs={4}>
-// <Card
-//     sx={{ maxWidth: 300, maxHeight: 450 }}
-//     className={`${styles.card}`}
-
-// >
-//     <div style={{ position: 'relative', backgroundColor: 'blue' }}>
-
-//         <div className={` ${styles.overflow}`} >
-//             <CardMedia
-//                 className={`${styles.card_img_top}`}
-//                 component="img"
-//                 height="300"
-//                 image={url}
-//                 alt="imagen"
-
-//             />
-//             {
-//                 authUser && (
-//                     <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 250, bottom: 235, }} >
-//                         <IconButton  >
-//                             <Edit style={{ color: 'black', fontSize: '27px' }} />
-//                         </IconButton>
-//                     </a>
-//                 )
-//             }
-//         </div>
-//     </div>
-//     <CardContent  >
-//         <Typography gutterBottom variant="h5" component="div">
-//             {titulo}
-//         </Typography>
-//         <Typography variant="body2" color="text.secondary">
-//             {descripcion}
-//         </Typography>
-//     </CardContent>
-//     <CardActions>
-//         <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="big">Mas info.</Button>
-//     </CardActions>
-// </Card>
-// </Box>
