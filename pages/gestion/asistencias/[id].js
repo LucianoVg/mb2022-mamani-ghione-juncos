@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Layout } from '../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
+import { Box, Divider, TextField, Typography } from '@mui/material';
 
 const MasInfo = () => {
 
@@ -60,6 +61,7 @@ const MasInfo = () => {
     }, [id, loading, authUser])
     return (
         <Layout>
+<<<<<<< HEAD:pages/gestion/asistencias/[id].js
             <div className="container">
                 <h1>Mas Información</h1>
                 <form className='needs-validation '>
@@ -93,6 +95,39 @@ const MasInfo = () => {
                         <hr className="mb-2" />
                         <div className="col-md-4">
                             <h3><strong>Asistencia Actual</strong></h3>
+=======
+            <div>
+                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                <form className='needs-validation'>
+                    <div className='hstack gap-2 '>
+                        <Box component='div' sx={{ marginBottom: 2 }}>
+                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Alumno: </Typography>
+                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.usuario?.apellido} {asistencia?.alumnoXcursoXdivision?.usuario?.nombre}</Typography>
+                        </Box>
+                        <Box component='div' sx={{ marginBottom: 2 }}>
+                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Curso: </Typography>
+                            <Typography variant='body' sx={{ fontSize: 18 }}>{asistencia?.alumnoXcursoXdivision?.cursoXdivision?.curso?.nombre} {asistencia?.alumnoXcursoXdivision?.cursoXdivision?.division?.division}</Typography>
+                        </Box>
+                        {
+                            asistencia?.motivo != null ? (
+                                <Box component={'div'} sx={{ marginBottom: 2 }}>
+                                    <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Editado por: </Typography>
+                                    <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
+                                </Box>
+                            ) :
+                                (
+                                    <Box component='div' sx={{ marginBottom: 2 }}>
+                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Creado por:</Typography>
+                                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
+                                    </Box>
+                                )
+                        }
+                    </div>
+                    <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                    <div className='hstack gap-3'>
+                        <Box component={'div'} sx={{ marginBottom: 2 }}>
+                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/[id].jsx
                             {
                                 asistencia?.presente ? (
                                     <h4>Presente</h4>
@@ -126,6 +161,7 @@ const MasInfo = () => {
                                             )
                                     )
                             }
+<<<<<<< HEAD:pages/gestion/asistencias/[id].js
                         </div>
                         <div className="col-md-3">
                             <h3><strong>Creado el: </strong></h3>
@@ -156,6 +192,36 @@ const MasInfo = () => {
 
                 </form >
             </div >
+=======
+                        </Box>
+                        <Box component={'div'} sx={{ marginBottom: 2 }}>
+                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
+                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
+                        </Box>
+                        <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                        {
+                            asistencia?.actualizadoEn != null ? (
+                                <Box component='div' sx={{ marginBottom: 2 }}>
+                                    <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
+                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
+                                </Box>
+                            ) :
+                                (
+                                    <Box component='div' sx={{ marginBottom: 2 }}>
+                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado en:</Typography>
+                                        <Typography variant={'body1'} sx={{ fontSize: 18 }}>--/--/----</Typography>
+                                    </Box>
+                                )
+                        }
+                    </div>
+
+                    <Box component={'div'} sx={{ margin: 'auto' }}>
+                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
+                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo}</Typography>
+                    </Box>
+                </form>
+            </div>
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/[id].jsx
         </Layout >
     )
 }

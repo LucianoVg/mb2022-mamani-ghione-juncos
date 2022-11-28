@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Layout } from '../../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../../components/context/authUserProvider';
+import { Box, Divider, TextField, Typography } from '@mui/material';
 
 const MasInfo = () => {
 
@@ -27,6 +28,7 @@ const MasInfo = () => {
         )
 
     }
+<<<<<<< HEAD:pages/gestion/asistencias/asistencia_docente/[id].js
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -87,6 +89,63 @@ const MasInfo = () => {
                         <hr className="mb-2" />
                         <div className="col-md-4">
                             <h3><strong>Asistencia Actual</strong></h3>
+=======
+
+    const mostrarAsistencia2 = (a) => {
+        if (a.presente && 1) {
+            setAsistenciaActual = 'Presente'
+        }
+        if (a.ausente && 1) {
+            setAsistenciaActual = 'Ausente'
+        }
+        if (a.ausenteJustificado && 1) {
+            setAsistenciaActual = 'Ausente Justificado'
+        }
+        if (a.llegadaTarde && 1) {
+            setAsistenciaActual = 'Llegada Tarde'
+        }
+        if (a.llegadaTardeJustificada && 1) {
+            setAsistenciaActual = 'Llegada Tarde Justificada'
+        }
+        if (a.mediaFalta && 1) {
+            setAsistenciaActual = 'Media Falta'
+        }
+        if (a.mediaFaltaJustificada && 1) {
+            setAsistenciaActual = 'Media Falta Justificada '
+        }
+    }
+
+    return (
+        <Layout>
+            <div>
+                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                <form className='needs-validation'>
+                    <div className='hstack gap-2 '>
+                        <Box component='div' sx={{ marginBottom: 2 }}>
+                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Docente: </Typography>
+                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docenteXmateria?.usuario?.apellido} {asistencia?.docenteXmateria?.usuario?.nombre}</Typography>
+                        </Box>
+      
+                        {
+                            asistencia?.motivo != null ? (
+                                <Box component={'div'} sx={{ marginBottom: 2 }}>
+                                    <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Editado por: </Typography>
+                                    <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
+                                </Box>
+                            ) :
+                                (
+                                    <Box component='div' sx={{ marginBottom: 2 }}>
+                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Creado por:</Typography>
+                                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
+                                    </Box>
+                                )
+                        }
+                    </div>
+                    <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                    <div className='hstack gap-3'>
+                        <Box component={'div'} sx={{ marginBottom: 2 }}>
+                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/asistencia_docente/[id].jsx
                             {
                                 asistencia?.presente ? (
                                     <h4>Presente</h4>
@@ -120,6 +179,7 @@ const MasInfo = () => {
                                             )
                                     )
                             }
+<<<<<<< HEAD:pages/gestion/asistencias/asistencia_docente/[id].js
                         </div>
                         <div className="col-md-3">
                             <h3><strong>Creado el: </strong></h3>
@@ -152,6 +212,37 @@ const MasInfo = () => {
             </div >
         </Layout >
 
+=======
+                        </Box>
+                        <Box component={'div'} sx={{ marginBottom: 2 }}>
+                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
+                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
+                        </Box>
+                        <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                        {
+                            asistencia?.actualizadoEn != null ? (
+                                <Box component='div' sx={{ marginBottom: 2 }}>
+                                    <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
+                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
+                                </Box>
+                            ) :
+                                (
+                                    <Box component='div' sx={{ marginBottom: 2 }}>
+                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado en:</Typography>
+                                        <Typography variant={'body1'} sx={{ fontSize: 18 }}>--/--/----</Typography>
+                                    </Box>
+                                )
+                        }
+                    </div>
+
+                    <Box component={'div'} sx={{ margin: 'auto' }}>
+                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
+                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo}</Typography>
+                    </Box>
+                </form>
+            </div>
+        </Layout >
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/gestion/asistencias/asistencia_docente/[id].jsx
     )
 }
 

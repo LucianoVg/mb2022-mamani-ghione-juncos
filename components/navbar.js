@@ -37,14 +37,30 @@ const AppBar = styled(MuiAppBar, {
 
 export const Navbar = () => {
     const { loading, authUser } = useAuth()
+<<<<<<< HEAD:components/navbar.js
 <<<<<<< HEAD:components/navbar.jsx
+=======
+    /* Set the width of the side navigation to 250px */
+    // function openNav() {
+    //     document.getElementById("mySidenav").style.width = "250px";
+    // }
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):components/navbar.jsx
     const windowSize = useWindowSize()
-    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
 
+    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     useEffect(() => {
         setTitle(windowSize.width <= 440 ? "El Salvador" : "Instituto Privado \"El Salvador\"")
     }, [windowSize])
 
+
+    // const width = screen.width
+    // console.log("screen width:", width)
+    // const width2 = window.innerWidth
+    // console.log("window:",width2)
+
+    // if (window.innerWidth <= 450) {
+    //     setTitle("El Salvador")
+    // }
     return (
         <div className="nav-bar">
             <div className="d-flex bd-highlight">
@@ -53,6 +69,7 @@ export const Navbar = () => {
                     <button className="navbar-toggler" style={{ fontSize: "20px" }} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <a href="#mySidenav" data-bs-toggle="offcanvas" >
                             <span className="navbar-toggler-icon" data-bs-target="mySidenav">
+
                                 <FontAwesomeIcon
                                     color="white"
                                     icon={faBars} />
@@ -61,7 +78,7 @@ export const Navbar = () => {
                     </button>
                 </div>
                 <div className="p-1 w-100 bd-highlight" style={{ marginLeft: "-10px", marginTop: "3px" }}  >
-                    <a className="navbar-brand" href="/" style={{ color: "white", fontSize: "15px" }}> <strong>{title}</strong></a>
+                    <a className="navbar-brand" href="#" style={{ color: "white", fontSize: "15px" }}> <strong>{title}</strong></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

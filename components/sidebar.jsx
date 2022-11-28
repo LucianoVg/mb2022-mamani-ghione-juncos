@@ -5,9 +5,8 @@ import { useAuth } from './context/authUserProvider'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDashboard, faFileCircleCheck, faHome, faLockOpen, faPieChart } from '@fortawesome/free-solid-svg-icons'
-import Link from 'next/link'
 
-const Sidebar = () => {
+const Sidebar = ({ children }) => {
     const [menusGestion, setMenusGestion] = useState()
     const [menusReportes, setMenusReportes] = useState()
     const router = useRouter()
@@ -47,6 +46,11 @@ const Sidebar = () => {
                 router.reload()
             })
     }
+
+    /* Set the width of the side navigation to 0 */
+    // function closeNav() {
+    //     document.getElementById("mySidenav").style.width = "0";
+    // }
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Docente'
@@ -56,33 +60,25 @@ const Sidebar = () => {
     }
     return (
         <div className="offcanvas offcanvas-start" tabIndex="-1" id='mySidenav' aria-labelledby="mySidenavLabel"
-            style={{ maxWidth: "250px" }}>
+        style={{maxWidth: "250px"}}>
             <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="mySidenavLabel">Offcanvas</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div className="offcanvas-body">
-                {/* <div>
+                <div>
                     Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-                </div> */}
-                {
-                    menusGestion && (
-                        <div className="dropdown mt-3">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                Gestion
-                            </button>
-                            <ul className="dropdown-menu">
-                                {
-                                    menusGestion.map(m => (
-                                        <li key={m.id}>
-                                            <a className="dropdown-item" href={m.menu?.url}>{m.menu?.menuSistema}</a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    )
-                }
+                </div>
+                <div className="dropdown mt-3">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Dropdown button
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -122,26 +118,26 @@ const Sidebar = () => {
         //                             </li>
         //                         )
         //                     }
-        /* <li>
-            <a href="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
-                <FontAwesomeIcon
-                    icon={faPieChart} />
-                <span className="ms-1 d-none d-sm-inline">Reportes</span> </a>
-            <ul className="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                <li className="w-100">
-                    <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 1</a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 2</a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a>
-                </li>
-            </ul>
-        </li> */
+                            /* <li>
+                                <a href="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                                    <FontAwesomeIcon
+                                        icon={faPieChart} />
+                                    <span className="ms-1 d-none d-sm-inline">Reportes</span> </a>
+                                <ul className="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                                    <li className="w-100">
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a>
+                                    </li>
+                                </ul>
+                            </li> */
         //                     <li>
         //                         <a href="/gestion/cuenta/login" className="nav-link px-0 align-middle">
         //                             <FontAwesomeIcon

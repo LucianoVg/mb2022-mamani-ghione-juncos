@@ -24,19 +24,28 @@ export default class MyDocument extends Document {
 <<<<<<< HEAD:pages/_document.jsx
 
 
+<<<<<<< HEAD:pages/_document.js
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous" />
 =======
                     
                     <meta name="emotion-insertion-point" content="" />
                     {this.props.emotionStyleTags}
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):pages/_document.js
+=======
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous" />
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/_document.jsx
                 </Head>
                 <body>
                     <Main />
                     <NextScript />
+<<<<<<< HEAD:pages/_document.js
 <<<<<<< HEAD:pages/_document.jsx
 
 
+=======
+                   
+                  
+>>>>>>> parent of 021b5a9 (quitando material del proyecto):pages/_document.jsx
                     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossOrigin="anonymous"></script>
                     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossOrigin="anonymous"></script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
