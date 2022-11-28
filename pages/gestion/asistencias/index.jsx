@@ -134,7 +134,11 @@ const [indice, setIndice] = useState(IndicePc)
         traerUsuario()
         listarCursos()
         listarAsistencias()
+<<<<<<< HEAD
         setIndice(windowSize.width <= 440 ? setIndice(indiceMobile) : setIndice(IndicePc))
+=======
+        setIndice(windowSize.width <= 440 ? " " : "position: \"absolute\", marginLeft: \"-150px\", marginTop: \"-40px\"")
+>>>>>>> parent of 6cf86a6 (modificando detalles)
     }, [loading, authUser, usuario.id])
 
     const traerUsuario = async () => {
@@ -426,7 +430,8 @@ const [indice, setIndice] = useState(IndicePc)
                 </Modal> */}
                 {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-                <form className="row mt-3 g-3">
+                <form className="row g-3">
+
                     <div className="col-md-2">
                         <label htmlFor="demo-simple-select">Curso</label>
                         <select
@@ -445,6 +450,7 @@ const [indice, setIndice] = useState(IndicePc)
                         </select>
                     </div>
                     <div className="col-md-2">
+
                         <label htmlFor="inputFecha">Fecha</label>
                         <input
                             id="inputFecha"
@@ -459,9 +465,9 @@ const [indice, setIndice] = useState(IndicePc)
                     </div>
 
                     <div className="col-md-12">
-                        <h5>Buscar Alumno:</h5>
+                        <h4>Buscar Alumno:</h4>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="form-group">
                             <input className="form-control"
                                 name="legajo"
@@ -473,7 +479,7 @@ const [indice, setIndice] = useState(IndicePc)
                             <label>Legajo</label>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <div className="form-group">
                             <input className="form-control"
                                 name="nombreAlumno"
@@ -484,7 +490,11 @@ const [indice, setIndice] = useState(IndicePc)
                             <label>Nombre Alumno</label>
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div className="col-md-3 ">
+=======
+                    <div className="col-md-2">
+>>>>>>> parent of 6cf86a6 (modificando detalles)
                         <div className="form-group">
                             <input
                                 className="form-control"
@@ -501,8 +511,8 @@ const [indice, setIndice] = useState(IndicePc)
                     <div className="col-md-12">
                         <button onClick={buscarAsistencias} className="button-61">
                             <FontAwesomeIcon
-                                icon={faSearch} style={{ marginRight: "5px" }} />
-                            Buscar
+                                icon={faSearch} style={{marginRight: "5px"}} />
+                             Buscar
                         </button>
                     </div>
 
@@ -542,6 +552,12 @@ const [indice, setIndice] = useState(IndicePc)
                 </form>
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> parent of 6cf86a6 (modificando detalles)
                 {
                     cargando && (
                         <div className="row">
