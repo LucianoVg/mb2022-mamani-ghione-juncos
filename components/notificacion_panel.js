@@ -9,11 +9,8 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Popover from '@mui/material/Popover';
 import { useAuth } from './context/authUserProvider';
-<<<<<<< HEAD
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faHome, faUser, faLock, faLockOpen, faListCheck, faChartPie, faUsers, faFileCircleCheck, faCheck, faCertificate, faWarning, faCalendar, faBell } from "@fortawesome/free-solid-svg-icons";
-=======
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 
 export const Notificacion = () => {
     const { loading, authUser } = useAuth()
@@ -60,7 +57,6 @@ export const Notificacion = () => {
         }
     }
     return (
-<<<<<<< HEAD
         <>
             <a className="dropdown" data-toggle="dropdown" role="button" id="dropdownMenu"
                 data-bs-toggle="dropdown" onClick={handleClick}>
@@ -103,73 +99,3 @@ export const Notificacion = () => {
 }
 
 export default Notificacion;
-=======
-        <Container>
-            <Tooltip title='Ver Notificacion'>
-                <IconButton onClick={handleClick}>
-                    <Badge
-
-                        aria-describedby={id} variant="contained"
-                        badgeContent={!localStorage.getItem('vistas') && notificaciones ?
-                            notificaciones.length : null}
-
-                        color="info"
-                        style={{ float: 'right' }}  >
-
-                        <NotificationsRoundedIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                    </Badge>
-                </IconButton>
-            </Tooltip>
-
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                PaperProps={{
-                    style: { width: '320px' },
-                }}
-
-            >
-                <List>
-                    {
-                        notificaciones && notificaciones?.map((n, i) => (
-                            <ListItem key={i} disablePadding>
-                                <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
-                                    <ListItemText primary={n.notificacion?.asunto} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))
-                    }
-                    {
-                        !notificaciones || !notificaciones?.length && (
-                            <ListItem>
-                                <ListItemText>No hay notificaciones</ListItemText>
-                            </ListItem>
-                        )
-                    }
-                    <ListItem disablePadding>
-                        <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones" >
-                            <ListItemText>
-                                <div style={{ textAlign: 'center' }}>
-                                    <strong>Ver todo</strong>
-                                </div>
-                            </ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Popover>
-        </Container>
-    )
-}
-
-export default Notificacion
->>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
