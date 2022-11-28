@@ -693,7 +693,7 @@ export default function Asistencias() {
                     </Table>
                 </TableContainer>
                 {
-                    asistencias && asistencias.length > 0 && (
+                    asistencias && asistencias?.length > 0 && (
                         <Pagination
                             sx={{ marginTop: 2 }}
                             count={cantidadPaginas}

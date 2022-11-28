@@ -1,11 +1,13 @@
 import { Search } from "@mui/icons-material";
-import { Button, Container, Box, Grid, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Box, Grid, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Pagination } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
+import { usePagination } from "../../../components/hooks/paginationHook";
 import { Layout } from "../../../components/layout";
+import Loading from "../../../components/loading";
 
 const Sanciones = () => {
     const [sanciones, setSanciones] = useState()
@@ -15,8 +17,15 @@ const Sanciones = () => {
     const [idCurso, setIdCurso] = useState('')
     const [idAlumno, setIdAlumno] = useState('')
     const [alumnos, setAlumnos] = useState()
-
-
+    const [cargandoInfo, setCargandoInfo] = useState(false)
+    const pageSize = 5
+    const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
+    const paginacion = usePagination(sanciones || [], pageSize)
+    const [pagina, setPagina] = useState(1)
+    const handlerCambioPagina = (e, pagina) => {
+        setPagina(pagina)
+        paginacion.saltar(pagina)
+    }
     const handleCurso = (e) => {
         setIdCurso(e.target.value)
     }
@@ -26,27 +35,27 @@ const Sanciones = () => {
     const buscarSanciones = (e) => {
         e.preventDefault()
         console.log(idCurso, idAlumno);
-
+        setCargandoInfo(true)
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${idCurso}/${idAlumno}`)
             .then(res => {
                 if (res.data) {
                     console.log(res.data);
                     setSanciones(res.data)
+                    setCargandoInfo(false)
                 }
             })
+
     }
-
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/')
-        }
-
+    const traerCursos = () => {
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
             .then(res => {
                 if (res.data) {
                     setCursos(res.data)
                 }
             })
+    }
+    const traerSanciones = () => {
+        setCargandoInfo(true)
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`)
             .then(res => {
                 if (res.data) {
@@ -54,12 +63,23 @@ const Sanciones = () => {
                     setSanciones(res.data)
                 }
             })
+        setCargandoInfo(false)
+    }
+    const traerAlumnos = () => {
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
             .then(res => {
                 if (res.data) {
                     setAlumnos(res.data)
                 }
             })
+    }
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/')
+        }
+        traerCursos()
+        traerAlumnos()
+        traerSanciones()
     }, [loading, authUser])
 
     return (
@@ -134,9 +154,15 @@ const Sanciones = () => {
 
             </Box>
 
-
             {
-                !loading && sanciones && (
+                cargandoInfo && (
+                    <Container sx={{ m: 'auto' }}>
+                        <Loading size={80} />
+                    </Container>
+                )
+            }
+            {
+                !cargandoInfo && (
                     <TableContainer component={Paper} sx={{ marginTop: 2 }}>
                         <Table sx={{ minWidth: 650 }}>
                             <TableHead>
@@ -179,6 +205,19 @@ const Sanciones = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                )
+            }
+            {
+                sanciones && sanciones?.length > 0 && (
+                    <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+                        <Pagination
+                            count={cantidadPaginas}
+                            size='large'
+                            page={pagina}
+                            variant="outlined"
+                            shape='circular'
+                            onChange={handlerCambioPagina} />
+                    </Container>
                 )
             }
         </Layout>
