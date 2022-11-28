@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { useAuth } from "./context/authUserProvider"
+<<<<<<< HEAD
 <<<<<<< HEAD:components/navbar.jsx
 import Notificaciones from "../components/notificacion_panel";
 import { useEffect, useState } from 'react'
@@ -7,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import useWindowSize from "./hooks/windowSizeHook";
 =======
+=======
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
 import { Toolbar, IconButton, Typography, Badge } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
@@ -33,6 +36,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
+<<<<<<< HEAD
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js
 
 export const Navbar = () => {
@@ -85,11 +89,19 @@ export const Navbar = () => {
 
 {/* <AppBar position="absolute" open={open}>
 =======
+=======
+
+export const Navbar = ({ toggleDrawer, open }) => {
+    const { loading, authUser } = useAuth()
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
     const router = useRouter()
     return (
         <>
             <AppBar position="absolute" open={open}>
+<<<<<<< HEAD
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js
+=======
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
                 <Toolbar
                     sx={{
                         pr: '24px', // keep right padding when drawer closed
@@ -134,6 +146,7 @@ export const Navbar = () => {
                     }
 
                 </Toolbar>
+<<<<<<< HEAD
 <<<<<<< HEAD:components/navbar.jsx
             </AppBar> */}
 =======
@@ -142,3 +155,9 @@ export const Navbar = () => {
     )
 }
 >>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js
+=======
+            </AppBar>
+        </>
+    )
+}
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap)
