@@ -1,12 +1,43 @@
+import Link from "next/link"
 import { useAuth } from "./context/authUserProvider"
+<<<<<<< HEAD:components/navbar.jsx
 import Notificaciones from "../components/notificacion_panel";
 import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import useWindowSize from "./hooks/windowSizeHook";
+=======
+import { Toolbar, IconButton, Typography, Badge } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuIcon from '@mui/icons-material/Menu'
+import MuiAppBar from '@mui/material/AppBar';
+import { styled } from '@mui/material/styles';
+import Notificacion from '../components/notificacion_panel'
+import { useRouter } from "next/router";
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: 280,
+        width: `calc(100% - ${280}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js
 
 export const Navbar = () => {
     const { loading, authUser } = useAuth()
+<<<<<<< HEAD:components/navbar.jsx
     const windowSize = useWindowSize()
     const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
 
@@ -53,6 +84,12 @@ export const Navbar = () => {
 
 
 {/* <AppBar position="absolute" open={open}>
+=======
+    const router = useRouter()
+    return (
+        <>
+            <AppBar position="absolute" open={open}>
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js
                 <Toolbar
                     sx={{
                         pr: '24px', // keep right padding when drawer closed
@@ -97,4 +134,11 @@ export const Navbar = () => {
                     }
 
                 </Toolbar>
+<<<<<<< HEAD:components/navbar.jsx
             </AppBar> */}
+=======
+            </AppBar>
+        </>
+    )
+}
+>>>>>>> parent of f4c7492 (reemplazo de material por bootstrap):components/navbar.js

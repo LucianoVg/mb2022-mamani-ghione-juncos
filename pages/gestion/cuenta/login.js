@@ -3,7 +3,12 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useAuth } from "../../../components/context/authUserProvider"
 import LoginLayout from "../../../components/loginLayout"
-import style from '../../../styles/login.module.css';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { Typography } from "@mui/material";
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
@@ -61,48 +66,56 @@ const Login = () => {
 
     return (
         <LoginLayout>
-            <form onSubmit={onSubmitData}>
-                <div className="form-group">
-                    <label htmlFor="email">Correo electronico</label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="correo"
-                        onChange={handleCorreo}
-                        className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Contraseña</label>
-                    <input
-                        id="password"
-                        type="password"
-                        className="form-control"
-                        name="password"
-                        onChange={handlePassword} />
-                </div>
+            <Box component="form" onSubmit={onSubmitData} sx={{ mt: 1 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Correo Electronico"
+                    name="correo"
+                    onChange={handleCorreo}
+                    autoComplete="email"
+                    autoFocus
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    onChange={handlePassword}
+                    label="Contrasenia"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                />
 
-                <button type="submit" className="btn btn-primary">Ingresar</button>
-                <a className={style.forgetPwd} onClick={() => {
-                    setMensaje("Consulte con el administrador del sistema")
-                    setTimeout(() => {
-                        setMensaje("")
-                    }, 3000);
-                }}> Olvidó sus credenciales?</a>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Ingresar
+                </Button>
+                <Grid container>
+                    <Grid item xs>
+                        <Typography component={'a'} variant="a" onClick={() => setMensaje("Consulte con el administrador del sistema")} sx={{ cursor: 'pointer' }}>
+                            Olvidó sus credenciales?
+                        </Typography>
+                    </Grid>
+                </Grid>
                 {
                     error !== "" && (
-                        <div className="alert alert-danger mt-2" role="alert">
-                            {error}
-                        </div>
+                        <Alert sx={{ m: 2 }} severity="warning">{error}</Alert>
                     )
                 }
                 {
                     mensaje !== "" && (
-                        <div className="alert alert-info mt-2" role="alert">
-                            {mensaje}
-                        </div>
+                        <Alert sx={{ m: 2 }} severity="info">{mensaje}</Alert>
                     )
                 }
-            </form>
+            </Box>
         </LoginLayout>
     )
 }

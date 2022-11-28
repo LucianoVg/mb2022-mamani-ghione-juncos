@@ -1,7 +1,11 @@
 #parent {
     width: 100%;
+
+
     overflow-x: hidden;
     /* elimine el position relative */
+
+
 }
 
 #child:hover {
@@ -18,6 +22,8 @@
     left: 0;
     right: -17px;
     /* Increase/Decrease this value for cross-browser compatibility */
+
     overflow-x: hidden;
     overflow-y: initial;
+
 }

@@ -1,12 +1,11 @@
 .login_container {
-    margin-left: 5%;
     margin-top: 5%;
     margin-bottom: 5%;
     margin-right: 5%;
 }
 
 .login_form_1 {
-    padding: 10%;
+    padding: 5%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
     background-image: url(/assets/img/portada.jpg);
 }
@@ -17,7 +16,7 @@
 }
 
 .login_form_2 {
-    padding: 2%;
+    padding: 5%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -27,5 +26,39 @@
 }
 
 .login_container form {
-    padding: 2%;
+    padding: 10%;
+}
+
+.btnSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+}
+
+/* .login_form_1 .btnSubmit {
+    font-weight: 600;
+    color: #fff;
+    background-color: #0062cc;
+} */
+
+.login_form_2 .btnSubmit {
+    font-weight: 600;
+    color: #b7a27e;
+    background-color: #303069;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.login_form_2 .ForgetPwd {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login_form_1 .ForgetPwd {
+    color: #0062cc;
+    font-weight: 600;
+    text-decoration: none;
 }
