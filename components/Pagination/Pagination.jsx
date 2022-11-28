@@ -1,5 +1,3 @@
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Pagination.module.css';
 
 export default function Pagination({ onNextPage, onPrevPage }) {
@@ -7,14 +5,10 @@ export default function Pagination({ onNextPage, onPrevPage }) {
         <div className={styles.paginationContent}>
             <ul className={styles.paginationItems}>
                 <li onClick={onPrevPage} className={styles.paginationItem}>
-                    <FontAwesomeIcon
-                        size='2x'
-                        icon={faArrowLeft} />
+                    <img src={'/assets/img/leftArrow.svg'} width={30} alt="arrowLeft" />
                 </li>
                 <li onClick={onNextPage} className={styles.paginationItem}>
-                    <FontAwesomeIcon
-                        size='2x'
-                        icon={faArrowRight} />
+                    <img src={'/assets/img/rightArrow.svg'} width={30} alt="arrowRight" />
                 </li>
             </ul>
         </div>
