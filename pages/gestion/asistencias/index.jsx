@@ -65,7 +65,7 @@ export default function Asistencias() {
 
 
     const windowSize = useWindowSize()
-
+   
 
     const IndicePc = <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
 
@@ -125,7 +125,7 @@ export default function Asistencias() {
         </div>
     </div>
 
-    const [indice, setIndice] = useState(IndicePc)
+const [indice, setIndice] = useState(IndicePc)
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -134,11 +134,8 @@ export default function Asistencias() {
         traerUsuario()
         listarCursos()
         listarAsistencias()
+        setIndice(windowSize.width <= 440 ? setIndice(indiceMobile) : setIndice(IndicePc))
     }, [loading, authUser, usuario.id])
-
-    useEffect(() => {
-        setIndice(windowSize.width < 1250 ? indiceMobile : IndicePc)
-    }, [windowSize])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -512,7 +509,7 @@ export default function Asistencias() {
                     {
                         indice
                     }
-
+                  
 
 
                     {/* <div className="col-md-4" style={{ position: "absolute", marginLeft: "800px", marginTop: "-40px" }} >
