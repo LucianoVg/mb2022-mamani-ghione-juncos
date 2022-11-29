@@ -148,7 +148,9 @@ export default function MantenimientoUsuario() {
             </TableContainer>
             {
                 cargandoInfo && (
-                    <Loading size={80} />
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
                 )
             }
             {

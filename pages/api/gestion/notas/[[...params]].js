@@ -13,8 +13,9 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
 
-        let { idMateria, idCurso, nombreAlumno, apellidoAlumno } = req.query
+        let { idMateria, idTrimestre, idCurso, nombreAlumno, apellidoAlumno } = req.query
         let OR = []
+
         let options = {
             include: {
                 materia: true,
