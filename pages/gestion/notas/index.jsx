@@ -316,7 +316,7 @@ export default function Notas() {
                     >
                         {
                             trimestres?.map(t => (
-                                <Tab label={t.trimestre} tabIndex={t.id} />
+                                <Tab key={t.id} label={t.trimestre} tabIndex={t.id} />
                             ))
                         }
                         {/* <Tab label="Segundo Trimestre" />
