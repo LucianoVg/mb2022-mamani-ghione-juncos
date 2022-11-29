@@ -7,14 +7,15 @@ import { Layout } from "../../../components/layout";
 
 export default function NuevoUsuario() {
     const router = useRouter()
+    const [roles, setRoles] = useState([])
     const [usuario, setUsuario] = useState({
         nombre: '', apellido: '', legajo: '',
-        correo: '', localidad: '', telefono: '', idRol: '',
-        direccion: '', contrasenia: '', idTutor: '', sexo: 'M', idCurso: ''
+        correo: '', localidad: '', telefono: '', idRol: 0,
+        direccion: '', contrasenia: '', idTutor: 0, sexo: 'M', idCurso: 0
     })
     const [cursos, setCursos] = useState()
     const [tutor, setTutor] = useState({
-        id: '', nombre: '', apellido: '', legajo: '',
+        id: 0, nombre: '', apellido: '', legajo: '',
         correo: '', localidad: '', telefono: '', idRol: roles?.find(r => r.tipo === 'Tutor')?.id,
         direccion: '', contrasenia: '', sexo: 'M'
     })
@@ -24,11 +25,11 @@ export default function NuevoUsuario() {
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
     const [esPreceptorODocente, setEsPreceptorODocente] = useState(false)
-    const [roles, setRoles] = useState([{ id: '', tipo: '' }])
+
     const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
+        // console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
@@ -98,7 +99,7 @@ export default function NuevoUsuario() {
 
         if (esAlumno && tutor.nombre !== '' && tutor.apellido !== '' && tutor.correo !== ''
             && tutor.legajo !== '' && tutor.localidad !== '' && tutor.sexo !== ''
-            && tutor.telefono !== '' && tutor.contrasenia !== '' && tutor.idRol !== ''
+            && tutor.telefono !== '' && tutor.contrasenia !== '' && tutor.idRol !== 0
             && tutor.direccion !== '') {
 
             axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {

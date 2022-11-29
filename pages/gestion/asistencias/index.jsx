@@ -358,21 +358,9 @@ export default function Asistencias() {
                             </LocalizationProvider>
                         </Box>
 
-                        <h4>Buscar Alumno:</h4>
-
-                        {/* <Autocomplete
-                            sx={{ width: '200px' }}
-                            {...defaultOptions}
-                            freeSolo
-                            // isOptionEqualToValue={(option, value) => option.id === value.id}
-                            multiple={false}
-                            id="controlled-demo"
-                            value={value}
-                            onChange={handleValue}
-
-                            renderInput={(params) => <TextField {...params} label="Alumnos" variant="outlined" />}
-
-                        /> */}
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            Buscar Alumno:
+                        </Typography>
 
                         <Box direction='row'>
                             <TextField
@@ -402,22 +390,35 @@ export default function Asistencias() {
                     </Grid>
                     <Grid item xs>
                         <Box component="span">
-                            <Stack direction="row" spacing={2}>
-                                <h5 >
+                            <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+                                <Typography variant="h6">
                                     <strong>Asistencia modificada:</strong>
-                                    <Button variant="contained" disabled style={{ marginRight: '20px', fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
-                                </h5>
-
+                                </Typography>
+                                <Button variant="contained" disabled style={{ marginRight: '20px', fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
                             </Stack >
-                            <h5 style={{ marginTop: '-10px' }}>
-                                <strong>P:</strong>Presente  <br />
-                                <strong>A:</strong>Ausente <br />
-                                <strong>AJ:</strong> Ausente Justificado <br />
-                                <strong>LT:</strong>Llegada Tarde <br />
-                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                <strong>MF:</strong>Media Falta <br />
-                                <strong>MFJ:</strong> Media Falta Justificada  <br />
-                            </h5>
+                            <Container sx={{ mt: '-10px' }}>
+                                <Typography variant="body2">
+                                    <strong>P:</strong> Presente
+                                </Typography>  <br />
+                                <Typography variant="body2">
+                                    <strong>A:</strong> Ausente
+                                </Typography> <br />
+                                <Typography variant="body2">
+                                    <strong>AJ:</strong> Ausente Justificado
+                                </Typography> <br />
+                                <Typography variant="body2">
+                                    <strong>LT:</strong>Llegada Tarde
+                                </Typography> <br />
+                                <Typography variant="body2">
+                                    <strong>LTJ:</strong> Llegada Tarde Justificada
+                                </Typography> <br />
+                                <Typography variant="body2">
+                                    <strong>MF:</strong>Media Falta
+                                </Typography> <br />
+                                <Typography variant="body2">
+                                    <strong>MFJ:</strong> Media Falta Justificada
+                                </Typography>  <br />
+                            </Container>
                         </Box>
                     </Grid>
                 </Grid>

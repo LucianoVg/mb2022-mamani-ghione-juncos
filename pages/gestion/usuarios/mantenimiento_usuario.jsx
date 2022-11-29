@@ -67,7 +67,7 @@ export default function MantenimientoUsuario() {
     }
     const handleNombre = (e) => {
         setNombre(e.target.value)
-    };
+    }
     const handleLegajo = (e) => {
         setLegajo(e.target.value)
     }
