@@ -259,8 +259,7 @@ export default function Asistencias() {
     return (
         <Layout>
             <Container
-                style={{ position: 'relative', }}
-            >
+                style={{ position: 'relative', }}>
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
 

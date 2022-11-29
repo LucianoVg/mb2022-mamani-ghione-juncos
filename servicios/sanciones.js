@@ -1,8 +1,8 @@
 import { Prisma } from "./prisma";
 
-export async function traerSanciones(idCurso = '', idAlumno = '') {
+export async function traerSanciones(idCurso = 0, idAlumno = 0) {
     try {
-        const sanciones = idCurso === '' || idAlumno === ''
+        const sanciones = idCurso === 0 || idAlumno === 0
             ? await Prisma.newPrisma().sancion.findMany({
                 include: {
                     alumnoXCursoXDivision: {
@@ -34,8 +34,8 @@ export async function traerSanciones(idCurso = '', idAlumno = '') {
                 where: {
                     alumnoXCursoXDivision: {
                         OR: [
-                            { id: idAlumno },
-                            { idCursoXdivision: idCurso }
+                            { id: Number(idAlumno) },
+                            { idCursoXdivision: Number(idCurso) }
                         ]
                     }
                 }
@@ -48,16 +48,16 @@ export async function traerSanciones(idCurso = '', idAlumno = '') {
     }
 }
 
-export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', motivo, idTipoSancion, fecha) {
+export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motivo, idTipoSancion, fecha) {
     try {
-        if (idCurso !== '') {
+        if (idCurso !== 0) {
             const sanciones = []
             const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
                 select: {
                     id: true
                 },
                 where: {
-                    idCursoXdivision: idCurso
+                    idCursoXdivision: Number(idCurso)
                 }
             })
             alumnos.forEach(async (a) => {
@@ -77,17 +77,17 @@ export async function generarSancion(idUsuario, idAlumno = '', idCurso = '', mot
                     motivo: motivo,
                     tipoSancion: {
                         connect: {
-                            id: idTipoSancion
+                            id: Number(idTipoSancion)
                         }
                     },
                     alumnoXCursoXDivision: {
                         connect: {
-                            id: idAlumno
+                            id: Number(idAlumno)
                         }
                     },
                     sancionXusuario: {
                         create: {
-                            idUsuario: idUsuario,
+                            idUsuario: Number(idUsuario),
                         }
                     },
                 }

@@ -54,15 +54,13 @@ const Sanciones = () => {
                 }
             })
     }
-    const traerSanciones = () => {
+    const traerSanciones = async () => {
         setCargandoInfo(true)
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data);
-                    setSanciones(res.data)
-                }
-            })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`)
+        if (res.data) {
+            console.log(res.data);
+            setSanciones(res.data)
+        }
         setCargandoInfo(false)
     }
     const traerAlumnos = () => {

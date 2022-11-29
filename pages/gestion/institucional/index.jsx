@@ -9,19 +9,15 @@ import { Typography, Button, Container, Grid, Divider } from "@mui/material";
 import { AddBoxRounded } from "@mui/icons-material";
 import styles from "../../../styles/fontSize.module.css"
 
-
 export default function Institucional() {
     const [fichaInstitucional, setFichaInstitucional] = useState()
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     const { authUser } = useAuth()
 
-    const traerFicha = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
-            .then(res => {
-                setFichaInstitucional(res.data[0])
-            }).catch(err => {
-                console.error(err);
-            })
+    const traerFicha = async () => {
+        setCargando(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
+        setFichaInstitucional(res.data[0])
         setCargando(false)
     }
 
@@ -50,34 +46,31 @@ export default function Institucional() {
             }
 
             {
-                fichaInstitucional && (
+                !cargando && fichaInstitucional && (
                     <div >
-                        <Carrusel imagenes={fichaInstitucional.portadasFicha}  />
-                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
+                        <Carrusel imagenes={fichaInstitucional.portadasFicha} />
+                        <Grid container spacing={2} sx={{ minWidth: '300px' }}>
 
                             <Grid item xs={12}>
                                 <Typography variant="h5"
-                                sx={{marginTop: '30px'}}
-                                     className={`${styles.Typography}`}
+                                    sx={{ marginTop: '30px' }}
+                                    className={`${styles.Typography}`}
                                 >{fichaInstitucional.nombreInstitucion}</Typography>
                             </Grid>
-                            {/* <Grid item xs={12}>
-                                <Typography variant="subtitle1" sx={{ mb: 1 }}>Institución: {fichaInstitucional.tipoInstitucion ? 'Privada' : 'Publica'}</Typography>
-                            </Grid> */}
                             <Grid item xs={12} >
                                 <Typography variant="body1"
-                                     className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 >{fichaInstitucional.descripcion}</Typography>
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
+                        <Grid container spacing={2} sx={{ minWidth: '300px' }}>
                             <Grid item xs={12}>
                                 <Divider sx={{ mb: 1 }} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="h5"
-                                     className={`${styles.Typography}`}
+                                    className={`${styles.Typography}`}
                                 >Datos de Contacto</Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -108,7 +101,7 @@ export default function Institucional() {
 
 
                             </Grid>
-                            <Grid item xs={9} sx={{minWidth: '300px'}}>
+                            <Grid item xs={9} sx={{ minWidth: '300px' }}>
                                 <Typography variant="body2"
                                     className={`${styles.Typography2}`}
                                 >
@@ -130,7 +123,9 @@ export default function Institucional() {
             }
             {
                 cargando && (
-                    <Loading />
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
                 )
             }
         </Layout>

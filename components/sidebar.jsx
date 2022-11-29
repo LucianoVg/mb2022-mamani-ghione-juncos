@@ -19,6 +19,7 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SegmentIcon from '@mui/icons-material/Segment';
 import { Navbar } from './navbar';
 import Link from 'next/link';
+import { Container } from '@mui/system';
 
 const Sidebar = ({ menusGestion, menusReportes }) => {
     const router = useRouter()
@@ -31,94 +32,94 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
             role="presentation"
             onClick={() => setOpenDrawer(!openDrawer)}
             onKeyDown={() => setOpenDrawer(!openDrawer)}>
-            <>
-                <ListItem disablePadding sx={{ mt: 3 }}>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <Home />
-                        </ListItemIcon>
-                        <Link href={'/'}>
-                            <Typography variant='h6'>Inicio</Typography>
-                        </Link>
-                    </ListItemButton>
-                </ListItem>
-                {
-                    menusGestion && (
-                        <>
 
-                            <List>
-                                <ListItem disablePadding>
-                                    <ListItemButton disabled style={{ opacity: '200%' }}>
-                                        <ListItemIcon>
-                                            <SegmentIcon />
-                                        </ListItemIcon>
-                                        <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
-                                            Gestion
-                                        </Typography>
-                                    </ListItemButton>
-                                </ListItem>
-                            </List>
+            <ListItem disablePadding sx={{ mt: 3 }}>
+                <ListItemButton>
+                    <ListItemIcon>
+                        <Home />
+                    </ListItemIcon>
+                    <Link href={'/'}>
+                        <Typography variant='h6'>Inicio</Typography>
+                    </Link>
+                </ListItemButton>
+            </ListItem>
+            {
+                menusGestion && menusGestion?.length > 0 && (
+                    <>
 
-                            {
-                                menusGestion?.map((m, i) => (
-                                    <ListItemButton key={i}>
-                                        <ListItemIcon>
-                                            {
-                                                m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Asistencias' && (
-                                                    <ContentPasteSearchOutlinedIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Asistencia Docente' && (
-                                                    <ContentPasteSearchOutlinedIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Notas' && (
-                                                    <DescriptionIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Certificado de Servicio' && (
-                                                    <DescriptionIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Sanciones' && (
-                                                    <ReportIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Material de Estudio' && (
-                                                    <FileCopyIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Fecha de Examen' && (
-                                                    <EventIcon />
-                                                )
-                                            }
-                                            {
-                                                m?.menu?.menuSistema === 'Notificaciones' && (
-                                                    <NotificationsRoundedIcon />
-                                                )
-                                            }
-                                        </ListItemIcon>
-                                        <Link href={m?.menu?.url}>
-                                            <ListItemText primary={m?.menu?.menuSistema} />
-                                        </Link>
-                                    </ListItemButton>
-                                ))
-                            }
-                            <Divider sx={{ mt: 1, mb: 1 }} />
-                        </>
-                    )
-                }
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton disabled style={{ opacity: '200%' }}>
+                                    <ListItemIcon>
+                                        <SegmentIcon />
+                                    </ListItemIcon>
+                                    <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                        Gestion
+                                    </Typography>
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
 
-                {/* {
+                        {
+                            menusGestion?.map((m, i) => (
+                                <ListItemButton key={i}>
+                                    <ListItemIcon>
+                                        {
+                                            m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Asistencias' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Asistencia Docente' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Notas' && (
+                                                <DescriptionIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Certificado de Servicio' && (
+                                                <DescriptionIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Sanciones' && (
+                                                <ReportIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Material de Estudio' && (
+                                                <FileCopyIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Fecha de Examen' && (
+                                                <EventIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.menuSistema === 'Notificaciones' && (
+                                                <NotificationsRoundedIcon />
+                                            )
+                                        }
+                                    </ListItemIcon>
+                                    <Link href={m?.menu?.url}>
+                                        <ListItemText primary={m?.menu?.menuSistema} />
+                                    </Link>
+                                </ListItemButton>
+                            ))
+                        }
+                        <Divider sx={{ mt: 1, mb: 1 }} />
+                    </>
+                )
+            }
+
+            {/* {
                     menusReportes && (
                         <>
                             <List>
@@ -148,27 +149,27 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                         </>
                     )
                 } */}
-                {
-                    authUser && (
-                        <ListItemButton onClick={logout}>
-                            <ListItemIcon>
-                                <LogoutIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Cerrar Sesion" />
-                        </ListItemButton>
-                    )
-                }
-                {
-                    !authUser && (
-                        <ListItemButton onClick={() => router.push('/gestion/cuenta/login')}>
-                            <ListItemIcon>
-                                <LoginIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Iniciar Sesion" />
-                        </ListItemButton>
-                    )
-                }
-            </>
+
+            {
+                authUser && (
+                    <ListItemButton onClick={logout}>
+                        <ListItemIcon>
+                            <LogoutIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Cerrar Sesion" />
+                    </ListItemButton>
+                )
+            }
+            {
+                !authUser && (
+                    <ListItemButton onClick={() => router.push('/gestion/cuenta/login')}>
+                        <ListItemIcon>
+                            <LoginIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Iniciar Sesion" />
+                    </ListItemButton>
+                )
+            }
         </Box>
     );
     const logout = () => {
