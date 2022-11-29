@@ -28,7 +28,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
 
     const list = () => (
         <Box
-            sx={{ width: 250 }}
+            style={{ width: 250}}
             role="presentation"
             onClick={() => setOpenDrawer(!openDrawer)}
             onKeyDown={() => setOpenDrawer(!openDrawer)}>
@@ -183,6 +183,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
         <React.Fragment>
             <Navbar toggleDrawer={() => setOpenDrawer(!openDrawer)} />
             <Drawer
+            style={{display: 'flex',}}
                 anchor={'left'}
                 open={openDrawer}
                 onClose={() => setOpenDrawer(false)}>

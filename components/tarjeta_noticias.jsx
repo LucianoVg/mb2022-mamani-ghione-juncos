@@ -33,7 +33,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                 </div>
                 <CardContent  >
                     <Typography gutterBottom variant="h5" component="div" style={{textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>
-                        {titulo}
+                      <strong>  {titulo}</strong>
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {`${descripcion.substring(0, 50)}...`}

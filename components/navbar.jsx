@@ -37,16 +37,16 @@ export const Navbar = ({ toggleDrawer }) => {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        // sx={{ mr: 2 }}
                         onClick={toggleDrawer}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Instituto Privado &quot;El Salvador&quot;
+                    <Typography variant="h7" component="div" sx={{ flexGrow: 1, fontSize: "20px" }}>
+                        <strong>Instituto Privado &quot;El Salvador&quot;</strong>
                     </Typography>
                     <Link href={'/gestion/institucional'}>
-                        <Button color="inherit">Institucional</Button>
+                        <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {
                         !loading && authUser && (

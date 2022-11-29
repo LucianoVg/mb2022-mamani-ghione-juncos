@@ -46,7 +46,7 @@ export function Layout({ children }) {
                 <title>Instituto Privado &quot;El Salvador&quot;</title>
             </Head>
             <Sidebar menusGestion={menusGestion} />
-            <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
+            <Container maxWidth="vh" sx={{ mt: 10, mb: 4 }}>
                 <React.Fragment>
                     {children}
                 </React.Fragment>
