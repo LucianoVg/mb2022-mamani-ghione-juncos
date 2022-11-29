@@ -32,15 +32,15 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                     </div>
                 </div>
                 <CardContent  >
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" style={{textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>
                         {titulo}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {`${descripcion.substring(0, 30)}...`}
+                        {`${descripcion.substring(0, 50)}...`}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="small" sx={{ mb: 2 }}>Mas info.</Button>
+                    <Button className="button-61" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="small" sx={{ mb: 2 }}>Mas info.</Button>
                 </CardActions>
             </Card>
         </Box>

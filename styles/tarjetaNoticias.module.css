@@ -22,6 +22,8 @@
     margin-bottom: 10mm;
     margin-top: 10mm;
     margin-left: 10mm;
+    border-radius: 30px;
+    /* background: linear-gradient(45deg, red, blue); */
 }
 
 .MenuItem {
