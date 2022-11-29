@@ -5,7 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
-import Notificacion from '../components/notificacion_panel'
+import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
 
 const AppBar = styled(MuiAppBar, {
