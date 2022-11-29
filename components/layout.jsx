@@ -8,44 +8,49 @@ import { useAuth } from './context/authUserProvider';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Sidebar from './sidebar';
-
 import Head from 'next/head';
-import { Navbar } from './navbar';
+import axios from 'axios';
 
 export function Layout({ children }) {
-    const [open, setOpen] = useState(true)
+    const { loading, authUser } = useAuth()
+    const [menusGestion, setMenusGestion] = useState([])
 
-    const toggleDrawer = () => {
-        setOpen(!open)
-    }
+    useEffect(() => {
+        if (!loading && authUser) {
+            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+                .then(res => {
+                    if (res.data) {
+                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/gestion`)
+                            .then(r => {
+                                if (r.data) {
+                                    console.log(r.data);
+                                    setMenusGestion(r.data)
+                                }
+                            })
+
+                        // axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/reportes`)
+                        //     .then(r => {
+                        //         if (r.data) {
+                        //             console.log(r.data);
+                        //             setMenusReportes(r.data)
+                        //         }
+                        //     })
+                    }
+                })
+        }
+    }, [authUser, loading])
+
     return (
         <>
             <Head>
                 <title>Instituto Privado &quot;El Salvador&quot;</title>
             </Head>
-            <Box sx={{ display: 'flex' }}>
-                <Navbar open={open} toggleDrawer={toggleDrawer} />
-                <Sidebar open={open} toggleDrawer={toggleDrawer} />
-                <Box
-                    component="main"
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
-                    <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <React.Fragment>
-                            {children}
-                        </React.Fragment>
-                    </Container>
-                </Box>
-            </Box>
+            <Sidebar menusGestion={menusGestion} />
+            <Container maxWidth="lg" sx={{ mt: 10, mb: 4 }}>
+                <React.Fragment>
+                    {children}
+                </React.Fragment>
+            </Container>
         </>
     );
 }

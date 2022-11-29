@@ -1,68 +1,53 @@
 import Link from "next/link"
 import { useAuth } from "./context/authUserProvider"
-import { Toolbar, IconButton, Typography, Badge } from "@mui/material";
+import { Toolbar, IconButton, Typography, Badge, Box, AppBar, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
-import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: 280,
-        width: `calc(100% - ${280}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//     shouldForwardProp: (prop) => prop !== 'open',
+// })(({ theme, open }) => ({
+//     zIndex: theme.zIndex.drawer + 1,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//         easing: theme.transitions.easing.sharp,
+//         duration: theme.transitions.duration.leavingScreen,
+//     }),
+//     ...(open && {
+//         marginLeft: 280,
+//         width: `calc(100% - ${280}px)`,
+//         transition: theme.transitions.create(['width', 'margin'], {
+//             easing: theme.transitions.easing.sharp,
+//             duration: theme.transitions.duration.enteringScreen,
+//         }),
+//     }),
+// }));
 
-
-export const Navbar = ({ toggleDrawer, open }) => {
+export const Navbar = ({ toggleDrawer }) => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     return (
-        <>
-            <AppBar position="absolute" open={open}>
-                <Toolbar
-                    sx={{
-                        pr: '24px', // keep right padding when drawer closed
-                    }}
-                >
+        <Box>
+            <AppBar position="fixed">
+                <Toolbar>
                     <IconButton
+                        size="large"
                         edge="start"
                         color="inherit"
-                        aria-label="open drawer"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
                         onClick={toggleDrawer}
-                        sx={{
-                            marginRight: '36px',
-                            ...(open && { display: 'none' }),
-                        }}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        sx={{ flexGrow: 1 }}
-                    >
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Instituto Privado &quot;El Salvador&quot;
                     </Typography>
-
-                    <Typography href='/gestion/institucional' component={'a'} variant="body1" sx={{ mr: 1, textDecoration: 'none' }} color='white'>
-                        Institucional
-                    </Typography>
+                    <Link href={'/gestion/institucional'}>
+                        <Button color="inherit">Institucional</Button>
+                    </Link>
                     {
                         !loading && authUser && (
                             <>
@@ -75,9 +60,9 @@ export const Navbar = ({ toggleDrawer, open }) => {
                             </>
                         )
                     }
-
                 </Toolbar>
             </AppBar>
-        </>
+        </Box>
     )
 }
+
