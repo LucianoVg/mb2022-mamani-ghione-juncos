@@ -3,15 +3,14 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl, Pagination } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import { SearchOutlined } from "@mui/icons-material";
-import Loading from "../../../components/loading";
-import { usePagination } from "../../../components/hooks/paginationHook";
 
 export default function Notas() {
     const [notas, setNotas] = useState([])
+
     const [index, setIndex] = useState(0)
     // const [trimestres, setTrimestres] = useState([])
     // const [idTrimestre, setIdTrimestre] = useState("")
@@ -27,21 +26,12 @@ export default function Notas() {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     let queryParams = []
-    const [cargandoInfo, setCargandoInfo] = useState(false)
+
     const [inEditMode, setInEditMode] = useState({
         status: false,
         rowKey: null
     });
 
-    const pageSize = 5
-    const cantidadPaginas = Math.ceil(notas?.length / pageSize)
-    const paginacion = usePagination(notas || [], pageSize)
-    const [pagina, setPagina] = useState(1)
-
-    const handlerCambioPagina = (e, pagina) => {
-        setPagina(pagina)
-        paginacion.saltar(pagina)
-    }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -120,12 +110,10 @@ export default function Notas() {
                 params += `${key}=${qp[key]}&`
             }
         })
-        setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas?${params}`)
-        if (res.data) {
-            setNotas(res.data)
-        }
-        setCargandoInfo(false)
+        // if (res.data) {
+        //     setNotas(res.data)
+        // }
     }
 
     // const onEdit = (id) => {
@@ -171,7 +159,7 @@ export default function Notas() {
         setColumnName(e.target.name)
     }
 
-
+   
     return (
         <Layout>
             <Container maxWidth={'xl'}>
@@ -188,71 +176,71 @@ export default function Notas() {
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
                                 <ListSubheader>Primero</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idCurso === 1 && (
-
+                                       
+                                        m?.idCurso === 1 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
                                 }
-                                <ListSubheader>Segundo</ListSubheader>
+                                  <ListSubheader>Segundo</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idCurso === 2 && (
-
+                                       
+                                        m?.idCurso === 2 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
                                 }
-                                <ListSubheader>Tercero</ListSubheader>
+                                  <ListSubheader>Tercero</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idcurso === 3 && (
-
+                                       
+                                        m?.idcurso === 3 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
                                 }
-                                <ListSubheader>Cuarto</ListSubheader>
+                                  <ListSubheader>Cuarto</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idCurso === 4 && (
-
+                                       
+                                        m?.idCurso === 4 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
                                 }
-                                <ListSubheader>Quinto</ListSubheader>
+                                  <ListSubheader>Quinto</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idCurso === 5 && (
-
+                                       
+                                        m?.idCurso === 5 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
                                 }
-                                <ListSubheader>Sexto</ListSubheader>
+                                  <ListSubheader>Sexto</ListSubheader>
                                 {
-
+                                 
                                     materias && materias?.map((m, i) => (
-
-                                        m?.idCurso === 6 && (
-
+                                       
+                                        m?.idCurso === 6 &&(
+                                            
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
@@ -315,197 +303,175 @@ export default function Notas() {
                         <Tab label="Tercer Trimestre" />
                     </Tabs>
                 </Box>
-                {
-                    !cargandoInfo && (
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 800 }}>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="right">Legajo</TableCell>
-                                        <TableCell align="right">Sexo</TableCell>
-                                        <TableCell align="right">Nombre</TableCell>
-                                        <TableCell align="right">Apellido</TableCell>
-                                        <TableCell align="right">Materia</TableCell>
-                                        <TableCell align="right">Nota 1</TableCell>
-                                        <TableCell align="right">Nota 2</TableCell>
-                                        <TableCell align="right">Nota 3</TableCell>
-                                        <TableCell align="right">Nota 4</TableCell>
-                                        <TableCell align="right">Nota 5</TableCell>
-                                        <TableCell align="right">Trimestre</TableCell>
-                                        <TableCell align="right">Operacion</TableCell>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 800 }}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="right">Legajo</TableCell>
+                                <TableCell align="right">Sexo</TableCell>
+                                <TableCell align="right">Nombre</TableCell>
+                                <TableCell align="right">Apellido</TableCell>
+                                <TableCell align="right">Materia</TableCell>
+                                <TableCell align="right">Nota 1</TableCell>
+                                <TableCell align="right">Nota 2</TableCell>
+                                <TableCell align="right">Nota 3</TableCell>
+                                <TableCell align="right">Nota 4</TableCell>
+                                <TableCell align="right">Nota 5</TableCell>
+                                <TableCell align="right">Trimestre</TableCell>
+                                <TableCell align="right">Operacion</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                notas && notas?.map((n, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.legajo}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.sexo}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.nombre}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.alumnoXcursoXdivision?.usuario?.apellido}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {n.materia?.nombre}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        margin="normal"
+                                                        variant="standard"
+                                                        name="nota1"
+                                                        placeholder={n.nota1}
+                                                        onChange={onChangeNotaColumna}
+
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota1
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota2"
+                                                        variant="standard"
+                                                        placeholder={n.nota2}
+                                                        onChange={onChangeNotaColumna}
+
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota2
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota3"
+                                                        variant="standard"
+                                                        placeholder={n.nota3}
+                                                        onChange={onChangeNotaColumna}
+
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota3
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota4"
+                                                        variant="standard"
+                                                        placeholder={n.nota4}
+                                                        onChange={onChangeNotaColumna}
+
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota4
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                    <TextField type="number"
+                                                        name="nota5"
+                                                        variant="standard"
+                                                        placeholder={n.nota5}
+                                                        onChange={onChangeNotaColumna}
+
+                                                    />
+                                                ) :
+                                                    (
+                                                        n.nota5
+                                                    )
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {n.trimestre?.trimestre}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                inEditMode.status && inEditMode.rowKey === i ? (
+
+                                                    <React.Fragment>
+                                                        <Grid container spacing={11}>
+                                                            <Grid item xs={5} >
+                                                                <Button variant="contained"
+                                                                    color="primary"
+                                                                    size="small"
+                                                                    onClick={() => onSave(n.id, nota, columnName)}
+                                                                >
+                                                                    Guardar
+                                                                </Button>
+                                                            </Grid>
+                                                            <Grid item xs={5}>
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    color="secondary"
+                                                                    size="small"
+                                                                    onClick={() => onCancel()}
+                                                                >
+                                                                    Cancelar
+                                                                </Button>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </React.Fragment>
+                                                ) : (
+                                                    <Button
+                                                        variant="contained"
+                                                        color="info"
+                                                        size="small"
+                                                        onClick={() => setInEditMode({
+                                                            status: true,
+                                                            rowKey: i
+                                                        })}
+                                                    >
+                                                        Editar
+                                                    </Button>
+                                                )
+                                            }
+                                        </TableCell>
                                     </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {
-                                        notas && paginacion.dataActual()?.map((n, i) => (
-                                            <TableRow key={i}>
-                                                <TableCell align="left">
-                                                    {n.alumnoXcursoXdivision?.usuario?.legajo}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {n.alumnoXcursoXdivision?.usuario?.sexo}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {n.alumnoXcursoXdivision?.usuario?.nombre}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {n.alumnoXcursoXdivision?.usuario?.apellido}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {n.materia?.nombre}
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                margin="normal"
-                                                                variant="standard"
-                                                                name="nota1"
-                                                                placeholder={n.nota1}
-                                                                onChange={onChangeNotaColumna}
-
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota1
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota2"
-                                                                variant="standard"
-                                                                placeholder={n.nota2}
-                                                                onChange={onChangeNotaColumna}
-
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota2
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota3"
-                                                                variant="standard"
-                                                                placeholder={n.nota3}
-                                                                onChange={onChangeNotaColumna}
-
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota3
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota4"
-                                                                variant="standard"
-                                                                placeholder={n.nota4}
-                                                                onChange={onChangeNotaColumna}
-
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota4
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota5"
-                                                                variant="standard"
-                                                                placeholder={n.nota5}
-                                                                onChange={onChangeNotaColumna}
-
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota5
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {n.trimestre?.trimestre}
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-
-                                                            <React.Fragment>
-                                                                <Grid container spacing={11}>
-                                                                    <Grid item xs={5} >
-                                                                        <Button variant="contained"
-                                                                            color="primary"
-                                                                            size="small"
-                                                                            onClick={() => onSave(n.id, nota, columnName)}
-                                                                        >
-                                                                            Guardar
-                                                                        </Button>
-                                                                    </Grid>
-                                                                    <Grid item xs={5}>
-                                                                        <Button
-                                                                            variant="outlined"
-                                                                            color="secondary"
-                                                                            size="small"
-                                                                            onClick={() => onCancel()}
-                                                                        >
-                                                                            Cancelar
-                                                                        </Button>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </React.Fragment>
-                                                        ) : (
-                                                            <Button
-                                                                variant="contained"
-                                                                color="info"
-                                                                size="small"
-                                                                onClick={() => setInEditMode({
-                                                                    status: true,
-                                                                    rowKey: i
-                                                                })}
-                                                            >
-                                                                Editar
-                                                            </Button>
-                                                        )
-                                                    }
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                    }
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    )
-                }
-                {
-                    cargandoInfo && (
-                        <Loading size={80} />
-                    )
-                }
-                {
-                    notas.length > 0 && (
-                        <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
-                            <Pagination
-                                count={cantidadPaginas}
-                                size='large'
-                                page={pagina}
-                                variant="outlined"
-                                shape='circular'
-                                onChange={handlerCambioPagina} />
-                        </Container>
-                    )
-                }
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Container>
         </Layout >
 

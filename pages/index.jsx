@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
-import Loading from '../components/loading';
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -19,24 +18,21 @@ const Home = () => {
   const paginacion = usePagination(noticias || [], pageSize)
   const { authUser } = useAuth()
   const router = useRouter()
-  const [cargandoInfo, setCargandoInfo] = useState(false)
+
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
     paginacion.saltar(pagina)
   }
 
   const traerNoticias = () => {
-    setCargandoInfo(true)
     axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
       .then(res => {
         if (res.data) {
           console.log(res.data);
           setNoticias(res.data)
-          setCargandoInfo(false)
         }
       }).catch(err => {
         console.error(err);
-        setCargandoInfo(false)
       })
   }
 
@@ -46,48 +42,39 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className='container' style={{ marginTop: "20px", marginBottom: "20px" }}>
+      {
+        authUser && (
+          <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
+            Agregar
+          </Button>
+        )
+      }
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container >
+          {
+            paginacion.dataActual().map((n, i) => (
+              <Grid item key={i} xs="auto">
+                <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+              </Grid>
+            ))
+          }
+        </Grid>
+      </Box>
 
-        {
-          authUser && (
-            <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
-              Agregar
-            </Button>
-          )
-        }
-        {
-          cargandoInfo && (
-            <Loading />
-          )
-        }
-
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container >
-            {
-              paginacion.dataActual().map((n, i) => (
-                <Grid item key={i} xs="auto">
-                  <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-                </Grid>
-              ))
-            }
-          </Grid>
-        </Box>
-
-        {
-          noticias && noticias.length > 0 && (
-            <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
-              <Pagination
-                count={cantidadPaginas}
-                size='large'
-                page={pagina}
-                variant="outlined"
-                shape='circular'
-                onChange={handlerCambioPagina} />
-            </Container>
-          )
-        }
-      </div >
-    </Layout >
+      {
+        noticias && noticias.length > 0 && (
+          <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+            <Pagination
+              count={cantidadPaginas}
+              size='large'
+              page={pagina}
+              variant="outlined"
+              shape='circular'
+              onChange={handlerCambioPagina} />
+          </Container>
+        )
+      }
+    </Layout>
   )
 }
 
