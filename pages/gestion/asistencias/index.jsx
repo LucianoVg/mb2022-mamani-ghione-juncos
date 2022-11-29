@@ -389,35 +389,22 @@ export default function Asistencias() {
                     </Grid>
                     <Grid item xs>
                         <Box component="span">
-                            <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-                                <Typography variant="h6">
-                                    <strong>Asistencia modificada:</strong>
-                                </Typography>
-                                <Button variant="contained" disabled style={{ marginRight: '20px', fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
-                            </Stack >
-                            <Container sx={{ mt: '-10px' }}>
-                                <Typography variant="body2">
-                                    <strong>P:</strong> Presente
-                                </Typography>  <br />
-                                <Typography variant="body2">
-                                    <strong>A:</strong> Ausente
-                                </Typography> <br />
-                                <Typography variant="body2">
-                                    <strong>AJ:</strong> Ausente Justificado
-                                </Typography> <br />
-                                <Typography variant="body2">
-                                    <strong>LT:</strong>Llegada Tarde
-                                </Typography> <br />
-                                <Typography variant="body2">
-                                    <strong>LTJ:</strong> Llegada Tarde Justificada
-                                </Typography> <br />
-                                <Typography variant="body2">
-                                    <strong>MF:</strong>Media Falta
-                                </Typography> <br />
-                                <Typography variant="body2">
-                                    <strong>MFJ:</strong> Media Falta Justificada
-                                </Typography>  <br />
-                            </Container>
+                            <div style={{ fontFamily: "roboto", fontSize: "20px" }}>
+                                <Stack spacing={1} direction="row" >
+                                    <h5 ><strong>Asistencia modificada:</strong> </h5>
+                                    <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '25px' }}>Contained</Button>
+                                </Stack >
+                                <h5 style={{ marginTop: '-10px' }}>
+                                    <hr />
+                                    <strong>P:</strong> Presente     <hr />
+                                    <strong>A:</strong> Ausente    <hr />
+                                    <strong>AJ:</strong> Ausente Justificado    <hr />
+                                    <strong>LT:</strong> Llegada Tarde    <hr />
+                                    <strong>LTJ:</strong> Llegada Tarde Justificada   <hr />
+                                    <strong>MF:</strong> Media Falta    <hr />
+                                    <strong>MFJ:</strong> Media Falta Justificada    <hr />
+                                </h5>
+                            </div>
                         </Box>
                     </Grid>
                 </Grid>

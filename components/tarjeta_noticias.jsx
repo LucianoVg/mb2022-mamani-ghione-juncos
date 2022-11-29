@@ -40,7 +40,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button className="button-61" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="small" sx={{ mb: 2 }}>Mas info.</Button>
+                    <Button className="button-61" onClick={() => router.push(`/gestion/noticias/detalles/${id}`)} size="small" sx={{ marginLeft:"10px"}}>Mas info.</Button>
                 </CardActions>
             </Card>
         </Box>

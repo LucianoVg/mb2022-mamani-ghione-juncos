@@ -227,7 +227,10 @@ export default function Asistencias() {
                             </LocalizationProvider>
                         </Box>
 
-                        <h4>Buscar Docente:</h4>
+                  
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            Buscar Docente:
+                        </Typography>
                         <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
@@ -257,19 +260,22 @@ export default function Asistencias() {
                     </Grid>
                     <Grid item xs>
                         <Box component="span">
-                            <Stack spacing={1} direction="row" >
-                                <h5 ><strong>Asistencia modificada:</strong> </h5>
-                                <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '10px' }}>Contained</Button>
-                            </Stack >
-                            <h5 style={{ marginTop: '-10px' }}>
-                                <strong>P:</strong>Presente  <br />
-                                <strong>A:</strong>Ausente <br />
-                                <strong>AJ:</strong> Ausente Justificado <br />
-                                <strong>LT:</strong>Llegada Tarde <br />
-                                <strong>LTJ:</strong> Llegada Tarde Justificada <br />
-                                <strong>MF:</strong>Media Falta <br />
-                                <strong>MFJ:</strong> Media Falta Justificada  <br />
-                            </h5>
+                            <div style={{ fontFamily: "roboto", fontSize: "20px" }}>
+                                <Stack spacing={1} direction="row" >
+                                    <h5 ><strong>Asistencia modificada:</strong> </h5>
+                                    <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '25px' }}>Contained</Button>
+                                </Stack >
+                                <h5 style={{ marginTop: '-10px' }}>
+                                    <hr />
+                                    <strong>P:</strong> Presente     <hr />
+                                    <strong>A:</strong> Ausente    <hr />
+                                    <strong>AJ:</strong> Ausente Justificado    <hr />
+                                    <strong>LT:</strong> Llegada Tarde    <hr />
+                                    <strong>LTJ:</strong> Llegada Tarde Justificada   <hr />
+                                    <strong>MF:</strong> Media Falta    <hr />
+                                    <strong>MFJ:</strong> Media Falta Justificada    <hr />
+                                </h5>
+                            </div>
                         </Box>
                     </Grid>
                 </Grid>
