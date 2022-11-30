@@ -1,46 +1,8 @@
 import { Prisma } from "./prisma";
 
-export async function traerSanciones(idCurso = 0, idAlumno = 0) {
+export async function traerSanciones(options) {
     try {
-        const sanciones = idCurso === 0 || idAlumno === 0
-            ? await Prisma.newPrisma().sancion.findMany({
-                include: {
-                    alumnoXCursoXDivision: {
-                        include: {
-                            usuario: true,
-                            cursoXdivision: {
-                                include: {
-                                    curso: true,
-                                    division: true
-                                }
-                            }
-                        }
-                    }
-                }
-            }) : await Prisma.newPrisma().sancion.findMany({
-                include: {
-                    alumnoXCursoXDivision: {
-                        include: {
-                            usuario: true,
-                            cursoXdivision: {
-                                include: {
-                                    curso: true,
-                                    division: true
-                                }
-                            }
-                        }
-                    }
-                },
-                where: {
-                    alumnoXCursoXDivision: {
-                        OR: [
-                            { id: Number(idAlumno) },
-                            { idCursoXdivision: Number(idCurso) }
-                        ]
-                    }
-                }
-            })
-
+        const sanciones = await Prisma.newPrisma().sancion.findMany(options)
         Prisma.disconnect()
         return sanciones
     } catch (error) {

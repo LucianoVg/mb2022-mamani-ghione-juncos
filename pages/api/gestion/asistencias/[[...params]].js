@@ -29,12 +29,6 @@ export default async function handler(req, res) {
                         }
                     }
                 })
-                options = {
-                    ...options,
-                    where: {
-                        OR: OR
-                    }
-                }
             }
             if (nombreAlumno) {
                 OR.push({
@@ -46,12 +40,6 @@ export default async function handler(req, res) {
                         }
                     }
                 })
-                options = {
-                    ...options,
-                    where: {
-                        OR: OR
-                    }
-                }
             }
             if (apellidoAlumno) {
                 OR.push({
@@ -63,6 +51,8 @@ export default async function handler(req, res) {
                         }
                     }
                 })
+            }
+            if (OR.length) {
                 options = {
                     ...options,
                     where: {

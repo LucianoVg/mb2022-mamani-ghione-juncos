@@ -31,7 +31,7 @@ export default function DetalleSancion() {
                     console.log(usuario);
                 }
             })
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/${id}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${id}`)
             .then(res => {
                 if (res.data) {
                     setSancion(res.data)
@@ -67,7 +67,7 @@ export default function DetalleSancion() {
     const actualizarSancion = (e) => {
         e.preventDefault()
         console.log(sancion);
-        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/${sancion.id}`, {
+        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancion.id}`, {
             idUsuario: usuario.id,
             idCurso: sancion.idCursoXDivision,
             idAlumno: sancion.idAlumnoXCursoXDivision,
@@ -94,7 +94,7 @@ export default function DetalleSancion() {
                                     <FormControl>
                                         <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
                                         <Select value={sancion?.idAlumnoXCursoXDivision} onChange={handleSancion}
-                                            name="idAlumnoXCursoXDivision" 
+                                            name="idAlumnoXCursoXDivision"
                                             id="inputAlumno"
                                             label="Alumno"
                                             sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
@@ -115,7 +115,7 @@ export default function DetalleSancion() {
                                     <FormControl>
                                         <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                                         <Select value={sancion?.idCursoXDivision} onChange={handleSancion}
-                                            name="idCursoXDivision" 
+                                            name="idCursoXDivision"
                                             id="inputCurso"
                                             label="Curso"
                                             sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
@@ -134,7 +134,7 @@ export default function DetalleSancion() {
                             <FormControl>
                                 <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
                                 <Select value={sancion?.idTipoSancion}
-                                    onChange={handleSancion} 
+                                    onChange={handleSancion}
                                     name="idTipoSancion"
                                     id="inputTipoSancion"
                                     label="Tipo de Sancion"
@@ -161,15 +161,15 @@ export default function DetalleSancion() {
                                 value={sancion?.motivo}
                                 label="Motivo"
                                 onChange={handleSancion}
-                                sx={{ width: '350px', }} 
-                                />
-                            
+                                sx={{ width: '350px', }}
+                            />
+
                         </Box>
                         <Box direction='row'>
-                            <Button disabled={!editMode} variant="contained" 
-                            color="primary" 
-                            onClick={actualizarSancion}
-                            sx={{marginRight: '20px', marginBottom: '10px'}}
+                            <Button disabled={!editMode} variant="contained"
+                                color="primary"
+                                onClick={actualizarSancion}
+                                sx={{ marginRight: '20px', marginBottom: '10px' }}
                             >Actualizar Sancion</Button>
 
                             <Link href={'/gestion/sanciones'}>

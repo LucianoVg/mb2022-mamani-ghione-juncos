@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 import { Layout } from "../../../components/layout";
 import { Box, Button, Stack, IconButton, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { useRouter } from 'next/router';
 import { guardarImagen, traerImagen } from '../../../servicios/portada';
+import { Container } from '@mui/system';
 
 const MaterialEstudio = () => {
     const [idCurso, setIdCurso] = useState('');
@@ -30,6 +31,9 @@ const MaterialEstudio = () => {
     const [subiendoT1, setSubiendoT1] = useState(false)
     const [subiendoT2, setSubiendoT2] = useState(false)
     const [subiendoT3, setSubiendoT3] = useState(false)
+    const [t1SubidoMsg, setT1SubidoMsg] = useState("")
+    const [t2SubidoMsg, setT2SubidoMsg] = useState("")
+    const [t3SubidoMsg, setT3SubidoMsg] = useState("")
 
     const handleMateria = (e) => {
         setIdMateria(e.target.value);
@@ -68,7 +72,7 @@ const MaterialEstudio = () => {
         setDocs3erTrimestre(e.currentTarget.files)
     }
 
-    const guardarMaterial = () => {
+    const guardarMaterial = async () => {
         // console.log("Id Curso", idCurso);
         // console.log("Id Materia", idMateria);
         // console.log("Material 1er Trimestre", docs1erTrimestre);
@@ -78,76 +82,78 @@ const MaterialEstudio = () => {
             setSubiendoT1(true)
             for (let i = 0; i < docs1erTrimestre?.length; i++) {
                 const doc = docs1erTrimestre[i];
-                guardarImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`, doc)
-                    .then(result => {
-                        traerImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`)
-                            .then(async (url) => {
-                                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                                    titulo: doc.name,
-                                    url: url,
-                                    idCurso: idCurso,
-                                    idMateria: idMateria,
-                                    idTrimestre: trimestres[0]?.id,
-                                    idUsuario: usuario.id,
-                                    fecha: new Date().toISOString().split('T')[0]
-                                })
-                                if (res.data && i === 2) {
-                                    setSubiendoT1(false)
-                                    setDocs1erTrimestre(null)
-                                }
-                            })
+                await guardarImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`, doc)
+                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`)
+                if (url.length) {
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
+                        titulo: doc.name,
+                        url: url,
+                        idCurso: idCurso,
+                        idMateria: idMateria,
+                        idTrimestre: trimestres[0]?.id,
+                        idUsuario: usuario.id,
+                        fecha: new Date().toISOString().split('T')[0]
                     })
+                    if (res.data && i === docs1erTrimestre.length - 1) {
+                        setT1SubidoMsg("Material 1 Subido!")
+                        setTimeout(() => {
+                            setT1SubidoMsg("")
+                        }, 2000);
+                        setDocs1erTrimestre(null)
+                    }
+                }
             }
+            setSubiendoT1(false)
         }
         if (docs2doTrimestre) {
             setSubiendoT2(true)
             for (let i = 0; i < docs2doTrimestre?.length; i++) {
                 const doc = docs2doTrimestre[i];
-                guardarImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`, doc)
-                    .then(result => {
-                        traerImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`)
-                            .then(async (url) => {
-                                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                                    titulo: doc.name,
-                                    url: url,
-                                    idCurso: idCurso,
-                                    idMateria: idMateria,
-                                    idTrimestre: trimestres[1]?.id,
-                                    idUsuario: usuario.id,
-                                    fecha: new Date().toISOString().split('T')[0]
-                                })
-                                if (res.data && i === 2) {
-                                    setSubiendoT2(false)
-                                    setDocs2doTrimestre(null)
-                                }
-                            })
-                    })
+                const result = await guardarImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`, doc)
+                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`)
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
+                    titulo: doc.name,
+                    url: url,
+                    idCurso: idCurso,
+                    idMateria: idMateria,
+                    idTrimestre: trimestres[1]?.id,
+                    idUsuario: usuario.id,
+                    fecha: new Date().toISOString().split('T')[0]
+                })
+                if (res.data && i === docs2doTrimestre.length - 1) {
+                    setT2SubidoMsg("Material 2 Subido!")
+                    setTimeout(() => {
+                        setT2SubidoMsg("")
+                    }, 2000);
+                    setDocs2doTrimestre(null)
+                }
             }
+            setSubiendoT2(false)
         }
         if (docs3erTrimestre) {
             setSubiendoT3(true)
             for (let i = 0; i < docs3erTrimestre?.length; i++) {
                 const doc = docs3erTrimestre[i];
-                guardarImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`, doc)
-                    .then(result => {
-                        traerImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`)
-                            .then(async (url) => {
-                                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                                    titulo: doc.name,
-                                    url: url,
-                                    idCurso: idCurso,
-                                    idMateria: idMateria,
-                                    idTrimestre: trimestres[2]?.id,
-                                    idUsuario: usuario.id,
-                                    fecha: new Date().toISOString().split('T')[0]
-                                })
-                                if (res.data && i === 2) {
-                                    setSubiendoT3(false)
-                                    setDocs3erTrimestre(null)
-                                }
-                            })
-                    })
+                await guardarImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`, doc)
+                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`)
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
+                    titulo: doc.name,
+                    url: url,
+                    idCurso: idCurso,
+                    idMateria: idMateria,
+                    idTrimestre: trimestres[2]?.id,
+                    idUsuario: usuario.id,
+                    fecha: new Date().toISOString().split('T')[0]
+                })
+                if (res.data && i === docs3erTrimestre.length - 1) {
+                    setT3SubidoMsg("Material 3 Subido!")
+                    setTimeout(() => {
+                        setT3SubidoMsg("")
+                    }, 2000);
+                    setDocs3erTrimestre(null)
+                }
             }
+            setSubiendoT3(false)
         }
     }
 
@@ -246,30 +252,6 @@ const MaterialEstudio = () => {
                                     )
                                 }
                             </Stack>
-                            {/* <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack>
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack> */}
                         </Grid>
                         <Grid item xs>
                             <h3>Segundo Trimestre</h3>
@@ -297,31 +279,6 @@ const MaterialEstudio = () => {
                                     )
                                 }
                             </Stack>
-                            {/* <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack>
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack> */}
-
                         </Grid>
                         <Grid item xs >
                             <h3>Tercer Trimestre</h3>
@@ -350,36 +307,21 @@ const MaterialEstudio = () => {
                                     )
                                 }
                             </Stack>
-                            {/* <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack>
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    Subir apunte
-                                    <input hidden accept=".pdf,.xlsx,.pptx,.docx" multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
-                            </Stack> */}
                         </Grid>
                     </Grid>
                 </Box>
+                {
+                    t1SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t1SubidoMsg}</Alert>
+                }
+                {
+                    t2SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t2SubidoMsg}</Alert>
 
+                }
+                {
+                    t3SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t3SubidoMsg}</Alert>
+                }
                 <Box mt={2}>
-                    <Button variant="contained" onClick={guardarMaterial} color="primary">
+                    <Button disabled={subiendoT1 || subiendoT2 || subiendoT3 || !idCurso || !idMateria} variant="contained" onClick={guardarMaterial} color="primary">
                         Guardar
                     </Button>
                 </Box>

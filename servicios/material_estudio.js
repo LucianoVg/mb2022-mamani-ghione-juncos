@@ -7,10 +7,10 @@ export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso
                 titulo: titulo,
                 url: url,
                 fecha: fecha,
-                idCursoXDivision: idCurso,
-                idMateria: idMateria,
-                idTrimestre: idTrimestre,
-                idUsuario: idUsuario
+                idCursoXDivision: Number(idCurso),
+                idMateria: Number(idMateria),
+                idTrimestre: Number(idTrimestre),
+                idUsuario: Number(idUsuario)
             }
         })
         console.log(materialEstudio);

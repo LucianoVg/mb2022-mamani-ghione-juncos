@@ -10,12 +10,12 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            const { params } = req.query
-            const idCurso = params[0]
-            const idAlumno = params[1]
-
-            const sanciones = await traerSanciones(idCurso, idAlumno)
-            return res.status(200).json(sanciones)
+            const { id } = req.query
+            const sancion = await obtenerSancion(id)
+            if (sancion) {
+                return res.status(200).json(sancion)
+            }
+            return res.status(404).json({ mensaje: 'Sancion no encontrada' })
         }
     } catch (error) {
         console.error(error);

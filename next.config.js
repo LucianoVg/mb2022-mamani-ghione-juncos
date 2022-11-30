@@ -1,9 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  headers: {
-    basePath: process.env.NEXT_PUBLIC_CLIENT_URL,
-    crossOrigin: '*'
+  headers: async () => {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'crossOrigin',
+            value: '*'
+          }
+        ]
+      }
+    ]
   },
   images: {
     domains: ['firebasestorage.googleapis.com']

@@ -14,7 +14,10 @@ export default async function handler(
         });
 
         let { idMateria, idTrimestre, idCurso, nombreAlumno, apellidoAlumno } = req.query
-        let OR = []
+        console.log({ idMateria, idTrimestre, idCurso, nombreAlumno, apellidoAlumno });
+        let AND = [
+            { idTrimestre: Number(idTrimestre) }
+        ]
 
         let options = {
             include: {
@@ -29,31 +32,19 @@ export default async function handler(
             },
         }
         if (idMateria) {
-            OR.push({ idMateria: Number(idMateria) })
-            options = {
-                ...options,
-                where: {
-                    OR: OR
-                }
-            }
+            AND.push({ idMateria: Number(idMateria) })
         }
         if (idCurso) {
-            OR.push({
+            AND.push({
                 alumnoXcursoXdivision: {
                     cursoXdivision: {
                         id: Number(idCurso)
                     }
                 }
             })
-            options = {
-                ...options,
-                where: {
-                    OR: OR
-                }
-            }
         }
         if (nombreAlumno) {
-            OR.push({
+            AND.push({
                 alumnoXcursoXdivision: {
                     usuario: {
                         nombre: {
@@ -62,15 +53,9 @@ export default async function handler(
                     }
                 },
             })
-            options = {
-                ...options,
-                where: {
-                    OR: OR
-                }
-            }
         }
         if (apellidoAlumno) {
-            OR.push({
+            AND.push({
                 alumnoXcursoXdivision: {
                     usuario: {
                         apellido: {
@@ -79,10 +64,12 @@ export default async function handler(
                     }
                 },
             })
+        }
+        if (AND.length) {
             options = {
                 ...options,
                 where: {
-                    OR: OR
+                    AND: AND
                 }
             }
         }

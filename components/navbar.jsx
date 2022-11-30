@@ -6,28 +6,19 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { styled } from '@mui/material/styles';
 import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
-
-// const AppBar = styled(MuiAppBar, {
-//     shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//     zIndex: theme.zIndex.drawer + 1,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//         easing: theme.transitions.easing.sharp,
-//         duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     ...(open && {
-//         marginLeft: 280,
-//         width: `calc(100% - ${280}px)`,
-//         transition: theme.transitions.create(['width', 'margin'], {
-//             easing: theme.transitions.easing.sharp,
-//             duration: theme.transitions.duration.enteringScreen,
-//         }),
-//     }),
-// }));
+import { useEffect, useState } from "react";
+import useWindowSize from "./hooks/windowSize";
 
 export const Navbar = ({ toggleDrawer }) => {
     const { loading, authUser } = useAuth()
+    const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     const router = useRouter()
+    const windowSize = useWindowSize()
+
+    useEffect(() => {
+        setTitle(windowSize.width <= 900 ? "\"El Salvador\"" : "Instituto Privado \"El Salvador\"")
+    }, [windowSize])
+
     return (
         <Box>
             <AppBar position="fixed">
@@ -43,9 +34,9 @@ export const Navbar = ({ toggleDrawer }) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h7" component="div" sx={{ flexGrow: 1, fontSize: "20px" }}>
-                        <strong>Instituto Privado &quot;El Salvador&quot;</strong>
+                        <strong>{title}</strong>
                     </Typography>
-                    <Link href={'/gestion/institucional'}>
+                    <Link href={'/gestion/institucional'} style={{ textDecoration: 'none', color: '#f9f9f9' }}>
                         <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {

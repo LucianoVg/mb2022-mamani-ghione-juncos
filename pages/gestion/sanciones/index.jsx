@@ -14,37 +14,42 @@ const Sanciones = () => {
     const [cursos, setCursos] = useState()
     const { loading, authUser } = useAuth()
     const router = useRouter()
-    const [idCurso, setIdCurso] = useState('')
-    const [idAlumno, setIdAlumno] = useState('')
+    const [idCurso, setIdCurso] = useState(0)
+    const [idAlumno, setIdAlumno] = useState(0)
     const [alumnos, setAlumnos] = useState()
     const [cargandoInfo, setCargandoInfo] = useState(false)
     const pageSize = 5
     const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
     const paginacion = usePagination(sanciones || [], pageSize)
     const [pagina, setPagina] = useState(1)
+    let queryParams = []
+
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
         paginacion.saltar(pagina)
     }
     const handleCurso = (e) => {
-        setIdCurso(e.target.value)
+        console.log(e.target.value);
+        queryParams.push({ idCurso: Number(e.target.value) })
     }
     const handleAlumno = (e) => {
-        setIdAlumno(e.target.value)
+        console.log(e.target.value);
+        queryParams.push({ idAlumno: Number(e.target.value) })
     }
-    const buscarSanciones = (e) => {
-        e.preventDefault()
-        console.log(idCurso, idAlumno);
+    const buscarSanciones = async () => {
+        let params = ""
+        console.log(queryParams);
+        queryParams.forEach(qp => {
+            for (const key in qp) {
+                params += `${key}=${qp[key]}&`
+            }
+        })
         setCargandoInfo(true)
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${idCurso}/${idAlumno}`)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data);
-                    setSanciones(res.data)
-                    setCargandoInfo(false)
-                }
-            })
-
+        console.log(params);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones?${params}`)
+        console.log(res.data);
+        setSanciones(res.data)
+        setCargandoInfo(false)
     }
     const traerCursos = () => {
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
@@ -108,7 +113,6 @@ const Sanciones = () => {
                     </Select>
                 </FormControl>
                 <FormControl>
-
                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                     <Select
 
@@ -135,9 +139,7 @@ const Sanciones = () => {
             <Box direction='row'>
                 <FormControl sx={{ marginRight: '20px', marginBottom: '10px' }}>
                     <Button startIcon={<Search />} variant="outlined"
-                        onClick={buscarSanciones}
-
-                    >
+                        onClick={buscarSanciones}>
                         Buscar
                     </Button>
                 </FormControl>

@@ -28,7 +28,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
 
     const list = () => (
         <Box
-            style={{ width: 250}}
+            style={{ width: 250 }}
             role="presentation"
             onClick={() => setOpenDrawer(!openDrawer)}
             onKeyDown={() => setOpenDrawer(!openDrawer)}>
@@ -38,7 +38,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                     <ListItemIcon>
                         <Home />
                     </ListItemIcon>
-                    <Link href={'/'}>
+                    <Link href={'/'} style={{ textDecoration: 'none', color: '#212121' }}>
                         <Typography variant='h6'>Inicio</Typography>
                     </Link>
                 </ListItemButton>
@@ -108,7 +108,9 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                                             )
                                         }
                                     </ListItemIcon>
-                                    <Link href={m?.menu?.url}>
+                                    <Link
+                                        style={{ textDecoration: 'none', color: '#212121' }}
+                                        href={m?.menu?.url}>
                                         <ListItemText primary={m?.menu?.menuSistema} />
                                     </Link>
                                 </ListItemButton>
@@ -183,7 +185,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
         <React.Fragment>
             <Navbar toggleDrawer={() => setOpenDrawer(!openDrawer)} />
             <Drawer
-            style={{display: 'flex',}}
+                style={{ display: 'flex', }}
                 anchor={'left'}
                 open={openDrawer}
                 onClose={() => setOpenDrawer(false)}>

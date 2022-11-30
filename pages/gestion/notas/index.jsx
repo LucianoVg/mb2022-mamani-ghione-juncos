@@ -61,7 +61,7 @@ export default function Notas() {
         traerTrimestres()
     }, [])
     useEffect(() => {
-        traerNotas()
+        traerNotas(0)
     }, [])
 
     const handleTrimestre = (e, value) => {
@@ -117,17 +117,18 @@ export default function Notas() {
         if (idCurso) {
             queryParams.push({ idCurso })
         }
-        let params = ''
+        let params = ""
         queryParams.forEach(qp => {
             for (const key in qp) {
                 params += `${key}=${qp[key]}&`
             }
         })
-        // params += `idTrimestre=${value}`
+        params += `idTrimestre=${(value + 1)}`
+        console.log(params);
         setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas?${params}`)
         if (res.data) {
-            setNotas(res.data.filter(n => n.idTrimestre === (value + 1)))
+            setNotas(res.data)
         }
         setCargandoInfo(false)
     }
@@ -303,7 +304,7 @@ export default function Notas() {
                             sx={{ mt: 3, ml: 2 }}
                             color="info"
                             variant="outlined"
-                            onClick={traerNotas}>
+                            onClick={() => traerNotas()}>
                             Buscar
                         </Button>
                     </Box>
