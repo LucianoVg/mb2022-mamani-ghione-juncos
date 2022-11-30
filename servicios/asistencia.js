@@ -17,18 +17,6 @@ export async function ListarCurso() {
     }
 }
 
-export async function FiltrarAsistencias(options) {
-    try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany(options)
-        console.log(asistencias);
-        return asistencias
-    } catch (error) {
-        console.error(error);
-    } finally {
-        Prisma.disconnect()
-    }
-}
-
 export async function TraerAsistencias(options) {
     try {
         const asistencias = await Prisma.newPrisma().asistencia.findMany(options)
@@ -83,12 +71,11 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 mediaFalta: mediaFalta,
                 mediaFaltaJustificada: mediaFaltaJustificada,
                 motivo: motivo,
-                fecha: fecha,
-                idUsuario: idUsuario,
+                idUsuario: Number(idUsuario),
                 actualizadoEn: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
             where: {
-                id: id
+                id: Number(id)
             }
         })
         return asistencia

@@ -18,6 +18,13 @@ export default async function handler(req, res) {
                     }
 
                 },
+                orderBy: {
+                    alumnoXcursoXdivision: {
+                        usuario: {
+                            nombre: 'asc'
+                        }
+                    }
+                }
             }
             if (legajo) {
                 OR.push({
