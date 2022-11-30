@@ -300,57 +300,57 @@ async function main() {
 
     // console.log(alumnos)
 
-    for (let i = 1; i < 7; i++) {
-        const alumnos = await prisma.alumnoXcursoXdivision.findMany({
-            include: {
-                cursoXdivision: true
-            },
-            where: {
-                cursoXdivision: {
-                    idCurso: i
-                }
-            }
+    // for (let i = 1; i < 7; i++) {
+    //     const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+    //         include: {
+    //             cursoXdivision: true
+    //         },
+    //         where: {
+    //             cursoXdivision: {
+    //                 idCurso: i
+    //             }
+    //         }
 
-        })
-        // console.log(alumnos)
-        const materias = await prisma.materia.findMany({
-            where: {
-                idCurso: i
-            }
+    //     })
+    //     // console.log(alumnos)
+    //     const materias = await prisma.materia.findMany({
+    //         where: {
+    //             idCurso: i
+    //         }
 
-        })
-        // console.log(materias)
-        const trimestres = await prisma.trimestre.findMany({
-        })
+    //     })
+    //     // console.log(materias)
+    //     const trimestres = await prisma.trimestre.findMany({
+    //     })
 
-        // console.log(i)
-        materias && materias.map(m => {
-            // console.log("entro a materias.map")
-            trimestres && trimestres.map(t => {
-                // console.log("entro a trimestres.map")
-                alumnos && alumnos.map(async (a) => {
-                    // console.log("entro a alumnos.map")
-                    let nota = await prisma.nota.create({
-                        data: {
-                            idAlumnoXcursoXdivision: a.id,
-                            idMateria: m.id,
-                            idTrimestre: t.id,
-                            nota1: 0,
-                            nota2: 0,
-                            nota3: 0,
-                            nota4: 0,
-                            nota5: 0,
-                            fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-                            idUsuario: 1
-                        },
-                    })
-                    console.log(nota);
-                })
+    //     // console.log(i)
+    //     materias && materias.map(m => {
+    //         // console.log("entro a materias.map")
+    //         trimestres && trimestres.map(t => {
+    //             // console.log("entro a trimestres.map")
+    //             alumnos && alumnos.map(async (a) => {
+    //                 // console.log("entro a alumnos.map")
+    //                 let nota = await prisma.nota.create({
+    //                     data: {
+    //                         idAlumnoXcursoXdivision: a.id,
+    //                         idMateria: m.id,
+    //                         idTrimestre: t.id,
+    //                         nota1: 0,
+    //                         nota2: 0,
+    //                         nota3: 0,
+    //                         nota4: 0,
+    //                         nota5: 0,
+    //                         fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                         idUsuario: 1
+    //                     },
+    //                 })
+    //                 console.log(nota);
+    //             })
 
-            })
+    //         })
 
-        })
-    }
+    //     })
+    // }
 
     // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
