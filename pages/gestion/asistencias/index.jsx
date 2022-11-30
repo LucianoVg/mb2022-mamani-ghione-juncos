@@ -264,7 +264,7 @@ export default function Asistencias() {
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
 
                 {/* MODAL----------------------------------------------------------------------------------------------------------- */}
-                <Button onClick={handleOpen} sx={{ mb: 3 }} variant="contained">Actualizar</Button>
+                {/* <Button onClick={handleOpen} sx={{ mb: 3 }} variant="contained">Actualizar</Button> */}
                 <Modal
                     open={open}
                     aria-labelledby="parent-modal-title"
@@ -422,19 +422,19 @@ export default function Asistencias() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell scope="col">Fecha</TableCell>
-                                        <TableCell scope="col">Legajo</TableCell>
-                                        <TableCell scope="col">Apellido</TableCell>
-                                        <TableCell scope="col">Nombre</TableCell>
+                                        <TableCell align="center" scope="col">Fecha</TableCell>
+                                        <TableCell align="center" scope="col">Legajo</TableCell>
+                                        <TableCell align="center" scope="col">Apellido</TableCell>
+                                        <TableCell align="center" scope="col">Nombre</TableCell>
                                         {/* <TableCell scope="col">Preceptor</TableCell> */}
-                                        <TableCell scope="col">P</TableCell>
-                                        <TableCell scope="col">A</TableCell>
-                                        <TableCell scope="col">AJ</TableCell>
-                                        <TableCell scope="col">LT</TableCell>
-                                        <TableCell scope="col">LTJ</TableCell>
-                                        <TableCell scope="col">MF</TableCell>
-                                        <TableCell scope="col">MFJ</TableCell>
-                                        <TableCell scope="col">Acción</TableCell>
+                                        <TableCell align="center" scope="col">P</TableCell>
+                                        <TableCell align="center" scope="col">A</TableCell>
+                                        <TableCell align="center" scope="col">AJ</TableCell>
+                                        <TableCell  align="center"scope="col">LT</TableCell>
+                                        <TableCell align="center" scope="col">LTJ</TableCell>
+                                        <TableCell  align="center"scope="col">MF</TableCell>
+                                        <TableCell align="center" scope="col">MFJ</TableCell>
+                                        <TableCell align="center" scope="col">Acción</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

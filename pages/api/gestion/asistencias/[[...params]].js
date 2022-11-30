@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                     alumnoXcursoXdivision: {
                         usuario: {
                             nombre: {
-                                contains: nombreAlumno[0].toUpperCase() + nombreAlumno.slice(1)
+                                contains: nombreAlumno(0).toUpperCase() + nombreAlumno.slice(1)
                             }
                         }
                     }

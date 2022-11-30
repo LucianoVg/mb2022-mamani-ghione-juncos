@@ -337,40 +337,40 @@ export default function Notas() {
                             <Table sx={{ minWidth: 800 }}>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell align="right">Legajo</TableCell>
-                                        <TableCell align="right">Sexo</TableCell>
-                                        <TableCell align="right">Nombre</TableCell>
-                                        <TableCell align="right">Apellido</TableCell>
-                                        <TableCell align="right">Materia</TableCell>
-                                        <TableCell align="right">Nota 1</TableCell>
-                                        <TableCell align="right">Nota 2</TableCell>
-                                        <TableCell align="right">Nota 3</TableCell>
-                                        <TableCell align="right">Nota 4</TableCell>
-                                        <TableCell align="right">Nota 5</TableCell>
-                                        <TableCell align="right">Trimestre</TableCell>
-                                        <TableCell align="right">Operacion</TableCell>
+                                        <TableCell align="center">Legajo</TableCell>
+                                        <TableCell align="center">Sexo</TableCell>
+                                        <TableCell align="center">Nombre</TableCell>
+                                        <TableCell align="center">Apellido</TableCell>
+                                        <TableCell align="center">Materia</TableCell>
+                                        <TableCell align="center">Nota 1</TableCell>
+                                        <TableCell align="center">Nota 2</TableCell>
+                                        <TableCell align="center">Nota 3</TableCell>
+                                        <TableCell align="center">Nota 4</TableCell>
+                                        <TableCell align="center">Nota 5</TableCell>
+                                        <TableCell align="center">Trimestre</TableCell>
+                                        <TableCell align="center">Operacion</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
                                         notas && paginacion.dataActual()?.map((n, i) => (
                                             <TableRow key={i}>
-                                                <TableCell align="left">
+                                                <TableCell align="center">
                                                     {n.alumnoXcursoXdivision?.usuario?.legajo}
                                                 </TableCell>
-                                                <TableCell align="left">
+                                                <TableCell align="center">
                                                     {n.alumnoXcursoXdivision?.usuario?.sexo}
                                                 </TableCell>
-                                                <TableCell align="left">
+                                                <TableCell align="center">
                                                     {n.alumnoXcursoXdivision?.usuario?.nombre}
                                                 </TableCell>
-                                                <TableCell align="left">
+                                                <TableCell align="center">
                                                     {n.alumnoXcursoXdivision?.usuario?.apellido}
                                                 </TableCell>
-                                                <TableCell align="left">
+                                                <TableCell align="center">
                                                     {n.materia?.nombre}
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <TextField type="number"
@@ -387,7 +387,7 @@ export default function Notas() {
                                                             )
                                                     }
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <TextField type="number"
@@ -403,7 +403,7 @@ export default function Notas() {
                                                             )
                                                     }
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <TextField type="number"
@@ -419,7 +419,7 @@ export default function Notas() {
                                                             )
                                                     }
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <TextField type="number"
@@ -435,7 +435,7 @@ export default function Notas() {
                                                             )
                                                     }
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
                                                             <TextField type="number"
@@ -451,10 +451,10 @@ export default function Notas() {
                                                             )
                                                     }
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {n.trimestre?.trimestre}
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
