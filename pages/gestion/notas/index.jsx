@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl, Pagination } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, FormHelperText, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl, Pagination } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import { SearchOutlined } from "@mui/icons-material";
@@ -21,7 +21,7 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
-    const [nota, setNota] = useState(1);
+    const [nota, setNota] = useState(0);
     const [columnName, setColumnName] = useState("");
     const [cursos, setCursos] = useState([])
     const [materias, setMaterias] = useState([])
@@ -171,8 +171,29 @@ export default function Notas() {
         setNota(0);
     }
 
+    const min = 1
+    const max = 10
+
+    const [errorMessage, setErrorMessage] = useState("")
+
     const onChangeNotaColumna = (e) => {
-        setNota(Number.parseInt(e.target.value))
+        var value = parseInt(e.target.value, 10);
+
+        if (value > max) {
+
+            // setErrorMessage("El valor máximo es 10")
+        }
+        if (value < min) {
+
+            // setErrorMessage("El valor mínimo es 1")
+        }
+
+        if (value <= max && value >= min) {
+            setNota(value)
+        }
+        // if (value >= min && value <= max) {
+        //     setNota(value)
+        // }
         setColumnName(e.target.name)
     }
 
@@ -220,10 +241,11 @@ export default function Notas() {
 
                                     materias && materias?.map((m, i) => (
 
-                                        m?.idcurso === 3 && (
+                                        m?.idCurso === 3 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
+
 
                                     ))
                                 }
@@ -373,14 +395,23 @@ export default function Notas() {
                                                 <TableCell align="center">
                                                     {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                margin="normal"
-                                                                variant="standard"
-                                                                name="nota1"
-                                                                placeholder={n.nota1}
-                                                                onChange={onChangeNotaColumna}
+                                                            <FormControl>
+                                                                <TextField type="number"
+                                                                    margin="normal"
+                                                                    variant="standard"
+                                                                    name="nota1"
+                                                                    maxlength="2"
+                                                                    min="1"
+                                                                    max="10"
+                                                                    inputProps={{
+                                                                        min, max,
+                                                                    }}
+                                                                    placeholder={n.nota1}
+                                                                    onChange={onChangeNotaColumna}
+                                                                    helperText={errorMessage}
+                                                                />
 
-                                                            />
+                                                            </FormControl>
                                                         ) :
                                                             (
                                                                 n.nota1
@@ -393,6 +424,8 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota2"
                                                                 variant="standard"
+
+                                                                inputProps={{ min, max }}
                                                                 placeholder={n.nota2}
                                                                 onChange={onChangeNotaColumna}
 
@@ -409,6 +442,8 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota3"
                                                                 variant="standard"
+
+                                                                inputProps={{ min, max }}
                                                                 placeholder={n.nota3}
                                                                 onChange={onChangeNotaColumna}
 
@@ -425,6 +460,8 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota4"
                                                                 variant="standard"
+
+                                                                inputProps={{ min, max }}
                                                                 placeholder={n.nota4}
                                                                 onChange={onChangeNotaColumna}
 
@@ -441,6 +478,8 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota5"
                                                                 variant="standard"
+
+                                                                inputProps={{ min, max }}
                                                                 placeholder={n.nota5}
                                                                 onChange={onChangeNotaColumna}
 
