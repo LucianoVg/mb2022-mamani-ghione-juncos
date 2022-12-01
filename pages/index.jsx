@@ -19,22 +19,21 @@ const Home = () => {
   const paginacion = usePagination(noticias || [], pageSize)
   const { authUser } = useAuth()
   const router = useRouter()
+  const [cargando, setCargando] = useState(false)
 
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
     paginacion.saltar(pagina)
   }
 
-  const traerNoticias = () => {
-    axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
-      .then(res => {
-        if (res.data) {
-          console.log(res.data);
-          setNoticias(res.data)
-        }
-      }).catch(err => {
-        console.error(err);
-      })
+  const traerNoticias = async () => {
+    setCargando(true)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
+    if (res.data) {
+      console.log(res.data);
+      setNoticias(res.data)
+    }
+    setCargando(false)
   }
 
   useEffect(() => {
@@ -44,14 +43,16 @@ const Home = () => {
   return (
     <Layout>
       <Container maxWidth={'xl'} sx={{ marginTop: "90px" }} >
-        <Container sx={{ textAlign: 'center' }}>
-          <Loading size={80} />
-        </Container>
+        {
+          cargando && (
+            <Container sx={{ textAlign: 'center' }}>
+              <Loading size={80} />
+            </Container>
+          )
+        }
         {
           authUser && (
-            <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}
-
-            >
+            <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
               Agregar
             </Button>
           )

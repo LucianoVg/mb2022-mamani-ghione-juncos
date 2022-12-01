@@ -145,21 +145,17 @@ export default function Notas() {
     //     })
     // }
 
-    const updateNota = (id, newNota, columnName) => {
-        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/update/${id}`, {
+    const updateNota = async (id, newNota, columnName) => {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/update/${id}`, {
             nota: newNota,
             nombreColumna: columnName
         })
-            .then(res => {
-                console.log(res.data);
-                // reset inEditMode and unit price state values
-                onCancel();
-
-                // fetch the updated data
-                traerNotas(index)
-            }).catch(err => {
-                console.error(err);
-            })
+        if (res.status === 200) {
+            // reset inEditMode and unit price state values
+            onCancel();
+            // fetch the updated data
+            traerNotas(index)
+        }
     }
 
     const onSave = (id, newNota, columnName) => {
@@ -176,9 +172,9 @@ export default function Notas() {
         // nota = 0
     }
 
-
     const [nota, setNota] = useState(
         {
+            id: 0,
             nota1: 0,
             nota2: 0,
             nota3: 0,
@@ -214,137 +210,102 @@ export default function Notas() {
 
     const onChangeNotaColumna = (e) => {
         var value = parseInt(e.target.value, 10);
-        setNota(value)
-
 
         if (value > max) {
-
             value = max
             // setErrorMessage("El valor máximo es 10")
         }
         if (value < min) {
-
             value = min
             // setErrorMessage("El valor mínimo es 1")
         }
         setValue(value)
 
         if (value >= min && value <= max) {
-            setNota.nota1 = value
-            setColumnName.columnName1 = e.target.name
+            setNota({ ...nota, nota1: value })
+            setColumnName({ ...columnName, columnName1: e.target.name })
         }
-
-
         // console.log(nota)
     }
     const onChangeNotaColumna2 = (e) => {
-
         var value2 = parseInt(e.target.value, 10);
 
-
         if (value2 > max) {
-
             value2 = max
             // setErrorMessage("El valor máximo es 10")
         }
         if (value2 < min) {
-
             value2 = min
             // setErrorMessage("El valor mínimo es 1")
         }
-
-
         setValue2(value2)
 
-
-
-        if (value >= min && value <= max) {
-            setNota.nota2 = value2
-            setColumnName.columnName2 = e.target.name
+        if (value2 >= min && value2 <= max) {
+            setNota({ ...nota, nota1: value2 })
+            setColumnName({ ...columnName, columnName2: e.target.name })
         }
-
-
     }
 
     const onChangeNotaColumna3 = (e) => {
-
         var value3 = parseInt(e.target.value, 10);
 
-
-
         if (value3 > max) {
-
             value3 = max
             // setErrorMessage("El valor máximo es 10")
         }
         if (value3 < min) {
-
             value3 = min
             // setErrorMessage("El valor mínimo es 1")
         }
-
-
         setValue3(value3)
 
-        if (value >= min && value <= max) {
-            setNota.nota3 = value3
-            setColumnName.columnName3 = e.target.name
+        if (value3 >= min && value3 <= max) {
+            setNota({ ...nota, nota3: value3 })
+            setColumnName({ ...columnName, columnName3: e.target.name })
         }
 
     }
 
     const onChangeNotaColumna4 = (e) => {
-
         var value4 = parseInt(e.target.value, 10);
 
         if (value4 > max) {
-
             value4 = max
             // setErrorMessage("El valor máximo es 10")
         }
         if (value4 < min) {
-
             value4 = min
             // setErrorMessage("El valor mínimo es 1")
         }
-
         setValue4(value4)
 
-        if (value >= min && value <= max) {
-            setNota.nota4 = value4
-            setColumnName.columnName4 = e.target.name
+        if (value4 >= min && value4 <= max) {
+            setNota({ ...nota, nota4: value4 })
+            setColumnName({ ...columnName, columnName4: e.target.name })
         }
-
     }
 
     const onChangeNotaColumna5 = (e) => {
-
         var value5 = parseInt(e.target.value, 10);
 
-
         if (value5 > max) {
-
             value5 = max
             // setErrorMessage("El valor máximo es 10")
         }
         if (value5 < min) {
-
             value5 = min
             // setErrorMessage("El valor mínimo es 1")
         }
 
-
         setValue5(value5)
 
-
-        if (value >= min && value <= max) {
-            setNota.nota5 = value5
-            setColumnName.columnName5 = e.target.name
+        if (value5 >= min && value5 <= max) {
+            setNota({ ...nota, nota5: value5 })
+            setColumnName({ ...columnName, columnName5: e.target.name })
         }
 
         console.log(nota)
         console.log(columnName)
-
     }
     return (
         <Layout>
