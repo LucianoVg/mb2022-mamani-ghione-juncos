@@ -23,12 +23,12 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                 }
             })
             alumnos.forEach(async (a) => {
-                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion(fecha, motivo,idTipoSancion,idAlumnoXCursoXDivision) VALUES(${fecha}, ${motivo}, ${idTipoSancion}, ${a.id});`
+                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion(fecha, motivo,idTipoSancion,idAlumnoXCursoXDivision) VALUES(${fecha}, ${motivo}, ${Number(idTipoSancion)}, ${Number(a.id)});`
                 console.log(sancion);
 
-                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idAlumnoXCursoXDivision = ${a.id}`
+                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idAlumnoXCursoXDivision = ${Number(a.id)}`
 
-                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionXusuario (idSancion, idUsuario) VALUES(${idsSancion[0]?.id}, ${idUsuario})`
+                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionXusuario (idSancion, idUsuario) VALUES(${idsSancion[0]?.id}, ${Number(idUsuario)})`
             })
             return sanciones
 

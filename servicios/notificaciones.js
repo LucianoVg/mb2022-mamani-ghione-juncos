@@ -1,6 +1,5 @@
 import { Prisma } from "./prisma";
 
-
 export async function ListarNotificaciones(idUsuario) {
     try {
         const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
@@ -15,7 +14,7 @@ export async function ListarNotificaciones(idUsuario) {
             where: {
                 usuario: {
                     id: {
-                        not: idUsuario
+                        not: Number(idUsuario)
                     }
                 }
             },
@@ -44,7 +43,7 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
             },
             where: {
                 usuario: {
-                    id: idUsuario
+                    id: Number(idUsuario)
                 }
             },
             orderBy: {
@@ -74,7 +73,7 @@ export async function DetalleNotificacion(idNotificacion) {
                 }
             },
             where: {
-                id: idNotificacion
+                id: Number(idNotificacion)
             }
         })
         console.log(notificacion);
@@ -91,7 +90,7 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
     try {
         const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
             where: {
-                idCursoXdivision: idCurso
+                idCursoXdivision: Number(idCurso)
             }
         }) : await Prisma.newPrisma().alumnoXcursoXdivision.findMany()
 
@@ -103,10 +102,10 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
                     fecha: fecha,
                     notificacionXusuario: {
                         create: {
-                            idUsuario: idUsuario
+                            idUsuario: Number(idUsuario)
                         }
                     },
-                    idAlumnoXCursoXDivision: a.id
+                    idAlumnoXCursoXDivision: Number(a.id)
                 }
             })
             console.log(notificacion);
@@ -128,16 +127,16 @@ export async function ActualizarNotificacion(id, asunto, contenido, idUsuario, i
                 notificacionXusuario: {
                     update: {
                         data: {
-                            idUsuario: idUsuario
+                            idUsuario: Number(idUsuario)
                         },
                         where: {
-                            id: idNotificacionXUsuario
+                            id: Number(idNotificacionXUsuario)
                         }
                     }
                 }
             },
             where: {
-                id: id
+                id: Number(id)
             }
         })
         return actualizar

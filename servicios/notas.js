@@ -44,12 +44,10 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
                     },
                     where: {
-                        id: idNota
+                        id: Number(idNota)
                     }
-
                 })
                 return newNota1
-
             case 'nota2':
                 const newNota2 = await Prisma.newPrisma().nota.update({
                     data: {
@@ -57,12 +55,10 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
                     },
                     where: {
-                        id: idNota
+                        id: Number(idNota)
                     }
                 })
                 return newNota2
-
-
             case 'nota3':
                 const newNota3 = await Prisma.newPrisma().nota.update({
                     data: {
@@ -70,11 +66,10 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
                     },
                     where: {
-                        id: idNota
+                        id: Number(idNota)
                     }
                 })
                 return newNota3
-
             case 'nota4':
                 const newNota4 = await Prisma.newPrisma().nota.update({
                     data: {
@@ -82,11 +77,10 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
                     },
                     where: {
-                        id: idNota
+                        id: Number(idNota)
                     }
                 })
                 return newNota4
-
             case 'nota5':
                 const newNota5 = await Prisma.newPrisma().nota.update({
                     data: {
@@ -94,7 +88,7 @@ export async function updateNota(idNota, notaNueva, columnName) {
 
                     },
                     where: {
-                        id: idNota
+                        id: Number(idNota)
                     }
                 })
                 return newNota5

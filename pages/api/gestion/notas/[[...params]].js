@@ -30,6 +30,13 @@ export default async function handler(
                     }
                 }
             },
+            orderBy: {
+                alumnoXcursoXdivision: {
+                    usuario: {
+                        nombre: 'asc'
+                    }
+                }
+            }
         }
         if (idMateria) {
             AND.push({ idMateria: Number(idMateria) })

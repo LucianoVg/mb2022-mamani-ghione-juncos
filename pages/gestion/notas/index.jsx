@@ -178,18 +178,17 @@ export default function Notas() {
 
     const onChangeNotaColumna = (e) => {
         var value = parseInt(e.target.value, 10);
+        setNota(value)
 
         if (value > max) {
-
-            // setErrorMessage("El valor máximo es 10")
+            setErrorMessage("El valor máximo es 10")
         }
         if (value < min) {
-
-            // setErrorMessage("El valor mínimo es 1")
+            setErrorMessage("El valor mínimo es 1")
         }
 
         if (value <= max && value >= min) {
-            setNota(value)
+            setErrorMessage("")
         }
         // if (value >= min && value <= max) {
         //     setNota(value)
@@ -503,6 +502,7 @@ export default function Notas() {
                                                                         <Button variant="contained"
                                                                             color="primary"
                                                                             size="small"
+                                                                            disabled={!(nota <= max && nota >= min)}
                                                                             onClick={() => onSave(n.id, nota, columnName)}
                                                                         >
                                                                             Guardar

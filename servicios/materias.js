@@ -2,12 +2,16 @@ import { Prisma } from "./prisma";
 
 export async function ListarMaterias(idCurso) {
     try {
-        const materias = await Prisma.newPrisma().materia.findMany({
+        const materias = idCurso ? await Prisma.newPrisma().materia.findMany({
             include: {
                 curso: true
             },
             where: {
-                idCurso: idCurso
+                idCurso: Number(idCurso)
+            }
+        }) : await Prisma.newPrisma().materia.findMany({
+            include: {
+                curso: true
             }
         })
         return materias

@@ -13,9 +13,9 @@ import { useEffect, useState } from 'react'
 export async function registrarUsuario(
     login, nombre, apellido, correo,
     legajo, telefono, localidad,
-    direccion, idRol, idTutor = '',
-    contrasenia, sexo, idCurso = '') {
-    const usuarioCreado = idTutor.length && idCurso.length ? await Prisma.newPrisma().usuario.create({
+    direccion, idRol, idTutor = 0,
+    contrasenia, sexo, idCurso = 0) {
+    const usuarioCreado = idTutor !== 0 && idCurso !== 0 ? await Prisma.newPrisma().usuario.create({
         data: {
             login: login,
             nombre: nombre,
@@ -25,14 +25,14 @@ export async function registrarUsuario(
             localidad: localidad,
             telefono: telefono,
             direccion: direccion,
-            idRol: idRol,
-            idTutor: idTutor,
+            idRol: Number(idRol),
+            idTutor: Number(idTutor),
             sexo: sexo,
             password: contrasenia,
             alumnoXcursoXdivision: {
                 connectOrCreate: {
                     create: {
-                        idCursoXDivision: idCurso,
+                        idCursoXDivision: Number(idCurso),
                         anoActual: new Date(),
                         idEstadoAlumno: 1,
                     }
@@ -49,7 +49,7 @@ export async function registrarUsuario(
             localidad: localidad,
             telefono: telefono,
             direccion: direccion,
-            idRol: idRol,
+            idRol: Number(idRol),
             sexo: sexo,
             password: contrasenia
         }

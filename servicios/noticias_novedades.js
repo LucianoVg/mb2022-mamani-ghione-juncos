@@ -20,14 +20,13 @@ export async function traerNoticia(id = 0) {
 }
 
 export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
-
     const agregar = await Prisma.newPrisma().noticiasYnovedades.create({
         data: {
             titulo: titulo,
             creadaEn: new Date(creadaEn),
             url: url,
             descripcion: descripcion,
-            idUsuario: idUsuario
+            idUsuario: Number(idUsuario)
         }
     })
     Prisma.disconnect()
@@ -44,7 +43,7 @@ export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn)
             actualizadaEn: new Date(actualizadaEn)
         },
         where: {
-            id: id
+            id: Number(id)
         }
     })
     Prisma.disconnect()
@@ -54,7 +53,7 @@ export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn)
 export async function eliminarNoticia(id) {
     const eliminar = await Prisma.newPrisma().noticiasYnovedades.delete({
         where: {
-            id: id
+            id: Number(id)
         }
     })
     Prisma.disconnect()

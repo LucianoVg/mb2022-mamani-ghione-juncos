@@ -1,7 +1,7 @@
 import { Prisma } from "./prisma";
 
-export async function traerFichaInstitucional(id = '') {
-    const fichaInstitucional = id !== '' ? await Prisma.newPrisma().fichaInstitucional.findFirst({
+export async function traerFichaInstitucional(id = 0) {
+    const fichaInstitucional = id !== 0 ? await Prisma.newPrisma().fichaInstitucional.findFirst({
         where: {
             OR: [
                 { id: id },
@@ -34,12 +34,12 @@ export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
 export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
     const portada = await Prisma.newPrisma().portadaFicha.update({
         where: {
-            id: id
+            id: Number(id)
         },
         data: {
             nombre: nombre,
             url: url,
-            fichaInstitucionalId: fichaInstitucionalId
+            fichaInstitucionalId: Number(fichaInstitucionalId)
         }
     })
     Prisma.disconnect()
@@ -48,7 +48,7 @@ export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
 export async function traerPortadas(idFicha) {
     const portadas = await Prisma.newPrisma().portadaFicha.findMany({
         where: {
-            fichaInstitucionalId: idFicha
+            fichaInstitucionalId: Number(idFicha)
         },
         include: {
             fichaInstitucional: true
@@ -57,11 +57,11 @@ export async function traerPortadas(idFicha) {
     Prisma.disconnect()
     return portadas
 }
-export async function guardarFichaInstitucional(id = '', nombreInstitucion = '', ubicacion = '', tipoInstitucion = false, descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = '') {
+export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = '', descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
 
     const guardado = await Prisma.newPrisma().fichaInstitucional.upsert({
         where: {
-            id: id
+            id: Number(id)
         },
         update: {
             nombreInstitucion: nombreInstitucion,
@@ -73,7 +73,7 @@ export async function guardarFichaInstitucional(id = '', nombreInstitucion = '',
             oficina1: oficina1,
             oficina2: oficina2,
             mail: mail,
-            idUsuario: idUsuario
+            idUsuario: Number(idUsuario)
         },
         create: {
             nombreInstitucion: nombreInstitucion,
@@ -85,7 +85,7 @@ export async function guardarFichaInstitucional(id = '', nombreInstitucion = '',
             oficina1: oficina1,
             oficina2: oficina2,
             mail: mail,
-            idUsuario: idUsuario
+            idUsuario: Number(idUsuario)
         }
     })
     Prisma.disconnect()

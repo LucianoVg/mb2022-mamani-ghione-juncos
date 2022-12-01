@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { useAuth } from "../../../components/context/authUserProvider"
 import { Layout } from "../../../components/layout"
+import Loading from "../../../components/loading"
 import { guardarImagen, traerImagen } from "../../../servicios/portada"
 
 export default function DetallesNoticia() {
@@ -25,6 +26,7 @@ export default function DetallesNoticia() {
     const hoy = new Date()
     const [imagen, setImagen] = useState(null)
     const [imgUrl, setImgUrl] = useState()
+    const [guardando, setGuardando] = useState(false)
 
     const handleImagen = (e) => {
         setImagen(e.target.files[0])
@@ -32,44 +34,42 @@ export default function DetallesNoticia() {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
+        setGuardando(true)
         if (imagen) {
-            guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
-                .then(result => {
-                    traerImagen('imagenes_noticias/' + imagen?.name)
-                        .then(url => {
-                            axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`, {
-                                titulo: noticiaActualizar.titulo,
-                                url: url,
-                                descripcion: noticiaActualizar.descripcion,
-                                actualizadaEn: hoy.toLocaleDateString('en-GB')
-                            }).then(res => {
-                                console.log(res.data);
-                                router.push('/')
-                            })
-                        })
+            const result = await guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
+            if (result) {
+                const url = await traerImagen('imagenes_noticias/' + imagen?.name)
+                const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${noticia.id}`, {
+                    titulo: noticiaActualizar.titulo,
+                    url: url,
+                    descripcion: noticiaActualizar.descripcion,
+                    actualizadaEn: hoy.toLocaleDateString('es-AR').split('T')[0]
                 })
-
+                setGuardando(false)
+                if (res.status === 200) {
+                    router.push('/')
+                }
+            }
         } else {
-            axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`, {
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${noticia.id}`, {
                 titulo: noticiaActualizar.titulo,
                 url: noticia.url,
                 descripcion: noticiaActualizar.descripcion,
-                actualizadaEn: hoy.toLocaleDateString('en-GB')
-            }).then(res => {
-                console.log(res.data);
+                actualizadaEn: hoy.toLocaleDateString('es-AR').split('T')[0]
             })
+            setGuardando(false)
+            if (res.status === 200) {
+                router.push('/')
+            }
         }
-
-        router.push('/')
-
     }
 
-    const borrarNoticia = () => {
+    const borrarNoticia = async () => {
         if (confirm("Está seguro que desea eliminar la noticia?")) {
-            axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/${noticia.id}`).then(res => {
-                console.log(res.data);
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${noticia.id}`)
+            if (res.status === 200) {
                 router.push('/')
-            })
+            }
         }
     }
     const handleForm = (e) => {
@@ -139,6 +139,13 @@ export default function DetallesNoticia() {
                         </Grid>
                     </Grid>
                 </Box>
+                {
+                    guardando && (
+                        <Container sx={{ textAlign: 'center' }}>
+                            <Loading size={80} />
+                        </Container>
+                    )
+                }
             </Container>
         </Layout>
     )

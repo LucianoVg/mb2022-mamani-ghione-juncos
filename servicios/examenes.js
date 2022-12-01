@@ -22,7 +22,7 @@ export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuari
                 titulo: titulo,
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
-                idUsuario: idUsuario
+                idUsuario: Number(idUsuario)
             }
         })
         return fechaExamen
@@ -40,10 +40,10 @@ export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsua
                 titulo: titulo,
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
-                idUsuario: idUsuario
+                idUsuario: Number(idUsuario)
             },
             where: {
-                id: id
+                id: Number(id)
             }
         })
         return examen
@@ -58,7 +58,7 @@ export async function borrarExamen(id) {
     try {
         const examen = await Prisma.newPrisma().fechaExamen.delete({
             where: {
-                id: id
+                id: Number(id)
             }
         })
         return examen

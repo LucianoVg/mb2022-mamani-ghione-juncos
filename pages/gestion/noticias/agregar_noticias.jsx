@@ -9,6 +9,8 @@ import { Grid } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { Container } from '@mui/system';
+import Loading from '../../../components/loading';
 
 const AgregarNoticias = () => {
     const [noticia, setNoticia] = useState({
@@ -18,9 +20,10 @@ const AgregarNoticias = () => {
     })
     var hoy = new Date();
     const [imagen, setImagen] = useState(null)
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
     const [imagenPrev, setImagenPrev] = useState("/assets/img/placeholder.png")
+    const [guardando, setGuardando] = useState(false)
 
     const handleForm = (e) => {
         setNoticia({
@@ -34,20 +37,19 @@ const AgregarNoticias = () => {
     }
     const { loading, authUser } = useAuth()
 
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({
+                id: res.data.id
+            })
+        }
+    }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-            .then(res => {
-                if (res.data) {
-                    setUsuario({
-                        id: res.data.id
-                    })
-                }
-            }).catch(err => {
-                console.log(err);
-            })
+        traerUsuario()
     }, [loading, authUser])
 
 
@@ -57,23 +59,22 @@ const AgregarNoticias = () => {
 
         console.log(imagen);
         console.log(noticia);
-        guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
-            .then(result => {
-                traerImagen('imagenes_noticias/' + imagen?.name)
-                    .then(url => {
-                        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`, {
-                            titulo: noticia.titulo,
-                            creadaEn: hoy.toLocaleDateString(),
-                            url: url,
-                            descripcion: noticia.descripcion,
-                            idUsuario: usuario.id
-                        }).then(res => {
-                            console.log(res.data);
-                        })
-
-                    })
+        setGuardando(true)
+        const result = await guardarImagen('imagenes_noticias/' + imagen?.name, imagen)
+        if (result) {
+            const url = await traerImagen('imagenes_noticias/' + imagen?.name)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`, {
+                titulo: noticia.titulo,
+                creadaEn: hoy.toLocaleDateString().split('T')[0],
+                url: url,
+                descripcion: noticia.descripcion,
+                idUsuario: usuario.id
             })
-        router.push('/')
+            if (res.status === 200) {
+                router.push('/')
+            }
+        }
+        setGuardando(false)
     }
 
     return (
@@ -127,6 +128,13 @@ const AgregarNoticias = () => {
                     </Grid>
                 </Grid>
             </Box>
+            {
+                guardando && (
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
+                )
+            }
         </Layout>
     )
 }
