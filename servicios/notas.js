@@ -34,7 +34,6 @@ export async function TraerNotas(options) {
 // }
 
 export async function updateNota(idNota, notaNueva, columnName) {
-
     try {
         switch (columnName) {
             case 'nota1':
