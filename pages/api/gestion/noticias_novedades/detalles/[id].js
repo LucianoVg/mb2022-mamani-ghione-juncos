@@ -15,14 +15,14 @@ export default async function handler(
         const { id } = req.query
         switch (req.method) {
             case 'GET':
-                const noticiaDetalle = await traerNoticia(id)
+                const noticiaDetalle = await traerNoticia(Number(id))
                 return res.json(noticiaDetalle)
             case 'PUT':
                 const { titulo, url, descripcion, actualizadaEn } = req.body
-                const noticiaActualizada = await editarNoticia(id, titulo, url, descripcion, actualizadaEn)
+                const noticiaActualizada = await editarNoticia(Number(id), titulo, url, descripcion, actualizadaEn)
                 return res.status(200).json(noticiaActualizada)
             case 'DELETE':
-                const noticia = await eliminarNoticia(id)
+                const noticia = await eliminarNoticia(Number(id))
                 return res.status(200).json(noticia)
             default:
                 return res.status(400).json({ mensaje: 'Metodo no permitido' })
