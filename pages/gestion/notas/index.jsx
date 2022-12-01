@@ -23,35 +23,6 @@ export default function Notas() {
 
 
 
-    const [nota, setNota] = useState([
-        {
-            nota: 0,
-            columnName: ""
-
-        },
-        {
-            nota: 0,
-            columnName: ""
-
-        },
-        {
-            nota: 0,
-            columnName: ""
-
-        },
-        {
-            nota: 0,
-            columnName: ""
-
-        },
-        {
-            nota: 0,
-            columnName: ""
-
-        }
-    ]);
-
-
     // const [nota, setNota] = useState(0);
     // const [columnName, setColumnName] = useState("");
 
@@ -202,8 +173,29 @@ export default function Notas() {
             rowKey: null
         })
         // reset the unit price state value
-        nota = 0
+        // nota = 0
     }
+
+
+    const [nota, setNota] = useState(
+        {
+            nota1: 0,
+            nota2: 0,
+            nota3: 0,
+            nota4: 0,
+            nota5: 0
+        }
+    );
+    const [columnName, setColumnName] = useState(
+        {
+            columnName1: "",
+            columnName2: "",
+            columnName3: "",
+            columnName4: "",
+            columnName5: "",
+        }
+    );
+
 
     const min = 1
     const max = 10
@@ -238,8 +230,8 @@ export default function Notas() {
         setValue(value)
 
         if (value >= min && value <= max) {
-            setNota[0].nota = value
-            setNota[0].columnName = e.target.name
+            setNota.nota1 = value
+            setColumnName.columnName1 = e.target.name
         }
 
 
@@ -267,8 +259,8 @@ export default function Notas() {
 
 
         if (value >= min && value <= max) {
-            setNota[1].nota = value
-            setNota[1].columnName = e.target.name
+            setNota.nota2 = value2
+            setColumnName.columnName2 = e.target.name
         }
 
 
@@ -295,8 +287,8 @@ export default function Notas() {
         setValue3(value3)
 
         if (value >= min && value <= max) {
-            setNota[2].nota = value
-            setNota[2].columnName = e.target.name
+            setNota.nota3 = value3
+            setColumnName.columnName3 = e.target.name
         }
 
     }
@@ -319,8 +311,8 @@ export default function Notas() {
         setValue4(value4)
 
         if (value >= min && value <= max) {
-            setNota[3].nota = value
-            setNota[3].columnName = e.target.name
+            setNota.nota4 = value4
+            setColumnName.columnName4 = e.target.name
         }
 
     }
@@ -346,11 +338,12 @@ export default function Notas() {
 
 
         if (value >= min && value <= max) {
-            setNota[4].nota = value
-            setNota[4].columnName = e.target.name
+            setNota.nota5 = value5
+            setColumnName.columnName5 = e.target.name
         }
 
         console.log(nota)
+        console.log(columnName)
 
     }
     return (
