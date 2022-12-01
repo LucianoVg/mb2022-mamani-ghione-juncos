@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../components/context/authUserProvider'
 import { Layout } from '../components/layout'
 import TarjetaNovedades from '../components/tarjeta_noticias'
-import { Button, Container } from "@mui/material";
+import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
 import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
-import Loading from '../components/loading'
+import { Container } from '@mui/system'
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -18,20 +18,22 @@ const Home = () => {
   const paginacion = usePagination(noticias || [], pageSize)
   const { authUser } = useAuth()
   const router = useRouter()
-  const [cargando, setCargando] = useState(false)
+
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
     paginacion.saltar(pagina)
   }
 
-  const traerNoticias = async () => {
-    setCargando(true)
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
-    if (res.data) {
-      console.log(res.data);
-      setNoticias(res.data)
-    }
-    setCargando(false)
+  const traerNoticias = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades`)
+      .then(res => {
+        if (res.data) {
+          console.log(res.data);
+          setNoticias(res.data)
+        }
+      }).catch(err => {
+        console.error(err);
+      })
   }
 
   useEffect(() => {
@@ -40,45 +42,42 @@ const Home = () => {
 
   return (
     <Layout>
-      {
-        authUser && (
-          <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
-            Agregar
-          </Button>
-        )
-      }
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container>
-          {
-            paginacion.dataActual().map((n, i) => (
-              <Grid item key={i} xs="auto" sx={{ maxWidth: 'fit-content', margin: 'auto' }}>
-                <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
-              </Grid>
-            ))
-          }
-        </Grid>
-      </Box>
-      {
-        cargando && (
-          <Container sx={{ textAlign: 'center' }}>
-            <Loading size={80} />
-          </Container>
-        )
-      }
-      {
-        noticias && noticias.length > 0 && (
-          <Container sx={{ width: 'fit-content', textAlign: 'center' }}>
-            <Pagination
-              count={cantidadPaginas}
-              size='large'
-              sx={{ width: 'fit-content' }}
-              page={pagina}
-              variant="outlined"
-              shape='circular'
-              onChange={handlerCambioPagina} />
-          </Container>
-        )
-      }
+          <Container maxWidth={'xl'} sx={{marginTop: "90px"}} >
+        {
+          authUser && (
+            <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}
+         
+            >
+              Agregar
+            </Button>
+          )
+        }
+        <Box sx={{ flexGrow: 1, marginLeft: "-25px" }} >
+          <Grid container >
+            {
+              paginacion.dataActual().map((n, i) => (
+                <Grid item key={i} xs="auto">
+                  <TarjetaNovedades id={n.id} titulo={n.titulo} descripcion={n.descripcion} url={n.url} />
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Box>
+
+        {
+          noticias && noticias.length > 0 && (
+            <Container maxWidth={'lg'} sx={{ width: 'fit-content', textAlign: 'center' }}>
+              <Pagination
+                count={cantidadPaginas}
+                size='large'
+                page={pagina}
+                variant="outlined"
+                shape='circular'
+                onChange={handlerCambioPagina} />
+            </Container>
+          )
+        }
+      </Container>
     </Layout>
   )
 }

@@ -233,7 +233,7 @@ export default function Asistencias() {
 
     return (
         <Layout>
-            <Container
+            <Container maxWidth= "xl"
                 style={{ position: 'relative', }}>
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>

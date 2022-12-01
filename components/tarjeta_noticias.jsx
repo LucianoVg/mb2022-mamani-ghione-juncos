@@ -22,7 +22,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                         />
                         {
                             authUser && (
-                                <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 250, bottom: 235, }} >
+                                <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 225, bottom: 235, }} >
                                     <IconButton  >
                                         <Edit style={{ color: 'black', fontSize: '27px' }} />
                                     </IconButton>

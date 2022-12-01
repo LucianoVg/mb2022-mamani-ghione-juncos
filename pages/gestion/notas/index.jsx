@@ -21,8 +21,42 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
-    const [nota, setNota] = useState(0);
-    const [columnName, setColumnName] = useState("");
+
+
+    const [nota, setNota] = useState([
+        {
+            nota: 0,
+            columnName: ""
+
+        },
+        {
+            nota: 0,
+            columnName: ""
+
+        },
+        {
+            nota: 0,
+            columnName: ""
+
+        },
+        {
+            nota: 0,
+            columnName: ""
+
+        },
+        {
+            nota: 0,
+            columnName: ""
+
+        }
+    ]);
+
+
+    // const [nota, setNota] = useState(0);
+    // const [columnName, setColumnName] = useState("");
+
+
+
     const [cursos, setCursos] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
@@ -168,38 +202,160 @@ export default function Notas() {
             rowKey: null
         })
         // reset the unit price state value
-        setNota(0);
+        nota = 0
     }
 
     const min = 1
     const max = 10
-
+    const [value, setValue] = useState(1)
+    const [value2, setValue2] = useState(1)
+    const [value3, setValue3] = useState(1)
+    const [value4, setValue4] = useState(1)
+    const [value5, setValue5] = useState(1)
     const [errorMessage, setErrorMessage] = useState("")
+
+
+    // const onChangeNotaColumna = (e) => {
+    //     setNota(Number.parseInt(e.target.value))
+    //     setColumnName(e.target.name)
+    // }
 
     const onChangeNotaColumna = (e) => {
         var value = parseInt(e.target.value, 10);
         setNota(value)
 
+
         if (value > max) {
-            setErrorMessage("El valor máximo es 10")
+
+            value = max
+            // setErrorMessage("El valor máximo es 10")
         }
         if (value < min) {
-            setErrorMessage("El valor mínimo es 1")
+
+            value = min
+            // setErrorMessage("El valor mínimo es 1")
+        }
+        setValue(value)
+
+        if (value >= min && value <= max) {
+            setNota[0].nota = value
+            setNota[0].columnName = e.target.name
         }
 
-        if (value <= max && value >= min) {
-            setErrorMessage("")
+
+        // console.log(nota)
+    }
+    const onChangeNotaColumna2 = (e) => {
+
+        var value2 = parseInt(e.target.value, 10);
+
+
+        if (value2 > max) {
+
+            value2 = max
+            // setErrorMessage("El valor máximo es 10")
         }
-        // if (value >= min && value <= max) {
-        //     setNota(value)
-        // }
-        setColumnName(e.target.name)
+        if (value2 < min) {
+
+            value2 = min
+            // setErrorMessage("El valor mínimo es 1")
+        }
+
+
+        setValue2(value2)
+
+
+
+        if (value >= min && value <= max) {
+            setNota[1].nota = value
+            setNota[1].columnName = e.target.name
+        }
+
+
     }
 
+    const onChangeNotaColumna3 = (e) => {
 
+        var value3 = parseInt(e.target.value, 10);
+
+
+
+        if (value3 > max) {
+
+            value3 = max
+            // setErrorMessage("El valor máximo es 10")
+        }
+        if (value3 < min) {
+
+            value3 = min
+            // setErrorMessage("El valor mínimo es 1")
+        }
+
+
+        setValue3(value3)
+
+        if (value >= min && value <= max) {
+            setNota[2].nota = value
+            setNota[2].columnName = e.target.name
+        }
+
+    }
+
+    const onChangeNotaColumna4 = (e) => {
+
+        var value4 = parseInt(e.target.value, 10);
+
+        if (value4 > max) {
+
+            value4 = max
+            // setErrorMessage("El valor máximo es 10")
+        }
+        if (value4 < min) {
+
+            value4 = min
+            // setErrorMessage("El valor mínimo es 1")
+        }
+
+        setValue4(value4)
+
+        if (value >= min && value <= max) {
+            setNota[3].nota = value
+            setNota[3].columnName = e.target.name
+        }
+
+    }
+
+    const onChangeNotaColumna5 = (e) => {
+
+        var value5 = parseInt(e.target.value, 10);
+
+
+        if (value5 > max) {
+
+            value5 = max
+            // setErrorMessage("El valor máximo es 10")
+        }
+        if (value5 < min) {
+
+            value5 = min
+            // setErrorMessage("El valor mínimo es 1")
+        }
+
+
+        setValue5(value5)
+
+
+        if (value >= min && value <= max) {
+            setNota[4].nota = value
+            setNota[4].columnName = e.target.name
+        }
+
+        console.log(nota)
+
+    }
     return (
         <Layout>
-            <Container maxWidth={'xl'}>
+            <Container maxWidth={'xl'} >
                 <Typography variant="h4">Notas</Typography>
                 <Box sx={{ marginTop: '20px' }} >
                     <Box direction='row'>
@@ -399,7 +555,7 @@ export default function Notas() {
                                                                     margin="normal"
                                                                     variant="standard"
                                                                     name="nota1"
-                                                                    maxlength="2"
+                                                                    value={value}
                                                                     min="1"
                                                                     max="10"
                                                                     inputProps={{
@@ -423,10 +579,10 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota2"
                                                                 variant="standard"
-
+                                                                value={value2}
                                                                 inputProps={{ min, max }}
                                                                 placeholder={n.nota2}
-                                                                onChange={onChangeNotaColumna}
+                                                                onChange={onChangeNotaColumna2}
 
                                                             />
                                                         ) :
@@ -441,10 +597,10 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota3"
                                                                 variant="standard"
-
+                                                                value={value3}
                                                                 inputProps={{ min, max }}
                                                                 placeholder={n.nota3}
-                                                                onChange={onChangeNotaColumna}
+                                                                onChange={onChangeNotaColumna3}
 
                                                             />
                                                         ) :
@@ -459,10 +615,10 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota4"
                                                                 variant="standard"
-
+                                                                value={value4}
                                                                 inputProps={{ min, max }}
                                                                 placeholder={n.nota4}
-                                                                onChange={onChangeNotaColumna}
+                                                                onChange={onChangeNotaColumna4}
 
                                                             />
                                                         ) :
@@ -477,10 +633,10 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota5"
                                                                 variant="standard"
-
+                                                                value={value5}
                                                                 inputProps={{ min, max }}
                                                                 placeholder={n.nota5}
-                                                                onChange={onChangeNotaColumna}
+                                                                onChange={onChangeNotaColumna5}
 
                                                             />
                                                         ) :

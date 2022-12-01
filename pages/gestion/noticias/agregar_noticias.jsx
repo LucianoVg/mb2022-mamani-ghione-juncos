@@ -79,62 +79,69 @@ const AgregarNoticias = () => {
 
     return (
         <Layout>
-            <Typography component={'h3'} variant="h4">Nueva Noticia</Typography>
-            <Box component={'form'} onSubmit={onSubmitData} sx={{ mt: 1 }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin='normal'
-                            required
-                            fullWidth
-                            id="titulo"
-                            label="Titulo de la noticia"
-                            name="titulo"
-                            autoFocus
-                            onChange={handleForm}
-                            value={noticia.titulo}
-                        />
-                        <TextField
-                            margin='normal'
-                            required
-                            fullWidth
-                            id="titulo"
-                            label="Descripcion de la noticia"
-                            name="descripcion"
-                            autoFocus
-                            multiline
-                            rows={3}
-                            onChange={handleForm}
-                            value={noticia.descripcion}
-                        />
-                        <Button disabled={imagen === null} variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
+            <Container maxWidth={'xl'}>
+                <Typography component={'h3'} variant="h4">Nueva Noticia</Typography>
+                <Box component={'form'} onSubmit={onSubmitData} sx={{ mt: 1 }}>
+                    <Grid container spacing={2}
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={6}>
+                            <Card sx={{ maxWidth: 300, height: 300 }}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        height="350"
+                                        image={imagenPrev}
+                                        alt="portada"
+                                        loading='lazy'
+                                    />
+                                </CardActionArea>
+                            </Card>
+                            <Button sx={{ mt: 1 }} variant="outlined" component="label">
+                                Subir Portada
+                                <input hidden id='inputFile' value={noticia.url} onChange={handleImagen} type="file" accept='image/*' name='url' />
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                margin='normal'
+                                required
+                                fullWidth
+                                id="titulo"
+                                label="Titulo de la noticia"
+                                name="titulo"
+                                autoFocus
+                                onChange={handleForm}
+                                value={noticia.titulo}
+                            />
+                            <TextField
+                                margin='normal'
+                                required
+                                fullWidth
+                                id="titulo"
+                                label="Descripcion de la noticia"
+                                name="descripcion"
+                                autoFocus
+                                multiline
+                                rows={3}
+                                onChange={handleForm}
+                                value={noticia.descripcion}
+                            />
+                            <Button disabled={imagen === null} variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
+                        </Grid>
+
                     </Grid>
-                    <Grid item xs={6}>
-                        <Card sx={{ maxWidth: 345, height: 350 }}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="350"
-                                    image={imagenPrev}
-                                    alt="portada"
-                                    loading='lazy'
-                                />
-                            </CardActionArea>
-                        </Card>
-                        <Button sx={{ mt: 1 }} variant="outlined" component="label">
-                            Subir Portada
-                            <input hidden id='inputFile' value={noticia.url} onChange={handleImagen} type="file" accept='image/*' name='url' />
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Box>
-            {
-                guardando && (
-                    <Container sx={{ textAlign: 'center' }}>
-                        <Loading size={80} />
-                    </Container>
-                )
-            }
+                </Box>
+                {
+                    guardando && (
+                        <Container sx={{ textAlign: 'center' }}>
+                            <Loading size={80} />
+                        </Container>
+                    )
+                }
+            </Container>
         </Layout>
     )
 }
