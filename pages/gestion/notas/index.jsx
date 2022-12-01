@@ -12,7 +12,6 @@ import { usePagination } from "../../../components/hooks/paginationHook";
 
 export default function Notas() {
     const [notas, setNotas] = useState([])
-
     const [index, setIndex] = useState(0)
     // const [trimestres, setTrimestres] = useState([])
     // const [idTrimestre, setIdTrimestre] = useState("")
@@ -21,19 +20,12 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
-
-
-    // const [nota, setNota] = useState(0);
-    // const [columnName, setColumnName] = useState("");
-
-
-
     const [cursos, setCursos] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
     const router = useRouter()
     const [cargandoInfo, setCargandoInfo] = useState(false)
-
+    const [guardandoNotas, setGuardandoNotas] = useState(false)
     const pageSize = 5
     const cantidadPaginas = Math.ceil(notas?.length / pageSize)
     const paginacion = usePagination(notas || [], pageSize)
@@ -145,21 +137,29 @@ export default function Notas() {
     //     })
     // }
 
-    const updateNota = async (id, newNota, columnName) => {
+    const onSave = async (id) => {
+        console.log(nota, columnName, id);
+        setGuardandoNotas(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas/update/${id}`, {
-            nota: newNota,
-            nombreColumna: columnName
+            nota1: nota.nota1,
+            nota2: nota.nota2,
+            nota3: nota.nota3,
+            nota4: nota.nota4,
+            nota5: nota.nota5,
+            columna1: columnName.columnName1,
+            columna2: columnName.columnName2,
+            columna3: columnName.columnName3,
+            columna4: columnName.columnName4,
+            columna5: columnName.columnName5
         })
         if (res.status === 200) {
+            console.log(res.data);
             // reset inEditMode and unit price state values
             onCancel();
             // fetch the updated data
             traerNotas(index)
         }
-    }
-
-    const onSave = (id, newNota, columnName) => {
-        updateNota(id, newNota, columnName);
+        setGuardandoNotas(false)
     }
 
     const onCancel = () => {
@@ -168,13 +168,26 @@ export default function Notas() {
             status: false,
             rowKey: null
         })
-        // reset the unit price state value
-        // nota = 0
+        setNota({
+            ...nota,
+            nota1: 1,
+            nota2: 1,
+            nota3: 1,
+            nota4: 1,
+            nota5: 1
+        })
+        setColumnName({
+            ...columnName,
+            columnName1: undefined,
+            columnName2: undefined,
+            columnName3: undefined,
+            columnName4: undefined,
+            columnName5: undefined
+        })
     }
 
     const [nota, setNota] = useState(
         {
-            id: 0,
             nota1: 0,
             nota2: 0,
             nota3: 0,
@@ -184,14 +197,13 @@ export default function Notas() {
     );
     const [columnName, setColumnName] = useState(
         {
-            columnName1: "",
-            columnName2: "",
-            columnName3: "",
-            columnName4: "",
-            columnName5: "",
+            columnName1: undefined,
+            columnName3: undefined,
+            columnName4: undefined,
+            columnName2: undefined,
+            columnName5: undefined,
         }
     );
-
 
     const min = 1
     const max = 10
@@ -201,7 +213,6 @@ export default function Notas() {
     const [value4, setValue4] = useState(1)
     const [value5, setValue5] = useState(1)
     const [errorMessage, setErrorMessage] = useState("")
-
 
     // const onChangeNotaColumna = (e) => {
     //     setNota(Number.parseInt(e.target.value))
@@ -225,7 +236,8 @@ export default function Notas() {
             setNota({ ...nota, nota1: value })
             setColumnName({ ...columnName, columnName1: e.target.name })
         }
-        // console.log(nota)
+        console.log(nota)
+        console.log(columnName)
     }
     const onChangeNotaColumna2 = (e) => {
         var value2 = parseInt(e.target.value, 10);
@@ -241,9 +253,11 @@ export default function Notas() {
         setValue2(value2)
 
         if (value2 >= min && value2 <= max) {
-            setNota({ ...nota, nota1: value2 })
+            setNota({ ...nota, nota2: value2 })
             setColumnName({ ...columnName, columnName2: e.target.name })
         }
+        console.log(nota)
+        console.log(columnName)
     }
 
     const onChangeNotaColumna3 = (e) => {
@@ -263,7 +277,8 @@ export default function Notas() {
             setNota({ ...nota, nota3: value3 })
             setColumnName({ ...columnName, columnName3: e.target.name })
         }
-
+        console.log(nota)
+        console.log(columnName)
     }
 
     const onChangeNotaColumna4 = (e) => {
@@ -283,6 +298,8 @@ export default function Notas() {
             setNota({ ...nota, nota4: value4 })
             setColumnName({ ...columnName, columnName4: e.target.name })
         }
+        console.log(nota)
+        console.log(columnName)
     }
 
     const onChangeNotaColumna5 = (e) => {
@@ -354,48 +371,36 @@ export default function Notas() {
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
-
-
                                     ))
                                 }
                                 <ListSubheader>Cuarto</ListSubheader>
                                 {
-
                                     materias && materias?.map((m, i) => (
 
                                         m?.idCurso === 4 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
-
                                     ))
                                 }
                                 <ListSubheader>Quinto</ListSubheader>
                                 {
-
                                     materias && materias?.map((m, i) => (
-
                                         m?.idCurso === 5 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
-
                                     ))
                                 }
                                 <ListSubheader>Sexto</ListSubheader>
                                 {
-
                                     materias && materias?.map((m, i) => (
-
                                         m?.idCurso === 6 && (
-
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
-
                                     ))
                                 }
                             </Select>
-
                         </FormControl>
 
                         <FormControl>
@@ -408,7 +413,6 @@ export default function Notas() {
                                 sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
                                 {
                                     cursos && cursos?.map((c, i) => (
-
                                         <MenuItem selected={i === 0} key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
                                     ))
                                 }
@@ -444,8 +448,7 @@ export default function Notas() {
                     <Tabs value={index} onChange={handleTrimestre}
                         variant="scrollable"
                         scrollButtons
-                        allowScrollButtonsMobile
-                    >
+                        allowScrollButtonsMobile>
                         {
                             trimestres?.map(t => (
                                 <Tab key={t.id} label={t.trimestre} tabIndex={t.id} />
@@ -509,17 +512,12 @@ export default function Notas() {
                                                                     margin="normal"
                                                                     variant="standard"
                                                                     name="nota1"
-                                                                    value={value}
-                                                                    min="1"
-                                                                    max="10"
+                                                                    value={nota.nota1}
                                                                     inputProps={{
                                                                         min, max,
                                                                     }}
-                                                                    placeholder={n.nota1}
                                                                     onChange={onChangeNotaColumna}
-                                                                    helperText={errorMessage}
                                                                 />
-
                                                             </FormControl>
                                                         ) :
                                                             (
@@ -533,11 +531,9 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota2"
                                                                 variant="standard"
-                                                                value={value2}
+                                                                value={nota.nota2}
                                                                 inputProps={{ min, max }}
-                                                                placeholder={n.nota2}
                                                                 onChange={onChangeNotaColumna2}
-
                                                             />
                                                         ) :
                                                             (
@@ -551,11 +547,9 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota3"
                                                                 variant="standard"
-                                                                value={value3}
+                                                                value={nota.nota3}
                                                                 inputProps={{ min, max }}
-                                                                placeholder={n.nota3}
                                                                 onChange={onChangeNotaColumna3}
-
                                                             />
                                                         ) :
                                                             (
@@ -569,11 +563,9 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota4"
                                                                 variant="standard"
-                                                                value={value4}
+                                                                value={nota.nota4}
                                                                 inputProps={{ min, max }}
-                                                                placeholder={n.nota4}
                                                                 onChange={onChangeNotaColumna4}
-
                                                             />
                                                         ) :
                                                             (
@@ -587,11 +579,9 @@ export default function Notas() {
                                                             <TextField type="number"
                                                                 name="nota5"
                                                                 variant="standard"
-                                                                value={value5}
+                                                                value={nota.nota5}
                                                                 inputProps={{ min, max }}
-                                                                placeholder={n.nota5}
                                                                 onChange={onChangeNotaColumna5}
-
                                                             />
                                                         ) :
                                                             (
@@ -607,28 +597,35 @@ export default function Notas() {
                                                         inEditMode.status && inEditMode.rowKey === i ? (
 
                                                             <React.Fragment>
-                                                                <Grid container spacing={11}>
-                                                                    <Grid item xs={5} >
-                                                                        <Button variant="contained"
-                                                                            color="primary"
-                                                                            size="small"
-                                                                            disabled={!(nota <= max && nota >= min)}
-                                                                            onClick={() => onSave(n.id, nota, columnName)}
-                                                                        >
-                                                                            Guardar
-                                                                        </Button>
-                                                                    </Grid>
-                                                                    <Grid item xs={5}>
-                                                                        <Button
-                                                                            variant="outlined"
-                                                                            color="secondary"
-                                                                            size="small"
-                                                                            onClick={() => onCancel()}
-                                                                        >
-                                                                            Cancelar
-                                                                        </Button>
-                                                                    </Grid>
-                                                                </Grid>
+                                                                {
+                                                                    guardandoNotas ? (
+                                                                        <Container sx={{ textAlign: 'center' }}>
+                                                                            <Loading size={50} />
+                                                                        </Container>
+                                                                    ) : (
+                                                                        <Grid container spacing={11}>
+                                                                            <Grid item xs={5}>
+                                                                                <Button variant="contained"
+                                                                                    color="primary"
+                                                                                    size="small"
+                                                                                    onClick={() => onSave(n.id)}>
+                                                                                    Guardar
+                                                                                </Button>
+                                                                            </Grid>
+                                                                            <Grid item xs={5}>
+                                                                                <Button
+                                                                                    variant="outlined"
+                                                                                    color="secondary"
+                                                                                    size="small"
+                                                                                    onClick={() => onCancel()}
+                                                                                >
+                                                                                    Cancelar
+                                                                                </Button>
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    )
+                                                                }
+
                                                             </React.Fragment>
                                                         ) : (
                                                             <Button
