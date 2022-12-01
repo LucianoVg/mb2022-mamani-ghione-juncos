@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { Grid, Pagination, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
+import Loading from "../components/loading";
 
 const Home = () => {
   const [noticias, setNoticias] = useState()
@@ -42,11 +43,14 @@ const Home = () => {
 
   return (
     <Layout>
-          <Container maxWidth={'xl'} sx={{marginTop: "90px"}} >
+      <Container maxWidth={'xl'} sx={{ marginTop: "90px" }} >
+        <Container sx={{ textAlign: 'center' }}>
+          <Loading size={80} />
+        </Container>
         {
           authUser && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}
-         
+
             >
               Agregar
             </Button>
