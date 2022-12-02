@@ -664,10 +664,7 @@ export default function Asistencias() {
                                                                 ) : (
                                                                     <Stack spacing={1} direction="row">
                                                                         <Button variant="contained"
-                                                                            onClick={() => setInEditMode({
-                                                                                status: true,
-                                                                                rowKey: i
-                                                                            })}
+                                                                            onClick={() => onEditMode(a, i)}
                                                                         >Editar</Button>
                                                                         <Button variant="contained"
                                                                             sx={{ backgroundColor: 'lightblue', color: 'black' }}
