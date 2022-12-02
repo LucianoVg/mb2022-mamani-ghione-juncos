@@ -19,11 +19,12 @@ export default async function handler(req, res) {
 
                 },
                 orderBy: {
-                    alumnoXcursoXdivision: {
-                        usuario: {
-                            nombre: 'asc'
-                        }
-                    }
+                    // alumnoXcursoXdivision: {
+                    //     usuario: {
+                    //         nombre: 'asc'
+                    //     }
+                    // },
+                    creadoEn: 'asc'
                 }
             }
             if (legajo) {

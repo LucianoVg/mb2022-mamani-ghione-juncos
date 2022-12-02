@@ -214,18 +214,6 @@ export default function Asistencias() {
 
     const handleClose = () => {
         setOpen(!open);
-        setAsistencia({
-            ...asistencia,
-            id: 0,
-            presente: false,
-            ausente: false,
-            ausenteJustificado: false,
-            llegadaTarde: false,
-            llegadaTardeJustificada: false,
-            mediaFalta: false,
-            mediaFaltaJustificada: false,
-            motivo: ''
-        })
     };
 
     const onEditMode = (a, i) => {
@@ -519,7 +507,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.presente}
+                                                                            checked={a.presente}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -529,7 +517,6 @@ export default function Asistencias() {
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
-                                                                        name="ausente"
                                                                         value={asistencia.ausente}
                                                                         onChange={handleAsistencia}
                                                                     />
@@ -537,7 +524,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a?.ausente}
+                                                                            checked={a?.ausente}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -555,7 +542,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.ausenteJustificado}
+                                                                            checked={a.ausenteJustificado}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -573,7 +560,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.llegadaTarde}
+                                                                            checked={a.llegadaTarde}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -592,7 +579,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.llegadaTardeJustificada}
+                                                                            checked={a.llegadaTardeJustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -611,7 +598,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.mediaFalta}
+                                                                            checked={a.mediaFalta}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -629,7 +616,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            value={a.mediaFaltaJustificada}
+                                                                            checked={a.mediaFaltaJustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
