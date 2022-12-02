@@ -40,16 +40,6 @@ export default function Asistencias() {
     const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
     const [asistencia, setAsistencia] = useState({
-        presente: false,
-        ausente: false,
-        ausenteJustificado: false,
-        llegadaTarde: false,
-        llegadaTardeJustificada: false,
-        mediaFalta: false,
-        mediaFaltaJustificada: false,
-        motivo: ''
-    })
-    const [asistenciaActual, setAsistenciaActual] = useState({
         id: 0,
         presente: false,
         ausente: false,
@@ -60,7 +50,7 @@ export default function Asistencias() {
         mediaFaltaJustificada: false,
         motivo: ''
     })
-
+    const [guardando, setGuardando] = useState(false)
     const [cargandoInfo, setCargandoInfo] = useState(false)
     let queryParams = []
 
@@ -152,17 +142,18 @@ export default function Asistencias() {
     });
 
     const onSave = async (id) => {
-        console.log({
-            id: id,
-            presente: asistencia.presente,
-            ausente: asistencia.ausente,
-            ausenteJustificado: asistencia.ausenteJustificado,
-            llegadaTarde: asistencia.llegadaTarde,
-            llegadaTardeJustificada: asistencia.llegadaTardeJustificada,
-            mediaFalta: asistencia.mediaFalta,
-            mediaFaltaJustificada: asistencia.mediaFaltaJustificada,
-            idUsuario: usuario.id
-        });
+        // console.log({
+        //     id: id,
+        //     presente: asistencia.presente,
+        //     ausente: asistencia.ausente,
+        //     ausenteJustificado: asistencia.ausenteJustificado,
+        //     llegadaTarde: asistencia.llegadaTarde,
+        //     llegadaTardeJustificada: asistencia.llegadaTardeJustificada,
+        //     mediaFalta: asistencia.mediaFalta,
+        //     mediaFaltaJustificada: asistencia.mediaFaltaJustificada,
+        //     idUsuario: usuario.id
+        // });
+        setGuardando(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
             presente: asistencia.presente,
             ausente: asistencia.ausente,
@@ -171,25 +162,10 @@ export default function Asistencias() {
             llegadaTardeJustificada: asistencia.llegadaTardeJustificada,
             mediaFalta: asistencia.mediaFalta,
             mediaFaltaJustificada: asistencia.mediaFaltaJustificada,
+            motivo: asistencia.motivo,
             idUsuario: usuario.id
         })
-        console.log(res.data);
-        onCancel()
-        listarAsistencias()
-    }
-
-    const onUpdate = async (id) => {
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
-            presente: asistenciaActual.presente,
-            ausente: asistenciaActual.ausente,
-            ausenteJustificado: asistenciaActual.ausenteJustificado,
-            llegadaTarde: asistenciaActual.llegadaTarde,
-            llegadaTardeJustificada: asistenciaActual.llegadaTardeJustificada,
-            mediaFalta: asistenciaActual.mediaFalta,
-            mediaFaltaJustificada: asistenciaActual.mediaFaltaJustificada,
-            motivo: asistenciaActual.motivo,
-            idUsuario: usuario.id
-        })
+        setGuardando(false)
         console.log(res.data);
         onCancel()
         listarAsistencias()
@@ -201,17 +177,29 @@ export default function Asistencias() {
             status: false,
             rowKey: null
         })
+        setAsistencia({
+            ...asistencia,
+            id: 0,
+            presente: false,
+            ausente: false,
+            ausenteJustificado: false,
+            llegadaTarde: false,
+            llegadaTardeJustificada: false,
+            mediaFalta: false,
+            mediaFaltaJustificada: false,
+            motivo: ''
+        })
+        if (open) {
+            handleClose()
+        }
     }
     const handleAsistencia = (e) => {
-        setAsistencia((asistencia) => ({ ...asistencia, [e.target.name]: Boolean(e.target.value) }))
-    }
-    const handleAsistenciaActual = (e) => {
-        setAsistenciaActual({ ...asistenciaActual, [e.target.name]: e.target.value })
+        setAsistencia({ ...asistencia, [e.target.name]: e.target.value })
     }
     const [open, setOpen] = useState(false);
     const handleOpen = (asistencia) => {
-        setAsistenciaActual({
-            ...asistenciaActual,
+        setAsistencia({
+            ...asistencia,
             id: asistencia.id,
             presente: asistencia.presente,
             ausente: asistencia.ausente,
@@ -221,19 +209,47 @@ export default function Asistencias() {
             mediaFalta: asistencia.mediaFalta,
             mediaFaltaJustificada: asistencia.mediaFaltaJustificada
         })
-        setOpen(true);
-    };
+        setOpen(!open);
+    }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpen(!open);
+        setAsistencia({
+            ...asistencia,
+            id: 0,
+            presente: false,
+            ausente: false,
+            ausenteJustificado: false,
+            llegadaTarde: false,
+            llegadaTardeJustificada: false,
+            mediaFalta: false,
+            mediaFaltaJustificada: false,
+            motivo: ''
+        })
     };
-    const handleMotivo = (e) => {
-        setMotivo(e.target.value)
+
+    const onEditMode = (a, i) => {
+        setInEditMode({
+            status: true,
+            rowKey: i
+        })
+        setAsistencia({
+            ...asistencia,
+            id: a.id,
+            presente: a.presente,
+            ausente: a.ausente,
+            ausenteJustificado: a.ausenteJustificado,
+            llegadaTarde: a.llegadaTarde,
+            llegadaTardeJustificada: a.llegadaTardeJustificada,
+            mediaFalta: a.mediaFalta,
+            mediaFaltaJustificada: a.mediaFaltaJustificada,
+            motivo: a.motivo
+        })
     }
 
     return (
         <Layout>
-            <Container maxWidth= "xl"
+            <Container maxWidth="xl"
                 style={{ position: 'relative', }}>
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
@@ -257,7 +273,7 @@ export default function Asistencias() {
                         borderRadius: "25px",
                         boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
                     }}>
-                        <h1 style={{ textAlign: "center" }}>Ingrese motivo</h1>
+                        <Typography variant="h6" sx={{ textAlign: "center" }}>Ingrese motivo</Typography>
                         <TextareaAutosize
                             style={{
                                 border: "2px solid #ccc",
@@ -270,28 +286,22 @@ export default function Asistencias() {
                                 display: "flex",
                                 alignItems: "center",
                                 fontSize: '20px',
-
                             }}
                             name="motivo"
-                            value={asistenciaActual.motivo}
-                            onChange={handleAsistenciaActual}
-                        >
-
+                            value={asistencia.motivo}
+                            onChange={handleAsistencia}>
                         </TextareaAutosize>
 
                         <Stack direction="row">
-
                             <Button variant="contained" type="submit"
                                 style={{ marginLeft: "48px", marginTop: "10px" }}
                                 // onClick={handleClose}
-                                onClick={() => onUpdate(asistenciaActual.id)}
-                            >
+                                onClick={() => onSave(asistencia.id)}>
                                 Guardar
                             </Button>
                             <Button variant="contained" color="error" type="submit"
                                 style={{ marginLeft: "10px", marginTop: "10px" }}
-                                onClick={handleClose}
-                            >
+                                onClick={handleClose}>
                                 Cancelar
                             </Button>
                         </Stack>
@@ -405,11 +415,17 @@ export default function Asistencias() {
                                         <TableCell align="center" scope="col">P</TableCell>
                                         <TableCell align="center" scope="col">A</TableCell>
                                         <TableCell align="center" scope="col">AJ</TableCell>
-                                        <TableCell  align="center"scope="col">LT</TableCell>
+                                        <TableCell align="center" scope="col">LT</TableCell>
                                         <TableCell align="center" scope="col">LTJ</TableCell>
-                                        <TableCell  align="center"scope="col">MF</TableCell>
+                                        <TableCell align="center" scope="col">MF</TableCell>
                                         <TableCell align="center" scope="col">MFJ</TableCell>
-                                        <TableCell align="center" scope="col">Acción</TableCell>
+                                        <TableCell align="center" scope="col">
+                                            {
+                                                guardando
+                                                    ? <Loading size={30} />
+                                                    : <span>Accion</span>
+                                            }
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -475,7 +491,8 @@ export default function Asistencias() {
                                                             <Stack spacing={1} direction="row">
                                                                 <Button variant="contained"
                                                                     sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                    onClick={() => onSave(a?.id)}>
+                                                                    onClick={() => onSave(a?.id)}
+                                                                    disabled={guardando}>
                                                                     Guardar
                                                                 </Button>
                                                             </Stack>
@@ -490,20 +507,19 @@ export default function Asistencias() {
                                                         <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                                         <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
                                                         <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
-                                                        {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="presente"
-                                                                        value={asistenciaActual.presente}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.presente}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.presente}
+                                                                            value={a.presente}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -514,14 +530,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="ausente"
-                                                                        value={asistenciaActual.ausente}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.ausente}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={asistenciaActual.ausente}
+                                                                            value={a?.ausente}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -532,14 +548,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="ausenteJustificado"
-                                                                        value={asistenciaActual.ausenteJustificado}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.ausenteJustificado}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.ausenteJustificado}
+                                                                            value={a.ausenteJustificado}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -550,18 +566,16 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="llegadaTarde"
-                                                                        value={llegadaTarde}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.llegadaTarde}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTarde}
+                                                                            value={a.llegadaTarde}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
-
-
                                                                     )
                                                             }
                                                         </TableCell>
@@ -571,15 +585,14 @@ export default function Asistencias() {
 
                                                                     <Switch
                                                                         name="llegadaTardeJustificada"
-                                                                        value={asistenciaActual.llegadaTardeJustificada}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.llegadaTardeJustificada}
+                                                                        onChange={handleAsistencia}
                                                                     />
-
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTardeJustificada}
+                                                                            value={a.llegadaTardeJustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -591,33 +604,32 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="mediaFalta"
-                                                                        value={asistenciaActual.mediaFalta}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.mediaFalta}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFalta}
+                                                                            value={a.mediaFalta}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
                                                             }
-
                                                         </TableCell>
                                                         <TableCell className="col-md-1">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="mediaFaltaJustificada"
-                                                                        value={asistenciaActual.mediaFaltaJustificada}
-                                                                        onChange={handleAsistenciaActual}
+                                                                        value={asistencia.mediaFaltaJustificada}
+                                                                        onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFaltaJustificada}
+                                                                            value={a.mediaFaltaJustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -636,13 +648,10 @@ export default function Asistencias() {
                                                                             </Button>
                                                                             <Button variant="contained" color="success"
                                                                                 onClick={(e) => onSave(a?.id)}
-
                                                                             >
                                                                                 Actualizar
                                                                             </Button>
                                                                             {/* IRIA ACA-------------------------------------------- */}
-
-
                                                                             <Button variant="contained" color="error"
                                                                                 style={{ marginLeft: 8 }}
                                                                                 onClick={() => onCancel()}
@@ -650,6 +659,7 @@ export default function Asistencias() {
                                                                                 Cancelar
                                                                             </Button>
                                                                         </Stack>
+
                                                                     </React.Fragment>
                                                                 ) : (
                                                                     <Stack spacing={1} direction="row">
@@ -671,8 +681,7 @@ export default function Asistencias() {
                                                     </TableRow>
                                                 ) :
                                                     (
-                                                        < TableRow key={i} >
-
+                                                        <TableRow key={i} >
                                                             <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
                                                             <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
                                                             <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
@@ -684,14 +693,14 @@ export default function Asistencias() {
 
                                                                         <Switch
                                                                             name="presente"
-                                                                            value={asistenciaActual.presente}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.presente}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.presente}
+                                                                                value={a.presente}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -702,14 +711,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="ausente"
-                                                                            value={asistenciaActual.ausente}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.ausente}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.ausente}
+                                                                                value={a.ausente}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -720,14 +729,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="ausenteJustificado"
-                                                                            value={asistenciaActual.ausenteJustificado}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.ausenteJustificado}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.ausenteJustificado}
+                                                                                value={a.ausenteJustificado}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -736,17 +745,16 @@ export default function Asistencias() {
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
-
                                                                         <Switch
                                                                             name="llegadaTarde"
-                                                                            value={asistenciaActual.llegadaTarde}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.llegadaTarde}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.llegadaTarde}
+                                                                                value={a.llegadaTarde}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -757,14 +765,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="llegadaTardeJustificada"
-                                                                            value={asistenciaActual.llegadaTardeJustificada}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.llegadaTardeJustificada}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.llegadaTardeJustificada}
+                                                                                value={a.llegadaTardeJustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -775,14 +783,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="mediaFalta"
-                                                                            value={asistenciaActual.mediaFalta}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.mediaFalta}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.mediaFalta}
+                                                                                value={a.mediaFalta}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -791,17 +799,16 @@ export default function Asistencias() {
                                                             <TableCell className="col-md-1">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
-
                                                                         <Switch
                                                                             name="mediaFaltaJustificada"
-                                                                            value={asistenciaActual.mediaFaltaJustificada}
-                                                                            onChange={handleAsistenciaActual}
+                                                                            value={asistencia.mediaFaltaJustificada}
+                                                                            onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.mediaFaltaJustificada}
+                                                                                value={a.mediaFaltaJustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -809,41 +816,30 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-2">
                                                                 {
-
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
-
                                                                         <React.Fragment>
                                                                             <Stack spacing={1} direction="row">
                                                                                 {/* IRIA ACA-------------------------------------------- */}
                                                                                 <Button variant="contained" color="info"
-                                                                                    onClick={handleOpen}>
+                                                                                    onClick={() => handleOpen(a)}>
                                                                                     Editar
                                                                                 </Button>
                                                                                 <Button variant="contained" color="success"
-                                                                                    onClick={(e) => onSave(a?.id)}
-
-                                                                                >
+                                                                                    onClick={(e) => onSave(a?.id)}>
                                                                                     Actualizar
                                                                                 </Button>
                                                                                 {/* IRIA ACA-------------------------------------------- */}
-
-
                                                                                 <Button variant="contained" color="error"
                                                                                     style={{ marginLeft: 8 }}
-                                                                                    onClick={() => onCancel()}
-                                                                                >
+                                                                                    onClick={() => onCancel()}>
                                                                                     Cancelar
                                                                                 </Button>
                                                                             </Stack>
                                                                         </React.Fragment>
                                                                     ) : (
                                                                         <Stack spacing={1} direction="row">
-
                                                                             <Button variant="contained"
-                                                                                onClick={() => setInEditMode({
-                                                                                    status: true,
-                                                                                    rowKey: i
-                                                                                })}
+                                                                                onClick={() => onEditMode(a, i)}
                                                                             >Editar</Button>
                                                                             <Button variant="contained"
                                                                                 sx={{ backgroundColor: 'lightblue', color: 'black' }}
@@ -867,18 +863,19 @@ export default function Asistencias() {
                 }
                 {
                     !cargandoInfo && asistencias && asistencias.length > 0 && (
-                        <Pagination
-                            sx={{ marginTop: 2 }}
-                            count={cantidadPaginas}
-                            size='large'
-                            page={pagina}
-                            variant="outlined"
-                            shape='circular'
-                            onChange={handlerCambioPagina} />
+                        <Container sx={{ textAlign: 'center' }}>
+                            <Pagination
+                                sx={{ marginTop: 2 }}
+                                count={cantidadPaginas}
+                                size='large'
+                                page={pagina}
+                                variant="outlined"
+                                shape='circular'
+                                onChange={handlerCambioPagina} />
+                        </Container>
                     )
                 }
             </Container>
-
         </Layout>
     );
 }

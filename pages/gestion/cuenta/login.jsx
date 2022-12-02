@@ -9,6 +9,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Typography } from "@mui/material";
+import Loading from "../../../components/loading"
 
 const Login = () => {
     const [correo, setCorreo] = useState("")
@@ -17,6 +18,7 @@ const Login = () => {
     const [mensaje, setMensaje] = useState("")
     const router = useRouter()
     const { iniciarSesion, registrarse, loading, authUser } = useAuth()
+    const [ingresando, setIngresando] = useState(false)
 
     useEffect(() => {
         if (!loading && authUser) {
@@ -33,11 +35,13 @@ const Login = () => {
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
+        setIngresando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}/${password}`)
         if (res.data) {
             console.log(res.data);
             iniciarSesion(res.data.correo, res.data.password)
                 .then(user => {
+                    setIngresando(false)
                     console.log(user);
                 }).catch(error => {
                     console.log(error);
@@ -46,10 +50,13 @@ const Login = () => {
                         registrarse(res.data.correo, res.data.password)
                             .then(user => {
                                 console.log(user);
+                                setIngresando(false)
                             }).catch(error => {
                                 console.log(error);
+                                setIngresando(false)
                             })
                     } else {
+                        setIngresando(false)
                         setError('Usuario y/o contraseña incorrectos')
                         setTimeout(() => {
                             setError('')
@@ -57,6 +64,7 @@ const Login = () => {
                     }
                 })
         } else {
+            setIngresando(false)
             setError('No se encontró al usuario')
             setTimeout(() => {
                 setError('')
@@ -94,9 +102,14 @@ const Login = () => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                >
-                    Ingresar
+                    disabled={ingresando}
+                    sx={{ mt: 3, mb: 2 }}>
+                    {
+                        ingresando && <Loading size={30} />
+                    }
+                    {
+                        !ingresando && <span>Ingresar</span>
+                    }
                 </Button>
                 <Grid container>
                     <Grid item xs>
