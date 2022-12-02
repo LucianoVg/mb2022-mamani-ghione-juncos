@@ -16,11 +16,11 @@ export default function Notas() {
     // const [trimestres, setTrimestres] = useState([])
     // const [idTrimestre, setIdTrimestre] = useState("")
     const [idMateria, setIdMateria] = useState(0)
-    const [idCurso, setIdCurso] = useState(0)
+    const [idDivision, setIdDivision] = useState(0)
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
-    const [cursos, setCursos] = useState([])
+    const [divisiones, setDivisiones] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
     const router = useRouter()
@@ -49,7 +49,7 @@ export default function Notas() {
     }, [loading, authUser])
 
     useEffect(() => {
-        traerCursos()
+        traerDivisiones()
     }, [])
     useEffect(() => {
         traerMaterias()
@@ -71,8 +71,8 @@ export default function Notas() {
         setIdMateria(Number(e.target.value))
     }
 
-    const handleCurso = (e) => {
-        setIdCurso(Number(e.target.value))
+    const handleDivision = (e) => {
+        setIdDivision(Number(e.target.value))
     }
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
@@ -82,10 +82,10 @@ export default function Notas() {
         setApellidoAlumno(e.target.value)
     }
 
-    const traerCursos = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+    const traerDivisiones = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/division`)
         if (res.data) {
-            setCursos(res.data)
+            setDivisiones(res.data)
         }
     }
     const traerMaterias = async () => {
@@ -111,8 +111,8 @@ export default function Notas() {
         if (idMateria) {
             queryParams.push({ idMateria })
         }
-        if (idCurso) {
-            queryParams.push({ idCurso })
+        if (idDivision) {
+            queryParams.push({ idDivision })
         }
         let params = ""
         queryParams.forEach(qp => {
@@ -404,16 +404,16 @@ export default function Notas() {
                         </FormControl>
 
                         <FormControl>
-                            <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                            <InputLabel htmlFor="inputCurso">Division</InputLabel>
                             <Select id="inputCurso"
-                                name="idCurso"
-                                value={idCurso}
-                                onChange={handleCurso}
-                                label="Curso"
+                                name="idDivision"
+                                value={idDivision}
+                                onChange={handleDivision}
+                                label="Division"
                                 sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
                                 {
-                                    cursos && cursos?.map((c, i) => (
-                                        <MenuItem selected={i === 0} key={i} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                    divisiones && divisiones?.map((d, i) => (
+                                        <MenuItem selected={i === 0} key={i} value={d.id}>{d.division}</MenuItem>
                                     ))
                                 }
                             </Select>

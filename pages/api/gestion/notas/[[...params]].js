@@ -13,8 +13,8 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
 
-        let { idMateria, idTrimestre, idCurso, nombreAlumno, apellidoAlumno } = req.query
-        console.log({ idMateria, idTrimestre, idCurso, nombreAlumno, apellidoAlumno });
+        let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
+        console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
         let AND = [
             { idTrimestre: Number(idTrimestre) }
         ]
@@ -41,11 +41,13 @@ export default async function handler(
         if (idMateria) {
             AND.push({ idMateria: Number(idMateria) })
         }
-        if (idCurso) {
+        if (idDivision) {
             AND.push({
                 alumnoXcursoXdivision: {
                     cursoXdivision: {
-                        id: Number(idCurso)
+                        division: {
+                            id: Number(idDivision)
+                        }
                     }
                 }
             })
