@@ -102,7 +102,17 @@ export default function DetallesNoticia() {
                     <Image src={imgUrl || noticia.url || '/assets/img/placeholder.png'} width={200} height={200} className="m-auto" />
                 </Box>
                 <Box textAlign={'center'} component={'form'} onSubmit={onSubmitData}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2}
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={6}>
+                            <Button sx={{ marginTop: 2 }} variant="outlined" component="label">
+                                <input hidden onChange={handleImagen} type="file" accept='image/*' name='imagen' />
+                                Subir Imagen
+                            </Button>
+                        </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 margin="normal"
@@ -125,16 +135,21 @@ export default function DetallesNoticia() {
                                 placeholder={noticia.descripcion}
                                 onChange={handleForm} />
                         </Grid>
-                        <Grid item xs={6}>
-                            <Button sx={{ marginTop: 2 }} variant="outlined" component="label">
-                                <input hidden onChange={handleImagen} type="file" accept='image/*' name='imagen' />
-                                Subir Imagen
-                            </Button>
-                        </Grid>
-                        <Grid item xs={3}>
+
+
+                    </Grid>
+
+                    <Grid container 
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        sx={{marginLeft: "210px"}}
+                    >
+                        <Grid item xs={2}>
                             <Button type="submit" variant="contained" color="primary">Actualizar</Button>
+
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}>
                             <Button variant="contained" color="warning" onClick={borrarNoticia}>Eliminar</Button>
                         </Grid>
                     </Grid>
