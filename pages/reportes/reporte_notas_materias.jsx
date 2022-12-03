@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Layout } from "../../components/layout";
 import BarChart from '../../components/graficos/BarChart'
 import Pie from '../../components/graficos/PieChart'
+import Line from '../../components/graficos/LineChart'
 import { Container } from '@mui/system';
+import { Grid } from '@mui/material';
 
 const data = [
   {
@@ -57,31 +59,62 @@ export default function NotasXmateria() {
       }
     ]
   });
-
+  let delayed;
   const [options, setOptions] = useState({
-
-    title: {
-      display: true,
-      text: 'Custom Chart Title'
+    animation: {
+      onComplete: () => {
+        delayed = true;
+      },
+      delay: (context) => {
+        let delay = 0;
+        if (context.type === 'data' && context.mode === 'default' && !delayed) {
+          delay = context.dataIndex * 300 + context.datasetIndex * 100;
+        }
+        return delay;
+      },
+    },
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true
+      }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Custom Chart Title',
+        padding: {
+          top: 10,
+          bottom: 30
+        }
+      }
     }
-
-
   });
   return (
     <Layout>
-      <Container direction="row" >
-        <div style={{ width: "600px" }}>
-          <BarChart
-            chartData={userData}
-            chartOptions={options}
-          />
-        </div>
-        <div style={{ width: "600px" }}>
-          <Pie
-            chartData={userData}
-            chartOptions={options}
-          />
-        </div>
+      <Container >
+        <Grid container>
+          <Grid item xs={4}>
+            <BarChart
+              chartData={userData}
+              chartOptions={options}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Pie
+              chartData={userData}
+              chartOptions={options}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Line
+              chartData={userData}
+              chartOptions={options}
+            />
+          </Grid>
+        </Grid>
 
       </Container>
 
