@@ -25,16 +25,16 @@ export async function registrarUsuario(
             localidad: localidad,
             telefono: telefono,
             direccion: direccion,
-            idRol: Number(idRol),
-            idTutor: Number(idTutor),
+            idrol: Number(idRol),
+            idtutor: Number(idTutor),
             sexo: sexo,
             password: contrasenia,
-            alumnoXcursoXdivision: {
+            alumnoxcursoxdivision: {
                 connectOrCreate: {
                     create: {
-                        idCursoXDivision: Number(idCurso),
+                        idcursoxdivision: Number(idCurso),
                         anoActual: new Date(),
-                        idEstadoAlumno: 1,
+                        idestadoalumno: 1,
                     }
                 }
             }
@@ -49,7 +49,7 @@ export async function registrarUsuario(
             localidad: localidad,
             telefono: telefono,
             direccion: direccion,
-            idRol: Number(idRol),
+            idrol: Number(idRol),
             sexo: sexo,
             password: contrasenia
         }
@@ -111,9 +111,9 @@ export async function traerUsuario(correo, password) {
         const usuario = await Prisma.newPrisma().usuario.findFirst({
             include: {
                 rol: true,
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     include: {
-                        cursoXdivision: {
+                        cursoxdivision: {
                             include: {
                                 curso: true,
                                 division: true

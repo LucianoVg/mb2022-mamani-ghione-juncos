@@ -65,45 +65,45 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                                 <ListItemButton key={i}>
                                     <ListItemIcon>
                                         {
-                                            m?.menu?.menuSistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
+                                            m?.menu?.menusistema === 'Usuarios' && <AssignmentIndOutlinedIcon />
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Asistencias' && (
+                                            m?.menu?.menusistema === 'Asistencias' && (
                                                 <ContentPasteSearchOutlinedIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Asistencia Docente' && (
+                                            m?.menu?.menusistema === 'Asistencia Docente' && (
                                                 <ContentPasteSearchOutlinedIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Notas' && (
+                                            m?.menu?.menusistema === 'Notas' && (
                                                 <DescriptionIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Certificado de Servicio' && (
+                                            m?.menu?.menusistema === 'Certificado de Servicio' && (
                                                 <DescriptionIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Sanciones' && (
+                                            m?.menu?.menusistema === 'Sanciones' && (
                                                 <ReportIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Material de Estudio' && (
+                                            m?.menu?.menusistema === 'Material de Estudio' && (
                                                 <FileCopyIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Fecha de Examen' && (
+                                            m?.menu?.menusistema === 'Fecha de Examen' && (
                                                 <EventIcon />
                                             )
                                         }
                                         {
-                                            m?.menu?.menuSistema === 'Notificaciones' && (
+                                            m?.menu?.menusistema === 'Notificaciones' && (
                                                 <NotificationsRoundedIcon />
                                             )
                                         }
@@ -111,7 +111,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                                     <Link
                                         style={{ textDecoration: 'none', color: '#212121' }}
                                         href={m?.menu?.url}>
-                                        <ListItemText primary={m?.menu?.menuSistema} />
+                                        <ListItemText primary={m?.menu?.menusistema} />
                                     </Link>
                                 </ListItemButton>
                             ))

@@ -2,46 +2,36 @@ import { Prisma } from "./prisma";
 
 export async function contadorNotas() {
     try {
-        const contador = await Prisma.newPrisma().nota.aggregate({
-           
-           
-            _count: {
-                nota1: true,
-                // nota2: true,
-                // nota3: true,
-                // nota4: true,
-                // nota5: true
-            },
-            where: {
-                nota1: { 
-                    in: 5
-                },
-            }
-            //     nota2: { 
-            //         in: 5
-            //     },
-            //     nota3: { 
-            //         in: 5
-            //     },
-            //     nota4: { 
-            //         in: 5
-            //     },
-            //     nota5: { 
-            //         in: 5
-            //     },
-            // }
-            // where: {
-            //     AND: [
-            //         { nota1: { contains: "1" } },
-            //         { nota2: { contains: "1" } },
-            //         { nota3: { contains: "1" } },
-            //         { nota4: { contains: "1" } },
-            //         { nota5: { contains: "1" } },
+
+                const contador = await Prisma.newPrisma().$queryRaw`SELECT * FROM alumnoXcursoXdivision`
+
+        // //     sum(case when nota1  = 1  ) as nota1,
+        // //      sum(case when  nota2  = 1 )as nota2 ,
+        // // sum(case when  nota3  = 1  )as nota3 ,
+        // //     sum(case when  nota4  = 1  ) as nota4,
+        // // sum(case when  nota5  = 1  ) as nota5
+
+        // const contador = await Prisma.newPrisma().nota.groupBy({
+        //     by: ["idMateria"],
+        //     orderBy: {
+        //         idMateria: "asc"
+        //     },
+
+        //     _count: {
+
+        //         nota1: true
 
 
-            //     ]
-            // }
-        })
+
+        //     },
+
+        //     where: {
+        //         nota1: {
+        //             in: 1
+        //         },
+        //     }
+        // })
+
         return contador
     } catch (error) {
         console.log(error);

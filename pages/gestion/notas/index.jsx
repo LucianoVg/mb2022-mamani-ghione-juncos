@@ -343,7 +343,7 @@ export default function Notas() {
 
                                     materias && materias?.map((m, i) => (
 
-                                        m?.idCurso === 1 && (
+                                        m?.idcurso === 1 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
@@ -355,7 +355,7 @@ export default function Notas() {
 
                                     materias && materias?.map((m, i) => (
 
-                                        m?.idCurso === 2 && (
+                                        m?.idcurso === 2 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
@@ -367,7 +367,7 @@ export default function Notas() {
 
                                     materias && materias?.map((m, i) => (
 
-                                        m?.idCurso === 3 && (
+                                        m?.idcurso === 3 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
@@ -377,7 +377,7 @@ export default function Notas() {
                                 {
                                     materias && materias?.map((m, i) => (
 
-                                        m?.idCurso === 4 && (
+                                        m?.idcurso === 4 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
@@ -386,7 +386,7 @@ export default function Notas() {
                                 <ListSubheader>Quinto</ListSubheader>
                                 {
                                     materias && materias?.map((m, i) => (
-                                        m?.idCurso === 5 && (
+                                        m?.idcurso === 5 && (
 
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
@@ -395,7 +395,7 @@ export default function Notas() {
                                 <ListSubheader>Sexto</ListSubheader>
                                 {
                                     materias && materias?.map((m, i) => (
-                                        m?.idCurso === 6 && (
+                                        m?.idcurso === 6 && (
                                             <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
                                     ))
@@ -490,16 +490,16 @@ export default function Notas() {
                                         notas && paginacion.dataActual()?.map((n, i) => (
                                             <TableRow key={i}>
                                                 <TableCell align="center">
-                                                    {n.alumnoXcursoXdivision?.usuario?.legajo}
+                                                    {n.alumnoxcursoxdivision?.usuario?.legajo}
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                    {n.alumnoXcursoXdivision?.usuario?.sexo}
+                                                    {n.alumnoxcursoxdivision?.usuario?.sexo}
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                    {n.alumnoXcursoXdivision?.usuario?.nombre}
+                                                    {n.alumnoxcursoxdivision?.usuario?.nombre}
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                    {n.alumnoXcursoXdivision?.usuario?.apellido}
+                                                    {n.alumnoxcursoxdivision?.usuario?.apellido}
                                                 </TableCell>
                                                 <TableCell align="center">
                                                     {n.materia?.nombre}

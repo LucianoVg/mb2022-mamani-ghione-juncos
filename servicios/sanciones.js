@@ -14,21 +14,21 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
     try {
         if (idCurso !== 0) {
             const sanciones = []
-            const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
+            const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
                 },
                 where: {
-                    idCursoXdivision: Number(idCurso)
+                    idcursoxdivision: Number(idCurso)
                 }
             })
             alumnos.forEach(async (a) => {
-                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion(fecha, motivo,idTipoSancion,idAlumnoXCursoXDivision) VALUES(${fecha}, ${motivo}, ${Number(idTipoSancion)}, ${Number(a.id)});`
+                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion (fecha, motivo, idtiposancion, idalumnoxcursoxdivision) VALUES(${fecha}, ${motivo}, ${Number(idTipoSancion)}, ${Number(a.id)});`
                 console.log(sancion);
 
-                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idAlumnoXCursoXDivision = ${Number(a.id)}`
+                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idalumnoxcursoxdivision = ${Number(a.id)}`
 
-                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionXusuario (idSancion, idUsuario) VALUES(${idsSancion[0]?.id}, ${Number(idUsuario)})`
+                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionxusuario (idsancion, idusuario) VALUES(${idsSancion[0]?.id}, ${Number(idUsuario)})`
             })
             return sanciones
 
@@ -37,17 +37,17 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                 data: {
                     fecha: fecha,
                     motivo: motivo,
-                    tipoSancion: {
+                    tiposancion: {
                         connect: {
                             id: Number(idTipoSancion)
                         }
                     },
-                    alumnoXCursoXDivision: {
+                    alumnoxcursoxdivision: {
                         connect: {
                             id: Number(idAlumno)
                         }
                     },
-                    sancionXusuario: {
+                    sancionxusuario: {
                         create: {
                             idUsuario: Number(idUsuario),
                         }
@@ -63,7 +63,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
 
 export async function traerTipoSanciones() {
     try {
-        const tipoSanciones = await Prisma.newPrisma().tipoSancion.findMany()
+        const tipoSanciones = await Prisma.newPrisma().tiposancion.findMany()
         return tipoSanciones
     } catch (error) {
         console.error(error);
@@ -75,10 +75,10 @@ export async function obtenerSancion(id) {
         const sancion = await Prisma.newPrisma().sancion.findUnique({
             include: {
                 tipoSancion: true,
-                alumnoXCursoXDivision: {
+                alumnoxcursoxdivision: {
                     include: {
                         usuario: true,
-                        cursoXdivision: {
+                        cursoxdivision: {
                             include: {
                                 curso: true,
                                 division: true
@@ -107,18 +107,18 @@ export async function actualizarSancion(
     fecha) {
     try {
         if (idCurso !== '') {
-            const alumnos = await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
+            const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
                 },
                 where: {
-                    idCursoXdivision: idCurso
+                    idcursoxdivision: idCurso
                 }
             })
 
             let sancionCuenta = 0
             alumnos.forEach(async (a) => {
-                const sanciones = await Prisma.newPrisma().$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idTipoSancion = ${idTipoSancion}, idAlumnoXCursoXDivision = ${a.id} WHERE id = ${id}`
+                const sanciones = await Prisma.newPrisma().$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idtiposancion = ${idTipoSancion}, idalumnoxcursoxdivision = ${a.id} WHERE id = ${id}`
                 console.log(sanciones);
 
                 sancionCuenta += sanciones
@@ -126,9 +126,9 @@ export async function actualizarSancion(
             })
             return sancionCuenta
         } else {
-            const sancionXUsuario = await Prisma.newPrisma().sancionXusuario.findFirst({
+            const sancionXUsuario = await Prisma.newPrisma().sancionxusuario.findFirst({
                 where: {
-                    idSancion: id
+                    idsancion: id
                 }
             })
             console.log(sancionXUsuario);
@@ -136,23 +136,23 @@ export async function actualizarSancion(
                 data: {
                     fecha: fecha,
                     motivo: motivo,
-                    alumnoXCursoXDivision: {
+                    alumnoxcursoxdivision: {
                         connect: {
                             id: idAlumno
                         }
                     },
-                    tipoSancion: {
+                    tiposancion: {
                         connect: {
                             id: idTipoSancion
                         }
                     },
-                    sancionXusuario: {
+                    sancionxusuario: {
                         connect: {
                             id: sancionXUsuario?.id
                         },
                         update: {
                             data: {
-                                idUsuario: idUsuario
+                                idusuario: idUsuario
                             },
                             where: {
                                 id: sancionXUsuario?.id

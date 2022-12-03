@@ -17,7 +17,7 @@ const Notificaciones = () => {
         asunto: '',
         contenido: ''
     })
-    const [listNotificaciones, setListNotificaciones] = useState()
+    const [listNotificaciones, setListNotificaciones] = useState([])
     const [cursos, setCursos] = useState('');
     const [idCurso, setIdCurso] = useState('');
     // const [nombre, setNombre] = useState('');
@@ -63,15 +63,14 @@ const Notificaciones = () => {
             })
     }
     const ListarNotificaciones = () => {
-        if (usuario.id.length) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${usuario?.id}`)
-                .then(res => {
-                    console.log(res.data);
-                    setListNotificaciones(res.data)
-                }).catch(err => {
-                    console.error(err);
-                })
-        }
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/listar_notificaciones`)
+            .then(res => {
+                console.log(res.data);
+                setListNotificaciones(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+
     }
     const CrearNotificacion = (e) => {
         e.preventDefault()
@@ -176,14 +175,23 @@ const Notificaciones = () => {
                     <Grid item xs>
                         <h1>Notificaciones enviadas</h1>
                         <Box sx={{ width: '350px' }}>
-                            <List style={{ backgroundColor: 'white', border: '0 10px 15px black', borderRadius: '10px' }}>
+                            <List style={{ backgroundColor: "lightgray", border: '0 10px 15px black', borderRadius: '10px' }}>
+                                {/* <ListItem disablePadding
+
+                                >
+                                    <ListItemButton component="a">
+                                        <ListItemText primary="hola" />
+                                    </ListItemButton>
+                                    <Divider />
+                                </ListItem> */}
                                 {
+
                                     listNotificaciones && listNotificaciones.map((n, i) => (
                                         <ListItem disablePadding
                                             key={i} value={n.id}
                                         >
-                                            <ListItemButton component="a" onClick={() => router.push(`/gestion/notificaciones/detalles/${n.notificacion?.id}`)}>
-                                                <ListItemText primary={n.notificacion?.asunto} />
+                                            <ListItemButton component="a" onClick={() => router.push(`/gestion/notificaciones/detalles/${n.id}`)}>
+                                                <ListItemText primary={n.asunto} />
                                             </ListItemButton>
                                             <Divider />
                                         </ListItem>

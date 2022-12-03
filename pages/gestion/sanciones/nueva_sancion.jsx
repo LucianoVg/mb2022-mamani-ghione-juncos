@@ -67,8 +67,8 @@ export default function NuevaSancion() {
         });
         axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
             idUsuario: usuario.id,
-            idCurso: sancion.idCurso,
             idAlumno: sancion.idAlumno,
+            idCurso: sancion.idCurso,
             idTipoSancion: sancion.idTipoSancion,
             motivo: sancion.motivo,
             fecha: new Date().toLocaleDateString('en-GB')

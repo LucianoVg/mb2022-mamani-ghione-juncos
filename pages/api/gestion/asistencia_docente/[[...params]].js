@@ -10,7 +10,7 @@ export default async function handler(
         let options = {
             include: {
                 usuario: true,
-                docenteXmateria: {
+                docentexmateria: {
                     include: {
                         usuario: true
                     }
@@ -20,7 +20,7 @@ export default async function handler(
 
         if (legajo) {
             OR.push({
-                docenteXmateria: {
+                docentexmateria: {
                     usuario: {
                         legajo: legajo
                     }
@@ -29,7 +29,7 @@ export default async function handler(
         }
         if (nombreDocente) {
             OR.push({
-                docenteXmateria: {
+                docentexmateria: {
                     usuario: {
                         nombre: {
                             contains: nombreDocente[0].toUpperCase() + nombreDocente.slice(1)
@@ -40,7 +40,7 @@ export default async function handler(
         }
         if (apellidoDocente) {
             OR.push({
-                docenteXmateria: {
+                docentexmateria: {
                     usuario: {
                         apellido: {
                             contains: apellidoDocente[0].toUpperCase() + apellidoDocente.slice(1)

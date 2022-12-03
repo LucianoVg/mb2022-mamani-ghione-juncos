@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function ListarCurso() {
     try {
-        const cursos = await Prisma.newPrisma().cursoXdivision.findMany({
+        const cursos = await Prisma.newPrisma().cursoxdivision.findMany({
             include: {
                 curso: true,
                 division: true
@@ -33,10 +33,10 @@ export async function DetalleAsistencia(id) {
         const asistencia = await Prisma.newPrisma().asistencia.findUnique({
             include: {
                 usuario: true,
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     include: {
                         usuario: true,
-                        cursoXdivision: {
+                        cursoxdivision: {
                             include: {
                                 curso: true,
                                 division: true
@@ -65,14 +65,14 @@ export async function updateAsistencia(id, presente, ausente, ausenteJustificado
             data: {
                 presente: presente,
                 ausente: ausente,
-                ausenteJustificado: ausenteJustificado,
+                ausentejustificado: ausenteJustificado,
                 llegadaTarde: llegadaTarde,
-                llegadaTardeJustificada: llegadaTardeJustificada,
-                mediaFalta: mediaFalta,
-                mediaFaltaJustificada: mediaFaltaJustificada,
+                llegadatardejustificada: llegadaTardeJustificada,
+                mediafalta: mediaFalta,
+                mediafaltajustificada: mediaFaltaJustificada,
                 motivo: motivo,
-                idUsuario: Number(idUsuario),
-                actualizadoEn: new Date().toLocaleDateString('es-AR').split('T')[0]
+                idusuario: Number(idUsuario),
+                actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
             where: {
                 id: Number(id)

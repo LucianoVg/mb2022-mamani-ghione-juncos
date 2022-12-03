@@ -16,22 +16,22 @@ export default async function handler(
         let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
         let AND = [
-            { idTrimestre: Number(idTrimestre) }
+            { idtrimestre: Number(idTrimestre) }
         ]
 
         let options = {
             include: {
                 materia: true,
                 trimestre: true,
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     include: {
                         usuario: true,
-                        cursoXdivision: true
+                        cursoxdivision: true
                     }
                 }
             },
             orderBy: {
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     usuario: {
                         nombre: 'asc'
                     }
@@ -39,12 +39,12 @@ export default async function handler(
             }
         }
         if (idMateria) {
-            AND.push({ idMateria: Number(idMateria) })
+            AND.push({ idmateria: Number(idMateria) })
         }
         if (idDivision) {
             AND.push({
-                alumnoXcursoXdivision: {
-                    cursoXdivision: {
+                alumnoxcursoxdivision: {
+                    cursoxdivision: {
                         division: {
                             id: Number(idDivision)
                         }
@@ -54,7 +54,7 @@ export default async function handler(
         }
         if (nombreAlumno) {
             AND.push({
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     usuario: {
                         nombre: {
                             contains: nombreAlumno[0].toUpperCase() + nombreAlumno.slice(1)
@@ -65,7 +65,7 @@ export default async function handler(
         }
         if (apellidoAlumno) {
             AND.push({
-                alumnoXcursoXdivision: {
+                alumnoxcursoxdivision: {
                     usuario: {
                         apellido: {
                             contains: apellidoAlumno[0].toUpperCase() + apellidoAlumno.slice(1)

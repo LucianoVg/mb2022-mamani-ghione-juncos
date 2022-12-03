@@ -1,26 +1,26 @@
 import { Prisma } from "./prisma";
 
-export async function ListarNotificaciones(idUsuario) {
+export async function ListarNotificaciones() {
     try {
-        const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
-            include: {
-                usuario: {
-                    include: {
-                        rol: true
-                    }
-                },
-                notificacion: true
-            },
-            where: {
-                usuario: {
-                    id: {
-                        not: Number(idUsuario)
-                    }
-                }
-            },
-            orderBy: {
-                id: 'desc'
-            }
+        const listado = await Prisma.newPrisma().notificacion.findMany({
+            // include: {
+            //     usuario: {
+            //         include: {
+            //             rol: true
+            //         }
+            //     },
+            //     notificacion: true
+            // },
+            // where: {
+            //     usuario: {
+            //         id: {
+            //             not: Number(idUsuario)
+            //         }
+            //     }
+            // },
+            // orderBy: {
+            //     id: 'desc'
+            // }
         })
 
         return listado
@@ -32,7 +32,7 @@ export async function ListarNotificaciones(idUsuario) {
 }
 export async function ListarNotificacionesDeUsuario(idUsuario) {
     try {
-        const listado = await Prisma.newPrisma().notificacionXusuario.findMany({
+        const listado = await Prisma.newPrisma().notificacionxusuario.findMany({
             include: {
                 usuario: {
                     include: {
@@ -62,7 +62,7 @@ export async function DetalleNotificacion(idNotificacion) {
     try {
         const notificacion = await Prisma.newPrisma().notificacion.findUnique({
             include: {
-                notificacionXusuario: {
+                notificacionxusuario: {
                     include: {
                         usuario: {
                             include: {
@@ -88,11 +88,11 @@ export async function DetalleNotificacion(idNotificacion) {
 export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso) {
     // console.log(asunto, contenido, fecha, idCurso, idUsuario);
     try {
-        const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoXcursoXdivision.findMany({
+        const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
             where: {
-                idCursoXdivision: Number(idCurso)
+                idcursoxdivision: Number(idCurso)
             }
-        }) : await Prisma.newPrisma().alumnoXcursoXdivision.findMany()
+        }) : await Prisma.newPrisma().alumnoxcursoxdivision.findMany()
 
         alumnos.map(async (a) => {
             const notificacion = await Prisma.newPrisma().notificacion.create({
@@ -100,12 +100,12 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
                     asunto: asunto,
                     contenido: contenido,
                     fecha: fecha,
-                    notificacionXusuario: {
+                    notificacionxusuario: {
                         create: {
-                            idUsuario: Number(idUsuario)
+                            idusuario: Number(idUsuario)
                         }
                     },
-                    idAlumnoXCursoXDivision: Number(a.id)
+                    idalumnoxcursoxdivision: Number(a.id)
                 }
             })
             console.log(notificacion);
@@ -124,10 +124,10 @@ export async function ActualizarNotificacion(id, asunto, contenido, idUsuario, i
             data: {
                 asunto: asunto,
                 contenido: contenido,
-                notificacionXusuario: {
+                notificacionxusuario: {
                     update: {
                         data: {
-                            idUsuario: Number(idUsuario)
+                            idusuario: Number(idUsuario)
                         },
                         where: {
                             id: Number(idNotificacionXUsuario)

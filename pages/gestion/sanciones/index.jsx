@@ -180,16 +180,16 @@ const Sanciones = () => {
                                     sanciones?.map((s, i) => (
                                         <TableRow key={i}>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.usuario?.nombre
+                                                s.alumnoxcursoxdivision?.usuario?.nombre
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.usuario?.apellido
+                                                s.alumnoxcursoxdivision?.usuario?.apellido
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.cursoXdivision?.curso?.nombre
+                                                s.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.cursoXdivision?.division?.division
+                                                s.alumnoXCursoXDivision?.cursoxdivision?.division?.division
                                             }</TableCell>
                                             <TableCell align="right">{s.fecha}</TableCell>
                                             <TableCell align="right">

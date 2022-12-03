@@ -7,7 +7,7 @@ export async function ListarMaterias(idCurso) {
                 curso: true
             },
             where: {
-                idCurso: Number(idCurso)
+                idcurso: Number(idCurso)
             }
         }) : await Prisma.newPrisma().materia.findMany({
             include: {

@@ -7,9 +7,9 @@ import { ficha } from "./seeds/ficha";
 import { notas } from './seeds/notas';
 import { noticias } from './seeds/noticias';
 import { tiposSancion } from './seeds/tiposSancion';
-// import { trimestres } from './seeds/trimestres';
+import { trimestres } from './seeds/trimestres';
 import { enfermedades } from "./seeds/enfermedad";
-// import { usuarios } from "./seeds/usuarios";
+import { usuarios } from "./seeds/usuarios";
 // import { alumnos, fechas } from "./seeds/alumnos";
 import { materias } from './seeds/materias';
 import { menuXRoles } from './seeds/menuXRol';
@@ -44,41 +44,71 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-    // const alumnos = await prisma.alumnoXcursoXdivision.findMany({
-    //     include: {
-    //         cursoXdivision: true
+    // const alumnos = await prisma.usuario.findMany({
+    //     where: {
+    //         idrol: 4
+    //     },
+    //     orderBy: {
+    //         id: "asc"
     //     }
     // })
 
-    // fechas && fechas.map((fecha) => {
-    //     alumnos && alumnos.map(async (a) => {
-    //         const asistencia = await prisma.asistencia.create({
-    //             data: {
-    //                 idAlumnoXcursoXdivision: a.id,
-    //                 presente: false,
-    //                 ausente: false,
-    //                 ausenteJustificado: false,
-    //                 llegadaTarde: false,
-    //                 llegadaTardeJustificada: false,
-    //                 mediaFalta: false,
-    //                 mediaFaltaJustificada: false,
-    //                 motivo: "",
-    //                 creadoEn: fecha,
-    //                 idUsuario: 1,
-    //                 actualizadoEn: ""
-    //             }
 
-    //         })
-    //         console.log(asistencia)
+    // let i = 57
+
+    // while (i < 62) {
+    //     const alumnos = await prisma.alumnoxcursoxdivision.create({
+    //         data: {
+    //             idusuario: i,
+    //             idcursoxdivision: 12,
+    //             anoactual: 2022,
+    //             idestadoalumno: 1
+
+    //         }
+
     //     })
-    // })
+    //     console.log("usuario id:", i)
+
+    //     i = i + 1
+
+    // }
 
 
 
 
 
-    // const trimestres = await prisma.trimestre.findMany({
-    // })
+    const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+        include: {
+            cursoxdivision: true
+        }
+    })
+
+
+
+    fechas && fechas.map((fecha) => {
+        alumnos && alumnos.map(async (a) => {
+            const asistencia = await prisma.asistencia.create({
+                data: {
+                    idalumnoxcursoxdivision: a.id,
+                    presente: false,
+                    ausente: false,
+                    ausentejustificado: false,
+                    llegadatarde: false,
+                    llegadatardejustificada: false,
+                    mediafalta: false,
+                    mediafaltajustificada: false,
+                    motivo: "",
+                    creadoen: fecha,
+                    idusuario: 1,
+                    actualizadoen: ""
+                }
+
+            })
+            console.log(asistencia)
+        })
+    })
+
+
 
     // const nota = await prisma.nota.findMany({
     //     where: {
@@ -86,38 +116,45 @@ async function main() {
     //     }
 
     // })
-
     // console.log(nota)
+
+
+    // const trimestres = await prisma.trimestre.findMany({
+    // })
+
+
+
+
     // alumnos && alumnos.map(async (a) => {
 
     //     // console.log(alumnos)
-    //     switch (a.cursoXdivision.idCurso) {
+    //     switch (a.cursoxdivision.idcurso) {
     //         case 1:
-    //             console.log("entro al switch 1")
+    //             // console.log("entro al switch 1")
     //             const materias1 = await prisma.materia.findMany({
     //                 where: {
-    //                     idCurso: 1
+    //                     idcurso: 1
     //                 }
 
     //             })
-    //             // console.log(materias)
+    //             // console.log(materias1)
 
     //             materias1 && materias1.map(m => {
-    //                 console.log("entro a materias.map")
-    //                 trimestres && trimestres.map (async (t) => {
-    //                     console.log("entro a trimestres.map")
+    //                 // console.log("entro a materias.map1")
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     // console.log("entro a trimestres.map")
     //                     let nota = await prisma.nota.create({
     //                         data: {
-    //                             idAlumnoXcursoXdivision: a.id,
-    //                             idMateria: m.id,
-    //                             idTrimestre: t.id,
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
     //                             nota1: 0,
     //                             nota2: 0,
     //                             nota3: 0,
     //                             nota4: 0,
     //                             nota5: 0,
     //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                             idUsuario: 1
+    //                             idusuario: 1
     //                         },
     //                     })
     //                     console.log(nota);
@@ -126,170 +163,170 @@ async function main() {
 
     //             })
     //             break;
-    //         // case 2:
-    //     const materias2 = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: 2
-    //         }
+    //         case 2:
+    //             const materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
 
-    //     })
-    //     // console.log(materias)
-
-    //     materias2 && materias.map(m => {
-    //         trimestres && trimestres.map(async (t) => {
-
-    //             let nota = await prisma.nota.create({
-    //                 data: {
-    //                     idAlumnoXcursoXdivision: a.id,
-    //                     idMateria: m.id,
-    //                     idTrimestre: t.id,
-    //                     nota1: 0,
-    //                     nota2: 0,
-    //                     nota3: 0,
-    //                     nota4: 0,
-    //                     nota5: 0,
-    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                     idUsuario: 1
-    //                 },
     //             })
-    //             console.log(nota);
+    //             // console.log(materias)
 
-    //         })
+    //             materias2 && materias.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
 
-    //     })
-    //     break;
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idusuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
 
-    // case 3:
-    //     const materias3 = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: 3
-    //         }
+    //                 })
 
-    //     })
-    //     // console.log(materias)
-
-    //     materias3 && materias.map(m => {
-    //         trimestres && trimestres.map(async (t) => {
-
-    //             let nota = await prisma.nota.create({
-    //                 data: {
-    //                     idAlumnoXcursoXdivision: a.id,
-    //                     idMateria: m.id,
-    //                     idTrimestre: t.id,
-    //                     nota1: 0,
-    //                     nota2: 0,
-    //                     nota3: 0,
-    //                     nota4: 0,
-    //                     nota5: 0,
-    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                     idUsuario: 1
-    //                 },
     //             })
-    //             console.log(nota);
+    //             break;
 
-    //         })
+    //         case 3:
+    //             const materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
 
-    //     })
-    //     break;
-
-    // case 4:
-    //     const materias4 = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: 4
-    //         }
-
-    //     })
-    //     // console.log(materias)
-
-    //     materias4 && materias.map(m => {
-    //         trimestres && trimestres.map(async (t) => {
-
-    //             let nota = await prisma.nota.create({
-    //                 data: {
-    //                     idAlumnoXcursoXdivision: a.id,
-    //                     idMateria: m.id,
-    //                     idTrimestre: t.id,
-    //                     nota1: 0,
-    //                     nota2: 0,
-    //                     nota3: 0,
-    //                     nota4: 0,
-    //                     nota5: 0,
-    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                     idUsuario: 1
-    //                 },
     //             })
-    //             console.log(nota);
+    //             // console.log(materias)
 
-    //         })
+    //             materias3 && materias.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
 
-    //     })
-    //     break;
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idusuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
 
-    // case 5:
-    //     const materias5 = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: 5
-    //         }
+    //                 })
 
-    //     })
-    //     // console.log(materias)
-
-    //     materias5 && materias.map(m => {
-    //         trimestres && trimestres.map(async (t) => {
-
-    //             let nota = await prisma.nota.create({
-    //                 data: {
-    //                     idAlumnoXcursoXdivision: a.id,
-    //                     idMateria: m.id,
-    //                     idTrimestre: t.id,
-    //                     nota1: 0,
-    //                     nota2: 0,
-    //                     nota3: 0,
-    //                     nota4: 0,
-    //                     nota5: 0,
-    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                     idUsuario: 1
-    //                 },
     //             })
-    //             console.log(nota);
+    //             break;
 
-    //         })
+    //         case 4:
+    //             const materias4 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 4
+    //                 }
 
-    //     })
-    //     break;
-
-    // case 6:
-    //     const materias6 = await prisma.materia.findMany({
-    //         where: {
-    //             idCurso: 6
-    //         }
-
-    //     })
-    //     // console.log(materias)
-
-    //     materias6 && materias.map(m => {
-    //         trimestres && trimestres.map(async t => {
-
-    //             let nota = await prisma.nota.create({
-    //                 data: {
-    //                     idAlumnoXcursoXdivision: a.id,
-    //                     idMateria: m.id,
-    //                     idTrimestre: t.id,
-    //                     nota1: 0,
-    //                     nota2: 0,
-    //                     nota3: 0,
-    //                     nota4: 0,
-    //                     nota5: 0,
-    //                     fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
-    //                     idUsuario: 1
-    //                 },
     //             })
-    //             console.log(nota);
+    //             // console.log(materias)
 
-    //         })
+    //             materias4 && materias.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
 
-    //     })
-    //     break;
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idusuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         case 5:
+    //             const materias5 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 5
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias5 && materias.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idusuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         case 6:
+    //             const materias6 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 6
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias6 && materias.map(m => {
+    //                 trimestres && trimestres.map(async t => {
+
+    //                     let nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: 0,
+    //                             nota2: 0,
+    //                             nota3: 0,
+    //                             nota4: 0,
+    //                             nota5: 0,
+    //                             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
+    //                             idusuario: 1
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
 
     //         default:
     //             break;
@@ -422,7 +459,7 @@ async function main() {
     // menus.map(async (m) => {
     //     const enfer = await prisma.menu.create({
     //         data: {
-    //             menuSistema: m.menuSistema,
+    //             menusistema: m.menuSistema,
     //             url: m.url
     //         }
     //     })
@@ -431,10 +468,10 @@ async function main() {
 
 
     // menuXRoles.map(async (m) => {
-    //     const enfer = await prisma.menuXrol.create({
+    //     const enfer = await prisma.menuxrol.create({
     //         data: {
-    //            idMenu: m.idMenu,
-    //            idRol: m.idRol
+    //            idmenu: m.idMenu,
+    //            idrol: m.idRol
     //         }
     //     })
     //     console.log(enfer);
@@ -459,13 +496,13 @@ async function main() {
     // })
 
     // noticias.map(async (n) => {
-    //     const noticia = await prisma.noticiasYnovedades.create({
+    //     const noticia = await prisma.noticiasynovedades.create({
     //         data: {
     //             titulo: n.titulo,
-    //             creadaEn: n.creadaEn,
-    //             actualizadaEn: n.actualizadaEn,
+    //             creadaen: n.creadaEn,
+    //             actualizadaen: n.actualizadaEn,
     //             descripcion: n.descripcion,
-    //             idUsuario: n.idUsuario,
+    //             idusuario: n.idUsuario,
     //             url: n.url
     //         }
     //     })
@@ -474,28 +511,28 @@ async function main() {
 
 
 
-    // const fichaInstitucional = await prisma.fichaInstitucional.create({
+    // const fichaInstitucional = await prisma.fichainstitucional.create({
     //     data: {
-    //         nombreInstitucion: ficha.nombreInstitucion,
+    //         nombreinstitucion: ficha.nombreInstitucion,
     //         ubicacion: ficha.ubicacion,
     //         telefono1: ficha.telefono1,
     //         telefono2: ficha.telefono2 ,
-    //         tipoInstitucion: ficha.tipoInstitucion ,
+    //         tipoinstitucion: ficha.tipoInstitucion ,
     //         descripcion: ficha.descripcion ,
     //         oficina1: ficha.oficina1,
     //         oficina2: ficha.oficina2 ,
     //         mail: ficha.mail,
-    //         idUsuario: ficha.idUsuario
+    //         idusuario: ficha.idUsuario
     //     }
     // })
     // console.log(fichaInstitucional);
 
     // portadaFicha.map(async (p) => {
-    //     const portada = await prisma.portadaFicha.createMany({
+    //     const portada = await prisma.portadaficha.createMany({
     //         data: {
     //             nombre: p.nombre,
     //             url: p.url,
-    //             idFichaInstitucional: 1
+    //             idfichainstitucional: 1
     //         }
     //     })
     //     console.log(portada);
@@ -504,11 +541,11 @@ async function main() {
 
     // cursos.map(async (c) => {
 
-    //     const materi = await prisma.cursoXdivision.create({
+    //     const materi = await prisma.cursoxdivision.create({
     //         data: {
 
-    //             idCurso: c.idCurso,
-    //             idDivision: c.idDivision
+    //             idcurso: c.idCurso,
+    //             iddivision: c.idDivision
     //         }
     //     })
     //     console.log(materi);
@@ -521,15 +558,15 @@ async function main() {
     //         data: {
     //             id: m.id,
     //             nombre: m.nombre,
-    //             idCorrelativa: m.idCorrelativa,
-    //             idCurso: m.idCurso
+    //             idcorrelativa: m.idCorrelativa,
+    //             idcurso: m.idCurso
     //         }
     //     })
     //     console.log(materi);
     // })
 
 
-    //  roles.map(async (m) => {
+    // roles.map(async (m) => {
 
     //     const roles = await prisma.rol.create({
     //         data: {
@@ -539,7 +576,7 @@ async function main() {
     //     })
     //     console.log(roles);
 
-
+    // })
 
     // usuarios.map(async (u) => {
     //     const usuario = await prisma.usuario.create({
@@ -547,7 +584,7 @@ async function main() {
     //             nombre: u.nombre,
     //             apellido: u.apellido,
     //             correo: u.correo,
-    //             idRol: u.idRol,
+    //             idrol: u.idRol,
     //             legajo: u.legajo,
     //             login: u.login,
     //             localidad: u.localidad,
@@ -560,7 +597,23 @@ async function main() {
     //     console.log(usuario);
     // })
 
-    // materias && materias.map(m => {
+
+}
+
+main()
+    .catch((e) => {
+        console.error(e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
+
+
+
+
+
+ // materias && materias.map(m => {
     //     trimestres && trimestres.map(t => {
     //         alumnos && alumnos.map(async (a) => {
     //             let nota = await prisma.nota.create({
@@ -584,19 +637,3 @@ async function main() {
     //     data: asistencias
     // })
     // console.log(creation);
-}
-
-main()
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
-
-
-
-
-
-

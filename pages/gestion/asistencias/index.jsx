@@ -133,7 +133,7 @@ export default function Asistencias() {
 
     const bloquearCheck = (a) => {
         return (
-            a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
+            a.presente || a.ausente || a.ausentejustificado || a.llegadatarde || a.llegadatardejustificada || a.mediafalta || a.mediafaltajustificada
         )
     }
     const [inEditMode, setInEditMode] = useState({
@@ -419,12 +419,12 @@ export default function Asistencias() {
                                 <TableBody>
                                     {
                                         paginacion.dataActual().map((a, i) => (
-                                            !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
+                                            !a.presente && !a.ausente && !a.ausentejustificado && !a.llegadatarde && !a.llegadatardejustificada && !a.mediafalta && !a.mediafaltajustificada ? (
                                                 <TableRow key={i} >
-                                                    <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                    <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                    <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
                                                     <TableCell className="col-md-1 ">
                                                         <Switch
                                                             name="presente"
@@ -442,35 +442,35 @@ export default function Asistencias() {
                                                     <TableCell className="col-md-1 ">
                                                         <Switch
                                                             name="ausenteJustificado"
-                                                            value={asistencia.ausenteJustificado}
+                                                            value={asistencia.ausentejustificado}
                                                             onChange={handleAsistencia}
                                                         />
                                                     </TableCell>
                                                     <TableCell className="col-md-1 ">
                                                         <Switch
                                                             name="llegadaTarde"
-                                                            value={asistencia.llegadaTarde}
+                                                            value={asistencia.llegadatarde}
                                                             onChange={handleAsistencia}
                                                         />
                                                     </TableCell>
                                                     <TableCell className="col-md-1">
                                                         <Switch
                                                             name="llegadaTardeJustificada"
-                                                            value={asistencia.llegadaTardeJustificada}
+                                                            value={asistencia.llegadatardejustificada}
                                                             onChange={handleAsistencia}
                                                         />
                                                     </TableCell>
                                                     <TableCell className="col-md-1 ">
                                                         <Switch
                                                             name="mediaFalta"
-                                                            value={asistencia.mediaFalta}
+                                                            value={asistencia.mediafalta}
                                                             onChange={handleAsistencia}
                                                         />
                                                     </TableCell>
                                                     <TableCell className="col-md-1">
                                                         <Switch
                                                             name="mediaFaltaJustificada"
-                                                            value={asistencia.mediaFaltaJustificada}
+                                                            value={asistencia.mediafaltajustificada}
                                                             onChange={handleAsistencia}
                                                         />
                                                     </TableCell>
@@ -491,10 +491,10 @@ export default function Asistencias() {
                                                 a.motivo ? (
                                                     <TableRow
                                                         key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
-                                                        <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                        <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                        <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
@@ -535,14 +535,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="ausenteJustificado"
-                                                                        value={asistencia.ausenteJustificado}
+                                                                        value={asistencia.ausentejustificado}
                                                                         onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.ausenteJustificado}
+                                                                            checked={a.ausentejustificado}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -553,14 +553,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="llegadaTarde"
-                                                                        value={asistencia.llegadaTarde}
+                                                                        value={asistencia.llegadatarde}
                                                                         onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTarde}
+                                                                            checked={a.llegadatarde}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -572,14 +572,14 @@ export default function Asistencias() {
 
                                                                     <Switch
                                                                         name="llegadaTardeJustificada"
-                                                                        value={asistencia.llegadaTardeJustificada}
+                                                                        value={asistencia.llegadatardejustificada}
                                                                         onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTardeJustificada}
+                                                                            checked={a.llegadatardejustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -591,14 +591,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="mediaFalta"
-                                                                        value={asistencia.mediaFalta}
+                                                                        value={asistencia.mediafalta}
                                                                         onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFalta}
+                                                                            checked={a.mediafalta}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -609,14 +609,14 @@ export default function Asistencias() {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
                                                                     <Switch
                                                                         name="mediaFaltaJustificada"
-                                                                        value={asistencia.mediaFaltaJustificada}
+                                                                        value={asistencia.mediafaltajustificada}
                                                                         onChange={handleAsistencia}
                                                                     />
                                                                 ) :
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFaltaJustificada}
+                                                                            checked={a.mediafaltajustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -666,10 +666,10 @@ export default function Asistencias() {
                                                 ) :
                                                     (
                                                         <TableRow key={i} >
-                                                            <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                            <TableCell className="col-md-1">{a.alumnoXcursoXdivision?.usuario?.legajo}</TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoXcursoXdivision?.usuario?.apellido} </TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoXcursoXdivision?.usuario?.nombre}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                            <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
                                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                             <TableCell className="col-md-1 ">
                                                                 {
@@ -713,14 +713,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="ausenteJustificado"
-                                                                            value={asistencia.ausenteJustificado}
+                                                                            value={asistencia.ausentejustificado}
                                                                             onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                value={a.ausenteJustificado}
+                                                                                value={a.ausentejustificado}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -731,14 +731,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="llegadaTarde"
-                                                                            value={asistencia.llegadaTarde}
+                                                                            value={asistencia.llegadatarde}
                                                                             onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                value={a.llegadaTarde}
+                                                                                value={a.llegadatarde}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -749,14 +749,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="llegadaTardeJustificada"
-                                                                            value={asistencia.llegadaTardeJustificada}
+                                                                            value={asistencia.llegadatardejustificada}
                                                                             onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                value={a.llegadaTardeJustificada}
+                                                                                value={a.llegadatardejustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -767,14 +767,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="mediaFalta"
-                                                                            value={asistencia.mediaFalta}
+                                                                            value={asistencia.mediafalta}
                                                                             onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                value={a.mediaFalta}
+                                                                                value={a.mediafalta}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -785,14 +785,14 @@ export default function Asistencias() {
                                                                     inEditMode.status && inEditMode.rowKey === i ? (
                                                                         <Switch
                                                                             name="mediaFaltaJustificada"
-                                                                            value={asistencia.mediaFaltaJustificada}
+                                                                            value={asistencia.mediafaltajustificada}
                                                                             onChange={handleAsistencia}
                                                                         />
                                                                     ) :
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                value={a.mediaFaltaJustificada}
+                                                                                value={a.mediafaltajustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )

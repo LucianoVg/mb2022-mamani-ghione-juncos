@@ -22,7 +22,7 @@ const MasInfo = () => {
 
     const mostrarAsistencia = (a) => {
         return (
-            a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
+            a.presente || a.ausente || a.ausentejustificado || a.llegadatarde || a.llegadatardejustificada || a.mediafalta || a.mediafaltajustificada
         )
 
     }
@@ -34,19 +34,19 @@ const MasInfo = () => {
         if (a.ausente && 1) {
             setAsistenciaActual = 'Ausente'
         }
-        if (a.ausenteJustificado && 1) {
+        if (a.ausentejustificado && 1) {
             setAsistenciaActual = 'Ausente Justificado'
         }
-        if (a.llegadaTarde && 1) {
+        if (a.llegadatarde && 1) {
             setAsistenciaActual = 'Llegada Tarde'
         }
-        if (a.llegadaTardeJustificada && 1) {
+        if (a.llegadatardejustificada && 1) {
             setAsistenciaActual = 'Llegada Tarde Justificada'
         }
-        if (a.mediaFalta && 1) {
+        if (a.mediafalta && 1) {
             setAsistenciaActual = 'Media Falta'
         }
-        if (a.mediaFaltaJustificada && 1) {
+        if (a.mediafaltajustificada && 1) {
             setAsistenciaActual = 'Media Falta Justificada '
         }
     }
@@ -90,19 +90,19 @@ const MasInfo = () => {
                                             <h4>Ausente</h4>
                                         ) :
                                             (
-                                                asistencia?.ausenteJustificado ? (
+                                                asistencia?.ausentejustificado ? (
                                                     <h4>Ausente Justificado</h4>
                                                 ) :
                                                     (
-                                                        asistencia?.llegadaTarde ? (
+                                                        asistencia?.llegadatarde ? (
                                                             <h4>Llegada Tarde</h4>
                                                         ) :
                                                             (
-                                                                asistencia?.llegadaTardeJustificada ? (
+                                                                asistencia?.llegadatardejustificada ? (
                                                                     <h4>llegada Tarde Justificada</h4>
                                                                 ) :
                                                                     (
-                                                                        asistencia?.mediaFalta ? (
+                                                                        asistencia?.mediafalta ? (
                                                                             <h4>Media Falta</h4>
                                                                         ) :
                                                                             (

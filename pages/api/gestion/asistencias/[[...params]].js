@@ -10,10 +10,10 @@ export default async function handler(req, res) {
             let options = {
                 include: {
                     usuario: true,
-                    alumnoXcursoXdivision: {
+                    alumnoxcursoxdivision: {
                         include: {
                             usuario: true,
-                            cursoXdivision: true
+                            cursoxdivision: true
                         }
                     }
 
@@ -24,12 +24,12 @@ export default async function handler(req, res) {
                     //         nombre: 'asc'
                     //     }
                     // },
-                    creadoEn: 'asc'
+                    creadoen: 'asc'
                 }
             }
             if (legajo) {
                 OR.push({
-                    alumnoXcursoXdivision: {
+                    alumnoxcursoxdivision: {
                         usuario: {
                             legajo: {
                                 contains: legajo
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             }
             if (nombreAlumno) {
                 OR.push({
-                    alumnoXcursoXdivision: {
+                    alumnoxcursoxdivision: {
                         usuario: {
                             nombre: {
                                 contains: nombreAlumno(0).toUpperCase() + nombreAlumno.slice(1)
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
             }
             if (apellidoAlumno) {
                 OR.push({
-                    alumnoXcursoXdivision: {
+                    alumnoxcursoxdivision: {
                         usuario: {
                             apellido: {
                                 contains: apellidoAlumno[0].toUpperCase() + apellidoAlumno.slice(1)

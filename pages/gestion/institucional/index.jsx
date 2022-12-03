@@ -48,14 +48,14 @@ export default function Institucional() {
             {
                 !cargando && fichaInstitucional && (
                     <div >
-                        <Carrusel imagenes={fichaInstitucional.portadasFicha} />
+                        <Carrusel imagenes={fichaInstitucional.portadaficha} />
                         <Grid container spacing={2} sx={{ minWidth: '300px' }}>
 
                             <Grid item xs={12}>
                                 <Typography variant="h5"
                                     sx={{ marginTop: '30px' }}
                                     className={`${styles.Typography}`}
-                                >{fichaInstitucional.nombreInstitucion}</Typography>
+                                >{fichaInstitucional.nombreinstitucion}</Typography>
                             </Grid>
                             <Grid item xs={12} >
                                 <Typography variant="body1"

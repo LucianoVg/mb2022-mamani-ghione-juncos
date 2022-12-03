@@ -107,7 +107,7 @@ export default function Asistencias() {
 
     const bloquearCheck = (a) => {
         return (
-            a.presente || a.ausente || a.ausenteJustificado || a.llegadaTarde || a.llegadaTardeJustificada || a.mediaFalta || a.mediaFaltaJustificada
+            a.presente || a.ausente || a.ausentejustificado || a.llegadatarde || a.llegadatardejustificada || a.mediafalta || a.mediafaltajustificada
         )
     }
     const [inEditMode, setInEditMode] = useState({
@@ -211,8 +211,9 @@ export default function Asistencias() {
 
     return (
         <Layout>
-            <Container
-                style={{ position: 'relative', }}>
+            <Container maxWidth="xl"
+                style={{ position: 'relative' }}>
+
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencia Docente</Typography>
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
@@ -227,7 +228,7 @@ export default function Asistencias() {
                             </LocalizationProvider>
                         </Box>
 
-                  
+
                         <Typography variant="h6" sx={{ mt: 2 }}>
                             Buscar Docente:
                         </Typography>
@@ -310,12 +311,12 @@ export default function Asistencias() {
                                 <TableBody>
                                     {
                                         paginacion.dataActual().map((a, i) => (
-                                            !a.presente && !a.ausente && !a.ausenteJustificado && !a.llegadaTarde && !a.llegadaTardeJustificada && !a.mediaFalta && !a.mediaFaltaJustificadaa ? (
+                                            !a.presente && !a.ausente && !a.ausentejustificado && !a.llegadatarde && !a.llegadatardejustificada && !a.mediafalta && !a.mediafaltajustificada ? (
                                                 <TableRow key={i} >
-                                                    <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                    <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                    <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
                                                     <TableCell className="col-md-1 ">
                                                         <Switch
                                                             onChange={handlePresente}
@@ -367,10 +368,10 @@ export default function Asistencias() {
                                                 a.motivo ? (
                                                     <TableRow
                                                         key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
-                                                        <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                        <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                        <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === i ? (
@@ -413,7 +414,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.ausenteJustificado}
+                                                                            checked={a.ausentejustificado}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -429,7 +430,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTarde}
+                                                                            checked={a.llegadatarde}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
 
@@ -449,7 +450,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.llegadaTardeJustificada}
+                                                                            checked={a.llegadatardejustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -466,7 +467,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFalta}
+                                                                            checked={a.mediafalta}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -483,7 +484,7 @@ export default function Asistencias() {
                                                                     (
                                                                         <Switch
                                                                             type="checkbox"
-                                                                            checked={a.mediaFaltaJustificada}
+                                                                            checked={a.mediafaltajustificada}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
                                                                     )
@@ -529,10 +530,10 @@ export default function Asistencias() {
                                                     (
                                                         < TableRow key={i} >
 
-                                                            <TableCell className="col-md-1 text-capitalize">{a.creadoEn}</TableCell>
-                                                            <TableCell className="col-md-1">{a.docenteXmateria?.usuario?.legajo}</TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize" >{a.docenteXmateria?.usuario?.apellido} </TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize">{a.docenteXmateria?.usuario?.nombre}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
+                                                            <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
                                                             {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
                                                             <TableCell className="col-md-1 ">
                                                                 {
@@ -582,7 +583,7 @@ export default function Asistencias() {
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.ausenteJustificado}
+                                                                                checked={a.ausentejustificado}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -601,7 +602,7 @@ export default function Asistencias() {
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.llegadaTarde}
+                                                                                checked={a.llegadatarde}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -619,7 +620,7 @@ export default function Asistencias() {
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.llegadaTardeJustificada}
+                                                                                checked={a.llegadatardejustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -637,7 +638,7 @@ export default function Asistencias() {
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.mediaFalta}
+                                                                                checked={a.mediafalta}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )
@@ -656,7 +657,7 @@ export default function Asistencias() {
                                                                         (
                                                                             <Switch
                                                                                 type="checkbox"
-                                                                                checked={a.mediaFaltaJustificada}
+                                                                                checked={a.mediafaltajustificada}
                                                                                 disabled={bloquearCheck(a)}
                                                                             />
                                                                         )

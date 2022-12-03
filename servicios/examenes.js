@@ -38,9 +38,9 @@ export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsua
         const examen = await Prisma.newPrisma().fechaExamen.update({
             data: {
                 titulo: titulo,
-                fechaInicio: fechaInicio,
+                fechainicio: fechaInicio,
                 fechaFin: fechaFin,
-                idUsuario: Number(idUsuario)
+                idusuario: Number(idUsuario)
             },
             where: {
                 id: Number(id)

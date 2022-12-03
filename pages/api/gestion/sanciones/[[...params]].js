@@ -14,10 +14,10 @@ export default async function handler(req, res) {
 
             let options = {
                 include: {
-                    alumnoXCursoXDivision: {
+                    alumnoxcursoxdivision: {
                         include: {
                             usuario: true,
-                            cursoXdivision: {
+                            cursoxdivision: {
                                 include: {
                                     curso: true,
                                     division: true
@@ -32,13 +32,13 @@ export default async function handler(req, res) {
                 AND.push({ id: Number(idAlumno) })
             }
             if (idCurso) {
-                AND.push({ idCursoXdivision: Number(idCurso) })
+                AND.push({ idcursoxdivision: Number(idCurso) })
             }
             if (AND.length) {
                 options = {
                     ...options,
                     where: {
-                        alumnoXCursoXDivision: {
+                        alumnoxcursoxdivision: {
                             AND: AND
                         }
                     }

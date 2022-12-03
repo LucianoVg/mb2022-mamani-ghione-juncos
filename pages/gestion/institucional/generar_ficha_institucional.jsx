@@ -10,7 +10,7 @@ import { Typography, TextField, Button, Select, Box, Grid, MenuItem, InputLabel 
 
 const FichaInstitucional = () => {
     const [fichaInstitucional, setFichaInstitucional] = useState({
-        id: '', nombreInstitucion: '', ubicacion: '', tipoInstitucion: '', descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: '', portadasFicha: []
+        id: '', nombreInstitucion: '', ubicacion: '', tipoInstitucion: '', descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: '', portadaficha: []
     })
     const [usuario, setUsuario] = useState({ id: '' })
     const router = useRouter()
@@ -60,7 +60,7 @@ const FichaInstitucional = () => {
             idUsuario: fichaInstitucional.idUsuario
         }).then(res => {
             console.log(res.data);
-            fichaInstitucional.portadasFicha.map(p => {
+            fichaInstitucional.portadaficha.map(p => {
                 axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas`, {
                     nombre: p.name,
                     url: p.url,
@@ -76,8 +76,8 @@ const FichaInstitucional = () => {
         })
     }
     const cargarImagenes = () => {
-        if (fichaInstitucional.portadasFicha.length > 0) {
-            fichaInstitucional.portadasFicha.splice(0, fichaInstitucional.portadasFicha.length)
+        if (fichaInstitucional.portadaficha.length > 0) {
+            fichaInstitucional.portadaficha.splice(0, fichaInstitucional.portadaficha.length)
         }
         for (let i = 0; i < imagenes?.length; i++) {
             const file = imagenes[i];
@@ -85,7 +85,7 @@ const FichaInstitucional = () => {
                 .then(result => {
                     traerImagen('portadas/' + file.name).then(url => {
                         console.log(url);
-                        fichaInstitucional.portadasFicha.push({
+                        fichaInstitucional.portadaficha.push({
                             name: file.name,
                             url: url
                         })

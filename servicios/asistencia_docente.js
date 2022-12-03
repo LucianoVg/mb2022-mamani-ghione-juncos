@@ -4,10 +4,10 @@ import { Prisma } from "./prisma";
 
 export async function FiltrarAsistencias(docente = '', documento = '', fecha = '') {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany({
+        const asistencias = await Prisma.newPrisma().asistenciadocente.findMany({
             include: {
                 usuario: true,
-                docenteXmateria: {
+                docentexmateria: {
                     include: {
                         usuario: true
                     }
@@ -17,7 +17,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
             where: {
                 OR: [
                     {
-                        docenteXmateria: {
+                        docentexmateria: {
                             usuario: {
                                 nombre: {
                                     startsWith: docente.split(' ')[0]
@@ -26,7 +26,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
                         },
                     },
                     {
-                        docenteXmateria: {
+                        docentexmateria: {
                             usuario: {
                                 apellido: {
                                     endsWith: docente.split(' ')[1]
@@ -35,7 +35,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
                         },
                     },
                     {
-                        docenteXmateria: {
+                        docentexmateria: {
                             usuario: {
                                 legajo: {
                                     contains: documento
@@ -44,7 +44,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
                         }
                     },
                     {
-                        creadoEn: fecha.split('T')[0]
+                        creadoen: fecha.split('T')[0]
                     }
                 ]
             }
@@ -60,7 +60,7 @@ export async function FiltrarAsistencias(docente = '', documento = '', fecha = '
 
 export async function TraerAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciaDocente.findMany(options)
+        const asistencias = await Prisma.newPrisma().asistenciadocente.findMany(options)
         return asistencias
     } catch (error) {
         console.log(error);
@@ -69,12 +69,12 @@ export async function TraerAsistencias(options) {
     }
 }
 
-export async function DetalleAsistencia(id) {
+export async function Detallesistencia(id) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciaDocente.findUnique({
+        const asistencia = await Prisma.newPrisma().asistenciadocente.findUnique({
             include: {
                 usuario: true,
-                docenteXmateria: {
+                docentexmateria: {
                     include: {
                         usuario: true
                     }
@@ -96,19 +96,19 @@ export async function DetalleAsistencia(id) {
 
 export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario, fecha) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciaDocente.update({
+        const asistencia = await Prisma.newPrisma().asistenciadocente.update({
             data: {
                 presente: presente,
                 ausente: ausente,
-                ausenteJustificado: ausenteJustificado,
-                llegadaTarde: llegadaTarde,
-                llegadaTardeJustificada: llegadaTardeJustificada,
-                mediaFalta: mediaFalta,
-                mediaFaltaJustificada: mediaFaltaJustificada,
+                ausentejustificado: ausenteJustificado,
+                llegadatarde: llegadaTarde,
+                llegadatardejustificada: llegadaTardeJustificada,
+                mediafalta: mediaFalta,
+                mediafaltajustificada: mediaFaltaJustificada,
                 motivo: motivo,
                 fecha: fecha,
-                idUsuario: Number(idUsuario),
-                actualizadoEn: new Date().toLocaleDateString('es-AR').split('T')[0]
+                idusuario: Number(idUsuario),
+                actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
             where: {
                 id: Number(id)

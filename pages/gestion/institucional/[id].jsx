@@ -24,16 +24,16 @@ export default function EditarFicha() {
         e.preventDefault()
 
         axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${ficha.id}`, {
-            nombreInstitucion: ficha.nombreInstitucion,
+            nombreInstitucion: ficha.nombreinstitucion,
             ubicacion: ficha.ubicacion,
-            tipoInstitucion: ficha.tipoInstitucion,
+            tipoInstitucion: ficha.tipoinstitucion,
             descripcion: ficha.descripcion,
             telefono1: ficha.telefono1,
             telefono2: ficha.telefono2,
             oficina1: ficha.oficina1,
             oficina2: ficha.oficina2,
             mail: ficha.mail,
-            idUsuario: ficha.idUsuario
+            idUsuario: ficha.idusuario
         }).then(res => {
             console.log(res.data);
             ficha.portadasFicha.map(p => {
@@ -41,7 +41,7 @@ export default function EditarFicha() {
                     axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas/${p.id}`, {
                         nombre: p.nombre,
                         url: p.url,
-                        fichaInstitucionalId: p.fichaInstitucionalId
+                        fichaInstitucionalId: p.idfichainstitucional
                     }).then(res => {
                         console.log(res.data);
                     }).catch(err => {
@@ -51,7 +51,7 @@ export default function EditarFicha() {
                     axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas`, {
                         nombre: p.nombre,
                         url: p.url,
-                        fichaInstitucionalId: p.fichaInstitucionalId
+                        fichaInstitucionalId: p.idfichainstitucional
                     }).then(res => {
                         console.log(res.data);
                     }).catch(err => {
@@ -123,7 +123,7 @@ export default function EditarFicha() {
                                     variant="outlined"
                                     label="Nombre de la institucion"
                                     name="nombreInstitucion"
-                                    value={ficha.nombreInstitucion}
+                                    value={ficha.nombreinstitucion}
                                     required
                                     onChange={handleForm} />
                                 <TextField
@@ -132,7 +132,7 @@ export default function EditarFicha() {
                                     variant="outlined"
                                     label="Nombre de la institucion"
                                     name="nombreInstitucion"
-                                    value={ficha.nombreInstitucion}
+                                    value={ficha.nombreinstitucion}
                                     required
                                     onChange={handleForm} />
                                 <TextField
@@ -141,7 +141,7 @@ export default function EditarFicha() {
                                     variant="outlined"
                                     label="Nombre de la institucion"
                                     name="nombreInstitucion"
-                                    value={ficha.nombreInstitucion}
+                                    value={ficha.nombreinstitucion}
                                     required
                                     onChange={handleForm} />
                             </Grid>

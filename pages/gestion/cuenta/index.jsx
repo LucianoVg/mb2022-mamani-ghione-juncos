@@ -88,21 +88,21 @@ export default function Detalles() {
                     <Grid item xs={4}>
                         <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
                             <strong>Edad</strong> <br />
-                            {usuario?.fechaNacimiento ? (new Date().getFullYear() - new Date(usuario?.fechaNacimiento).getFullYear()) : 'N/A'}
+                            {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechaNacimiento).getFullYear()) : 'N/A'}
                         </Typography>
                     </Grid>
                     <Grid item xs>
                         <Typography variant="h5" sx={{ width: '250px', marginBottom: '20px' }} >
                             <strong>Fecha de Nacimiento</strong> <br />
-                            {usuario?.fechaNacimiento || 'N/A'}
+                            {usuario?.fechanacimiento || 'N/A'}
                         </Typography>
                     </Grid>
                     <Grid item xs>
                         <Typography variant="h5" sx={{ width: '250px', marginBottom: '20px' }} >
                             <strong>Curso</strong> <br />
-                            {usuario?.alumnoXcursoXdivision[0]?.cursoXdivision?.curso?.nombre
-                                && usuario?.alumnoXcursoXdivision[0]?.cursoXdivision?.division?.division ? `${usuario?.alumnoXcursoXdivision[0]?.cursoXdivision?.curso?.nombre}
-                                "${usuario?.alumnoXcursoXdivision[0]?.cursoXdivision?.division?.division}"` : 'N/A'}
+                            {usuario?.alumnoxcursoxdivision[0]?.cursoxdivision?.curso?.nombre
+                                && usuario?.alumnoxcursoxdivision[0]?.cursoxdivision?.division?.division ? `${usuario?.alumnoXcursoXdivision[0]?.cursoXdivision?.curso?.nombre}
+                                "${usuario?.alumnoxcursoxdivision[0]?.cursoxdivision?.division?.division}"` : 'N/A'}
                         </Typography>
                     </Grid>
 
@@ -231,7 +231,7 @@ export default function Detalles() {
                                 <Grid item xs={4} sx={{ width: '200px', marginBottom: '20px' }} >
                                     <Typography variant="h5" sx={{ width: '250px' }} >
                                         <strong>Año de Matriculacion</strong> <br />
-                                        {usuario?.alumnoXcursoXdivision[0]?.anoActual}
+                                        {usuario?.alumnoxcursoxdivision[0]?.anoactual}
                                     </Typography>
                                 </Grid>
 

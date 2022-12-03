@@ -60,7 +60,7 @@ export default function DetallesNoticia() {
             asunto: actualizar.asunto.length && actualizar.asunto || notificacion?.asunto,
             contenido: actualizar.contenido.length && actualizar.contenido || notificacion?.contenido,
             idUsuario: usuario.id,
-            idNotificacionXUsuario: notificacion?.notificacionXusuario[0]?.id
+            idNotificacionXUsuario: notificacion?.notificacionxusuario[0]?.id
         })
         onCancel()
         if (res.status === 200) {
@@ -112,7 +112,7 @@ export default function DetallesNoticia() {
                                             <Grid item >
                                                 <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                                     className={`${styles.Typography3}`}
-                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario.nombre} {notificacion.notificacionXusuario[0]?.usuario?.apellido} ({notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo})</strong>
+                                                > <strong>Atte. {notificacion.notificacionxusuario?.usuario?.nombre} {notificacion.notificacionXusuario?.usuario?.apellido} ({notificacion.notificacionXusuario?.usuario?.rol?.tipo})</strong>
                                                 </Typography>
                                             </Grid>
                                         </Grid>
@@ -190,7 +190,7 @@ export default function DetallesNoticia() {
                                             <Grid item>
                                                 <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                                     className={`${styles.Typography3}`}
-                                                > <strong>Atte. {notificacion.notificacionXusuario[0]?.usuario.nombre} {notificacion.notificacionXusuario[0]?.usuario?.apellido} ({notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo})</strong>
+                                                > <strong>Atte. {notificacion.notificacionxusuario[0]?.usuario.nombre} {notificacion.notificacionXusuario[0]?.usuario?.apellido} ({notificacion.notificacionXusuario[0]?.usuario?.rol?.tipo})</strong>
                                                 </Typography>
                                             </Grid>
                                         </Grid>

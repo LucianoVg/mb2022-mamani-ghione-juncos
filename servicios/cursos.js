@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function traerCursosXDivision() {
     try {
-        const cursosXDivision = await Prisma.newPrisma().cursoXdivision.findMany({
+        const cursosXDivision = await Prisma.newPrisma().cursoxdivision.findMany({
             select: {
                 id: true,
                 curso: {
