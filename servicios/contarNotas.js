@@ -3,13 +3,13 @@ import { Prisma } from "./prisma";
 export async function contadorNotas() {
     try {
 
-                const contador = await Prisma.newPrisma().$queryRaw`SELECT * FROM alumnoXcursoXdivision`
+        const contador = await Prisma.newPrisma().$queryRaw`SELECT idmateria, 
+       sum(count(nota1))
+        from nota 
+        -- where nota1 = 1 and nota2= 1
+        group by idmateria`
 
-        // //     sum(case when nota1  = 1  ) as nota1,
-        // //      sum(case when  nota2  = 1 )as nota2 ,
-        // // sum(case when  nota3  = 1  )as nota3 ,
-        // //     sum(case when  nota4  = 1  ) as nota4,
-        // // sum(case when  nota5  = 1  ) as nota5
+
 
         // const contador = await Prisma.newPrisma().nota.groupBy({
         //     by: ["idMateria"],

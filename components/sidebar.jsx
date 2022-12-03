@@ -15,6 +15,8 @@ import ReportIcon from '@mui/icons-material/Report';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import React from 'react'
 import EventIcon from '@mui/icons-material/Event';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SegmentIcon from '@mui/icons-material/Segment';
 import { Navbar } from './navbar';
@@ -121,36 +123,79 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                 )
             }
 
-            {/* {
-                    menusReportes && (
-                        <>
-                            <List>
-                                <ListItem disablePadding>
-                                    <ListItemButton disabled style={{ opacity: '200%' }}>
-                                        <ListItemIcon>
-                                            <EqualizerIcon />
-                                        </ListItemIcon>
-                                        <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
-                                            Reportes
-                                        </Typography>
-                                    </ListItemButton>
-                                </ListItem>
-                            </List>
-                            {
-                                menusReportes?.map((m, i) => (
+            {
+                menusReportes && (
+                    <>
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton disabled style={{ opacity: '200%' }}>
+                                    <ListItemIcon>
+                                        <EqualizerIcon />
+                                    </ListItemIcon>
+                                    <Typography style={{ fontWeight: 'bold', fontSize: '20px' }} >
+                                        Reportes
+                                    </Typography>
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                        {
+                            menusReportes?.map((m, i) => (
+                                <ListItemButton key={i}>
+                                    <ListItemIcon>
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_sanciones' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_asistencias' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
 
-                                    <ListItemButton key={i} href={m?.menu?.url}>
-                                        <ListItemIcon>
-                                            <AssessmentIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary={m?.menu?.menuSistema} />
-                                    </ListItemButton>
-                                ))
-                            }
-                            <Divider sx={{ mt: 1, mb: 1 }} />
-                        </>
-                    )
-                } */}
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_asistencias_docente' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_mejor_promedio' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_notas' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+
+                                        {
+                                            m?.menu?.url === '/reportes/reporte_preanalitico' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+                                           {
+                                            m?.menu?.url === '/reportes/reporte_notas_materias' && (
+                                                <ContentPasteSearchOutlinedIcon />
+                                            )
+                                        }
+
+                                    </ListItemIcon>
+                                    <Link
+                                        style={{ textDecoration: 'none', color: '#212121' }}
+                                        href={m?.menu?.url}>
+                                        <ListItemText primary={m?.menu?.menusistema} />
+                                    </Link>
+                                </ListItemButton>
+
+                            ))
+                        }
+                        <Divider sx={{ mt: 1, mb: 1 }} />
+                    </>
+                )
+            }
 
             {
                 authUser && (
