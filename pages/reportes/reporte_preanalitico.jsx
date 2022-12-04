@@ -43,7 +43,7 @@ export default function Preanalitico() {
     const tercerAño = preanalitico.filter(p => p.curso === 3)
     const cuartoAño = preanalitico.filter(p => p.curso === 4)
     const quintoAño = preanalitico.filter(p => p.curso === 5)
-    const sextoAño = preanalitico.filter(p => p.curso === 5)
+    const sextoAño = preanalitico.filter(p => p.curso === 6)
 
 
     const [nombreAlumno, setNombreAlumno] = useState("")
