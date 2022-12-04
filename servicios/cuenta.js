@@ -33,7 +33,7 @@ export async function registrarUsuario(
                 connectOrCreate: {
                     create: {
                         idcursoxdivision: Number(idCurso),
-                        anoActual: new Date(),
+                        fechamatriculacion: new Date().toLocaleDateString('es-AR').split('T')[0],
                         idestadoalumno: 1,
                     }
                 }

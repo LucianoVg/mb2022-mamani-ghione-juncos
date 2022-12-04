@@ -340,7 +340,6 @@ export default function Preanalitico() {
                                     }}>
                                     Nota
                                 </TableCell>
-
                             </TableRow>
                         </TableHead>
                         <TableBody >
@@ -354,7 +353,6 @@ export default function Preanalitico() {
                                             borderTopColor: 'black',
                                             borderBottom: 1,
                                             borderBottomColor: 'black'
-
                                         }}
                                     >
                                         {
@@ -456,7 +454,6 @@ export default function Preanalitico() {
                                             borderTopColor: 'black',
                                             borderBottom: 1,
                                             borderBottomColor: 'black'
-
                                         }}
                                     >
                                         {
@@ -490,7 +487,6 @@ export default function Preanalitico() {
                                             borderTopColor: 'black',
                                             borderBottom: 1,
                                             borderBottomColor: 'black'
-
                                         }}
                                     >
                                         {
@@ -983,87 +979,87 @@ export default function Preanalitico() {
                     <TableContainer component={Paper} >
                         <Table aria-label="customized table" >
                             <TableHead >
-                            <TableRow >
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1, borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Sexto Año
-                                </TableCell>
+                                <TableRow >
+                                    <TableCell align="center" colSpan={3}
+                                        sx={{
+                                            color: 'black',
+                                            backgroundColor: 'lightblue',
+                                            borderRightColor: 'black',
+                                            borderRight: 1, borderBottom: 1,
+                                            borderBottomColor: 'black'
+                                        }}
+                                    >
+                                        Sexto Año
+                                    </TableCell>
 
-                            </TableRow>
-                            <TableRow >
-                                <TableCell align="center" colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1, borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-                                <TableCell align="center" colSpan={1}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1, borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Nota
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody xs>
-                            {
-                                sextoAño && sextoAño.map((p, i) => (
+                                </TableRow>
+                                <TableRow >
+                                    <TableCell align="center" colSpan={2}
+                                        sx={{
+                                            color: 'black',
+                                            backgroundColor: 'lightblue',
+                                            borderRightColor: 'black',
+                                            borderRight: 1, borderBottom: 1,
+                                            borderBottomColor: 'black'
+                                        }}
+                                    >
+                                        Materia
+                                    </TableCell>
+                                    <TableCell align="center" colSpan={1}
+                                        sx={{
+                                            color: 'black',
+                                            backgroundColor: 'lightblue',
+                                            borderRightColor: 'black',
+                                            borderRight: 1, borderBottom: 1,
+                                            borderBottomColor: 'black'
+                                        }}
+                                    >
+                                        Nota
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody xs>
+                                {
+                                    sextoAño && sextoAño.map((p, i) => (
 
-                                    <TableRow key={i}>
-                                        <TableCell colSpan={2} component="th" scope="row"
-                                            sx={{
-                                                borderRightColor: 'black',
-                                                borderRight: 1,
-                                                borderTop: 1,
-                                                borderTopColor: 'black',
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
+                                        <TableRow key={i}>
+                                            <TableCell colSpan={2} component="th" scope="row"
+                                                sx={{
+                                                    borderRightColor: 'black',
+                                                    borderRight: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                            }}
-                                        >
-                                            {p.materia}
-                                        </TableCell >
-                                        <TableCell colSpan={1} align="center"
-                                            sx={{
-                                                borderLeftColor: 'black',
-                                                borderLeftt: 1,
-                                                borderTop: 1,
-                                                borderTopColor: 'black',
-                                                borderBottom: 1,
-                                                borderBottomColor: 'black'
+                                                }}
+                                            >
+                                                {p.materia}
+                                            </TableCell >
+                                            <TableCell colSpan={1} align="center"
+                                                sx={{
+                                                    borderLeftColor: 'black',
+                                                    borderLeftt: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                            }}
-                                        >
-                                            {Math.round(p.notafinal)}
-                                        </TableCell>
+                                                }}
+                                            >
+                                                {Math.round(p.notafinal)}
+                                            </TableCell>
 
 
-                                    </TableRow>
+                                        </TableRow>
 
-                                ))
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
             </Grid>
-        </Grid>
 
         </Layout >
     );
