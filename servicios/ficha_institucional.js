@@ -9,11 +9,11 @@ export async function traerFichaInstitucional(id = 0) {
             ]
         },
         include: {
-            portadaficha: true
+            portadasficha: true
         }
     }) : await Prisma.newPrisma().fichainstitucional.findMany({
         include: {
-            portadaficha: true
+            portadasficha: true
         }
     })
     Prisma.disconnect()

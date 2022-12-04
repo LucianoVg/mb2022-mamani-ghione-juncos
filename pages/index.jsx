@@ -70,7 +70,7 @@ const Home = () => {
         </Box>
 
         {
-          noticias && noticias.length > 0 && (
+          !cargando && noticias && noticias.length > 0 && (
             <Container maxWidth={'lg'} sx={{ width: 'fit-content', textAlign: 'center' }}>
               <Pagination
                 count={cantidadPaginas}

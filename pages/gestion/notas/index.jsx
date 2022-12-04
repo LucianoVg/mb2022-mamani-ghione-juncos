@@ -652,7 +652,8 @@ export default function Notas() {
                 }
                 {
                     !cargandoInfo && notas.length > 0 && (
-                        <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+                        <Container maxWidth={'lg'}
+                            sx={{ marginTop: 2, width: 'fit-content', textAlign: 'center' }}>
                             <Pagination
                                 count={cantidadPaginas}
                                 size='large'

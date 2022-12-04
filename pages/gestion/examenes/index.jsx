@@ -33,7 +33,7 @@ export default function FechasExamen() {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`)
     if (res.data) {
       let events = []
-      res.data?.map(d => events.push({ text: d.titulo, startDate: d.fechaInicio, endDate: d.fechaFin, id: d.id, idUsuario: d.idUsuario }))
+      res.data?.map(d => events.push({ text: d.titulo, startDate: d.fechainicio, endDate: d.fechafin, id: d.id, idusuario: d.idUsuario }))
       setFechasExamen(events)
     }
   }

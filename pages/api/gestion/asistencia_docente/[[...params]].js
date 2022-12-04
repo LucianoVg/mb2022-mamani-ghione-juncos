@@ -15,6 +15,11 @@ export default async function handler(
                         usuario: true
                     }
                 }
+            },
+            orderBy: {
+                usuario: {
+                    nombre: 'asc'
+                }
             }
         }
 

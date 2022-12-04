@@ -154,10 +154,8 @@ model materia {
   nombre          String?
   idcorrelativa   Int
   idcurso         Int
-  // materia         materia           @relation("materiaTomateria", fields: [idCorrelativa], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso           curso             @relation(fields: [idcurso], references: [id])
   docentexmateria docentexmateria[]
-  // other_materia   materia[]         @relation("materiaTomateria")
   materialestudio materialestudio[]
   nota            nota[]
 }
@@ -289,14 +287,13 @@ model rol {
 }
 
 model sancion {
-  id                      Int                   @id @default(autoincrement())
+  id                      Int                    @id @default(autoincrement())
   motivo                  String?
   fecha                   String?
   idtiposancion           Int
-  idcurso                 Int
-  idalumnoxcursoxdivision Int
-  alumnoxcursoxdivision   alumnoxcursoxdivision @relation(fields: [idalumnoxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tiposancion             tiposancion           @relation(fields: [idtiposancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  idalumnoxcursoxdivision Int?
+  alumnoxcursoxdivision   alumnoxcursoxdivision? @relation(fields: [idalumnoxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tiposancion             tiposancion            @relation(fields: [idtiposancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sancionxusuario         sancionxusuario[]
 }
 

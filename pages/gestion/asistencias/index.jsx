@@ -847,9 +847,9 @@ export default function Asistencias() {
                 }
                 {
                     !cargandoInfo && asistencias && asistencias.length > 0 && (
-                        <Container sx={{ textAlign: 'center' }}>
+                        <Container
+                            sx={{ marginTop: 2, width: 'fit-content', textAlign: 'center' }}>
                             <Pagination
-                                sx={{ marginTop: 2 }}
                                 count={cantidadPaginas}
                                 size='large'
                                 page={pagina}

@@ -6,79 +6,69 @@ import { Layout } from "../../../components/layout";
 import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 
 export default function NuevaSancion() {
-    const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: '', motivo: '', idTipoSancion: 0 })
+    const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 0 })
 
     const [alumnos, setAlumnos] = useState()
     const [cursos, setCursos] = useState()
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const { loading, authUser } = useAuth()
 
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/')
         }
+        traerUsuario()
+        traerAlumnos()
+        traerCursos()
+        traerTiposSancion()
 
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-            .then(res => {
-                if (res.data) {
-                    setUsuario({ id: res.data.id })
-                    console.log(usuario);
-                }
-            })
-
-
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
-            .then(res => {
-                if (res.data) {
-                    setAlumnos(res.data)
-                }
-            })
-
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-            .then(res => {
-                if (res.data) {
-                    setCursos(res.data)
-                }
-            })
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
-            .then(res => {
-                if (res.data) {
-                    setTipoSanciones(res.data)
-                }
-            })
     }, [loading, authUser, usuario.id])
 
+    const traerTiposSancion = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
+        if (res.data) {
+            setTipoSanciones(res.data)
+        }
+    }
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
+    }
+    const traerAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+        if (res.data) {
+            setAlumnos(res.data)
+        }
+    }
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ id: res.data.id })
+            console.log(usuario);
+        }
+    }
     const handleSancion = (e) => {
         setSancion({ ...sancion, [e.target.name]: e.target.value })
     }
-    const generarSancion = (e) => {
+    const generarSancion = async (e) => {
         e.preventDefault()
-        console.log(sancion);
-        console.log({
-            idUsuario: usuario.id,
-            idCurso: sancion.idCurso,
-            idAlumno: sancion.idAlumno,
-            idTipoSancion: sancion.idTipoSancion,
-            motivo: sancion.motivo,
-            fecha: new Date().toLocaleDateString('en-GB')
-        });
-        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
             idUsuario: usuario.id,
             idAlumno: sancion.idAlumno,
             idCurso: sancion.idCurso,
             idTipoSancion: sancion.idTipoSancion,
             motivo: sancion.motivo,
-            fecha: new Date().toLocaleDateString('en-GB')
-        }).then(res => {
-            if (res.data) {
-                router.push('/gestion/sanciones')
-            }
-        }).catch(err => {
-            console.error(err);
+            fecha: new Date().toLocaleDateString('es-AR').split('T')[0]
         })
+        if (res.status === 200) {
+            console.log(res.data);
+            router.push('/gestion/sanciones')
+        }
     }
     return (
         <Layout>

@@ -12,8 +12,9 @@ export async function traerSanciones(options) {
 
 export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motivo, idTipoSancion, fecha) {
     try {
+        // console.log(idUsuario, idAlumno, idCurso, motivo, idTipoSancion, fecha);
         if (idCurso !== 0) {
-            const sanciones = []
+            let sanciones = []
             const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
@@ -23,12 +24,32 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                 }
             })
             alumnos.forEach(async (a) => {
-                const sancion = await Prisma.newPrisma().$executeRaw`INSERT INTO sancion (fecha, motivo, idtiposancion, idalumnoxcursoxdivision) VALUES(${fecha}, ${motivo}, ${Number(idTipoSancion)}, ${Number(a.id)});`
-                console.log(sancion);
-
-                const idsSancion = await Prisma.newPrisma().$queryRaw`SELECT id FROM sancion WHERE idalumnoxcursoxdivision = ${Number(a.id)}`
-
-                await Prisma.newPrisma().$executeRaw`INSERT INTO sancionxusuario (idsancion, idusuario) VALUES(${idsSancion[0]?.id}, ${Number(idUsuario)})`
+                const sancion = await Prisma.newPrisma().sancion.create({
+                    data: {
+                        fecha: fecha,
+                        motivo: motivo,
+                        alumnoxcursoxdivision: {
+                            connect: {
+                                id: a.id
+                            }
+                        },
+                        tiposancion: {
+                            connect: {
+                                id: Number(idTipoSancion)
+                            }
+                        },
+                        sancionxusuario: {
+                            create: {
+                                usuario: {
+                                    connect: {
+                                        id: Number(idUsuario)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                sanciones.push(sancion)
             })
             return sanciones
 
@@ -49,11 +70,12 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                     },
                     sancionxusuario: {
                         create: {
-                            idUsuario: Number(idUsuario),
+                            idusuario: Number(idUsuario),
                         }
                     },
                 }
             })
+            console.log(sancion);
             return sancion
         }
     } catch (error) {

@@ -9,29 +9,17 @@ export async function TraerNotas(options) {
         Prisma.disconnect()
     }
 }
-// export async function TraerNotas() {
-//     try {
-//         return await Prisma.newPrisma().nota.findMany({
-//             include: {
-//                 materia: true,
-//                 trimestre: true,
-//                 alumnoXcursoXdivision: {
-//                     include: {
-//                         usuario: true,
-//                         cursoXdivision: true
-//                     }
-//                 }
-//             },
-//             // where: {
-//             //     idTrimestre: 1
-//             // }
-//         })
-//     } catch (error) {
-//         console.error(error);
-//     } finally {
-//         Prisma.disconnect()
-//     }
-// }
+
+export async function contarNotas() {
+    try {
+        const count = await Prisma.newPrisma().nota.aggregate({
+            _count: ['nota1', 'nota2', 'nota3', 'nota4', 'nota5']
+        })
+        console.log(count);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
     columna1, columna2, columna3, columna4, columna5) {

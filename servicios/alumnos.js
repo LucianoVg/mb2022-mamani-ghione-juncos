@@ -1,4 +1,3 @@
-import { orderBy } from "lodash";
 import { Prisma } from "./prisma";
 
 export default async function traerAlumnos() {
@@ -6,9 +5,13 @@ export default async function traerAlumnos() {
         const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
             include: {
                 usuario: true
+            },
+            orderBy: {
+                usuario: {
+                    nombre: 'asc'
+                }
             }
         })
-        console.log(alumnos);
         return alumnos
     } catch (error) {
         console.error(error);

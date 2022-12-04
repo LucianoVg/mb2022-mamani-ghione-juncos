@@ -9,6 +9,7 @@ export default async function handler(
         const detalle = await DetalleAsistencia(id)
         return res.status(200).json(detalle)
     } catch (error) {
-        return res.status(200).json({ mensaje: error.message })
+        console.log(error);
+        return res.status(400).json({ mensaje: error.message })
     }
 }

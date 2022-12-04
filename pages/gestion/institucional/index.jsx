@@ -48,7 +48,7 @@ export default function Institucional() {
             {
                 !cargando && fichaInstitucional && (
                     <div >
-                        <Carrusel imagenes={fichaInstitucional.portadaficha} />
+                        <Carrusel imagenes={fichaInstitucional.portadasficha} />
                         <Grid container spacing={2} sx={{ minWidth: '300px' }}>
 
                             <Grid item xs={12}>

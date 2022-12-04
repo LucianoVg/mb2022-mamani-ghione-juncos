@@ -1,7 +1,7 @@
 import NextCors from "nextjs-cors/dist";
 import { generarSancion, traerSanciones } from "../../../../servicios/sanciones"
 
-export default async function handler(req, res) {
+export default async function hORler(req, res) {
     try {
         await NextCors(req, res, {
             // Options
@@ -27,20 +27,28 @@ export default async function handler(req, res) {
                     }
                 }
             }
-            const AND = []
+            const OR = []
             if (idAlumno) {
-                AND.push({ id: Number(idAlumno) })
+                OR.push({
+                    alumnoxcursoxdivision: {
+                        id: Number(idAlumno)
+                    }
+                })
             }
             if (idCurso) {
-                AND.push({ idcursoxdivision: Number(idCurso) })
+                OR.push({
+                    alumnoxcursoxdivision: {
+                        cursoxdivision: {
+                            id: Number(idCurso)
+                        }
+                    }
+                })
             }
-            if (AND.length) {
+            if (OR.length) {
                 options = {
                     ...options,
                     where: {
-                        alumnoxcursoxdivision: {
-                            AND: AND
-                        }
+                        OR: OR
                     }
                 }
             }

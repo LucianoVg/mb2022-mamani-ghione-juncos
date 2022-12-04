@@ -715,18 +715,21 @@ export default function Asistencias() {
                 }
                 {
                     !cargandoInfo && asistencias && asistencias?.length > 0 && (
-                        <Pagination
-                            sx={{ marginTop: 2 }}
-                            count={cantidadPaginas}
-                            size='large'
-                            page={pagina}
-                            variant="outlined"
-                            shape='circular'
-                            onChange={handlerCambioPagina} />
+                        <Container
+                            maxWidth={'lg'}
+                            sx={{ marginTop: 2, width: 'fit-content', textAlign: 'center' }}>
+                            <Pagination
+                                count={cantidadPaginas}
+                                size='large'
+                                page={pagina}
+                                variant="outlined"
+                                shape='circular'
+                                onChange={handlerCambioPagina} />
+                        </Container>
                     )
                 }
             </Container>
 
-        </Layout>
+        </Layout >
     );
 }

@@ -156,7 +156,7 @@ const Sanciones = () => {
 
             {
                 cargandoInfo && (
-                    <Container sx={{ m: 'auto' }}>
+                    <Container sx={{ textAlign: 'center' }}>
                         <Loading size={80} />
                     </Container>
                 )
@@ -177,7 +177,7 @@ const Sanciones = () => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    sanciones?.map((s, i) => (
+                                    paginacion.dataActual()?.map((s, i) => (
                                         <TableRow key={i}>
                                             <TableCell align="right">{
                                                 s.alumnoxcursoxdivision?.usuario?.nombre
@@ -189,7 +189,7 @@ const Sanciones = () => {
                                                 s.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre
                                             }</TableCell>
                                             <TableCell align="right">{
-                                                s.alumnoXCursoXDivision?.cursoxdivision?.division?.division
+                                                s.alumnoxcursoxdivision?.cursoxdivision?.division?.division
                                             }</TableCell>
                                             <TableCell align="right">{s.fecha}</TableCell>
                                             <TableCell align="right">
@@ -208,8 +208,9 @@ const Sanciones = () => {
                 )
             }
             {
-                sanciones && sanciones?.length > 0 && (
-                    <Container maxWidth={'lg'} sx={{ marginTop: 3 }}>
+                !cargandoInfo && sanciones && sanciones?.length > 0 && (
+                    <Container maxWidth={'lg'}
+                        sx={{ marginTop: 2, width: 'fit-content', textAlign: 'center' }} >
                         <Pagination
                             count={cantidadPaginas}
                             size='large'
@@ -220,7 +221,7 @@ const Sanciones = () => {
                     </Container>
                 )
             }
-        </Layout>
+        </Layout >
     )
 }
 

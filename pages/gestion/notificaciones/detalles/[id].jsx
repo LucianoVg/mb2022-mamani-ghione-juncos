@@ -112,7 +112,7 @@ export default function DetallesNoticia() {
                                             <Grid item >
                                                 <Typography variant="caption" sx={{ marginBottom: '30px', marginLeft: '30px' }}
                                                     className={`${styles.Typography3}`}
-                                                > <strong>Atte. {notificacion.notificacionxusuario?.usuario?.nombre} {notificacion.notificacionXusuario?.usuario?.apellido} ({notificacion.notificacionXusuario?.usuario?.rol?.tipo})</strong>
+                                                > <strong>Atte. {notificacion.notificacionxusuario?.usuario?.nombre} {notificacion.notificacionxusuario[0]?.usuario?.apellido} ({notificacion.notificacionxusuario[0]?.usuario?.rol?.tipo})</strong>
                                                 </Typography>
                                             </Grid>
                                         </Grid>

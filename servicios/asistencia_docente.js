@@ -1,63 +1,5 @@
 import { Prisma } from "./prisma";
 
-
-
-export async function FiltrarAsistencias(docente = '', documento = '', fecha = '') {
-    try {
-        const asistencias = await Prisma.newPrisma().asistenciadocente.findMany({
-            include: {
-                usuario: true,
-                docentexmateria: {
-                    include: {
-                        usuario: true
-                    }
-                }
-
-            },
-            where: {
-                OR: [
-                    {
-                        docentexmateria: {
-                            usuario: {
-                                nombre: {
-                                    startsWith: docente.split(' ')[0]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        docentexmateria: {
-                            usuario: {
-                                apellido: {
-                                    endsWith: docente.split(' ')[1]
-                                }
-                            }
-                        },
-                    },
-                    {
-                        docentexmateria: {
-                            usuario: {
-                                legajo: {
-                                    contains: documento
-                                }
-                            }
-                        }
-                    },
-                    {
-                        creadoen: fecha.split('T')[0]
-                    }
-                ]
-            }
-        })
-        console.log(asistencias);
-        return asistencias
-    } catch (error) {
-        console.error(error);
-    } finally {
-        Prisma.disconnect()
-    }
-}
-
 export async function TraerAsistencias(options) {
     try {
         const asistencias = await Prisma.newPrisma().asistenciadocente.findMany(options)
@@ -69,7 +11,7 @@ export async function TraerAsistencias(options) {
     }
 }
 
-export async function Detallesistencia(id) {
+export async function DetalleAsistencia(id) {
     try {
         const asistencia = await Prisma.newPrisma().asistenciadocente.findUnique({
             include: {
@@ -94,7 +36,7 @@ export async function Detallesistencia(id) {
     }
 }
 
-export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario, fecha) {
+export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario) {
     try {
         const asistencia = await Prisma.newPrisma().asistenciadocente.update({
             data: {
@@ -106,7 +48,6 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 mediafalta: mediaFalta,
                 mediafaltajustificada: mediaFaltaJustificada,
                 motivo: motivo,
-                fecha: fecha,
                 idusuario: Number(idUsuario),
                 actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]
             },
