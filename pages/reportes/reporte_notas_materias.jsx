@@ -59,6 +59,8 @@ export default function NotasXmateria() {
       }
     ]
   });
+
+  
   let delayed;
   const [options, setOptions] = useState({
     animation: {
