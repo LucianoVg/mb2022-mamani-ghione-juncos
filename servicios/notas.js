@@ -1,8 +1,20 @@
 import { Prisma } from "./prisma";
 
-export async function TraerNotas(options) {
+
+export async function Preanalitico(idAlumno) {
     try {
-        return await Prisma.newPrisma().nota.findMany(options)
+        return await Prisma.newPrisma().$queryRaw`select m.id as id ,m.nombre as materia, m.idcurso as curso , idalumnoxcursoxdivision,
+        avg ((SELECT AVG(c)
+               FROM   (VALUES(nota1),
+                             (nota2),
+                             (nota3),
+                             (nota4),
+                             (nota5)) T (c))) as notafinal
+       from historialnota as hn
+       INNER JOIN materia as m ON m.id = hn.idmateria
+       where idalumnoxcursoxdivision = 53
+       group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
+       order by m.idcurso asc, m.id asc`
     } catch (error) {
         console.error(error);
     } finally {
@@ -20,6 +32,18 @@ export async function contarNotas() {
         console.log(error);
     }
 }
+
+
+export async function TraerNotas(options) {
+    try {
+        return await Prisma.newPrisma().nota.findMany(options)
+    } catch (error) {
+        console.error(error);
+    } finally {
+        Prisma.disconnect()
+    }
+}
+
 
 export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
     columna1, columna2, columna3, columna4, columna5) {
