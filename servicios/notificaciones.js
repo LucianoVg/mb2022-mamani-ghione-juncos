@@ -85,55 +85,79 @@ export async function DetalleNotificacion(idNotificacion) {
     }
 }
 
-export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso) {
+export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso, idAlumno) {
     // console.log(asunto, contenido, fecha, idCurso, idUsuario);
-    try {
-        const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
-            where: {
-                idcursoxdivision: Number(idCurso)
-            }
-        }) : await Prisma.newPrisma().alumnoxcursoxdivision.findMany()
-
-        alumnos.map(async (a) => {
+    if (idCurso != "") {
+        try {
+            const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
+                where: {
+                    idcursoxdivision: Number(idCurso)
+                }
+            }) : await Prisma.newPrisma().alumnoxcursoxdivision.findMany()
             const notificacion = await Prisma.newPrisma().notificacion.create({
                 data: {
                     asunto: asunto,
                     contenido: contenido,
                     fecha: fecha,
-                    notificacionxusuario: {
-                        create: {
-                            idusuario: Number(idUsuario)
-                        }
-                    },
-                    idalumnoxcursoxdivision: Number(a.id)
+                    idusuario: Number(idUsuario),
                 }
             })
-            console.log(notificacion);
+            const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
+                orderBy: {
+                    id: "desc"
+                }
+            })
+            alumnos.map(async (a) => {
+
+                const notificacionUsuario = await Prisma.newPrisma().notificacionxusuario.create({
+                    data: {
+                        idnotificacion: idNotificacionUltimo.id,
+                        idalumnoxcursoxdivision: Number(idAlumno)
+                    }
+                })
+                console.log(notificacionUsuario);
+            })
+            return "Notificaciones creadas"
+        } catch (err) {
+            console.error(err);
+        } finally {
+            Prisma.disconnect()
+        }
+    } else {
+        const notificacion = await Prisma.newPrisma().notificacion.create({
+            data: {
+                asunto: asunto,
+                contenido: contenido,
+                fecha: fecha,
+                idusuario: Number(idUsuario),
+
+
+            }
         })
-        return "Notificaciones creadas"
-    } catch (err) {
-        console.error(err);
-    } finally {
-        Prisma.disconnect()
+        const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
+            orderBy: {
+                id: "desc"
+            }
+        })
+
+        const notificacionUsuario = await Prisma.newPrisma().notificacionxusuario.create({
+            data: {
+                idnotificacion: idNotificacionUltimo.id,
+                idalumnoxcursoxdivision: Number(idAlumno)
+            }
+        })
+
+        console.log(notificacionUsuario);
     }
 }
 
-export async function ActualizarNotificacion(id, asunto, contenido, idUsuario, idNotificacionXUsuario) {
+export async function ActualizarNotificacion(id, asunto, contenido, idUsuario) {
     try {
         const actualizar = await Prisma.newPrisma().notificacion.update({
             data: {
                 asunto: asunto,
                 contenido: contenido,
-                notificacionxusuario: {
-                    update: {
-                        data: {
-                            idusuario: Number(idUsuario)
-                        },
-                        where: {
-                            id: Number(idNotificacionXUsuario)
-                        }
-                    }
-                }
+                idusuario: Number(idUsuario),
             },
             where: {
                 id: Number(id)

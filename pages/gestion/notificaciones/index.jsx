@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Layout } from "../../../components/layout";
-import { Box, Button, TextareaAutosize, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, TextareaAutosize, Container, Autocomplete, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import { Notificacion } from '../../../components/notificacion_panel'
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from '@mui/material/Divider';
@@ -22,7 +22,7 @@ const Notificaciones = () => {
     const [idCurso, setIdCurso] = useState('');
     // const [nombre, setNombre] = useState('');
     const [usuario, setUsuario] = useState({ id: '' })
-
+    const [alumnos, setAlumnos] = useState([])
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
@@ -43,6 +43,7 @@ const Notificaciones = () => {
         traerUsuario()
         ListarNotificaciones()
         listarCursos()
+        listarAlumnos()
         // filtros()
     }, [usuario.id, loading, authUser])
 
@@ -52,6 +53,16 @@ const Notificaciones = () => {
             console.log(res.data);
             setUsuario({ id: res.data?.id })
         }
+    }
+
+    const listarAlumnos = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+            .then(res => {
+                console.log(res.data);
+                setAlumnos(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
     }
     const listarCursos = () => {
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
@@ -91,6 +102,18 @@ const Notificaciones = () => {
     }
 
 
+    const listaAlumnos = alumnos.map(a => (
+        [
+            {
+                label: a.apellido + a.nombre,
+                id: a.id
+            }
+        ]
+    ))
+
+    console.log("alumnos:", listaAlumnos)
+
+
     return (
         <Layout>
             {/* <Notificacion /> */}
@@ -124,6 +147,15 @@ const Notificaciones = () => {
                                     </Select>
 
                                 </FormControl>
+
+
+                                {/* <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    options={top100Films}
+                                    sx={{ width: 300 }}
+                                    renderInput={(params) => <TextField {...params} label="Movie" />}
+                                /> */}
                                 {/* <FormControl sx={{ width: '30%', marginRight: '20px' }}>
                                     <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
                                     <Select

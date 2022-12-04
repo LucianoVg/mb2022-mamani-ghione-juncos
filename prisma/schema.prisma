@@ -8,19 +8,19 @@ datasource db {
 }
 
 model alumnoxcursoxdivision {
-  id                 Int             @id @default(autoincrement())
-  fechamatriculacion String?
-  idcursoxdivision   Int
-  idusuario          Int
-  idestadoalumno     Int
-  cursoxdivision     cursoxdivision  @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  estadoalumno       estadoalumno    @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario            usuario         @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  asistencia         asistencia[]
-  historialnota      historialnota[]
-  nota               nota[]
-  notificacion       notificacion[]
-  sancion            sancion[]
+  id                   Int                    @id @default(autoincrement())
+  fechamatriculacion   String?
+  idcursoxdivision     Int
+  idusuario            Int
+  idestadoalumno       Int
+  cursoxdivision       cursoxdivision         @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  estadoalumno         estadoalumno           @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario              usuario                @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  asistencia           asistencia[]
+  historialnota        historialnota[]
+  nota                 nota[]
+  notificacionxusuario notificacionxusuario[]
+  sancionxalumno       sancionxalumno[]
 }
 
 model asistencia {
@@ -240,21 +240,21 @@ model noticiasynovedades {
 }
 
 model notificacion {
-  id                      Int                    @id @default(autoincrement())
-  asunto                  String?
-  contenido               String?
-  fecha                   String?
-  idalumnoxcursoxdivision Int
-  alumnoxcursoxdivision   alumnoxcursoxdivision  @relation(fields: [idalumnoxcursoxdivision], references: [id])
-  notificacionxusuario    notificacionxusuario[]
+  id                   Int                    @id @default(autoincrement())
+  asunto               String?
+  contenido            String?
+  fecha                String?
+  idusuario            Int
+  usuario              usuario                @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  notificacionxusuario notificacionxusuario[]
 }
 
 model notificacionxusuario {
-  id             Int          @id @default(autoincrement())
-  idusuario      Int
-  idnotificacion Int
-  notificacion   notificacion @relation(fields: [idnotificacion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario        usuario      @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                      Int                   @id @default(autoincrement())
+  idalumnoxcursoxdivision Int
+  idnotificacion          Int
+  alumnoxcursoxdivision   alumnoxcursoxdivision @relation(fields: [idalumnoxcursoxdivision], references: [id])
+  notificacion            notificacion?         @relation(fields: [idnotificacion], references: [id])
 }
 
 model permisos {
@@ -306,22 +306,22 @@ model rol {
 }
 
 model sancion {
-  id                      Int                    @id @default(autoincrement())
-  motivo                  String?
-  fecha                   String?
-  idtiposancion           Int
-  idalumnoxcursoxdivision Int?
-  alumnoxcursoxdivision   alumnoxcursoxdivision? @relation(fields: [idalumnoxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tiposancion             tiposancion            @relation(fields: [idtiposancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sancionxusuario         sancionxusuario[]
+  id             Int              @id @default(autoincrement())
+  motivo         String?
+  fecha          String?
+  idtiposancion  Int
+  idusuario      Int
+  tiposancion    tiposancion      @relation(fields: [idtiposancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario        usuario          @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancionxalumno sancionxalumno[]
 }
 
-model sancionxusuario {
-  id        Int     @id @default(autoincrement())
-  idsancion Int
-  idusuario Int
-  sancion   sancion @relation(fields: [idsancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario   usuario @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model sancionxalumno {
+  id                      Int                    @id @default(autoincrement())
+  idsancion               Int
+  idalumnoxcursoxdivision Int?
+  alumnoxcursoxdivision   alumnoxcursoxdivision? @relation(fields: [idalumnoxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sancion                 sancion                @relation(fields: [idsancion], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model tiporeporte {
@@ -386,6 +386,6 @@ model usuario {
   materialestudio       materialestudio[]
   nota                  nota[]
   noticiasynovedades    noticiasynovedades[]
-  notificacionxusuario  notificacionxusuario[]
-  sancionxusuario       sancionxusuario[]
+  notificacion          notificacion[]
+  sancion               sancion[]
 }
