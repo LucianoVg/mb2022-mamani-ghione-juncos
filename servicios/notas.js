@@ -28,6 +28,7 @@ export async function contarNotas() {
             _count: ['nota1', 'nota2', 'nota3', 'nota4', 'nota5']
         })
         console.log(count);
+        return count
     } catch (error) {
         console.log(error);
     }

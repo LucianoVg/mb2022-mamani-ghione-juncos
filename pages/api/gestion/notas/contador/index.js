@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { contadorNotas } from "../../../../servicios/contarNotas"
+import { contarNotas } from "../../../../../servicios/notas";
 
 export default async function handler(req, res) {
     try {
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            const contador = await contadorNotas()
+            const contador = await contarNotas()
 
             return res.status(200).json(contador)
         } else {

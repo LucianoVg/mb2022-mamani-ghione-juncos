@@ -14,38 +14,42 @@ import axios from 'axios';
 export function Layout({ children }) {
     const { loading, authUser } = useAuth()
     const [menusGestion, setMenusGestion] = useState([])
+    const [menusReportes, setMenusReportes] = useState([])
 
     useEffect(() => {
         if (!loading && authUser) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-                .then(res => {
-                    if (res.data) {
-                        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/gestion`)
-                            .then(r => {
-                                if (r.data) {
-                                    console.log(r.data);
-                                    setMenusGestion(r.data)
-                                }
-                            })
-
-                        // axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${res.data?.rol?.id}/reportes`)
-                        //     .then(r => {
-                        //         if (r.data) {
-                        //             console.log(r.data);
-                        //             setMenusReportes(r.data)
-                        //         }
-                        //     })
-                    }
-                })
+            traerUsuario()
         }
     }, [authUser, loading])
-
+    const traerMenuGestion = async (idRol) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${idRol}/gestion`)
+        if (res.data) {
+            console.log(res.data);
+            setMenusGestion(res.data)
+        }
+    }
+    const traerMenuReportes = async (idRol) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/submenu/${idRol}/reportes`)
+        if (res.data) {
+            console.log(res.data);
+            setMenusReportes(res.data)
+        }
+    }
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            await traerMenuGestion(res.data?.rol?.id)
+            await traerMenuReportes(res.data?.rol?.id)
+        }
+    }
     return (
         <>
             <Head>
                 <title>Instituto Privado &quot;El Salvador&quot;</title>
             </Head>
-            <Sidebar menusGestion={menusGestion} />
+            <Sidebar
+                menusGestion={menusGestion}
+                menusReportes={menusReportes} />
             <Container maxWidth="vh" sx={{ mt: 10, mb: 4 }}>
                 <React.Fragment>
                     {children}

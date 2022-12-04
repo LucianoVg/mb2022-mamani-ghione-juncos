@@ -16,12 +16,10 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import React from 'react'
 import EventIcon from '@mui/icons-material/Event';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SegmentIcon from '@mui/icons-material/Segment';
 import { Navbar } from './navbar';
 import Link from 'next/link';
-import { Container } from '@mui/system';
 
 const Sidebar = ({ menusGestion, menusReportes }) => {
     const router = useRouter()
@@ -124,7 +122,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
             }
 
             {
-                menusReportes && (
+                menusReportes && menusReportes?.length > 0 && (
                     <>
                         <List>
                             <ListItem disablePadding>
@@ -176,7 +174,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                                                 <ContentPasteSearchOutlinedIcon />
                                             )
                                         }
-                                           {
+                                        {
                                             m?.menu?.url === '/reportes/reporte_notas_materias' && (
                                                 <ContentPasteSearchOutlinedIcon />
                                             )
