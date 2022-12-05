@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider';
 import { Edit } from "@mui/icons-material";
 import Icon from '@mui/material/Icon';
 import { useAuth } from '../../../components/context/authUserProvider';
+import { setInterval } from 'timers';
 
 const Notificaciones = () => {
     const router = useRouter()
@@ -34,6 +35,9 @@ const Notificaciones = () => {
     const handleNotificacion = (e) => {
         setNotificacion({ ...notificacion, [e.target.name]: e.target.value })
     }
+
+
+
 
 
     useEffect(() => {
@@ -102,16 +106,23 @@ const Notificaciones = () => {
     }
 
 
-    const listaAlumnos = alumnos.map(a => (
-        [
-            {
-                label: a.apellido + a.nombre,
-                id: a.id
-            }
-        ]
-    ))
+    // const [value, setValue] = useState('');
+    const [idalumno, setIdAlumno] = useState()
 
-    console.log("alumnos:", listaAlumnos)
+
+
+    const handleAlumno = (e, newValue) => {
+
+        if (newValue) {
+
+            setIdAlumno(newValue.id);
+
+        }
+
+
+    }
+
+    console.log("id alumno:", idalumno)
 
 
     return (
@@ -147,15 +158,25 @@ const Notificaciones = () => {
                                     </Select>
 
                                 </FormControl>
-
-
-                                {/* <Autocomplete
+                                <Autocomplete
                                     disablePortal
                                     id="combo-box-demo"
-                                    options={top100Films}
-                                    sx={{ width: 300 }}
-                                    renderInput={(params) => <TextField {...params} label="Movie" />}
-                                /> */}
+                                    // value={value}
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumnos) => `${alumnos.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                    options={alumnos}
+                                    sx={{ width: "250px" }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option.apellido === value.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumnos) => (
+                                        <Box component="li" {...props} key={alumnos.id}>
+                                            {alumnos.usuario.apellido} {alumnos.usuario.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                />
                                 {/* <FormControl sx={{ width: '30%', marginRight: '20px' }}>
                                     <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
                                     <Select
