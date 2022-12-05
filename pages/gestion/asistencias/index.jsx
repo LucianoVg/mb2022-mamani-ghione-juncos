@@ -35,19 +35,19 @@ export default function Asistencias() {
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [cursos, setCursos] = useState()
     const [fecha, setFecha] = useState(new Date())
-    const [idCurso, setIdCurso] = useState("")
+    const [idCurso, setIdCurso] = useState(0)
     const { loading, authUser } = useAuth()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
     const [asistencia, setAsistencia] = useState({
         id: 0,
         presente: false,
         ausente: false,
-        ausenteJustificado: false,
-        llegadaTarde: false,
-        llegadaTardeJustificada: false,
-        mediaFalta: false,
-        mediaFaltaJustificada: false,
+        ausentejustificado: false,
+        llegadatarde: false,
+        llegadatardejustificada: false,
+        mediafalta: false,
+        mediafaltajustificada: false,
         motivo: ''
     })
     const [guardando, setGuardando] = useState(false)
@@ -157,11 +157,11 @@ export default function Asistencias() {
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/update/${id}`, {
             presente: asistencia.presente,
             ausente: asistencia.ausente,
-            ausenteJustificado: asistencia.ausenteJustificado,
-            llegadaTarde: asistencia.llegadaTarde,
-            llegadaTardeJustificada: asistencia.llegadaTardeJustificada,
-            mediaFalta: asistencia.mediaFalta,
-            mediaFaltaJustificada: asistencia.mediaFaltaJustificada,
+            ausenteJustificado: asistencia.ausentejustificado,
+            llegadaTarde: asistencia.llegadatarde,
+            llegadaTardeJustificada: asistencia.llegadatardejustificada,
+            mediaFalta: asistencia.mediafalta,
+            mediaFaltaJustificada: asistencia.mediafaltajustificada,
             motivo: asistencia.motivo,
             idUsuario: usuario.id
         })
