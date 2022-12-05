@@ -30,6 +30,9 @@ export default async function hORler(req, res) {
                             tiposancion: true
                         }
                     }
+                },
+                orderBy: {
+                    id: "desc"
                 }
             }
             const OR = []

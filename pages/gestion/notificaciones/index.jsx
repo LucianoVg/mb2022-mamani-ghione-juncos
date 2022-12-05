@@ -90,7 +90,7 @@ const Notificaciones = () => {
             contenido: notificacion.contenido,
             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
             idCurso: idCurso,
-            idAlumno: idalumno,
+            idAlumno: idAlumno,
             idUsuario: usuario.id
         })
         if (res.status === 200) {
@@ -102,7 +102,7 @@ const Notificaciones = () => {
 
 
     // const [value, setValue] = useState('');
-    const [idalumno, setIdAlumno] = useState(0)
+    const [idAlumno, setIdAlumno] = useState(0)
 
 
 
@@ -111,8 +111,7 @@ const Notificaciones = () => {
             setIdAlumno(newValue.id);
         }
     }
-
-    console.log("id alumno:", idalumno)
+ 
 
     return (
         <Layout>
@@ -147,42 +146,27 @@ const Notificaciones = () => {
                                     </Select>
 
                                 </FormControl>
-                                <Autocomplete
-                                    disablePortal
-                                    id="combo-box-demo"
-                                    // value={value}
-                                    onChange={handleAlumno}
-                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
-                                    options={alumnos}
-                                    sx={{ width: "250px" }}
-                                    isOptionEqualToValue={(option, value) =>
-                                        option?.apellido === value?.apellido
-                                    }
-                                    noOptionsText={"No existe un alumno con ese nombre"}
-                                    renderOption={(props, alumnos) => (
-                                        <Box component="li" {...props} key={alumnos?.id}>
-                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                                        </Box>
-                                    )}
-                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
-                                />
-                                {/* <FormControl sx={{ width: '30%', marginRight: '20px' }}>
-                                    <InputLabel id="demo-simple-select-label">Usuario</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={nombre}
-                                        name="nombre"
-                                        label="nombre"
-                                        onChange={handleNombre}
-                                        sx={{ width: '200px' }}
-                                    >
-                                        <MenuItem value={'JuanJuncos'}>Juan Juncos</MenuItem>
-                                        <MenuItem value={'SamuelBertola'}>Samuel Bertola</MenuItem>
-                                        <MenuItem value={'LuisGarcia'}>Luis Garcia</MenuItem>
-
-                                    </Select>
-                                </FormControl> */}
+                                <FormControl >
+                                    <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        // value={value}
+                                        onChange={handleAlumno}
+                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                        options={alumnos}
+                                        sx={{ width: "250px" }}
+                                        isOptionEqualToValue={(option, value) =>
+                                            option?.apellido === value?.apellido
+                                        }
+                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                        renderOption={(props, alumnos) => (
+                                            <Box component="li" {...props} key={alumnos?.id}>
+                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                    />
+                                </FormControl>
                             </Box>
 
 

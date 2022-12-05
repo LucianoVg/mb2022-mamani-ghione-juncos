@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
+import { Container, Typography, TextField, Button,Autocomplete, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 import Loading from "../../../components/loading";
 
 export default function NuevaSancion() {
     const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 0 })
 
-    const [alumnos, setAlumnos] = useState()
+   
     const [cursos, setCursos] = useState()
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
@@ -17,6 +17,10 @@ export default function NuevaSancion() {
     const [usuario, setUsuario] = useState({ id: 0 })
     const { loading, authUser } = useAuth()
     const [guardando, setGuardando] = useState(false)
+
+    const [alumnos, setAlumnos] = useState([])
+
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/')
@@ -27,6 +31,10 @@ export default function NuevaSancion() {
         traerTiposSancion()
 
     }, [loading, authUser, usuario.id])
+
+
+
+  
 
     const traerTiposSancion = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
@@ -73,6 +81,21 @@ export default function NuevaSancion() {
             router.push('/gestion/sanciones')
         }
     }
+
+    // const [value, setValue] = useState('');
+    const [idalumno, setIdAlumno] = useState(0)
+
+
+
+    const handleAlumno = (e, newValue) => {
+        if (newValue) {
+            setSancion({ ...sancion, idAlumno: newValue.id});
+        }
+    }
+
+    // console.log("id alumno:", sancion.idAlumno)
+
+
     return (
         <Layout>
             <div maxWidth={'md'}>
@@ -87,24 +110,46 @@ export default function NuevaSancion() {
 
                         {
                             !esSancionGrupal && (
-                                <FormControl>
-                                    <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
-                                    <Select value={sancion.idAlumno}
-                                        onChange={handleSancion}
-                                        name="idAlumno"
-                                        id="inputAlumno"
-                                        label="Alumno"
-                                        sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
-                                    >
-                                        {
-                                            alumnos && alumnos.map((a, i) => (
-                                                <MenuItem key={i} value={a.id}>
-                                                    {a.usuario.nombre} {a.usuario.apellido}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </FormControl>
+                                <FormControl style={{marginRight: "20px"}}>
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                    options={alumnos}
+                                    sx={{ width: "250px" }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.apellido === value?.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumnos) => (
+                                        <Box component="li" {...props} key={alumnos?.id}>
+                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                />
+                            </FormControl>
+                                // <FormControl>
+                                //     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                                //     <Select value={sancion.idAlumno}
+                                //         onChange={handleSancion}
+                                //         name="idAlumno"
+                                //         id="inputAlumno"
+                                //         label="Alumno"
+                                //         sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
+                                //     >
+                                //         {
+                                //             alumnos && alumnos.map((a, i) => (
+                                //                 <MenuItem key={i} value={a.id}>
+                                //                     {a.usuario.nombre} {a.usuario.apellido}
+                                //                 </MenuItem>
+                                //             ))
+                                //         }
+                                //     </Select>
+                                // </FormControl>
 
                             )
                         }
@@ -151,6 +196,7 @@ export default function NuevaSancion() {
                                 }
                             </Select>
                         </FormControl>
+                
                     </Box>
 
                     <Box sx={{ marginBottom: '20px' }}>

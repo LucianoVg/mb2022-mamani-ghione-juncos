@@ -481,7 +481,7 @@ export default function Asistencias() {
                                                                     sx={{ backgroundColor: 'lightblue', color: 'black' }}
                                                                     onClick={() => onSave(a?.id)}
                                                                     disabled={guardando}>
-                                                                    Guardar
+                                                                    Cargar
                                                                 </Button>
                                                             </Stack>
                                                         }

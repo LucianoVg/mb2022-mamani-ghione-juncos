@@ -9,6 +9,9 @@ export async function ListarNotificaciones() {
                         rol: true
                     }
                 }
+            },
+            orderBy: {
+                id: "desc"
             }
         })
 

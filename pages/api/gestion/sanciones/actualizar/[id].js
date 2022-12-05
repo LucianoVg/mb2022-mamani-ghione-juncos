@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         const {
             idSancionXAlumno,
             idUsuario,
-            idCurso,
+            // idCurso,
             idAlumno,
             idTipoSancion,
             motivo
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
             id,
             idSancionXAlumno,
             idUsuario,
-            idCurso,
+            // idCurso,
             idAlumno,
             idTipoSancion,
             motivo)
