@@ -10,6 +10,7 @@ import { Edit } from "@mui/icons-material";
 import Icon from '@mui/material/Icon';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { setInterval } from 'timers';
+import Loading from '../../../components/loading';
 
 const Notificaciones = () => {
     const router = useRouter()
@@ -19,11 +20,12 @@ const Notificaciones = () => {
         contenido: ''
     })
     const [listNotificaciones, setListNotificaciones] = useState([])
-    const [cursos, setCursos] = useState('');
-    const [idCurso, setIdCurso] = useState('');
+    const [cursos, setCursos] = useState([]);
+    const [idCurso, setIdCurso] = useState(0);
     // const [nombre, setNombre] = useState('');
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const [alumnos, setAlumnos] = useState([])
+    const [cargandoInfo, setCargandoInfo] = useState(false)
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
@@ -35,10 +37,6 @@ const Notificaciones = () => {
     const handleNotificacion = (e) => {
         setNotificacion({ ...notificacion, [e.target.name]: e.target.value })
     }
-
-
-
-
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -77,53 +75,44 @@ const Notificaciones = () => {
                 console.error(err);
             })
     }
-    const ListarNotificaciones = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/listar_notificaciones`)
-            .then(res => {
-                console.log(res.data);
-                setListNotificaciones(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
-
+    const ListarNotificaciones = async () => {
+        setCargandoInfo(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/listar_notificaciones`)
+        console.log(res.data);
+        setListNotificaciones(res.data)
+        setCargandoInfo(false)
     }
-    const CrearNotificacion = (e) => {
+    const CrearNotificacion = async (e) => {
         e.preventDefault()
         console.log(notificacion);
-        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones`, {
             asunto: notificacion.asunto,
             contenido: notificacion.contenido,
-            fecha: new Date().toISOString().split('T')[0],
+            fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
             idCurso: idCurso,
+            idAlumno: idalumno,
             idUsuario: usuario.id
-        }).then(res => {
-            if (res.data) {
-                router.push('/gestion/notificaciones')
-            }
-        }).catch(err => {
-            console.error(err);
         })
+        if (res.status === 200) {
+            router.reload()
+        } else {
+            console.error(res.data);
+        }
     }
 
 
     // const [value, setValue] = useState('');
-    const [idalumno, setIdAlumno] = useState()
+    const [idalumno, setIdAlumno] = useState(0)
 
 
 
     const handleAlumno = (e, newValue) => {
-
         if (newValue) {
-
             setIdAlumno(newValue.id);
-
         }
-
-
     }
 
     console.log("id alumno:", idalumno)
-
 
     return (
         <Layout>
@@ -150,8 +139,8 @@ const Notificaciones = () => {
                                         <MenuItem value={'todos'}>Todos</MenuItem>
                                         {
                                             cursos && cursos.map((c, i) => (
-                                                <MenuItem key={i} value={c.id}>{
-                                                    c.curso?.nombre}{c.division?.division}
+                                                <MenuItem key={i} value={c.id}>
+                                                    {c.curso?.nombre} {c.division?.division}
                                                 </MenuItem>
                                             ))
                                         }
@@ -163,16 +152,16 @@ const Notificaciones = () => {
                                     id="combo-box-demo"
                                     // value={value}
                                     onChange={handleAlumno}
-                                    getOptionLabel={(alumnos) => `${alumnos.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
                                     options={alumnos}
                                     sx={{ width: "250px" }}
                                     isOptionEqualToValue={(option, value) =>
-                                        option.apellido === value.apellido
+                                        option?.apellido === value?.apellido
                                     }
                                     noOptionsText={"No existe un alumno con ese nombre"}
                                     renderOption={(props, alumnos) => (
-                                        <Box component="li" {...props} key={alumnos.id}>
-                                            {alumnos.usuario.apellido} {alumnos.usuario.nombre}
+                                        <Box component="li" {...props} key={alumnos?.id}>
+                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
                                         </Box>
                                     )}
                                     renderInput={(params) => <TextField {...params} label="Alumno" />}
@@ -218,18 +207,23 @@ const Notificaciones = () => {
                                     <Button variant="contained" type="submit">Enviar</Button>
                                 </Box>
                             </Box>
-
-
-
                         </Box>
-
-
                     </Grid>
                     <Grid item xs>
-                        <h1>Notificaciones enviadas</h1>
-                        <Box sx={{ width: '350px' }}>
-                            <List style={{ backgroundColor: "lightgray", border: '0 10px 15px black', borderRadius: '10px' }}>
-                                {/* <ListItem disablePadding
+                        {
+                            cargandoInfo && (
+                                <Container sx={{ textAlign: 'center' }}>
+                                    <Loading size={50} />
+                                </Container>
+                            )
+                        }
+                        {
+                            !cargandoInfo && (
+                                <>
+                                    <h1>Notificaciones enviadas</h1>
+                                    <Box sx={{ width: '350px' }}>
+                                        <List style={{ backgroundColor: "lightgray", border: '0 10px 15px black', borderRadius: '10px' }}>
+                                            {/* <ListItem disablePadding
 
                                 >
                                     <ListItemButton component="a">
@@ -237,25 +231,28 @@ const Notificaciones = () => {
                                     </ListItemButton>
                                     <Divider />
                                 </ListItem> */}
-                                {
+                                            {
 
-                                    listNotificaciones && listNotificaciones.map((n, i) => (
-                                        <ListItem disablePadding
-                                            key={i} value={n.id}
-                                        >
-                                            <ListItemButton component="a" onClick={() => router.push(`/gestion/notificaciones/detalles/${n.id}`)}>
-                                                <ListItemText primary={n.asunto} />
-                                            </ListItemButton>
-                                            <Divider />
-                                        </ListItem>
+                                                listNotificaciones && listNotificaciones.map((n, i) => (
+                                                    <ListItem disablePadding
+                                                        key={i} value={n.id}
+                                                    >
+                                                        <ListItemButton component="a" onClick={() => router.push(`/gestion/notificaciones/detalles/${n.id}`)}>
+                                                            <ListItemText primary={n.asunto} />
+                                                        </ListItemButton>
+                                                        <Divider />
+                                                    </ListItem>
 
-                                    ))
+                                                ))
 
-                                }
+                                            }
 
 
-                            </List>
-                        </Box>
+                                        </List>
+                                    </Box>
+                                </>
+                            )
+                        }
                     </Grid>
 
                 </Grid>

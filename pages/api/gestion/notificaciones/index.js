@@ -12,11 +12,12 @@ export default async function handler(req, res) {
         });
 
         if (req.method === 'POST') {
-            const { asunto, contenido, fecha, idUsuario, idCurso } = req.body
-            const crear = await CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso)
+            const { asunto, contenido, fecha, idAlumno, idUsuario, idCurso } = req.body
+            const crear = await CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso, idAlumno)
             return res.status(200).json({ mensaje: crear })
         }
     } catch (error) {
+        console.log(error);
         return res.status(400).send(error)
     }
 }

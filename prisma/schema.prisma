@@ -8,19 +8,19 @@ datasource db {
 }
 
 model alumnoxcursoxdivision {
-  id                   Int                    @id @default(autoincrement())
-  fechamatriculacion   String?
-  idcursoxdivision     Int
-  idusuario            Int
-  idestadoalumno       Int
-  cursoxdivision       cursoxdivision         @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  estadoalumno         estadoalumno           @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario              usuario                @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  asistencia           asistencia[]
-  historialnota        historialnota[]
-  nota                 nota[]
-  notificacionxusuario notificacionxusuario[]
-  sancionxalumno       sancionxalumno[]
+  id                  Int                   @id @default(autoincrement())
+  fechamatriculacion  String?
+  idcursoxdivision    Int
+  idusuario           Int
+  idestadoalumno      Int
+  cursoxdivision      cursoxdivision        @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  estadoalumno        estadoalumno          @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario             usuario               @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  asistencia          asistencia[]
+  historialnota       historialnota[]
+  nota                nota[]
+  notificacionxalumno notificacionxalumno[]
+  sancionxalumno      sancionxalumno[]
 }
 
 model asistencia {
@@ -240,16 +240,16 @@ model noticiasynovedades {
 }
 
 model notificacion {
-  id                   Int                    @id @default(autoincrement())
-  asunto               String?
-  contenido            String?
-  fecha                String?
-  idusuario            Int
-  usuario              usuario                @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  notificacionxusuario notificacionxusuario[]
+  id                  Int                   @id @default(autoincrement())
+  asunto              String?
+  contenido           String?
+  fecha               String?
+  idusuario           Int
+  usuario             usuario               @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  notificacionxalumno notificacionxalumno[]
 }
 
-model notificacionxusuario {
+model notificacionxalumno {
   id                      Int                   @id @default(autoincrement())
   idalumnoxcursoxdivision Int
   idnotificacion          Int

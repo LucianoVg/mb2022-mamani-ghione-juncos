@@ -3,24 +3,13 @@ import { Prisma } from "./prisma";
 export async function ListarNotificaciones() {
     try {
         const listado = await Prisma.newPrisma().notificacion.findMany({
-            // include: {
-            //     usuario: {
-            //         include: {
-            //             rol: true
-            //         }
-            //     },
-            //     notificacion: true
-            // },
-            // where: {
-            //     usuario: {
-            //         id: {
-            //             not: Number(idUsuario)
-            //         }
-            //     }
-            // },
-            // orderBy: {
-            //     id: 'desc'
-            // }
+            include: {
+                usuario: {
+                    include: {
+                        rol: true
+                    }
+                }
+            }
         })
 
         return listado
@@ -32,14 +21,13 @@ export async function ListarNotificaciones() {
 }
 export async function ListarNotificacionesDeUsuario(idUsuario) {
     try {
-        const listado = await Prisma.newPrisma().notificacionxusuario.findMany({
+        const listado = await Prisma.newPrisma().notificacion.findMany({
             include: {
                 usuario: {
                     include: {
                         rol: true
                     }
                 },
-                notificacion: true
             },
             where: {
                 usuario: {
@@ -47,7 +35,7 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
                 }
             },
             orderBy: {
-                id: 'desc'
+                fecha: 'desc'
             }
         })
 
@@ -62,13 +50,9 @@ export async function DetalleNotificacion(idNotificacion) {
     try {
         const notificacion = await Prisma.newPrisma().notificacion.findUnique({
             include: {
-                notificacionxusuario: {
+                usuario: {
                     include: {
-                        usuario: {
-                            include: {
-                                rol: true
-                            }
-                        }
+                        rol: true
                     }
                 }
             },
@@ -87,7 +71,7 @@ export async function DetalleNotificacion(idNotificacion) {
 
 export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idCurso, idAlumno) {
     // console.log(asunto, contenido, fecha, idCurso, idUsuario);
-    if (idCurso != "") {
+    if (idCurso != 0) {
         try {
             const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 where: {
@@ -102,20 +86,19 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
                     idusuario: Number(idUsuario),
                 }
             })
-            const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
-                orderBy: {
-                    id: "desc"
-                }
-            })
+            // const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
+            //     orderBy: {
+            //         id: "desc"
+            //     }
+            // })
             alumnos.map(async (a) => {
-
-                const notificacionUsuario = await Prisma.newPrisma().notificacionxusuario.create({
+                const notificacionAlumno = await Prisma.newPrisma().notificacionxalumno.create({
                     data: {
-                        idnotificacion: idNotificacionUltimo.id,
-                        idalumnoxcursoxdivision: Number(idAlumno)
+                        idnotificacion: notificacion.id,
+                        idalumnoxcursoxdivision: a.id
                     }
                 })
-                console.log(notificacionUsuario);
+                console.log(notificacionAlumno);
             })
             return "Notificaciones creadas"
         } catch (err) {
@@ -130,24 +113,22 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
                 contenido: contenido,
                 fecha: fecha,
                 idusuario: Number(idUsuario),
-
-
             }
         })
-        const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
-            orderBy: {
-                id: "desc"
-            }
-        })
+        // const idNotificacionUltimo = await Prisma.newPrisma().notificacion.findUnique({
+        //     orderBy: {
+        //         id: "desc"
+        //     }
+        // })
 
-        const notificacionUsuario = await Prisma.newPrisma().notificacionxusuario.create({
+        const notificacionAlumno = await Prisma.newPrisma().notificacionxalumno.create({
             data: {
-                idnotificacion: idNotificacionUltimo.id,
+                idnotificacion: notificacion.id,
                 idalumnoxcursoxdivision: Number(idAlumno)
             }
         })
 
-        console.log(notificacionUsuario);
+        console.log(notificacionAlumno);
     }
 }
 
