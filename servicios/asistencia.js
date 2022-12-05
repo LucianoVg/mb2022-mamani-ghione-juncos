@@ -66,7 +66,7 @@ export async function updateAsistencia(id, presente, ausente, ausenteJustificado
                 presente: presente,
                 ausente: ausente,
                 ausentejustificado: ausenteJustificado,
-                llegadaTarde: llegadaTarde,
+                llegadatarde: llegadaTarde,
                 llegadatardejustificada: llegadaTardeJustificada,
                 mediafalta: mediaFalta,
                 mediafaltajustificada: mediaFaltaJustificada,
