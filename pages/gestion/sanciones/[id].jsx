@@ -74,10 +74,6 @@ export default function DetalleSancion() {
         }
     }
 
-
-
-
-
     const handleTipoSancion = (e) => {
         setIdtiposancion(Number(e.target.value))
         // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
@@ -92,16 +88,12 @@ export default function DetalleSancion() {
         // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
     }
 
-
     let selected = ""
- 
 
     alumnos && alumnos.map((a, i) => (
         a.id === sancionxalumno?.alumnoxcursoxdivision?.id && (
-
             selected = `${a.usuario?.apellido} ${a.usuario?.nombre}`
             // idAlumno: Number(a.id)
-
         )
     ))
 
@@ -112,13 +104,13 @@ export default function DetalleSancion() {
 
     const actualizarSancion = async (e) => {
         e.preventDefault()
+        console.log(motivo, sancionxalumno);
         setGuardando(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancionxalumno?.sancion?.id}`, {
-            idSancionXAlumno: sancionxalumno?.id,
+            // idSancionXAlumno: sancionxalumno?.id,
             idUsuario: usuario.id,
-            idAlumno: sancionxalumno?.alumnoxcursoxdivision?.id,
-            idTipoSancion: idtiposancion,
-            motivo: motivo
+            // idTipoSancion: idtiposancion,
+            motivo: motivo.length ? motivo : sancionxalumno?.sancion?.motivo
         })
         setGuardando(false)
         if (res.status === 200) {
@@ -170,18 +162,15 @@ export default function DetalleSancion() {
                                     )
                                 }
 
-
-
                                 <FormControl>
                                     <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
                                     <Select
-                                        value={idtiposancion}
-                                        onChange={handleTipoSancion}
+                                        value={sancionxalumno?.sancion?.idtiposancion}
                                         name="idtiposancion"
                                         id="inputTipoSancion"
                                         label="Tipo de Sancion"
                                         disabled
-                                        renderValue={(value) => value ? value : <a>{sancionxalumno?.sancion?.tiposancion?.tipo}</a>}
+                                        renderValue={(value) => <span>{sancionxalumno?.sancion?.tiposancion?.tipo}</span>}
                                         sx={{ width: '180px', marginBottom: '20px' }}>
                                         {
                                             tipoSanciones && tipoSanciones.map((t, i) => (
@@ -216,11 +205,9 @@ export default function DetalleSancion() {
                                                 multiline
                                                 rows={6}
                                                 required
-                                                defaultValue={sancionxalumno?.sancion?.motivo}
-                                                // name="motivo"
-                                                value={motivo}
-                                                // label="Motivo"
-                                                // onChange={handleMotivo}
+                                                name="motivo"
+                                                value={sancionxalumno?.sancion?.motivo}
+                                                label="Motivo"
                                                 disabled
                                                 sx={{ maxWidth: '350px', minWidth: "300px" }}
                                             />
@@ -230,7 +217,6 @@ export default function DetalleSancion() {
 
                             {
                                 inEditMode.status === true ? (
-
                                     <Box direction='row'>
                                         <Button disabled={guardando} variant="contained"
                                             color="primary"
@@ -256,18 +242,12 @@ export default function DetalleSancion() {
                                             color="info"
                                             size="small"
                                             style={{ marginRight: '20px' }}
-                                            onClick={() => {
-                                                setInEditMode({
-                                                    status: true
-                                                })
-                                                setMotivo(sancionxalumno?.sancion?.motivo)
-                                            }
-                                            }
+                                            onClick={() => setInEditMode({ status: true })}
                                         >
                                             Actualizar Sancion
                                         </Button>
-                                        <Button variant="outlined" size="small" component="label">
-                                            <span href={'/gestion/sanciones'} variant="outlined" component="label">Volver</span>
+                                        <Button variant="outlined" size="small" component="a" href={'/gestion/sanciones'}>
+                                            Volver
                                         </Button>
                                     </Box>
                                 )

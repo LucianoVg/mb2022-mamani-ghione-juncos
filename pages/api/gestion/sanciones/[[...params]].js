@@ -32,7 +32,9 @@ export default async function hORler(req, res) {
                     }
                 },
                 orderBy: {
-                    id: "desc"
+                    sancion: {
+                        fecha: 'desc'
+                    }
                 }
             }
             const OR = []

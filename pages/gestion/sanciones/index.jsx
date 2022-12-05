@@ -14,27 +14,33 @@ const Sanciones = () => {
     const [cursos, setCursos] = useState()
     const { loading, authUser } = useAuth()
     const router = useRouter()
-    const [idCurso, setIdCurso] = useState(0)
-    const [idAlumno, setIdAlumno] = useState(0)
     const [alumnos, setAlumnos] = useState()
     const [cargandoInfo, setCargandoInfo] = useState(false)
     const pageSize = 5
     const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
     const paginacion = usePagination(sanciones || [], pageSize)
     const [pagina, setPagina] = useState(1)
-    let queryParams = []
+    const queryParams = []
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
         paginacion.saltar(pagina)
     }
     const handleCurso = (e) => {
+        if (Number(e.target.value) > 0) {
+            queryParams.push({ idCurso: Number(e.target.value) })
+        } else {
+            traerSanciones()
+        }
         console.log(e.target.value);
-        queryParams.push({ idCurso: Number(e.target.value) })
     }
     const handleAlumno = (e) => {
+        if (Number(e.target.value) > 0) {
+            queryParams.push({ idAlumno: Number(e.target.value) })
+        } else {
+            traerSanciones()
+        }
         console.log(e.target.value);
-        queryParams.push({ idAlumno: Number(e.target.value) })
     }
     const buscarSanciones = async () => {
         let params = ""
@@ -93,15 +99,13 @@ const Sanciones = () => {
                 <FormControl>
                     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
                     <Select
-
                         sx={{ width: '230px', marginRight: '20px', marginBottom: '20px' }}
-                        name="idAlumno"
                         id="inputAlumno"
+                        name="idAlumno"
                         onChange={handleAlumno}
                         label="Alumno"
-                        value={idAlumno}
                     >
-                        <MenuItem value={idAlumno}>Seleccione un alumno</MenuItem>
+                        <MenuItem value={0}>Seleccione un alumno</MenuItem>
                         {
                             alumnos && alumnos.map((a, i) => (
                                 <MenuItem key={i} value={a.id}>
@@ -115,15 +119,13 @@ const Sanciones = () => {
                 <FormControl>
                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                     <Select
-
                         sx={{ width: '100px', marginRight: '20px' }}
-                        name="idCurso"
                         id="inputCurso"
+                        name="idCurso"
                         onChange={handleCurso}
                         label="Curso"
-                        value={idCurso}
                     >
-                        <MenuItem value={idCurso}>Seleccione un curso</MenuItem>
+                        <MenuItem value={0}>Seleccione un curso</MenuItem>
                         {
                             cursos && cursos.map((c, i) => (
                                 <MenuItem key={i} value={c.id}>
