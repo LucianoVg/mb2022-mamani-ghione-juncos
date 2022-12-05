@@ -94,11 +94,7 @@ export default function DetalleSancion() {
 
 
     let selected = ""
-    let m = ""
-    m = sancionxalumno?.asunto?.motivo
-    if (m !== '') {
-        setMotivo(m)
-    }
+ 
 
     alumnos && alumnos.map((a, i) => (
         a.id === sancionxalumno?.alumnoxcursoxdivision?.id && (
