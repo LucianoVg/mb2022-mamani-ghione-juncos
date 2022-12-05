@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function traerSanciones(options) {
     try {
-        const sanciones = await Prisma.newPrisma().sancion.findMany(options)
+        const sanciones = await Prisma.newPrisma().sancionxalumno.findMany(options)
         Prisma.disconnect()
         return sanciones
     } catch (error) {
@@ -14,7 +14,6 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
     try {
         // console.log(idUsuario, idAlumno, idCurso, motivo, idTipoSancion, fecha);
         if (idCurso !== 0) {
-            let sanciones = []
             const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
@@ -23,36 +22,40 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                     idcursoxdivision: Number(idCurso)
                 }
             })
+            const sancion = await Prisma.newPrisma().sancion.create({
+                data: {
+                    fecha: fecha,
+                    motivo: motivo,
+                    tiposancion: {
+                        connect: {
+                            id: Number(idTipoSancion)
+                        }
+                    },
+                    usuario: {
+                        connect: {
+                            id: Number(idUsuario)
+                        }
+                    }
+                }
+            })
             alumnos.forEach(async (a) => {
-                const sancion = await Prisma.newPrisma().sancion.create({
+                const sancionXAlumno = await Prisma.newPrisma().sancionxalumno.create({
                     data: {
-                        fecha: fecha,
-                        motivo: motivo,
                         alumnoxcursoxdivision: {
                             connect: {
                                 id: a.id
                             }
                         },
-                        tiposancion: {
+                        sancion: {
                             connect: {
-                                id: Number(idTipoSancion)
-                            }
-                        },
-                        sancionxusuario: {
-                            create: {
-                                usuario: {
-                                    connect: {
-                                        id: Number(idUsuario)
-                                    }
-                                }
+                                id: sancion.id
                             }
                         }
                     }
                 })
-                sanciones.push(sancion)
+                console.log(sancionXAlumno);
             })
-            return sanciones
-
+            return "Sanciones creadas"
         } else {
             const sancion = await Prisma.newPrisma().sancion.create({
                 data: {
@@ -63,16 +66,20 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                             id: Number(idTipoSancion)
                         }
                     },
-                    alumnoxcursoxdivision: {
-                        connect: {
-                            id: Number(idAlumno)
-                        }
-                    },
-                    sancionxusuario: {
+                    sancionxalumno: {
                         create: {
-                            idusuario: Number(idUsuario),
+                            alumnoxcursoxdivision: {
+                                connect: {
+                                    id: Number(idAlumno)
+                                }
+                            }
                         }
                     },
+                    usuario: {
+                        connect: {
+                            id: Number(idUsuario)
+                        }
+                    }
                 }
             })
             console.log(sancion);
@@ -94,9 +101,13 @@ export async function traerTipoSanciones() {
 
 export async function obtenerSancion(id) {
     try {
-        const sancion = await Prisma.newPrisma().sancion.findUnique({
+        const sancion = await Prisma.newPrisma().sancionxalumno.findFirst({
             include: {
-                tipoSancion: true,
+                sancion: {
+                    include: {
+                        tiposancion: true
+                    }
+                },
                 alumnoxcursoxdivision: {
                     include: {
                         usuario: true,
@@ -110,9 +121,10 @@ export async function obtenerSancion(id) {
                 }
             },
             where: {
-                id: id
+                idsancion: Number(id)
             }
         })
+        console.log(sancion);
         return sancion
     } catch (error) {
         console.error(error);
@@ -121,14 +133,14 @@ export async function obtenerSancion(id) {
 
 export async function actualizarSancion(
     id,
+    idSancionXAlumno,
     idUsuario,
-    idCurso = '',
-    idAlumno = '',
+    idCurso = 0,
+    idAlumno = 0,
     idTipoSancion,
-    motivo,
-    fecha) {
+    motivo) {
     try {
-        if (idCurso !== '') {
+        if (idCurso !== 0) {
             const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
@@ -137,57 +149,70 @@ export async function actualizarSancion(
                     idcursoxdivision: idCurso
                 }
             })
-
-            let sancionCuenta = 0
-            alumnos.forEach(async (a) => {
-                const sanciones = await Prisma.newPrisma().$executeRaw`UPDATE sancion SET fecha = ${fecha}, motivo = ${motivo}, idtiposancion = ${idTipoSancion}, idalumnoxcursoxdivision = ${a.id} WHERE id = ${id}`
-                console.log(sanciones);
-
-                sancionCuenta += sanciones
-                // const sancionesXUsuario = await Prisma.newPrisma().$executeRaw`UPDATE sancionXusuario SET idSancion = ${}`
-            })
-            return sancionCuenta
-        } else {
-            const sancionXUsuario = await Prisma.newPrisma().sancionxusuario.findFirst({
-                where: {
-                    idsancion: id
-                }
-            })
-            console.log(sancionXUsuario);
             const sancion = await Prisma.newPrisma().sancion.update({
                 data: {
-                    fecha: fecha,
-                    motivo: motivo,
-                    alumnoxcursoxdivision: {
-                        connect: {
-                            id: idAlumno
+                    idusuario: Number(idUsuario),
+                    idtiposancion: Number(idTipoSancion),
+                    motivo: motivo
+                },
+                where: {
+                    id: Number(id)
+                }
+            })
+            alumnos.forEach(async (a) => {
+                const sancionXAlumno = await Prisma.newPrisma().sancionxalumno.update({
+                    data: {
+                        alumnoxcursoxdivision: {
+                            connect: {
+                                id: Number(a.id)
+                            }
+                        },
+                        sancion: {
+                            connect: {
+                                id: Number(sancion.id)
+                            }
                         }
                     },
+                    where: {
+                        id: Number(idSancionXAlumno)
+                    }
+                })
+                console.log(sancionXAlumno);
+            })
+        } else {
+            const sancion = await Prisma.newPrisma().sancion.update({
+                data: {
+                    motivo: motivo,
                     tiposancion: {
                         connect: {
-                            id: idTipoSancion
+                            id: Number(idTipoSancion)
                         }
                     },
-                    sancionxusuario: {
+                    usuario: {
                         connect: {
-                            id: sancionXUsuario?.id
-                        },
+                            id: Number(idUsuario)
+                        }
+                    },
+                    sancionxalumno: {
                         update: {
                             data: {
-                                idusuario: idUsuario
+                                alumnoxcursoxdivision: {
+                                    connect: {
+                                        id: Number(idAlumno)
+                                    }
+                                }
                             },
                             where: {
-                                id: sancionXUsuario?.id
+                                id: Number(idSancionXAlumno)
                             }
                         }
                     }
                 },
                 where: {
-                    id: id
+                    id: Number(id)
                 }
             })
             return sancion
-
         }
     } catch (error) {
         console.error(error);

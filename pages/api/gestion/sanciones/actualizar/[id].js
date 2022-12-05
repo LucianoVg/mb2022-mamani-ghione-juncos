@@ -11,22 +11,23 @@ export default async function handler(req, res) {
         });
         const { id } = req.query
 
-        const { idUsuario,
+        const {
+            idSancionXAlumno,
+            idUsuario,
             idCurso,
             idAlumno,
             idTipoSancion,
-            motivo,
-            fecha
+            motivo
         } = req.body
 
         const sancion = await actualizarSancion(
             id,
+            idSancionXAlumno,
             idUsuario,
-            idCurso || 0,
-            idAlumno || 0,
+            idCurso,
+            idAlumno,
             idTipoSancion,
-            motivo,
-            fecha)
+            motivo)
 
         return res.status(200).json(sancion)
     } catch (error) {

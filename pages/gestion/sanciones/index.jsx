@@ -191,9 +191,9 @@ const Sanciones = () => {
                                             <TableCell align="right">{
                                                 s.alumnoxcursoxdivision?.cursoxdivision?.division?.division
                                             }</TableCell>
-                                            <TableCell align="right">{s.fecha}</TableCell>
+                                            <TableCell align="right">{s.sancion?.fecha}</TableCell>
                                             <TableCell align="right">
-                                                <Link href={`/gestion/sanciones/${s.id}`}>
+                                                <Link href={`/gestion/sanciones/${s.sancion?.id}`}>
                                                     <Button variant="outlined" component="label" color="info">
                                                         Detalles
                                                     </Button>

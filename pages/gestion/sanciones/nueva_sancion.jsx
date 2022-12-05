@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import { Container, Typography, TextField, Button, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
+import Loading from "../../../components/loading";
 
 export default function NuevaSancion() {
     const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 0 })
@@ -15,7 +16,7 @@ export default function NuevaSancion() {
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
     const [usuario, setUsuario] = useState({ id: 0 })
     const { loading, authUser } = useAuth()
-
+    const [guardando, setGuardando] = useState(false)
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/')
@@ -57,6 +58,7 @@ export default function NuevaSancion() {
     }
     const generarSancion = async (e) => {
         e.preventDefault()
+        setGuardando(true)
         const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
             idUsuario: usuario.id,
             idAlumno: sancion.idAlumno,
@@ -65,6 +67,7 @@ export default function NuevaSancion() {
             motivo: sancion.motivo,
             fecha: new Date().toLocaleDateString('es-AR').split('T')[0]
         })
+        setGuardando(false)
         if (res.status === 200) {
             console.log(res.data);
             router.push('/gestion/sanciones')
@@ -165,10 +168,16 @@ export default function NuevaSancion() {
                         />
                     </Box>
 
-                    <Box >
-                        <Button variant="contained" sx={{ width: '170px' }} color="primary" type="submit">Generar Sancion</Button>
+                    <Box>
+                        <Button disabled={guardando} variant="contained" sx={{ width: '170px' }} color="primary" type="submit">
+                            {
+                                guardando && <Loading size={30} />
+                            }
+                            {
+                                !guardando && <span>Generar Sancion</span>
+                            }
+                        </Button>
                     </Box>
-
                 </Box>
             </div>
         </Layout>

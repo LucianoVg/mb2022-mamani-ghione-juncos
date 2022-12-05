@@ -24,6 +24,11 @@ export default async function hORler(req, res) {
                                 }
                             }
                         }
+                    },
+                    sancion: {
+                        include: {
+                            tiposancion: true
+                        }
                     }
                 }
             }
