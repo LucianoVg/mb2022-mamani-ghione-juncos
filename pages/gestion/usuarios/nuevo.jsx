@@ -7,6 +7,25 @@ import { Layout } from "../../../components/layout";
 import Loading from '../../../components/loading';
 
 export default function NuevoUsuario() {
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const theme = useTheme()
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+    function getStyles(materia, materias = []) {
+        return {
+            fontWeight:
+                materias.findIndex(m => m.id === materia.id) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
     const router = useRouter()
     const [roles, setRoles] = useState([])
     const [usuario, setUsuario] = useState({
@@ -486,23 +505,4 @@ export default function NuevoUsuario() {
             }
         </Layout >
     )
-}
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-function getStyles(materia, materias = []) {
-    const theme = useTheme()
-    return {
-        fontWeight:
-            materias.findIndex(m => m.id === materia.id) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
 }
