@@ -17,7 +17,11 @@ export default async function handler(
                 }
             },
             orderBy: {
-                creadoen: 'desc'
+                docentexmateria: {
+                    usuario: {
+                        nombre: 'asc'
+                    }
+                }
             }
         }
 

@@ -2,7 +2,7 @@ import { Layout } from "../../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography } from "@mui/material";
+import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, Modal, TextareaAutosize } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -122,6 +122,16 @@ export default function Asistencias() {
     });
 
     const onSave = async (id) => {
+        // console.log({
+        //     presente: presente,
+        //     ausente: ausente,
+        //     ausenteJustificado: aj,
+        //     llegadaTarde: llegadaTarde,
+        //     llegadaTardeJustificada: ltj,
+        //     mediaFalta: mf,
+        //     mediaFaltaJustificada: mfj,
+        //     idUsuario: usuario.id
+        // });
         setGuardando(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/update/${id}`, {
             presente: presente,
@@ -131,7 +141,8 @@ export default function Asistencias() {
             llegadaTardeJustificada: ltj,
             mediaFalta: mf,
             mediaFaltaJustificada: mfj,
-            idUsuario: usuario.id
+            idUsuario: usuario.id,
+            motivo: motivo
         })
         console.log(res.data);
         setGuardando(false)
@@ -145,8 +156,27 @@ export default function Asistencias() {
             status: false,
             rowKey: null
         })
+        if (open) {
+            handleClose()
+        }
+    }
+    const [open, setOpen] = useState(false);
+    const [motivo, setMotivo] = useState("")
+    const [asistenciaId, setAsistenciaId] = useState(0)
+    const handleMotivo = (e) => {
+        setMotivo(e.target.value)
+    }
+    const handleOpen = (asistencia) => {
+        setMotivo(asistencia.motivo)
+        setAsistenciaId(asistencia.id)
+        setOpen(true);
     }
 
+    const handleClose = () => {
+        setMotivo("")
+        setAsistenciaId(0)
+        setOpen(false);
+    };
     const handlePresente = (e, checked) => {
         setPresente(checked)
         setAusente(false)
@@ -217,6 +247,60 @@ export default function Asistencias() {
                 style={{ position: 'relative' }}>
 
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencia Docente</Typography>
+
+                {/* MODAL */}
+                <Modal
+                    open={open}
+                    aria-labelledby="parent-modal-title"
+                    aria-describedby="parent-modal-description">
+
+                    <Box style={{
+                        backgroundColor: "white",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        height: "320px",
+                        width: "min(100% - 15px, 500px)",
+                        margin: "0 auto",
+                        borderRadius: "25px",
+                        boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)'
+                    }}>
+                        <Typography variant="h6" sx={{ textAlign: "center" }}>Ingrese motivo</Typography>
+                        <TextareaAutosize
+                            style={{
+                                border: "2px solid #ccc",
+                                borderRadius: "10px",
+                                height: "150px",
+                                width: "min(100% - 15px, 410px)",
+                                margin: "auto",
+                                maxLenght: '300',
+                                resize: "none",
+                                display: "flex",
+                                alignItems: "center",
+                                fontSize: '20px',
+                            }}
+                            name="motivo"
+                            value={motivo}
+                            onChange={handleMotivo}>
+                        </TextareaAutosize>
+
+                        <Stack direction="row">
+                            <Button variant="contained" type="submit"
+                                style={{ marginLeft: "48px", marginTop: "10px" }}
+                                // onClick={handleClose}
+                                onClick={() => onSave(asistenciaId)}>
+                                Guardar
+                            </Button>
+                            <Button variant="contained" color="error" type="submit"
+                                style={{ marginLeft: "10px", marginTop: "10px" }}
+                                onClick={handleClose}>
+                                Cancelar
+                            </Button>
+                        </Stack>
+                    </Box>
+                </Modal>
+                {/* MODAL */}
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <Box>
@@ -307,7 +391,14 @@ export default function Asistencias() {
                                         <TableCell scope="col">LTJ</TableCell>
                                         <TableCell scope="col">MF</TableCell>
                                         <TableCell scope="col">MFJ</TableCell>
-                                        <TableCell scope="col">Acción</TableCell>
+                                        <TableCell scope="col">
+                                            {
+                                                !guardando && <span>Acción</span>
+                                            }
+                                            {
+                                                guardando && <Loading size={30} />
+                                            }
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -371,9 +462,9 @@ export default function Asistencias() {
                                                     <TableRow
                                                         key={a.id} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
                                                         <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                        <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
+                                                        <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -534,7 +625,7 @@ export default function Asistencias() {
                                                                         >Editar</Button>
                                                                         <Button variant="contained"
                                                                             sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                            onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                                                            onClick={() => router.push(`/gestion/asistencias/asistencia_docente/${a?.id}`)}>
                                                                             Info.
                                                                         </Button>
                                                                     </Stack>
@@ -545,11 +636,10 @@ export default function Asistencias() {
                                                 ) :
                                                     (
                                                         <TableRow key={a.id} >
-
                                                             <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                            <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
+                                                            <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -701,7 +791,6 @@ export default function Asistencias() {
                                                                         </React.Fragment>
                                                                     ) : (
                                                                         <Stack spacing={1} direction="row">
-
                                                                             <Button variant="contained"
                                                                                 onClick={() => setInEditMode({
                                                                                     status: true,
@@ -710,7 +799,7 @@ export default function Asistencias() {
                                                                             >Editar</Button>
                                                                             <Button variant="contained"
                                                                                 sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                                onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                                                                onClick={() => router.push(`/gestion/asistencias/asistencia_docente/${a?.id}`)}>
                                                                                 Info.
                                                                             </Button>
                                                                         </Stack>

@@ -3,145 +3,148 @@ import axios from 'axios';
 import { Layout } from '../../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../../components/context/authUserProvider';
-import { Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
+import Loading from '../../../../components/loading';
+import Link from 'next/link';
+import { ArrowBack } from '@mui/icons-material';
 
 const MasInfo = () => {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     const { id } = router.query
     const [asistencia, setAsistencia] = useState()
-
+    const [cargando, setCargando] = useState(false)
     const listarAsistencia = async () => {
         if (id) {
+            setCargando(true)
             const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/detalles/${id}`)
             if (res.data) {
+                console.log(res.data)
                 setAsistencia(res.data)
             }
+            setCargando(false)
         }
     }
-
-    const mostrarAsistencia = (a) => {
-        return (
-            a.presente || a.ausente || a.ausentejustificado || a.llegadatarde || a.llegadatardejustificada || a.mediafalta || a.mediafaltajustificada
-        )
-
-    }
-
-    const mostrarAsistencia2 = (a) => {
-        if (a.presente && 1) {
-            setAsistenciaActual = 'Presente'
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
         }
-        if (a.ausente && 1) {
-            setAsistenciaActual = 'Ausente'
-        }
-        if (a.ausentejustificado && 1) {
-            setAsistenciaActual = 'Ausente Justificado'
-        }
-        if (a.llegadatarde && 1) {
-            setAsistenciaActual = 'Llegada Tarde'
-        }
-        if (a.llegadatardejustificada && 1) {
-            setAsistenciaActual = 'Llegada Tarde Justificada'
-        }
-        if (a.mediafalta && 1) {
-            setAsistenciaActual = 'Media Falta'
-        }
-        if (a.mediafaltajustificada && 1) {
-            setAsistenciaActual = 'Media Falta Justificada '
-        }
-    }
-
+        listarAsistencia()
+    }, [id, loading, authUser])
     return (
         <Layout>
-            <div>
-                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
-                <form className='needs-validation'>
-                    <div className='hstack gap-2 '>
-                        <Box component='div' sx={{ marginBottom: 2 }}>
-                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Docente: </Typography>
-                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docenteXmateria?.usuario?.apellido} {asistencia?.docenteXmateria?.usuario?.nombre}</Typography>
-                        </Box>
-
-                        {
-                            asistencia?.motivo != null ? (
-                                <Box component={'div'} sx={{ marginBottom: 2 }}>
-                                    <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Editado por: </Typography>
-                                    <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
-                                </Box>
-                            ) :
-                                (
-                                    <Box component='div' sx={{ marginBottom: 2 }}>
-                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Creado por:</Typography>
+            {
+                !cargando && (
+                    <div>
+                        <Grid container spacing={2}>
+                            <Grid item xs={10}>
+                                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Link href={'/gestion/asistencias/asistencia_docente'}>
+                                    <Button endIcon={<ArrowBack />} color="secondary" variant="outlined">
+                                        Volver
+                                    </Button>
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <div className='hstack gap-2 '>
+                            <Box component='div' sx={{ marginBottom: 2 }}>
+                                <Typography variant='h5' sx={{ fontWeight: 500 }}>Alumno: </Typography>
+                                <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docentexmateria?.usuario?.apellido} {asistencia?.docentexmateria?.usuario?.nombre}</Typography>
+                            </Box>
+                            {/* <Box component='div' sx={{ marginBottom: 2 }}>
+                                <Typography variant='h5' sx={{ fontWeight: 500 }}>Curso: </Typography>
+                                <Typography variant='body' sx={{ fontSize: 18 }}>{asistencia?.docentexmateria?.cursoxdivision?.curso?.nombre} {asistencia?.docentexmateria?.cursoxdivision?.division?.division}</Typography>
+                            </Box> */}
+                            {
+                                asistencia?.motivo ? (
+                                    <Box component={'div'} sx={{ marginBottom: 2 }}>
+                                        <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Editado por: </Typography>
                                         <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
                                     </Box>
-                                )
-                        }
-                    </div>
-                    <Divider sx={{ width: '100%', marginBottom: 2 }} />
-                    <div className='hstack gap-3'>
-                        <Box component={'div'} sx={{ marginBottom: 2 }}>
-                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
-                            {
-                                asistencia?.presente ? (
-                                    <h4>Presente</h4>
                                 ) :
                                     (
-                                        asistencia?.ausente ? (
-                                            <h4>Ausente</h4>
-                                        ) :
-                                            (
-                                                asistencia?.ausentejustificado ? (
-                                                    <h4>Ausente Justificado</h4>
-                                                ) :
-                                                    (
-                                                        asistencia?.llegadatarde ? (
-                                                            <h4>Llegada Tarde</h4>
-                                                        ) :
-                                                            (
-                                                                asistencia?.llegadatardejustificada ? (
-                                                                    <h4>llegada Tarde Justificada</h4>
-                                                                ) :
-                                                                    (
-                                                                        asistencia?.mediafalta ? (
-                                                                            <h4>Media Falta</h4>
-                                                                        ) :
-                                                                            (
-                                                                                <h4>-</h4>
-                                                                            )
-                                                                    )
-                                                            )
-                                                    )
-                                            )
+                                        <Box component='div' sx={{ marginBottom: 2 }}>
+                                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Creado por:</Typography>
+                                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}</Typography>
+                                        </Box>
                                     )
                             }
-                        </Box>
-                        <Box component={'div'} sx={{ marginBottom: 2 }}>
-                            <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
-                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoEn}</Typography>
-                        </Box>
+                        </div>
                         <Divider sx={{ width: '100%', marginBottom: 2 }} />
-                        {
-                            asistencia?.actualizadoEn != null ? (
-                                <Box component='div' sx={{ marginBottom: 2 }}>
-                                    <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
-                                    <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoEn}</Typography>
-                                </Box>
-                            ) :
-                                (
+                        <div className='hstack gap-3'>
+                            <Box component={'div'} sx={{ marginBottom: 2 }}>
+                                <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
+                                {
+                                    asistencia?.presente ? (
+                                        <h4>Presente</h4>
+                                    ) :
+                                        (
+                                            asistencia?.ausente ? (
+                                                <h4>Ausente</h4>
+                                            ) :
+                                                (
+                                                    asistencia?.ausentejustificado ? (
+                                                        <h4>Ausente Justificado</h4>
+                                                    ) :
+                                                        (
+                                                            asistencia?.llegadatarde ? (
+                                                                <h4>Llegada Tarde</h4>
+                                                            ) :
+                                                                (
+                                                                    asistencia?.llegadatardejustificada ? (
+                                                                        <h4>llegada Tarde Justificada</h4>
+                                                                    ) :
+                                                                        (
+                                                                            asistencia?.mediafalta ? (
+                                                                                <h4>Media Falta</h4>
+                                                                            ) :
+                                                                                (
+                                                                                    <h4>-</h4>
+                                                                                )
+                                                                        )
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                }
+                            </Box>
+                            <Box component={'div'} sx={{ marginBottom: 2 }}>
+                                <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
+                                <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoen}</Typography>
+                            </Box>
+                            <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                            {
+                                asistencia?.actualizadoen ? (
                                     <Box component='div' sx={{ marginBottom: 2 }}>
-                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado en:</Typography>
-                                        <Typography variant={'body1'} sx={{ fontSize: 18 }}>--/--/----</Typography>
+                                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado el:</Typography>
+                                        <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.actualizadoen}</Typography>
                                     </Box>
-                                )
-                        }
-                    </div>
+                                ) :
+                                    (
+                                        <Box component='div' sx={{ marginBottom: 2 }}>
+                                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Actualizado en:</Typography>
+                                            <Typography variant={'body1'} sx={{ fontSize: 18 }}>--/--/----</Typography>
+                                        </Box>
+                                    )
+                            }
+                        </div>
 
-                    <Box component={'div'} sx={{ margin: 'auto' }}>
-                        <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
-                        <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo}</Typography>
-                    </Box>
-                </form>
-            </div>
+                        <Box component={'div'} sx={{ margin: 'auto' }}>
+                            <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
+                            <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo || 'N/A'}</Typography>
+                        </Box>
+                    </div>
+                )
+            }
+            {
+                cargando && (
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
+                )
+            }
         </Layout >
     )
 }
