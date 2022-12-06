@@ -1,4 +1,4 @@
-import { updateAsistencia } from "../../../../../servicios/asistencia";
+import { updateAsistencia } from "../../../servicios/asistencia";
 
 export default async function handler(req, res) {
     try {

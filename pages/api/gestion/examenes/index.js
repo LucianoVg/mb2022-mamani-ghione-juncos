@@ -1,4 +1,4 @@
-import { guardarFechaExamen, traerFechaExamenes } from "../../../../servicios/examenes";
+import { guardarFechaExamen, traerFechaExamenes } from "../../servicios/examenes";
 
 export default async function handler(req, res) {
     try {

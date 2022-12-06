@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function ListarNotificaciones() {
     try {
-        const listado = await Prisma.newPrisma().notificacion.findMany({
+        const listado = await Prisma.newPrisma.notificacion.findMany({
             include: {
                 usuario: {
                     include: {
@@ -24,7 +24,7 @@ export async function ListarNotificaciones() {
 }
 export async function ListarNotificacionesDeUsuario(idUsuario) {
     try {
-        const listado = await Prisma.newPrisma().notificacion.findMany({
+        const listado = await Prisma.newPrisma.notificacion.findMany({
             include: {
                 usuario: {
                     include: {
@@ -51,7 +51,7 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
 }
 export async function DetalleNotificacion(idNotificacion) {
     try {
-        const notificacion = await Prisma.newPrisma().notificacion.findUnique({
+        const notificacion = await Prisma.newPrisma.notificacion.findUnique({
             include: {
                 usuario: {
                     include: {
@@ -76,12 +76,12 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
     // console.log(asunto, contenido, fecha, idCurso, idUsuario);
     if (idCurso != 0) {
         try {
-            const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
+            const alumnos = idCurso !== 'todos' ? await Prisma.newPrisma.alumnoxcursoxdivision.findMany({
                 where: {
                     idcursoxdivision: Number(idCurso)
                 }
-            }) : await Prisma.newPrisma().alumnoxcursoxdivision.findMany()
-            const notificacion = await Prisma.newPrisma().notificacion.create({
+            }) : await Prisma.newPrisma.alumnoxcursoxdivision.findMany()
+            const notificacion = await Prisma.newPrisma.notificacion.create({
                 data: {
                     asunto: asunto,
                     contenido: contenido,
@@ -95,7 +95,7 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
             //     }
             // })
             alumnos.map(async (a) => {
-                const notificacionAlumno = await Prisma.newPrisma().notificacionxalumno.create({
+                const notificacionAlumno = await Prisma.newPrisma.notificacionxalumno.create({
                     data: {
                         idnotificacion: notificacion.id,
                         idalumnoxcursoxdivision: a.id
@@ -110,7 +110,7 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
             Prisma.disconnect()
         }
     } else {
-        const notificacion = await Prisma.newPrisma().notificacion.create({
+        const notificacion = await Prisma.newPrisma.notificacion.create({
             data: {
                 asunto: asunto,
                 contenido: contenido,
@@ -124,7 +124,7 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
         //     }
         // })
 
-        const notificacionAlumno = await Prisma.newPrisma().notificacionxalumno.create({
+        const notificacionAlumno = await Prisma.newPrisma.notificacionxalumno.create({
             data: {
                 idnotificacion: notificacion.id,
                 idalumnoxcursoxdivision: Number(idAlumno)
@@ -137,7 +137,7 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
 
 export async function ActualizarNotificacion(id, asunto, contenido, idUsuario) {
     try {
-        const actualizar = await Prisma.newPrisma().notificacion.update({
+        const actualizar = await Prisma.newPrisma.notificacion.update({
             data: {
                 asunto: asunto,
                 contenido: contenido,

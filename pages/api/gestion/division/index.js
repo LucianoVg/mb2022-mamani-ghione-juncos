@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerDivision } from "../../../../servicios/division"
+import { traerDivision } from "../../servicios/division"
 
 export default async function handler(req, res) {
     try {

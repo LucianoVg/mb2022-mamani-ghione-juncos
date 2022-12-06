@@ -2,11 +2,11 @@ import { Prisma } from "./prisma";
 
 export async function traerNoticia(id = 0) {
     try {
-        const noticias = id !== 0 ? await Prisma.newPrisma().noticiasynovedades.findUnique({
+        const noticias = id !== 0 ? await Prisma.newPrisma.noticiasynovedades.findUnique({
             where: {
                 id: Number(id)
             }
-        }) : await Prisma.newPrisma().noticiasynovedades.findMany({
+        }) : await Prisma.newPrisma.noticiasynovedades.findMany({
             orderBy: {
                 creadaen: 'desc'
             }
@@ -20,7 +20,7 @@ export async function traerNoticia(id = 0) {
 }
 
 export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
-    const agregar = await Prisma.newPrisma().noticiasynovedades.create({
+    const agregar = await Prisma.newPrisma.noticiasynovedades.create({
         data: {
             titulo: titulo,
             creadaen: new Date(creadaEn),
@@ -35,7 +35,7 @@ export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuar
 
 
 export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn) {
-    const editar = Prisma.newPrisma().noticiasynovedades.update({
+    const editar = Prisma.newPrisma.noticiasynovedades.update({
         data: {
             titulo: titulo,
             url: url,
@@ -51,7 +51,7 @@ export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn)
 }
 
 export async function eliminarNoticia(id) {
-    const eliminar = await Prisma.newPrisma().noticiasynovedades.delete({
+    const eliminar = await Prisma.newPrisma.noticiasynovedades.delete({
         where: {
             id: Number(id)
         }

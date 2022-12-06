@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { PromedioXtrimestre } from "../../../../../servicios/notas"
+import { PromedioXtrimestre } from "../../../servicios/notas"
 
 export default async function handler(req, res) {
     try {
@@ -11,8 +11,8 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
 
-            let { idAlumno, idMateria,  } = req.query
-            const promedio = await PromedioXtrimestre(idAlumno,idMateria)
+            let { idAlumno, idMateria, } = req.query
+            const promedio = await PromedioXtrimestre(idAlumno, idMateria)
 
             return res.status(200).json(promedio)
         } else {

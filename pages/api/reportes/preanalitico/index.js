@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { Preanalitico } from "../../../../servicios/notas"
+import { Preanalitico } from "../../servicios/notas"
 
 export default async function handler(req, res) {
     try {

@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function TraerAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistenciadocente.findMany(options)
+        const asistencias = await Prisma.newPrisma.asistenciadocente.findMany(options)
         return asistencias
     } catch (error) {
         console.log(error);
@@ -13,7 +13,7 @@ export async function TraerAsistencias(options) {
 
 export async function DetalleAsistencia(id) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciadocente.findUnique({
+        const asistencia = await Prisma.newPrisma.asistenciadocente.findUnique({
             include: {
                 usuario: true,
                 docentexmateria: {
@@ -38,7 +38,7 @@ export async function DetalleAsistencia(id) {
 
 export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario) {
     try {
-        const asistencia = await Prisma.newPrisma().asistenciadocente.update({
+        const asistencia = await Prisma.newPrisma.asistenciadocente.update({
             data: {
                 presente: presente,
                 ausente: ausente,

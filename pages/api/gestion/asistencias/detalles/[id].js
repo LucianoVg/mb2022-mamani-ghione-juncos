@@ -1,4 +1,4 @@
-import { DetalleAsistencia } from "../../../../../servicios/asistencia";
+import { DetalleAsistencia } from "../../../servicios/asistencia";
 
 export default async function handler(
     req,

@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import traerRoles from "../../../../servicios/roles";
+import traerRoles from "../../servicios/roles";
 
 export default async function handler(
     req,

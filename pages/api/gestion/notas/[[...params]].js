@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { TraerNotas } from "../../../../servicios/notas";
+import { TraerNotas } from "../../servicios/notas";
 
 export default async function handler(
     req,

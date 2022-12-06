@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerUsuario } from "../../../../servicios/cuenta";
+import { traerUsuario } from "../../servicios/cuenta";
 
 export default async function handler(
     req,

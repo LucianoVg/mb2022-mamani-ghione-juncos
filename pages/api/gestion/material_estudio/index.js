@@ -1,4 +1,4 @@
-import guardarMaterialEstudio from "../../../../servicios/material_estudio"
+import guardarMaterialEstudio from "../../servicios/material_estudio"
 
 export default async function handler(req, res) {
     try {

@@ -1,7 +1,7 @@
 import { Prisma } from "./prisma";
 
 export async function traerFichaInstitucional(id = 0) {
-    const fichaInstitucional = id !== 0 ? await Prisma.newPrisma().fichainstitucional.findFirst({
+    const fichaInstitucional = id !== 0 ? await Prisma.newPrisma.fichainstitucional.findFirst({
         where: {
             OR: [
                 { id: id },
@@ -11,7 +11,7 @@ export async function traerFichaInstitucional(id = 0) {
         include: {
             portadasficha: true
         }
-    }) : await Prisma.newPrisma().fichainstitucional.findMany({
+    }) : await Prisma.newPrisma.fichainstitucional.findMany({
         include: {
             portadasficha: true
         }
@@ -21,7 +21,7 @@ export async function traerFichaInstitucional(id = 0) {
 }
 
 export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
-    const portada = await Prisma.newPrisma().portadaficha.create({
+    const portada = await Prisma.newPrisma.portadaficha.create({
         data: {
             nombre: nombre,
             url: url,
@@ -32,7 +32,7 @@ export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
     return portada
 }
 export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
-    const portada = await Prisma.newPrisma().portadaficha.update({
+    const portada = await Prisma.newPrisma.portadaficha.update({
         where: {
             id: Number(id)
         },
@@ -46,7 +46,7 @@ export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
     return portada
 }
 export async function traerPortadas(idFicha) {
-    const portadas = await Prisma.newPrisma().portadaficha.findMany({
+    const portadas = await Prisma.newPrisma.portadaficha.findMany({
         where: {
             idfichainstitucional: Number(idFicha)
         },
@@ -59,7 +59,7 @@ export async function traerPortadas(idFicha) {
 }
 export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = '', descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
 
-    const guardado = await Prisma.newPrisma().fichainstitucional.upsert({
+    const guardado = await Prisma.newPrisma.fichainstitucional.upsert({
         where: {
             id: Number(id)
         },

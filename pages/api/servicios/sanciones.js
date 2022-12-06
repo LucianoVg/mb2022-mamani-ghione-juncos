@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function traerSanciones(options) {
     try {
-        const sanciones = await Prisma.newPrisma().sancionxalumno.findMany(options)
+        const sanciones = await Prisma.newPrisma.sancionxalumno.findMany(options)
         Prisma.disconnect()
         return sanciones
     } catch (error) {
@@ -14,7 +14,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
     try {
         // console.log(idUsuario, idAlumno, idCurso, motivo, idTipoSancion, fecha);
         if (idCurso !== 0) {
-            const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
+            const alumnos = await Prisma.newPrisma.alumnoxcursoxdivision.findMany({
                 select: {
                     id: true
                 },
@@ -22,7 +22,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                     idcursoxdivision: Number(idCurso)
                 }
             })
-            const sancion = await Prisma.newPrisma().sancion.create({
+            const sancion = await Prisma.newPrisma.sancion.create({
                 data: {
                     fecha: fecha,
                     motivo: motivo,
@@ -39,7 +39,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
                 }
             })
             alumnos.forEach(async (a) => {
-                const sancionXAlumno = await Prisma.newPrisma().sancionxalumno.create({
+                const sancionXAlumno = await Prisma.newPrisma.sancionxalumno.create({
                     data: {
                         alumnoxcursoxdivision: {
                             connect: {
@@ -57,7 +57,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
             })
             return "Sanciones creadas"
         } else {
-            const sancion = await Prisma.newPrisma().sancion.create({
+            const sancion = await Prisma.newPrisma.sancion.create({
                 data: {
                     fecha: fecha,
                     motivo: motivo,
@@ -92,7 +92,7 @@ export async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motiv
 
 export async function traerTipoSanciones() {
     try {
-        const tipoSanciones = await Prisma.newPrisma().tiposancion.findMany()
+        const tipoSanciones = await Prisma.newPrisma.tiposancion.findMany()
         return tipoSanciones
     } catch (error) {
         console.error(error);
@@ -101,7 +101,7 @@ export async function traerTipoSanciones() {
 
 export async function obtenerSancion(id) {
     try {
-        const sancion = await Prisma.newPrisma().sancionxalumno.findFirst({
+        const sancion = await Prisma.newPrisma.sancionxalumno.findFirst({
             include: {
                 sancion: {
                     include: {
@@ -182,7 +182,7 @@ export async function actualizarSancion(
         // } else {
 
         // }
-        const sancion = await Prisma.newPrisma().sancion.update({
+        const sancion = await Prisma.newPrisma.sancion.update({
             data: {
                 motivo: motivo,
                 usuario: {

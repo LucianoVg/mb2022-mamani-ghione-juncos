@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { generarSancion, traerSanciones } from "../../../../servicios/sanciones"
+import { generarSancion, traerSanciones } from "../../servicios/sanciones"
 
 export default async function hORler(req, res) {
     try {

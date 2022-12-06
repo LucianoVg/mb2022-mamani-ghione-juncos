@@ -1,4 +1,4 @@
-import { traerTrimestres } from "../../../../servicios/trimestres";
+import { traerTrimestres } from "../../servicios/trimestres";
 
 export default async function handler(req, res) {
     try {

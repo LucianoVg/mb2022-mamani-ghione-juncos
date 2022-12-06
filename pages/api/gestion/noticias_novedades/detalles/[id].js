@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { editarNoticia, eliminarNoticia, traerNoticia } from "../../../../../servicios/noticias_novedades"
+import { editarNoticia, eliminarNoticia, traerNoticia } from "../../../servicios/noticias_novedades"
 
 export default async function handler(
     req,

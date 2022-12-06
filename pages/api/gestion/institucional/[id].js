@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { guardarFichaInstitucional, traerFichaInstitucional } from "../../../../servicios/ficha_institucional";
+import { guardarFichaInstitucional, traerFichaInstitucional } from "../../servicios/ficha_institucional";
 
 export default async function handler(req, res) {
     try {

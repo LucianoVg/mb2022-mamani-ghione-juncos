@@ -1,6 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-
-import { CrearNotificacion } from "../../../../servicios/notificaciones"
+import { CrearNotificacion } from "../../servicios/notificaciones"
 
 export default async function handler(req, res) {
     try {

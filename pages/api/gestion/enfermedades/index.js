@@ -1,4 +1,4 @@
-import traerEnfermedades from "../../../../servicios/enfermedades";
+import traerEnfermedades from "../../servicios/enfermedades";
 
 export default async function handler(req, res) {
     try {

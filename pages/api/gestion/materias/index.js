@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { ListarMaterias } from "../../../../servicios/materias";
+import { ListarMaterias } from "../../servicios/materias";
 export default async function handler(
     req,
     res

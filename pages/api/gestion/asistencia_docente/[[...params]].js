@@ -1,4 +1,4 @@
-import { TraerAsistencias } from "../../../../servicios/asistencia_docente";
+import { TraerAsistencias } from "../../servicios/asistencia_docente";
 
 export default async function handler(
     req,

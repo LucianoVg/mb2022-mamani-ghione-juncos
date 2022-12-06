@@ -1,4 +1,4 @@
-import { ListarNotificacionesDeUsuario } from "../../../../../servicios/notificaciones";
+import { ListarNotificacionesDeUsuario } from "../../../servicios/notificaciones";
 
 export default async function handler(req, res) {
     try {

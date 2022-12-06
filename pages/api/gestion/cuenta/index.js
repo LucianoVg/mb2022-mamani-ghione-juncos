@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { registrarUsuario } from "../../../../servicios/cuenta";
+import { registrarUsuario } from "../../servicios/cuenta";
 
 export default async function handler(req, res) {
     try {
@@ -13,17 +13,23 @@ export default async function handler(req, res) {
             const { login,
                 nombre, apellido, legajo,
                 telefono, correo, direccion,
-                localidad, idRol, idTutor, sexo, contrasenia, idCurso } = req.body
+                localidad, idRol, idTutor,
+                sexo, contrasenia, idCurso,
+                idUsuario, esAlumno, esDocente, idMaterias } = req.body
 
             console.log({
                 login,
                 nombre, apellido, legajo,
                 telefono, correo, direccion,
-                localidad, idRol, idTutor, sexo, contrasenia, idCurso
+                localidad, idRol, idTutor,
+                sexo, contrasenia, idCurso,
+                idUsuario, esAlumno, esDocente, idMaterias
             });
             const creado = await registrarUsuario(login, nombre, apellido,
                 correo, legajo, telefono,
-                localidad, direccion, idRol, idTutor ? idTutor : '', contrasenia, sexo, idCurso ? idCurso : '')
+                localidad, direccion, idRol,
+                idTutor, contrasenia, sexo, idCurso,
+                idUsuario, esAlumno, esDocente, idMaterias)
 
             return res.status(200).json(creado)
         } else {

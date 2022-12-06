@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { editarPortadas, traerPortadas } from "../../../../servicios/ficha_institucional";
+import { editarPortadas, traerPortadas } from "../../servicios/ficha_institucional";
 
 export default async function handler(req, res) {
     try {

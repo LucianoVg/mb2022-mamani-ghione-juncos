@@ -1,9 +1,9 @@
-import { ListarNotificaciones } from "../../../../../servicios/notificaciones";
+import { ListarNotificaciones } from "../../../servicios/notificaciones";
 
 export default async function handler(req, res) {
     try {
         if (req.method === 'GET') {
-         
+
             const notificaciones = await ListarNotificaciones()
             return res.status(200).json(notificaciones)
         }

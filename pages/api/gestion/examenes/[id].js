@@ -1,4 +1,4 @@
-import { actualizarExamen, borrarExamen } from "../../../../servicios/examenes"
+import { actualizarExamen, borrarExamen } from "../../servicios/examenes"
 
 export default async function handler(req, res) {
     try {

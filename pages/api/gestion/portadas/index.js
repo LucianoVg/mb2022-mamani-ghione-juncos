@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { guardarPortadas } from "../../../../servicios/ficha_institucional"
+import { guardarPortadas } from "../../servicios/ficha_institucional"
 
 export default async function handler(
     req,

@@ -1,9 +1,10 @@
-import { Alert, Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
+import Loading from '../../../components/loading';
 
 export default function NuevoUsuario() {
     const router = useRouter()
@@ -14,40 +15,57 @@ export default function NuevoUsuario() {
         direccion: '', contrasenia: '', idTutor: 0, sexo: 'M', idCurso: 0
     })
     const [cursos, setCursos] = useState()
+    const [materias, setMaterias] = useState([])
+    const [idMaterias, setIdMaterias] = useState([])
     const [tutor, setTutor] = useState({
         id: 0, nombre: '', apellido: '', legajo: '',
         correo: '', localidad: '', telefono: '', idRol: roles?.find(r => r.tipo === 'Tutor')?.id,
         direccion: '', contrasenia: '', sexo: 'M'
     })
-    const [curso, setCurso] = useState('')
-    const [rol, setRol] = useState('')
-
+    const [curso, setCurso] = useState(0)
+    const [rol, setRol] = useState(0)
+    const [usuarioLogeado, setUsuarioLogueado] = useState({ id: 0 })
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
-    const [esPreceptorODocente, setEsPreceptorODocente] = useState(false)
-
+    const [esDocente, setEsDocente] = useState(false)
+    const [guardando, setGuardando] = useState(false)
     const { loading, authUser } = useAuth()
 
     useEffect(() => {
-        // console.log(process.env.NEXT_PUBLIC_CLIENT_URL);
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles`)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data);
-                    setRoles(res.data)
-                }
-            })
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-            .then(res => {
-                if (res.data) {
-                    setCursos(res.data)
-                }
-            })
-    }, [authUser, loading])
+        traerUsuario()
+        traerRoles()
+        traerCursos()
+        traerMaterias()
+    }, [authUser, loading, usuarioLogeado.id])
 
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id) })
+        }
+    }
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
+    }
+    const traerRoles = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles`)
+        if (res.data) {
+            console.log(res.data);
+            setRoles(res.data)
+        }
+    }
+    const traerMaterias = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+        if (res.status === 200) {
+            setMaterias(res.data?.map(d => ({ id: d.id, nombre: d.nombre })))
+        }
+    }
     const handleTutor = (e) => {
         setTutor({ ...tutor, [e.target.name]: e.target.value })
     }
@@ -57,75 +75,55 @@ export default function NuevoUsuario() {
 
     const handleRol = (e) => {
         setRol(e.target.value)
-        setEsAlumno(e.target.value === roles?.find(r => r.tipo === 'Estudiante')?.id)
-        setEsPreceptorODocente(e.target.value === roles?.find(r => r.tipo === 'Preceptor')?.id
-            || e.target.value === roles?.find(r => r.tipo === 'Docente')?.id)
+        setEsAlumno(Number(e.target.value) === roles?.find(r => r.tipo === 'Estudiante')?.id)
+        setEsDocente(Number(e.target.value) === roles?.find(r => r.tipo === 'Docente')?.id)
     }
+
     const handleCurso = (e) => {
-        setCurso(e.target.value)
+        setCurso(Number(e.target.value))
     }
+    const handleMaterias = (event) => {
+        const {
+            target: { value },
+        } = event;
 
-    const registrarUsuario = (e) => {
+        setIdMaterias(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
+    const registrarUsuario = async (e) => {
         e.preventDefault()
+        console.log(idMaterias);
         usuario.idRol = rol
+        setGuardando(true)
 
-        if (esAlumno || esPreceptorODocente) {
-            usuario.idCurso = curso
+        let data = {
+            login: usuario.correo.split('@')[0],
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            legajo: usuario.legajo,
+            telefono: usuario.telefono,
+            correo: usuario.correo,
+            direccion: usuario.direccion,
+            localidad: usuario.localidad,
+            idRol: usuario.idRol,
+            idCurso: usuario.idCurso,
+            idTutor: usuario.idTutor,
+            sexo: usuario.sexo,
+            contrasenia: usuario.contrasenia,
+            esAlumno: esAlumno,
+            esDocente: esDocente,
+            idUsuario: usuarioLogeado.id,
+            idMaterias: idMaterias
         }
-
-        if (!esAlumno) {
-            axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-                login: usuario.correo.split('@')[0],
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                legajo: usuario.legajo,
-                telefono: usuario.telefono,
-                correo: usuario.correo,
-                direccion: usuario.direccion,
-                localidad: usuario.localidad,
-                idRol: usuario.idRol,
-                idCurso: usuario.idCurso,
-                sexo: usuario.sexo,
-                contrasenia: usuario.contrasenia
-            }).then(res => {
-                if (res.data && res.data.id) {
-                    setMensaje("Usuario creado!")
-                    setTimeout(() => {
-                        router.push('/gestion/usuarios/mantenimiento_usuario')
-                    }, 1300);
-                }
-            })
-        }
-
-        if (esAlumno && tutor.nombre !== '' && tutor.apellido !== '' && tutor.correo !== ''
-            && tutor.legajo !== '' && tutor.localidad !== '' && tutor.sexo !== ''
-            && tutor.telefono !== '' && tutor.contrasenia !== '' && tutor.idRol !== 0
-            && tutor.direccion !== '') {
-
-            axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-                login: usuario.correo.split('@')[0],
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                legajo: usuario.legajo,
-                telefono: usuario.telefono,
-                correo: usuario.correo,
-                direccion: usuario.direccion,
-                localidad: usuario.localidad,
-                idRol: usuario.idRol,
-                idTutor: usuario.idTutor,
-                idCurso: usuario.idCurso,
-                sexo: usuario.sexo,
-                contrasenia: usuario.contrasenia
-            }).then(res => {
-                if (res.data && res.data.id) {
-                    setMensaje("Usuario creado!")
-                    setTimeout(() => {
-                        router.push('/gestion/usuarios/mantenimiento_usuario')
-                    }, 1300);
-                }
-            })
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, data)
+        setGuardando(false)
+        if (res.status === 200) {
+            setMensaje('Usuario registrado! 😅🎉')
         } else {
-            setMensaje('Complete los datos del tutor')
+            setMensaje('Algo salió mal 😱📛')
         }
     }
     const registrarTutor = (e) => {
@@ -149,13 +147,6 @@ export default function NuevoUsuario() {
     }
     return (
         <Layout>
-            {
-                mensaje.length > 0 && (
-                    <Alert color="success">
-                        {mensaje}
-                    </Alert>
-                )
-            }
             <Typography variant="h4">Nuevo Usuario</Typography>
             <Box component={'form'} onSubmit={registrarUsuario}>
 
@@ -287,7 +278,7 @@ export default function NuevoUsuario() {
                 </Box>
 
                 {
-                    esAlumno || esPreceptorODocente && (
+                    esAlumno && (
                         <Box>
                             <h3>Seleccionar curso</h3>
 
@@ -314,8 +305,49 @@ export default function NuevoUsuario() {
 
                     )
                 }
+                {
+                    esDocente && (
+                        <Box>
+                            <h3>Seleccionar Materias</h3>
+                            <FormControl sx={{ m: 1, width: 300 }}>
+                                <InputLabel id="demo-multiple-name-label">Materias</InputLabel>
+                                <Select
+                                    required
+                                    labelId="demo-multiple-name-label"
+                                    id="demo-multiple-name"
+                                    multiple
+                                    value={idMaterias}
+                                    onChange={handleMaterias}
+                                    input={<OutlinedInput label="Materias" />}
+                                    MenuProps={MenuProps}
+                                >
+                                    {materias.map((materia) => (
+                                        <MenuItem
+                                            key={materia.id}
+                                            value={materia.id}
+                                            style={getStyles(materia, materias)}
+                                        >
+                                            {materia.nombre}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    )
+                }
 
-                <Button sx={{ mt: 2 }} variant="contained" color="primary" type="submit">Registrar Usuario</Button>
+                <Button disabled={guardando}
+                    sx={{ mt: 2 }}
+                    variant="contained"
+                    color="primary"
+                    type="submit">
+                    {
+                        !guardando && <span>Registrar Usuario</span>
+                    }
+                    {
+                        guardando && <Loading size={30} />
+                    }
+                </Button>
             </Box>
             {
                 esAlumno && (
@@ -441,6 +473,31 @@ export default function NuevoUsuario() {
                     </>
                 )
             }
+            {
+                mensaje.length > 0 && (
+                    <Alert sx={{ mt: 1 }} color={mensaje === 'Usuario registrado! 😅🎉' ? 'success' : 'error'}>
+                        {mensaje}
+                    </Alert>
+                )
+            }
         </Layout >
     )
+}
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+function getStyles(materia, materias = [], theme = useTheme()) {
+    return {
+        fontWeight:
+            materias.findIndex(m => m.id === materia.id) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
 }

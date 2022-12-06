@@ -1,4 +1,4 @@
-import { DetalleNotificacion } from "../../../../../servicios/notificaciones";
+import { DetalleNotificacion } from "../../../servicios/notificaciones";
 
 export default async function handler(
     req,

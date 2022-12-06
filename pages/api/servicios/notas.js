@@ -3,7 +3,7 @@ import { Prisma } from "./prisma";
 
 export async function Preanalitico(idAlumno) {
     try {
-        return await Prisma.newPrisma().$queryRaw`select m.id as id ,m.nombre as materia, m.idcurso as curso , idalumnoxcursoxdivision,
+        return await Prisma.newPrisma.$queryRaw`select m.id as id ,m.nombre as materia, m.idcurso as curso , idalumnoxcursoxdivision,
         avg ((SELECT AVG(c)
                FROM   (VALUES(nota1),
                              (nota2),
@@ -24,7 +24,7 @@ export async function Preanalitico(idAlumno) {
 
 export async function PromedioXtrimestre(idAlumno, idMateria) {
     try {
-        return await Prisma.newPrisma().$queryRaw`select m.nombre as materia, idalumnoxcursoxdivision,t.trimestre as trimestre,
+        return await Prisma.newPrisma.$queryRaw`select m.nombre as materia, idalumnoxcursoxdivision,t.trimestre as trimestre,
         (SELECT AVG(c)
                FROM   (VALUES(nota1),
                              (nota2),
@@ -45,7 +45,7 @@ export async function PromedioXtrimestre(idAlumno, idMateria) {
 
 export async function notasTrimestres(idAlumno, idMateria) {
     try {
-        return await Prisma.newPrisma().$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from historialnota hn
+        return await Prisma.newPrisma.$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from historialnota hn
          INNER JOIN materia as m ON m.id = hn.idmateria
         where idmateria = 1 and idalumnoxcursoxdivision = 53
         group by idtrimestre,nota1,nota2,nota3,nota4,nota5, m.nombre`
@@ -59,6 +59,7 @@ export async function notasTrimestres(idAlumno, idMateria) {
 
 export async function contarNotas() {
     try {
+<<<<<<< Updated upstream:servicios/notas.js
         const conteo = await Prisma.newPrisma().$queryRaw`SELECT n.idmateria,
         (
              (select count(*) from historialnota where nota1= 1   and idmateria =2)+
@@ -136,6 +137,13 @@ export async function contarNotas() {
 
         return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
 
+=======
+        const count = await Prisma.newPrisma.nota.aggregate({
+            _count: ['nota1', 'nota2', 'nota3', 'nota4', 'nota5']
+        })
+        console.log(count);
+        return count
+>>>>>>> Stashed changes:pages/api/servicios/notas.js
     } catch (error) {
         console.log(error);
     }
@@ -144,7 +152,7 @@ export async function contarNotas() {
 
 export async function TraerNotas(options) {
     try {
-        return await Prisma.newPrisma().nota.findMany(options)
+        return await Prisma.newPrisma.nota.findMany(options)
     } catch (error) {
         console.error(error);
     } finally {
@@ -158,7 +166,7 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
     try {
         let notas = []
         if (columna1) {
-            const newNota1 = await Prisma.newPrisma().nota.update({
+            const newNota1 = await Prisma.newPrisma.nota.update({
                 data: {
                     nota1: Number(nota1)
 
@@ -170,7 +178,7 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
             notas.push(newNota1)
         }
         if (columna2) {
-            const newNota2 = await Prisma.newPrisma().nota.update({
+            const newNota2 = await Prisma.newPrisma.nota.update({
                 data: {
                     nota2: Number(nota2)
 
@@ -182,7 +190,7 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
             notas.push(newNota2)
         }
         if (columna3) {
-            const newNota3 = await Prisma.newPrisma().nota.update({
+            const newNota3 = await Prisma.newPrisma.nota.update({
                 data: {
                     nota3: Number(nota3)
 
@@ -194,7 +202,7 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
             notas.push(newNota3)
         }
         if (columna4) {
-            const newNota4 = await Prisma.newPrisma().nota.update({
+            const newNota4 = await Prisma.newPrisma.nota.update({
                 data: {
                     nota4: Number(nota4)
                 },
@@ -205,7 +213,7 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
             notas.push(newNota4)
         }
         if (columna5) {
-            const newNota5 = await Prisma.newPrisma().nota.update({
+            const newNota5 = await Prisma.newPrisma.nota.update({
                 data: {
                     nota5: Number(nota5)
                 },

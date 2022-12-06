@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerCursosXDivision } from "../../../../servicios/cursos"
+import { traerCursosXDivision } from "../../servicios/cursos"
 
 export default async function handler(req, res) {
     try {

@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso, idMateria, idTrimestre, idUsuario) {
     try {
-        const materialEstudio = await Prisma.newPrisma().materialestudio.create({
+        const materialEstudio = await Prisma.newPrisma.materialestudio.create({
             data: {
                 titulo: titulo,
                 url: url,

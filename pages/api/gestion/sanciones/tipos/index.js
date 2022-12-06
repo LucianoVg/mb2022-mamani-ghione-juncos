@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerTipoSanciones } from "../../../../../servicios/sanciones";
+import { traerTipoSanciones } from "../../../servicios/sanciones";
 
 export default async function handler(req, res) {
     try {

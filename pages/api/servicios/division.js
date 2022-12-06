@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function traerDivision() {
     try {
-        const division = await Prisma.newPrisma().division.findMany({
+        const division = await Prisma.newPrisma.division.findMany({
             orderBy: {
                 division: 'asc'
             }

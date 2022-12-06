@@ -2,7 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function traerFechaExamenes() {
     try {
-        const examenes = await Prisma.newPrisma().fechaexamen.findMany({
+        const examenes = await Prisma.newPrisma.fechaexamen.findMany({
             include: {
                 usuario: true
             }
@@ -17,7 +17,7 @@ export async function traerFechaExamenes() {
 
 export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuario) {
     try {
-        const fechaExamen = await Prisma.newPrisma().fechaexamen.create({
+        const fechaExamen = await Prisma.newPrisma.fechaexamen.create({
             data: {
                 titulo: titulo,
                 fechainicio: fechaInicio,
@@ -35,7 +35,7 @@ export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuari
 
 export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsuario) {
     try {
-        const examen = await Prisma.newPrisma().fechaexamen.update({
+        const examen = await Prisma.newPrisma.fechaexamen.update({
             data: {
                 titulo: titulo,
                 fechainicio: fechaInicio,
@@ -56,7 +56,7 @@ export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsua
 
 export async function borrarExamen(id) {
     try {
-        const examen = await Prisma.newPrisma().fechaexamen.delete({
+        const examen = await Prisma.newPrisma.fechaexamen.delete({
             where: {
                 id: Number(id)
             }

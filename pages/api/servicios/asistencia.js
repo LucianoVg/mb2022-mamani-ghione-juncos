@@ -2,6 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function ConteoAsistencias() {
     try {
+<<<<<<< Updated upstream:servicios/asistencia.js
         const conteo = await Prisma.newPrisma().$queryRaw`SELECT a.idalumnoxcursoxdivision,
         (SELECT COUNT(*) FROM asistencia WHERE presente = true   and idalumnoxcursoxdivision = 2) as presente,
         (SELECT COUNT(*) FROM asistencia WHERE ausente = true   and idalumnoxcursoxdivision = 2) as ausente,
@@ -15,6 +16,21 @@ export async function ConteoAsistencias() {
     group by a.idalumnoxcursoxdivision`
 
     return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+=======
+        const conteo = await Prisma.newPrisma.asistencia.findMany({
+            where: {
+                AND: [
+                    {
+                        creadoen: {
+                            lte: '01/11/2022',
+                            gte: '01/10/2022',
+                        }
+                    },
+                    {
+                        idalumnoxcursoxdivision: 1
+                    }
+                ]
+>>>>>>> Stashed changes:pages/api/servicios/asistencia.js
 
     } catch (error) {
         console.error(error);
@@ -27,7 +43,7 @@ export async function ConteoAsistencias() {
 
 export async function ListarCurso() {
     try {
-        const cursos = await Prisma.newPrisma().cursoxdivision.findMany({
+        const cursos = await Prisma.newPrisma.cursoxdivision.findMany({
             include: {
                 curso: true,
                 division: true
@@ -44,7 +60,7 @@ export async function ListarCurso() {
 
 export async function TraerAsistencias(options) {
     try {
-        const asistencias = await Prisma.newPrisma().asistencia.findMany(options)
+        const asistencias = await Prisma.newPrisma.asistencia.findMany(options)
         return asistencias
     } catch (error) {
         console.log(error);
@@ -55,7 +71,7 @@ export async function TraerAsistencias(options) {
 
 export async function DetalleAsistencia(id) {
     try {
-        const asistencia = await Prisma.newPrisma().asistencia.findUnique({
+        const asistencia = await Prisma.newPrisma.asistencia.findUnique({
             include: {
                 usuario: true,
                 alumnoxcursoxdivision: {
@@ -86,7 +102,7 @@ export async function DetalleAsistencia(id) {
 
 export async function updateAsistencia(id, presente, ausente, ausenteJustificado, llegadaTarde, llegadaTardeJustificada, mediaFalta, mediaFaltaJustificada, motivo = "", idUsuario) {
     try {
-        const asistencia = await Prisma.newPrisma().asistencia.update({
+        const asistencia = await Prisma.newPrisma.asistencia.update({
             data: {
                 presente: presente,
                 ausente: ausente,
