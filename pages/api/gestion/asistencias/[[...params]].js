@@ -3,8 +3,8 @@ import { TraerAsistencias } from "../../../../servicios/asistencia";
 export default async function handler(req, res) {
     try {
         if (req.method === 'GET') {
-            let { legajo, nombreAlumno, apellidoAlumno } = req.query
-            console.log(legajo, nombreAlumno, apellidoAlumno);
+            let { legajo, fecha, idCurso, nombreAlumno, apellidoAlumno } = req.query
+            console.log(legajo, fecha, idCurso, nombreAlumno, apellidoAlumno);
 
             let OR = []
             let options = {
@@ -19,11 +19,6 @@ export default async function handler(req, res) {
 
                 },
                 orderBy: {
-                    // alumnoXcursoXdivision: {
-                    //     usuario: {
-                    //         nombre: 'asc'
-                    //     }
-                    // },
                     creadoen: 'asc'
                 }
             }
@@ -43,7 +38,7 @@ export default async function handler(req, res) {
                     alumnoxcursoxdivision: {
                         usuario: {
                             nombre: {
-                                contains: nombreAlumno(0).toUpperCase() + nombreAlumno.slice(1)
+                                contains: nombreAlumno[0].toUpperCase() + nombreAlumno.slice(1)
                             }
                         }
                     }
@@ -58,6 +53,20 @@ export default async function handler(req, res) {
                             }
                         }
                     }
+                })
+            }
+            if (idCurso) {
+                OR.push({
+                    alumnoxcursoxdivision: {
+                        cursoxdivision: {
+                            id: Number(idCurso)
+                        }
+                    }
+                })
+            }
+            if (fecha) {
+                OR.push({
+                    creadoen: fecha
                 })
             }
             if (OR.length) {
