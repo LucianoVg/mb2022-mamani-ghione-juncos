@@ -1,5 +1,5 @@
 import { ref, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
-import { app } from "../firebase/config";
+import { app } from "../../../firebase.config";
 
 export async function traerImagen(nombre) {
     const storage = getStorage(app)
