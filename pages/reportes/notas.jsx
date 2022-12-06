@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-
-
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useAuth } from '../../components/context/authUserProvider';
 import { Layout } from "../../components/layout";
-import { Box, Button, Stack, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, Autocomplete, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-
 
 import { Search } from "@mui/icons-material";
 
@@ -48,6 +48,52 @@ export default function Notas() {
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
     const [materia, setMateria] = useState("");
+
+    const [notaTrimestre, setNotaTrimestre] = useState([])
+    const [promedioTrimestre, setPromedioTrimestre] = useState([])
+    const [alumnos, setAlumnos] = useState([])
+    const [usuario, setUsuario] = useState({ id: 0 })
+    const { loading, authUser } = useAuth()
+
+    useEffect(() => {
+        listarAlumnos()
+        promedioPorTrimestre()
+        notasPorTrimestre()
+    }, [])
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+
+    }, [usuario.id, loading, authUser])
+
+    const notasPorTrimestre = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/`)
+            .then(res => {
+                console.log(res.data);
+                setNotaTrimestre(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+    const promedioPorTrimestre = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}//reportes/notas/promedios_trimestres/`)
+            .then(res => {
+                console.log(res.data);
+                setPromedioTrimestre(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+    const listarAlumnos = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
+            .then(res => {
+                console.log(res.data);
+                setAlumnos(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
 
     const handleMateria = (e) => {
         setMateria(e.target.value);
@@ -127,14 +173,16 @@ export default function Notas() {
 
 
                                             }}
-                                        > Lengua</TableCell>
+                                        >
+                                            {notaTrimestre[0]?.materia}
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        puntos.map((p) => (
-                                            p.id == 1 ? (
-                                                <TableRow key={p.nota1}>
+                                        notaTrimestre.map((n, i) => (
+                                            n.id == 1 ? (
+                                                <TableRow key={i}>
                                                     <TableCell variant="head"
                                                         sx={{
                                                             color: 'black',
@@ -143,42 +191,45 @@ export default function Notas() {
                                                     >
                                                         Primer Trimestre
                                                     </TableCell>
-                                                    <TableCell>{p.nota1}</TableCell>
-                                                    <TableCell>{p.nota2}</TableCell>
-                                                    <TableCell>{p.nota3}</TableCell>
-                                                    <TableCell>{p.nota4}</TableCell>
-                                                    <TableCell>{p.nota5}</TableCell>
+                                                    <TableCell>{n.nota1}</TableCell>
+                                                    <TableCell>{n.nota2}</TableCell>
+                                                    <TableCell>{n.nota3}</TableCell>
+                                                    <TableCell>{n.nota4}</TableCell>
+                                                    <TableCell>{n.nota5}</TableCell>
                                                 </TableRow>
                                             ) : (
-                                                p.id === 2 ? (
-                                                    <TableRow key={p.nota1}>
+                                                n.id === 2 ? (
+                                                    <TableRow key={i}>
                                                         <TableCell variant="head"
                                                             sx={{
                                                                 color: 'black',
                                                                 backgroundColor: 'lightblue',
                                                             }}
                                                         >
-                                                            Segundo Trimestre</TableCell>
-                                                        <TableCell>{p.nota1}</TableCell>
-                                                        <TableCell>{p.nota2}</TableCell>
-                                                        <TableCell>{p.nota3}</TableCell>
-                                                        <TableCell>{p.nota4}</TableCell>
-                                                        <TableCell>{p.nota5}</TableCell>
+                                                            Segundo Trimestre
+                                                        </TableCell>
+                                                        <TableCell>{n.nota1}</TableCell>
+                                                        <TableCell>{n.nota2}</TableCell>
+                                                        <TableCell>{n.nota3}</TableCell>
+                                                        <TableCell>{n.nota4}</TableCell>
+                                                        <TableCell>{n.nota5}</TableCell>
                                                     </TableRow>
-                                                ) : (<TableRow key={p.nota1}>
-                                                    <TableCell variant="head"
-                                                        sx={{
-                                                            color: 'black',
-                                                            backgroundColor: 'lightblue',
-                                                        }}
-                                                    >
-                                                        Tercer Trimestre</TableCell>
-                                                    <TableCell>{p.nota1}</TableCell>
-                                                    <TableCell>{p.nota2}</TableCell>
-                                                    <TableCell>{p.nota3}</TableCell>
-                                                    <TableCell>{p.nota4}</TableCell>
-                                                    <TableCell>{p.nota5}</TableCell>
-                                                </TableRow>
+                                                ) : (
+                                                    <TableRow key={i}>
+                                                        <TableCell variant="head"
+                                                            sx={{
+                                                                color: 'black',
+                                                                backgroundColor: 'lightblue',
+                                                            }}
+                                                        >
+                                                            Tercer Trimestre
+                                                        </TableCell>
+                                                        <TableCell>{n.nota1}</TableCell>
+                                                        <TableCell>{n.nota2}</TableCell>
+                                                        <TableCell>{n.nota3}</TableCell>
+                                                        <TableCell>{n.nota4}</TableCell>
+                                                        <TableCell>{n.nota5}</TableCell>
+                                                    </TableRow>
                                                 )
                                             )
 
@@ -207,7 +258,7 @@ export default function Notas() {
                                                 borderBottomColor: 'black'
                                             }}
                                         >
-                                            Lengua
+                                            {promedioTrimestre[0]?.materia}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -253,8 +304,9 @@ export default function Notas() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody >
-                                    {promedio.map((row) => (
-                                        <TableRow key={row.nota1}>
+                                    {
+
+                                        <TableRow>
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
                                                     borderRightColor: 'black',
@@ -266,7 +318,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {row.promedio1}
+                                               {Math.round(promedioTrimestre[0]?.promedio)}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -279,7 +331,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {row.promedio2}
+                                                {Math.round(promedioTrimestre[1]?.promedio)}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -292,10 +344,10 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {row.promedio3}
+                                              {Math.round(promedioTrimestre[2]?.promedio)}
                                             </TableCell >
                                         </TableRow>
-                                    ))}
+                                    }
                                 </TableBody>
                             </Table>
                         </TableContainer>

@@ -22,7 +22,7 @@ export async function Preanalitico(idAlumno) {
     }
 }
 
-export async function PromedioXtrimestre(idAlumno) {
+export async function PromedioXtrimestre(idAlumno, idMateria) {
     try {
         return await Prisma.newPrisma().$queryRaw`select m.nombre as materia, idalumnoxcursoxdivision,t.trimestre as trimestre,
         (SELECT AVG(c)
@@ -34,7 +34,7 @@ export async function PromedioXtrimestre(idAlumno) {
        from historialnota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN trimestre as t ON t.id = hn.idtrimestre
-       where idalumnoxcursoxdivision =53 and idmateria = 5
+       where idalumnoxcursoxdivision =53 and idmateria = 1
        order by m.nombre asc, t.trimestre asc`
     } catch (error) {
         console.error(error);
@@ -43,12 +43,13 @@ export async function PromedioXtrimestre(idAlumno) {
     }
 }
 
-export async function notasTrimestres() {
+export async function notasTrimestres(idAlumno, idMateria) {
     try {
-        return await Prisma.newPrisma().$queryRaw`select idtrimestre,nota1,nota2,nota3,nota4,nota5 from historialnota 
+        return await Prisma.newPrisma().$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from historialnota hn
+         INNER JOIN materia as m ON m.id = hn.idmateria
         where idmateria = 1 and idalumnoxcursoxdivision = 53
-        group by idtrimestre,nota1,nota2,nota3,nota4,nota5`
-       
+        group by idtrimestre,nota1,nota2,nota3,nota4,nota5, m.nombre`
+
     } catch (error) {
         console.log(error);
     }
