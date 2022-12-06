@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { guardarImagen, traerImagen } from "../../../servicios/portada";
+import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 import { Typography, TextField, Button, Select, Box, Grid, MenuItem, InputLabel } from "@mui/material";
 
 

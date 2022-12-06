@@ -7,7 +7,7 @@ import Carrusel from "../../../components/carrusel";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import { guardarImagen, traerImagen } from "../../../servicios/portada";
+import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 
 export default function EditarFicha() {
     const [ficha, setFicha] = useState({

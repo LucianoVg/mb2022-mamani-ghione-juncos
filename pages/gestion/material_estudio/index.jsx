@@ -10,7 +10,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import axios from 'axios';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { useRouter } from 'next/router';
-import { guardarImagen, traerImagen } from '../../../servicios/portada';
+import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 import { Container } from '@mui/system';
 
 const MaterialEstudio = () => {

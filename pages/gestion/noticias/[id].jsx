@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { useAuth } from "../../../components/context/authUserProvider"
 import { Layout } from "../../../components/layout"
 import Loading from "../../../components/loading"
-import { guardarImagen, traerImagen } from "../../../servicios/portada"
+import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
@@ -139,11 +139,11 @@ export default function DetallesNoticia() {
 
                     </Grid>
 
-                    <Grid container 
+                    <Grid container
                         direction="row"
                         justifyContent="flex-start"
                         alignItems="center"
-                        sx={{marginLeft: "210px"}}
+                        sx={{ marginLeft: "210px" }}
                     >
                         <Grid item xs={2}>
                             <Button type="submit" variant="contained" color="primary">Actualizar</Button>
