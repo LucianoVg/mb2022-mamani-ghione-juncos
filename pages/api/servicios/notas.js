@@ -55,12 +55,9 @@ export async function notasTrimestres(idAlumno, idMateria) {
     }
 }
 
-
-
 export async function contarNotas() {
     try {
-<<<<<<< Updated upstream:servicios/notas.js
-        const conteo = await Prisma.newPrisma().$queryRaw`SELECT n.idmateria,
+        const conteo = await Prisma.newPrisma.$queryRaw`SELECT n.idmateria,
         (
              (select count(*) from historialnota where nota1= 1   and idmateria =2)+
              (select count(*) from historialnota where nota2= 1    and idmateria =2) +
@@ -137,13 +134,6 @@ export async function contarNotas() {
 
         return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
 
-=======
-        const count = await Prisma.newPrisma.nota.aggregate({
-            _count: ['nota1', 'nota2', 'nota3', 'nota4', 'nota5']
-        })
-        console.log(count);
-        return count
->>>>>>> Stashed changes:pages/api/servicios/notas.js
     } catch (error) {
         console.log(error);
     }

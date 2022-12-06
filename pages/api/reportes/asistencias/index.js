@@ -10,15 +10,9 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-<<<<<<< Updated upstream
-            
+
             let idAlumno = req.query
             const conteo = await ConteoAsistencias()
-=======
-
-            let { idAlumno, idMateria, } = req.query
-            const conteo = await ConteoAsistencias(idAlumno, idMateria)
->>>>>>> Stashed changes
 
             return res.status(200).json(conteo)
         } else {

@@ -2,8 +2,7 @@ import { Prisma } from "./prisma";
 
 export async function ConteoAsistencias() {
     try {
-<<<<<<< Updated upstream:servicios/asistencia.js
-        const conteo = await Prisma.newPrisma().$queryRaw`SELECT a.idalumnoxcursoxdivision,
+        const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.idalumnoxcursoxdivision,
         (SELECT COUNT(*) FROM asistencia WHERE presente = true   and idalumnoxcursoxdivision = 2) as presente,
         (SELECT COUNT(*) FROM asistencia WHERE ausente = true   and idalumnoxcursoxdivision = 2) as ausente,
         (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true  and idalumnoxcursoxdivision = 2) as ausentejustificado ,
@@ -15,30 +14,12 @@ export async function ConteoAsistencias() {
     where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and idalumnoxcursoxdivision = 2
     group by a.idalumnoxcursoxdivision`
 
-    return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
-=======
-        const conteo = await Prisma.newPrisma.asistencia.findMany({
-            where: {
-                AND: [
-                    {
-                        creadoen: {
-                            lte: '01/11/2022',
-                            gte: '01/10/2022',
-                        }
-                    },
-                    {
-                        idalumnoxcursoxdivision: 1
-                    }
-                ]
->>>>>>> Stashed changes:pages/api/servicios/asistencia.js
+        return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
 
     } catch (error) {
         console.error(error);
     }
 }
-
-
-
 
 
 export async function ListarCurso() {

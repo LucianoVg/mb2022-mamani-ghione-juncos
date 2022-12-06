@@ -1,4 +1,4 @@
-import { contarNotas } from "../../../../../servicios/notas";
+import { contarNotas } from "../../../servicios/notas";
 
 export default async function handler(req, res) {
     try {
