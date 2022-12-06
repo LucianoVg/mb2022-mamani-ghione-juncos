@@ -497,7 +497,8 @@ const MenuProps = {
         },
     },
 };
-function getStyles(materia, materias = [], theme = useTheme()) {
+function getStyles(materia, materias = []) {
+    const theme = useTheme()
     return {
         fontWeight:
             materias.findIndex(m => m.id === materia.id) === -1
