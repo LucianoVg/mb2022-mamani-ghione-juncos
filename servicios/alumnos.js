@@ -4,7 +4,12 @@ export default async function traerAlumnos() {
     try {
         const alumnos = await Prisma.newPrisma().alumnoxcursoxdivision.findMany({
             include: {
-                usuario: true
+                usuario: true,
+                cursoxdivision: {
+                    include: {
+                        curso: true
+                    }
+                }
             },
             orderBy: {
                 usuario: {

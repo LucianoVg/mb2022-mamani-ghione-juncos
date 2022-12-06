@@ -141,7 +141,8 @@ export default function Notas() {
                                                             backgroundColor: 'lightblue',
                                                         }}
                                                     >
-                                                        Primer Trimestre</TableCell>
+                                                        Primer Trimestre
+                                                    </TableCell>
                                                     <TableCell>{p.nota1}</TableCell>
                                                     <TableCell>{p.nota2}</TableCell>
                                                     <TableCell>{p.nota3}</TableCell>

@@ -22,6 +22,41 @@ export async function Preanalitico(idAlumno) {
     }
 }
 
+export async function PromedioXtrimestre(idAlumno) {
+    try {
+        return await Prisma.newPrisma().$queryRaw`select m.nombre as materia, idalumnoxcursoxdivision,t.trimestre as trimestre,
+        (SELECT AVG(c)
+               FROM   (VALUES(nota1),
+                             (nota2),
+                             (nota3),
+                             (nota4),
+                             (nota5)) T (c)) AS Promedio
+       from historialnota as hn
+       INNER JOIN materia as m ON m.id = hn.idmateria
+       INNER JOIN trimestre as t ON t.id = hn.idtrimestre
+       where idalumnoxcursoxdivision =53 and idmateria = 5
+       order by m.nombre asc, t.trimestre asc`
+    } catch (error) {
+        console.error(error);
+    } finally {
+        Prisma.disconnect()
+    }
+}
+
+export async function notasTrimestres() {
+    try {
+        return await Prisma.newPrisma().$queryRaw`select idtrimestre,nota1,nota2,nota3,nota4,nota5 from historialnota 
+        where idmateria = 1 and idalumnoxcursoxdivision = 53
+        group by idtrimestre,nota1,nota2,nota3,nota4,nota5`
+       
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
 export async function contarNotas() {
     try {
         const count = await Prisma.newPrisma().nota.aggregate({
