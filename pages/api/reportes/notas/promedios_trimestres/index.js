@@ -12,9 +12,9 @@ export default async function handler(req, res) {
         if (req.method === 'GET') {
 
             let { idAlumno, idMateria,  } = req.query
-            const division = await PromedioXtrimestre(idAlumno,idMateria)
+            const promedio = await PromedioXtrimestre(idAlumno,idMateria)
 
-            return res.status(200).json(division)
+            return res.status(200).json(promedio)
         } else {
             return res.status(405).send("Metodo no permitido")
         }

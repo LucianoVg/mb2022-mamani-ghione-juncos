@@ -1,5 +1,34 @@
 import { Prisma } from "./prisma";
 
+
+export async function ConteoAsistencias() {
+    try {
+        const conteo = await Prisma.newPrisma().asistencia.findMany({
+            where: {
+                AND: [
+                    {
+                        creadoen: {
+                            lte: '01/11/2022',
+                            gte: '01/10/2022',
+                        }
+                    },
+                    {
+                        idalumnoxcursoxdivision: 1
+                    }
+                ]
+
+            }
+        })
+        return conteo
+    } catch (error) {
+        console.log(error);
+    } finally {
+        Prisma.disconnect()
+    }
+}
+
+
+
 export async function ListarCurso() {
     try {
         const cursos = await Prisma.newPrisma().cursoxdivision.findMany({
