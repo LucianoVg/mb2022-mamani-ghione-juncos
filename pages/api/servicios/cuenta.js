@@ -182,7 +182,7 @@ export default function useFirebaseAuth() {
 
 export async function traerUsuario(correo, password) {
     try {
-        const usuario = await Prisma.newPrisma().usuario.findFirst({
+        const usuario = await Prisma.newPrisma.usuario.findFirst({
             include: {
                 rol: true,
                 alumnoxcursoxdivision: {

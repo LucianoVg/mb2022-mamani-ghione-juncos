@@ -122,6 +122,10 @@ export default function NuevoUsuario() {
         setGuardando(false)
         if (res.status === 200) {
             setMensaje('Usuario registrado! 😅🎉')
+            setTimeout(() => {
+                router.push('/gestion/usuarios/mantenimiento_usuario')
+            }, 2000);
+            // console.log(res.data);
         } else {
             setMensaje('Algo salió mal 😱📛')
         }

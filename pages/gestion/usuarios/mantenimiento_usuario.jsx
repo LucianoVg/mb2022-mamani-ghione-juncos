@@ -118,34 +118,38 @@ export default function MantenimientoUsuario() {
                 </Grid>
             </Grid>
 
-            <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Legajo</TableCell>
-                            <TableCell align="right">Nombre</TableCell>
-                            <TableCell align="right">Apellido</TableCell>
-                            <TableCell align="right">Direccion</TableCell>
-                            <TableCell align="right">Telefono</TableCell>
-                            <TableCell align="right">Localidad</TableCell>
-                            <TableCell align="right">Rol</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {paginacion.dataActual().map((u, i) => (
-                            <TableRow key={i}>
-                                <TableCell component="th" scope="row">{u.legajo}</TableCell>
-                                <TableCell align="right">{u.nombre}</TableCell>
-                                <TableCell align="right">{u.apellido}</TableCell>
-                                <TableCell align="right">{u.direccion}</TableCell>
-                                <TableCell align="right">{u.telefono}</TableCell>
-                                <TableCell align="right">{u.localidad}</TableCell>
-                                <TableCell align="right">{u.rol?.tipo}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            {
+                !cargandoInfo && (
+                    <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
+                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Legajo</TableCell>
+                                    <TableCell align="right">Nombre</TableCell>
+                                    <TableCell align="right">Apellido</TableCell>
+                                    <TableCell align="right">Direccion</TableCell>
+                                    <TableCell align="right">Telefono</TableCell>
+                                    <TableCell align="right">Localidad</TableCell>
+                                    <TableCell align="right">Rol</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {paginacion.dataActual().map((u, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell component="th" scope="row">{u.legajo}</TableCell>
+                                        <TableCell align="right">{u.nombre}</TableCell>
+                                        <TableCell align="right">{u.apellido}</TableCell>
+                                        <TableCell align="right">{u.direccion}</TableCell>
+                                        <TableCell align="right">{u.telefono}</TableCell>
+                                        <TableCell align="right">{u.localidad}</TableCell>
+                                        <TableCell align="right">{u.rol?.tipo}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )
+            }
             {
                 cargandoInfo && (
                     <Container sx={{ textAlign: 'center' }}>
@@ -154,7 +158,7 @@ export default function MantenimientoUsuario() {
                 )
             }
             {
-                usuarios.length > 0 && (
+                !cargandoInfo && usuarios.length > 0 && (
                     <Container maxWidth={'lg'}
                         sx={{ marginTop: 2, width: 'fit-content', textAlign: 'center' }}>
                         <Pagination
