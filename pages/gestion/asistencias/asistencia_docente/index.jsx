@@ -32,13 +32,13 @@ export default function Asistencias() {
     const [nombreDocente, setNombreDocente] = useState("")
     const [apellidoDocente, setApellidoDocente] = useState("")
     const [legajo, setLegajo] = useState("")
+    const [fecha, setFecha] = useState(null)
 
-    const [fecha, setFecha] = useState(new Date().toISOString())
     const { loading, authUser } = useAuth()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const router = useRouter()
-    const [asistenciaActual, setAsistenciaActual] = useState()
     const [cargandoInfo, setCargandoInfo] = useState(false)
+    const [guardando, setGuardando] = useState(false)
     let queryParams = []
 
     useEffect(() => {
@@ -74,6 +74,9 @@ export default function Asistencias() {
         if (legajo) {
             queryParams.push({ legajo })
         }
+        if (fecha) {
+            queryParams.push({ fecha: fecha.toLocaleDateString('es-AR').split('T')[0] })
+        }
         let params = ""
         queryParams.forEach(qp => {
             for (const key in qp) {
@@ -81,10 +84,13 @@ export default function Asistencias() {
             }
         })
         console.log(params);
+        setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente?${params}`)
+        queryParams = []
         if (res.data) {
             setAsistencias(res.data)
         }
+        setCargandoInfo(false)
     }
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -102,7 +108,7 @@ export default function Asistencias() {
         setLegajo(e.target.value)
     }
     const handleFecha = (value) => {
-        setFecha(value || new Date().toUTCString())
+        setFecha(new Date(value))
     }
 
     const bloquearCheck = (a) => {
@@ -116,6 +122,7 @@ export default function Asistencias() {
     });
 
     const onSave = async (id) => {
+        setGuardando(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/update/${id}`, {
             presente: presente,
             ausente: ausente,
@@ -126,6 +133,8 @@ export default function Asistencias() {
             mediaFaltaJustificada: mfj,
             idUsuario: usuario.id
         })
+        console.log(res.data);
+        setGuardando(false)
         onCancel()
         listarAsistencias()
     }
@@ -136,13 +145,6 @@ export default function Asistencias() {
             status: false,
             rowKey: null
         })
-        setPresente(false)
-        setAusente(false)
-        setLlegadaTarde(false)
-        setAj(false)
-        setLtj(false)
-        setMf(false)
-        setMfj(false)
     }
 
     const handlePresente = (e, checked) => {
@@ -312,7 +314,7 @@ export default function Asistencias() {
                                     {
                                         paginacion.dataActual().map((a, i) => (
                                             !a.presente && !a.ausente && !a.ausentejustificado && !a.llegadatarde && !a.llegadatardejustificada && !a.mediafalta && !a.mediafaltajustificada ? (
-                                                <TableRow key={i} >
+                                                <TableRow key={a.id} >
                                                     <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
                                                     <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
                                                     <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
@@ -358,7 +360,7 @@ export default function Asistencias() {
                                                                 <Button variant="contained"
                                                                     sx={{ backgroundColor: 'lightblue', color: 'black' }}
                                                                     onClick={() => onSave(a?.id)}>
-                                                                    Guardar
+                                                                    Cargar
                                                                 </Button>
                                                             </Stack>
                                                         }
@@ -367,15 +369,18 @@ export default function Asistencias() {
                                             ) : (
                                                 a.motivo ? (
                                                     <TableRow
-                                                        key={i} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
+                                                        key={a.id} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
                                                         <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                        <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
+                                                        <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
+
                                                                     <Switch
+                                                                        name="presente"
+                                                                        checked={presente}
                                                                         onChange={handlePresente}
                                                                     />
                                                                 ) :
@@ -390,8 +395,10 @@ export default function Asistencias() {
                                                         </TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                     <Switch
+                                                                        name="ausente"
+                                                                        checked={ausente}
                                                                         onChange={handleAusente}
                                                                     />
                                                                 ) :
@@ -406,8 +413,9 @@ export default function Asistencias() {
                                                         </TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                     <Switch
+                                                                        checked={aj}
                                                                         onChange={handleAj}
                                                                     />
                                                                 ) :
@@ -422,8 +430,11 @@ export default function Asistencias() {
                                                         </TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
+
                                                                     <Switch
+                                                                        name="llegadaTarde"
+                                                                        checked={llegadaTarde}
                                                                         onChange={handleLlegadaTarde}
                                                                     />
                                                                 ) :
@@ -433,19 +444,17 @@ export default function Asistencias() {
                                                                             checked={a.llegadatarde}
                                                                             disabled={bloquearCheck(a)}
                                                                         />
-
-
                                                                     )
                                                             }
                                                         </TableCell>
                                                         <TableCell className="col-md-1">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
-
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                     <Switch
+                                                                        name="ltj"
+                                                                        checked={ltj}
                                                                         onChange={handleLtj}
                                                                     />
-
                                                                 ) :
                                                                     (
                                                                         <Switch
@@ -455,12 +464,13 @@ export default function Asistencias() {
                                                                         />
                                                                     )
                                                             }
-
                                                         </TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                     <Switch
+                                                                        name="mf"
+                                                                        checked={mf}
                                                                         onChange={handleMf}
                                                                     />
                                                                 ) :
@@ -472,12 +482,14 @@ export default function Asistencias() {
                                                                         />
                                                                     )
                                                             }
-
                                                         </TableCell>
                                                         <TableCell className="col-md-1">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
+
                                                                     <Switch
+                                                                        name="mfj"
+                                                                        checked={mfj}
                                                                         onChange={handleMfj}
                                                                     />
                                                                 ) :
@@ -492,11 +504,14 @@ export default function Asistencias() {
                                                         </TableCell>
                                                         <TableCell className="col-md-2">
                                                             {
-                                                                inEditMode.status && inEditMode.rowKey === i ? (
+
+                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
+
                                                                     <React.Fragment>
                                                                         <Stack spacing={1} direction="row">
                                                                             <Button variant="contained" color="success"
-                                                                                onClick={(e) => onSave(a?.id)}>
+                                                                                onClick={() => handleOpen(a)}
+                                                                            >
                                                                                 Guardar
                                                                             </Button>
 
@@ -510,15 +525,16 @@ export default function Asistencias() {
                                                                     </React.Fragment>
                                                                 ) : (
                                                                     <Stack spacing={1} direction="row">
+
                                                                         <Button variant="contained"
                                                                             onClick={() => setInEditMode({
                                                                                 status: true,
-                                                                                rowKey: i
+                                                                                rowKey: a?.id
                                                                             })}
                                                                         >Editar</Button>
                                                                         <Button variant="contained"
                                                                             sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                            onClick={() => router.push(`/gestion/asistencias/asistencia_docente/${a?.id}`)}>
+                                                                            onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
                                                                             Info.
                                                                         </Button>
                                                                     </Stack>
@@ -528,16 +544,15 @@ export default function Asistencias() {
                                                     </TableRow>
                                                 ) :
                                                     (
-                                                        < TableRow key={i} >
+                                                        <TableRow key={a.id} >
 
                                                             <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                            <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
-                                                            {/* <TableCell className="col-md-1 text-capitalize">{a.usuario?.nombre} {a.usuario?.apellido}</TableCell> */}
+                                                            <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize" >{a.alumnoxcursoxdivision?.usuario?.apellido} </TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.alumnoxcursoxdivision?.usuario?.nombre}</TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
 
                                                                         <Switch
                                                                             name="presente"
@@ -556,7 +571,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                         <Switch
                                                                             name="ausente"
                                                                             checked={ausente}
@@ -574,7 +589,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                         <Switch
                                                                             checked={aj}
                                                                             onChange={handleAj}
@@ -591,7 +606,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
 
                                                                         <Switch
                                                                             name="llegadaTarde"
@@ -610,7 +625,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                         <Switch
                                                                             name="ltj"
                                                                             checked={ltj}
@@ -628,7 +643,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                         <Switch
                                                                             name="mf"
                                                                             checked={mf}
@@ -646,7 +661,7 @@ export default function Asistencias() {
                                                             </TableCell>
                                                             <TableCell className="col-md-1">
                                                                 {
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
 
                                                                         <Switch
                                                                             name="mfj"
@@ -666,12 +681,12 @@ export default function Asistencias() {
                                                             <TableCell className="col-md-2">
                                                                 {
 
-                                                                    inEditMode.status && inEditMode.rowKey === i ? (
+                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
 
                                                                         <React.Fragment>
                                                                             <Stack spacing={1} direction="row">
                                                                                 <Button variant="contained" color="success"
-                                                                                    onClick={() => onSave(a?.id)}
+                                                                                    onClick={() => handleOpen(a)}
                                                                                 >
                                                                                     Guardar
                                                                                 </Button>
@@ -690,12 +705,12 @@ export default function Asistencias() {
                                                                             <Button variant="contained"
                                                                                 onClick={() => setInEditMode({
                                                                                     status: true,
-                                                                                    rowKey: i
+                                                                                    rowKey: a?.id
                                                                                 })}
                                                                             >Editar</Button>
                                                                             <Button variant="contained"
                                                                                 sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                                onClick={() => router.push(`/gestion/asistencias/asistencia_docente/${a?.id}`)}>
+                                                                                onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
                                                                                 Info.
                                                                             </Button>
                                                                         </Stack>
@@ -708,6 +723,7 @@ export default function Asistencias() {
                                         )
                                         )
                                     }
+
                                 </TableBody>
                             </Table>
                         </TableContainer>

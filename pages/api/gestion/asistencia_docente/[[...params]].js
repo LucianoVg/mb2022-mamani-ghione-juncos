@@ -5,7 +5,7 @@ export default async function handler(
     res
 ) {
     try {
-        const { legajo, nombreDocente, apellidoDocente } = req.query
+        const { legajo, fecha, nombreDocente, apellidoDocente } = req.query
         let OR = []
         let options = {
             include: {
@@ -17,9 +17,7 @@ export default async function handler(
                 }
             },
             orderBy: {
-                usuario: {
-                    nombre: 'asc'
-                }
+                creadoen: 'desc'
             }
         }
 
@@ -52,6 +50,11 @@ export default async function handler(
                         }
                     }
                 }
+            })
+        }
+        if (fecha) {
+            OR.push({
+                creadoen: fecha
             })
         }
         if (OR.length) {
