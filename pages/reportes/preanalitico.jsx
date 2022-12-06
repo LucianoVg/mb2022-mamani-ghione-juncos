@@ -166,6 +166,451 @@ export default function Preanalitico() {
                 </Button>
             </Box>
 
+
+            <div>
+                <TableContainer component={Paper} >
+                    <Table aria-label="customized table" >
+                        <TableHead  >
+                            <TableRow >
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1, borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Primer Año
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1, borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Segundo Año
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Tercer Año
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Cuarto Año
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+
+                                >
+                                    Quinto Año
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderLeftColor: 'black',
+                                        borderLeft: 1,
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Sexto Año
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderLeftColor: 'black',
+                                        borderLeft: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody >
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[0]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[0]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[10]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[10]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[20]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[20]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[31]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[31]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[42]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[42]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[57]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[57]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
             <Container>
                 <TableContainer>
                     <Table size="small">
@@ -684,979 +1129,522 @@ export default function Preanalitico() {
             </Container>
 
 
-            {/* <div>
-                <TableContainer component={Paper} >
-                    <Table aria-label="customized table" >
-                        <TableHead  >
-                            <TableRow >
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1, borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Primer Año
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1, borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Segundo Año
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Tercer Año
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Cuarto Año
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-
-                                >
-                                    Quinto Año
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderLeftColor: 'black',
-                                        borderLeft: 1,
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Sexto Año
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderLeftColor: 'black',
-                                        borderLeft: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody >
-                            {preanalitico && preanalitico.map((p, i) => (
-                                <TableRow key={i}>
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 1 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 1 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 2 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 2 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 3 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 3 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 4 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 4 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 5 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 5 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 6 && (
-                                                p.materia
-                                            )
-                                        }
-                                    </TableCell >
-                                    <TableCell colSpan={1} align="center"
-                                        sx={{
-                                            borderLeftColor: 'black',
-                                            borderLeftt: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
-
-                                        }}
-                                    >
-                                        {
-                                            p.curso === 6 && (
-                                                Math.round(p.notafinal)
-                                            )
-                                        }
-                                    </TableCell >
-
-                                </TableRow>
-                            ))}
-
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div> */}
-
-           <Container maxWidth={'xl'}  style={{marginTop: "60px"}}>
-           <Grid container sx={{ marginBottom: '100px' }}>
-                <Grid item xs>
-                    <TableContainer component={Paper} style={{ borderRadius: "none" }}>
-                        <Table size="small" aria-label="customized table"  >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Primer Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    primerAño && primerAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-                                        </TableRow>
 
 
-                                    ))
-                                }
 
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+
+            <Container maxWidth={'xl'} style={{ marginTop: "60px" }}>
+                <Grid container sx={{ marginBottom: '100px' }}>
+                    <Grid item xs>
+                        <TableContainer component={Paper} style={{ borderRadius: "none" }}>
+                            <Table size="small" aria-label="customized table"  >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Primer Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        primerAño && primerAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+                                            </TableRow>
+
+
+                                        ))
+                                    }
+
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                    </Grid>
+                    <Grid item xs >
+                        <TableContainer component={Paper} >
+                            <Table size="small" aria-label="customized table" >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Segundo Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        segundoAño && segundoAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs >
+                        <TableContainer component={Paper} >
+                            <Table size="small" aria-label="customized table" >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Tercer Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        tercerAño && tercerAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs >
+                        <TableContainer component={Paper} >
+                            <Table size="small" aria-label="customized table" >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Cuarto Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        cuartoAño && cuartoAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs >
+                        <TableContainer component={Paper} >
+                            <Table size="small" aria-label="customized table" >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Quinto Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        quintoAño && quintoAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs >
+                        <TableContainer component={Paper} >
+                            <Table size="small" aria-label="customized table" >
+                                <TableHead >
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={3}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Sexto Año
+                                        </TableCell>
+
+                                    </TableRow>
+                                    <TableRow >
+                                        <TableCell align="center" colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Materia
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1, borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Nota
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody xs={2}>
+                                    {
+                                        //  sextoAño && sextoAño.map((p, i) => (
+                                        quintoAño && quintoAño.map((p, i) => (
+
+                                            <TableRow key={i}>
+                                                <TableCell colSpan={2} component="th" scope="row"
+                                                    sx={{
+                                                        borderRightColor: 'black',
+                                                        borderRight: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {p.materia}
+                                                </TableCell >
+                                                <TableCell colSpan={1} align="center"
+                                                    sx={{
+                                                        borderLeftColor: 'black',
+                                                        borderLeftt: 1,
+                                                        borderTop: 1,
+                                                        borderTopColor: 'black',
+                                                        borderBottom: 1,
+                                                        borderBottomColor: 'black'
+
+                                                    }}
+                                                >
+                                                    {Math.round(p.notafinal)}
+                                                </TableCell>
+
+
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
 
                 </Grid>
-                <Grid item xs >
-                    <TableContainer component={Paper} >
-                        <Table size="small" aria-label="customized table" >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Segundo Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    segundoAño && segundoAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-
-                                        </TableRow>
-
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs >
-                    <TableContainer component={Paper} >
-                        <Table size="small" aria-label="customized table" >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Tercer Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    tercerAño && tercerAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-
-                                        </TableRow>
-
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs >
-                    <TableContainer component={Paper} >
-                        <Table size="small" aria-label="customized table" >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Cuarto Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    cuartoAño && cuartoAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-
-                                        </TableRow>
-
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs >
-                    <TableContainer component={Paper} >
-                        <Table size="small" aria-label="customized table" >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Quinto Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    quintoAño && quintoAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-
-                                        </TableRow>
-
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs >
-                    <TableContainer component={Paper} >
-                        <Table size="small" aria-label="customized table" >
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell align="center" colSpan={3}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Sexto Año
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell align="center" colSpan={2}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Materia
-                                    </TableCell>
-                                    <TableCell align="center" colSpan={1}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                            borderRightColor: 'black',
-                                            borderRight: 1, borderBottom: 1,
-                                            borderBottomColor: 'black'
-                                        }}
-                                    >
-                                        Nota
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody xs={2}>
-                                {
-                                    //  sextoAño && sextoAño.map((p, i) => (
-                                    quintoAño && quintoAño.map((p, i) => (
-
-                                        <TableRow key={i}>
-                                            <TableCell colSpan={2} component="th" scope="row"
-                                                sx={{
-                                                    borderRightColor: 'black',
-                                                    borderRight: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {p.materia}
-                                            </TableCell >
-                                            <TableCell colSpan={1} align="center"
-                                                sx={{
-                                                    borderLeftColor: 'black',
-                                                    borderLeftt: 1,
-                                                    borderTop: 1,
-                                                    borderTopColor: 'black',
-                                                    borderBottom: 1,
-                                                    borderBottomColor: 'black'
-
-                                                }}
-                                            >
-                                                {Math.round(p.notafinal)}
-                                            </TableCell>
-
-
-                                        </TableRow>
-
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-
-            </Grid>
-           </Container>
+            </Container>
 
         </Layout >
     );
