@@ -57,14 +57,85 @@ export async function notasTrimestres(idAlumno, idMateria) {
 
 
 
-
 export async function contarNotas() {
     try {
-        const count = await Prisma.newPrisma().nota.aggregate({
-            _count: ['nota1', 'nota2', 'nota3', 'nota4', 'nota5']
-        })
-        console.log(count);
-        return count
+        const conteo = await Prisma.newPrisma().$queryRaw`SELECT n.idmateria,
+        (
+             (select count(*) from historialnota where nota1= 1   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 1    and idmateria =2) +
+             (select count(*) from historialnota where nota3= 1  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 1   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 1  and idmateria =2) 
+        ) as nota1,
+        (
+             (select count(*) from historialnota where nota1= 2  and idmateria =2)+
+             (select count(*) from historialnota where nota2= 2  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 2  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 2   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 2  and idmateria =2) 
+        ) as nota2,
+        (
+             (select count(*) from historialnota where nota1= 3   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 3  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 3  and idmateria =2)+
+             (select count(*) from historialnota where nota4=3   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 3  and idmateria =2) 
+        ) as nota3,
+        (
+             (select count(*) from historialnota where nota1= 4   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 4  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 4  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 4   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 4 and idmateria =2) 
+        ) as nota4,
+        (
+             (select count(*) from historialnota where nota1= 5   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 5  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 5  and idmateria =2) +
+             (select count(*) from historialnota where nota4= 5  and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 5  and idmateria =2) 
+        ) as nota5,
+        (
+             (select count(*) from historialnota where nota1= 6   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 6 and idmateria =2) +
+             (select count(*) from historialnota where nota3= 6  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 6   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 6  and idmateria =2) 
+        ) as nota6,
+        (
+             (select count(*) from historialnota where nota1= 7   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 7  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 7  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 7   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 7 and idmateria =2) 
+        ) as nota7,
+        (
+             (select count(*) from historialnota where nota1= 8   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 8  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 8  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 8   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 8  and idmateria =2) 
+        ) as nota8,
+        (
+             (select count(*) from historialnota where nota1= 9   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 9  and idmateria =2) +
+             (select count(*) from historialnota where nota3= 9  and idmateria =2)  +
+             (select count(*) from historialnota where nota4= 9   and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 9  and idmateria =2) 
+        ) as nota9,
+        (
+             (select count(*) from historialnota where nota1= 10   and idmateria =2)+
+             (select count(*) from historialnota where nota2= 10 and idmateria =2) +
+             (select count(*) from historialnota where nota3= 10  and idmateria =2)+
+             (select count(*) from historialnota where nota4= 10  and idmateria =2) +
+             (select count(*) from historialnota where  nota5= 10  and idmateria =2) 
+        ) as nota10
+        FROM historialnota as n
+        where idmateria= 2
+        group by n.idmateria`
+
+        return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+
     } catch (error) {
         console.log(error);
     }
