@@ -99,14 +99,32 @@ export default function Sancion() {
         }
     }
 
-    sanciones.map(s => {
-        console.log(s?.motivo)
-        console.log(s?.usuario?.rol?.tipo)
-    })
+ 
     return (
         <Layout>
             <h3>Buscar Alumno</h3>
-
+            <FormControl style={{ marginRight: "20px" }}>
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        // value={value}
+                        name="idAlumno"
+                        onChange={handleAlumno}
+                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                        options={alumnos}
+                        sx={{ width: "250px" }}
+                        isOptionEqualToValue={(option, value) =>
+                            option?.apellido === value?.apellido
+                        }
+                        noOptionsText={"No existe un alumno con ese nombre"}
+                        renderOption={(props, alumnos) => (
+                            <Box component="li" {...props} key={alumnos?.id}>
+                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                            </Box>
+                        )}
+                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                    />
+                </FormControl>
             <Box direction="row" rowSpacing={2}>
                 <TextField
                     sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}

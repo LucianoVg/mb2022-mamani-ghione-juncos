@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Button, Container, Box, Grid, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Pagination } from "@mui/material";
+import { Button, Container, Box, Grid,TextField, Autocomplete, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Pagination } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ const Sanciones = () => {
     const [cursos, setCursos] = useState()
     const { loading, authUser } = useAuth()
     const router = useRouter()
-    const [alumnos, setAlumnos] = useState()
+    const [alumnos, setAlumnos] = useState([])
     const [cargandoInfo, setCargandoInfo] = useState(false)
     const pageSize = 5
     const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
@@ -34,14 +34,14 @@ const Sanciones = () => {
         }
         console.log(e.target.value);
     }
-    const handleAlumno = (e) => {
-        if (Number(e.target.value) > 0) {
-            queryParams.push({ idAlumno: Number(e.target.value) })
-        } else {
-            traerSanciones()
-        }
-        console.log(e.target.value);
-    }
+    // const handleAlumno = (e) => {
+    //     if (Number(e.target.value) > 0) {
+    //         queryParams.push({ idAlumno: Number(e.target.value) })
+    //     } else {
+    //         traerSanciones()
+    //     }
+    //     console.log(e.target.value);
+    // }
     const buscarSanciones = async () => {
         let params = ""
         console.log(queryParams);
@@ -91,12 +91,29 @@ const Sanciones = () => {
         traerSanciones()
     }, [loading, authUser])
 
+
+
+
+    const [idAlumno, setIdAlumno] = useState(0)
+
+
+
+    const handleAlumno = (e, newValue) => {
+        if (Number(e.target.value) > 0) {
+            queryParams.push({ idAlumno: newValue.id })
+
+        }
+    }
+
+
+
+
     return (
         <Layout>
             <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
 
             <Box direction='row' sx={{ marginBottom: '10px' }}>
-                <FormControl>
+                {/* <FormControl>
                     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
                     <Select
                         sx={{ width: '230px', marginRight: '20px', marginBottom: '20px' }}
@@ -115,6 +132,28 @@ const Sanciones = () => {
                         }
 
                     </Select>
+                </FormControl> */}
+                <FormControl style={{ marginRight: "20px" }}>
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        // value={value}
+                        name="idAlumno"
+                        onChange={handleAlumno}
+                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                        options={alumnos}
+                        sx={{ width: "250px" }}
+                        isOptionEqualToValue={(option, value) =>
+                            option?.apellido === value?.apellido
+                        }
+                        noOptionsText={"No existe un alumno con ese nombre"}
+                        renderOption={(props, alumnos) => (
+                            <Box component="li" {...props} key={alumnos?.id}>
+                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                            </Box>
+                        )}
+                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                    />
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
