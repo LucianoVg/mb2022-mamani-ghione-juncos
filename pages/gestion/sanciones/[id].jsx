@@ -16,9 +16,9 @@ export default function DetalleSancion() {
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
     const [usuario, setUsuario] = useState({ id: 0 })
     const { loading, authUser } = useAuth()
-    const [idtiposancion, setIdtiposancion] = useState(0)
+    // const [idtiposancion, setIdtiposancion] = useState(0)
     const [idalumno, setIdalumno] = useState(0)
-    const [idcurso, setIdcurso] = useState(0)
+    // const [idcurso, setIdcurso] = useState(0)
     const [loadSancion, setLoadSancion] = useState(false)
     // const [editMode, setEditMode] = useState(false)
     const [motivo, setMotivo] = useState('')
@@ -74,10 +74,10 @@ export default function DetalleSancion() {
         }
     }
 
-    const handleTipoSancion = (e) => {
-        setIdtiposancion(Number(e.target.value))
-        // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
-    }
+    // const handleTipoSancion = (e) => {
+    //     setIdtiposancion(Number(e.target.value))
+    //     // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
+    // }
 
     // const handleIdAlumno = (e) => {
     //     setIdalumno(Number(e.target.value))
@@ -246,9 +246,11 @@ export default function DetalleSancion() {
                                         >
                                             Actualizar Sancion
                                         </Button>
-                                        <Button variant="outlined" size="small" component="a" href={'/gestion/sanciones'}>
-                                            Volver
-                                        </Button>
+                                        <Link href={'/gestion/sanciones'}>
+                                            <Button variant="outlined" size="small">
+                                                Volver
+                                            </Button>
+                                        </Link>
                                     </Box>
                                 )
                             }
