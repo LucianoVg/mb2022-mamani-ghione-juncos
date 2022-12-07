@@ -3,10 +3,29 @@ import { useAuth } from "./context/authUserProvider";
 import { Card, CardContent, Box, CardActions, Button, Typography, IconButton, CardMedia } from "@mui/material";
 import { useRouter } from "next/router";
 import { Edit } from "@mui/icons-material";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 
 const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const { authUser } = useAuth()
     const router = useRouter()
+    const [usuario, setUsuario] = useState([])
+
+
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+          setUsuario(res.data)
+        }
+      }
+
+    useEffect(() => {
+  
+        traerUsuario()
+      }, [])
+    
+
 
     return (
         <Box xs={3}>
@@ -21,7 +40,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                             alt="imagen"
                         />
                         {
-                            authUser && (
+                            authUser && usuario?.rol?.id === 3 || usuario?.rol?.id === 4 || usuario?.rol?.id === 8 || (
                                 <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 225, bottom: 235, }} >
                                     <IconButton  >
                                         <Edit style={{ color: 'black', fontSize: '27px' }} />

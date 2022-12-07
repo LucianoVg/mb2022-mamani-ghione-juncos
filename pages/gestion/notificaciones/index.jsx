@@ -206,7 +206,7 @@ const Notificaciones = () => {
                                 <>
                                     <h1>Notificaciones enviadas</h1>
                                     <Box sx={{ width: '350px' }}>
-                                        <List style={{ backgroundColor: "lightgray", border: '0 10px 15px black', borderRadius: '10px' }}>
+                                        <List style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)", border: '0 10px 15px black', borderRadius: '15px' }}>
                                             {/* <ListItem disablePadding
 
                                 >

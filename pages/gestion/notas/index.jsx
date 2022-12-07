@@ -20,6 +20,7 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
+    const [usuario, setUsuario] = useState([])
     const [divisiones, setDivisiones] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
@@ -46,6 +47,7 @@ export default function Notas() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerUsuario()
     }, [loading, authUser])
 
     useEffect(() => {
@@ -75,7 +77,12 @@ export default function Notas() {
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
     }
-
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario(res.data)
+        }
+    }
     const traerDivisiones = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/division`)
         if (res.data) {
@@ -199,7 +206,7 @@ export default function Notas() {
         }
     );
 
-    const min = 1
+    const min = 0
     const max = 10
     const [value, setValue] = useState(1)
     const [value2, setValue2] = useState(1)
@@ -464,181 +471,282 @@ export default function Notas() {
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 800 }}>
                                 <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">Legajo</TableCell>
-                                        <TableCell align="center">Sexo</TableCell>
-                                        <TableCell align="center">Nombre</TableCell>
-                                        <TableCell align="center">Apellido</TableCell>
-                                        <TableCell align="center">Materia</TableCell>
-                                        <TableCell align="center">Nota 1</TableCell>
-                                        <TableCell align="center">Nota 2</TableCell>
-                                        <TableCell align="center">Nota 3</TableCell>
-                                        <TableCell align="center">Nota 4</TableCell>
-                                        <TableCell align="center">Nota 5</TableCell>
-                                        <TableCell align="center">Trimestre</TableCell>
-                                        <TableCell align="center">Operacion</TableCell>
-                                    </TableRow>
+
+
+                                    {
+                                        usuario?.rol?.id === 3 || usuario?.rol?.id === 8 || (
+                                            <TableRow>
+                                                <TableCell align="center">Legajo</TableCell>
+                                                <TableCell align="center">Sexo</TableCell>
+                                                <TableCell align="center">Nombre</TableCell>
+                                                <TableCell align="center">Apellido</TableCell>
+                                                <TableCell align="center">Materia</TableCell>
+                                                <TableCell align="center">Nota 1</TableCell>
+                                                <TableCell align="center">Nota 2</TableCell>
+                                                <TableCell align="center">Nota 3</TableCell>
+                                                <TableCell align="center">Nota 4</TableCell>
+                                                <TableCell align="center">Nota 5</TableCell>
+                                                <TableCell align="center">Trimestre</TableCell>
+                                            </TableRow>
+                                        )
+
+                                    }
+                                    {
+
+                                        usuario?.rol?.id === 4 || usuario?.rol?.id === 1 || (
+                                            <TableRow>
+                                                <TableCell align="center">Legajo</TableCell>
+                                                <TableCell align="center">Sexo</TableCell>
+                                                <TableCell align="center">Nombre</TableCell>
+                                                <TableCell align="center">Apellido</TableCell>
+                                                <TableCell align="center">Materia</TableCell>
+                                                <TableCell align="center">Nota 1</TableCell>
+                                                <TableCell align="center">Nota 2</TableCell>
+                                                <TableCell align="center">Nota 3</TableCell>
+                                                <TableCell align="center">Nota 4</TableCell>
+                                                <TableCell align="center">Nota 5</TableCell>
+                                                <TableCell align="center">Trimestre</TableCell>
+                                                <TableCell align="center">Operacion</TableCell>
+                                            </TableRow>
+                                        )
+
+                                    }
+
                                 </TableHead>
                                 <TableBody>
+
                                     {
-                                        notas && paginacion.dataActual()?.map((n, i) => (
-                                            <TableRow key={i}>
-                                                <TableCell align="center">
-                                                    {n.alumnoxcursoxdivision?.usuario?.legajo}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {n.alumnoxcursoxdivision?.usuario?.sexo}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {n.alumnoxcursoxdivision?.usuario?.nombre}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {n.alumnoxcursoxdivision?.usuario?.apellido}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {n.materia?.nombre}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <FormControl>
+                                        usuario?.rol?.id === 3 ||  usuario?.rol?.id === 8 (
+
+                                            notas && paginacion.dataActual()?.map((n, i) => (
+                                                <TableRow key={i}>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.legajo}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.sexo}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.nombre}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.apellido}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.materia?.nombre}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <FormControl>
+                                                                    <TextField type="number"
+                                                                        margin="normal"
+                                                                        variant="standard"
+                                                                        name="nota1"
+                                                                        value={nota.nota1}
+                                                                        min={1}
+                                                                        InputProps={{
+                                                                            min, max,
+                                                                        }}
+                                                                        onChange={onChangeNotaColumna}
+                                                                    />
+                                                                </FormControl>
+                                                            ) :
+                                                                (
+                                                                    n.nota1
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
                                                                 <TextField type="number"
-                                                                    margin="normal"
+                                                                    name="nota2"
                                                                     variant="standard"
-                                                                    name="nota1"
-                                                                    value={nota.nota1}
-                                                                    InputProps={{
-                                                                        min, max,
-                                                                    }}
-                                                                    onChange={onChangeNotaColumna}
+                                                                    value={nota.nota2}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna2}
                                                                 />
-                                                            </FormControl>
-                                                        ) :
-                                                            (
-                                                                n.nota1
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota2"
-                                                                variant="standard"
-                                                                value={nota.nota2}
-                                                                InputProps={{ min, max }}
-                                                                onChange={onChangeNotaColumna2}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota2
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota3"
-                                                                variant="standard"
-                                                                value={nota.nota3}
-                                                                InputProps={{ min, max }}
-                                                                onChange={onChangeNotaColumna3}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota3
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota4"
-                                                                variant="standard"
-                                                                value={nota.nota4}
-                                                                InputProps={{ min, max }}
-                                                                onChange={onChangeNotaColumna4}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota4
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
-                                                            <TextField type="number"
-                                                                name="nota5"
-                                                                variant="standard"
-                                                                value={nota.nota5}
-                                                                InputProps={{ min, max }}
-                                                                onChange={onChangeNotaColumna5}
-                                                            />
-                                                        ) :
-                                                            (
-                                                                n.nota5
-                                                            )
-                                                    }
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {n.trimestre?.trimestre}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {
-                                                        inEditMode.status && inEditMode.rowKey === i ? (
+                                                            ) :
+                                                                (
+                                                                    n.nota2
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota3"
+                                                                    variant="standard"
+                                                                    value={nota.nota3}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna3}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota3
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota4"
+                                                                    variant="standard"
+                                                                    value={nota.nota4}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna4}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota4
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota5"
+                                                                    variant="standard"
+                                                                    value={nota.nota5}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna5}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota5
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.trimestre?.trimestre}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
 
-                                                            <React.Fragment>
-                                                                {
-                                                                    guardandoNotas ? (
-                                                                        <Container sx={{ textAlign: 'center' }}>
-                                                                            <Loading size={50} />
-                                                                        </Container>
-                                                                    ) : (
-                                                                        <Grid container spacing={11}>
-                                                                            <Grid item xs={5}>
-                                                                                <Button variant="contained"
-                                                                                    color="primary"
-                                                                                    size="small"
-                                                                                    onClick={() => onSave(n.id)}>
-                                                                                    Guardar
-                                                                                </Button>
-                                                                            </Grid>
-                                                                            <Grid item xs={5}>
-                                                                                <Button
-                                                                                    variant="outlined"
-                                                                                    color="secondary"
-                                                                                    size="small"
-                                                                                    onClick={() => onCancel()}
-                                                                                >
-                                                                                    Cancelar
-                                                                                </Button>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    )
-                                                                }
-
-                                                            </React.Fragment>
-                                                        ) : (
-                                                            <Button
-                                                                variant="contained"
-                                                                color="info"
-                                                                size="small"
-                                                                onClick={() => setInEditMode({
-                                                                    status: true,
-                                                                    rowKey: i
-                                                                })}
-                                                            >
-                                                                Editar
-                                                            </Button>
-                                                        )
-                                                    }
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
+                                        )
                                     }
+                                    {
+                                        usuario?.rol?.id === 4 && (
+                                            notas && paginacion.dataActual()?.map((n, i) => (
+                                                <TableRow key={i}>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.legajo}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.sexo}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.nombre}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.alumnoxcursoxdivision?.usuario?.apellido}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.materia?.nombre}
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <FormControl>
+                                                                    <TextField type="number"
+                                                                        margin="normal"
+                                                                        variant="standard"
+                                                                        name="nota1"
+                                                                        value={nota.nota1}
+                                                                        min={1}
+                                                                        InputProps={{
+                                                                            min, max,
+                                                                        }}
+                                                                        onChange={onChangeNotaColumna}
+                                                                    />
+                                                                </FormControl>
+                                                            ) :
+                                                                (
+                                                                    n.nota1
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota2"
+                                                                    variant="standard"
+                                                                    value={nota.nota2}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna2}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota2
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota3"
+                                                                    variant="standard"
+                                                                    value={nota.nota3}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna3}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota3
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota4"
+                                                                    variant="standard"
+                                                                    value={nota.nota4}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna4}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota4
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <TextField type="number"
+                                                                    name="nota5"
+                                                                    variant="standard"
+                                                                    value={nota.nota5}
+                                                                    InputProps={{ min, max }}
+                                                                    onChange={onChangeNotaColumna5}
+                                                                />
+                                                            ) :
+                                                                (
+                                                                    n.nota5
+                                                                )
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        {n.trimestre?.trimestre}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+
+
+                                        )
+
+
+
+                                    }
+
                                 </TableBody>
                             </Table>
                         </TableContainer>

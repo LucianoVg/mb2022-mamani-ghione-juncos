@@ -123,7 +123,7 @@ export default function Preanalitico() {
                         // value={value}
                         name="idAlumno"
                         onChange={handleAlumno}
-                        getOptionLabel={(alumnos2) => `${alumnos2?.usuario?.apellido} ${alumnos2.usuario?.nombre}`}
+                        getOptionLabel={(alumnos2) => `${alumnos2?.usuario?.apellido} ${alumnos2?.usuario?.nombre}`}
                         options={alumnos2}
                         sx={{ width: "250px" }}
                         isOptionEqualToValue={(option, value) =>

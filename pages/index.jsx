@@ -20,6 +20,7 @@ const Home = () => {
   const { authUser } = useAuth()
   const router = useRouter()
   const [cargando, setCargando] = useState(false)
+  const [usuario, setUsuario] = useState([])
 
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
@@ -36,8 +37,16 @@ const Home = () => {
     setCargando(false)
   }
 
+  const traerUsuario = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    if (res.data) {
+      setUsuario(res.data)
+    }
+  }
+
   useEffect(() => {
     traerNoticias()
+    traerUsuario()
   }, [])
 
   return (
@@ -51,7 +60,7 @@ const Home = () => {
           )
         }
         {
-          authUser && (
+          authUser && usuario?.rol?.id === 3 || usuario?.rol?.id === 4 || usuario?.rol?.id === 8 || (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
               Agregar
             </Button>

@@ -110,7 +110,7 @@ export default function Sancion() {
                         // value={value}
                         name="idAlumno"
                         onChange={handleAlumno}
-                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
                         options={alumnos}
                         sx={{ width: "250px" }}
                         isOptionEqualToValue={(option, value) =>

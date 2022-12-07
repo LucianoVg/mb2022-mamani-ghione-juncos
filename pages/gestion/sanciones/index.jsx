@@ -99,8 +99,9 @@ const Sanciones = () => {
 
 
     const handleAlumno = (e, newValue) => {
-        if (Number(e.target.value) > 0) {
+        if (newValue) {
             queryParams.push({ idAlumno: newValue.id })
+            console.log(newValue.id)
 
         }
     }

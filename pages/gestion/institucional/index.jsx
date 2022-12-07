@@ -8,12 +8,26 @@ import Loading from "../../../components/loading";
 import { Typography, Button, Container, Grid, Divider } from "@mui/material";
 import { AddBoxRounded } from "@mui/icons-material";
 import styles from "../../../styles/fontSize.module.css"
+import { Box } from "devextreme-react";
 
 export default function Institucional() {
     const [fichaInstitucional, setFichaInstitucional] = useState()
     const [cargando, setCargando] = useState(false)
     const { authUser } = useAuth()
+    const [usuario, setUsuario] = useState([])
 
+    useEffect(() => {
+
+        traerUsuario()
+
+    }, [usuario.id])
+
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ id: res.data?.id })
+        }
+    }
     const traerFicha = async () => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`)
@@ -27,23 +41,34 @@ export default function Institucional() {
 
     return (
         <Layout>
+
+
             {
-                !cargando && !fichaInstitucional && (
-                    <div>
+                !fichaInstitucional && (
+                    <div style={{ marginBottom: "20px" }}>
                         <Typography sx={{ mb: 3 }} component={'h3'} variant="h4">No hay ninguna ficha</Typography>
-                        {
-                            authUser && (
-                                <Link href={'/gestion/institucional/generar_ficha_institucional'}>
-                                    <Button variant="outlined">
-                                        <AddBoxRounded />
-                                        Nueva Ficha Institucional
-                                    </Button>
-                                </Link>
-                            )
-                        }
                     </div>
+
                 )
             }
+
+            {
+
+                !cargando && authUser && usuario?.rol?.id === 4 || usuario?.rol?.id === 3 || usuario?.rol?.id === 8 || usuario?.rol?.id === 2 || (
+                    <div style={{ marginBottom: "20px" }}>
+
+                        <Link href={'/gestion/institucional/generar_ficha_institucional'} >
+                            <Button variant="outlined">
+                                <AddBoxRounded />
+                                Nueva Ficha Institucional
+                            </Button>
+                        </Link>
+
+                    </div>
+
+                )
+            }
+
 
             {
                 !cargando && fichaInstitucional && (
