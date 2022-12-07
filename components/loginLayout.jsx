@@ -14,7 +14,7 @@ export default function LoginLayout({ children }) {
             <Head>
                 <title>Iniciar Sesion</title>
             </Head>
-            <Grid container component="main" sx={{ height: '50%', my: '3%' }}>
+            <Grid container component="main" sx={{ height: '570px', my: '3%' }}>
                 <Grid
                     item
                     xs={false}
