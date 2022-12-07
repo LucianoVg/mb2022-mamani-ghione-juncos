@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Button, Container, Box, Grid,TextField, Autocomplete, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Pagination } from "@mui/material";
+import { Button, Container, Box, Grid, TextField, Autocomplete, InputLabel, MenuItem, FormControl, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Pagination } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ const Sanciones = () => {
     const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
     const paginacion = usePagination(sanciones || [], pageSize)
     const [pagina, setPagina] = useState(1)
-    const queryParams = []
+    let queryParams = []
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -34,14 +34,6 @@ const Sanciones = () => {
         }
         console.log(e.target.value);
     }
-    // const handleAlumno = (e) => {
-    //     if (Number(e.target.value) > 0) {
-    //         queryParams.push({ idAlumno: Number(e.target.value) })
-    //     } else {
-    //         traerSanciones()
-    //     }
-    //     console.log(e.target.value);
-    // }
     const buscarSanciones = async () => {
         let params = ""
         console.log(queryParams);
@@ -53,17 +45,16 @@ const Sanciones = () => {
         setCargandoInfo(true)
         console.log(params);
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones?${params}`)
+        queryParams = []
         console.log(res.data);
         setSanciones(res.data)
         setCargandoInfo(false)
     }
-    const traerCursos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-            .then(res => {
-                if (res.data) {
-                    setCursos(res.data)
-                }
-            })
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data)
+        }
     }
     const traerSanciones = async () => {
         setCargandoInfo(true)
@@ -74,13 +65,11 @@ const Sanciones = () => {
         }
         setCargandoInfo(false)
     }
-    const traerAlumnos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
-            .then(res => {
-                if (res.data) {
-                    setAlumnos(res.data)
-                }
-            })
+    const traerAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+        if (res.data) {
+            setAlumnos(res.data)
+        }
     }
     useEffect(() => {
         if (!loading && !authUser) {
@@ -91,49 +80,19 @@ const Sanciones = () => {
         traerSanciones()
     }, [loading, authUser])
 
-
-
-
-    const [idAlumno, setIdAlumno] = useState(0)
-
-
-
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             queryParams.push({ idAlumno: newValue.id })
-            console.log(newValue.id)
-
+        } else {
+            traerSanciones()
         }
     }
-
-
-
 
     return (
         <Layout>
             <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
 
             <Box direction='row' sx={{ marginBottom: '10px' }}>
-                {/* <FormControl>
-                    <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
-                    <Select
-                        sx={{ width: '230px', marginRight: '20px', marginBottom: '20px' }}
-                        id="inputAlumno"
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        label="Alumno"
-                    >
-                        <MenuItem value={0}>Seleccione un alumno</MenuItem>
-                        {
-                            alumnos && alumnos.map((a, i) => (
-                                <MenuItem key={i} value={a.id}>
-                                    {a.usuario?.nombre} {a.usuario?.apellido}
-                                </MenuItem>
-                            ))
-                        }
-
-                    </Select>
-                </FormControl> */}
                 <FormControl style={{ marginRight: "20px" }}>
                     <Autocomplete
                         disablePortal
@@ -161,10 +120,8 @@ const Sanciones = () => {
                     <Select
                         sx={{ width: '100px', marginRight: '20px' }}
                         id="inputCurso"
-                        name="idCurso"
                         onChange={handleCurso}
-                        label="Curso"
-                    >
+                        label="Curso">
                         <MenuItem value={0}>Seleccione un curso</MenuItem>
                         {
                             cursos && cursos.map((c, i) => (
