@@ -507,7 +507,7 @@ export default function Notas() {
                                                                     variant="standard"
                                                                     name="nota1"
                                                                     value={nota.nota1}
-                                                                    inputProps={{
+                                                                    InputProps={{
                                                                         min, max,
                                                                     }}
                                                                     onChange={onChangeNotaColumna}
@@ -526,7 +526,7 @@ export default function Notas() {
                                                                 name="nota2"
                                                                 variant="standard"
                                                                 value={nota.nota2}
-                                                                inputProps={{ min, max }}
+                                                                InputProps={{ min, max }}
                                                                 onChange={onChangeNotaColumna2}
                                                             />
                                                         ) :
@@ -542,7 +542,7 @@ export default function Notas() {
                                                                 name="nota3"
                                                                 variant="standard"
                                                                 value={nota.nota3}
-                                                                inputProps={{ min, max }}
+                                                                InputProps={{ min, max }}
                                                                 onChange={onChangeNotaColumna3}
                                                             />
                                                         ) :
@@ -558,7 +558,7 @@ export default function Notas() {
                                                                 name="nota4"
                                                                 variant="standard"
                                                                 value={nota.nota4}
-                                                                inputProps={{ min, max }}
+                                                                InputProps={{ min, max }}
                                                                 onChange={onChangeNotaColumna4}
                                                             />
                                                         ) :
@@ -574,7 +574,7 @@ export default function Notas() {
                                                                 name="nota5"
                                                                 variant="standard"
                                                                 value={nota.nota5}
-                                                                inputProps={{ min, max }}
+                                                                InputProps={{ min, max }}
                                                                 onChange={onChangeNotaColumna5}
                                                             />
                                                         ) :
