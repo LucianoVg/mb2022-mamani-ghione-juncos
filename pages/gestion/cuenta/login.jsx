@@ -92,7 +92,7 @@ const Login = () => {
                     fullWidth
                     name="password"
                     onChange={handlePassword}
-                    label="Contrasenia"
+                    label="Contraseña"
                     type="password"
                     id="password"
                     autoComplete="current-password"
