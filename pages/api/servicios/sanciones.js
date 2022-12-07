@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export async function ReporteSanciones() {
+export async function ReporteSanciones(idAlumno) {
     try {
         const sanciones = await Prisma.newPrisma.sancion.findMany(
             {
@@ -25,6 +25,11 @@ export async function ReporteSanciones() {
                         }
                     },
                     tiposancion: true
+                },
+                where: {
+                    alumnoxcursoxdivision: {
+                        id: idAlumno
+                    }
                 },
                 orderBy: {
                     id: "desc"

@@ -169,7 +169,9 @@ export default function Preanalitico() {
 
             <div>
                 <TableContainer component={Paper} >
-                    <Table aria-label="customized table" >
+                    <Table size="small" aria-label="customized table"
+                    style={{minWidth: "600px"}}
+                    >
                         <TableHead  >
                             <TableRow >
                                 <TableCell align="center" colSpan={3}
@@ -245,7 +247,35 @@ export default function Preanalitico() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell colSpan={2}
+                                <TableCell align="center" colSpan={2}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    Materia
+                                </TableCell>
+
+                                <TableCell align="center" colSpan={1}
+                                    sx={{
+                                        color: 'black',
+                                        backgroundColor: 'lightblue',
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}>
+                                    Nota
+                                </TableCell>
+                                <TableCell align="center" colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -273,7 +303,7 @@ export default function Preanalitico() {
                                     }}>
                                     Nota
                                 </TableCell>
-                                <TableCell colSpan={2}
+                                <TableCell align="center" colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -301,7 +331,7 @@ export default function Preanalitico() {
                                     }}>
                                     Nota
                                 </TableCell>
-                                <TableCell colSpan={2}
+                                <TableCell align="center" colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -329,7 +359,7 @@ export default function Preanalitico() {
                                     }}>
                                     Nota
                                 </TableCell>
-                                <TableCell colSpan={2}
+                                <TableCell align="center" colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -357,35 +387,7 @@ export default function Preanalitico() {
                                     }}>
                                     Nota
                                 </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Materia
-                                </TableCell>
-
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
-                                        borderTop: 1,
-                                        borderTopColor: 'black',
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Nota
-                                </TableCell>
-                                <TableCell colSpan={2}
+                                <TableCell align="center" colSpan={2}
                                     sx={{
                                         color: 'black',
                                         backgroundColor: 'lightblue',
@@ -415,6 +417,11 @@ export default function Preanalitico() {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
+
+                        {/* -------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------- 
+ -------------------------------------------------------------------------------------------------------------------     */}
+
                         <TableBody >
 
                             <TableRow>
@@ -436,6 +443,7 @@ export default function Preanalitico() {
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -467,6 +475,7 @@ export default function Preanalitico() {
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -498,6 +507,7 @@ export default function Preanalitico() {
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -529,6 +539,7 @@ export default function Preanalitico() {
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -553,13 +564,14 @@ export default function Preanalitico() {
                                     }}
                                 >
                                     {
-                                        preanalitico[42]?.materia
+                                        preanalitico[43]?.materia
                                     }
                                 </TableCell >
                                 <TableCell colSpan={1} align="center"
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -569,7 +581,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[42]?.notafinal)
+                                        Math.round(preanalitico[43]?.notafinal)
 
                                     }
                                 </TableCell >
@@ -591,6 +603,7 @@ export default function Preanalitico() {
                                     sx={{
                                         borderLeftColor: 'black',
                                         borderLeftt: 1,
+                                        borderRight: 1,
                                         borderTop: 1,
                                         borderTopColor: 'black',
                                         borderBottom: 1,
@@ -607,10 +620,2742 @@ export default function Preanalitico() {
                             </TableRow>
 
 
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[1]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[1]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[11]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[11]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[21]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[21]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[32]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[32]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[44]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[44]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[58]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[58]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[2]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[2]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[12]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[12]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[22]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[22]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[33]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[33]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[45]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[45]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[59]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[59]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[3]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[3]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[13]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[13]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[23]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[23]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[34]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[34]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[46]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[46]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[60]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[60]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[4]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[4]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[14]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[14]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[24]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[24]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[35]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[35]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[47]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[47]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[61]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[61]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[5]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[5]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[15]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[15]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[25]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[25]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[36]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[36]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[48]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[48]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[62]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[62]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[6]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[6]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[16]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[16]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[26]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[26]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[37]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[37]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[49]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[49]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[63]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[63]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[7]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[7]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[17]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[17]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[27]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[27]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[38]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[38]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[50]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[50]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[64]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[64]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[8]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[8]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[18]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[18]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[28]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[28]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[39]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[39]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[51]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[51]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[65]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[65]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[9]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[9]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[19]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[19]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[29]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[29]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[40]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[40]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[52]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[52]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[66]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[66]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[9]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[9]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[19]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[19]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[30]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[30]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[41]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[41]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[53]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[53]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[67]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[67]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[9]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[9]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[19]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[19]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[30]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[30]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[42]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[42]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[54]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[54]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[68]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[68]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[9]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[9]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[19]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[19]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[30]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[30]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[42]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[42]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[55]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[55]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[69]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[69]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <TableRow>
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[9]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[9]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+                                        preanalitico[19]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[19]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[30]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[30]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[42]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[42]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+                                    }}
+                                >
+                                    {
+                                        preanalitico[56]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black'
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[56]?.notafinal)
+
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={2} component="th" scope="row"
+                                    sx={{
+                                        borderRightColor: 'black',
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+                                    }}
+                                >
+                                    {
+                                        preanalitico[69]?.materia
+                                    }
+                                </TableCell >
+                                <TableCell colSpan={1} align="center"
+                                    sx={{
+                                        borderLeftColor: 'black',
+                                        borderLeftt: 1,
+                                        borderRight: 1,
+                                        borderTop: 1,
+                                        borderTopColor: 'black',
+                                        borderBottom: 1,
+                                        borderBottomColor: 'black',
+                                        opacity: "0%"
+
+                                    }}
+                                >
+                                    {
+
+                                        Math.round(preanalitico[69]?.notafinal)
+
+                                    }
+                                </TableCell >
+                            </TableRow>
+
+
+
                         </TableBody>
                     </Table>
                 </TableContainer>
             </div>
+
+
+
+
+
+
+
+
+
+            {/* 
+
+
             <Container>
                 <TableContainer>
                     <Table size="small">
@@ -1643,8 +4388,8 @@ export default function Preanalitico() {
                         </TableContainer>
                     </Grid>
 
-                </Grid>
-            </Container>
+                </Grid> */}
+            {/* </Container> */}
 
         </Layout >
     );
