@@ -1,5 +1,44 @@
 import { Prisma } from "./prisma";
 
+export async function ReporteSanciones() {
+    try {
+        const sanciones = await Prisma.newPrisma.sancion.findMany(
+            {
+                include: {
+                    sancionxalumno: {
+                        include: {
+                            alumnoxcursoxdivision: {
+                                include: {
+                                    usuario: {
+                                        include: {
+                                            rol: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    usuario: {
+                        include: {
+                            rol: true
+                        }
+                    },
+                    tiposancion: true
+                },
+                orderBy: {
+                    id: "desc"
+                }
+            }
+        )
+        Prisma.disconnect()
+        return sanciones
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 export async function traerSanciones(options) {
     try {
         const sanciones = await Prisma.newPrisma.sancionxalumno.findMany(options)

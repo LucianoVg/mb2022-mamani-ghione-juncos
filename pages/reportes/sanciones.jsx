@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-
-
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useAuth } from '../../components/context/authUserProvider';
 import { Layout } from "../../components/layout";
-import { Box, Button, Stack, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, Autocomplete, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 
@@ -22,6 +23,54 @@ const rows = [
 ];
 
 export default function Sancion() {
+
+    const [alumnos, setAlumnos] = useState([])
+    const [sanciones, setSanciones] = useState([])
+    const [usuario, setUsuario] = useState({ id: 0 })
+    const { loading, authUser } = useAuth()
+
+    
+    useEffect(() => {
+        listarAlumnos()
+        listarSanciones()
+       }, [])
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+
+    }, [usuario.id, loading, authUser])
+
+
+    const listarSanciones = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/`)
+            .then(res => {
+                console.log(res.data);
+                setSanciones(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+  
+
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            console.log(res.data);
+            setUsuario({ id: res.data?.id })
+        }
+    }
+
+    const listarAlumnos = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
+            .then(res => {
+                console.log(res.data);
+                setAlumnos(res.data)
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
     const [documento, setDocumento] = useState("")
@@ -38,6 +87,22 @@ export default function Sancion() {
     const handleDocumento = (e) => {
         setDocumento(e.target.value)
     }
+
+
+    const [idAlumno, setIdAlumno] = useState(0)
+
+
+
+    const handleAlumno = (e, newValue) => {
+        if (newValue) {
+            setIdAlumno(newValue.id);
+        }
+    }
+
+    sanciones.map(s => {
+        console.log(s?.motivo)
+        console.log(s?.usuario?.rol?.tipo)
+    })
     return (
         <Layout>
             <h3>Buscar Alumno</h3>
@@ -130,8 +195,9 @@ export default function Sancion() {
                             </TableRow>
                         </TableHead>
                         <TableBody >
-                            {rows.map((row) => (
-                                <TableRow key={row.motivo}>
+                            {sanciones && sanciones.map((s,i) => (
+                             
+                                <TableRow key={i}>
                                     <TableCell colSpan={4} component="th" scope="row"
                                         sx={{
                                             borderRightColor: 'black',
@@ -143,7 +209,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {row.motivo}
+                                        {s.motivo}
                                     </TableCell >
                                     <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
@@ -156,7 +222,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {row.autoridad}
+                                        {s.usuario?.rol?.tipo}
                                     </TableCell >
                                     <TableCell colSpan={1} component="th" scope="row"
                                         sx={{
@@ -169,7 +235,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {row.fecha}
+                                        {s.fecha}
                                     </TableCell >
                                     <TableCell colSpan={1} component="th" scope="row"
                                         sx={{
@@ -182,7 +248,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {row.tipo}
+                                        {s.tiposancion?.tipo}
                                     </TableCell >
                                 </TableRow>
                             ))}
