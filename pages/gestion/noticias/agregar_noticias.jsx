@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Layout } from '../../../components/layout';
-import { guardarImagen, traerImagen } from '../../../servicios/portada';
+import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { Typography, Box, TextField, Button } from "@mui/material";
