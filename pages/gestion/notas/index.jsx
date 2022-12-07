@@ -50,14 +50,8 @@ export default function Notas() {
 
     useEffect(() => {
         traerDivisiones()
-    }, [])
-    useEffect(() => {
         traerMaterias()
-    }, [])
-    useEffect(() => {
         traerTrimestres()
-    }, [])
-    useEffect(() => {
         traerNotas(0)
     }, [])
 
