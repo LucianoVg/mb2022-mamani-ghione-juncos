@@ -20,7 +20,7 @@ const Home = () => {
   const { authUser } = useAuth()
   const router = useRouter()
   const [cargando, setCargando] = useState(false)
-  const [usuario, setUsuario] = useState([])
+  const [usuario, setUsuario] = useState()
 
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina)
@@ -60,7 +60,7 @@ const Home = () => {
           )
         }
         {
-          authUser && usuario?.rol?.id === 3 || usuario?.rol?.id === 4 || usuario?.rol?.id === 8 || (
+          authUser && (usuario?.rol?.tipo === 'Director' || usuario?.rol?.tipo === 'Administrador' || usuario?.rol?.tipo === 'Vicedirector') && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
               Agregar
             </Button>

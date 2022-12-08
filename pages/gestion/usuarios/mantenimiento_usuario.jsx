@@ -24,6 +24,7 @@ export default function MantenimientoUsuario() {
     const paginacion = usePagination(usuarios || [], pageSize)
     const [pagina, setPagina] = useState(1)
     const [cargandoInfo, setCargandoInfo] = useState(false)
+    const [usuario, setUsuario] = useState({ rol: '' })
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -33,9 +34,16 @@ export default function MantenimientoUsuario() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerUsuario()
         traerUsuarios()
     }, [authUser, loading])
 
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ rol: res.data?.rol?.tipo })
+        }
+    }
     const traerUsuarios = async () => {
         if (legajo) {
             queryParams.push({ legajo })
@@ -76,10 +84,14 @@ export default function MantenimientoUsuario() {
     }
 
     return (
-        <Layout title={'Mantenimiento de Usuarios'}>
-            <Link href={'/gestion/usuarios/nuevo'}>
-                <Button variant="outlined">Nuevo Usuario</Button>
-            </Link>
+        <Layout>
+            {
+                usuario.rol === 'Administrador' && (
+                    <Link href={'/gestion/usuarios/nuevo'}>
+                        <Button variant="outlined">Nuevo Usuario</Button>
+                    </Link>
+                )
+            }
             <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
 
             <Grid container xs={12}>

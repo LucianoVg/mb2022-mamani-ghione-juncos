@@ -63,6 +63,7 @@ const MaterialEstudio = () => {
         }
     }
     const handleDocs1erTrimestre = (e) => {
+        console.log(e.currentTarget.files);
         setDocs1erTrimestre(e.currentTarget.files)
     }
     const handleDocs2doTrimestre = (e) => {
@@ -234,7 +235,13 @@ const MaterialEstudio = () => {
                                     sx={{ width: '180px' }}
                                     spacing={4}
                                 >
-                                    Subir apunte
+                                    {
+                                        !docs1erTrimestre && <span>Subir apunte</span>
+                                    }
+                                    {
+                                        docs1erTrimestre &&
+                                        <span>{`${docs1erTrimestre.item(0)?.name}...`}</span>
+                                    }
                                     <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
                                         accept=".pdf,.xlsx,.pptx,.docx"
                                         multiple type="file" />
@@ -261,7 +268,13 @@ const MaterialEstudio = () => {
                                     sx={{ width: '180px' }}
                                     spacing={4}
                                 >
-                                    Subir apunte
+                                    {
+                                        !docs2doTrimestre && <span>Subir apunte</span>
+                                    }
+                                    {
+                                        docs2doTrimestre &&
+                                        <span>{`${docs2doTrimestre.item(0)?.name}...`}</span>
+                                    }
                                     <input hidden name='docs2doTrimestre' onChange={handleDocs2doTrimestre}
                                         accept=".pdf,.xlsx,.pptx,.docx"
                                         multiple type="file" />
@@ -288,7 +301,13 @@ const MaterialEstudio = () => {
                                     sx={{ width: '180px' }}
                                     spacing={4}
                                 >
-                                    Subir apunte
+                                    {
+                                        !docs3erTrimestre && <span>Subir apunte</span>
+                                    }
+                                    {
+                                        docs3erTrimestre &&
+                                        <span>{`${docs3erTrimestre.item(0)?.name}...`}</span>
+                                    }
                                     <input hidden name='docs3erTrimestre'
                                         onChange={handleDocs3erTrimestre}
                                         accept=".pdf,.xlsx,.pptx,.docx"

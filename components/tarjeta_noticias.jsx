@@ -10,22 +10,19 @@ import axios from 'axios'
 const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
     const { authUser } = useAuth()
     const router = useRouter()
-    const [usuario, setUsuario] = useState([])
+    const [usuario, setUsuario] = useState()
 
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-          setUsuario(res.data)
+            setUsuario(res.data)
         }
-      }
+    }
 
     useEffect(() => {
-  
         traerUsuario()
-      }, [])
-    
-
+    }, [])
 
     return (
         <Box xs={3}>
@@ -40,7 +37,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                             alt="imagen"
                         />
                         {
-                            authUser && usuario?.rol?.id === 3 || usuario?.rol?.id === 4 || usuario?.rol?.id === 8 || (
+                            authUser && (usuario?.rol?.tipo === 'Director' || usuario?.rol?.tipo === 'Administrador' || usuario?.rol?.tipo === 'Vicedirector') && (
                                 <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 225, bottom: 235, }} >
                                     <IconButton  >
                                         <Edit style={{ color: 'black', fontSize: '27px' }} />

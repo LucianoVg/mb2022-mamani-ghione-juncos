@@ -23,4 +23,27 @@ export default async function traerAlumnos() {
     }
 }
 
+export async function traerAlumno(legajo) {
+    try {
+        const alumno = await Prisma.newPrisma.alumnoxcursoxdivision.findFirst({
+            include: {
+                cursoxdivision: {
+                    include: {
+                        curso: true,
+                        division: true
+                    }
+                },
+                tutor: true
+            },
+            where: {
+                usuario: {
+                    legajo: legajo
+                }
+            }
+        })
+        return alumno
+    } catch (error) {
+        console.log(error);
+    }
+}
 

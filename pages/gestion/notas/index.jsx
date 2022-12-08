@@ -474,7 +474,8 @@ export default function Notas() {
 
 
                                     {
-                                        usuario?.rol?.tipo === '' || usuario?.rol?.id === 8 && (
+                                        (usuario?.rol?.tipo === 'Docente'
+                                            || usuario?.rol?.tipo === 'Vicedirector') && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -492,8 +493,8 @@ export default function Notas() {
 
                                     }
                                     {
-
-                                        usuario?.rol?.id === 4 || usuario?.rol?.id === 1 && (
+                                        (usuario?.rol?.tipo === 'Administrador'
+                                            || usuario?.rol?.tipo === 'Docente') && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -509,14 +510,12 @@ export default function Notas() {
                                                 <TableCell align="center">Operacion</TableCell>
                                             </TableRow>
                                         )
-
                                     }
-
                                 </TableHead>
                                 <TableBody>
-
                                     {
-                                        usuario?.rol?.id === 3 || usuario?.rol?.id === 8 && (
+                                        (usuario?.rol?.tipo === 'Director'
+                                            || usuario?.rol?.tipo === 'Vicedirector') && (
 
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
@@ -630,7 +629,7 @@ export default function Notas() {
                                         )
                                     }
                                     {
-                                        usuario?.rol?.id === 4 && (
+                                        usuario?.rol?.tipo === 'Administrador' && (
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
                                                     <TableCell align="center">
@@ -737,13 +736,59 @@ export default function Notas() {
                                                     <TableCell align="center">
                                                         {n.trimestre?.trimestre}
                                                     </TableCell>
+                                                    <TableCell align="center">
+                                                        {
+                                                            inEditMode.status && inEditMode.rowKey === i ? (
+                                                                <React.Fragment>
+                                                                    {
+                                                                        guardandoNotas ? (
+                                                                            <Container sx={{ textAlign: 'center' }}>
+                                                                                <Loading size={50} />
+                                                                            </Container>
+                                                                        ) : (
+                                                                            <Grid container spacing={11}>
+                                                                                <Grid item xs={5}>
+                                                                                    <Button variant="contained"
+                                                                                        color="primary"
+                                                                                        size="small"
+                                                                                        onClick={() => onSave(n.id)}>
+                                                                                        Guardar
+                                                                                    </Button>
+                                                                                </Grid>
+                                                                                <Grid item xs={5}>
+                                                                                    <Button
+                                                                                        variant="outlined"
+                                                                                        color="secondary"
+                                                                                        size="small"
+                                                                                        onClick={() => onCancel()}
+                                                                                    >
+                                                                                        Cancelar
+                                                                                    </Button>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        )
+                                                                    }
+
+                                                                </React.Fragment>
+                                                            ) : (
+                                                                <Button
+                                                                    variant="contained"
+                                                                    color="info"
+                                                                    size="small"
+                                                                    onClick={() => setInEditMode({
+                                                                        status: true,
+                                                                        rowKey: i
+                                                                    })}
+                                                                >
+                                                                    Editar
+                                                                </Button>
+                                                            )
+                                                        }
+                                                    </TableCell>
                                                 </TableRow>
                                             ))
-
-
                                         )
                                     }
-
                                 </TableBody>
                             </Table>
                         </TableContainer>
