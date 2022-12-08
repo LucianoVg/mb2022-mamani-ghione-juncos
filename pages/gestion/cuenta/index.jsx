@@ -91,7 +91,7 @@ export default function Detalles() {
                 </Stack>
                 <Stack
                     direction={{ xs: 'column', sm: 'row' }}
-                    spacing={{ xs: 2, sm: 2, md: 23 }}
+                    spacing={{ xs: 2, sm: 2, md: 23}}
                     sx={{ marginBottom: '30px' }}
                 >
                     <Typography variant="h5" sx={{ width: '200px' }} >
@@ -99,10 +99,14 @@ export default function Detalles() {
                         {usuario?.correo}
                     </Typography>
                     <Typography variant="h5" sx={{ width: '200px' }} >
+                        <strong>Localidad</strong> <br />
+                        {usuario?.localidad}
+                    </Typography>
+                    <Typography variant="h5" sx={{ width: '400px' }} >
                         <strong>Direccion</strong> <br />
                         {usuario?.direccion}
                     </Typography>
-                    <Typography variant="h5" sx={{ width: '200px' }} >
+                    <Typography variant="h5" sx={{ width: '150px' }} >
                         <strong>Telefono</strong> <br />
                         {usuario?.telefono}
                     </Typography>
