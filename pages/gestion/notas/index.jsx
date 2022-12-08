@@ -474,7 +474,7 @@ export default function Notas() {
 
 
                                     {
-                                        usuario?.rol?.id === 3 || usuario?.rol?.id === 8 || (
+                                        usuario?.rol?.tipo === '' || usuario?.rol?.id === 8 && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -493,7 +493,7 @@ export default function Notas() {
                                     }
                                     {
 
-                                        usuario?.rol?.id === 4 || usuario?.rol?.id === 1 || (
+                                        usuario?.rol?.id === 4 || usuario?.rol?.id === 1 && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -516,7 +516,7 @@ export default function Notas() {
                                 <TableBody>
 
                                     {
-                                        usuario?.rol?.id === 3 ||  usuario?.rol?.id === 8 (
+                                        usuario?.rol?.id === 3 || usuario?.rol?.id === 8 && (
 
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
@@ -742,9 +742,6 @@ export default function Notas() {
 
 
                                         )
-
-
-
                                     }
 
                                 </TableBody>
