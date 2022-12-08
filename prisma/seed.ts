@@ -18,6 +18,7 @@ import { discapacidad } from './seeds/discapacidad';
 import { roles } from './seeds/roles';
 import { menus } from './seeds/menus';
 import { docentes } from './seeds/docentes';
+// import { tutores } from './seeds/tutores';
 // import { roles } from './seeds/roles';
 
 const prisma = new PrismaClient();
@@ -43,6 +44,59 @@ const prisma = new PrismaClient();
 // }
 
 async function main() {
+
+    //  tutores.map(async (t) => {
+    //         const usuario = await prisma.usuario.create({
+    //             data: {
+    //                 nombre: t.nombre,
+    //                 apellido: t.apellido,
+    //                 correo: t.correo,
+    //                 idrol: t.idRol,
+    //                 legajo: t.legajo,
+    //                 login: t.login,
+    //                 localidad: t.localidad,
+    //                 password: t.password,
+    //                 sexo: t.sexo,
+    //                 telefono: t.telefono,
+    //                 direccion: t.direccion
+    //             }
+    //         })
+    //         console.log(usuario);
+    //     })
+    const tutores = await prisma.usuario.findMany({
+        select: {
+            apellido: true,
+            id: true
+        },
+        where: {
+            idrol: 6
+        }
+    })
+    console.log(tutores)
+
+    tutores.map(async (t) => {
+        const tutor = await prisma.alumnoxcursoxdivision.updateMany({
+            // include: {
+            //     usuario: {
+            //         select: {
+            //             apellido: true
+            //         }
+            //     }
+            // },
+            where: {
+                usuario: {
+                    apellido: t.apellido
+                }
+
+            },
+            data: {
+                idtutor: t.id
+            }
+        })
+        console.log(tutor);
+    })
+
+
     // const materias = await prisma.materia.findMany()
     // docentes.map(async (d) => {
     //     materias.map(async (m) => {
