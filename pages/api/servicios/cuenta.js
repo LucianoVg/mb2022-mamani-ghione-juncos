@@ -9,7 +9,6 @@ import {
 import { Prisma } from './prisma'
 import { useEffect, useState } from 'react'
 
-
 export async function registrarUsuario(
     login, nombre, apellido, correo,
     legajo, telefono, localidad,
@@ -37,9 +36,13 @@ export async function registrarUsuario(
                     idrol: Number(idRol),
                     sexo: sexo,
                     password: contrasenia,
-                    idtutor: Number(idTutor),
                     alumnoxcursoxdivision: {
                         create: {
+                            tutor: {
+                                connect: {
+                                    id: Number(idTutor)
+                                }
+                            },
                             cursoxdivision: {
                                 connect: {
                                     id: Number(idCurso)
@@ -74,7 +77,7 @@ export async function registrarUsuario(
             })
             return alumno
         }
-        if (esDocente) {
+        else if (esDocente) {
             let docente = await Prisma.newPrisma.usuario.create({
                 data: {
                     login: login,
@@ -125,6 +128,23 @@ export async function registrarUsuario(
                 console.log(docentexmateria);
             })
             return docente
+        } else {
+            let usuario = await Prisma.newPrisma.usuario.create({
+                data: {
+                    login: login,
+                    nombre: nombre,
+                    apellido: apellido,
+                    legajo: legajo,
+                    correo: correo,
+                    localidad: localidad,
+                    telefono: telefono,
+                    direccion: direccion,
+                    idrol: Number(idRol),
+                    sexo: sexo,
+                    password: contrasenia,
+                }
+            })
+            return usuario
         }
     } catch (error) {
         console.log(error);
@@ -184,17 +204,7 @@ export async function traerUsuario(correo, password) {
     try {
         const usuario = await Prisma.newPrisma.usuario.findFirst({
             include: {
-                rol: true,
-                alumnoxcursoxdivision: {
-                    include: {
-                        cursoxdivision: {
-                            include: {
-                                curso: true,
-                                division: true
-                            }
-                        }
-                    }
-                }
+                rol: true
             },
             where: {
                 AND: [
