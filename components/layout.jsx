@@ -50,10 +50,9 @@ export function Layout({ children }) {
             <Sidebar
                 menusGestion={menusGestion}
                 menusReportes={menusReportes} />
-            <Container maxWidth="vh" sx={{ mt: 10, mb: 4 }}>
-                <React.Fragment>
-                    {children}
-                </React.Fragment>
+
+            <Container sx={{ mt: 10, mb: 4 }}>
+                {children}
             </Container>
         </>
     );

@@ -8,21 +8,21 @@ datasource db {
 }
 
 model alumnoxcursoxdivision {
-  id                                             Int                   @id @default(autoincrement())
-  fechamatriculacion                             String?
-  idcursoxdivision                               Int
-  idusuario                                      Int
-  idestadoalumno                                 Int
-  idtutor                                        Int?
-  cursoxdivision                                 cursoxdivision        @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  estadoalumno                                   estadoalumno          @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario_alumnoxcursoxdivision_idtutorTousuario usuario?              @relation("alumnoxcursoxdivision_idtutorTousuario", fields: [idtutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario_alumnoxcursoxdivisionTousuario         usuario               @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  asistencia                                     asistencia[]
-  historialnota                                  historialnota[]
-  nota                                           nota[]
-  notificacionxalumno                            notificacionxalumno[]
-  sancionxalumno                                 sancionxalumno[]
+  id                  Int                   @id @default(autoincrement())
+  fechamatriculacion  String?
+  idcursoxdivision    Int
+  idusuario           Int
+  idestadoalumno      Int
+  idtutor             Int?
+  cursoxdivision      cursoxdivision        @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  estadoalumno        estadoalumno          @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tutor               usuario?              @relation(fields: [idtutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario             usuario               @relation("alumnoxcursoxdivision_idusuarioTousuario", fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  asistencia          asistencia[]
+  historialnota       historialnota[]
+  nota                nota[]
+  notificacionxalumno notificacionxalumno[]
+  sancionxalumno      sancionxalumno[]
 }
 
 model asistencia {
@@ -348,33 +348,33 @@ model trimestre {
 }
 
 model usuario {
-  id                                                           Int                     @id @default(autoincrement())
-  login                                                        String?
-  password                                                     String?
-  sexo                                                         String?
-  nombre                                                       String?
-  apellido                                                     String?
-  legajo                                                       String?
-  fechanacimiento                                              String?
-  correo                                                       String?
-  localidad                                                    String?
-  telefono                                                     String?
-  direccion                                                    String?
-  alergias                                                     String?
-  idrol                                                        Int
-  rol                                                          rol                     @relation(fields: [idrol], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  alumnoxcursoxdivision_alumnoxcursoxdivision_idtutorTousuario alumnoxcursoxdivision[] @relation("alumnoxcursoxdivision_idtutorTousuario")
-  alumnoxcursoxdivision_alumnoxcursoxdivisionTousuario         alumnoxcursoxdivision[]
-  asistencia                                                   asistencia[]
-  asistenciadocente                                            asistenciadocente[]
-  discapacidadxusuario                                         discapacidadxusuario[]
-  docentexmateria                                              docentexmateria[]
-  enfermedadesxusuario                                         enfermedadesxusuario[]
-  fechaexamen                                                  fechaexamen[]
-  fichainstitucional                                           fichainstitucional[]
-  materialestudio                                              materialestudio[]
-  nota                                                         nota[]
-  noticiasynovedades                                           noticiasynovedades[]
-  notificacion                                                 notificacion[]
-  sancion                                                      sancion[]
+  id                                                             Int                     @id @default(autoincrement())
+  login                                                          String?
+  password                                                       String?
+  sexo                                                           String?
+  nombre                                                         String?
+  apellido                                                       String?
+  legajo                                                         String?
+  fechanacimiento                                                String?
+  correo                                                         String?
+  localidad                                                      String?
+  telefono                                                       String?
+  direccion                                                      String?
+  alergias                                                       String?
+  idrol                                                          Int
+  rol                                                            rol                     @relation(fields: [idrol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoxcursoxdivision_alumnoxcursoxdivisionTousuario           alumnoxcursoxdivision[]
+  alumnoxcursoxdivision_alumnoxcursoxdivision_idusuarioTousuario alumnoxcursoxdivision[] @relation("alumnoxcursoxdivision_idusuarioTousuario")
+  asistencia                                                     asistencia[]
+  asistenciadocente                                              asistenciadocente[]
+  discapacidadxusuario                                           discapacidadxusuario[]
+  docentexmateria                                                docentexmateria[]
+  enfermedadesxusuario                                           enfermedadesxusuario[]
+  fechaexamen                                                    fechaexamen[]
+  fichainstitucional                                             fichainstitucional[]
+  materialestudio                                                materialestudio[]
+  nota                                                           nota[]
+  noticiasynovedades                                             noticiasynovedades[]
+  notificacion                                                   notificacion[]
+  sancion                                                        sancion[]
 }
