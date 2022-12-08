@@ -1,7 +1,5 @@
 #parent {
     width: 100%;
-
-
     overflow-x: hidden;
     /* elimine el position relative */
 
@@ -24,6 +22,6 @@
     /* Increase/Decrease this value for cross-browser compatibility */
 
     overflow-x: hidden;
-    overflow-y: initial;
+    overflow-y: scroll;
 
 }

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
-import { Container, Typography } from "@mui/material";
+import { Container, Box, Grid, Typography } from "@mui/material";
 import Loading from "../../../../components/loading";
 
 export default function DetallesNoticia() {
@@ -35,23 +35,66 @@ export default function DetallesNoticia() {
 
     return (
         <Layout>
-            {
-                noticia.id !== '' && (
-                    <Container sx={{ textAlign: 'center' }}>
-                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={500} height={400} />
+            <Container sx={{ marginTop: "100px", textAlign: 'center' }} >
+                {
+                    !cargando && noticia.id !== '' && (
 
-                        <Typography component={'h1'} variant="h3">{noticia.titulo}</Typography>
-                        <Typography component={'p'} variant="p">{noticia.descripcion}</Typography>
-                    </Container>
-                )
-            }
-            {
-                cargando && (
-                    <Container sx={{ textAlign: 'center' }}>
-                        <Loading />
-                    </Container>
-                )
-            }
-        </Layout>
+                     
+                        <Grid container
+                            direction="column"
+                            justifyContent="center"
+                            spacing={8}
+
+                        >
+                            <Grid item xs={12} >
+
+                                <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width="600" height="400"
+                                    style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)", border: '0 10px 15px black', borderRadius: '15px' }}
+
+                                />
+
+                            </Grid>
+                            <Grid item xs >
+                                <Box
+
+                                >
+                                    <Typography component={'h3'}
+                                        variant="h3"
+                                        id="fontSize"
+                                    >
+                                        {noticia.titulo}</Typography>
+                                    <Typography component={'p'}
+                                        variant="p"
+                                        id="fontSize2"
+                                        style={{
+                                            marginTop: "40px",
+                                            textAlign: "justify",
+                                            textJustify: "inter-word"
+                                        }}
+                                    >
+                                        {noticia.descripcion}</Typography>
+                                </Box>
+                            </Grid>
+                        </Grid>
+
+
+
+                    )
+                }
+
+                {
+                    cargando && (
+                        <Container sx={{ top: "60%", left: "70%" }}>
+                            <Loading />
+                        </Container>
+
+
+                    )
+                }
+            </Container>
+
+
+
+        </Layout >
     )
 }

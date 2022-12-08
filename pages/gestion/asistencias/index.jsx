@@ -297,7 +297,7 @@ export default function Asistencias() {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        height: "320px",
+                        height: "250px",
                         width: "min(100% - 15px, 500px)",
                         margin: "0 auto",
                         borderRadius: "25px",
