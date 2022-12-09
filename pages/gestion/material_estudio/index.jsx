@@ -59,7 +59,7 @@ const MaterialEstudio = () => {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data?.id, rol: res.data?.tol?.tipo })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
     const handleDocs1erTrimestre = (e) => {
@@ -165,13 +165,13 @@ const MaterialEstudio = () => {
         }
         traerUsuario()
         if (usuario.rol) {
-            // if (!tienePermisos()) {
-            //     router.push('/error')
-            // } else {
-            traerCursos()
-            traerMaterias()
-            traerTrimestres()
-            // }
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerCursos()
+                traerMaterias()
+                traerTrimestres()
+            }
         }
     }, [loading, authUser, usuario.id, usuario.rol])
     const tienePermisos = () => {

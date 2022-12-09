@@ -14,6 +14,7 @@ export default function FechasExamen() {
   const { loading, authUser } = useAuth()
   const router = useRouter()
   const [usuario, setUsuario] = useState({ id: 0, rol: '' })
+  const [cargando, setCargando] = useState(false)
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -43,12 +44,14 @@ export default function FechasExamen() {
     }
   }
   const traerExamenes = async () => {
+    setCargando(true)
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`)
     if (res.data) {
       let events = []
       res.data?.map(d => events.push({ text: d.titulo, startDate: d.fechainicio, endDate: d.fechafin, id: d.id, idusuario: d.idUsuario }))
       setFechasExamen(events)
     }
+    setCargando(false)
   }
   const guardarExamen = async (titulo, fechaInicio, fechaFin, idUsuario) => {
     setGuardandoEvento(true)
@@ -111,7 +114,7 @@ export default function FechasExamen() {
     <Layout>
       <Typography variant='h4' sx={{ textAlign: 'center' }}>Fechas de Examen</Typography>
       {
-        !guardandoEvento && (
+        !guardandoEvento && !cargando && (
           <Calendar data={fechasExamen}
             onAdd={onAdd}
             onUpdate={onUpdate}
@@ -119,7 +122,7 @@ export default function FechasExamen() {
         )
       }
       {
-        guardandoEvento && (
+        guardandoEvento || cargando && (
           <Container maxWidth={'md'} sx={{ m: 'auto', textAlign: 'center' }}>
             <Loading size={80} />
           </Container>
