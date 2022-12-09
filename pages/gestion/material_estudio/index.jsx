@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Alert, CircularProgress } from "@mui/material";
 
 import { Layout } from "../../../components/layout";
-import { Box, Button, Stack, IconButton, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, Stack, IconButton, FormControl, ListSubheader, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -207,19 +207,74 @@ const MaterialEstudio = () => {
                     </FormControl>
                 </Box>
                 <Box>
-                    <FormControl sx={{ width: '150px' }}>
-                        <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name='idMateria'
+                    <FormControl>
+                        <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+                        <Select id="inputMateria"
+                            onChange={handleMateria}
+                            name="idMateria"
                             value={idMateria}
                             label="Materia"
-                            onChange={handleMateria}
-                        >
+                            sx={{ width: '150px' }}>
+                            <ListSubheader>Primero</ListSubheader>
+                            {
+
+                                materias && materias?.map((m, i) => (
+
+                                    m?.idcurso === 1 && (
+
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
+
+                                ))
+                            }
+                            <ListSubheader>Segundo</ListSubheader>
+                            {
+
+                                materias && materias?.map((m, i) => (
+
+                                    m?.idcurso === 2 && (
+
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
+
+                                ))
+                            }
+                            <ListSubheader>Tercero</ListSubheader>
+                            {
+
+                                materias && materias?.map((m, i) => (
+
+                                    m?.idcurso === 3 && (
+
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
+                                ))
+                            }
+                            <ListSubheader>Cuarto</ListSubheader>
                             {
                                 materias && materias?.map((m, i) => (
-                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+
+                                    m?.idcurso === 4 && (
+
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
+                                ))
+                            }
+                            <ListSubheader>Quinto</ListSubheader>
+                            {
+                                materias && materias?.map((m, i) => (
+                                    m?.idcurso === 5 && (
+
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
+                                ))
+                            }
+                            <ListSubheader>Sexto</ListSubheader>
+                            {
+                                materias && materias?.map((m, i) => (
+                                    m?.idcurso === 6 && (
+                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                    )
                                 ))
                             }
                         </Select>
