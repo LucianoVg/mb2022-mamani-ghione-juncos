@@ -50,13 +50,7 @@ export default function Asistencias() {
         }
         traerUsuario()
         if (usuario.rol) {
-<<<<<<< Updated upstream
             if (!tienePermisos()) {
-=======
-            if (usuario.rol !== 'Administrador'
-                && usuario.rol !== 'Docente'
-                && usuario.rol !== 'Preceptor') {
->>>>>>> Stashed changes
                 router.push('/error')
             } else {
                 listarCursos()
@@ -65,15 +59,10 @@ export default function Asistencias() {
         }
     }, [loading, authUser, usuario.id, usuario.rol])
 
-<<<<<<< Updated upstream
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
             || usuario.rol === 'Preceptor'
-=======
-    const revisarPermisos = () => {
-
->>>>>>> Stashed changes
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

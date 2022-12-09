@@ -47,7 +47,6 @@ export default function Asistencias() {
         }
         traerUsuario()
         if (usuario.rol) {
-<<<<<<< Updated upstream
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -61,18 +60,6 @@ export default function Asistencias() {
             || usuario.rol === 'Vicedirector'
             || usuario.rol === 'Preceptor'
     }
-=======
-            if (usuario.rol !== 'Administrador'
-                && usuario.rol !== 'Docente'
-                && usuario.rol !== 'Preceptor') {
-                router.push('/error')
-            }
-        } else {
-            listarAsistencias()
-        }
-    }, [loading, authUser, usuario.id, usuario.rol])
-
->>>>>>> Stashed changes
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
