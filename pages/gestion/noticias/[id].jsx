@@ -14,20 +14,35 @@ export default function DetallesNoticia() {
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: ''
+        idUsuario: 0
     })
     const [noticiaActualizar, setNoticiaActualizar] = useState({
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: ''
+        idUsuario: 0
     })
     const router = useRouter()
     const hoy = new Date()
     const [imagen, setImagen] = useState(null)
     const [imgUrl, setImgUrl] = useState()
     const [guardando, setGuardando] = useState(false)
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
 
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+    }
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({
+                id: res.data.id,
+                rol: res.data?.rol?.tipo
+            })
+        }
+    }
     const handleImagen = (e) => {
         setImagen(e.target.files[0])
         setImgUrl(URL.createObjectURL(e.target.files[0]))
@@ -82,17 +97,25 @@ export default function DetallesNoticia() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        if (id) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
-                .then(res => {
-                    console.log(res.data);
-                    setNoticia(res.data)
-                }).catch(err => {
-                    console.error(err);
-                })
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerNoticia(id)
+            }
         }
-    }, [id, authUser, loading])
+    }, [id, authUser, loading, usuario.id, usuario.rol])
 
+    const traerNoticia = async (id) => {
+        if (id) {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
+            if (res.status === 200) {
+                console.log(res.data);
+                setNoticia(res.data)
+            }
+        }
+    }
     return (
         <Layout>
             <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2 }}>Detalles de la noticia</Typography>

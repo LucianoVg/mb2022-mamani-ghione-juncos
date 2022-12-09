@@ -37,39 +37,44 @@ const Login = () => {
     const onSubmitData = async (e) => {
         e.preventDefault()
         setIngresando(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}/${password}`)
-        if (res.data) {
-            console.log(res.data);
-            iniciarSesion(res.data.correo, res.data.password)
-                .then(user => {
-                    setIngresando(false)
-                    console.log(user);
-                }).catch(error => {
-                    console.log(error);
-                    if (res.data.correo === correo
-                        && res.data.password === password) {
-                        registrarse(res.data.correo, res.data.password)
-                            .then(user => {
-                                console.log(user);
-                                setIngresando(false)
-                            }).catch(error => {
-                                console.log(error);
-                                setIngresando(false)
-                            })
-                    } else {
+        try {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}/${password}`)
+            if (res.status === 200) {
+                console.log(res.data);
+                iniciarSesion(res.data.correo, res.data.password)
+                    .then(user => {
                         setIngresando(false)
-                        setError('Usuario y/o contraseña incorrectos')
-                        setTimeout(() => {
-                            setError('')
-                        }, 3000);
-                    }
-                })
-        } else {
-            setIngresando(false)
-            setError('No se encontró al usuario')
-            setTimeout(() => {
-                setError('')
-            }, 3000);
+                        console.log(user);
+                    }).catch(error => {
+                        console.log(error);
+                        if (res.data.correo === correo
+                            && res.data.password === password) {
+                            registrarse(res.data.correo, res.data.password)
+                                .then(user => {
+                                    console.log(user);
+                                    setIngresando(false)
+                                }).catch(error => {
+                                    console.log(error);
+                                    setIngresando(false)
+                                })
+                        } else {
+                            setIngresando(false)
+                            setError('Usuario y/o contraseña incorrectos')
+                            setTimeout(() => {
+                                setError('')
+                            }, 3000);
+                        }
+                    })
+            } else {
+                setIngresando(false)
+                setError('No se encontró al usuario')
+                setTimeout(() => {
+                    setError('')
+                }, 3000);
+            }
+        } catch (error) {
+            console.log(error);
+            router.push('/error')
         }
     }
 

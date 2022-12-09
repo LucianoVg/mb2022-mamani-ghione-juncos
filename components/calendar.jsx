@@ -1,11 +1,3 @@
-// import {
-//     Scheduler,
-//     MonthView,
-//     Appointments,
-//     AppointmentForm,
-//     AppointmentTooltip
-// } from '@devexpress/dx-react-scheduler-material-ui';
-// import { ViewState, EditingState, IntegratedEditing, Scheduler, MonthView, AppointmentForm } from '@devexpress/dx-react-scheduler';
 import Scheduler, { Editing } from 'devextreme-react/scheduler'
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -25,65 +17,40 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
         form.itemOption('mainGroup', 'items', mainGroupItems);
     }
     const { loading, authUser } = useAuth()
-    const [usuario, setUsuario] = useState([])
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     useEffect(() => {
         traerUsuario()
- 
-    }, [usuario.id])
+    }, [usuario.id, usuario.rol])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Docente'
+    }
 
     return (
         <div id="calendar">
-            {
-                usuario?.rol?.id === 3 || usuario?.rol?.id === 8 || (
-                    <Scheduler
-                        firstDayOfWeek={1}
-                        locale={'es-AR'}
-                        dataSource={data}
-                        defaultCurrentDate={new Date()}
-                        defaultCurrentView={'week'}
-                    onAppointmentFormOpening={onFormOpening}
-                    onAppointmentAdded={(e) => onAdd(e.appointmentData)}
-                    onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
-                    onAppointmentDeleted={(e) => onDelete(e.appointmentData)}
-                    >
+            <Scheduler
+                firstDayOfWeek={1}
+                locale={'es-AR'}
+                dataSource={data}
+                defaultCurrentDate={new Date()}
+                defaultCurrentView={'week'}
+                onAppointmentFormOpening={onFormOpening}
+                onAppointmentAdded={(e) => onAdd(e.appointmentData)}
+                onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
+                onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
 
-                        <Editing
-                        allowAdding={false}
-                        allowDeleting={false}
-                        allowUpdating={false} />
-                    </Scheduler>
-
-                )
-            }
-            {
-                usuario?.rol?.id === 4 || usuario?.rol?.id === 1 || (
-                    <Scheduler
-                        firstDayOfWeek={1}
-                        locale={'es-AR'}
-                        dataSource={data}
-                        defaultCurrentDate={new Date()}
-                        defaultCurrentView={'week'}
-                        onAppointmentFormOpening={onFormOpening}
-                        onAppointmentAdded={(e) => onAdd(e.appointmentData)}
-                        onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
-                        onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
-
-                        <Editing
-                            allowAdding={true}
-                            allowDeleting={true}
-                            allowUpdating={true} />
-                    </Scheduler>
-
-                )
-            }
+                <Editing
+                    allowAdding={tienePermisos()}
+                    allowDeleting={tienePermisos()}
+                    allowUpdating={tienePermisos()} />
+            </Scheduler>
         </div>
     )
 }

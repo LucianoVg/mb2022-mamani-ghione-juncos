@@ -18,14 +18,6 @@ import Loading from '../../../components/loading';
 export default function Asistencias() {
     const [pagina, setPagina] = useState(1)
     const pageSize = 5
-    // const [presente, setPresente] = useState(false)
-    // const [ausente, setAusente] = useState(false)
-    // const [llegadaTarde, setLlegadaTarde] = useState(false)
-    // const [aj, setAj] = useState(false)
-    // const [ltj, setLtj] = useState(false)
-    // const [mf, setMf] = useState(false)
-    // const [mfj, setMfj] = useState(false)
-    // const [motivo, setMotivo] = useState('')
     const [asistencias, setAsistencias] = useState([])
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
@@ -58,7 +50,13 @@ export default function Asistencias() {
         }
         traerUsuario()
         if (usuario.rol) {
+<<<<<<< Updated upstream
             if (!tienePermisos()) {
+=======
+            if (usuario.rol !== 'Administrador'
+                && usuario.rol !== 'Docente'
+                && usuario.rol !== 'Preceptor') {
+>>>>>>> Stashed changes
                 router.push('/error')
             } else {
                 listarCursos()
@@ -67,10 +65,15 @@ export default function Asistencias() {
         }
     }, [loading, authUser, usuario.id, usuario.rol])
 
+<<<<<<< Updated upstream
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
             || usuario.rol === 'Preceptor'
+=======
+    const revisarPermisos = () => {
+
+>>>>>>> Stashed changes
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -296,7 +299,6 @@ export default function Asistencias() {
                 <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencias</Typography>
 
                 {/* MODAL----------------------------------------------------------------------------------------------------------- */}
-                {/* <Button onClick={handleOpen} sx={{ mb: 3 }} variant="contained">Actualizar</Button> */}
                 <Modal
                     open={open}
                     aria-labelledby="parent-modal-title"
@@ -1024,63 +1026,3 @@ export default function Asistencias() {
         </Layout>
     );
 }
-{/* 
-<React.Fragment>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.presente}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.ausente}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.ausentejustificado}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.llegadatarde}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.llegadatardejustificada}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.mediafalta}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-1">
-                                                                        <Switch
-                                                                            checked={a.mediafaltajustificada}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    </TableCell>
-                                                                    <TableCell className="col-md-2">
-                                                                        <Stack spacing={1} direction="row">
-                                                                            <Button variant="contained"
-                                                                                onClick={() => setInEditMode({
-                                                                                    status: true,
-                                                                                    rowKey: i
-                                                                                })}
-                                                                            >Editar</Button>
-                                                                            <Button variant="contained"
-                                                                                sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                                onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
-                                                                                Info.
-                                                                            </Button>
-                                                                        </Stack>
-                                                                    </TableCell>
-                                                                    <React.Fragment /> */}

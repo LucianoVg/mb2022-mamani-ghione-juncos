@@ -14,7 +14,6 @@ export default async function handler(
         });
         if (req.method === 'GET') {
             const { params } = req.query
-            console.log(params);
             const usuario = await traerUsuario(params[0], params[1])
             return res.status(200).json(usuario)
         }

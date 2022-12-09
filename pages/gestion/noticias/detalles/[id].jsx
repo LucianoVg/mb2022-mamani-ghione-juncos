@@ -35,6 +35,7 @@ export default function DetallesNoticia() {
 
     return (
         <Layout>
+<<<<<<< Updated upstream
             <Container sx={{ marginTop: "100px", textAlign: 'center' }} >
                 {
                     !cargando && noticia.id !== '' && (
@@ -96,5 +97,25 @@ export default function DetallesNoticia() {
 
 
         </Layout >
+=======
+            {
+                noticia.id !== 0 && (
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={500} height={400} />
+
+                        <Typography component={'h1'} variant="h3">{noticia.titulo}</Typography>
+                        <Typography component={'p'} variant="p">{noticia.descripcion}</Typography>
+                    </Container>
+                )
+            }
+            {
+                cargando && (
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading />
+                    </Container>
+                )
+            }
+        </Layout>
+>>>>>>> Stashed changes
     )
 }

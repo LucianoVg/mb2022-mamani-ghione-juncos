@@ -110,7 +110,6 @@ export default function FechasExamen() {
   return (
     <Layout>
       <Typography variant='h4' sx={{ textAlign: 'center' }}>Fechas de Examen</Typography>
-
       {
         !guardandoEvento && (
           <Calendar data={fechasExamen}
@@ -119,7 +118,10 @@ export default function FechasExamen() {
             onDelete={onDelete} />
         )
       }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       {
         guardandoEvento && (
           <Container maxWidth={'md'} sx={{ m: 'auto', textAlign: 'center' }}>

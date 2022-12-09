@@ -20,7 +20,7 @@ const AgregarNoticias = () => {
     })
     var hoy = new Date();
     const [imagen, setImagen] = useState(null)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const router = useRouter()
     const [imagenPrev, setImagenPrev] = useState("/assets/img/placeholder.png")
     const [guardando, setGuardando] = useState(false)
@@ -41,7 +41,8 @@ const AgregarNoticias = () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             setUsuario({
-                id: res.data.id
+                id: res.data.id,
+                rol: res.data?.rol?.tipo
             })
         }
     }
@@ -50,9 +51,18 @@ const AgregarNoticias = () => {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-    }, [loading, authUser])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            }
+        }
+    }, [loading, authUser, usuario.id, usuario.rol])
 
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+    }
     const onSubmitData = async (e) => {
         e.preventDefault()
         // noticia.fecha = fecha

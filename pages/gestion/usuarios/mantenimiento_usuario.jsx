@@ -54,6 +54,9 @@ export default function MantenimientoUsuario() {
             setUsuario({ rol: res.data?.rol?.tipo })
         }
     }
+    const tienePermisos = () => {
+
+    }
     const traerUsuarios = async () => {
         if (legajo) {
             queryParams.push({ legajo })
