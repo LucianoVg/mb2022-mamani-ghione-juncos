@@ -13,7 +13,7 @@ export default function Error() {
                     <Grid item xs={5} sx={{ m: 'auto', mt: '15%', textAlign: 'center' }}>
                         <Avatar src={'/assets/img/error.svg'} sx={{ m: 'auto', width: 80, height: 80 }} />
                         <Typography variant="h5" sx={{ textAlign: 'center' }}>
-                            No poseee los permisos para ingresar a esta parte
+                            No posee los permisos para ingresar a esta parte
                         </Typography>
                         <Link href={'/'}>
                             <Button
