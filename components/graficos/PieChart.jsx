@@ -4,7 +4,9 @@ import { Chart as ChartJS } from "chart.js/auto"
 
 export default function NotasXmateria({ chartData, chartOptions  }) {
 
-    return <Pie data={chartData} options={chartOptions} />
+    return <Pie data={chartData} 
+    // options={chartOptions} 
+    />
 
 
 }
