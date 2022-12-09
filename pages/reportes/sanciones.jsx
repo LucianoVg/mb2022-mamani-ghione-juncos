@@ -26,20 +26,24 @@ export default function Sancion() {
 
     const [alumnos, setAlumnos] = useState([])
     const [sanciones, setSanciones] = useState([])
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
+    const router = useRouter()
 
-    
-    useEffect(() => {
-        listarAlumnos()
-        listarSanciones()
-       }, [])
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-
-    }, [usuario.id, loading, authUser])
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/')
+            } else {
+                listarAlumnos()
+                listarSanciones()
+            }
+        }
+    }, [usuario.id, usuario.rol, loading, authUser])
 
 
     const listarSanciones = () => {
@@ -51,13 +55,18 @@ export default function Sancion() {
                 console.error(err);
             })
     }
-  
 
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Estudiante'
+            || usuario.rol === 'Tutor'
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             console.log(res.data);
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
 
@@ -77,12 +86,10 @@ export default function Sancion() {
 
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
     const handleDocumento = (e) => {
         setDocumento(e.target.value)
@@ -99,32 +106,32 @@ export default function Sancion() {
         }
     }
 
- 
+
     return (
         <Layout>
             <h3>Buscar Alumno</h3>
             <FormControl style={{ marginRight: "20px" }}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                        options={alumnos}
-                        sx={{ width: "250px" }}
-                        isOptionEqualToValue={(option, value) =>
-                            option?.apellido === value?.apellido
-                        }
-                        noOptionsText={"No existe un alumno con ese nombre"}
-                        renderOption={(props, alumnos) => (
-                            <Box component="li" {...props} key={alumnos?.id}>
-                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Alumno" />}
-                    />
-                </FormControl>
+                <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    // value={value}
+                    name="idAlumno"
+                    onChange={handleAlumno}
+                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                    options={alumnos}
+                    sx={{ width: "250px" }}
+                    isOptionEqualToValue={(option, value) =>
+                        option?.apellido === value?.apellido
+                    }
+                    noOptionsText={"No existe un alumno con ese nombre"}
+                    renderOption={(props, alumnos) => (
+                        <Box component="li" {...props} key={alumnos?.id}>
+                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                        </Box>
+                    )}
+                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                />
+            </FormControl>
             <Box direction="row" rowSpacing={2}>
                 <TextField
                     sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
@@ -213,8 +220,8 @@ export default function Sancion() {
                             </TableRow>
                         </TableHead>
                         <TableBody >
-                            {sanciones && sanciones.map((s,i) => (
-                             
+                            {sanciones && sanciones.map((s, i) => (
+
                                 <TableRow key={i}>
                                     <TableCell colSpan={4} component="th" scope="row"
                                         sx={{

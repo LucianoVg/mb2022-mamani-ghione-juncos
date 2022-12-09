@@ -20,7 +20,7 @@ export default function Notas() {
     const [nombreAlumno, setNombreAlumno] = useState("")
     const [apellidoAlumno, setApellidoAlumno] = useState("")
 
-    const [usuario, setUsuario] = useState([])
+    const [usuario, setUsuario] = useState({ rol: '' })
     const [divisiones, setDivisiones] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
@@ -48,15 +48,24 @@ export default function Notas() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-    }, [loading, authUser])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerDivisiones()
+                traerMaterias()
+                traerTrimestres()
+                traerNotas(0)
+            }
+        }
+    }, [loading, authUser, usuario.rol])
 
-    useEffect(() => {
-        traerDivisiones()
-        traerMaterias()
-        traerTrimestres()
-        traerNotas(0)
-    }, [])
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Docente'
+    }
     const handleTrimestre = (e, value) => {
         console.log(value);
         setIndex(value)
@@ -80,7 +89,7 @@ export default function Notas() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario(res.data)
+            setUsuario({ rol: res.data?.rol?.tipo })
         }
     }
     const traerDivisiones = async () => {

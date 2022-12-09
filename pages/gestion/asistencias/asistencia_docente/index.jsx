@@ -35,7 +35,7 @@ export default function Asistencias() {
     const [fecha, setFecha] = useState(null)
 
     const { loading, authUser } = useAuth()
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const router = useRouter()
     const [cargandoInfo, setCargandoInfo] = useState(false)
     const [guardando, setGuardando] = useState(false)
@@ -46,13 +46,24 @@ export default function Asistencias() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        listarAsistencias()
-    }, [loading, authUser, usuario.id])
-
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                listarAsistencias()
+            }
+        }
+    }, [loading, authUser, usuario.id, usuario.rol])
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
     const listarAsistencias = async () => {

@@ -13,20 +13,33 @@ export default function FechasExamen() {
   const [fechasExamen, setFechasExamen] = useState()
   const { loading, authUser } = useAuth()
   const router = useRouter()
-  const [usuario, setUsuario] = useState({ id: '' })
+  const [usuario, setUsuario] = useState({ id: 0, rol: '' })
 
   useEffect(() => {
     if (!loading && !authUser) {
       router.push('/gestion/cuenta/login')
     }
     traerUsuario()
-    traerExamenes()
-  }, [loading, authUser, usuario.id])
+    if (usuario.rol) {
+      if (!tienePermisos()) {
+        router.push('/error')
+      } else {
+        traerExamenes()
+      }
+    }
+  }, [loading, authUser, usuario.id, usuario.rol])
 
+  const tienePermisos = () => {
+    return usuario.rol === 'Administrador'
+      || usuario.rol === 'Vicedirector'
+      || usuario.rol === 'Docente'
+      || usuario.rol === 'Estudiante'
+      || usuario.rol === 'Tutor'
+  }
   const traerUsuario = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
     if (res.data) {
-      setUsuario({ id: res.data?.id })
+      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
     }
   }
   const traerExamenes = async () => {
@@ -106,7 +119,7 @@ export default function FechasExamen() {
             onDelete={onDelete} />
         )
       }
-    
+
       {
         guardandoEvento && (
           <Container maxWidth={'md'} sx={{ m: 'auto', textAlign: 'center' }}>

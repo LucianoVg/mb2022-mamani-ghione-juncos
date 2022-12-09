@@ -20,6 +20,7 @@ const Sanciones = () => {
     const cantidadPaginas = Math.ceil(sanciones?.length / pageSize)
     const paginacion = usePagination(sanciones || [], pageSize)
     const [pagina, setPagina] = useState(1)
+    const [usuario, setUsuario] = useState({ rol: '' })
     let queryParams = []
 
     const handlerCambioPagina = (e, pagina) => {
@@ -71,15 +72,35 @@ const Sanciones = () => {
             setAlumnos(res.data)
         }
     }
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ rol: res.data?.rol?.tipo })
+            console.log(usuario);
+        }
+    }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/')
         }
-        traerCursos()
-        traerAlumnos()
-        traerSanciones()
-    }, [loading, authUser])
-
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerCursos()
+                traerAlumnos()
+                traerSanciones()
+            }
+        }
+    }, [loading, authUser, usuario.rol])
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+            || usuario.rol === 'Docente'
+    }
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             queryParams.push({ idAlumno: newValue.id })

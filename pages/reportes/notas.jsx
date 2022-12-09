@@ -52,21 +52,40 @@ export default function Notas() {
     const [notaTrimestre, setNotaTrimestre] = useState([])
     const [promedioTrimestre, setPromedioTrimestre] = useState([])
     const [alumnos, setAlumnos] = useState([])
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
+    const router = useRouter()
 
-    useEffect(() => {
-        listarAlumnos()
-        promedioPorTrimestre()
-        notasPorTrimestre()
-    }, [])
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                listarAlumnos()
+                promedioPorTrimestre()
+                notasPorTrimestre()
+            }
+        }
+    }, [usuario.id, usuario.rol, loading, authUser])
 
-    }, [usuario.id, loading, authUser])
-
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            console.log(res.data);
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+        }
+    }
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Estudiante'
+            || usuario.rol === 'Tutor'
+    }
     const notasPorTrimestre = () => {
         axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/`)
             .then(res => {
@@ -85,14 +104,12 @@ export default function Notas() {
                 console.error(err);
             })
     }
-    const listarAlumnos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
-            .then(res => {
-                console.log(res.data);
-                setAlumnos(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+    const listarAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
+        if (res.status === 200) {
+            console.log(res.data);
+            setAlumnos(res.data)
+        }
     }
 
     const handleMateria = (e) => {
@@ -101,12 +118,10 @@ export default function Notas() {
 
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
 
     const handleApellidoAlumno = (e) => {
         setApellidoAlumno(e.target.value)
-        setAlumno(`${nombreAlumno} ${apellidoAlumno}`)
     }
     const handleDocumento = (e) => {
         setDocumento(e.target.value)
@@ -318,7 +333,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                               {Math.round(promedioTrimestre[0]?.promedio)}
+                                                {Math.round(promedioTrimestre[0]?.promedio)}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -344,7 +359,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                              {Math.round(promedioTrimestre[2]?.promedio)}
+                                                {Math.round(promedioTrimestre[2]?.promedio)}
                                             </TableCell >
                                         </TableRow>
                                     }

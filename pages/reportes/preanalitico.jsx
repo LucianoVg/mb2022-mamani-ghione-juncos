@@ -26,23 +26,26 @@ const rows = [
 ];
 
 export default function Preanalitico() {
-
-
     const [alumnos, setAlumnos] = useState([])
     const alumnos2 = alumnos.filter(a => a.cursoxdivision?.curso?.id === 6)
-
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const router = useRouter()
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
-    useEffect(() => {
-        listarAlumnos()
-        traerPreanalitico()
-    }, [])
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-
-    }, [usuario.id, loading, authUser])
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                listarAlumnos()
+                traerPreanalitico()
+            }
+        }
+    }, [usuario.id, usuario.rol, loading, authUser])
 
 
     const [preanalitico, setPreanalitico] = useState([])
@@ -61,16 +64,18 @@ export default function Preanalitico() {
     const quintoAño = preanalitico.filter(p => p.curso === 5)
     const sextoAño = preanalitico.filter(p => p.curso === 6)
 
-
-
-
-
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             console.log(res.data);
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
+    }
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Secretario'
+            || usuario.rol === 'Tutor'
     }
 
     const listarAlumnos = () => {
@@ -170,7 +175,7 @@ export default function Preanalitico() {
             <div>
                 <TableContainer component={Paper} >
                     <Table size="small" aria-label="customized table"
-                    style={{minWidth: "600px"}}
+                        style={{ minWidth: "600px" }}
                     >
                         <TableHead  >
                             <TableRow >

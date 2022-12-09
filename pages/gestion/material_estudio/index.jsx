@@ -27,7 +27,7 @@ const MaterialEstudio = () => {
     const [docs2doTrimestre, setDocs2doTrimestre] = useState(null)
     const [docs3erTrimestre, setDocs3erTrimestre] = useState(null)
     const [trimestres, setTrimestres] = useState()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const [subiendoT1, setSubiendoT1] = useState(false)
     const [subiendoT2, setSubiendoT2] = useState(false)
     const [subiendoT3, setSubiendoT3] = useState(false)
@@ -59,7 +59,7 @@ const MaterialEstudio = () => {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.tol?.tipo })
         }
     }
     const handleDocs1erTrimestre = (e) => {
@@ -164,11 +164,21 @@ const MaterialEstudio = () => {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        traerCursos()
-        traerMaterias()
-        traerTrimestres()
-    }, [loading, authUser, usuario.id])
-
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerCursos()
+                traerMaterias()
+                traerTrimestres()
+            }
+        }
+    }, [loading, authUser, usuario.id, usuario.rol])
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Docente'
+            || usuario.rol === 'Estudiante'
+    }
     return (
         <Layout>
             <Typography variant='h3' sx={{ mb: 2 }}>Material de Estudio</Typography>

@@ -14,7 +14,7 @@ export default function DetalleSancion() {
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
     // const [idtiposancion, setIdtiposancion] = useState(0)
     const [idalumno, setIdalumno] = useState(0)
@@ -31,17 +31,29 @@ export default function DetalleSancion() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        traerCursos()
-        traerAlumnos()
-        traerTiposSancion()
-        traerSancion(id)
-    }, [loading, authUser, id, usuario.id])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerCursos()
+                traerAlumnos()
+                traerTiposSancion()
+                traerSancion(id)
+            }
+        }
+    }, [loading, authUser, id, usuario.id, usuario.rol])
 
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+            || usuario.rol === 'Docente'
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
 
@@ -73,16 +85,6 @@ export default function DetalleSancion() {
             setTipoSanciones(res.data)
         }
     }
-
-    // const handleTipoSancion = (e) => {
-    //     setIdtiposancion(Number(e.target.value))
-    //     // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
-    // }
-
-    // const handleIdAlumno = (e) => {
-    //     setIdalumno(Number(e.target.value))
-    //     setEditMode((idalumno || idcurso) && idtiposancion && motivo)
-    // }
     const handleMotivo = (e) => {
         setMotivo(e.target.value)
         // setEditMode((idalumno || idcurso) && idtiposancion && motivo)

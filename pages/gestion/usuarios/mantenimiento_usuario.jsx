@@ -35,9 +35,19 @@ export default function MantenimientoUsuario() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        traerUsuarios()
-    }, [authUser, loading])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerUsuarios()
+            }
+        }
+    }, [authUser, loading, usuario.id, usuario.rol])
 
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Secretario'
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {

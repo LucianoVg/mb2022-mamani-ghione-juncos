@@ -10,14 +10,9 @@ import { useAuth } from "../../../../components/context/authUserProvider";
 
 
 export default function DetallesNoticia() {
-    const [cargando, setCargando] = useState(true)
+    const [cargando, setCargando] = useState(false)
     const [notificacion, setNotificacion] = useState()
-    // const [actualizar, setActualizar] = useState({
-    //     id: '',
-    //     asunto: '',
-    //     contenido: ''
-    // })
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
 
     const [asunto, setAsunto] = useState('')
@@ -37,7 +32,7 @@ export default function DetallesNoticia() {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             console.log(res.data);
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
 
@@ -49,22 +44,30 @@ export default function DetallesNoticia() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        traerDetalle()
-        setCargando(false)
-    }, [id, cargando, usuario.id, loading, authUser])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerDetalle()
+            }
+        }
+    }, [id, cargando, usuario.id, usuario.rol, loading, authUser])
 
-    // const [inEditMode, setInEditMode] = useState({
-    //     status: false,
-    //     rowKey: null
-    // });
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+    }
     const traerDetalle = async () => {
         if (id) {
+            setCargando(true)
             const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/detalles/${id}`)
             if (res.data) {
                 console.log(res.data);
                 setNotificacion(res.data)
             }
+            setCargando(false)
         }
     }
     const onSave = async (id) => {

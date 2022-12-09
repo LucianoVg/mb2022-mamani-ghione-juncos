@@ -3,18 +3,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Container, Typography, TextField, Button,Autocomplete, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
+import { Container, Typography, TextField, Button, Autocomplete, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 import Loading from "../../../components/loading";
 
 export default function NuevaSancion() {
     const [sancion, setSancion] = useState({ idAlumno: 0, idCurso: 0, motivo: '', idTipoSancion: 0 })
 
-   
+
     const [cursos, setCursos] = useState()
     const [tipoSanciones, setTipoSanciones] = useState()
     const router = useRouter()
     const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
     const [guardando, setGuardando] = useState(false)
 
@@ -26,16 +26,24 @@ export default function NuevaSancion() {
             router.push('/')
         }
         traerUsuario()
-        traerAlumnos()
-        traerCursos()
-        traerTiposSancion()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerAlumnos()
+                traerCursos()
+                traerTiposSancion()
+            }
+        }
+    }, [loading, authUser, usuario.id, usuario.rol])
 
-    }, [loading, authUser, usuario.id])
-
-
-
-  
-
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+            || usuario.rol === 'Docente'
+    }
     const traerTiposSancion = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
         if (res.data) {
@@ -57,7 +65,7 @@ export default function NuevaSancion() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ id: res.data.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
             console.log(usuario);
         }
     }
@@ -89,7 +97,7 @@ export default function NuevaSancion() {
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
-            setSancion({ ...sancion, idAlumno: newValue.id});
+            setSancion({ ...sancion, idAlumno: newValue.id });
         }
     }
 
@@ -110,28 +118,28 @@ export default function NuevaSancion() {
 
                         {
                             !esSancionGrupal && (
-                                <FormControl style={{marginRight: "20px"}}>
-                                <Autocomplete
-                                    disablePortal
-                                    id="combo-box-demo"
-                                    // value={value}
-                                    name="idAlumno"
-                                    onChange={handleAlumno}
-                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
-                                    options={alumnos}
-                                    sx={{ width: "250px" }}
-                                    isOptionEqualToValue={(option, value) =>
-                                        option?.apellido === value?.apellido
-                                    }
-                                    noOptionsText={"No existe un alumno con ese nombre"}
-                                    renderOption={(props, alumnos) => (
-                                        <Box component="li" {...props} key={alumnos?.id}>
-                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                                        </Box>
-                                    )}
-                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
-                                />
-                            </FormControl>
+                                <FormControl style={{ marginRight: "20px" }}>
+                                    <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        // value={value}
+                                        name="idAlumno"
+                                        onChange={handleAlumno}
+                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                        options={alumnos}
+                                        sx={{ width: "250px" }}
+                                        isOptionEqualToValue={(option, value) =>
+                                            option?.apellido === value?.apellido
+                                        }
+                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                        renderOption={(props, alumnos) => (
+                                            <Box component="li" {...props} key={alumnos?.id}>
+                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                    />
+                                </FormControl>
                                 // <FormControl>
                                 //     <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
                                 //     <Select value={sancion.idAlumno}
@@ -196,7 +204,7 @@ export default function NuevaSancion() {
                                 }
                             </Select>
                         </FormControl>
-                
+
                     </Box>
 
                     <Box sx={{ marginBottom: '20px' }}>

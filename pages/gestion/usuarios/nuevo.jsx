@@ -43,7 +43,7 @@ export default function NuevoUsuario() {
     })
     const [curso, setCurso] = useState(0)
     const [rol, setRol] = useState(0)
-    const [usuarioLogeado, setUsuarioLogueado] = useState({ id: 0 })
+    const [usuarioLogeado, setUsuarioLogueado] = useState({ id: 0, rol: '' })
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
     const [esDocente, setEsDocente] = useState(false)
@@ -55,16 +55,26 @@ export default function NuevoUsuario() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        traerRoles()
-        traerCursos()
-        traerMaterias()
-    }, [authUser, loading, usuarioLogeado.id])
+        if (usuarioLogeado.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+                traerRoles()
+                traerCursos()
+                traerMaterias()
+            }
+        }
+    }, [authUser, loading, usuarioLogeado.id, usuarioLogeado.rol])
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id) })
         }
+    }
+    const tienePermisos = () => {
+        return usuarioLogeado.rol === 'Administrador'
+            || usuarioLogeado.rol === 'Secretario'
     }
     const traerCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)

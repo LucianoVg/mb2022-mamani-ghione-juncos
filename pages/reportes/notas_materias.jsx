@@ -6,6 +6,8 @@ import Line from '../../components/graficos/LineChart'
 import { Container } from '@mui/system';
 import { Grid } from '@mui/material';
 import axios from 'axios';
+import { useAuth } from '../../components/context/authUserProvider';
+import { useRouter } from 'next/router';
 
 const data = [
   {
@@ -41,12 +43,36 @@ const data = [
 ];
 
 export default function NotasXmateria() {
+  const [usuario, setUsuario] = useState({ rol: '' })
+  const router = useRouter()
+  const [conteoNotas, setConteoNotas] = useState()
+  const { loading, authUser } = useAuth()
 
   useEffect(() => {
-    traerConteoNotas()
-  }, [])
+    if (!loading && !authUser) {
+      router.push('/gestion/cuenta/login')
+    }
+    traerUsuario()
+    if (usuario.rol) {
+      if (!tienePermisos()) {
+        router.push('/error')
+      } else {
+        traerConteoNotas()
+      }
+    }
+  }, [loading, authUser, usuario.rol])
 
-  const [conteoNotas, setConteoNotas] = useState()
+  const tienePermisos = () => {
+    return usuario.rol === 'Administrador'
+      || usuario.rol === 'Director'
+  }
+  const traerUsuario = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    if (res.data) {
+      console.log(res.data);
+      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+    }
+  }
   const traerConteoNotas = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/contador_notas/${3}`)
     if (res.data) {

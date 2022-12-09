@@ -23,7 +23,7 @@ const Notificaciones = () => {
     const [cursos, setCursos] = useState([]);
     const [idCurso, setIdCurso] = useState(0);
     // const [nombre, setNombre] = useState('');
-    const [usuario, setUsuario] = useState({ id: 0 })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const [alumnos, setAlumnos] = useState([])
     const [cargandoInfo, setCargandoInfo] = useState(false)
 
@@ -43,17 +43,28 @@ const Notificaciones = () => {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        ListarNotificaciones()
-        listarCursos()
-        listarAlumnos()
-        // filtros()
-    }, [usuario.id, loading, authUser])
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/')
+            } else {
+                ListarNotificaciones()
+                listarCursos()
+                listarAlumnos()
+            }
+        }
+    }, [usuario.id, usuario.rol, loading, authUser])
 
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             console.log(res.data);
-            setUsuario({ id: res.data?.id })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
 
@@ -111,7 +122,7 @@ const Notificaciones = () => {
             setIdAlumno(newValue.id);
         }
     }
- 
+
 
     return (
         <Layout>
