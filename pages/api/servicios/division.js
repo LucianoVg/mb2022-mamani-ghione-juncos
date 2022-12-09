@@ -10,7 +10,5 @@ export async function traerDivision() {
         return division
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

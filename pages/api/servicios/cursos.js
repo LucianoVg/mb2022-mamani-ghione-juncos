@@ -24,10 +24,9 @@ export async function traerCursosXDivision() {
                 }
             }
         })
+        console.log(cursosXDivision);
         return cursosXDivision
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

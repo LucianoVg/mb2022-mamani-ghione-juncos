@@ -14,8 +14,6 @@ export async function traerNoticia(id = 0) {
         return noticias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -29,7 +27,6 @@ export async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuar
             idusuario: Number(idUsuario)
         }
     })
-    Prisma.disconnect()
     return agregar
 }
 
@@ -46,7 +43,6 @@ export async function editarNoticia(id, titulo, url, descripcion, actualizadaEn)
             id: Number(id)
         }
     })
-    Prisma.disconnect()
     return editar
 }
 
@@ -56,6 +52,5 @@ export async function eliminarNoticia(id) {
             id: Number(id)
         }
     })
-    Prisma.disconnect()
     return eliminar
 }

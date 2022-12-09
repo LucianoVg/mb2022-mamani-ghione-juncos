@@ -19,6 +19,5 @@ export async function FiltrarMenu(idRol, prefijoUrl) {
       ]
     }
   })
-  Prisma.disconnect()
   return filtro
 }

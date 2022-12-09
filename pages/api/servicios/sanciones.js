@@ -36,7 +36,6 @@ export async function ReporteSanciones(idAlumno) {
                 }
             }
         )
-        Prisma.disconnect()
         return sanciones
     } catch (error) {
         console.error(error);
@@ -47,7 +46,6 @@ export async function ReporteSanciones(idAlumno) {
 export async function traerSanciones(options) {
     try {
         const sanciones = await Prisma.newPrisma.sancionxalumno.findMany(options)
-        Prisma.disconnect()
         return sanciones
     } catch (error) {
         console.error(error);

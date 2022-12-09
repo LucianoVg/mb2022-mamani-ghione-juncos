@@ -16,7 +16,6 @@ export async function traerFichaInstitucional(id = 0) {
             portadasficha: true
         }
     })
-    Prisma.disconnect()
     return fichaInstitucional
 }
 
@@ -28,7 +27,6 @@ export async function guardarPortadas(nombre, url, fichaInstitucionalId) {
             idfichainstitucional: Number(fichaInstitucionalId)
         },
     })
-    Prisma.disconnect()
     return portada
 }
 export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
@@ -42,7 +40,6 @@ export async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
             idfichainstitucional: Number(fichaInstitucionalId)
         }
     })
-    Prisma.disconnect()
     return portada
 }
 export async function traerPortadas(idFicha) {
@@ -54,7 +51,6 @@ export async function traerPortadas(idFicha) {
             fichainstitucional: true
         }
     })
-    Prisma.disconnect()
     return portadas
 }
 export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = '', descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
@@ -88,6 +84,5 @@ export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', 
             idusuario: Number(idUsuario)
         }
     })
-    Prisma.disconnect()
     return guardado
 }

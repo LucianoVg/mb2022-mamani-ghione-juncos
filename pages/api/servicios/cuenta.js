@@ -148,8 +148,6 @@ export async function registrarUsuario(
         }
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect();
     }
 }
 

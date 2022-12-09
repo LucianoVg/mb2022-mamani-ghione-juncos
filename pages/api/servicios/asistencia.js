@@ -34,8 +34,6 @@ export async function ListarCurso() {
         return cursos
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -45,8 +43,6 @@ export async function TraerAsistencias(options) {
         return asistencias
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -76,8 +72,6 @@ export async function DetalleAsistencia(id) {
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -103,8 +97,6 @@ export async function updateAsistencia(id, presente, ausente, ausenteJustificado
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 

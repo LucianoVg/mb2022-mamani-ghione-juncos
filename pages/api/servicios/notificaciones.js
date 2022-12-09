@@ -18,8 +18,6 @@ export async function ListarNotificaciones() {
         return listado
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 export async function ListarNotificacionesDeUsuario(idUsuario) {
@@ -45,8 +43,6 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
         return listado
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 export async function DetalleNotificacion(idNotificacion) {
@@ -67,8 +63,6 @@ export async function DetalleNotificacion(idNotificacion) {
         return notificacion
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -106,8 +100,6 @@ export async function CrearNotificacion(asunto, contenido, fecha, idUsuario, idC
             return "Notificaciones creadas"
         } catch (err) {
             console.error(err);
-        } finally {
-            Prisma.disconnect()
         }
     } else {
         const notificacion = await Prisma.newPrisma.notificacion.create({

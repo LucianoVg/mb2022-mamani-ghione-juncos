@@ -17,8 +17,6 @@ export async function Preanalitico(idAlumno) {
        order by m.idcurso asc, m.id asc`
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -38,8 +36,6 @@ export async function PromedioXtrimestre(idAlumno, idMateria) {
        order by m.nombre asc, t.trimestre asc`
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -145,8 +141,6 @@ export async function TraerNotas(options) {
         return await Prisma.newPrisma.nota.findMany(options)
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -216,7 +210,5 @@ export async function updateNota(idNota, nota1, nota2, nota3, nota4, nota5,
         return notas
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

@@ -6,7 +6,5 @@ export async function traerTrimestres() {
         return trimestres
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

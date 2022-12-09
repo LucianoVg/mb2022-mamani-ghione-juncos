@@ -17,7 +17,5 @@ export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso
         return materialEstudio
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

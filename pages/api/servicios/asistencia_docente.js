@@ -6,8 +6,6 @@ export async function TraerAsistencias(options) {
         return asistencias
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -31,8 +29,6 @@ export async function DetalleAsistencia(id) {
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -58,8 +54,6 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
         return asistencia
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 

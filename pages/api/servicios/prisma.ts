@@ -9,10 +9,4 @@ export class Prisma {
         }
         return this._newPrisma
     }
-
-    public static disconnect() {
-        if (Prisma._newPrisma) {
-            Prisma._newPrisma.$disconnect()
-        }
-    }
 }

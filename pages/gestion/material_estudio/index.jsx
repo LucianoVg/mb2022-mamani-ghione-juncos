@@ -165,13 +165,13 @@ const MaterialEstudio = () => {
         }
         traerUsuario()
         if (usuario.rol) {
-            if (!tienePermisos()) {
-                router.push('/error')
-            } else {
-                traerCursos()
-                traerMaterias()
-                traerTrimestres()
-            }
+            // if (!tienePermisos()) {
+            //     router.push('/error')
+            // } else {
+            traerCursos()
+            traerMaterias()
+            traerTrimestres()
+            // }
         }
     }, [loading, authUser, usuario.id, usuario.rol])
     const tienePermisos = () => {

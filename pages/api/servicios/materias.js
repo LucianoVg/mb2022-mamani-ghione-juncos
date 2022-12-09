@@ -17,7 +17,5 @@ export async function ListarMaterias(idCurso) {
         return materias
     } catch (error) {
         console.error(error);
-    } finally {
-        Prisma.disconnect()
     }
 }

@@ -10,8 +10,6 @@ export async function traerFechaExamenes() {
         return examenes
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -28,8 +26,6 @@ export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuari
         return fechaExamen
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
@@ -49,8 +45,6 @@ export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsua
         return examen
     } catch (error) {
         console.log(error);
-    } finally {
-        Prisma.disconnect()
     }
 }
 
