@@ -12,35 +12,31 @@ export default function DetallesNoticia() {
         titulo: '',
         descripcion: '',
         url: '',
-        idUsuario: ''
+        idUsuario: 0
     })
     const [cargando, setCargando] = useState(false)
     const router = useRouter()
     const { id } = router.query
     useEffect(() => {
-        if (id) {
-            setCargando(true)
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
-                .then(res => {
-                    console.log(res.data);
-                    setNoticia(res.data)
-                    setCargando(false)
-                }).catch(err => {
-                    console.error(err);
-                    setCargando(false)
-                })
-        }
+        traerNoticia()
     }, [id])
 
-
+    const traerNoticia = async () => {
+        if (id) {
+            setCargando(true)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${id}`)
+            if (res.status === 200) {
+                console.log(res.data);
+                setNoticia(res.data)
+                setCargando(false)
+            }
+        }
+    }
     return (
         <Layout>
-<<<<<<< Updated upstream
             <Container sx={{ marginTop: "100px", textAlign: 'center' }} >
                 {
-                    !cargando && noticia.id !== '' && (
-
-                     
+                    !cargando && noticia.id !== 0 && (
                         <Grid container
                             direction="column"
                             justifyContent="center"
@@ -89,7 +85,6 @@ export default function DetallesNoticia() {
                             <Loading />
                         </Container>
 
-
                     )
                 }
             </Container>
@@ -97,25 +92,5 @@ export default function DetallesNoticia() {
 
 
         </Layout >
-=======
-            {
-                noticia.id !== 0 && (
-                    <Container sx={{ textAlign: 'center' }}>
-                        <Image alt="noticia" src={noticia.url !== '' ? noticia.url : '/assets/img/placeholder.png'} width={500} height={400} />
-
-                        <Typography component={'h1'} variant="h3">{noticia.titulo}</Typography>
-                        <Typography component={'p'} variant="p">{noticia.descripcion}</Typography>
-                    </Container>
-                )
-            }
-            {
-                cargando && (
-                    <Container sx={{ textAlign: 'center' }}>
-                        <Loading />
-                    </Container>
-                )
-            }
-        </Layout>
->>>>>>> Stashed changes
     )
 }

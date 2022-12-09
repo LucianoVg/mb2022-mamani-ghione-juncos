@@ -14,6 +14,8 @@ const MasInfo = () => {
     const { id } = router.query
     const [asistencia, setAsistencia] = useState()
     const [cargando, setCargando] = useState(false)
+    const [usuario, setUsuario] = useState({ rol: '' })
+
     const listarAsistencia = async () => {
         if (id) {
             setCargando(true)
@@ -25,12 +27,30 @@ const MasInfo = () => {
             setCargando(false)
         }
     }
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
+    }
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.data) {
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+        }
+    }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            }
+        }
         listarAsistencia()
-    }, [id, loading, authUser])
+    }, [id, loading, authUser, usuario.rol])
+
     return (
         <Layout>
             {

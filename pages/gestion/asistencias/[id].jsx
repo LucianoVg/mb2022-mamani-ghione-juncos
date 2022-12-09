@@ -39,9 +39,7 @@ const MasInfo = () => {
             router.push('/gestion/cuenta/login')
         }
         if (usuario.rol) {
-            if (usuario.rol !== 'Administrador'
-                && usuario.rol !== 'Docente'
-                && usuario.rol !== 'Preceptor') {
+            if (!tienePermisos()) {
                 router.push('/error')
             } else {
                 traerUsuario()
@@ -49,6 +47,11 @@ const MasInfo = () => {
             }
         }
     }, [id, loading, authUser, usuario.id, usuario.rol])
+    const tienePermisos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Docente'
+            || usuario.rol === 'Preceptor'
+    }
     return (
         <Layout>
             {
