@@ -4,7 +4,7 @@ export const tutores = [
 
         login: "fernando",
         password: "123456",
-        nombre: "Lucas",
+        nombre: "Fernando",
         apellido: "Carnero",
         correo: "carnerofernando@gmail.com",
         idRol: 6,
