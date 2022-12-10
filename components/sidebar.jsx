@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { Home } from '@mui/icons-material';
+import { Assessment, Home } from '@mui/icons-material';
 import { ListItemButton, ListItem, ListItemIcon, ListItemText, Box, Drawer } from '@mui/material';
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
@@ -43,6 +43,20 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                     </Link>
                 </ListItemButton>
             </ListItem>
+            {
+                authUser && (
+                    <ListItem disablePadding sx={{ mt: 3 }}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Assessment />
+                            </ListItemIcon>
+                            <Link href={'/dashboard'} style={{ textDecoration: 'none', color: '#212121' }}>
+                                <Typography variant='h6'>Dashboard</Typography>
+                            </Link>
+                        </ListItemButton>
+                    </ListItem>
+                )
+            }
             {
                 menusGestion && menusGestion?.length > 0 && (
                     <>

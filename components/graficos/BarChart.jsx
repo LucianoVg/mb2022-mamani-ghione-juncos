@@ -24,11 +24,7 @@ export default function BarChart({ data }) {
     }
     return (
         <div>
-            <Bar style={{
-                width: '50%',
-                height: 'auto',
-                margin: 'auto'
-            }} data={chartData} />
+            <Bar width={500} height={300} data={chartData} />
         </div>
     )
 }
