@@ -1,5 +1,23 @@
 import { Prisma } from "./prisma";
 
+export async function MejorPromedio(idAlumno) {
+    try {
+        return await Prisma.newPrisma.$queryRaw`select  concat (u.nombre, ' ' , u.apellido) as alumno, idalumnoxcursoxdivision,
+        avg ((SELECT AVG(c)
+               FROM   (VALUES(nota1),
+                             (nota2),
+                             (nota3),
+                             (nota4),
+                             (nota5)) T (c))) as promediototal
+       from historialnota as hn
+       INNER JOIN materia as m ON m.id = hn.idmateria
+       INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
+       INNER JOIN usuario as u ON u.id = a.idusuario
+       group by alumno,idalumnoxcursoxdivision`
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export async function Preanalitico(idAlumno) {
     try {
