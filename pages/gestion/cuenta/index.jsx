@@ -165,7 +165,7 @@ export default function Detalles() {
                                     <strong>Materia/s Impartidas</strong> <br />
                                     {
                                         docente?.materia?.map(m => (
-                                            <span>{m.nombre}</span>
+                                            <span key={m.id}>{m.nombre}</span>
                                         ))
                                     }
                                 </Typography>

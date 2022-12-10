@@ -32,7 +32,7 @@ export async function PromedioXtrimestre(idAlumno, idMateria) {
        from historialnota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN trimestre as t ON t.id = hn.idtrimestre
-       where idalumnoxcursoxdivision =53 and idmateria = 1
+       where idalumnoxcursoxdivision =${Number(idAlumno)} and idmateria = ${Number(idMateria)}
        order by m.nombre asc, t.trimestre asc`
     } catch (error) {
         console.error(error);
@@ -975,43 +975,43 @@ export async function contarNotas() {
 
         const notas = [
             {
-                valorNota:1,
+                valorNota: 1,
                 nota: nota1_1._count.nota1 + nota1_2._count.nota2 + nota1_3._count.nota3 + nota1_4._count.nota4 + nota1_5._count.nota5
             },
             {
-                valorNota:2,
+                valorNota: 2,
                 nota: nota2_1._count.nota1 + nota2_2._count.nota2 + nota2_3._count.nota3 + nota2_4._count.nota4 + nota2_5._count.nota5
             },
             {
-                valorNota:3,
+                valorNota: 3,
                 nota: nota3_1._count.nota1 + nota3_2._count.nota2 + nota3_3._count.nota3 + nota3_4._count.nota4 + nota3_5._count.nota5,
             },
             {
-                valorNota:4,
+                valorNota: 4,
                 nota: nota4_1._count.nota1 + nota4_2._count.nota2 + nota4_3._count.nota3 + nota4_4._count.nota4 + nota4_5._count.nota5,
             },
             {
-                valorNota:5,
+                valorNota: 5,
                 nota: nota5_1._count.nota1 + nota5_2._count.nota2 + nota5_3._count.nota3 + nota5_4._count.nota4 + nota5_5._count.nota5,
             },
             {
-                valorNota:6,
+                valorNota: 6,
                 nota: nota6_1._count.nota1 + nota6_2._count.nota2 + nota6_3._count.nota3 + nota6_4._count.nota4 + nota6_5._count.nota5,
             },
             {
-                valorNota:7,
+                valorNota: 7,
                 nota: nota7_1._count.nota1 + nota7_2._count.nota2 + nota7_3._count.nota3 + nota7_4._count.nota4 + nota7_5._count.nota5,
             },
             {
-                valorNota:8,
+                valorNota: 8,
                 nota: nota8_1._count.nota1 + nota8_2._count.nota2 + nota8_3._count.nota3 + nota8_4._count.nota4 + nota8_5._count.nota5,
             },
             {
-                valorNota:9,
+                valorNota: 9,
                 nota: nota9_1._count.nota1 + nota9_2._count.nota2 + nota9_3._count.nota3 + nota9_4._count.nota4 + nota9_5._count.nota5,
             },
             {
-                valorNota:10,
+                valorNota: 10,
                 nota: nota10_1._count.nota1 + nota10_2._count.nota2 + nota10_3._count.nota3 + nota10_4._count.nota4 + nota10_5._count.nota5
             }
 

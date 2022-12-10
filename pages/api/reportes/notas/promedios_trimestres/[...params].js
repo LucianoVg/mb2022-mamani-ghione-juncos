@@ -10,10 +10,8 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-
-            let { idAlumno, idMateria, } = req.query
-            const promedio = await PromedioXtrimestre(idAlumno, idMateria)
-
+            let { params } = req.query
+            const promedio = await PromedioXtrimestre(params[0], params[1])
             return res.status(200).json(promedio)
         } else {
             return res.status(405).send("Metodo no permitido")
