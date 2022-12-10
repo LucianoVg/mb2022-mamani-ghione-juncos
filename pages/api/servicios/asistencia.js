@@ -1,8 +1,49 @@
 import { Prisma } from "./prisma";
 
-export async function ConteoAsistencias(idAlumno) {
+
+
+export async function ListadoAsistenciasMensual(idAlumno) {
     try {
-    const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.idalumnoxcursoxdivision,
+        return await Prisma.newPrisma.$queryRaw`SELECT 
+        *
+    FROM asistencia a
+    inner join alumnoxcursoxdivision al on al.id = a.idalumnoxcursoxdivision
+    inner join usuario u on u.id = al.idusuario
+    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and idalumnoxcursoxdivision = 1
+      order by creadoen asc`
+
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function ConteoAsistenciasAnual(idAlumno) {
+    try {
+        const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.idalumnoxcursoxdivision,
+    (SELECT COUNT(*) FROM asistencia WHERE presente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as presente,
+    (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
+    (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausentejustificado ,
+    (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatarde,
+    (SELECT COUNT(*) FROM asistencia WHERE llegadatardejustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatardejustificada,
+    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta,
+    (SELECT COUNT(*) FROM asistencia WHERE mediafaltajustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafaltajustificada
+FROM asistencia as a
+where idalumnoxcursoxdivision = ${Number(idAlumno)}
+group by a.idalumnoxcursoxdivision`
+
+        var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+        let present = JSON.parse(presente)
+        return present
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function ConteoAsistenciasMensual(idAlumno) {
+    try {
+        const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.idalumnoxcursoxdivision,
     (SELECT COUNT(*) FROM asistencia WHERE presente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as presente,
     (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
     (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausentejustificado ,
@@ -14,9 +55,9 @@ FROM asistencia as a
 where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and idalumnoxcursoxdivision = ${Number(idAlumno)}
 group by a.idalumnoxcursoxdivision`
 
-var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
-let present = JSON.parse(presente)
-return present
+        var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+        let present = JSON.parse(presente)
+        return present
 
     } catch (error) {
         console.error(error);

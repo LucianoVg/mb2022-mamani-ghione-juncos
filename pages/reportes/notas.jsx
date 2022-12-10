@@ -96,7 +96,7 @@ export default function Notas() {
             })
     }
     const promedioPorTrimestre = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}//reportes/notas/promedios_trimestres/`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/promedios_trimestres/`)
             .then(res => {
                 console.log(res.data);
                 setPromedioTrimestre(res.data)

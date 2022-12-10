@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { ConteoAsistencias } from "../../servicios/asistencia"
+import { ConteoAsistenciasAnual } from "../../../servicios/asistencia"
 
 export default async function handler(req, res) {
     try {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             let { idAlumno } = req.query
-            const conteo = await ConteoAsistencias(idAlumno)
+            const conteo = await ConteoAsistenciasAnual(idAlumno)
             return res.status(200).json(conteo)
         } else {
             return res.status(405).send("Metodo no permitido")
