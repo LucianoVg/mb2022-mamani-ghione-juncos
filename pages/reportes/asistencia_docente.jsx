@@ -11,7 +11,7 @@ import { Search } from "@mui/icons-material";
 
 
 
-export default function Asistencias() {
+export default function AsistenciasDocentes() {
 
     const [alumnos, setAlumnos] = useState([])
     const [listado, setListado] = useState([])
@@ -40,7 +40,7 @@ export default function Asistencias() {
 
 
     const listarAsistenciasAnuales = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${1}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_anual/${1}`)
             .then(res => {
                 console.log(res.data);
                 setAnual(res.data)
@@ -49,7 +49,7 @@ export default function Asistencias() {
             })
     }
     const listarAsistenciasMensuales = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual/${1}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_mensual/${1}`)
             .then(res => {
                 console.log(res.data);
                 setMensual(res.data)
@@ -58,7 +58,7 @@ export default function Asistencias() {
             })
     }
     const listadoAsistencias = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/listado_mensual/${1}`)
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/listado_mensual/${1}`)
             .then(res => {
                 console.log(res.data);
                 setListado(res.data)
