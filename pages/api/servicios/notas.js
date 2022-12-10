@@ -1033,7 +1033,7 @@ export async function contarNotas() {
 
 // export async function contarNotas(idMateria) {
 //     try {
-//        return await Prisma.newPrisma.$queryRaw`SELECT n.idmateria,
+//         const conteo = await Prisma.newPrisma.$queryRaw`SELECT n.idmateria,
 //         (
 //              (select count(*) from historialnota where nota1= 1   and idmateria =${Number(idMateria)})+
 //              (select count(*) from historialnota where nota2= 1    and idmateria =${Number(idMateria)}) +
@@ -1108,7 +1108,9 @@ export async function contarNotas() {
 //         where idmateria= ${Number(idMateria)}
 //         group by n.idmateria`
 
-//         return JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+//         var string = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+//         let notas = JSON.parse(string)
+//         return notas
 
 //     } catch (error) {
 //         console.log(error);

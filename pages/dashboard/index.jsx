@@ -51,10 +51,10 @@ export default function Dashboard() {
         <Layout>
             <h3>Dashboard</h3>
             <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                     {
                         !cargando && conteoNotas.length > 0 && (
-                            <Card sx={{ backgroundColor: '#f9f9f9' }}>
+                            <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
                                     <BarChart
                                         data={conteoNotas}

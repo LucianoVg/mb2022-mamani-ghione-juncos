@@ -22,9 +22,48 @@ export default function BarChart({ data }) {
             }
         ]
     }
+
+    let delayed
+    const options = {
+        animation: {
+            onComplete: () => {
+                delayed = true;
+            },
+            delay: (context) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                }
+                return delay;
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Conteo Notas por Materia',
+                padding: {
+                    top: 10,
+                    bottom: 30
+                }
+            }
+        }
+    };
+
     return (
-        <div>
-            <Bar width={500} height={300} data={chartData} />
-        </div>
+
+        <Bar data={chartData}
+            options={options}
+         
+
+        />
+
     )
 }
