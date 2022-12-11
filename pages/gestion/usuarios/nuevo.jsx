@@ -219,6 +219,7 @@ export default function NuevoUsuario() {
                     <TextField
                         margin="normal"
                         name="legajo"
+                        type="number"
                         onChange={handleForm}
                         label="Legajo"
                         value={usuario.legajo}
