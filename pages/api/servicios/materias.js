@@ -8,10 +8,16 @@ export async function ListarMaterias(idCurso) {
             },
             where: {
                 idcurso: Number(idCurso)
+            },
+            orderBy: {
+                id: "asc"
             }
         }) : await Prisma.newPrisma.materia.findMany({
             include: {
                 curso: true
+            },
+            orderBy: {
+                id: "asc"
             }
         })
         return materias
