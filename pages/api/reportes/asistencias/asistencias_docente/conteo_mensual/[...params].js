@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             let { params } = req.query
+            console.log(params);
             const conteo = await ConteoAsistenciasMensual(params[0], params[1])
             return res.status(200).json(conteo)
         } else {

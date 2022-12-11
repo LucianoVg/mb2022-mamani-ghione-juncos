@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { Assessment, Home } from '@mui/icons-material';
+import { Assessment, Home, TableChart } from '@mui/icons-material';
 import { ListItemButton, ListItem, ListItemIcon, ListItemText, Box, Drawer } from '@mui/material';
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined'
@@ -154,46 +154,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                             menusReportes?.map((m, i) => (
                                 <ListItemButton key={i}>
                                     <ListItemIcon>
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_sanciones' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_asistencias' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_asistencias_docente' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_mejor_promedio' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_notas' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_preanalitico' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-                                        {
-                                            m?.menu?.url === '/reportes/reporte_notas_materias' && (
-                                                <ContentPasteSearchOutlinedIcon />
-                                            )
-                                        }
-
+                                        <TableChart />
                                     </ListItemIcon>
                                     <Link
                                         style={{ textDecoration: 'none', color: '#212121' }}

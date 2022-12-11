@@ -30,7 +30,7 @@ export async function Preanalitico(idAlumno) {
                              (nota5)) T (c))) as notafinal
        from historialnota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
-       where idalumnoxcursoxdivision = 53
+       where idalumnoxcursoxdivision = ${Number(idAlumno)}
        group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
        order by m.idcurso asc, m.id asc`
     } catch (error) {
@@ -61,7 +61,7 @@ export async function notasTrimestres(idAlumno, idMateria) {
     try {
         return await Prisma.newPrisma.$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from historialnota hn
          INNER JOIN materia as m ON m.id = hn.idmateria
-        where idmateria = 1 and idalumnoxcursoxdivision = 53
+        where idmateria = ${Number(idMateria)} and idalumnoxcursoxdivision = ${Number(idAlumno)}
         group by idtrimestre,nota1,nota2,nota3,nota4,nota5, m.nombre`
 
     } catch (error) {

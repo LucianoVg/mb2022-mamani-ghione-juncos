@@ -1,13 +1,17 @@
 import { Prisma } from "./prisma";
 
 export async function ListadoAsistenciasMensual(idDocente, mes) {
+    let dia = Number(mes) === 3 || Number(mes) === 5 || Number(mes) === 8 || Number(mes) === 10 || Number(mes) === 12 ? 31 : 30
+
+    let fechaInicio = `01/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
+    let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     try {
         return await Prisma.newPrisma.$queryRaw`SELECT 
         *
     FROM asistenciadocente a
     inner join alumnoxcursoxdivision al on al.id = a.iddocentexmateria
     inner join usuario u on u.id = al.idusuario
-    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(DATE(${Number(mes)}),'DD/MM/YYYY') and TO_DATE(DATE(${Number(mes) + 1}),'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
+    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
       order by creadoen asc`
     } catch (error) {
         console.error(error);
@@ -36,24 +40,28 @@ export async function ConteoAsistenciasAnual(idDocente) {
     }
 }
 
-export async function ConteoAsistenciasMensual(idDocente = 1, mes = 3) {
+export async function ConteoAsistenciasMensual(idDocente, mes) {
+    let dia = Number(mes) === 3 || Number(mes) === 5 || Number(mes) === 8 || Number(mes) === 10 || Number(mes) === 12 ? 31 : 30
+
+    let fechaInicio = `01/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
+    let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     try {
+        console.log(fechaInicio, fechaFin);
         const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.iddocentexmateria,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocentexmateria = ${Number(idDocente)}) as ausente,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocentexmateria = ${Number(idDocente)}) as ausentejustificado ,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocentexmateria = ${Number(idDocente)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE llegadatardejustificada= true and iddocentexmateria = ${Number(idDocente)}) as llegadatardejustificada,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
-FROM asistenciadocente as a
-where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(DATE(${Number(mes)}),'DD/MM/YYYY') and TO_DATE(DATE(${Number(mes) + 1}),'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
-group by a.iddocentexmateria`
+            (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocentexmateria = ${Number(idDocente)}) as ausente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocentexmateria = ${Number(idDocente)}) as ausentejustificado ,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocentexmateria = ${Number(idDocente)}) as llegadatarde,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE llegadatardejustificada= true and iddocentexmateria = ${Number(idDocente)}) as llegadatardejustificada,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
+        FROM asistenciadocente as a
+        where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
+        group by a.iddocentexmateria`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
         let present = JSON.parse(presente)
         return present
-
     } catch (error) {
         console.error(error);
     }

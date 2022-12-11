@@ -10,9 +10,9 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            let idAlumno = req.query
+            let { idAlumno } = req.query
             const preanalitico = await Preanalitico(idAlumno)
-            preanalitico.forEach(p => {
+            preanalitico?.forEach(p => {
                 if (p.curso < 4) {
                     let dosDecimal = Number(p.notafinal).toFixed(2)
                     let nota = dosDecimal.toString().split('.')

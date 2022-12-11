@@ -1,18 +1,18 @@
 import { Prisma } from "./prisma";
 
+export async function ListadoAsistenciasMensual(idAlumno, mes) {
+    let dia = Number(mes) === 3 || Number(mes) === 5 || Number(mes) === 8 || Number(mes) === 10 || Number(mes) === 12 ? 31 : 30
 
-
-export async function ListadoAsistenciasMensual(idAlumno) {
+    let fechaInicio = `01/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
+    let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     try {
         return await Prisma.newPrisma.$queryRaw`SELECT 
         *
     FROM asistencia a
     inner join alumnoxcursoxdivision al on al.id = a.idalumnoxcursoxdivision
     inner join usuario u on u.id = al.idusuario
-    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and idalumnoxcursoxdivision = 1
+    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and idalumnoxcursoxdivision = ${Number(idAlumno)}
       order by creadoen asc`
-
-
     } catch (error) {
         console.error(error);
     }
@@ -41,8 +41,13 @@ group by a.idalumnoxcursoxdivision`
     }
 }
 
-export async function ConteoAsistenciasMensual(idAlumno) {
+export async function ConteoAsistenciasMensual(idAlumno, mes) {
     try {
+        let dia = Number(mes) === 3 || Number(mes) === 5 || Number(mes) === 8 || Number(mes) === 10 || Number(mes) === 12 ? 31 : 30
+
+        let fechaInicio = `01/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
+        let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
+
         const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.idalumnoxcursoxdivision,
     (SELECT COUNT(*) FROM asistencia WHERE presente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as presente,
     (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
@@ -52,7 +57,7 @@ export async function ConteoAsistenciasMensual(idAlumno) {
     (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta,
     (SELECT COUNT(*) FROM asistencia WHERE mediafaltajustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafaltajustificada
 FROM asistencia as a
-where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and idalumnoxcursoxdivision = ${Number(idAlumno)}
+where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and idalumnoxcursoxdivision = ${Number(idAlumno)}
 group by a.idalumnoxcursoxdivision`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)

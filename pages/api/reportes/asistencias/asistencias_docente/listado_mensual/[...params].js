@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { ConteoAsistenciasMensual } from "../../../servicios/asistencia"
+import { ListadoAsistenciasMensual } from "../../../../servicios/asistencia_docente"
 
 export default async function handler(req, res) {
     try {
@@ -10,8 +10,9 @@ export default async function handler(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            let { idAlumno } = req.query
-            const conteo = await ConteoAsistenciasMensual(idAlumno)
+            let { params } = req.query
+            console.log(params);
+            const conteo = await ListadoAsistenciasMensual(params[0], params[1])
             return res.status(200).json(conteo)
         } else {
             return res.status(405).send("Metodo no permitido")

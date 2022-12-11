@@ -3,11 +3,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from '../../components/context/authUserProvider';
 import { Layout } from "../../components/layout";
-import { Box, Button, Stack, Autocomplete, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { styled } from '@mui/material/styles';
+import { Box, Button, Autocomplete, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import TableCell from '@mui/material/TableCell';
 import { Search } from "@mui/icons-material";
-import { Col, Row } from 'devextreme-react/responsive-box';
 import Loading from '../../components/loading';
 
 export default function AsistenciasDocentes() {
@@ -17,13 +15,12 @@ export default function AsistenciasDocentes() {
     const [anual, setAnual] = useState([])
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const { loading, authUser } = useAuth()
-    const [idDocente, setIdDocente] = useState(0)
-    const [mes, setMes] = useState(0)
+    const [idDocente, setIdDocente] = useState(1)
+    const [mes, setMes] = useState(3)
     const router = useRouter()
     const [cargando1, setCargando1] = useState(false)
     const [cargando2, setCargando2] = useState(false)
     const [cargando3, setCargando3] = useState(false)
-    let queryParams = []
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -43,27 +40,27 @@ export default function AsistenciasDocentes() {
     }, [usuario.id, usuario.rol, loading, authUser])
 
 
-    const listarAsistenciasAnuales = async (params = "") => {
+    const listarAsistenciasAnuales = async () => {
         setCargando3(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_anual?${params}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_anual/${idDocente}`)
         if (res.status === 200) {
             console.log(res.data);
             setAnual(res.data)
         }
         setCargando3(false)
     }
-    const listarAsistenciasMensuales = async (params = "") => {
+    const listarAsistenciasMensuales = async () => {
         setCargando2(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_mensual?${params}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_mensual/${idDocente}/${mes}`)
         if (res.status === 200) {
             console.log(res.data);
             setMensual(res.data)
         }
         setCargando2(false)
     }
-    const listadoAsistencias = async (params = "") => {
+    const listadoAsistencias = async () => {
         setCargando1(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/listado_mensual?${params}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/listado_mensual/${idDocente}/${mes}`)
         if (res.status === 200) {
             console.log(res.data);
             setListado(res.data)
@@ -98,29 +95,17 @@ export default function AsistenciasDocentes() {
         }
     }
     const handleMes = (e) => {
-        setMes(Number(e.target.value || 0))
+        setMes(Number(e.target.value || 3))
     }
 
     const handleSearch = async () => {
-        if (idDocente > 0) {
-            queryParams.push({ idDocente })
-        }
-        if (mes > 0) {
-            queryParams.push({ mes })
-        }
-        let params = ""
-        queryParams.forEach(qp => {
-            for (const key in qp) {
-                params += `${key}=${qp[key]}&`
-            }
-        })
-        listarAsistenciasAnuales(params)
-        listarAsistenciasMensuales(params)
-        listadoAsistencias(params)
+        await listarAsistenciasAnuales()
+        await listarAsistenciasMensuales()
+        await listadoAsistencias()
     }
     return (
         <Layout>
-            <h3>Buscar Alumno</h3>
+            <h3>Buscar Docente</h3>
             <FormControl style={{ marginRight: "20px" }}>
                 <Autocomplete
                     disablePortal
@@ -204,16 +189,12 @@ export default function AsistenciasDocentes() {
                                                 <TableCell>Llegada Tarde</TableCell>
                                                 <TableCell>Media Falta</TableCell>
                                             </TableRow>
-                                            {
-                                                mensual.map(m => (
-                                                    <TableRow key={m.id} >
-                                                        <TableCell>{m?.presente}</TableCell>
-                                                        <TableCell>{m?.ausente} </TableCell>
-                                                        <TableCell>{m?.llegadatarde}</TableCell>
-                                                        <TableCell>{m?.mediafalta}</TableCell>
-                                                    </TableRow>
-                                                ))
-                                            }
+                                            <TableRow>
+                                                <TableCell>{mensual[0]?.presente}</TableCell>
+                                                <TableCell>{mensual[0]?.ausente} </TableCell>
+                                                <TableCell>{mensual[0]?.llegadatarde}</TableCell>
+                                                <TableCell>{mensual[0]?.mediafalta}</TableCell>
+                                            </TableRow>
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
@@ -251,16 +232,12 @@ export default function AsistenciasDocentes() {
                                                 <TableCell>Llegada Tarde</TableCell>
                                                 <TableCell>Media Falta</TableCell>
                                             </TableRow>
-                                            {
-                                                anual?.map(a => (
-                                                    <TableRow key={a.id}>
-                                                        <TableCell>{a?.presente}</TableCell>
-                                                        <TableCell>{a?.ausente} </TableCell>
-                                                        <TableCell>{a?.llegadatarde}</TableCell>
-                                                        <TableCell>{a?.mediafalta}</TableCell>
-                                                    </TableRow>
-                                                ))
-                                            }
+                                            <TableRow>
+                                                <TableCell>{anual[0]?.presente}</TableCell>
+                                                <TableCell>{anual[0]?.ausente} </TableCell>
+                                                <TableCell>{anual[0]?.llegadatarde}</TableCell>
+                                                <TableCell>{anual[0]?.mediafalta}</TableCell>
+                                            </TableRow>
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
@@ -290,9 +267,6 @@ export default function AsistenciasDocentes() {
                                                 listado.map((l, i) => (
                                                     <TableRow key={i}>
                                                         <TableCell align="center" className="col-md-1 text-capitalize">{l.creadoen}</TableCell>
-                                                        {/* <TableCell className="col-md-1">{a.alumnoxcursoxdivision?.usuario?.legajo}</TableCell> */}
-                                                        {/* <TableCell align="center" className="col-md-1 text-capitalize" >{l.apellido} </TableCell>
-                                                <TableCell align="center" className="col-md-1 text-capitalize">{l.nombre}</TableCell> */}
                                                         <TableCell align="center" className="col-md-1 ">
                                                             {
                                                                 l.presente ? (

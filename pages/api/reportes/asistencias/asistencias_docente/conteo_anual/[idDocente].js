@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             let { idDocente } = req.query
+            console.log(idDocente);
             const conteo = await ConteoAsistenciasAnual(idDocente)
             return res.status(200).json(conteo)
         } else {
