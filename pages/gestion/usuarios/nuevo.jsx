@@ -245,7 +245,7 @@ export default function NuevoUsuario() {
                         onChange={handleForm}
                         label="Telefono"
                         value={usuario.telefono}
-                        type={'tel'}
+                        type="number"
                         required
                         sx={{ marginRight: '20px', marginBottom: '20px' }}
                     />
