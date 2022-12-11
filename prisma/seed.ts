@@ -63,38 +63,38 @@ async function main() {
     //         })
     //         console.log(usuario);
     //     })
-    const tutores = await prisma.usuario.findMany({
-        select: {
-            apellido: true,
-            id: true
-        },
-        where: {
-            idrol: 6
-        }
-    })
-    console.log(tutores)
+    // const tutores = await prisma.usuario.findMany({
+    //     select: {
+    //         apellido: true,
+    //         id: true
+    //     },
+    //     where: {
+    //         idrol: 6
+    //     }
+    // })
+    // console.log(tutores)
 
-    tutores.map(async (t) => {
-        const tutor = await prisma.alumnoxcursoxdivision.updateMany({
-            // include: {
-            //     usuario: {
-            //         select: {
-            //             apellido: true
-            //         }
-            //     }
-            // },
-            where: {
-                usuario: {
-                    apellido: t.apellido
-                }
+    // tutores.map(async (t) => {
+    //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
+    //         // include: {
+    //         //     usuario: {
+    //         //         select: {
+    //         //             apellido: true
+    //         //         }
+    //         //     }
+    //         // },
+    //         where: {
+    //             usuario: {
+    //                 apellido: t.apellido
+    //             }
 
-            },
-            data: {
-                idtutor: t.id
-            }
-        })
-        console.log(tutor);
-    })
+    //         },
+    //         data: {
+    //             idtutor: t.id
+    //         }
+    //     })
+    //     console.log(tutor);
+    // })
 
 
     // const materias = await prisma.materia.findMany()
