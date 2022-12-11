@@ -383,6 +383,7 @@ export default function Asistencias() {
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
                                 name="legajo"
+                                type="number"
                                 value={legajo}
                                 onChange={handleLegajo}
                                 label="Legajo" />

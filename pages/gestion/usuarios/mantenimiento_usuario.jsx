@@ -109,6 +109,7 @@ export default function MantenimientoUsuario() {
                     <TextField
                         name="legajo"
                         value={legajo}
+                        type="number"
                         onChange={handleLegajo}
                         variant="outlined"
                         label="Legajo" />
