@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Typography, Grid, Box, Divider, Stack, Item, MenuItem, TextField, Checkbox, FormControl, InputLabel, Select, OutlinedInput, Button, Alert } from "@mui/material";
+import { Typography, Grid, Box, Divider, Stack, Item, MenuItem, TextField, Checkbox, FormControl, InputLabel, Select, OutlinedInput, Button, Alert, unstable_createMuiStrictModeTheme } from "@mui/material";
 import { useRouter } from "next/router";
 import { Container } from "@mui/system";
 import Loading from '../../../components/loading';
@@ -88,6 +88,28 @@ export default function Detalles() {
         }, 2000);
 
     }
+
+    const [password, setPassword] = useState()
+    const onSave = async (idUsuario) => {
+        // const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/update/${id}`, {
+        //     asunto: asunto.length && asunto || notificacion?.asunto,
+        //     contenido: contenido.length && contenido || notificacion?.contenido,
+        //     idUsuario: notificacion.usuario?.id,
+        // })
+        onCancel()
+
+    }
+
+    const [inEditMode, setInEditMode] = useState({
+        status: false
+    });
+    const onCancel = () => {
+        // reset the inEditMode state value
+        setInEditMode({
+            status: false
+        })
+
+    }
     return (
         <Layout>
             {
@@ -157,7 +179,76 @@ export default function Detalles() {
                             </Typography>
 
                         </Stack>
+                        <Divider sx={{ marginTop: '20px' }}></Divider>
+                        <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+                            <strong>
+                                Datos de Usuario
+                            </strong>
+                        </Typography>
+                        <Stack
+                            direction={{ xs: 'column', sm: 'row' }}
+                            spacing={{ xs: 2, sm: 2, md: 23 }}
+                            sx={{ marginBottom: '30px' }}
+                        >
 
+                            <Typography variant="h5" sx={{ width: '200px' }} >
+                                <strong>Correo</strong> <br />
+                                {usuario?.correo}
+                            </Typography>
+
+                            {
+                                inEditMode.status === true ? (
+
+                                    <FormControl>
+                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <strong>Contraseña</strong> <br />
+                                        </Typography>
+                                        <TextField value={password} style={{ marginBottom: "15px" }} />
+                                        <Button disabled={guardando} variant="contained" onClick={(e) => onSave(usuario?.id)}>
+                                            {
+                                                guardando && (
+                                                    <Loading size={30} />
+                                                )
+                                            }
+                                            {
+                                                !guardando && <span>Actualizar contraseña</span>
+                                            }
+                                        </Button>
+                                        <Button disabled={guardando} variant="contained" onClick={onCancel()}>
+                                            Cancelar
+                                        </Button>
+                                    </FormControl>
+
+
+
+                                ) : (
+
+                                    <FormControl>
+                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <strong>Contraseña</strong> <br />
+                                        </Typography>
+                                        <TextField disabled value={usuario?.password}
+                                            style={{ marginBottom: "15px" }}
+                                        />
+                                        <Button
+
+                                            onClick={() => {
+                                                setInEditMode({
+                                                    status: true
+                                                })
+                                                setPassword(usuario?.password)
+
+                                            }
+                                            }
+                                        >
+                                            Cambiar contraseña
+                                        </Button>
+                                    </FormControl>
+
+                                )
+                            }
+
+                        </Stack>
                         <Divider sx={{ marginTop: '20px' }}></Divider>
                         {
                             docente && (
