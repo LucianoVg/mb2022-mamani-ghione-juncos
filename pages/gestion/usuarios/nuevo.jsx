@@ -69,7 +69,7 @@ export default function NuevoUsuario() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id) })
+            setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id), rol: res.data?.rol?.tipo })
         }
     }
     const tienePermisos = () => {
@@ -84,7 +84,7 @@ export default function NuevoUsuario() {
     }
     const traerRoles = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles`)
-        if (res.data) {
+        if (res.status === 200) {
             console.log(res.data);
             setRoles(res.data)
         }

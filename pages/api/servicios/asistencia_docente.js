@@ -1,23 +1,44 @@
 import { Prisma } from "./prisma";
 
-
-export async function ListadoAsistenciasMensual(idDocente) {
+export async function ListadoAsistenciasMensual(idDocente, mes) {
     try {
         return await Prisma.newPrisma.$queryRaw`SELECT 
         *
     FROM asistenciadocente a
     inner join alumnoxcursoxdivision al on al.id = a.iddocentexmateria
     inner join usuario u on u.id = al.idusuario
-    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and iddocentexmateria = 1
+    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(DATE(${Number(mes)}),'DD/MM/YYYY') and TO_DATE(DATE(${Number(mes) + 1}),'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
       order by creadoen asc`
+    } catch (error) {
+        console.error(error);
+    }
+}
 
+export async function ConteoAsistenciasAnual(idDocente, mes) {
+    try {
+        const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.iddocentexmateria,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocentexmateria = ${Number(idDocente)}) as ausente,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocentexmateria = ${Number(idDocente)}) as ausentejustificado ,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocentexmateria = ${Number(idDocente)}) as llegadatarde,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE llegadatardejustificada= true and iddocentexmateria = ${Number(idDocente)}) as llegadatardejustificada,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
+    FROM asistenciadocente as a
+    where iddocentexmateria = ${Number(idDocente)} OR EXTRACT(
+        YEAR FROM DATE(creadoen)
+    ) = ${Number(mes)} 
+    group by a.iddocentexmateria`
+        var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+        let present = JSON.parse(presente)
+        return present
 
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function ConteoAsistenciasAnual(idDocente) {
+export async function ConteoAsistenciasMensual(idDocente, mes) {
     try {
         const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.iddocentexmateria,
     (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
@@ -28,7 +49,7 @@ export async function ConteoAsistenciasAnual(idDocente) {
     (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
     (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
 FROM asistenciadocente as a
-where iddocentexmateria = ${Number(idDocente)}
+where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(DATE(${Number(mes)}),'DD/MM/YYYY') and TO_DATE(DATE(${Number(mes) + 1}),'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
 group by a.iddocentexmateria`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
@@ -39,31 +60,6 @@ group by a.iddocentexmateria`
         console.error(error);
     }
 }
-
-export async function ConteoAsistenciasMensual(idDocente) {
-    try {
-        const conteo = await Prisma.newPrisma.$queryRaw`SELECT a.iddocentexmateria,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocentexmateria = ${Number(idDocente)}) as ausente,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocentexmateria = ${Number(idDocente)}) as ausentejustificado ,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocentexmateria = ${Number(idDocente)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE llegadatardejustificada= true and iddocentexmateria = ${Number(idDocente)}) as llegadatardejustificada,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
-    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
-FROM asistenciadocente as a
-where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE('01/10/2022','DD/MM/YYYY') and TO_DATE('31/10/2022','DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
-group by a.iddocentexmateria`
-
-        var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
-        let present = JSON.parse(presente)
-        return present
-
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-
 
 
 export async function TraerAsistencias(options) {

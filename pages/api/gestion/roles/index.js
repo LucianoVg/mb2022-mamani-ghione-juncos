@@ -7,17 +7,13 @@ export default async function handler(
 ) {
     await NextCors(req, res, {
         // Options
-        methods: ['GET', 'POST'],
+        methods: ['GET'],
         origin: '*',
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     try {
-        if (req.method === 'POST') {
-
-        } else {
-            const roles = await traerRoles()
-            return res.status(200).json(roles)
-        }
+        const roles = await traerRoles()
+        return res.status(200).json(roles)
     } catch (error) {
         return res.status(400).send(error)
     }
