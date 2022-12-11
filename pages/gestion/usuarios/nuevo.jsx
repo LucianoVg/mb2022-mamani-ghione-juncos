@@ -49,6 +49,7 @@ export default function NuevoUsuario() {
     const [esDocente, setEsDocente] = useState(false)
     const [guardando, setGuardando] = useState(false)
     const { loading, authUser } = useAuth()
+    const [buscando, setBuscando] = useState(false)
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -122,61 +123,79 @@ export default function NuevoUsuario() {
         );
     };
 
+    const existeUsuario = async (legajo, correo) => {
+        setBuscando(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?legajo=${legajo}&correo=${correo}`)
+        setBuscando(false)
+
+        if (res.data.length) {
+            setMensaje('Ya existen usuarios con esa informacion (correo/legajo) 😡')
+            return true
+        }
+        return false
+    }
     const registrarUsuario = async (e) => {
         e.preventDefault()
-        console.log(idMaterias);
-        usuario.idRol = rol
-        setGuardando(true)
 
-        let data = {
-            login: usuario.correo.split('@')[0],
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            legajo: usuario.legajo,
-            telefono: usuario.telefono,
-            correo: usuario.correo,
-            direccion: usuario.direccion,
-            localidad: usuario.localidad,
-            idRol: usuario.idRol,
-            idCurso: usuario.idCurso,
-            idTutor: usuario.idTutor,
-            sexo: usuario.sexo,
-            contrasenia: usuario.contrasenia,
-            esAlumno: esAlumno,
-            esDocente: esDocente,
-            idUsuario: usuarioLogeado.id,
-            idMaterias: idMaterias
-        }
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, data)
-        setGuardando(false)
-        if (res.status === 200) {
-            setMensaje('Usuario registrado! 😅🎉')
-            setTimeout(() => {
-                router.push('/gestion/usuarios/mantenimiento_usuario')
-            }, 2000);
-            // console.log(res.data);
-        } else {
-            setMensaje('Algo salió mal 😱📛')
+        const existe = await existeUsuario(usuario.legajo, usuario.correo)
+        if (!existe) {
+            console.log(idMaterias);
+            usuario.idRol = rol
+            setGuardando(true)
+
+            let data = {
+                login: usuario.correo.split('@')[0],
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                legajo: usuario.legajo,
+                telefono: usuario.telefono,
+                correo: usuario.correo,
+                direccion: usuario.direccion,
+                localidad: usuario.localidad,
+                idRol: usuario.idRol,
+                idCurso: usuario.idCurso,
+                idTutor: usuario.idTutor,
+                sexo: usuario.sexo,
+                contrasenia: usuario.contrasenia,
+                esAlumno: esAlumno,
+                esDocente: esDocente,
+                idUsuario: usuarioLogeado.id,
+                idMaterias: idMaterias
+            }
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, data)
+            setGuardando(false)
+            if (res.status === 200) {
+                setMensaje('Usuario registrado! 😅🎉')
+                setTimeout(() => {
+                    router.push('/gestion/usuarios/mantenimiento_usuario')
+                }, 2000);
+                // console.log(res.data);
+            } else {
+                setMensaje('Algo salió mal 😱📛')
+            }
         }
     }
-    const registrarTutor = (e) => {
+    const registrarTutor = async (e) => {
         e.preventDefault()
-        axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
-            login: tutor.correo.split('@')[0],
-            nombre: tutor.nombre,
-            apellido: tutor.apellido,
-            legajo: tutor.legajo,
-            telefono: tutor.telefono,
-            correo: tutor.correo,
-            direccion: tutor.direccion,
-            localidad: tutor.localidad,
-            idRol: tutor.idRol,
-            sexo: tutor.sexo,
-            contrasenia: tutor.contrasenia
-        }).then(res => {
-            usuario.idTutor = res.data?.id
-            console.log(res.data);
-        })
+        const existe = await existeUsuario(tutor.legajo, tutor.correo)
+        if (!existe) {
+            axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, {
+                login: tutor.correo.split('@')[0],
+                nombre: tutor.nombre,
+                apellido: tutor.apellido,
+                legajo: tutor.legajo,
+                telefono: tutor.telefono,
+                correo: tutor.correo,
+                direccion: tutor.direccion,
+                localidad: tutor.localidad,
+                idRol: tutor.idRol,
+                sexo: tutor.sexo,
+                contrasenia: tutor.contrasenia
+            }).then(res => {
+                usuario.idTutor = res.data?.id
+                console.log(res.data);
+            })
+        }
     }
     return (
         <Layout>
@@ -370,16 +389,16 @@ export default function NuevoUsuario() {
                     )
                 }
 
-                <Button disabled={guardando}
+                <Button disabled={guardando || buscando}
                     sx={{ mt: 2 }}
                     variant="contained"
                     color="primary"
                     type="submit">
                     {
-                        !guardando && <span>Registrar Usuario</span>
+                        !guardando && !buscando && <span>Registrar Usuario</span>
                     }
                     {
-                        guardando && <Loading size={30} />
+                        guardando || buscando && <Loading size={30} />
                     }
                 </Button>
             </Box>
@@ -429,14 +448,12 @@ export default function NuevoUsuario() {
                                     margin="normal"
                                     name="dni"
                                     onChange={handleTutor}
-                                    label="DNI"
+                                    label="Legajo"
                                     value={tutor.dni}
                                     required />
                             </Box>
                             <Box direction='row'>
-
                                 <TextField
-
                                     margin="normal"
                                     name="localidad"
                                     onChange={handleTutor}
@@ -501,7 +518,14 @@ export default function NuevoUsuario() {
 
                             </Box>
                             <Box>
-                                <Button sx={{ mt: 2 }} variant="contained" color="primary" type="submit">Registrar Tutor</Button>
+                                <Button disabled={guardando || buscando} sx={{ mt: 2 }} variant="contained" color="primary" type="submit">
+                                    {
+                                        guardando || buscando && <Loading size={30} />
+                                    }
+                                    {
+                                        !guardando && !buscando && <span>Registrar Tutor</span>
+                                    }
+                                </Button>
                             </Box>
                         </Box>
                     </>

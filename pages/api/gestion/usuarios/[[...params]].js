@@ -13,13 +13,20 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            let { legajo, nombre, apellido } = req.query
-            console.log(legajo, nombre, apellido);
+            let { correo, legajo, nombre, apellido } = req.query
+            console.log(correo, legajo, nombre, apellido);
             let OR = []
             let options = {
                 include: {
                     rol: true
                 },
+            }
+            if (correo) {
+                OR.push({
+                    correo: {
+                        contains: correo
+                    }
+                })
             }
             if (legajo) {
                 OR.push({
