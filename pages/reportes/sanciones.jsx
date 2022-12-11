@@ -27,6 +27,10 @@ export default function Sancion() {
     const [alumnos, setAlumnos] = useState([])
     const [sanciones, setSanciones] = useState([])
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
+    const [nombreAlumno, setNombreAlumno] = useState("")
+    const [apellidoAlumno, setApellidoAlumno] = useState("")
+    const [documento, setDocumento] = useState("")
+    const [idAlumno, setIdAlumno] = useState(0)
     const { loading, authUser } = useAuth()
     const router = useRouter()
 
@@ -46,14 +50,12 @@ export default function Sancion() {
     }, [usuario.id, usuario.rol, loading, authUser])
 
 
-    const listarSanciones = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/`)
-            .then(res => {
-                console.log(res.data);
-                setSanciones(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+    const listarSanciones = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`)
+        if (res.status === 200) {
+            console.log(res.data);
+            setSanciones(res.data)
+        }
     }
 
     const tienePermisos = () => {
@@ -70,19 +72,14 @@ export default function Sancion() {
         }
     }
 
-    const listarAlumnos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
-            .then(res => {
-                console.log(res.data);
-                setAlumnos(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+    const listarAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
+        if (res.status === 200) {
+            console.log(res.data);
+            setAlumnos(res.data)
+        }
     }
 
-    const [nombreAlumno, setNombreAlumno] = useState("")
-    const [apellidoAlumno, setApellidoAlumno] = useState("")
-    const [documento, setDocumento] = useState("")
 
     const handleNombreAlumno = (e) => {
         setNombreAlumno(e.target.value)
@@ -95,11 +92,6 @@ export default function Sancion() {
         setDocumento(e.target.value)
     }
 
-
-    const [idAlumno, setIdAlumno] = useState(0)
-
-
-
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             setIdAlumno(newValue.id);
@@ -110,29 +102,39 @@ export default function Sancion() {
     return (
         <Layout>
             <h3>Buscar Alumno</h3>
-            <FormControl style={{ marginRight: "20px" }}>
-                <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    // value={value}
-                    name="idAlumno"
-                    onChange={handleAlumno}
-                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                    options={alumnos}
-                    sx={{ width: "250px" }}
-                    isOptionEqualToValue={(option, value) =>
-                        option?.apellido === value?.apellido
-                    }
-                    noOptionsText={"No existe un alumno con ese nombre"}
-                    renderOption={(props, alumnos) => (
-                        <Box component="li" {...props} key={alumnos?.id}>
-                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                        </Box>
-                    )}
-                    renderInput={(params) => <TextField {...params} label="Alumno" />}
-                />
-            </FormControl>
-            <Box direction="row" rowSpacing={2}>
+            <Grid container spacing={2} marginBottom={2}>
+                <Grid item xs={4}>
+                    <FormControl style={{ marginRight: "20px" }}>
+                        <Autocomplete
+                            size='small'
+                            disablePortal
+                            id="combo-box-demo"
+                            // value={value}
+                            name="idAlumno"
+                            onChange={handleAlumno}
+                            getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                            options={alumnos}
+                            sx={{ width: "250px" }}
+                            isOptionEqualToValue={(option, value) =>
+                                option?.apellido === value?.apellido
+                            }
+                            noOptionsText={"No existe un alumno con ese nombre"}
+                            renderOption={(props, alumnos) => (
+                                <Box component="li" {...props} key={alumnos?.id}>
+                                    {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                </Box>
+                            )}
+                            renderInput={(params) => <TextField {...params} label="Alumno" />}
+                        />
+                    </FormControl>
+                </Grid>
+                <Grid item xs={3}>
+                    <Button variant="outlined" startIcon={<Search />} color="info" >
+                        Buscar
+                    </Button>
+                </Grid>
+            </Grid>
+            {/* <Box direction="row" rowSpacing={2}>
                 <TextField
                     sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
                     name="documento"
@@ -152,13 +154,7 @@ export default function Sancion() {
                     onChange={handleApellidoAlumno}
                     label="Apellido" />
 
-            </Box>
-            <Box sx={{ marginBottom: '20px', }}>
-                <Button variant="outlined" startIcon={<Search />} color="info" >
-                    Buscar
-                </Button>
-            </Box>
-
+            </Box> */}
 
             <div sx={{ marginTop: '200px' }}>
                 <TableContainer component={Paper} >
@@ -234,7 +230,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {s.motivo}
+                                        {s.sancion?.motivo}
                                     </TableCell >
                                     <TableCell colSpan={2} component="th" scope="row"
                                         sx={{
@@ -247,7 +243,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {s.usuario?.rol?.tipo}
+                                        {s.sancion?.usuario?.rol?.tipo}
                                     </TableCell >
                                     <TableCell colSpan={1} component="th" scope="row"
                                         sx={{
@@ -260,7 +256,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {s.fecha}
+                                        {s.sancion?.fecha}
                                     </TableCell >
                                     <TableCell colSpan={1} component="th" scope="row"
                                         sx={{
@@ -273,7 +269,7 @@ export default function Sancion() {
 
                                         }}
                                     >
-                                        {s.tiposancion?.tipo}
+                                        {s.sancion?.tiposancion?.tipo}
                                     </TableCell >
                                 </TableRow>
                             ))}

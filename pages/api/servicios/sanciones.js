@@ -1,41 +1,36 @@
 import { Prisma } from "./prisma";
 
-export async function ReporteSanciones(idAlumno) {
+export async function ReporteSanciones(idAlumno = 0) {
     try {
-        const sanciones = await Prisma.newPrisma.sancion.findMany(
-            {
-                include: {
-                    sancionxalumno: {
-                        include: {
-                            alumnoxcursoxdivision: {
-                                include: {
-                                    usuario: {
-                                        include: {
-                                            rol: true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                    },
-                    usuario: {
-                        include: {
-                            rol: true
-                        }
-                    },
-                    tiposancion: true
-                },
-                where: {
-                    alumnoxcursoxdivision: {
-                        id: idAlumno
+        let options = {
+            include: {
+                alumnoxcursoxdivision: {
+                    include: {
+                        usuario: true
                     }
                 },
-                orderBy: {
-                    id: "desc"
+                sancion: {
+                    include: {
+                        tiposancion: true,
+                        usuario: true
+                    }
+                }
+            },
+            orderBy: {
+                id: "desc"
+            }
+        }
+        if (idAlumno > 0) {
+            options = {
+                ...options,
+                where: {
+                    alumnoxcursoxdivision: {
+                        id: Number(idAlumno)
+                    }
                 }
             }
-        )
+        }
+        const sanciones = await Prisma.newPrisma.sancionxalumno.findMany(options)
         return sanciones
     } catch (error) {
         console.error(error);
