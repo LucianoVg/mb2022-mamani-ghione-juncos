@@ -104,9 +104,13 @@ export default function Asistencias() {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
-let a = 0
-let b = 0
+    let a = 0
+    let b = 0
 
+    let dias = 30
+    if (dias === 3 || dias === 5 || dias === 7 || dias === 8 || dias === 10 || dias === 12) {
+
+    }
 
     return (
         <Layout>
@@ -226,7 +230,7 @@ let b = 0
 
                                     </TableRow>
                                     <TableRow >
-                                    <TableCell>{anual[0]?.presente}</TableCell>
+                                        <TableCell>{anual[0]?.presente}</TableCell>
                                         <TableCell>{anual[0]?.ausente} </TableCell>
                                         <TableCell>{anual[0]?.llegadatarde}</TableCell>
                                         <TableCell>{anual[0]?.mediafalta}</TableCell>
