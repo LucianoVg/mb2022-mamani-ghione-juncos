@@ -6,33 +6,19 @@ import { Layout } from "../../components/layout";
 import { Box, Button, Stack, Autocomplete, Menu, Popover, TextareaAutosize, ButtonGroup, Container, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-
-
+import Loading from '../../components/loading';
 import { Search } from "@mui/icons-material";
 
 
-function createData(motivo, autoridad, fecha, tipo) {
-    return { motivo, autoridad, fecha, tipo };
-}
-
-const rows = [
-    createData('Tiro un papel en la cabeza un alumno', 'Docente', '2022-09-23', 'Firma'),
-    createData('Falto el respeto a un profesor', 'Docente', '2022-09-23', 'Firma'),
-    createData('Golpeo a un compañero', 'Direccion', '2022-09-23', 'Amonestacion')
-
-];
-
 export default function Sancion() {
-
     const [alumnos, setAlumnos] = useState([])
     const [sanciones, setSanciones] = useState([])
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    const [nombreAlumno, setNombreAlumno] = useState("")
-    const [apellidoAlumno, setApellidoAlumno] = useState("")
-    const [documento, setDocumento] = useState("")
+    const [cargando, setCargando] = useState(false)
     const [idAlumno, setIdAlumno] = useState(0)
     const { loading, authUser } = useAuth()
     const router = useRouter()
+
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -51,11 +37,13 @@ export default function Sancion() {
 
 
     const listarSanciones = async () => {
+        setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`)
         if (res.status === 200) {
             console.log(res.data);
             setSanciones(res.data)
         }
+        setCargando(false)
     }
 
     const tienePermisos = () => {
@@ -80,24 +68,13 @@ export default function Sancion() {
         }
     }
 
-
-    const handleNombreAlumno = (e) => {
-        setNombreAlumno(e.target.value)
-    }
-
-    const handleApellidoAlumno = (e) => {
-        setApellidoAlumno(e.target.value)
-    }
-    const handleDocumento = (e) => {
-        setDocumento(e.target.value)
-    }
-
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             setIdAlumno(newValue.id);
+        } else {
+            setIdAlumno(0)
         }
     }
-
 
     return (
         <Layout>
@@ -129,7 +106,7 @@ export default function Sancion() {
                     </FormControl>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button variant="outlined" startIcon={<Search />} color="info" >
+                    <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >
                         Buscar
                     </Button>
                 </Grid>
@@ -157,126 +134,137 @@ export default function Sancion() {
             </Box> */}
 
             <div sx={{ marginTop: '200px' }}>
-                <TableContainer component={Paper} >
-                    <Table sx={{ minWidth: 650 }} aria-label="customized table" s >
-                        <TableHead  >
-                            <TableRow>
-                                <TableCell colSpan={4}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
+                {
+                    !cargando && (
+                        <TableContainer component={Paper} >
+                            <Table sx={{ minWidth: 650 }} aria-label="customized table" s >
+                                <TableHead  >
+                                    <TableRow>
+                                        <TableCell colSpan={4}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1,
 
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Motivo
-                                </TableCell>
-                                <TableCell colSpan={2}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
+                                                borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Motivo
+                                        </TableCell>
+                                        <TableCell colSpan={2}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1,
 
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Autoridad
-                                </TableCell>
+                                                borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Autoridad
+                                        </TableCell>
 
-                                <TableCell colSpan={1} align="center"
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
+                                        <TableCell colSpan={1} align="center"
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1,
 
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}>
-                                    Fecha
-                                </TableCell>
-                                <TableCell colSpan={1}
-                                    sx={{
-                                        color: 'black',
-                                        backgroundColor: 'lightblue',
-                                        borderRightColor: 'black',
-                                        borderRight: 1,
+                                                borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}>
+                                            Fecha
+                                        </TableCell>
+                                        <TableCell colSpan={1}
+                                            sx={{
+                                                color: 'black',
+                                                backgroundColor: 'lightblue',
+                                                borderRightColor: 'black',
+                                                borderRight: 1,
 
-                                        borderBottom: 1,
-                                        borderBottomColor: 'black'
-                                    }}
-                                >
-                                    Tipo
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody >
-                            {sanciones && sanciones.map((s, i) => (
+                                                borderBottom: 1,
+                                                borderBottomColor: 'black'
+                                            }}
+                                        >
+                                            Tipo
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody >
+                                    {sanciones && sanciones.map((s, i) => (
 
-                                <TableRow key={i}>
-                                    <TableCell colSpan={4} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
+                                        <TableRow key={i}>
+                                            <TableCell colSpan={4} component="th" scope="row"
+                                                sx={{
+                                                    borderRightColor: 'black',
+                                                    borderRight: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                        }}
-                                    >
-                                        {s.sancion?.motivo}
-                                    </TableCell >
-                                    <TableCell colSpan={2} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
+                                                }}
+                                            >
+                                                {s.sancion?.motivo}
+                                            </TableCell >
+                                            <TableCell colSpan={2} component="th" scope="row"
+                                                sx={{
+                                                    borderRightColor: 'black',
+                                                    borderRight: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                        }}
-                                    >
-                                        {s.sancion?.usuario?.rol?.tipo}
-                                    </TableCell >
-                                    <TableCell colSpan={1} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
+                                                }}
+                                            >
+                                                {s.sancion?.usuario?.rol?.tipo}
+                                            </TableCell >
+                                            <TableCell colSpan={1} component="th" scope="row"
+                                                sx={{
+                                                    borderRightColor: 'black',
+                                                    borderRight: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                        }}
-                                    >
-                                        {s.sancion?.fecha}
-                                    </TableCell >
-                                    <TableCell colSpan={1} component="th" scope="row"
-                                        sx={{
-                                            borderRightColor: 'black',
-                                            borderRight: 1,
-                                            borderTop: 1,
-                                            borderTopColor: 'black',
-                                            borderBottom: 1,
-                                            borderBottomColor: 'black'
+                                                }}
+                                            >
+                                                {s.sancion?.fecha}
+                                            </TableCell >
+                                            <TableCell colSpan={1} component="th" scope="row"
+                                                sx={{
+                                                    borderRightColor: 'black',
+                                                    borderRight: 1,
+                                                    borderTop: 1,
+                                                    borderTopColor: 'black',
+                                                    borderBottom: 1,
+                                                    borderBottomColor: 'black'
 
-                                        }}
-                                    >
-                                        {s.sancion?.tiposancion?.tipo}
-                                    </TableCell >
-                                </TableRow>
-                            ))}
+                                                }}
+                                            >
+                                                {s.sancion?.tiposancion?.tipo}
+                                            </TableCell >
+                                        </TableRow>
+                                    ))}
 
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )
+                }
+                {
+                    cargando && (
+                        <Container sx={{ maxWidth: 'fit-content', textAlign: 'center' }}>
+                            <Loading size={80} />
+                        </Container>
+                    )
+                }
             </div>
         </Layout >
     );

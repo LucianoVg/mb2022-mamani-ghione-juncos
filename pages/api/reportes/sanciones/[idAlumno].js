@@ -12,7 +12,6 @@ export default async function handler(req, res) {
         if (req.method === 'GET') {
             let { idAlumno } = req.query
             const sanciones = await ReporteSanciones(idAlumno)
-
             return res.status(200).json(sanciones)
         } else {
             return res.status(405).send("Metodo no permitido")

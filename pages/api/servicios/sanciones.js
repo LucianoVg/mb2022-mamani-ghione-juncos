@@ -12,7 +12,11 @@ export async function ReporteSanciones(idAlumno = 0) {
                 sancion: {
                     include: {
                         tiposancion: true,
-                        usuario: true
+                        usuario: {
+                            include: {
+                                rol: true
+                            }
+                        }
                     }
                 }
             },
