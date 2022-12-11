@@ -8,8 +8,9 @@ import {
 ChartJS.register(...registerables)
 
 export default function BarChart({ data }) {
-    const labels = data?.map(d => `Nota ${d?.valorNota}`)
-    const values = data?.map(d => d?.nota)
+    const labels = ['Nota 1', 'Nota 2', 'Nota 3', 'Nota 4', 'Nota 5', 'Nota 6', 'Nota 7', 'Nota 8', 'Nota 9', 'Nota 10']
+    const values = [data[0].nota1, data[0].nota2, data[0].nota3, data[0].nota4, data[0].nota5, data[0].nota6, data[0].nota7, data[0].nota8, data[0].nota9, data[0].nota10]
+
     const chartData = {
         labels: labels,
         datasets: [
@@ -61,8 +62,6 @@ export default function BarChart({ data }) {
 
         <Bar data={chartData}
             options={options}
-         
-
         />
 
     )
