@@ -25,7 +25,7 @@ export default function Detalles() {
         }
         traerUsuario()
         traerAlumno()
-        traerDocente()
+        // traerDocente()
         traerEnfermedades()
     }, [loading, authUser])
 
@@ -38,12 +38,12 @@ export default function Detalles() {
             typeof value === 'string' ? value.split(',') : value,
         );
     }
-    const traerDocente = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.legajo}`)
-        if (res.status === 200) {
-            setDocente(res.data)
-        }
-    }
+    // const traerDocente = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.legajo}`)
+    //     if (res.status === 200) {
+    //         setDocente(res.data)
+    //     }
+    // }
     const traerAlumno = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.legajo}`)
         if (res.status === 200) {
@@ -214,7 +214,7 @@ export default function Detalles() {
                                                 !guardando && <span>Actualizar contraseña</span>
                                             }
                                         </Button>
-                                        <Button disabled={guardando} variant="contained" onClick={onCancel()}>
+                                        <Button disabled={guardando} variant="contained" color="error" onClick={onCancel()}>
                                             Cancelar
                                         </Button>
                                     </FormControl>
@@ -228,10 +228,11 @@ export default function Detalles() {
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
                                         <TextField disabled value={usuario?.password}
+                                            type="password"
                                             style={{ marginBottom: "15px" }}
                                         />
                                         <Button
-
+                                            variant="contained"
                                             onClick={() => {
                                                 setInEditMode({
                                                     status: true
