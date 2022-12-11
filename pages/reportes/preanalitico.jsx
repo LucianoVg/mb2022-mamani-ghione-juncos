@@ -116,8 +116,14 @@ export default function Preanalitico() {
         }
     }
 
+
+   const redondear = Math.round((7.33 + Number.EPSILON) * 100) / 100
+
+console.log("redondeado", redondear)
+
     return (
-        <Layout>
+        <Layout>s
+            
             <h3>Buscar Alumno</h3>
 
             <Box direction="row">
@@ -554,7 +560,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[31]?.notafinal)
+                                       Number(preanalitico[31]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -586,7 +592,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[43]?.notafinal)
+                                        Number(preanalitico[43]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -618,7 +624,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[57]?.notafinal)
+                                        Number(preanalitico[57]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -759,7 +765,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[32]?.notafinal)
+                                       Number(preanalitico[32]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -791,7 +797,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[44]?.notafinal)
+                                        Number(preanalitico[44]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -823,7 +829,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[58]?.notafinal)
+                                        Number(preanalitico[58]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -960,7 +966,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[33]?.notafinal)
+                                        Number(preanalitico[33]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -992,7 +998,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[45]?.notafinal)
+                                        Number(preanalitico[45]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1024,7 +1030,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[59]?.notafinal)
+                                       Number(preanalitico[59]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1162,7 +1168,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[34]?.notafinal)
+                                        Number(preanalitico[34]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1194,7 +1200,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[46]?.notafinal)
+                                     Number(preanalitico[46]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1226,7 +1232,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[60]?.notafinal)
+                                        Number(preanalitico[60]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1363,7 +1369,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[35]?.notafinal)
+                                        Number(preanalitico[35]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1395,7 +1401,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[47]?.notafinal)
+                                        Number(preanalitico[47]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1427,7 +1433,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[61]?.notafinal)
+                                        Number(preanalitico[61]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1569,7 +1575,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[36]?.notafinal)
+                                        Number(preanalitico[36]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1601,7 +1607,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[48]?.notafinal)
+                                        Number(preanalitico[48]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1633,7 +1639,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[62]?.notafinal)
+                                        Number(preanalitico[62]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1774,7 +1780,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[37]?.notafinal)
+                                       Number(preanalitico[37]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1806,7 +1812,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[49]?.notafinal)
+                                        Number(preanalitico[49]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1838,7 +1844,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[63]?.notafinal)
+                                       Number(preanalitico[63]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -1980,7 +1986,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[38]?.notafinal)
+                                       Number(preanalitico[38]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2012,7 +2018,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[50]?.notafinal)
+                                      Number(preanalitico[50]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2044,7 +2050,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[64]?.notafinal)
+                                        Number(preanalitico[64]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2189,7 +2195,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[39]?.notafinal)
+                                        Number(preanalitico[39]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2221,7 +2227,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[51]?.notafinal)
+                                        Number(preanalitico[51]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2253,7 +2259,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[65]?.notafinal)
+                                        Number(preanalitico[65]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2394,7 +2400,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[40]?.notafinal)
+                                        Number(preanalitico[40]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2426,7 +2432,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[52]?.notafinal)
+                                       Number(preanalitico[52]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2458,7 +2464,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[66]?.notafinal)
+                                       Number(preanalitico[66]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2608,7 +2614,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[41]?.notafinal)
+                                        Number(preanalitico[41]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2640,7 +2646,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[53]?.notafinal)
+                                        Number(preanalitico[53]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2672,7 +2678,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[67]?.notafinal)
+                                        Number(preanalitico[67]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2829,7 +2835,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[42]?.notafinal)
+                                        Number(preanalitico[42]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2861,7 +2867,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[54]?.notafinal)
+                                      Number(preanalitico[54]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -2893,7 +2899,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[68]?.notafinal)
+                                        Number(preanalitico[68]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3050,7 +3056,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[42]?.notafinal)
+                                       Number(preanalitico[42]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3082,7 +3088,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[55]?.notafinal)
+                                        Number(preanalitico[55]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3114,7 +3120,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[69]?.notafinal)
+                                        Number(preanalitico[69]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3271,7 +3277,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[42]?.notafinal)
+                                        Number(preanalitico[42]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3303,7 +3309,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[56]?.notafinal)
+                                       Number(preanalitico[56]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
@@ -3337,7 +3343,7 @@ export default function Preanalitico() {
                                 >
                                     {
 
-                                        Math.round(preanalitico[69]?.notafinal)
+                                        Number(preanalitico[69]?.notafinal).toFixed(2)
 
                                     }
                                 </TableCell >
