@@ -333,7 +333,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {Math.round(promedioTrimestre[0]?.promedio)}
+                                                {Number(promedioTrimestre[0]?.promedio).toFixed(2)}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -346,7 +346,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {Math.round(promedioTrimestre[1]?.promedio)}
+                                                {Number(promedioTrimestre[1]?.promedio).toFixed(2)}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -359,7 +359,7 @@ export default function Notas() {
 
                                                 }}
                                             >
-                                                {Math.round(promedioTrimestre[2]?.promedio)}
+                                                {Number(promedioTrimestre[2]?.promedio).toFixed(2)}
                                             </TableCell >
                                         </TableRow>
                                     }

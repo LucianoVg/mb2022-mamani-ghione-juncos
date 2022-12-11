@@ -57,12 +57,6 @@ export default function Preanalitico() {
         }
     }
 
-    const primerAño = preanalitico.filter(p => p.curso === 1)
-    const segundoAño = preanalitico.filter(p => p.curso === 2)
-    const tercerAño = preanalitico.filter(p => p.curso === 3)
-    const cuartoAño = preanalitico.filter(p => p.curso === 4)
-    const quintoAño = preanalitico.filter(p => p.curso === 5)
-    const sextoAño = preanalitico.filter(p => p.curso === 6)
 
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -117,12 +111,8 @@ export default function Preanalitico() {
     }
 
 
-   const redondear = Math.round((7.33 + Number.EPSILON) * 100) / 100
-
-console.log("redondeado", redondear)
-
     return (
-        <Layout>s
+        <Layout>
             
             <h3>Buscar Alumno</h3>
 
@@ -464,7 +454,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[0]?.notafinal)
+                                         preanalitico[0]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -496,7 +486,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[10]?.notafinal)
+                                         preanalitico[10]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -528,7 +518,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[20]?.notafinal)
+                                         preanalitico[20]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -669,7 +659,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[1]?.notafinal)
+                                         preanalitico[1]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -701,7 +691,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[11]?.notafinal)
+                                         preanalitico[11]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -733,7 +723,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[21]?.notafinal)
+                                         preanalitico[21]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -870,7 +860,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[2]?.notafinal)
+                                         preanalitico[2]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -902,7 +892,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[12]?.notafinal)
+                                         preanalitico[12]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -934,7 +924,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[22]?.notafinal)
+                                         preanalitico[22]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1072,7 +1062,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[3]?.notafinal)
+                                         preanalitico[3]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1104,7 +1094,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[13]?.notafinal)
+                                         preanalitico[13]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1136,7 +1126,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[23]?.notafinal)
+                                         preanalitico[23]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1273,7 +1263,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[4]?.notafinal)
+                                         preanalitico[4]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1305,7 +1295,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[14]?.notafinal)
+                                         preanalitico[14]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1337,7 +1327,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[24]?.notafinal)
+                                         preanalitico[24]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1479,7 +1469,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[5]?.notafinal)
+                                         preanalitico[5]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1511,7 +1501,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[15]?.notafinal)
+                                         preanalitico[15]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1543,7 +1533,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[25]?.notafinal)
+                                         preanalitico[25]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1684,7 +1674,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[6]?.notafinal)
+                                         preanalitico[6]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1716,7 +1706,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[16]?.notafinal)
+                                         preanalitico[16]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1748,7 +1738,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[26]?.notafinal)
+                                         preanalitico[26]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1890,7 +1880,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[7]?.notafinal)
+                                         preanalitico[7]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1922,7 +1912,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[17]?.notafinal)
+                                         preanalitico[17]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -1954,7 +1944,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[27]?.notafinal)
+                                         preanalitico[27]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2099,7 +2089,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[8]?.notafinal)
+                                         preanalitico[8]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2131,7 +2121,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[18]?.notafinal)
+                                         preanalitico[18]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2163,7 +2153,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[28]?.notafinal)
+                                         preanalitico[28]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2304,7 +2294,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[9]?.notafinal)
+                                         preanalitico[9]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2336,7 +2326,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[19]?.notafinal)
+                                         preanalitico[19]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2368,7 +2358,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[29]?.notafinal)
+                                         preanalitico[29]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2514,7 +2504,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[9]?.notafinal)
+                                         preanalitico[9]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2550,7 +2540,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[19]?.notafinal)
+                                         preanalitico[19]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2582,7 +2572,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[30]?.notafinal)
+                                         preanalitico[30]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2731,7 +2721,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[9]?.notafinal)
+                                         preanalitico[9]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2767,7 +2757,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[19]?.notafinal)
+                                         preanalitico[19]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2801,7 +2791,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[30]?.notafinal)
+                                         preanalitico[30]?.notafinal 
 
                                     }
                                 </TableCell >
@@ -2952,7 +2942,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[9]?.notafinal)
+                                         preanalitico[9]?.notafinal
 
                                     }
                                 </TableCell >
@@ -2988,8 +2978,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[19]?.notafinal)
-
+                                         preanalitico[19]?.notafinal
                                     }
                                 </TableCell >
                                 <TableCell colSpan={2} component="th" scope="row"
@@ -3022,7 +3011,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[30]?.notafinal)
+                                         preanalitico[30]?.notafinal
 
                                     }
                                 </TableCell >
@@ -3173,7 +3162,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[9]?.notafinal)
+                                         preanalitico[9]?.notafinal
 
                                     }
                                 </TableCell >
@@ -3209,7 +3198,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[19]?.notafinal)
+                                         preanalitico[19]?.notafinal
 
                                     }
                                 </TableCell >
@@ -3243,7 +3232,7 @@ console.log("redondeado", redondear)
                                 >
                                     {
 
-                                        Math.round(preanalitico[30]?.notafinal)
+                                         preanalitico[30]?.notafinal
 
                                     }
                                 </TableCell >
