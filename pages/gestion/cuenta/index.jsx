@@ -265,7 +265,7 @@ export default function Detalles() {
                                         <Typography variant="h5" sx={{ width: '200px' }} >
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
-                                        <TextField disabled value={usuario?.password}
+                                        <TextField disabled value="123457655689"
                                             type="password"
                                             style={{ marginBottom: "15px",  width: "220px" }}
                                         />
