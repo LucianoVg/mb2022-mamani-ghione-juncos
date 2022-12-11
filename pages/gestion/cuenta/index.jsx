@@ -11,7 +11,7 @@ export default function Detalles() {
     const { loading, authUser } = useAuth()
     const router = useRouter()
     const [usuario, setUsuario] = useState()
-    const [enfermedades, setEnfermedades] = useState()
+    const [enfermedades, setEnfermedades] = useState([])
     const [selectedEnf, setSelectedEnf] = useState([])
     const [alergias, setAlergias] = useState('')
     const [alumno, setAlumno] = useState(null)
@@ -60,9 +60,10 @@ export default function Detalles() {
         setCargando(false)
     }
     const traerEnfermedades = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/enfermedades`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/enfermedades/${usuario?.id}`)
         if (res.data) {
             setEnfermedades(res.data)
+            console.log(res.data)
         }
     }
     const updateProfile = async () => {
@@ -110,6 +111,27 @@ export default function Detalles() {
         })
 
     }
+    const onSave2 = async (idUsuario) => {
+        // const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/update/${id}`, {
+        //     asunto: asunto.length && asunto || notificacion?.asunto,
+        //     contenido: contenido.length && contenido || notificacion?.contenido,
+        //     idUsuario: notificacion.usuario?.id,
+        // })
+        onCancel2()
+
+    }
+
+    const [inEditMode2, setInEditMode2] = useState({
+        status: false
+    });
+    const onCancel2 = () => {
+        // reset the inEditMode state value
+        setInEditMode2({
+            status: false
+        })
+
+    }
+
     return (
         <Layout>
             {
@@ -203,20 +225,36 @@ export default function Detalles() {
                                         <Typography variant="h5" sx={{ width: '200px' }} >
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
-                                        <TextField value={password} style={{ marginBottom: "15px" }} />
-                                        <Button disabled={guardando} variant="contained" onClick={(e) => onSave(usuario?.id)}>
-                                            {
-                                                guardando && (
-                                                    <Loading size={30} />
-                                                )
-                                            }
-                                            {
-                                                !guardando && <span>Actualizar contraseña</span>
-                                            }
-                                        </Button>
-                                        <Button disabled={guardando} variant="contained" color="error" onClick={onCancel()}>
-                                            Cancelar
-                                        </Button>
+                                        <TextField value={password} style={{ marginBottom: "15px", width: "220px" }}
+                                        onChange={(e) => { setPassword(e.target.value) }}
+                                        />
+
+                                        <Stack
+                                            direction={{ xs: 'column', sm: 'row' }}
+                                            spacing={{ xs: 2, sm: 2 }}
+
+                                        >
+                                            <Button disabled={guardando} variant="contained"
+                                                onClick={(e) => onSave(usuario?.id)}
+                                                sx={{ marginBottom: '5px' }}
+                                                style={{ height: "40px", width: "220px" }}
+                                            >
+                                                {
+                                                    guardando && (
+                                                        <Loading size={30} />
+                                                    )
+                                                }
+                                                {
+                                                    !guardando && <span>Actualizar contraseña</span>
+                                                }
+                                            </Button>
+                                            <Button variant="contained" color="error" onClick={() => onCancel()}
+                                                style={{ height: "40px", width: "100px" }}
+                                            >
+                                                Cancelar
+                                            </Button>
+                                        </Stack>
+
                                     </FormControl>
 
 
@@ -229,9 +267,10 @@ export default function Detalles() {
                                         </Typography>
                                         <TextField disabled value={usuario?.password}
                                             type="password"
-                                            style={{ marginBottom: "15px" }}
+                                            style={{ marginBottom: "15px",  width: "220px" }}
                                         />
                                         <Button
+                                            style={{ height: "40px", width: "220px" }}
                                             variant="contained"
                                             onClick={() => {
                                                 setInEditMode({
@@ -268,61 +307,97 @@ export default function Detalles() {
                                 Datos de salud
                             </strong>
                         </Typography>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 2, sm: 2, md: 23 }}
-                            sx={{ marginBottom: '30px' }}
-                        >
-                            <Typography variant="h5"><strong>Alergias:</strong> {usuario?.alergias}</Typography>
-                            <Typography variant="h5"><strong>Enfermedades:</strong></Typography>
 
-                        </Stack>
-
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 2, sm: 2, md: 10 }}
-                        >
-
-                            <FormControl >
-                                <InputLabel id="demo-multiple-name-label">Tienes alguna enfermedad?</InputLabel>
-                                <Select
-                                    labelId="demo-multiple-name-label"
-                                    id="demo-multiple-name"
-                                    multiple
-                                    value={selectedEnf}
-                                    onChange={handleEnfermedad}
-                                    input={<OutlinedInput label="Enfermedad" />}
-                                    style={{ minWidth: "250px" }}>
-                                    {enfermedades?.map((enf) => (
-                                        <MenuItem
-                                            key={enf.id}
-                                            value={enf.descripcion}>
-                                            {enf.descripcion}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl>
-                                <TextField label="Tienes alguna alergia?" multiline value={alergias} onChange={(e) => { setAlergias(e.target.value) }} />
-                            </FormControl>
-                            <Button disabled={guardando} variant="contained" onClick={updateProfile}>
-                                {
-                                    guardando && (
-                                        <Loading size={30} />
-                                    )
-                                }
-                                {
-                                    !guardando && <span>Actualizar Perfil</span>
-                                }
-                            </Button>
-                        </Stack>
                         {
-                            !guardando && respuesta.mensaje && (
-                                <Alert sx={{ mt: 2 }} color={respuesta.status === 200 ? 'success' : 'error'}>
-                                    {respuesta.mensaje}
-                                </Alert>
+                            inEditMode2.status === true ? (
+                                <Stack
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                    spacing={{ xs: 2, sm: 2 }}
+                                >
+
+                                    <FormControl >
+                                        <InputLabel id="demo-multiple-name-label">Tienes alguna enfermedad?</InputLabel>
+                                        <Select
+                                            labelId="demo-multiple-name-label"
+                                            id="demo-multiple-name"
+                                            multiple
+                                            value={selectedEnf}
+                                            onChange={handleEnfermedad}
+                                            input={<OutlinedInput label="Enfermedad" />}
+                                            style={{ minWidth: "250px" }}>
+                                            {enfermedades?.map((enf) => (
+                                                <MenuItem
+                                                    key={enf.id}
+                                                    value={enf.descripcion}>
+                                                    {enf.descripcion}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                    <FormControl>
+                                        <TextField label="Tienes alguna alergia?" multiline value={alergias} onChange={(e) => { setAlergias(e.target.value) }} />
+                                    </FormControl>
+
+                                    <Button disabled={guardando} variant="contained" onClick={updateProfile}
+                                        style={{ height: "40px", width: "180px" }}
+                                    >
+                                        {
+                                            guardando && (
+                                                <Loading size={10} />
+                                            )
+                                        }
+                                        {
+                                            !guardando && <span>Actualizar Perfil</span>
+                                        }
+                                    </Button>
+                                    <Button variant="contained" onClick={() => onCancel2()}
+                                        color="error"
+                                        style={{ height: "40px", width: "100px" }}
+                                    >
+                                        Cancelar
+                                    </Button>
+
+                                </Stack>
+
+                                // !guardando && respuesta.mensaje && (
+                                //     <Alert sx={{ mt: 2 }} color={respuesta.status === 200 ? 'success' : 'error'}>
+                                //         {respuesta.mensaje}
+                                //     </Alert>
+                                // )
+
+                            ) : (
+                                <Stack
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                    spacing={{ xs: 2, sm: 2, md: 23 }}
+                                    sx={{ marginBottom: '30px' }}
+                                >
+                                    <Typography variant="h5"><strong>Enfermedades:</strong>
+                                        {
+                                            enfermedades && enfermedades.map((e) => {
+                                                `${e.enfermedad?.descripcion}`
+                                            })
+                                        }
+                                    </Typography>
+                                    <Typography variant="h5"><strong>Alergias:</strong> {usuario?.alergias}</Typography>
+
+                                    <Button variant="contained"
+                                        style={{ height: "40px", width: "180px" }}
+                                        onClick={() => {
+                                            setInEditMode2({
+                                                status: true
+                                            })
+                                            setAlergias(usuario?.alergias)
+                                        }
+                                        }
+                                    >
+                                        Actualizar Perfil
+                                    </Button>
+                                </Stack>
+
                             )
+
                         }
+
                         {
                             alumno && (
                                 <>
