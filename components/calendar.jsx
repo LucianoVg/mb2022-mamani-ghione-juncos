@@ -1,6 +1,5 @@
 import Scheduler, { Editing } from 'devextreme-react/scheduler'
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuth } from './context/authUserProvider';
 
@@ -19,6 +18,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                     displayExpr: 'curso',
                     valueExpr: 'id',
                     value: idCurso,
+                    readonly: !tienePermisos(),
                     onValueChanged(args) {
                         setIdCurso(Number(args.value))
                     }
@@ -32,6 +32,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 dataField: 'asunto',
                 editorOptions: {
                     value: asunto,
+                    readonly: !tienePermisos(),
                     onValueChanged(args) {
                         setAsunto(args.value)
                     }
@@ -46,6 +47,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 editorOptions: {
                     value: fechaInicio,
                     type: 'datetime',
+                    readonly: !tienePermisos(),
                     onValueChanged(args) {
                         setFechaInicio(args.value)
                     }
@@ -60,6 +62,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 editorOptions: {
                     value: fechaFin,
                     type: 'datetime',
+                    readonly: !tienePermisos(),
                     onValueChanged(args) {
                         setFechaFin(args.value)
                     }
@@ -97,7 +100,6 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
             || usuario.rol === 'Docente'
     }
 
-
     return (
         <div id="calendar">
             <Scheduler
@@ -105,7 +107,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 locale={'es-AR'}
                 dataSource={data}
                 defaultCurrentDate={new Date()}
-                defaultCurrentView={'week'}
+                views={['month']}
                 onAppointmentClick={(e) => {
                     console.log(e.appointmentData)
                     setIdCurso(e.appointmentData.idCurso)
@@ -113,7 +115,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                     setFechaInicio(e.appointmentData.startDate)
                     setFechaFin(e.appointmentData.endDate)
                 }}
-                onAppointmentFormOpening={tienePermisos() ? onFormOpening : undefined}
+                onAppointmentFormOpening={onFormOpening}
                 onAppointmentAdded={() => onAdd(idCurso, asunto, fechaInicio, fechaFin)}
                 onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
                 onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
