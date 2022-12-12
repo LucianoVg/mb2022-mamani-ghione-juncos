@@ -36,9 +36,9 @@ export default function Sancion() {
     }, [usuario.id, usuario.rol, loading, authUser])
 
     if (usuario.rol === 'Estudiante') {
-        alumnos.find(a => a.idusuario === usuario.id)
+        let alumno = alumnos.find(a => a.idusuario === usuario.id)
         // setAlumnos(alumnos.id)
-        console.log("estudiante", alumnos.idusuario, "usuario", usuario.id)
+        console.log("estudiante", alumno.idusuario, "usuario", usuario.id)
     }
     const listarSanciones = async () => {
         setCargando(true)

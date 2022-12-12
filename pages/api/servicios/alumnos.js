@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export default async function traerAlumnos() {
+export default async function traerAlumnos(idCursoDivision = 1) {
     try {
         const alumnos = await Prisma.newPrisma.alumnoxcursoxdivision.findMany({
             include: {
@@ -16,6 +16,7 @@ export default async function traerAlumnos() {
                     nombre: 'asc'
                 }
             }
+        
         })
         return alumnos
     } catch (error) {
