@@ -39,7 +39,7 @@ const Login = () => {
         setIngresando(true)
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${correo}/${password}`)
-            if (res.status === 200) {
+            if (res.data) {
                 console.log(res.data);
                 iniciarSesion(res.data.correo, res.data.password)
                     .then(user => {
@@ -74,7 +74,7 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
-            router.push('/error')
+            setMensaje(error)
         }
     }
 
