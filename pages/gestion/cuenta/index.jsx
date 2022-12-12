@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Typography, Divider, Stack, MenuItem, TextField, FormControl, InputLabel, Select, OutlinedInput, Button, Alert } from "@mui/material";
+import { Typography, Divider, Stack, MenuItem, TextField, FormControl, InputLabel, Select, OutlinedInput, Button, Alert, Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { Container } from "@mui/system";
 import Loading from '../../../components/loading';
@@ -190,24 +190,54 @@ export default function Detalles() {
                                 Datos de Usuario
                             </strong>
                         </Typography>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 2, sm: 2, md: 23 }}
-                            sx={{ marginBottom: '30px' }}
-                        >
+                        {
+                            !editMode && (
+                                <Button
+                                    style={{ height: "40px", width: "220px", marginBottom: "15px" }}
+                                    variant="contained"
+                                    onClick={() => setEditMode(!editMode)}>
 
-                            <Typography variant="h5" sx={{ width: '200px' }} >
-                                <strong>Correo</strong> <br />
-                                {usuario?.correo}
-                            </Typography>
+                                    Editar Info
 
-
-                            {
-                                editMode && (
+                                </Button>
+                            )
+                        }
+                        {
+                            editMode ? (
+                                <Box>
                                     <Stack
                                         direction={{ xs: 'column', sm: 'row' }}
                                         spacing={{ xs: 2, sm: 2 }}
+                                        sx={{ marginBottom: '15px' }}
                                     >
+                                        <Button disabled={guardando} variant="contained" onClick={updateProfile} sx={{ height: "40px", width: "220px" }}>
+                                            {
+                                                guardando && (
+                                                    <Loading size={10} />
+                                                )
+                                            }
+                                            {
+                                                !guardando && <span>Actualizar Perfil</span>
+                                            }
+                                        </Button>
+                                        <Button
+                                            style={{ height: "40px", width: "220px" }}
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => setEditMode(!editMode)}>
+                                            <span>Cancelar</span>
+                                        </Button>
+                                    </Stack>
+                                    <Stack
+                                        direction={{ xs: 'column', sm: 'row' }}
+                                        spacing={{ xs: 2, sm: 2, md: 23 }}
+                                        sx={{ marginBottom: '30px' }}
+                                    >
+
+                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <strong>Correo</strong> <br />
+                                            {usuario?.correo}
+                                        </Typography>
                                         <FormControl>
                                             <Typography variant="h5" sx={{ width: '200px' }} >
                                                 <strong>Contraseña Actual</strong> <br />
@@ -218,52 +248,53 @@ export default function Detalles() {
                                             {
                                                 mensaje.length > 0 && <Alert color="error">{mensaje}</Alert>
                                             }
-                                            <FormControl>
-                                                <Typography variant="h5" sx={{ width: '200px' }} >
-                                                    <strong>Contraseña Nueva</strong> <br />
-                                                </Typography>
-                                                <TextField
-                                                    value={newPassword}
-                                                    type="newPassword"
-                                                    onChange={(e) => setNewPassword(e.target.value)}
-                                                    style={{ marginBottom: "15px", width: "220px" }}
-                                                />
-                                            </FormControl>
-                                        </FormControl>
 
+                                        </FormControl>
+                                        <FormControl>
+                                            <Typography variant="h5" sx={{ width: '200px' }} >
+                                                <strong>Contraseña Nueva</strong> <br />
+                                            </Typography>
+                                            <TextField
+                                                value={newPassword}
+                                                type="newPassword"
+                                                onChange={(e) => setNewPassword(e.target.value)}
+                                                style={{ marginBottom: "15px", width: "220px" }}
+                                            />
+                                        </FormControl>
                                     </Stack>
-                                )
-                            }
-                        </Stack>
+                                </Box>
+
+                            ) : (
+                                <Stack
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                    spacing={{ xs: 2, sm: 2, md: 23 }}
+                                    sx={{ marginBottom: '30px' }}
+                                >
+                                    <Typography variant="h5" sx={{ width: '200px' }} >
+                                        <strong>Correo</strong> <br />
+                                        {usuario?.correo}
+                                    </Typography>
+                                    <FormControl>
+                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <strong>Contraseña</strong> <br />
+                                        </Typography>
+                                        <TextField
+                                            value="12341342342141321312"
+                                            type="password"
+                                            disabled
+                                        />
+                                    </FormControl>
+                                </Stack>
+
+
+                            )
+                        }
+
                         <Stack
                             direction={{ xs: 'column', sm: 'row' }}
                             spacing={{ xs: 2, sm: 2 }}
                         >
-                            {
-                                editMode && (
-                                    <Button disabled={guardando} variant="contained" onClick={updateProfile} sx={{ height: "40px", width: "220px" }}>
-                                        {
-                                            guardando && (
-                                                <Loading size={10} />
-                                            )
-                                        }
-                                        {
-                                            !guardando && <span>Actualizar Perfil</span>
-                                        }
-                                    </Button>
-                                )
-                            }
-                            <Button
-                                style={{ height: "40px", width: "220px" }}
-                                variant="contained"
-                                onClick={() => setEditMode(!editMode)}>
-                                {
-                                    editMode && <span>Cancelar</span>
-                                }
-                                {
-                                    !editMode && <span>Editar Info</span>
-                                }
-                            </Button>
+
                         </Stack>
                         <Divider sx={{ marginTop: '20px' }}></Divider>
                         {
@@ -314,27 +345,54 @@ export default function Detalles() {
                                         <TextField label="Tienes alguna alergia?" multiline value={alergias} onChange={(e) => { setAlergias(e.target.value) }} />
                                     </FormControl>
 
+
                                 </Stack>
+
                             ) : (
                                 <Stack
                                     direction={{ xs: 'column', sm: 'row' }}
                                     spacing={{ xs: 2, sm: 2, md: 23 }}
                                     sx={{ marginBottom: '30px' }}
                                 >
-                                    <Typography variant="h5">
-                                        <strong>Enfermedades:</strong>
-                                    </Typography>
-                                    <ul>
-                                        {
-                                            usuario?.enfermedadesxusuario.length > 0 && usuario?.enfermedadesxusuario.map((e) => (
-                                                <li key={e.id}>{e.enfemedad?.descripcion}</li>
-                                            ))
-                                        }
-                                    </ul>
-                                    <Typography variant="h5">
-                                        <strong>Alergias:</strong>
-                                        {usuario?.alergias}
-                                    </Typography>
+
+
+                                    {
+                                        !usuario?.enfermedadesxusuario ? (
+                                            <Typography variant="h5">
+                                                <strong>Enfermedades:</strong> <br />
+                                                No tiene enfermedad/es
+                                            </Typography>
+                                        ) : (
+                                            <Box>
+                                                <Typography variant="h5">
+                                                    <strong>Enfermedades:</strong>
+                                                </Typography>
+                                                <ul>
+                                                    {
+                                                        usuario?.enfermedadesxusuario.length > 0 && usuario?.enfermedadesxusuario.map((e) => (
+                                                            <li key={e.id}>{e.enfemedad?.descripcion}</li>
+                                                        ))
+                                                    }
+
+                                                </ul>
+                                            </Box>
+                                        )
+                                    }
+
+                                    {
+                                        !usuario?.alergias ? (
+                                            <Typography variant="h5">
+                                                <strong>Alergias:</strong> <br />
+                                                No tiene alergia/s
+                                            </Typography>
+                                        ) : (
+                                            <Typography variant="h5">
+                                                <strong>Alergias:</strong> <br />
+                                                {usuario?.alergias}
+                                            </Typography>
+                                        )
+                                    }
+
                                 </Stack>
 
                             )
