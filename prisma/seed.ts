@@ -16,7 +16,7 @@ import { materias } from './seeds/materias';
 import { menuXRoles } from './seeds/menuXRol';
 import { portadaFicha } from './seeds/portadaFicha';
 import { discapacidad } from './seeds/discapacidad';
-// import { roles } from './seeds/roles';
+import { roles } from './seeds/roles';
 import { menus } from './seeds/menus';
 import { docentes } from './seeds/docentes';
 import { estadosAlumno } from './seeds/estadosAlumno';
@@ -49,6 +49,7 @@ async function main() {
     // usuarios.map(async (u) => {
     //     const usuario = await prisma.usuario.create({
     //         data: {
+    //             id: u.id,
     //             nombre: u.nombre,
     //             apellido: u.apellido,
     //             correo: u.correo,
@@ -65,7 +66,6 @@ async function main() {
     //     console.log(usuario);
     // })
 
-<<<<<<< HEAD
     //  tutores.map(async (t) => {
     //         const usuario = await prisma.usuario.create({
     //             data: {
@@ -131,18 +131,18 @@ async function main() {
 
     // })
 
-    materias.map(async (m) => {
+    // materias.map(async (m) => {
 
-        const materi = await prisma.materia.create({
-            data: {
-                id: m.id,
-                nombre: m.nombre,
-                // idcorrelativa: m.idCorrelativa,
-                idcurso: m.idCurso
-            }
-        })
-        console.log(materi);
-    })
+    //     const materi = await prisma.materia.create({
+    //         data: {
+    //             id: m.id,
+    //             nombre: m.nombre,
+    //             // idcorrelativa: m.idCorrelativa,
+    //             idcurso: m.idCurso
+    //         }
+    //     })
+    //     console.log(materi);
+    // })
 
     // tutores.map(async (t) => {
     //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
@@ -991,8 +991,6 @@ async function main() {
 
 
 
-=======
->>>>>>> e4f313b51efc10c74bf7333addd63ccd16e91cd5
 }
 
 main()
