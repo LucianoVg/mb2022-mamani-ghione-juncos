@@ -6,7 +6,20 @@ export default async function handler(req, res) {
             let { legajo, fecha, idCurso, nombreAlumno, apellidoAlumno } = req.query
             console.log(legajo, fecha, idCurso, nombreAlumno, apellidoAlumno);
 
-            let OR = []
+
+            // AND: [
+            //     {
+            //         FECHA
+            //     },
+            //     {
+            //         OR: [
+            //             {
+
+            //             }
+            //         ]
+            //     }
+            // ]
+            let AND = []
             let options = {
                 include: {
                     usuario: true,
