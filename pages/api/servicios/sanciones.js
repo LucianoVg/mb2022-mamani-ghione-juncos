@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export async function ReporteSanciones(idAlumno = 0) {
+export async function ReporteSanciones(idAlumno = 1) {
     try {
         let options = {
             include: {
