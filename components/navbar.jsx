@@ -54,12 +54,13 @@ export const Navbar = ({ toggleDrawer }) => {
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
                                 </div>
-                                <IconButton onClick={() => router.push('/gestion/cuenta')}>
-                                    <AccountCircleIcon />
-                                </IconButton>
+
                             </>
                         )
                     }
+                    <IconButton onClick={() => router.push('/gestion/cuenta')}>
+                        <AccountCircleIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>
