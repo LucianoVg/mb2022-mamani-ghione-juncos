@@ -16,11 +16,11 @@ import { Upload } from '@mui/icons-material';
 import Loading from '../../../components/loading';
 
 const MaterialEstudio = () => {
-    const [idCurso, setIdCurso] = useState('');
+    const [idCurso, setIdCurso] = useState(0);
     const [materias, setMaterias] = useState()
     const [cursos, setCursos] = useState()
     const handleCurso = (e) => {
-        setIdCurso(e.target.value);
+        setIdCurso(Number(e.target.value));
     };
 
     const { loading, authUser } = useAuth()
@@ -39,7 +39,9 @@ const MaterialEstudio = () => {
     const [t1SubidoMsg, setT1SubidoMsg] = useState("")
     const [t2SubidoMsg, setT2SubidoMsg] = useState("")
     const [t3SubidoMsg, setT3SubidoMsg] = useState("")
-
+    const [materialEstudio, setMaterialEstudio] = useState()
+    const [alumno, setAlumno] = useState()
+    const [mensaje, setMensaje] = useState("")
     const handleMateria = (e) => {
         setIdMateria(e.target.value);
     };
@@ -65,6 +67,12 @@ const MaterialEstudio = () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
             setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+        }
+    }
+    const traerAlumno = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`)
+        if (res.status === 200) {
+            setAlumno(res.data)
         }
     }
     const handleDocs1erTrimestre = (e) => {
@@ -162,23 +170,40 @@ const MaterialEstudio = () => {
             setSubiendoT3(false)
         }
     }
-    const descargarMaterial1 = async (idTrimestre) => {
-        setBajandoT1(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
-        setBajandoT1(false)
+    const descargarMaterial = async (idTrimestre) => {
+        switch (idTrimestre) {
+            case 1:
+                setBajandoT1(true)
+                break;
+            case 2:
+                setBajandoT2(true)
+                break;
+            case 3:
+                setBajandoT3(true)
+                break;
+        }
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${alumno?.cursoxdivision?.id}`)
         console.log(res.data);
-    }
-    const descargarMaterial2 = async (idTrimestre) => {
-        setBajandoT2(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
-        setBajandoT2(false)
-        console.log(res.data);
-    }
-    const descargarMaterial3 = async (idTrimestre) => {
-        setBajandoT3(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
-        setBajandoT3(false)
-        console.log(res.data);
+        if (res.status === 200) {
+            setMaterialEstudio(res.data)
+        }
+        if (!res.data?.length) {
+            setMensaje('No hay material de estudio en este trimestre')
+            setTimeout(() => {
+                setMensaje('')
+            }, 2000);
+        }
+        switch (idTrimestre) {
+            case 1:
+                setBajandoT1(false)
+                break;
+            case 2:
+                setBajandoT2(false)
+                break;
+            case 3:
+                setBajandoT3(false)
+                break;
+        }
     }
 
     const router = useRouter()
@@ -194,6 +219,7 @@ const MaterialEstudio = () => {
                 traerCursos()
                 traerMaterias()
                 traerTrimestres()
+                traerAlumno()
             }
         }
     }, [loading, authUser, usuario.id, usuario.rol])
@@ -352,7 +378,7 @@ const MaterialEstudio = () => {
                                             }
                                             {
                                                 subiendoT1 && (
-                                                    <CircularProgress sx={{ margin: 'auto' }} size={30} color="primary" />
+                                                    <Loading size={30} />
                                                 )
                                             }
                                         </>
@@ -361,7 +387,7 @@ const MaterialEstudio = () => {
                                             <Button variant='outlined' component="label"
                                                 sx={{ width: '180px' }}
                                                 spacing={4}
-                                            >
+                                                onClick={() => descargarMaterial(1)}>
                                                 {
                                                     !bajandoT1 && <span>Descargar apunte</span>
                                                 }
@@ -370,13 +396,11 @@ const MaterialEstudio = () => {
                                                         <Loading size={30} />
                                                     )
                                                 }
-                                                <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
-                                                    accept=".pdf,.xlsx,.pptx,.docx"
-                                                    multiple type="file" />
                                             </Button>
                                             <IconButton spacing={4} color="primary">
                                                 <DownloadIcon />
                                             </IconButton>
+
                                         </>
                                     )
                                 }
@@ -386,52 +410,133 @@ const MaterialEstudio = () => {
                             <h3>Segundo Trimestre</h3>
 
                             <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
+                                {
+                                    usuario.rol !== 'Estudiante' ? (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                            >
 
-                                    {
-                                        !bajandoT2 && <span>Descargar apunte</span>
-                                    }
-                                    {
-                                        bajandoT2 && (
-                                            <Loading size={30} />
-                                        )
-                                    }
-                                    <input hidden name='docs2doTrimestre' onChange={handleDocs2doTrimestre}
-                                        accept=".pdf,.xlsx,.pptx,.docx"
-                                        multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
+                                                {
+                                                    !docs2doTrimestre && <span>Subir apunte</span>
+                                                }
+                                                {
+                                                    docs2doTrimestre &&
+                                                    <span>{`${docs2doTrimestre.item(0)?.name}...`}</span>
+                                                }
+                                                <input hidden name='docs2doTrimestre' onChange={handleDocs2doTrimestre}
+                                                    accept=".pdf,.xlsx,.pptx,.docx"
+                                                    multiple type="file" />
+                                            </Button>
+                                            {
+                                                !subiendoT2 && (
+                                                    <IconButton spacing={4} color="primary">
+                                                        <Upload />
+                                                    </IconButton>
+                                                )
+                                            }
+                                            {
+                                                subiendoT2 && (
+                                                    <Loading size={30} />
+                                                )
+                                            }
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                                onClick={() => descargarMaterial(2)}>
+
+                                                {
+                                                    !bajandoT2 && <span>Descargar apunte</span>
+                                                }
+                                                {
+                                                    bajandoT2 && (
+                                                        <Loading size={30} />
+                                                    )
+                                                }
+                                            </Button>
+                                            <IconButton spacing={4} color="primary">
+                                                <DownloadIcon />
+                                            </IconButton>
+
+                                        </>
+                                    )
+                                }
                             </Stack>
                         </Grid>
                         <Grid item xs >
                             <h3>Tercer Trimestre</h3>
 
                             <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    {
-                                        !bajandoT3 && <span>Descargar apunte</span>
-                                    }
-                                    {
-                                        bajandoT3 && <Loading size={30} />
-                                    }
-                                    <input hidden name='docs3erTrimestre'
-                                        onChange={handleDocs3erTrimestre}
-                                        accept=".pdf,.xlsx,.pptx,.docx"
-                                        multiple type="file" />
-                                </Button>
-                                <IconButton spacing={4} color="primary">
-                                    <DownloadIcon />
-                                </IconButton>
+                                {
+                                    usuario.rol !== 'Estudiante' ? (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                            >
+                                                {
+                                                    !subiendoT3 && <span>Subir apunte</span>
+                                                }
+                                                {
+                                                    subiendoT3 && <Loading size={30} />
+                                                }
+                                                <input hidden name='docs3erTrimestre'
+                                                    onChange={handleDocs3erTrimestre}
+                                                    accept=".pdf,.xlsx,.pptx,.docx"
+                                                    multiple type="file" />
+                                            </Button>
+                                            {
+                                                !subiendoT3 && (
+                                                    <IconButton spacing={4} color="primary">
+                                                        <Upload />
+                                                    </IconButton>
+                                                )
+                                            }
+                                            {
+                                                subiendoT3 && (
+                                                    <Loading size={30} />
+                                                )
+                                            }
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                                onClick={() => descargarMaterial(3)}>
+                                                {
+                                                    !bajandoT3 && <span>Descargar apunte</span>
+                                                }
+                                                {
+                                                    bajandoT3 && <Loading size={30} />
+                                                }
+                                            </Button>
+                                            <IconButton spacing={4} color="primary">
+                                                <DownloadIcon />
+                                            </IconButton>
+
+                                        </>
+                                    )
+                                }
                             </Stack>
                         </Grid>
+                    </Grid>
+                    <Grid container spacing={2} sx={{ mt: 2 }}>
+                        {
+                            <ul>
+                                {
+                                    materialEstudio?.map(m => (
+                                        <li>
+                                            <a href={m?.url}>{m?.titulo}</a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        }
                     </Grid>
                 </Box>
                 {
@@ -452,6 +557,9 @@ const MaterialEstudio = () => {
                             </Button>
                         </Box>
                     )
+                }
+                {
+                    mensaje && <Alert sx={{ mt: 2 }} severity="warning">{mensaje}</Alert>
                 }
             </div>
         </Layout >

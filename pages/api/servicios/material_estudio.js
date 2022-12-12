@@ -19,3 +19,27 @@ export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso
         console.log(error);
     }
 }
+
+export async function descargarMaterialEstudio(idTrimestre, idCurso) {
+    try {
+        const material_estudio = await Prisma.newPrisma.materialestudio.findMany({
+            where: {
+                AND: [
+                    {
+                        trimestre: {
+                            id: Number(idTrimestre)
+                        }
+                    },
+                    {
+                        cursoxdivision: {
+                            id: Number(idCurso)
+                        }
+                    }
+                ]
+            }
+        })
+        return material_estudio
+    } catch (error) {
+        throw error
+    }
+}
