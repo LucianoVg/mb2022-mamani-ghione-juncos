@@ -40,8 +40,8 @@ export default function Dashboard() {
     }
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
+        console.log(res.data);
         if (res.status === 200) {
-            console.log(res.data);
             setMaterias(res.data)
         }
     }

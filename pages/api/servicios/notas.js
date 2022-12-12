@@ -13,7 +13,7 @@ export async function MejorPromedio() {
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
-       where a.idcursoxdivision = 8  and a.idcursoxdivision = 9
+       where a.idcursoxdivision = 8  or a.idcursoxdivision = 9
        group by alumno,idalumnoxcursoxdivision
        order by promediototal desc`
     } catch (error) {
@@ -1055,74 +1055,74 @@ export async function contarNotas(idMateria) {
     try {
         const conteo = await Prisma.newPrisma.$queryRaw`SELECT n.idmateria,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 1   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 1    and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 1  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 1   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 1  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 1   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 1    and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 1  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 1   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 1  and idmateria =${Number(idMateria)}) 
         ) as nota1,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 2  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 2  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 2  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 2   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 2  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 2  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 2  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 2  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 2   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 2  and idmateria =${Number(idMateria)}) 
         ) as nota2,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 3   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 3  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 3  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4=3   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 3  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 3   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 3  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 3  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4=3   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 3  and idmateria =${Number(idMateria)}) 
         ) as nota3,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 4   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 4  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 4  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 4   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 4 and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 4   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 4  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 4  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 4   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 4 and idmateria =${Number(idMateria)}) 
         ) as nota4,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 5   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 5  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 5  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota4= 5  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 5  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 5   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 5  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 5  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota4= 5  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 5  and idmateria =${Number(idMateria)}) 
         ) as nota5,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 6   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 6 and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 6  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 6   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 6  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 6   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 6 and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 6  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 6   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 6  and idmateria =${Number(idMateria)}) 
         ) as nota6,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 7   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 7  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 7  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 7   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 7 and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 7   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 7  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 7  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 7   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 7 and idmateria =${Number(idMateria)}) 
         ) as nota7,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 8   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 8  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 8  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 8   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 8  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 8   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 8  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 8  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 8   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 8  and idmateria =${Number(idMateria)}) 
         ) as nota8,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 9   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 9  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 9  and idmateria =${Number(idMateria)})  +
-             (select count(*) from nota where anoactual = 2022 and nota4= 9   and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 9  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 9   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 9  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 9  and idmateria =${Number(idMateria)})  +
+             (select count(*) from nota where   nota4= 9   and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where    nota5= 9  and idmateria =${Number(idMateria)}) 
         ) as nota9,
         (
-             (select count(*) from nota where anoactual = 2022 and nota1= 10   and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota2= 10 and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and nota3= 10  and idmateria =${Number(idMateria)})+
-             (select count(*) from nota where anoactual = 2022 and nota4= 10  and idmateria =${Number(idMateria)}) +
-             (select count(*) from nota where anoactual = 2022 and  nota5= 10  and idmateria =${Number(idMateria)}) 
+             (select count(*) from nota where   nota1= 10   and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota2= 10 and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota3= 10  and idmateria =${Number(idMateria)})+
+             (select count(*) from nota where   nota4= 10  and idmateria =${Number(idMateria)}) +
+             (select count(*) from nota where   nota5= 10  and idmateria =${Number(idMateria)}) 
         ) as nota10
         FROM historialnota as n
         where idmateria= ${Number(idMateria)}
