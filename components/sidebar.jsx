@@ -20,12 +20,24 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SegmentIcon from '@mui/icons-material/Segment';
 import { Navbar } from './navbar';
 import Link from 'next/link';
+import axios from 'axios';
 
 const Sidebar = ({ menusGestion, menusReportes }) => {
     const router = useRouter()
     const { authUser, cerrarSesion } = useAuth()
     const [openDrawer, setOpenDrawer] = useState(false)
+    const [usuario, setUsuario] = useState({ rol: '' })
 
+    useEffect(() => {
+        traerUsuario()
+    }, [authUser, usuario.rol])
+
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.status === 200) {
+            setUsuario({ rol: res.data?.rol?.tipo })
+        }
+    }
     const list = () => (
         <Box
             style={{ width: 250 }}
@@ -44,7 +56,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                 </ListItemButton>
             </ListItem>
             {
-                authUser && (
+                authUser && usuario.rol !== 'Estudiante' && (
                     <ListItem disablePadding sx={{ mt: 3 }}>
                         <ListItemButton>
                             <ListItemIcon>
@@ -210,35 +222,6 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                 {list()}
             </Drawer>
         </React.Fragment>
-
-        // <Drawer sx={{ height: '100vh' }} variant="permanent" open={open} >
-        //     <Toolbar id="parent"
-        //         sx={{
-        //             display: 'flex',
-        //             alignItems: 'center',
-        //             justifyContent: 'flex-end',
-        //             px: [1],
-        //         }}
-
-        //     >
-        //         <IconButton onClick={toggleDrawer}>
-        //             <ChevronLeftIcon />
-        //         </IconButton>
-        //     </Toolbar>
-        //     <List id="child" component="nav">
-        //         <React.Fragment>
-        //             <ListItemButton onClick={() => router.push('/')}>
-        //                 <ListItemIcon>
-        //                     <HomeOutlined />
-        //                 </ListItemIcon>
-        //                 <ListItemText primary="Inicio" />
-        //             </ListItemButton>
-        //             <Divider sx={{ mt: 1, mb: 1 }} />
-
-
-        //         </React.Fragment>
-        //     </List>
-        // </Drawer>
     )
 }
 

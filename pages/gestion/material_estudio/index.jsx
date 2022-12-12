@@ -530,7 +530,7 @@ const MaterialEstudio = () => {
                             <ul>
                                 {
                                     materialEstudio?.map(m => (
-                                        <li>
+                                        <li key={m?.id}>
                                             <a href={m?.url}>{m?.titulo}</a>
                                         </li>
                                     ))
