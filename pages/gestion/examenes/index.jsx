@@ -10,7 +10,7 @@ import Loading from '../../../components/loading';
 
 export default function FechasExamen() {
   const [guardandoEvento, setGuardandoEvento] = useState(false)
-  const [fechasExamen, setFechasExamen] = useState()
+  const [fechasExamen, setFechasExamen] = useState([])
   const { loading, authUser } = useAuth()
   const router = useRouter()
   const [usuario, setUsuario] = useState({ id: 0, rol: '' })
@@ -47,46 +47,49 @@ export default function FechasExamen() {
     setCargando(true)
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`)
     if (res.data) {
+      console.log(res.data);
       let events = []
-      res.data?.map(d => events.push({ text: d.titulo, startDate: d.fechainicio, endDate: d.fechafin, id: d.id, idusuario: d.idUsuario }))
+      res.data?.map(d => events.push({ idCurso: d.idcurso, text: d.titulo, startDate: d.fechainicio, endDate: d.fechafin, id: d.id, idusuario: d.idUsuario }))
       setFechasExamen(events)
     }
     setCargando(false)
   }
-  const guardarExamen = async (titulo, fechaInicio, fechaFin, idUsuario) => {
+  const guardarExamen = async (idCurso, asunto, fechaInicio, fechaFin, idUsuario) => {
     setGuardandoEvento(true)
     const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`, {
-      titulo: titulo,
+      titulo: asunto,
       fechaInicio: fechaInicio,
       fechaFin: fechaFin,
       idUsuario: idUsuario,
+      idCurso: idCurso
     })
     if (res.data) {
       console.log(res.data);
-      setGuardandoEvento(false)
     }
+    setGuardandoEvento(false)
     traerExamenes()
   }
-  const modificarExamen = async (id, text, startDate, endDate) => {
+  const modificarExamen = async (id, text, startDate, endDate, idCurso) => {
     setGuardandoEvento(true)
     const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes/${id}`, {
       titulo: text,
       fechaInicio: startDate,
       fechaFin: endDate,
+      idCurso: idCurso,
       idUsuario: usuario.id
     })
-    if (res.data) {
+    setGuardandoEvento(false)
+    if (res.status === 200) {
       console.log(res.data);
-      setGuardandoEvento(false)
+      traerExamenes()
     }
-    traerExamenes()
   }
   const eliminarExamen = async (id) => {
     setGuardandoEvento(true)
     const res = await axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes/${id}`)
-    if (res.data) {
+    setGuardandoEvento(false)
+    if (res.status === 200) {
       console.log(res.data);
-      setGuardandoEvento(false)
       traerExamenes()
     }
   }
@@ -98,16 +101,16 @@ export default function FechasExamen() {
     * endDate = Fecha de fin
     */
 
-  const onAdd = ({ text, startDate, endDate }) => {
-    console.log(text, startDate, endDate);
-    guardarExamen(text, startDate, endDate, usuario.id)
+  const onAdd = (idCurso, asunto, fechaInicio, fechaFin) => {
+    // console.log(idCurso, asunto, fechaInicio, fechaFin, usuario.id);
+    guardarExamen(idCurso, asunto, fechaInicio, fechaFin, usuario.id)
   }
-  const onUpdate = ({ id, text, startDate, endDate }) => {
-    console.log(id, text, startDate, endDate);
-    modificarExamen(id, text, startDate, endDate)
+  const onUpdate = ({ id, asunto, fechaInicio, fechaFin, idCurso }) => {
+    // console.log(id, asunto, fechaInicio, fechaFin, idCurso, usuario.id);
+    modificarExamen(id, asunto, fechaInicio, fechaFin, idCurso)
   }
   const onDelete = ({ id }) => {
-    console.log(id);
+    // console.log(id);
     eliminarExamen(id)
   }
   return (

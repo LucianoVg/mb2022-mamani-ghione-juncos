@@ -15,10 +15,11 @@ export default function Sancion() {
     const [sanciones, setSanciones] = useState([])
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const [cargando, setCargando] = useState(false)
-    const [idAlumno, setIdAlumno] = useState(0)
+    const [idAlumno, setIdAlumno] = useState(1)
+    const [idCurso, setIdCurso] = useState(1)
     const { loading, authUser } = useAuth()
     const router = useRouter()
-
+    const [cursos, setCursos] = useState([])
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -29,17 +30,29 @@ export default function Sancion() {
             if (!tienePermisos()) {
                 router.push('/')
             } else {
-                listarAlumnos()
+                if (usuario.rol === 'Estudiante') {
+                    traerAlumno()
+                } else {
+                    traerCursos()
+                    listarAlumnos()
+                }
                 listarSanciones()
             }
         }
     }, [usuario.id, usuario.rol, loading, authUser])
 
-    // if (usuario.rol === 'Estudiante') {
-    //     let alumno = alumnos.find(a => a.idusuario === usuario.id)
-    //     setIdAlumno(alumno?.id)
-
-    // }
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.status === 200) {
+            setCursos(res.data)
+        }
+    }
+    const traerAlumno = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`)
+        if (res.data) {
+            setIdAlumno(res.data?.id)
+        }
+    }
     const listarSanciones = async () => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`)
@@ -72,6 +85,13 @@ export default function Sancion() {
             setAlumnos(res.data)
         }
     }
+    const buscarAlumnos = async (idCurso) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${idCurso}`)
+        if (res.status === 200) {
+            console.log(res.data);
+            setAlumnos(res.data)
+        }
+    }
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
@@ -81,17 +101,35 @@ export default function Sancion() {
         }
     }
 
+    const handleCurso = (e) => {
+        console.log(e.target.value);
+        buscarAlumnos(Number(e.target.value))
+    }
+
     return (
         <Layout>
             {
-                usuario?.rol !== 'Estudiante' && usuario?.rol !== 'Tutor' && (
+                usuario?.rol !== 'Estudiante'
+                && usuario?.rol !== 'Tutor' && (
                     <Box>
                         <h3>Buscar Alumno</h3>
                         <Stack
                             direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 2, sm: 2, md: 5}}
+                            spacing={{ xs: 2, sm: 2, md: 5 }}
                             sx={{ marginBottom: '30px' }}
                         >
+                            <FormControl style={{ marginRight: "20px" }} size={'small'}>
+                                <InputLabel htmlFor='selectCurso'>Curso</InputLabel>
+                                <Select
+                                    sx={{ width: 120 }}
+                                    onChange={handleCurso}>
+                                    {
+                                        cursos.map(c => (
+                                            <MenuItem key={c.id} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </FormControl>
                             <FormControl style={{ marginRight: "20px" }}>
                                 <Autocomplete
                                     size='small'
@@ -124,28 +162,6 @@ export default function Sancion() {
                     </Box>
                 )
             }
-
-            {/* <Box direction="row" rowSpacing={2}>
-                <TextField
-                    sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                    name="documento"
-                    value={documento}
-                    onChange={handleDocumento}
-                    label="Documento" />
-                <TextField
-                    sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
-                    name="nombreAlumno"
-                    value={nombreAlumno}
-                    onChange={handleNombreAlumno}
-                    label="Nombre" />
-                <TextField
-                    sx={{ width: '200px', marginBottom: '20px' }}
-                    name="apellidoAlumno"
-                    value={apellidoAlumno}
-                    onChange={handleApellidoAlumno}
-                    label="Apellido" />
-
-            </Box> */}
 
             <div sx={{ marginTop: '200px' }}>
                 {
@@ -210,7 +226,6 @@ export default function Sancion() {
                                 </TableHead>
                                 <TableBody >
                                     {sanciones && sanciones.map((s, i) => (
-
                                         <TableRow key={i}>
                                             <TableCell colSpan={4} component="th" scope="row"
                                                 sx={{
@@ -223,7 +238,7 @@ export default function Sancion() {
 
                                                 }}
                                             >
-                                                {s.sancion?.motivo}
+                                                {s?.motivo}
                                             </TableCell >
                                             <TableCell colSpan={2} component="th" scope="row"
                                                 sx={{
@@ -236,7 +251,7 @@ export default function Sancion() {
 
                                                 }}
                                             >
-                                                {s.sancion?.usuario?.rol?.tipo}
+                                                {s?.usuario?.rol?.tipo}
                                             </TableCell >
                                             <TableCell colSpan={1} component="th" scope="row"
                                                 sx={{
@@ -249,7 +264,7 @@ export default function Sancion() {
 
                                                 }}
                                             >
-                                                {s.sancion?.fecha}
+                                                {s?.fecha}
                                             </TableCell >
                                             <TableCell colSpan={1} component="th" scope="row"
                                                 sx={{
@@ -262,7 +277,7 @@ export default function Sancion() {
 
                                                 }}
                                             >
-                                                {s.sancion?.tiposancion?.tipo}
+                                                {s?.tiposancion?.tipo}
                                             </TableCell >
                                         </TableRow>
                                     ))}
