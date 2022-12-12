@@ -65,7 +65,6 @@ async function main() {
     //     console.log(usuario);
     // })
 
-<<<<<<< HEAD
     //  tutores.map(async (t) => {
     //         const usuario = await prisma.usuario.create({
     //             data: {
@@ -131,18 +130,18 @@ async function main() {
 
     // })
 
-    materias.map(async (m) => {
+    // materias.map(async (m) => {
 
-        const materi = await prisma.materia.create({
-            data: {
-                id: m.id,
-                nombre: m.nombre,
-                // idcorrelativa: m.idCorrelativa,
-                idcurso: m.idCurso
-            }
-        })
-        console.log(materi);
-    })
+    //     const materi = await prisma.materia.create({
+    //         data: {
+    //             id: m.id,
+    //             nombre: m.nombre,
+    //             // idcorrelativa: m.idCorrelativa,
+    //             idcurso: m.idCurso
+    //         }
+    //     })
+    //     console.log(materi);
+    // })
 
     // tutores.map(async (t) => {
     //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
@@ -988,11 +987,6 @@ async function main() {
     //     })
     //     console.log(materi);
     // })
-
-
-
-=======
->>>>>>> e4f313b51efc10c74bf7333addd63ccd16e91cd5
 }
 
 main()
