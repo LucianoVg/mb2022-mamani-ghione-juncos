@@ -1,18 +1,18 @@
 export const usuarios = [
-    // {
-    //     login: "admin",
-    //     password: "123456",
-    //     nombre: "Admin",
-    //     apellido: "Sistema",
-    //     correo: "admin@gmail.com",
-    //     idRol: 4,
-    //     legajo: "3423431",
-    //     sexo: "M",
-    //     localidad: "Buenos Aires",
-    //     telefono: "351612452",
-    //     direccion: "Caseros 343",
-    //     
-    // },
+    {
+        login: "admin",
+        password: "123456",
+        nombre: "Admin",
+        apellido: "Sistema",
+        correo: "admin@gmail.com",
+        idRol: 4,
+        legajo: "3423431",
+        sexo: "M",
+        localidad: "Buenos Aires",
+        telefono: "351612452",
+        direccion: "Caseros 343",
+        
+    },
     {
         login: "bruno",
         password: "123456",
