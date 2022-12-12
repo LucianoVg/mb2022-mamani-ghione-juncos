@@ -51,7 +51,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
                                 <Assessment />
                             </ListItemIcon>
                             <Link href={'/dashboard'} style={{ textDecoration: 'none', color: '#212121' }}>
-                                <Typography variant='h6'>Dashboard</Typography>
+                                <Typography variant='h6'>Estadisticas</Typography>
                             </Link>
                         </ListItemButton>
                     </ListItem>

@@ -16,7 +16,7 @@ export default async function traerAlumnos(idCursoDivision = 1) {
                     nombre: 'asc'
                 }
             }
-        
+
         })
         return alumnos
     } catch (error) {
@@ -24,7 +24,7 @@ export default async function traerAlumnos(idCursoDivision = 1) {
     }
 }
 
-export async function traerAlumno(legajo) {
+export async function traerAlumno(id) {
     try {
         const alumno = await Prisma.newPrisma.alumnoxcursoxdivision.findFirst({
             include: {
@@ -38,7 +38,7 @@ export async function traerAlumno(legajo) {
             },
             where: {
                 usuario: {
-                    legajo: legajo
+                    id: Number(id)
                 }
             }
         })
