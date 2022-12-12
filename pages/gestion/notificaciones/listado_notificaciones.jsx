@@ -9,6 +9,7 @@ import styles from "../../../styles/tarjetaNoticias.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../components/context/authUserProvider";
+import Loading from "../../../components/loading";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,6 +50,7 @@ export default function ListadoNotificaciones() {
     const router = useRouter()
     const { loading, authUser } = useAuth()
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
+    const [cargando, setCargando] = useState(false)
     const handleChange = (e, newValue) => {
         setValue(newValue);
     };
@@ -83,63 +85,76 @@ export default function ListadoNotificaciones() {
         }
     }
     const ListarNotificaciones = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/alumno/${usuario?.id}`)
+        setCargando(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${usuario?.id}`)
         if (res.status === 200) {
             console.log(res.data);
             setNotificaciones(res.data)
         }
+        setCargando(false)
     }
 
     return (
         <Layout>
             <div xs={12}>
-                <Box
-                    className={`${styles.box}`}
-                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550, minWidth: '280px' }}
-                >
-                    <Tabs
-                        orientation="vertical"
-                        variant="scrollable"
-                        value={value}
-                        onChange={handleChange}
-                        scrollButtons="auto"
-                        sx={{ borderRight: 1, borderColor: 'divider', width: '350px', minWidth: '100px' }}
-                    >
-
-                        {
-                            notificaciones && notificaciones?.map((n, i) => (
-                                <Tab
-                                    key={i}
-                                    label={n.notificacion?.asunto} {...a11yProps(i)}
-                                    sx={{ borderBottom: 1, borderColor: 'divider' }} />
-                            ))
-                        }
-
-                    </Tabs>
-                    {
-                        notificaciones && notificaciones.map((n, i) => (
-                            <TabPanel
-                                key={i}
+                {
+                    !cargando && (
+                        <Box
+                            className={`${styles.box}`}
+                            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550, minWidth: '280px' }}
+                        >
+                            <Tabs
+                                orientation="vertical"
+                                variant="scrollable"
                                 value={value}
-                                index={i}
-                                style={{ width: '680px' }}
-                                container="true"
+                                onChange={handleChange}
+                                scrollButtons="auto"
+                                sx={{ borderRight: 1, borderColor: 'divider', width: '350px', minWidth: '100px' }}
                             >
-                                <Typography textAlign="center" variant={'h6'}
-                                    sx={{ marginBottom: '30px' }}
-                                    className={`${styles.Typography}`}
-                                ><strong>{n.notificacion?.asunto}</strong> </Typography>
-                                <Typography variant={'body2'}
-                                    sx={{ marginBottom: '30px' }}
-                                    className={`${styles.Typography2}`}
-                                >{n.notificacion?.contenido} </Typography>
-                                <Typography variant="caption"
-                                    className={`${styles.Typography3}`}
-                                > <strong>Atte. {n.notificacion?.usuario?.nombre} {n.notificacion?.usuario?.apellido} ({n.notificacion?.usuario?.rol?.tipo})</strong></Typography>
-                            </TabPanel>
-                        ))
-                    }
-                </Box>
+
+                                {
+                                    notificaciones && notificaciones?.map((n, i) => (
+                                        <Tab
+                                            key={i}
+                                            label={n.notificacion?.asunto} {...a11yProps(i)}
+                                            sx={{ borderBottom: 1, borderColor: 'divider' }} />
+                                    ))
+                                }
+
+                            </Tabs>
+                            {
+                                notificaciones && notificaciones?.map((n, i) => (
+                                    <TabPanel
+                                        key={i}
+                                        value={value}
+                                        index={i}
+                                        style={{ width: '680px' }}
+                                        container="true"
+                                    >
+                                        <Typography textAlign="center" variant={'h6'}
+                                            sx={{ marginBottom: '30px' }}
+                                            className={`${styles.Typography}`}
+                                        ><strong>{n.notificacion?.asunto}</strong> </Typography>
+                                        <Typography variant={'body2'}
+                                            sx={{ marginBottom: '30px' }}
+                                            className={`${styles.Typography2}`}
+                                        >{n.notificacion?.contenido} </Typography>
+                                        <Typography variant="caption"
+                                            className={`${styles.Typography3}`}
+                                        > <strong>Atte. {n.notificacion?.usuario?.nombre} {n.notificacion?.usuario?.apellido} ({n.notificacion?.usuario?.rol?.tipo})</strong></Typography>
+                                    </TabPanel>
+                                ))
+                            }
+                        </Box>
+                    )
+                }
+                {
+                    cargando && (
+                        <Container sx={{ maxWidth: 'fit-content', textAlign: 'center' }}>
+                            <Loading size={80} />
+                        </Container>
+                    )
+                }
             </div>
         </Layout >
     );

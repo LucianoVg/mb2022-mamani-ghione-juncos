@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
 import Loading from "../../../../components/loading";
-import { Box, Button, Card, Stack, TextareaAutosize, Typography, TextField, CardContent, CardActions, IconButton, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, } from "@mui/material";
+import { Box, Button, Card, Stack, Typography, TextField, Container, Grid, } from "@mui/material";
 import styles from "../../../../styles/fontSize.module.css"
 import React from 'react';
 import { useAuth } from "../../../../components/context/authUserProvider";
@@ -51,7 +51,7 @@ export default function DetallesNoticia() {
                 traerDetalle()
             }
         }
-    }, [id, cargando, usuario.id, usuario.rol, loading, authUser])
+    }, [usuario.id, usuario.rol, loading, authUser])
 
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
@@ -83,15 +83,11 @@ export default function DetallesNoticia() {
         }
     }
 
-    const [inEditMode, setInEditMode] = useState({
-        status: false
-    });
+    const [editMode, setEditMode] = useState(false)
+
     const onCancel = () => {
         // reset the inEditMode state value
-        setInEditMode({
-            status: false
-        })
-
+        setEditMode(false)
     }
 
 
@@ -103,7 +99,7 @@ export default function DetallesNoticia() {
                         <Card sx={{ minWidth: '300px', height: '400px', boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)', backgroundColor: 'white', borderRadius: '30px' }}>
                             <div >
                                 {
-                                    inEditMode.status === true ? (
+                                    editMode ? (
                                         <Box>
                                             <Stack spacing={1} direction="row" sx={{ marginLeft: '30px', marginTop: '19px' }}>
                                                 <Button variant="contained" color="success"
@@ -180,19 +176,21 @@ export default function DetallesNoticia() {
                                         </Box>
                                     ) : (
                                         <Box>
-                                            <Button variant="contained"
-                                                sx={{ marginLeft: '30px', marginTop: '20px' }}
-                                                onClick={() => {
-                                                    setInEditMode({
-                                                        status: true
-                                                    })
-                                                    setAsunto(notificacion?.asunto)
-                                                    setContenido(notificacion?.contenido)
-                                                }
-
-                                                }>
-                                                Editar
-                                            </Button>
+                                            {
+                                                usuario.rol !== 'Estudiante'
+                                                && usuario.rol !== 'Tutor' && (
+                                                    <Button variant="contained"
+                                                        sx={{ marginLeft: '30px', marginTop: '20px' }}
+                                                        onClick={() => {
+                                                            setEditMode(true)
+                                                            setAsunto(notificacion?.asunto)
+                                                            setContenido(notificacion?.contenido)
+                                                        }
+                                                        }>
+                                                        Editar
+                                                    </Button>
+                                                )
+                                            }
                                             <Grid>
                                                 <Grid item >
                                                     <Typography textAlign="center" variant={'h6'}

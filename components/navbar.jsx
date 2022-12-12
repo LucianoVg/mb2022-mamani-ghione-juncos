@@ -8,16 +8,24 @@ import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useWindowSize from "./hooks/windowSize";
+import axios from "axios";
 
 export const Navbar = ({ toggleDrawer }) => {
     const { loading, authUser } = useAuth()
     const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     const router = useRouter()
     const windowSize = useWindowSize()
-
+    const [usuario, setUsuario] = useState({ rol: '' })
     useEffect(() => {
         setTitle(windowSize.width <= 900 ? "\"El Salvador\"" : "Instituto Privado \"El Salvador\"")
-    }, [windowSize])
+        traerUsuario()
+    }, [windowSize, usuario.rol])
+    const traerUsuario = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        if (res.status === 200) {
+            setUsuario({ rol: res.data?.rol?.tipo })
+        }
+    }
 
     return (
         <Box>
@@ -40,7 +48,8 @@ export const Navbar = ({ toggleDrawer }) => {
                         <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {
-                        !loading && authUser && (
+                        !loading && authUser && (usuario.rol === 'Estudiante'
+                            || usuario.rol === 'Tutor') && (
                             <>
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />

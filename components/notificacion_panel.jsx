@@ -42,7 +42,7 @@ export const Notificacion = () => {
     }
     const ListarNotificaciones = async () => {
         if (usuario.id) {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/alumno/${usuario.id}`)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${usuario.id}`)
             if (res.status === 200) {
                 setNotificaciones(res.data)
             }
@@ -88,14 +88,15 @@ export const Notificacion = () => {
                     {
                         notificaciones && notificaciones?.map((n, i) => (
                             <ListItem key={i} disablePadding>
-                                <ListItemButton component="a" href={`/gestion/notificaciones/detalles/${n.id}`}>
+                                <ListItemButton component="a" href={`/gestion/notificaciones/detalles/${n.notificacion?.id}`}>
                                     <ListItemText primary={n.notificacion?.asunto} />
                                 </ListItemButton>
                             </ListItem>
                         ))
                     }
                     {
-                        !notificaciones || !notificaciones?.length && (
+                        (!notificaciones
+                            || notificaciones?.length === 0) && (
                             <ListItem>
                                 <ListItemText>No hay notificaciones</ListItemText>
                             </ListItem>

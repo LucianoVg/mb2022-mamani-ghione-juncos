@@ -53,15 +53,11 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
 }
 export async function DetalleNotificacion(idNotificacion) {
     try {
-        const notificacion = await Prisma.newPrisma.notificacionxalumno.findUnique({
+        const notificacion = await Prisma.newPrisma.notificacion.findUnique({
             include: {
-                notificacion: {
+                usuario: {
                     include: {
-                        usuario: {
-                            include: {
-                                rol: true
-                            }
-                        }
+                        rol: true
                     }
                 }
             },

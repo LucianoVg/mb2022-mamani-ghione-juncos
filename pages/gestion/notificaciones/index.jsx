@@ -207,7 +207,7 @@ const Notificaciones = () => {
                     <Grid item xs>
                         {
                             cargandoInfo && (
-                                <Container sx={{ textAlign: 'center' }}>
+                                <Container sx={{ maxWidth: 'fit-content', textAlign: 'center' }}>
                                     <Loading size={50} />
                                 </Container>
                             )
@@ -218,17 +218,9 @@ const Notificaciones = () => {
                                     <h1>Notificaciones enviadas</h1>
                                     <Box sx={{ width: '350px' }}>
                                         <List style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)", border: '0 10px 15px black', borderRadius: '15px' }}>
-                                            {/* <ListItem disablePadding
-
-                                >
-                                    <ListItemButton component="a">
-                                        <ListItemText primary="hola" />
-                                    </ListItemButton>
-                                    <Divider />
-                                </ListItem> */}
                                             {
 
-                                                listNotificaciones && listNotificaciones.map((n, i) => (
+                                                listNotificaciones.map((n, i) => (
                                                     <ListItem disablePadding
                                                         key={i} value={n.id}
                                                     >

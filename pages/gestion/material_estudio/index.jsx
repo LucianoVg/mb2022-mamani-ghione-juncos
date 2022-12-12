@@ -12,6 +12,8 @@ import { useAuth } from '../../../components/context/authUserProvider';
 import { useRouter } from 'next/router';
 import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 import { Container } from '@mui/system';
+import { Upload } from '@mui/icons-material';
+import Loading from '../../../components/loading';
 
 const MaterialEstudio = () => {
     const [idCurso, setIdCurso] = useState('');
@@ -31,6 +33,9 @@ const MaterialEstudio = () => {
     const [subiendoT1, setSubiendoT1] = useState(false)
     const [subiendoT2, setSubiendoT2] = useState(false)
     const [subiendoT3, setSubiendoT3] = useState(false)
+    const [bajandoT1, setBajandoT1] = useState(false)
+    const [bajandoT2, setBajandoT2] = useState(false)
+    const [bajandoT3, setBajandoT3] = useState(false)
     const [t1SubidoMsg, setT1SubidoMsg] = useState("")
     const [t2SubidoMsg, setT2SubidoMsg] = useState("")
     const [t3SubidoMsg, setT3SubidoMsg] = useState("")
@@ -157,6 +162,24 @@ const MaterialEstudio = () => {
             setSubiendoT3(false)
         }
     }
+    const descargarMaterial1 = async (idTrimestre) => {
+        setBajandoT1(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
+        setBajandoT1(false)
+        console.log(res.data);
+    }
+    const descargarMaterial2 = async (idTrimestre) => {
+        setBajandoT2(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
+        setBajandoT2(false)
+        console.log(res.data);
+    }
+    const descargarMaterial3 = async (idTrimestre) => {
+        setBajandoT3(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${usuario.id}`)
+        setBajandoT3(false)
+        console.log(res.data);
+    }
 
     const router = useRouter()
     useEffect(() => {
@@ -183,144 +206,178 @@ const MaterialEstudio = () => {
         <Layout>
             <Typography variant='h3' sx={{ mb: 2 }}>Material de Estudio</Typography>
             <div>
-                <Box sx={{ marginBottom: '20px' }}>
-                    <FormControl sx={{ width: '100px' }}>
-                        <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                        <Select
-                            direction='row'
-                            // PONER LA LISTA EN HORIZONTAL 
-                            MenuProps={{
-                                anchorOrigin: {
-                                    vertical: 'center',
-                                    horizontal: 'right',
-                                },
-                                transformOrigin: {
-                                    vertical: 'center',
-                                    horizontal: 'left',
-                                },
+                {
+                    usuario.rol !== 'Estudiante' && (
+                        <>
+                            <Box sx={{ marginBottom: '20px' }}>
+                                <FormControl sx={{ width: '100px' }}>
+                                    <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                                    <Select
+                                        direction='row'
+                                        // PONER LA LISTA EN HORIZONTAL 
+                                        MenuProps={{
+                                            anchorOrigin: {
+                                                vertical: 'center',
+                                                horizontal: 'right',
+                                            },
+                                            transformOrigin: {
+                                                vertical: 'center',
+                                                horizontal: 'left',
+                                            },
 
-                            }}
-                            IconComponent={ArrowRightIcon}
-                            name='idCurso'
-                            value={idCurso}
-                            label="Curso"
-                            onChange={handleCurso}
-                        >
-                            {
-                                cursos && cursos?.map((c, i) => (
-                                    <MenuItem key={i} value={c.id} sx={{ display: "inline-block" }}>
-                                        {c.curso?.nombre} {c.division?.division}
-                                    </MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
-                </Box>
-                <Box>
-                    <FormControl>
-                        <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                        <Select id="inputMateria"
-                            onChange={handleMateria}
-                            name="idMateria"
-                            value={idMateria}
-                            label="Materia"
-                            sx={{ width: '150px' }}>
-                            <ListSubheader>Primero</ListSubheader>
-                            {
+                                        }}
+                                        IconComponent={ArrowRightIcon}
+                                        name='idCurso'
+                                        value={idCurso}
+                                        label="Curso"
+                                        onChange={handleCurso}
+                                    >
+                                        {
+                                            cursos && cursos?.map((c, i) => (
+                                                <MenuItem key={i} value={c.id} sx={{ display: "inline-block" }}>
+                                                    {c.curso?.nombre} {c.division?.division}
+                                                </MenuItem>
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                            <Box>
+                                <FormControl>
+                                    <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+                                    <Select id="inputMateria"
+                                        onChange={handleMateria}
+                                        name="idMateria"
+                                        value={idMateria}
+                                        label="Materia"
+                                        sx={{ width: '150px' }}>
+                                        <ListSubheader>Primero</ListSubheader>
+                                        {
 
-                                materias && materias?.map((m, i) => (
+                                            materias && materias?.map((m, i) => (
 
-                                    m?.idcurso === 1 && (
+                                                m?.idcurso === 1 && (
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
 
-                                ))
-                            }
-                            <ListSubheader>Segundo</ListSubheader>
-                            {
+                                            ))
+                                        }
+                                        <ListSubheader>Segundo</ListSubheader>
+                                        {
 
-                                materias && materias?.map((m, i) => (
+                                            materias && materias?.map((m, i) => (
 
-                                    m?.idcurso === 2 && (
+                                                m?.idcurso === 2 && (
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
 
-                                ))
-                            }
-                            <ListSubheader>Tercero</ListSubheader>
-                            {
+                                            ))
+                                        }
+                                        <ListSubheader>Tercero</ListSubheader>
+                                        {
 
-                                materias && materias?.map((m, i) => (
+                                            materias && materias?.map((m, i) => (
 
-                                    m?.idcurso === 3 && (
+                                                m?.idcurso === 3 && (
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
-                                ))
-                            }
-                            <ListSubheader>Cuarto</ListSubheader>
-                            {
-                                materias && materias?.map((m, i) => (
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
+                                            ))
+                                        }
+                                        <ListSubheader>Cuarto</ListSubheader>
+                                        {
+                                            materias && materias?.map((m, i) => (
 
-                                    m?.idcurso === 4 && (
+                                                m?.idcurso === 4 && (
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
-                                ))
-                            }
-                            <ListSubheader>Quinto</ListSubheader>
-                            {
-                                materias && materias?.map((m, i) => (
-                                    m?.idcurso === 5 && (
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
+                                            ))
+                                        }
+                                        <ListSubheader>Quinto</ListSubheader>
+                                        {
+                                            materias && materias?.map((m, i) => (
+                                                m?.idcurso === 5 && (
 
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
-                                ))
-                            }
-                            <ListSubheader>Sexto</ListSubheader>
-                            {
-                                materias && materias?.map((m, i) => (
-                                    m?.idcurso === 6 && (
-                                        <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
-                                    )
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
-                </Box>
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
+                                            ))
+                                        }
+                                        <ListSubheader>Sexto</ListSubheader>
+                                        {
+                                            materias && materias?.map((m, i) => (
+                                                m?.idcurso === 6 && (
+                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                )
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                        </>
+                    )
+                }
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                         <Grid item xs >
                             <h3>Primer Trimestre</h3>
 
                             <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                <Button variant='outlined' component="label"
-                                    sx={{ width: '180px' }}
-                                    spacing={4}
-                                >
-                                    {
-                                        !docs1erTrimestre && <span>Subir apunte</span>
-                                    }
-                                    {
-                                        docs1erTrimestre &&
-                                        <span>{`${docs1erTrimestre.item(0)?.name}...`}</span>
-                                    }
-                                    <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
-                                        accept=".pdf,.xlsx,.pptx,.docx"
-                                        multiple type="file" />
-                                </Button>
                                 {
-                                    !subiendoT1 && (
-                                        <IconButton spacing={4} color="primary">
-                                            <DownloadIcon />
-                                        </IconButton>
-                                    )
-                                }
-                                {
-                                    subiendoT1 && (
-                                        <CircularProgress sx={{ margin: 'auto' }} size={30} color="primary" />
+                                    usuario.rol !== 'Estudiante' ? (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                            >
+                                                {
+                                                    !docs1erTrimestre && <span>Subir apunte</span>
+                                                }
+                                                {
+                                                    docs1erTrimestre &&
+                                                    <span>{`${docs1erTrimestre.item(0)?.name}...`}</span>
+                                                }
+                                                <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
+                                                    accept=".pdf,.xlsx,.pptx,.docx"
+                                                    multiple type="file" />
+                                            </Button>
+                                            {
+                                                !subiendoT1 && (
+                                                    <IconButton spacing={4} color="primary">
+                                                        <Upload />
+                                                    </IconButton>
+                                                )
+                                            }
+                                            {
+                                                subiendoT1 && (
+                                                    <CircularProgress sx={{ margin: 'auto' }} size={30} color="primary" />
+                                                )
+                                            }
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button variant='outlined' component="label"
+                                                sx={{ width: '180px' }}
+                                                spacing={4}
+                                            >
+                                                {
+                                                    !bajandoT1 && <span>Descargar apunte</span>
+                                                }
+                                                {
+                                                    bajandoT1 && (
+                                                        <Loading size={30} />
+                                                    )
+                                                }
+                                                <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
+                                                    accept=".pdf,.xlsx,.pptx,.docx"
+                                                    multiple type="file" />
+                                            </Button>
+                                            <IconButton spacing={4} color="primary">
+                                                <DownloadIcon />
+                                            </IconButton>
+                                        </>
                                     )
                                 }
                             </Stack>
@@ -333,29 +390,22 @@ const MaterialEstudio = () => {
                                     sx={{ width: '180px' }}
                                     spacing={4}
                                 >
+
                                     {
-                                        !docs2doTrimestre && <span>Subir apunte</span>
+                                        !bajandoT2 && <span>Descargar apunte</span>
                                     }
                                     {
-                                        docs2doTrimestre &&
-                                        <span>{`${docs2doTrimestre.item(0)?.name}...`}</span>
+                                        bajandoT2 && (
+                                            <Loading size={30} />
+                                        )
                                     }
                                     <input hidden name='docs2doTrimestre' onChange={handleDocs2doTrimestre}
                                         accept=".pdf,.xlsx,.pptx,.docx"
                                         multiple type="file" />
                                 </Button>
-                                {
-                                    !subiendoT2 && (
-                                        <IconButton spacing={4} color="primary">
-                                            <DownloadIcon />
-                                        </IconButton>
-                                    )
-                                }
-                                {
-                                    subiendoT2 && (
-                                        <CircularProgress sx={{ margin: 'auto' }} size={30} color="primary" />
-                                    )
-                                }
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
                             </Stack>
                         </Grid>
                         <Grid item xs >
@@ -367,29 +417,19 @@ const MaterialEstudio = () => {
                                     spacing={4}
                                 >
                                     {
-                                        !docs3erTrimestre && <span>Subir apunte</span>
+                                        !bajandoT3 && <span>Descargar apunte</span>
                                     }
                                     {
-                                        docs3erTrimestre &&
-                                        <span>{`${docs3erTrimestre.item(0)?.name}...`}</span>
+                                        bajandoT3 && <Loading size={30} />
                                     }
                                     <input hidden name='docs3erTrimestre'
                                         onChange={handleDocs3erTrimestre}
                                         accept=".pdf,.xlsx,.pptx,.docx"
                                         multiple type="file" />
                                 </Button>
-                                {
-                                    !subiendoT3 && (
-                                        <IconButton spacing={4} color="primary">
-                                            <DownloadIcon />
-                                        </IconButton>
-                                    )
-                                }
-                                {
-                                    subiendoT3 && (
-                                        <CircularProgress sx={{ margin: 'auto' }} size={30} color="primary" />
-                                    )
-                                }
+                                <IconButton spacing={4} color="primary">
+                                    <DownloadIcon />
+                                </IconButton>
                             </Stack>
                         </Grid>
                     </Grid>
@@ -404,11 +444,15 @@ const MaterialEstudio = () => {
                 {
                     t3SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t3SubidoMsg}</Alert>
                 }
-                <Box mt={2}>
-                    <Button disabled={subiendoT1 || subiendoT2 || subiendoT3 || !idCurso || !idMateria} variant="contained" onClick={guardarMaterial} color="primary">
-                        Guardar
-                    </Button>
-                </Box>
+                {
+                    usuario.rol !== 'Estudiante' && (
+                        <Box mt={2}>
+                            <Button disabled={subiendoT1 || subiendoT2 || subiendoT3 || !idCurso || !idMateria} variant="contained" onClick={guardarMaterial} color="primary">
+                                Guardar
+                            </Button>
+                        </Box>
+                    )
+                }
             </div>
         </Layout >
     )
