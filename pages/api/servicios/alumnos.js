@@ -11,6 +11,11 @@ export default async function traerAlumnos(idCursoDivision = 1) {
                     }
                 }
             },
+            where: {
+                cursoxdivision: {
+                    id: Number(idCursoDivision)
+                }
+            },
             orderBy: {
                 usuario: {
                     nombre: 'asc'
