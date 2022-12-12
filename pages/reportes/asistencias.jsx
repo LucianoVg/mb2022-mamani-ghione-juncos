@@ -107,7 +107,7 @@ export default function Asistencias() {
     return (
         <Layout>
             {
-                !usuario?.rol?.tipo === 'Estudiante' && !usuario?.rol?.tipo === 'Tutor'(
+                !usuario?.rol === 'Estudiante' && !usuario?.rol === 'Tutor'(
                     <FormControl>
                         <h3>Buscar Alumno</h3>
                         <FormControl style={{ marginRight: "20px" }}>
