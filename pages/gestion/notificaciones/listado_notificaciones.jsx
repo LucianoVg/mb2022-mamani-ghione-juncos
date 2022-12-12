@@ -82,14 +82,12 @@ export default function ListadoNotificaciones() {
             setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
-    const ListarNotificaciones = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario?.id}`)
-            .then(res => {
-                console.log(res.data);
-                setNotificaciones(res.data)
-            }).catch(err => {
-                console.error(err);
-            })
+    const ListarNotificaciones = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/alumno/${usuario?.id}`)
+        if (res.status === 200) {
+            console.log(res.data);
+            setNotificaciones(res.data)
+        }
     }
 
     return (
@@ -97,7 +95,6 @@ export default function ListadoNotificaciones() {
             <div xs={12}>
                 <Box
                     className={`${styles.box}`}
-
                     sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 550, minWidth: '280px' }}
                 >
                     <Tabs
@@ -110,7 +107,7 @@ export default function ListadoNotificaciones() {
                     >
 
                         {
-                            notificaciones && notificaciones.map((n, i) => (
+                            notificaciones && notificaciones?.map((n, i) => (
                                 <Tab
                                     key={i}
                                     label={n.notificacion?.asunto} {...a11yProps(i)}

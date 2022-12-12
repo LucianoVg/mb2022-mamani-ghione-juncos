@@ -202,7 +202,12 @@ export async function traerUsuario(correo, password) {
     try {
         const usuario = await Prisma.newPrisma.usuario.findFirst({
             include: {
-                rol: true
+                rol: true,
+                enfermedadesxusuario: {
+                    include: {
+                        enfermedad: true
+                    }
+                }
             },
             where: {
                 AND: [

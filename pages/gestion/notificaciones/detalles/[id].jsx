@@ -58,6 +58,7 @@ export default function DetallesNoticia() {
             || usuario.rol === 'Director'
             || usuario.rol === 'Vicedirector'
             || usuario.rol === 'Preceptor'
+            || usuario.rol === 'Estudiante'
     }
     const traerDetalle = async () => {
         if (id) {
@@ -97,7 +98,7 @@ export default function DetallesNoticia() {
     return (
         <Layout>
             {
-                notificacion && (
+                !cargando && notificacion && (
                     <div className="container text-center">
                         <Card sx={{ minWidth: '300px', height: '400px', boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)', backgroundColor: 'white', borderRadius: '30px' }}>
                             <div >
@@ -224,7 +225,9 @@ export default function DetallesNoticia() {
             }
             {
                 cargando && (
-                    <Loading />
+                    <Container sx={{ maxWidth: 'fit-content', textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
                 )
             }
         </Layout >
