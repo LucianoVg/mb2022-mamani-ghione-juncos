@@ -16,7 +16,13 @@ export default function BarChart({ data }) {
         datasets: [
             {
                 label: 'Conteo Notas',
-                backgroundColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: [
+                    "rgba(75,192,192,1)",
+                    "#ecf0f1",
+                    "#50AF95",
+                    "#f3ba2f",
+                    "#2a71d0"
+                ],
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 1,
                 data: values
