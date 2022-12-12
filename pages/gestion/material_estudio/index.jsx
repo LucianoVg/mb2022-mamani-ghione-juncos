@@ -41,7 +41,7 @@ const MaterialEstudio = () => {
     const [t3SubidoMsg, setT3SubidoMsg] = useState("")
     const [materialEstudio, setMaterialEstudio] = useState()
     const [alumno, setAlumno] = useState()
-
+    const [mensaje, setMensaje] = useState("")
     const handleMateria = (e) => {
         setIdMateria(e.target.value);
     };
@@ -186,6 +186,12 @@ const MaterialEstudio = () => {
         console.log(res.data);
         if (res.status === 200) {
             setMaterialEstudio(res.data)
+        }
+        if (!res.data?.length) {
+            setMensaje('No hay material de estudio en este trimestre')
+            setTimeout(() => {
+                setMensaje('')
+            }, 2000);
         }
         switch (idTrimestre) {
             case 1:
@@ -394,19 +400,7 @@ const MaterialEstudio = () => {
                                             <IconButton spacing={4} color="primary">
                                                 <DownloadIcon />
                                             </IconButton>
-                                            {
-                                                materialEstudio?.trimestre?.trimestre === 'Primer Trimestre' && (
-                                                    <ul>
-                                                        {
-                                                            materialEstudio?.map(m => (
-                                                                <li>
-                                                                    <a href={m?.url}>{m?.titulo}</a>
-                                                                </li>
-                                                            ))
-                                                        }
-                                                    </ul>
-                                                )
-                                            }
+
                                         </>
                                     )
                                 }
@@ -467,19 +461,7 @@ const MaterialEstudio = () => {
                                             <IconButton spacing={4} color="primary">
                                                 <DownloadIcon />
                                             </IconButton>
-                                            {
-                                                materialEstudio?.trimestre?.trimestre === 'Segundo Trimestre' && (
-                                                    <ul>
-                                                        {
-                                                            materialEstudio?.map(m => (
-                                                                <li>
-                                                                    <a href={m?.url}>{m?.titulo}</a>
-                                                                </li>
-                                                            ))
-                                                        }
-                                                    </ul>
-                                                )
-                                            }
+
                                         </>
                                     )
                                 }
@@ -536,24 +518,25 @@ const MaterialEstudio = () => {
                                             <IconButton spacing={4} color="primary">
                                                 <DownloadIcon />
                                             </IconButton>
-                                            {
-                                                materialEstudio?.trimestre?.trimestre === 'Tercer Trimestre' && (
-                                                    <ul>
-                                                        {
-                                                            materialEstudio?.map(m => (
-                                                                <li>
-                                                                    <a href={m?.url}>{m?.titulo}</a>
-                                                                </li>
-                                                            ))
-                                                        }
-                                                    </ul>
-                                                )
-                                            }
+
                                         </>
                                     )
                                 }
                             </Stack>
                         </Grid>
+                    </Grid>
+                    <Grid container spacing={2} sx={{ mt: 2 }}>
+                        {
+                            <ul>
+                                {
+                                    materialEstudio?.map(m => (
+                                        <li>
+                                            <a href={m?.url}>{m?.titulo}</a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        }
                     </Grid>
                 </Box>
                 {
@@ -574,6 +557,9 @@ const MaterialEstudio = () => {
                             </Button>
                         </Box>
                     )
+                }
+                {
+                    mensaje && <Alert sx={{ mt: 2 }} severity="warning">{mensaje}</Alert>
                 }
             </div>
         </Layout >
