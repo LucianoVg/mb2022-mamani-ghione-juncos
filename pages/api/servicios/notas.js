@@ -9,7 +9,7 @@ export async function MejorPromedio() {
                              (nota3),
                              (nota4),
                              (nota5)) T (c))) as promediototal
-       from historialnota as hn
+       from nota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
@@ -29,7 +29,7 @@ export async function Preanalitico(idAlumno) {
                              (nota3),
                              (nota4),
                              (nota5)) T (c))) as notafinal
-       from historialnota as hn
+       from nota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
        where idalumnoxcursoxdivision = ${Number(idAlumno)}
        group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
@@ -48,7 +48,7 @@ export async function PromedioXtrimestre(idAlumno, idMateria) {
                              (nota3),
                              (nota4),
                              (nota5)) T (c)) AS Promedio
-       from historialnota as hn
+       from nota as hn
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN trimestre as t ON t.id = hn.idtrimestre
        where idalumnoxcursoxdivision =${Number(idAlumno)} and idmateria = ${Number(idMateria)}
