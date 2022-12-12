@@ -1,25 +1,12 @@
 import { TraerAsistencias } from "../../servicios/asistencia";
 
-export default async function handler(req, res) {
+export default async function hORler(req, res) {
     try {
         if (req.method === 'GET') {
             let { legajo, fecha, idCurso, nombreAlumno, apellidoAlumno } = req.query
             console.log(legajo, fecha, idCurso, nombreAlumno, apellidoAlumno);
-
-
-            // AND: [
-            //     {
-            //         FECHA
-            //     },
-            //     {
-            //         OR: [
-            //             {
-
-            //             }
-            //         ]
-            //     }
-            // ]
-            let AND = []
+            
+            let OR = []
             let options = {
                 include: {
                     usuario: true,
