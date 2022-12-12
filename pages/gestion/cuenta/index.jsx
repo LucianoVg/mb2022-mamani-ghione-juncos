@@ -30,7 +30,7 @@ export default function Detalles() {
         traerUsuario()
         traerAlumno()
         traerDocente()
-        traerEnfermedades()
+        // traerEnfermedades()
     }, [loading, authUser])
 
     const handleEnfermedad = (event) => {
@@ -63,13 +63,13 @@ export default function Detalles() {
         }
         setCargando(false)
     }
-    const traerEnfermedades = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/enfermedades/${usuario?.id}`)
-        if (res.status === 200) {
-            setEnfermedades(res.data)
-            console.log(res.data)
-        }
-    }
+    // const traerEnfermedades = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/enfermedades/${usuario?.id}`)
+    //     if (res.status === 200) {
+    //         setEnfermedades(res.data)
+    //         console.log(res.data)
+    //     }
+    // }
     const updateProfile = async () => {
         console.log(selectedEnf, alergias);
         console.log(usuario);
