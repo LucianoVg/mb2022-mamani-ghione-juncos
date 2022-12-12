@@ -6,22 +6,86 @@ import { useAuth } from './context/authUserProvider';
 
 export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     const onFormOpening = (e) => {
-        e.popup.option('showTitle', true);
-        e.popup.option('title', e.appointmentData.text ?
-            e.appointmentData.text :
-            'Nueva Fecha de Examen');
-
-        const form = e.form;
-        let mainGroupItems = form.itemOption('mainGroup').items;
-        mainGroupItems = mainGroupItems.splice(0, 2)
-        form.itemOption('mainGroup', 'items', mainGroupItems);
+        const { form } = e
+        form.option('items', [
+            {
+                label: {
+                    text: 'Curso'
+                },
+                editorType: 'dxSelectBox',
+                dataField: 'id',
+                editorOptions: {
+                    items: cursos,
+                    displayExpr: 'curso',
+                    valueExpr: 'id',
+                    value: idCurso,
+                    onValueChanged(args) {
+                        setIdCurso(Number(args.value))
+                    }
+                }
+            },
+            {
+                label: {
+                    text: 'Asunto'
+                },
+                editorType: 'dxTextBox',
+                dataField: 'asunto',
+                editorOptions: {
+                    value: asunto,
+                    onValueChanged(args) {
+                        setAsunto(args.value)
+                    }
+                }
+            },
+            {
+                label: {
+                    text: 'Fecha Inicio'
+                },
+                editorType: 'dxDateBox',
+                dataField: 'fechaInicio',
+                editorOptions: {
+                    value: fechaInicio,
+                    type: 'datetime',
+                    onValueChanged(args) {
+                        setFechaInicio(args.value)
+                    }
+                }
+            },
+            {
+                label: {
+                    text: 'Fecha Fin'
+                },
+                editorType: 'dxDateBox',
+                dataField: 'fechaFin',
+                editorOptions: {
+                    value: fechaFin,
+                    type: 'datetime',
+                    onValueChanged(args) {
+                        setFechaFin(args.value)
+                    }
+                }
+            }
+        ])
     }
-    const { loading, authUser } = useAuth()
+    const { authUser } = useAuth()
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
+    const [cursos, setCursos] = useState([])
+    const [asunto, setAsunto] = useState('')
+    const [fechaInicio, setFechaInicio] = useState(new Date())
+    const [fechaFin, setFechaFin] = useState(new Date())
+    const [idCurso, setIdCurso] = useState(0)
+
     useEffect(() => {
         traerUsuario()
-    }, [usuario.id, usuario.rol])
+        traerCursos()
+    }, [usuario.id, usuario.rol, authUser])
 
+    const traerCursos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
+        if (res.data) {
+            setCursos(res.data?.map(c => ({ id: c?.id, curso: `${c?.curso?.nombre} ${c?.division?.division}` })))
+        }
+    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
@@ -33,6 +97,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
             || usuario.rol === 'Docente'
     }
 
+
     return (
         <div id="calendar">
             <Scheduler
@@ -41,8 +106,15 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 dataSource={data}
                 defaultCurrentDate={new Date()}
                 defaultCurrentView={'week'}
-                onAppointmentFormOpening={onFormOpening}
-                onAppointmentAdded={(e) => onAdd(e.appointmentData)}
+                onAppointmentClick={(e) => {
+                    console.log(e.appointmentData)
+                    setIdCurso(e.appointmentData.idCurso)
+                    setAsunto(e.appointmentData.text)
+                    setFechaInicio(e.appointmentData.startDate)
+                    setFechaFin(e.appointmentData.endDate)
+                }}
+                onAppointmentFormOpening={tienePermisos() ? onFormOpening : undefined}
+                onAppointmentAdded={() => onAdd(idCurso, asunto, fechaInicio, fechaFin)}
                 onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
                 onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
 

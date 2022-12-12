@@ -4,7 +4,13 @@ export async function traerFechaExamenes() {
     try {
         const examenes = await Prisma.newPrisma.fechaexamen.findMany({
             include: {
-                usuario: true
+                usuario: true,
+                curso: {
+                    include: {
+                        curso: true,
+                        division: true
+                    }
+                }
             }
         })
         return examenes
@@ -13,14 +19,23 @@ export async function traerFechaExamenes() {
     }
 }
 
-export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuario) {
+export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuario, idCurso) {
     try {
         const fechaExamen = await Prisma.newPrisma.fechaexamen.create({
             data: {
                 titulo: titulo,
                 fechainicio: fechaInicio,
                 fechafin: fechaFin,
-                idusuario: Number(idUsuario)
+                usuario: {
+                    connect: {
+                        id: Number(idUsuario)
+                    }
+                },
+                curso: {
+                    connect: {
+                        id: Number(idCurso)
+                    }
+                }
             }
         })
         return fechaExamen
@@ -29,14 +44,15 @@ export async function guardarFechaExamen(titulo, fechaInicio, fechaFin, idUsuari
     }
 }
 
-export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsuario) {
+export async function actualizarExamen(id, titulo, fechaInicio, fechaFin, idUsuario, idCurso) {
     try {
         const examen = await Prisma.newPrisma.fechaexamen.update({
             data: {
                 titulo: titulo,
                 fechainicio: fechaInicio,
                 fechafin: fechaFin,
-                idusuario: Number(idUsuario)
+                idusuario: Number(idUsuario),
+                idcurso: Number(idCurso)
             },
             where: {
                 id: Number(id)

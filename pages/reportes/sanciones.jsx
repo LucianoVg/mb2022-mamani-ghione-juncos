@@ -29,17 +29,22 @@ export default function Sancion() {
             if (!tienePermisos()) {
                 router.push('/')
             } else {
-                listarAlumnos()
+                if (usuario.rol === 'Estudiante') {
+                    traerAlumno()
+                } else {
+                    listarAlumnos()
+                }
                 listarSanciones()
             }
         }
     }, [usuario.id, usuario.rol, loading, authUser])
 
-    // if (usuario.rol === 'Estudiante') {
-    //     let alumno = alumnos.find(a => a.idusuario === usuario.id)
-    //     setIdAlumno(alumno?.id)
-
-    // }
+    const traerAlumno = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`)
+        if (res.data) {
+            setIdAlumno(res.data?.id)
+        }
+    }
     const listarSanciones = async () => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`)
@@ -89,7 +94,7 @@ export default function Sancion() {
                         <h3>Buscar Alumno</h3>
                         <Stack
                             direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 2, sm: 2, md: 5}}
+                            spacing={{ xs: 2, sm: 2, md: 5 }}
                             sx={{ marginBottom: '30px' }}
                         >
                             <FormControl style={{ marginRight: "20px" }}>
@@ -124,28 +129,6 @@ export default function Sancion() {
                     </Box>
                 )
             }
-
-            {/* <Box direction="row" rowSpacing={2}>
-                <TextField
-                    sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                    name="documento"
-                    value={documento}
-                    onChange={handleDocumento}
-                    label="Documento" />
-                <TextField
-                    sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
-                    name="nombreAlumno"
-                    value={nombreAlumno}
-                    onChange={handleNombreAlumno}
-                    label="Nombre" />
-                <TextField
-                    sx={{ width: '200px', marginBottom: '20px' }}
-                    name="apellidoAlumno"
-                    value={apellidoAlumno}
-                    onChange={handleApellidoAlumno}
-                    label="Apellido" />
-
-            </Box> */}
 
             <div sx={{ marginTop: '200px' }}>
                 {
