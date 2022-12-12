@@ -55,6 +55,7 @@ export default function Dashboard() {
     const traerConteoNotas = async (idMateria) => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/contador_notas/${idMateria || 1}`)
+        console.log(res.data);
         if (res.status === 200) {
             setConteoNotas(res.data)
         }
