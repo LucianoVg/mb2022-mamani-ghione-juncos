@@ -33,7 +33,7 @@ export default async function hORler(req, res) {
                 },
                 orderBy: {
                     sancion: {
-                        fecha: 'desc'
+                        id: 'desc'
                     }
                 }
             }
