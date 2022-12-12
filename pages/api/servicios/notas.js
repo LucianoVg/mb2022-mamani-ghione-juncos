@@ -13,6 +13,7 @@ export async function MejorPromedio() {
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
+       where a.idcursoxdivision = 8  and a.idcursoxdivision = 9
        group by alumno,idalumnoxcursoxdivision
        order by promediototal desc`
     } catch (error) {
