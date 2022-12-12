@@ -38,7 +38,7 @@ export default function Sancion() {
     if (usuario.rol === 'Estudiante') {
         let alumno = alumnos.find(a => a.idusuario === usuario.id)
         setIdAlumno(alumno?.id)
-      
+
     }
     const listarSanciones = async () => {
         setCargando(true)
@@ -84,42 +84,44 @@ export default function Sancion() {
     return (
         <Layout>
             {
-               !usuario?.rol?.tipo === 'Estudiante' && !usuario?.rol?.tipo === 'Tutor' (
-                    <FormControl>
+                usuario?.rol !== 'Estudiante' && usuario?.rol !== 'Tutor' && (
+                    <Box>
                         <h3>Buscar Alumno</h3>
-                        <Grid container spacing={2} marginBottom={2}>
-                            <Grid item xs={4}>
-                                <FormControl style={{ marginRight: "20px" }}>
-                                    <Autocomplete
-                                        size='small'
-                                        disablePortal
-                                        id="combo-box-demo"
-                                        // value={value}
-                                        name="idAlumno"
-                                        onChange={handleAlumno}
-                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                                        options={alumnos}
-                                        sx={{ width: "250px" }}
-                                        isOptionEqualToValue={(option, value) =>
-                                            option?.apellido === value?.apellido
-                                        }
-                                        noOptionsText={"No existe un alumno con ese nombre"}
-                                        renderOption={(props, alumnos) => (
-                                            <Box component="li" {...props} key={alumnos?.id}>
-                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >
-                                    Buscar
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </FormControl>
+                        <Stack
+                            direction={{ xs: 'column', sm: 'row' }}
+                            spacing={{ xs: 2, sm: 2, md: 5}}
+                            sx={{ marginBottom: '30px' }}
+                        >
+                            <FormControl style={{ marginRight: "20px" }}>
+                                <Autocomplete
+                                    size='small'
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                                    options={alumnos}
+                                    sx={{ width: "250px" }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.apellido === value?.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumnos) => (
+                                        <Box component="li" {...props} key={alumnos?.id}>
+                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                />
+                            </FormControl>
+                            <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >
+                                Buscar
+                            </Button>
+
+                        </Stack>
+
+                    </Box>
                 )
             }
 
