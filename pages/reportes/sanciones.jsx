@@ -37,7 +37,7 @@ export default function Sancion() {
 
     if (usuario.rol === 'Estudiante') {
         let alumno = alumnos.find(a => a.idusuario === usuario.id)
-        setAlumnos(alumno?.id)
+        setIdAlumno(alumno?.id)
       
     }
     const listarSanciones = async () => {

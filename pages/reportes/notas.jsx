@@ -109,6 +109,9 @@ export default function Notas() {
         await notasPorTrimestre()
         await promedioPorTrimestre()
     }
+
+
+  
     return (
         <Layout>
             {
