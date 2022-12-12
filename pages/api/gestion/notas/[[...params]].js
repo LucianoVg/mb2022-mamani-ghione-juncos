@@ -16,7 +16,8 @@ export default async function hORler(
         let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
         let OR = [
-            { idtrimestre: Number(idTrimestre) }
+            { idtrimestre: Number(idTrimestre) },
+            { anoactual: 2022 }
         ]
 
         let options = {
@@ -36,7 +37,8 @@ export default async function hORler(
                         nombre: 'asc'
                     }
                 }
-            }
+            },
+
         }
         if (idMateria) {
             OR.push({ idmateria: Number(idMateria) })

@@ -207,42 +207,62 @@ async function main() {
     // })
 
 
-    const alumnos = await prisma.alumnoxcursoxdivision.findMany({
-        include: {
-            cursoxdivision: true
-        },
-        // where: {
-        //     id: 55
+    // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+    //     include: {
+    //         cursoxdivision: true
+    //     },
+    //     // where: {
+    //     //     id: 55
 
-        // }
-    })
+    //     // }
+    // })
 
 
 
-    fechas && fechas.map((fecha) => {
-        alumnos && alumnos.map(async (a) => {
-            const asistencia = await prisma.asistencia.create({
-                data: {
-                    idalumnoxcursoxdivision: a.id,
-                    presente: false,
-                    ausente: false,
-                    ausentejustificado: false,
-                    llegadatarde: false,
-                    llegadatardejustificada: false,
-                    mediafalta: false,
-                    mediafaltajustificada: false,
-                    motivo: "",
-                    creadoen: fecha,
-                    idusuario: 1,
-                    actualizadoen: ""
-                }
+    // fechas && fechas.map((fecha) => {
+    //     alumnos && alumnos.map(async (a) => {
+    //         const asistencia = await prisma.asistencia.create({
+    //             data: {
+    //                 idalumnoxcursoxdivision: a.id,
+    //                 presente: false,
+    //                 ausente: false,
+    //                 ausentejustificado: false,
+    //                 llegadatarde: false,
+    //                 llegadatardejustificada: false,
+    //                 mediafalta: false,
+    //                 mediafaltajustificada: false,
+    //                 motivo: "",
+    //                 creadoen: fecha,
+    //                 idusuario: 1,
+    //                 actualizadoen: ""
+    //             }
 
-            })
-            console.log(asistencia)
+    //         })
+    //         console.log(asistencia)
+    //     })
+    // })
+
+    fechas && fechas.map(async (fecha) => {
+        const asistencia = await prisma.asistenciadocente.create({
+            data: {
+                iddocentexmateria: 1,
+                presente: false,
+                ausente: false,
+                ausentejustificado: false,
+                llegadatarde: false,
+                llegadatardejustificada: false,
+                mediafalta: false,
+                mediafaltajustificada: false,
+                motivo: "",
+                creadoen: fecha,
+                idusuario: 1,
+                actualizadoen: ""
+            }
+
         })
+        console.log(asistencia)
+
     })
-
-
 
     //  nota = await prisma.nota.findMany({
     //     where: {
@@ -255,8 +275,6 @@ async function main() {
 
 
 
-    // let materias1 = [], materias2 = [], materias3 = [], materias4 = [], materias5 = [], materias6 = []
-    // let random, random2, random3, random4, random5, nota;
 
     // const min = 6
     // const max = 10
