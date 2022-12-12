@@ -25,8 +25,8 @@ import { tutores } from './seeds/tutores';
 
 const prisma = new PrismaClient();
 
-// const getAsistencias = async () => {
-//     const asistencias = alumnos.map(a => (
+//  getAsistencias = async () => {
+//      asistencias = alumnos.map(a => (
 //         fechas.map(fecha => (
 //             {
 //                 idAlumnoXcursoXdivision: a.id,
@@ -48,10 +48,10 @@ const prisma = new PrismaClient();
 async function main() {
 
 
-    // const materias = await prisma.materia.findMany()
+    //  materias = await prisma.materia.findMany()
     // docentes.map(async (d) => {
     //     materias.map(async (m) => {
-    //         const docente = await prisma.usuario.create({
+    //          docente = await prisma.usuario.create({
     //             data: {
     //                 login: d.login,
     //                 password: d.password,
@@ -94,9 +94,9 @@ async function main() {
     //         console.log(docente);
     //     })
     // })
-    // const docentes = await prisma.docentexmateria.findMany()
+    //  docentes = await prisma.docentexmateria.findMany()
     // docentes.map(async (d) => {
-    //     const asistencia = await prisma.asistenciadocente.create({
+    //      asistencia = await prisma.asistenciadocente.create({
     //         data: {
     //             presente: false,
     //             ausente: false,
@@ -121,7 +121,7 @@ async function main() {
     //     })
     //     console.log(asistencia);
     // })
-    // const alumnos = await prisma.usuario.findMany({
+    //  alumnos = await prisma.usuario.findMany({
     //     where: {
     //         idrol: 4
     //     },
@@ -131,7 +131,7 @@ async function main() {
     // })
 
 
-    // let estudiantes = await prisma.usuario.findMany({
+    //  estudiantes = await prisma.usuario.findMany({
     //     orderBy: {
     //         id: "asc"
     //     },
@@ -142,11 +142,11 @@ async function main() {
 
     // })
 
-    // let i = 57
+    //  i = 57
 
     // while (i < 62) {
 
-    //    const alumnos = await prisma.alumnoxcursoxdivision.create({
+    //     alumnos = await prisma.alumnoxcursoxdivision.create({
     //         data: {
     //             idusuario: i,
     //             idcursoxdivision: 1,
@@ -161,7 +161,7 @@ async function main() {
     //     i = i + 1
 
     // }
-    // const tutores = await prisma.usuario.findMany({
+    //  tutores = await prisma.usuario.findMany({
     //     orderBy: {
     //         id: "asc"
     //     },
@@ -170,11 +170,11 @@ async function main() {
     //     }
     // })
 
-    // let i = 2
-    // let idTutor = 62
+    //  i = 2
+    //  idTutor = 62
     // while (i < 62) {
 
-    //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
+    //      tutor = await prisma.alumnoxcursoxdivision.updateMany({
     //         where: {
     //             idusuario: i
     //         },
@@ -194,7 +194,7 @@ async function main() {
 
     // estadosAlumno.map(async (e) => {
 
-    //     const estado = await prisma.estadoalumno.create({
+    //      estado = await prisma.estadoalumno.create({
     //         data: {
     //             id: e.id,
     //             estado: e.estado
@@ -205,7 +205,7 @@ async function main() {
     // })
 
 
-    // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+    //  alumnos = await prisma.alumnoxcursoxdivision.findMany({
     //     include: {
     //         cursoxdivision: true
     //     },
@@ -219,7 +219,7 @@ async function main() {
 
     // fechas && fechas.map((fecha) => {
     //     alumnos && alumnos.map(async (a) => {
-    //         const asistencia = await prisma.asistencia.create({
+    //          asistencia = await prisma.asistencia.create({
     //             data: {
     //                 idalumnoxcursoxdivision: a.id,
     //                 presente: false,
@@ -242,7 +242,7 @@ async function main() {
 
 
 
-    // const nota = await prisma.nota.findMany({
+    //  nota = await prisma.nota.findMany({
     //     where: {
     //         idMateria: 70
     //     }
@@ -251,281 +251,1065 @@ async function main() {
 
 
 
-    const trimestres = await prisma.trimestre.findMany({
-    })
-
-
-
-    const min = 6
-    const max = 10
-    // const random = Math.floor(Math.random() * (max - min + 1)) + min;
-
-
-    const alumnos = await prisma.alumnoxcursoxdivision.findMany({
-        include: {
-            cursoxdivision: true
-        }
-
-    })
-
-
-
-
-    let i = 1
-
-    alumnos && alumnos.map(async (a) => {
-
-        // console.log(alumnos)
-        switch (a.cursoxdivision?.idcurso) {
-            case 1:
-                const materias1 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 1
-                    }
-
-                })
-                materias1 && materias1.map(m => {
-
-                    trimestres && trimestres.map(async (t) => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        // console.log("entro a trimestres.map")
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-
-                            },
-                        })
-                        console.log(nota);
-
-                    })
-
-                })
-                break;
-            case 2:
-                const materias2 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 2
-                    }
-
-                })
-                // console.log(materias)
-
-                materias2 && materias2.map(m => {
-
-                    trimestres && trimestres.map(async (t) => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-                            },
-                        })
-                        console.log(nota);
-
-                    })
-
-                })
-                break;
-            case 3:
-                const materias3 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 3
-                    }
-
-                })
-                // console.log(materias)
-
-                materias3 && materias3.map(m => {
-                    trimestres && trimestres.map(async (t) => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-
-                            },
-                        })
-                        console.log(nota);
-
-                    })
-
-                })
-                break;
-            case 4:
-                const materias4 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 4
-                    }
-
-                })
-                // console.log(materias)
-
-                materias4 && materias4.map(m => {
-                    trimestres && trimestres.map(async (t) => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-
-                            },
-                        })
-                        console.log(nota);
-
-                    })
-
-                })
-                break;
-            case 5:
-                const materias5 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 5
-                    }
-
-                })
-                // console.log(materias)
-
-                materias5 && materias5.map(m => {
-                    trimestres && trimestres.map(async (t) => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-
-                            },
-                        })
-                        console.log(nota);
-
-                    })
-
-                })
-                break;
-
-            case 6:
-                const materias6 = await prisma.materia.findMany({
-                    where: {
-                        idcurso: 6
-                    }
-
-                })
-                console.log(materias)
-
-                materias6 && materias.map(m => {
-                    trimestres && trimestres.map(async t => {
-                        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-                        let nota = await prisma.nota.create({
-                            data: {
-                                idalumnoxcursoxdivision: a.id,
-                                idmateria: m.id,
-                                idtrimestre: t.id,
-                                nota1: random,
-                                nota2: random2,
-                                nota3: random3,
-                                nota4: random4,
-                                nota5: random5,
-                                anoactual: 2022,
-                                idusuario: 1
-
-                            },
-                        })
-                        console.log(nota);
-
-
-                    })
-
-                })
-                break;
-
-            default:
-                break;
-        }
-
-    })
-
-
-
     // const trimestres = await prisma.trimestre.findMany({
     // })
 
 
+    // let materias1 = [], materias2 = [], materias3 = [], materias4 = [], materias5 = [], materias6 = []
+    // let random, random2, random3, random4, random5, nota;
 
     // const min = 6
     // const max = 10
-    // // const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    // //  random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 
     // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+    //     include: {
+    //         cursoxdivision: true
+    //     }
+
+    // })
+
+    // alumnos && alumnos.map(async (a) => {
+
+    //     // console.log(alumnos)
+    //     switch (a.cursoxdivision?.idcurso) {
+    //         case 1:
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 2:
+
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2021,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 3:
+
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2020,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2021,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias3 && materias3.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 4:
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2019,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2020,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias3 && materias3.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2021,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias4 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 4
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias4 && materias4.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 5:
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2018,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2019,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias3 && materias3.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2020,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias4 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 4
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias4 && materias4.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2021,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias5 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 5
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias5 && materias5.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         case 6:
+    //             materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2017,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2018,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias3 && materias3.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2019,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias4 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 4
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias4 && materias4.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2020,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //             materias5 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 5
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias5 && materias5.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2021,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             materias6 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 6
+    //                 }
+
+    //             })
+    //             console.log(materias)
+
+    //             materias6 && materias.map(m => {
+    //                 trimestres && trimestres.map(async t => {
+    //                     random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         default:
+    //             break;
+    //     }
+
+    // })
+
+
+    //  i = 1
+
+    // alumnos && alumnos.map(async (a) => {
+
+    //     // console.log(alumnos)
+    //     switch (a.cursoxdivision?.idcurso) {
+    //         case 1:
+    //              materias1 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 1
+    //                 }
+
+    //             })
+    //             materias1 && materias1.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                     // console.log("entro a trimestres.map")
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 2:
+    //              materias2 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 2
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias2 && materias2.map(m => {
+
+    //                 trimestres && trimestres.map(async (t) => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 3:
+    //              materias3 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 3
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias3 && materias3.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 4:
+    //              materias4 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 4
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias4 && materias4.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+    //         case 5:
+    //              materias5 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 5
+    //                 }
+
+    //             })
+    //             // console.log(materias)
+
+    //             materias5 && materias5.map(m => {
+    //                 trimestres && trimestres.map(async (t) => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         case 6:
+    //              materias6 = await prisma.materia.findMany({
+    //                 where: {
+    //                     idcurso: 6
+    //                 }
+
+    //             })
+    //             console.log(materias)
+
+    //             materias6 && materias.map(m => {
+    //                 trimestres && trimestres.map(async t => {
+    //                      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                      nota = await prisma.nota.create({
+    //                         data: {
+    //                             idalumnoxcursoxdivision: a.id,
+    //                             idmateria: m.id,
+    //                             idtrimestre: t.id,
+    //                             nota1: random,
+    //                             nota2: random2,
+    //                             nota3: random3,
+    //                             nota4: random4,
+    //                             nota5: random5,
+    //                             anoactual: 2022,
+    //                             idusuario: 1
+
+    //                         },
+    //                     })
+    //                     console.log(nota);
+
+
+    //                 })
+
+    //             })
+    //             break;
+
+    //         default:
+    //             break;
+    //     }
+
+    // })
+
+
+
+    //  trimestres = await prisma.trimestre.findMany({
+    // })
+
+
+
+    //  min = 6
+    //  max = 10
+    // //  random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+
+    //  alumnos = await prisma.alumnoxcursoxdivision.findMany({
     //     include: {
     //         cursoxdivision: true
 
@@ -548,7 +1332,7 @@ async function main() {
     //     if (a.cursoxdivision?.idcurso === 6) {
 
     //         // console.log("entro al switch 1")
-    //         const materias1 = await prisma.materia.findMany({
+    //          materias1 = await prisma.materia.findMany({
     //             where: {
     //                 idcurso: 1
     //             }
@@ -560,12 +1344,12 @@ async function main() {
     //             // console.log("entro a materias.map1")
     //             trimestres && trimestres.map(async (t) => {
     //                 // console.log("entro a trimestres.map")
-    //                 const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 let nota = await prisma.historialnota.create({
+    //                  random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  nota = await prisma.historialnota.create({
     //                     data: {
     //                         idalumnoxcursoxdivision: a.id,
     //                         idmateria: m.id,
@@ -584,7 +1368,7 @@ async function main() {
     //             })
 
     //         })
-    //         const materias2 = await prisma.materia.findMany({
+    //          materias2 = await prisma.materia.findMany({
     //             where: {
     //                 idcurso: 2
     //             }
@@ -596,12 +1380,12 @@ async function main() {
     //             // console.log("entro a materias.map1")
     //             trimestres && trimestres.map(async (t) => {
     //                 // console.log("entro a trimestres.map")
-    //                 const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 let nota = await prisma.historialnota.create({
+    //                  random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  nota = await prisma.historialnota.create({
     //                     data: {
     //                         idalumnoxcursoxdivision: a.id,
     //                         idmateria: m.id,
@@ -622,7 +1406,7 @@ async function main() {
     //         })
 
 
-    //         const materias3 = await prisma.materia.findMany({
+    //          materias3 = await prisma.materia.findMany({
     //             where: {
     //                 idcurso: 3
     //             }
@@ -632,12 +1416,12 @@ async function main() {
     //             // console.log("entro a materias.map1")
     //             trimestres && trimestres.map(async (t) => {
     //                 // console.log("entro a trimestres.map")
-    //                 const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 let nota = await prisma.historialnota.create({
+    //                  random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  nota = await prisma.historialnota.create({
     //                     data: {
     //                         idalumnoxcursoxdivision: a.id,
     //                         idmateria: m.id,
@@ -656,7 +1440,7 @@ async function main() {
     //             })
 
     //         })
-    //         const materias4 = await prisma.materia.findMany({
+    //          materias4 = await prisma.materia.findMany({
     //             where: {
     //                 idcurso: 4
     //             }
@@ -666,12 +1450,12 @@ async function main() {
     //             // console.log("entro a materias.map1")
     //             trimestres && trimestres.map(async (t) => {
     //                 // console.log("entro a trimestres.map")
-    //                 const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 let nota = await prisma.historialnota.create({
+    //                  random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  nota = await prisma.historialnota.create({
     //                     data: {
     //                         idalumnoxcursoxdivision: a.id,
     //                         idmateria: m.id,
@@ -690,7 +1474,7 @@ async function main() {
     //             })
 
     //         })
-    //         const materias5 = await prisma.materia.findMany({
+    //          materias5 = await prisma.materia.findMany({
     //             where: {
     //                 idcurso: 5
     //             }
@@ -700,12 +1484,12 @@ async function main() {
     //             // console.log("entro a materias.map1")
     //             trimestres && trimestres.map(async (t) => {
     //                 // console.log("entro a trimestres.map")
-    //                 const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //                 let nota = await prisma.historialnota.create({
+    //                  random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //                  nota = await prisma.historialnota.create({
     //                     data: {
     //                         idalumnoxcursoxdivision: a.id,
     //                         idmateria: m.id,
@@ -730,8 +1514,8 @@ async function main() {
 
     // console.log(alumnos)
 
-    // for (let i = 1; i < 7; i++) {
-    //     const alumnos = await prisma.alumnoXcursoXdivision.findMany({
+    // for ( i = 1; i < 7; i++) {
+    //      alumnos = await prisma.alumnoXcursoXdivision.findMany({
     //         include: {
     //             cursoXdivision: true
     //         },
@@ -743,14 +1527,14 @@ async function main() {
 
     //     })
     //     // console.log(alumnos)
-    //     const materias = await prisma.materia.findMany({
+    //      materias = await prisma.materia.findMany({
     //         where: {
     //             idCurso: i
     //         }
 
     //     })
     //     // console.log(materias)
-    //     const trimestres = await prisma.trimestre.findMany({
+    //      trimestres = await prisma.trimestre.findMany({
     //     })
 
     //     // console.log(i)
@@ -760,7 +1544,7 @@ async function main() {
     //             // console.log("entro a trimestres.map")
     //             alumnos && alumnos.map(async (a) => {
     //                 // console.log("entro a alumnos.map")
-    //                 let nota = await prisma.nota.create({
+    //                  nota = await prisma.nota.create({
     //                     data: {
     //                         idAlumnoXcursoXdivision: a.id,
     //                         idMateria: m.id,
@@ -784,7 +1568,7 @@ async function main() {
 
     // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
-    //     const asistencia = await prisma.asistencia.create({
+    //      asistencia = await prisma.asistencia.create({
     //         data: {
     //             presente: false,
     //             ausente: false,
@@ -815,7 +1599,7 @@ async function main() {
 
     // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
     // usuarios.map(async (u) => {
-    //     const asistencia = await prisma.asistencia.create({
+    //      asistencia = await prisma.asistencia.create({
     //         data: {
     //             presente: false,
     //             ausente: false,
@@ -845,15 +1629,15 @@ async function main() {
     // })
 
 
-    // const menus = await prisma.menu.findMany()
-    // const roles = await prisma.rol.findMany()
+    //  menus = await prisma.menu.findMany()
+    //  roles = await prisma.rol.findMany()
     // console.log(menus, roles);
 
 
 
     // cursosxdivision.map(async (c) => {
 
-    //     const materi = await prisma.cursoxdivision.create({
+    //      materi = await prisma.cursoxdivision.create({
     //         data: {
 
     //             idcurso: c.idCurso,
@@ -863,16 +1647,16 @@ async function main() {
     //     console.log(materi);
     // })
 
-    // const min = 6
-    // const max = 10
-    // // const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //  min = 6
+    //  max = 10
+    // //  random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 
 
-    // const trimestres = await prisma.trimestre.findMany({
+    //  trimestres = await prisma.trimestre.findMany({
     // })
 
-    // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+    //  alumnos = await prisma.alumnoxcursoxdivision.findMany({
 
     //     where: {
     //         idcursoxdivision: 12
@@ -883,7 +1667,7 @@ async function main() {
 
     // alumnos && alumnos.map(async (a) => {
 
-    //     const materias1 = await prisma.materia.findMany({
+    //      materias1 = await prisma.materia.findMany({
     //         where: {
     //             idcurso: 6
     //         }
@@ -892,13 +1676,13 @@ async function main() {
 
     //     materias1 && materias1.map(m => {
     //         trimestres && trimestres.map(async (t) => {
-    //             const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //             const random2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //             const random3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //             const random4 = Math.floor(Math.random() * (max - min + 1)) + min;
-    //             const random5 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //              random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //              random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //              random3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //              random4 = Math.floor(Math.random() * (max - min + 1)) + min;
+    //              random5 = Math.floor(Math.random() * (max - min + 1)) + min;
     //             // console.log("entro a trimestres.map")
-    //             let nota = await prisma.nota.create({
+    //              nota = await prisma.nota.create({
     //                 data: {
     //                     idalumnoxcursoxdivision: a.id,
     //                     idmateria: m.id,
@@ -937,7 +1721,7 @@ main()
  // materias && materias.map(m => {
     //     trimestres && trimestres.map(t => {
     //         alumnos && alumnos.map(async (a) => {
-    //             let nota = await prisma.nota.create({
+    //              nota = await prisma.nota.create({
     //                 data: {
     //                     idAlumnoXcursoXdivision: a.id,
     //                     idMateria: m.id,
@@ -953,8 +1737,8 @@ main()
     //         })
     //     })
     // })
-    // const asistencias = await getAsistencias()
-    // const creation = await prisma.asistencia.createMany({
+    //  asistencias = await getAsistencias()
+    //  creation = await prisma.asistencia.createMany({
     //     data: asistencias
     // })
     // console.log(creation);
@@ -962,7 +1746,7 @@ main()
 
 
     // usuarios.map(async (u) => {
-    //     const usuario = await prisma.usuario.create({
+    //      usuario = await prisma.usuario.create({
     //         data: {
     //             id: u.id,
     //             nombre: u.nombre,
@@ -982,7 +1766,7 @@ main()
     // })
 
     //  tutores.map(async (t) => {
-    //         const usuario = await prisma.usuario.create({
+    //          usuario = await prisma.usuario.create({
     //             data: {
     //                 id: t.id,
     //                 nombre: t.nombre,
@@ -1000,7 +1784,7 @@ main()
     //         })
     //         console.log(usuario);
     //     })
-    // const tutores = await prisma.usuario.findMany({
+    //  tutores = await prisma.usuario.findMany({
     //     select: {
     //         apellido: true,
     //         id: true
@@ -1014,7 +1798,7 @@ main()
 
     // roles.map(async (r) => {
 
-    //     const roles = await prisma.rol.create({
+    //      roles = await prisma.rol.create({
     //         data: {
     //             id: r.id,
     //             tipo: r.tipo
@@ -1026,7 +1810,7 @@ main()
 
     // cursos.map(async (c) => {
 
-    //     const roles = await prisma.curso.create({
+    //      roles = await prisma.curso.create({
     //         data: {
     //             id: c.id,
     //             nombre: c.nombre
@@ -1037,7 +1821,7 @@ main()
     // })
     // division.map(async (d) => {
 
-    //     const roles = await prisma.division.create({
+    //      roles = await prisma.division.create({
     //         data: {
     //             id: d.id,
     //             division: d.division
@@ -1049,7 +1833,7 @@ main()
 
     // materias.map(async (m) => {
 
-    //     const materi = await prisma.materia.create({
+    //      materi = await prisma.materia.create({
     //         data: {
     //             id: m.id,
     //             nombre: m.nombre,
@@ -1061,7 +1845,7 @@ main()
     // })
 
     // tutores.map(async (t) => {
-    //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
+    //      tutor = await prisma.alumnoxcursoxdivision.updateMany({
     //         // include: {
     //         //     usuario: {
     //         //         select: {
@@ -1083,7 +1867,7 @@ main()
     // })
 
     // menus.map(async (m) => {
-    //     const enfer = await prisma.menu.create({
+    //      enfer = await prisma.menu.create({
     //         data: {
     //             menusistema: m.menuSistema,
     //             url: m.url
@@ -1094,7 +1878,7 @@ main()
 
 
     // menuXRoles.map(async (m) => {
-    //     const enfer = await prisma.menuxrol.create({
+    //      enfer = await prisma.menuxrol.create({
     //         data: {
     //            idmenu: m.idMenu,
     //            idrol: m.idRol
@@ -1104,7 +1888,7 @@ main()
     // })
 
     // enfermedades.map(async (m) => {
-    //     const enfer = await prisma.enfermedad.create({
+    //      enfer = await prisma.enfermedad.create({
     //         data: {
     //             descripcion: m.nombre
     //         }
@@ -1113,7 +1897,7 @@ main()
     // })
 
     // discapacidad.map(async (m) => {
-    //     const disc = await prisma.discapacidad.create({
+    //      disc = await prisma.discapacidad.create({
     //         data: {
     //             nombre: m.nombre
     //         }
@@ -1122,7 +1906,7 @@ main()
     // })
 
     // noticias.map(async (n) => {
-    //     const noticia = await prisma.noticiasynovedades.create({
+    //      noticia = await prisma.noticiasynovedades.create({
     //         data: {
     //             titulo: n.titulo,
     //             creadaen: n.creadaEn,
@@ -1137,7 +1921,7 @@ main()
 
 
 
-    // const fichaInstitucional = await prisma.fichainstitucional.create({
+    //  fichaInstitucional = await prisma.fichainstitucional.create({
     //     data: {
     //         nombreinstitucion: ficha.nombreInstitucion,
     //         ubicacion: ficha.ubicacion,
@@ -1154,7 +1938,7 @@ main()
     // console.log(fichaInstitucional);
 
     // portadaFicha.map(async (p) => {
-    //     const portada = await prisma.portadaficha.createMany({
+    //      portada = await prisma.portadaficha.createMany({
     //         data: {
     //             nombre: p.nombre,
     //             url: p.url,
