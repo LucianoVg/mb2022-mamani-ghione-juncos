@@ -101,7 +101,7 @@ export default function Notas() {
     return (
         <Layout>
             {
-                !usuario.rol === 'Estudiante' && !usuario.rol === 'Tutor'(
+                !usuario.rol === 'Estudiante' && usuario.rol === 'Tutor' ? (
                     <FormControl>
                         <h3>Buscar Alumno</h3>
 
@@ -148,6 +148,28 @@ export default function Notas() {
                             Buscar
                         </Button>
                     </FormControl>
+                ) : (
+                    <Box direction="row" rowSpacing={2}>
+                        <FormControl sx={{ width: '150px' }}>
+                            <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={idMateria}
+                                label="Materia"
+                                onChange={handleMateria}>
+                                {
+                                    materias?.map(m => (
+                                        <MenuItem key={m.id} value={m.id}>{m.nombre}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                        <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" sx={{ marginTop: '20px' }}>
+                            Buscar
+                        </Button>
+                    </Box>
+
                 )
 
             }
