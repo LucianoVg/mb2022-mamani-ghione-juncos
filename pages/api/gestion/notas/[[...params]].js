@@ -1,7 +1,7 @@
 import NextCors from "nextjs-cors/dist";
 import { TraerNotas } from "../../servicios/notas";
 
-export default async function handler(
+export default async function hORler(
     req,
     res
 ) {
@@ -15,7 +15,7 @@ export default async function handler(
 
         let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
-        let AND = [
+        let OR = [
             { idtrimestre: Number(idTrimestre) }
         ]
 
@@ -39,10 +39,10 @@ export default async function handler(
             }
         }
         if (idMateria) {
-            AND.push({ idmateria: Number(idMateria) })
+            OR.push({ idmateria: Number(idMateria) })
         }
         if (idDivision) {
-            AND.push({
+            OR.push({
                 alumnoxcursoxdivision: {
                     cursoxdivision: {
                         division: {
@@ -53,7 +53,7 @@ export default async function handler(
             })
         }
         if (nombreAlumno) {
-            AND.push({
+            OR.push({
                 alumnoxcursoxdivision: {
                     usuario: {
                         nombre: {
@@ -64,7 +64,7 @@ export default async function handler(
             })
         }
         if (apellidoAlumno) {
-            AND.push({
+            OR.push({
                 alumnoxcursoxdivision: {
                     usuario: {
                         apellido: {
@@ -74,11 +74,11 @@ export default async function handler(
                 },
             })
         }
-        if (AND.length) {
+        if (OR.length) {
             options = {
                 ...options,
                 where: {
-                    AND: AND
+                    OR: OR
                 }
             }
         }
