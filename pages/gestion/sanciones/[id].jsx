@@ -244,7 +244,11 @@ export default function DetalleSancion() {
                                             color="info"
                                             size="small"
                                             style={{ marginRight: '20px' }}
-                                            onClick={() => setInEditMode({ status: true })}
+                                            onClick={() => {
+                                                setInEditMode({ status: true })
+                                                setMotivo(sancionxalumno?.sancion?.motivo)
+                                            }
+                                            }
                                         >
                                             Actualizar Sancion
                                         </Button>
