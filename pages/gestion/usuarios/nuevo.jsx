@@ -141,7 +141,7 @@ export default function NuevoUsuario() {
         if (!existe) {
             console.log(idMaterias);
             usuario.idRol = rol
-            setGuardando(true)
+            
 
             let data = {
                 login: usuario.correo.split('@')[0],
@@ -162,6 +162,8 @@ export default function NuevoUsuario() {
                 idUsuario: usuarioLogeado.id,
                 idMaterias: idMaterias
             }
+            console.log(data);
+            setGuardando(true)
             const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta`, data)
             setGuardando(false)
             if (res.status === 200) {
