@@ -35,11 +35,11 @@ export default function Sancion() {
         }
     }, [usuario.id, usuario.rol, loading, authUser])
 
-    if (usuario.rol === 'Estudiante') {
-        let alumno = alumnos.find(a => a.idusuario === usuario.id)
-        setIdAlumno(alumno?.id)
+    // if (usuario.rol === 'Estudiante') {
+    //     let alumno = alumnos.find(a => a.idusuario === usuario.id)
+    //     setIdAlumno(alumno?.id)
 
-    }
+    // }
     const listarSanciones = async () => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`)
