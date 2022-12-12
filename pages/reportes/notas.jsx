@@ -22,6 +22,8 @@ export default function Notas() {
     const [cargando1, setCargando1] = useState(false)
     const [cargando2, setCargando2] = useState(false)
     const [idCurso, setIdCurso] = useState(1)
+    const [cursos, setCursos] = useState([])
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -110,7 +112,7 @@ export default function Notas() {
     return (
         <Layout>
             {
-                !usuario.rol === 'Estudiante' && usuario.rol === 'Tutor' ? (
+                !usuario?.rol?.tipo === 'Estudiante' && !usuario?.rol?.tipo === 'Tutor' ? (
                     <FormControl>
                         <h3>Buscar Alumno</h3>
                         <FormControl>
@@ -183,7 +185,9 @@ export default function Notas() {
                                 id="demo-simple-select"
                                 value={idMateria}
                                 label="Materia"
-                                onChange={handleMateria}>
+                                onChange={handleMateria}
+                                style={{marginRight: "30px"}}
+                                >
                                 <ListSubheader>Primero</ListSubheader>
                                 {
 
