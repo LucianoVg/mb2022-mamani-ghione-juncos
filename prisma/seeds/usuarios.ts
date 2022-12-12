@@ -1,5 +1,6 @@
 export const usuarios = [
-    {
+      {
+        id: 1,
         login: "admin",
         password: "123456",
         nombre: "Admin",
@@ -13,7 +14,8 @@ export const usuarios = [
         direccion: "Caseros 343",
         
     },
-    {
+      {
+        id: 2,
         login: "bruno",
         password: "123456",
         nombre: "Bruno",
@@ -27,7 +29,8 @@ export const usuarios = [
         direccion: "Caseros 563",
        
     },
-    {
+      {
+        id: 3,
         login: "luis",
         password: "123456",
         nombre: "Luis",
@@ -41,7 +44,8 @@ export const usuarios = [
         direccion: "Caseros 234",
        
     },
-    {
+      {
+        id: 4,
         login: "samuel",
         password: "123456",
         nombre: "Samuel",
@@ -55,7 +59,8 @@ export const usuarios = [
         direccion: "Casas 434",
        
     },
-    {
+      {
+        id: 5,
         login: "lucia",
         password: "123456",
         nombre: "Lucia",
@@ -69,7 +74,8 @@ export const usuarios = [
         direccion: "Siempre Viva 343",
        
     },
-    {
+      {
+        id: 6,
         login: "jacinto",
         password: "123456",
         nombre: "Jacinto",
@@ -83,7 +89,8 @@ export const usuarios = [
         direccion: "Caseros 343",
        
     },
-    {
+      {
+        id: 7,
         login: "juan",
         password: "123456",
         nombre: "Juan",
@@ -97,7 +104,8 @@ export const usuarios = [
         direccion: "Caseros 343",
        
     },
-    {
+      {
+        id: 8,
         login: "hector",
         password: "123456",
         nombre: "Hector",
@@ -110,7 +118,8 @@ export const usuarios = [
         telefono: "351615252",
         direccion: "Caseros 323"
     },
-    {
+      {
+        id: 9,
         login: "Leonardo",
         password: "123456",
         nombre: "Leonardo",
@@ -123,7 +132,8 @@ export const usuarios = [
         telefono: "351645452",
         direccion: "Caseros 423"
     },
-    {
+      {
+        id: 10,
         login: "Mireia",
         password: "123456",
         nombre: "Mireia",
@@ -136,7 +146,8 @@ export const usuarios = [
         telefono: "3516144352",
         direccion: "9922 Domenica Passage"
     },
-    {
+      {
+        id: 11,
         login: "Reyes ",
         password: "123456",
         nombre: "Reyes ",
@@ -149,7 +160,8 @@ export const usuarios = [
         telefono: "3516125452",
         direccion: "6844 Abshire Plaza"
     },
-    {
+      {
+        id: 12,
         login: "Mariano",
         password: "123456",
         nombre: "Mariano",
@@ -162,7 +174,8 @@ export const usuarios = [
         telefono: "3516154352",
         direccion: "1352 Alberta Loaf"
     },
-    {
+      {
+        id: 13,
         login: "iban",
         password: "123456",
         nombre: "Iban ",
@@ -175,7 +188,8 @@ export const usuarios = [
         telefono: "3513412452",
         direccion: "12900 White Spur"
     },
-    {
+      {
+        id: 14,
         login: "patricia",
         password: "123456",
         nombre: "Patricia ",
@@ -188,7 +202,8 @@ export const usuarios = [
         telefono: "3516124352",
         direccion: "20424 Maximillian Hollow"
     },
-    {
+      {
+        id: 15,
         login: "noel ",
         password: "123456",
         nombre: "Noel ",
@@ -201,7 +216,8 @@ export const usuarios = [
         telefono: "351342452",
         direccion: "035 Roberto Forges"
     },
-    {
+      {
+        id: 16,
         login: "serafin ",
         password: "123456",
         nombre: "Serafin ",
@@ -214,7 +230,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "124 Pollich Corner"
     },
-    {
+      {
+        id: 17,
         login: "leonor ",
         password: "123456",
         nombre: "Leonor ",
@@ -227,7 +244,8 @@ export const usuarios = [
         telefono: "3516125442",
         direccion: "966 Evalyn Manor"
     },
-    {
+      {
+        id: 18,
         login: "antonio",
         password: "123456",
         nombre: "Antonio ",
@@ -240,7 +258,8 @@ export const usuarios = [
         telefono: "3513232452",
         direccion: "68313 Dawson Meadow"
     },
-    {
+      {
+        id: 19,
         login: "virgilio",
         password: "123456",
         nombre: "Virgilio ",
@@ -253,7 +272,8 @@ export const usuarios = [
         telefono: "351613432",
         direccion: "4002 Schiller Creek"
     },
-    {
+      {
+        id: 20,
         login: "nicolae",
         password: "123456",
         nombre: "Nicolae ",
@@ -266,7 +286,8 @@ export const usuarios = [
         telefono: "351613252",
         direccion: "4042 Schiller Creek"
     },
-    {
+      {
+        id: 21,
         login: "andres",
         password: "123456",
         nombre: "Andres",
@@ -279,7 +300,8 @@ export const usuarios = [
         telefono: "351634223",
         direccion: "4508 Madelyn Ways"
     },
-    {
+      {
+        id: 22,
         login: "virgilio",
         password: "123456",
         nombre: "Virgilio ",
@@ -292,7 +314,8 @@ export const usuarios = [
         telefono: "3516565452",
         direccion: "9414 Koepp Loop"
     },
-    {
+      {
+        id: 23,
         login: "florencio",
         password: "123456",
         nombre: "Florencio ",
@@ -305,7 +328,8 @@ export const usuarios = [
         telefono: "351545452",
         direccion: "80586 Petra Haven"
     },
-    {
+      {
+        id: 24,
         login: "yurena",
         password: "123456",
         nombre: "Yurena ",
@@ -318,7 +342,8 @@ export const usuarios = [
         telefono: "351675652",
         direccion: "19289 Spencer Valleys"
     },
-    {
+      {
+        id: 25,
         login: "nil",
         password: "123456",
         nombre: "Nil",
@@ -331,7 +356,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "19765 Spencer Valleys"
     },
-    {
+      {
+        id: 26,
         login: "martos",
         password: "123456",
         nombre: "Luciana",
@@ -344,7 +370,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "0032 Krajcik Path"
     },
-    {
+      {
+        id: 27,
         login: "luis",
         password: "123456",
         nombre: "Luis",
@@ -357,7 +384,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "3655 Jairo Mall"
     },
-    {
+      {
+        id: 28,
         login: "eloisa",
         password: "123456",
         nombre: "Eloisa",
@@ -370,7 +398,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "0728 Raymundo Plains"
     },
-    {
+      {
+        id: 29,
         login: "fran",
         password: "123456",
         nombre: "Fran",
@@ -383,7 +412,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "1760 Renner Loop"
     },
-    {
+      {
+        id: 30,
         login: "mohammed",
         password: "123456",
         nombre: "Mohammed",
@@ -396,7 +426,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "6199 Mara Street"
     },
-    {
+      {
+        id: 31,
         login: "malak",
         password: "123456",
         nombre: "Malak",
@@ -409,7 +440,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "4874 Bauch Junctions"
     },
-    {
+      {
+        id: 32,
         login: "gisela",
         password: "123456",
         nombre: "Gisela",
@@ -422,7 +454,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "98849 Reilly Ports"
     },
-    {
+      {
+        id: 33,
         login: "isaias",
         password: "123456",
         nombre: "Isaias ",
@@ -435,7 +468,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "2750 Trantow Stream"
     },
-    {
+      {
+        id: 34,
         login: "minerva",
         password: "123456",
         nombre: "Minerva ",
@@ -448,7 +482,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "4283 Schamberger Crossroad"
     },
-    {
+      {
+        id: 35,
         login: "mercedes ",
         password: "123456",
         nombre: "Mercedes ",
@@ -456,12 +491,13 @@ export const usuarios = [
         correo: "mercedes@gmail.com",
         idRol: 6,
         legajo: "567543",
-        sexo: "M",
+        sexo: "F",
         localidad: "Cordoba",
         telefono: "351612452",
         direccion: "5544 Weissnat Rest"
     },
-    {
+      {
+        id: 36,
         login: "sara",
         password: "123456",
         nombre: "Sara",
@@ -474,7 +510,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "369 Nathen Well"
     },
-    {
+      {
+        id: 37,
         login: "said",
         password: "123456",
         nombre: "Said ",
@@ -487,7 +524,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "251 Reinger Road"
     },
-    {
+      {
+        id: 38,
         login: "oriol",
         password: "123456",
         nombre: "Oriol",
@@ -500,7 +538,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "3781 Gene Mission"
     },
-    {
+      {
+        id: 39,
         login: "carolina",
         password: "123456",
         nombre: "Carolina ",
@@ -513,7 +552,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "2553 Creola Springs"
     },
-    {
+      {
+        id: 40,
         login: "mihaela",
         password: "123456",
         nombre: "Mihaela ",
@@ -526,7 +566,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "1432 Hudson Point"
     },
-    {
+      {
+        id: 41,
         login: "angel",
         password: "123456",
         nombre: "Angel ",
@@ -539,7 +580,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "533 Gleason Wall"
     },
-    {
+      {
+        id: 42,
         login: "antoni",
         password: "123456",
         nombre: "Antoni",
@@ -552,7 +594,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "3718 Haag Forks"
     },
-    {
+      {
+        id: 43,
         login: "maribel",
         password: "123456",
         nombre: "Maribel",
@@ -565,7 +608,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "1081 Jones Forge"
     },
-    {
+      {
+        id: 44,
         login: "hafida",
         password: "123456",
         nombre: "Hafida ",
@@ -578,7 +622,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "073 Franecki Junction"
     },
-    {
+      {
+        id: 45,
         login: "merce",
         password: "123456",
         nombre: "Merce",
@@ -591,7 +636,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "79919 Amparo Route"
     },
-    {
+      {
+        id: 46,
         login: "aranzazu",
         password: "123456",
         nombre: "Aranzazu",
@@ -604,7 +650,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "13776 Angela Gardens"
     },
-    {
+      {
+        id: 47,
         login: "najat",
         password: "123456",
         nombre: "Najat",
@@ -617,7 +664,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "90585 Isabel Union"
     },
-    {
+      {
+        id: 48,
         login: "marwa",
         password: "123456",
         nombre: "Marwa",
@@ -630,7 +678,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "1483 Stoltenberg Viaduct"
     },
-    {
+      {
+        id: 49,
         login: "mayte",
         password: "123456",
         nombre: "Mayte ",
@@ -643,7 +692,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "91963 Kenyatta Underpass"
     },
-    {
+      {
+        id: 50,
         login: "dominga",
         password: "123456",
         nombre: "Dominga ",
@@ -656,7 +706,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "59862 Bernhard Valleys"
     },
-    {
+      {
+        id: 51,
         login: "gerardo",
         password: "123456",
         nombre: "Gerardo",
@@ -669,7 +720,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "5704 Kuhn Avenue"
     },
-    {
+      {
+        id: 52,
         login: "vega",
         password: "123456",
         nombre: "Vega",
@@ -682,7 +734,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "6845 Wolf Village"
     },
-    {
+      {
+        id: 53,
         login: "bilal",
         password: "123456",
         nombre: "Bilal",
@@ -695,7 +748,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "137 VonRueden Pine"
     },
-    {
+      {
+        id: 54,
         login: "lydia",
         password: "123456",
         nombre: "Lydia",
@@ -708,7 +762,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "52991 Camren Wells"
     },
-    {
+      {
+        id: 55,
         login: "pilar",
         password: "123456",
         nombre: "Pilar",
@@ -721,7 +776,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "42369 Cassin Tunnel"
     },
-    {
+      {
+        id: 56,
         login: "ainara",
         password: "123456",
         nombre: "Ainara",
@@ -734,7 +790,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "219 Becker Stravenue"
     },
-    {
+      {
+        id: 57,
         login: "lucia",
         password: "123456",
         nombre: "Lucia",
@@ -747,7 +804,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "058 Rolfson Cove"
     },
-    {
+      {
+        id: 58,
         login: "ruben",
         password: "123456",
         nombre: "Ruben",
@@ -760,7 +818,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "71289 Steuber Hill"
     },
-    {
+      {
+        id: 59,
         login: "andoni",
         password: "123456",
         nombre: "Andoni",
@@ -773,7 +832,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "376 Wyman Cliff"
     },
-    {
+      {
+        id: 60,
         login: "basilisa",
         password: "123456",
         nombre: "Basilisa",
@@ -786,7 +846,8 @@ export const usuarios = [
         telefono: "351612452",
         direccion: "04517 Aufderhar Circle"
     },
-    {
+      {
+        id: 61,
         login: "rebeca",
         password: "123456",
         nombre: "Rebeca",

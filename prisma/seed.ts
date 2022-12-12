@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { asistencias, fechas } from './seeds/asistencias';
-
+import { division } from './seeds/division';
 import { cursos } from './seeds/cursos';
+import { cursosxdivision } from './seeds/cursosxdivision';
 import { ficha } from "./seeds/ficha";
 // import { menus } from './seeds/menus';
 import { notas } from './seeds/notas';
@@ -44,6 +45,24 @@ const prisma = new PrismaClient();
 // }
 
 async function main() {
+    // usuarios.map(async (u) => {
+    //     const usuario = await prisma.usuario.create({
+    //         data: {
+    //             nombre: u.nombre,
+    //             apellido: u.apellido,
+    //             correo: u.correo,
+    //             idrol: u.idRol,
+    //             legajo: u.legajo,
+    //             login: u.login,
+    //             localidad: u.localidad,
+    //             password: u.password,
+    //             sexo: u.sexo,
+    //             telefono: u.telefono,
+    //             direccion: u.direccion
+    //         }
+    //     })
+    //     console.log(usuario);
+    // })
 
     //  tutores.map(async (t) => {
     //         const usuario = await prisma.usuario.create({
@@ -74,6 +93,55 @@ async function main() {
     // })
     // console.log(tutores)
 
+
+    // roles.map(async (r) => {
+
+    //     const roles = await prisma.rol.create({
+    //         data: {
+    //             id: r.id,
+    //             tipo: r.tipo
+    //         }
+    //     })
+    //     console.log(roles);
+
+    // })
+
+    // cursos.map(async (c) => {
+
+    //     const roles = await prisma.curso.create({
+    //         data: {
+    //             id: c.id,
+    //             nombre: c.nombre
+    //         }
+    //     })
+    //     console.log(roles);
+
+    // })
+    // division.map(async (d) => {
+
+    //     const roles = await prisma.division.create({
+    //         data: {
+    //             id: d.id,
+    //             division: d.division
+    //         }
+    //     })
+    //     console.log(roles);
+
+    // })
+
+    materias.map(async (m) => {
+
+        const materi = await prisma.materia.create({
+            data: {
+                id: m.id,
+                nombre: m.nombre,
+                // idcorrelativa: m.idCorrelativa,
+                idcurso: m.idCurso
+            }
+        })
+        console.log(materi);
+    })
+
     // tutores.map(async (t) => {
     //     const tutor = await prisma.alumnoxcursoxdivision.updateMany({
     //         // include: {
@@ -94,6 +162,88 @@ async function main() {
     //         }
     //     })
     //     console.log(tutor);
+    // })
+
+    // menus.map(async (m) => {
+    //     const enfer = await prisma.menu.create({
+    //         data: {
+    //             menusistema: m.menuSistema,
+    //             url: m.url
+    //         }
+    //     })
+    //     console.log(enfer);
+    // })
+
+
+    // menuXRoles.map(async (m) => {
+    //     const enfer = await prisma.menuxrol.create({
+    //         data: {
+    //            idmenu: m.idMenu,
+    //            idrol: m.idRol
+    //         }
+    //     })
+    //     console.log(enfer);
+    // })
+
+    // enfermedades.map(async (m) => {
+    //     const enfer = await prisma.enfermedad.create({
+    //         data: {
+    //             descripcion: m.nombre
+    //         }
+    //     })
+    //     console.log(enfer);
+    // })
+
+    // discapacidad.map(async (m) => {
+    //     const disc = await prisma.discapacidad.create({
+    //         data: {
+    //             nombre: m.nombre
+    //         }
+    //     })
+    //     console.log(disc);
+    // })
+
+    // noticias.map(async (n) => {
+    //     const noticia = await prisma.noticiasynovedades.create({
+    //         data: {
+    //             titulo: n.titulo,
+    //             creadaen: n.creadaEn,
+    //             actualizadaen: n.actualizadaEn,
+    //             descripcion: n.descripcion,
+    //             idusuario: n.idUsuario,
+    //             url: n.url
+    //         }
+    //     })
+    //     console.log(noticia);
+    // })
+
+
+
+    // const fichaInstitucional = await prisma.fichainstitucional.create({
+    //     data: {
+    //         nombreinstitucion: ficha.nombreInstitucion,
+    //         ubicacion: ficha.ubicacion,
+    //         telefono1: ficha.telefono1,
+    //         telefono2: ficha.telefono2 ,
+    //         tipoinstitucion: ficha.tipoInstitucion ,
+    //         descripcion: ficha.descripcion ,
+    //         oficina1: ficha.oficina1,
+    //         oficina2: ficha.oficina2 ,
+    //         mail: ficha.mail,
+    //         idusuario: ficha.idUsuario
+    //     }
+    // })
+    // console.log(fichaInstitucional);
+
+    // portadaFicha.map(async (p) => {
+    //     const portada = await prisma.portadaficha.createMany({
+    //         data: {
+    //             nombre: p.nombre,
+    //             url: p.url,
+    //             idfichainstitucional: 1
+    //         }
+    //     })
+    //     console.log(portada);
     // })
 
 
@@ -823,87 +973,6 @@ async function main() {
     // const roles = await prisma.rol.findMany()
     // console.log(menus, roles);
 
-    // menus.map(async (m) => {
-    //     const enfer = await prisma.menu.create({
-    //         data: {
-    //             menusistema: m.menuSistema,
-    //             url: m.url
-    //         }
-    //     })
-    //     console.log(enfer);
-    // })
-
-
-    // menuXRoles.map(async (m) => {
-    //     const enfer = await prisma.menuxrol.create({
-    //         data: {
-    //            idmenu: m.idMenu,
-    //            idrol: m.idRol
-    //         }
-    //     })
-    //     console.log(enfer);
-    // })
-
-    // enfermedades.map(async (m) => {
-    //     const enfer = await prisma.enfermedad.create({
-    //         data: {
-    //             descripcion: m.nombre
-    //         }
-    //     })
-    //     console.log(enfer);
-    // })
-
-    // discapacidad.map(async (m) => {
-    //     const disc = await prisma.discapacidad.create({
-    //         data: {
-    //             nombre: m.nombre
-    //         }
-    //     })
-    //     console.log(disc);
-    // })
-
-    // noticias.map(async (n) => {
-    //     const noticia = await prisma.noticiasynovedades.create({
-    //         data: {
-    //             titulo: n.titulo,
-    //             creadaen: n.creadaEn,
-    //             actualizadaen: n.actualizadaEn,
-    //             descripcion: n.descripcion,
-    //             idusuario: n.idUsuario,
-    //             url: n.url
-    //         }
-    //     })
-    //     console.log(noticia);
-    // })
-
-
-
-    // const fichaInstitucional = await prisma.fichainstitucional.create({
-    //     data: {
-    //         nombreinstitucion: ficha.nombreInstitucion,
-    //         ubicacion: ficha.ubicacion,
-    //         telefono1: ficha.telefono1,
-    //         telefono2: ficha.telefono2 ,
-    //         tipoinstitucion: ficha.tipoInstitucion ,
-    //         descripcion: ficha.descripcion ,
-    //         oficina1: ficha.oficina1,
-    //         oficina2: ficha.oficina2 ,
-    //         mail: ficha.mail,
-    //         idusuario: ficha.idUsuario
-    //     }
-    // })
-    // console.log(fichaInstitucional);
-
-    // portadaFicha.map(async (p) => {
-    //     const portada = await prisma.portadaficha.createMany({
-    //         data: {
-    //             nombre: p.nombre,
-    //             url: p.url,
-    //             idfichainstitucional: 1
-    //         }
-    //     })
-    //     console.log(portada);
-    // })
 
 
     // cursos.map(async (c) => {
@@ -919,50 +988,7 @@ async function main() {
     // })
 
 
-    // materias.map(async (m) => {
 
-    //     const materi = await prisma.materia.create({
-    //         data: {
-    //             id: m.id,
-    //             nombre: m.nombre,
-    //             idcorrelativa: m.idCorrelativa,
-    //             idcurso: m.idCurso
-    //         }
-    //     })
-    //     console.log(materi);
-    // })
-
-
-    // roles.map(async (m) => {
-
-    //     const roles = await prisma.rol.create({
-    //         data: {
-    //             id: m.id,
-    //             tipo: m.tipo
-    //         }
-    //     })
-    //     console.log(roles);
-
-    // })
-
-    // usuarios.map(async (u) => {
-    //     const usuario = await prisma.usuario.create({
-    //         data: {
-    //             nombre: u.nombre,
-    //             apellido: u.apellido,
-    //             correo: u.correo,
-    //             idrol: u.idRol,
-    //             legajo: u.legajo,
-    //             login: u.login,
-    //             localidad: u.localidad,
-    //             password: u.password,
-    //             sexo: u.sexo,
-    //             telefono: u.telefono,
-    //             direccion: u.direccion
-    //         }
-    //     })
-    //     console.log(usuario);
-    // })
 }
 
 main()

@@ -155,7 +155,7 @@ model fichainstitucional {
 model materia {
   id              Int               @id @default(autoincrement())
   nombre          String?
-  idcorrelativa   Int
+  // idcorrelativa   Int?
   idcurso         Int
   curso           curso             @relation(fields: [idcurso], references: [id])
   docentexmateria docentexmateria[]

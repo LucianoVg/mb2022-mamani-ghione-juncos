@@ -1,50 +1,27 @@
 export const cursos = [
     {
-        idCurso:  1,
-        idDivision:  1
+        id:  1,
+        nombre:  '1'
     },
     {
-        idCurso:  1,
-        idDivision:  2
+        id:  2,
+        nombre:  '2'
     },
     {
-        idCurso:  2,
-        idDivision:  1
+        id:  3,
+        nombre:  '3'
     },
     {
-        idCurso:  2,
-        idDivision:  2
+        id:  4,
+        nombre:  '4'
+    },
+      {
+        id:  5,
+        nombre:  '5'
     },
     {
-        idCurso:  3,
-        idDivision:  1
+        id:  6,
+        nombre:  '6'
     },
-    {
-        idCurso:  3,
-        idDivision:  2
-    },
-    {
-        idCurso:  4,
-        idDivision:  1
-    },
-    {
-        idCurso:  4,
-        idDivision:  2
-    },
-    {
-        idCurso:  5,
-        idDivision:  1
-    },
-    {
-        idCurso:  5,
-        idDivision:  2
-    },
-    {
-        idCurso:  6,
-        idDivision:  1
-    },
-    {
-        idCurso:  6,
-        idDivision:  2
-    }
+
 ]

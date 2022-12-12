@@ -54,5 +54,6 @@ export const menus = [
     {
         menuSistema: "Fecha de Examen",
         url: "/gestion/examenes"
-    }
+    },
+    
 ]

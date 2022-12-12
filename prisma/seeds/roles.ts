@@ -1,13 +1,5 @@
 export const roles = [
     {
-        id: 4,
-        tipo: 'Administrador'
-    },
-    {
-        id: 7,
-        tipo: 'Estudiante',
-    },
-    {
         id: 1,
         tipo: 'Docente',
     },
@@ -20,11 +12,26 @@ export const roles = [
         tipo: 'Director',
     },
     {
+        id: 4,
+        tipo: 'Administrador'
+    },
+    {
         id: 5,
         tipo: 'Preceptor',
     },
     {
         id: 6,
         tipo: 'Tutor',
-    }
+    },
+    {
+        id: 7,
+        tipo: 'Estudiante',
+    },
+    {
+        id: 8,
+        tipo: 'Vicedirector',
+    },
+
+
+
 ]
