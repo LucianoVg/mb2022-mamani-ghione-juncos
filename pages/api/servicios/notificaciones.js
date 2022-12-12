@@ -22,21 +22,27 @@ export async function ListarNotificaciones() {
 }
 export async function ListarNotificacionesDeUsuario(idUsuario) {
     try {
-        const listado = await Prisma.newPrisma.notificacion.findMany({
+        const listado = await Prisma.newPrisma.notificacionxalumno.findMany({
             include: {
-                usuario: {
+                notificacion: {
                     include: {
-                        rol: true
+                        usuario: {
+                            include: {
+                                rol: true
+                            }
+                        }
                     }
-                },
+                }
             },
             where: {
-                usuario: {
+                alumnoxcursoxdivision: {
                     id: Number(idUsuario)
                 }
             },
             orderBy: {
-                fecha: 'desc'
+                notificacion: {
+                    fecha: 'desc'
+                }
             }
         })
 
@@ -47,11 +53,15 @@ export async function ListarNotificacionesDeUsuario(idUsuario) {
 }
 export async function DetalleNotificacion(idNotificacion) {
     try {
-        const notificacion = await Prisma.newPrisma.notificacion.findUnique({
+        const notificacion = await Prisma.newPrisma.notificacionxalumno.findUnique({
             include: {
-                usuario: {
+                notificacion: {
                     include: {
-                        rol: true
+                        usuario: {
+                            include: {
+                                rol: true
+                            }
+                        }
                     }
                 }
             },

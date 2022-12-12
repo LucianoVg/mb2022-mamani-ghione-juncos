@@ -8,21 +8,33 @@ export default async function traerUsuarios(options) {
     }
 }
 
-export async function actualizarUsuario(id, enfermedades, alergias) {
+export async function actualizarUsuario(id, enfermedades, alergias, password) {
     try {
-        enfermedades?.map(async (e) => {
-            const enf = await Prisma.newPrisma.enfermedad.findFirst({ where: { descripcion: e } })
-            const usuario = await Prisma.newPrisma.usuario.update({
-                data: {
-                    enfermedadesxusuario: {
-                        create: {
-                            enfermedad: {
-                                connect: {
-                                    id: enf?.id
+        if (enfermedades) {
+            enfermedades?.map(async (e) => {
+                const enf = await Prisma.newPrisma.enfermedad.findFirst({ where: { descripcion: e } })
+                const usuario = await Prisma.newPrisma.usuario.update({
+                    data: {
+                        enfermedadesxusuario: {
+                            create: {
+                                enfermedad: {
+                                    connect: {
+                                        id: enf?.id
+                                    }
                                 }
                             }
                         }
                     },
+                    where: {
+                        id: Number(id)
+                    }
+                })
+                console.log(usuario);
+            })
+        }
+        if (alergias) {
+            const usuario = await Prisma.newPrisma.usuario.update({
+                data: {
                     alergias: alergias
                 },
                 where: {
@@ -30,7 +42,18 @@ export async function actualizarUsuario(id, enfermedades, alergias) {
                 }
             })
             console.log(usuario);
-        })
+        }
+        if (password) {
+            const usuario = await Prisma.newPrisma.usuario.update({
+                data: {
+                    password: password
+                },
+                where: {
+                    id: Number(id)
+                }
+            })
+            console.log(usuario);
+        }
     } catch (error) {
         console.log(error);
     }

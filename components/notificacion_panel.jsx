@@ -9,9 +9,8 @@ import { useAuth } from './context/authUserProvider';
 
 export const Notificacion = () => {
     const { loading, authUser } = useAuth()
-
     const [notificaciones, setNotificaciones] = useState()
-    const [usuario, setUsuario] = useState({ id: '' })
+    const [usuario, setUsuario] = useState({ id: 0 })
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (e) => {
@@ -41,14 +40,12 @@ export const Notificacion = () => {
             setUsuario({ id: res.data?.id })
         }
     }
-    const ListarNotificaciones = () => {
-        if (usuario.id.length) {
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/${usuario.id}`)
-                .then(res => {
-                    setNotificaciones(res.data)
-                }).catch(err => {
-                    console.error(err);
-                })
+    const ListarNotificaciones = async () => {
+        if (usuario.id) {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/alumno/${usuario.id}`)
+            if (res.status === 200) {
+                setNotificaciones(res.data)
+            }
         }
     }
     return (
@@ -91,7 +88,7 @@ export const Notificacion = () => {
                     {
                         notificaciones && notificaciones?.map((n, i) => (
                             <ListItem key={i} disablePadding>
-                                <ListItemButton component="a" href="/gestion/notificaciones/listado_notificaciones">
+                                <ListItemButton component="a" href={`/gestion/notificaciones/detalles/${n.id}`}>
                                     <ListItemText primary={n.notificacion?.asunto} />
                                 </ListItemButton>
                             </ListItem>

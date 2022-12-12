@@ -10,6 +10,7 @@ export default async function traerEnfermedades(idUsuario) {
                 idusuario: Number(idUsuario)
             }
         })
+        console.log(enfermedades);
         return enfermedades
     } catch (error) {
         console.log(error);
