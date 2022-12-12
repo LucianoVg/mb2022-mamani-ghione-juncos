@@ -69,6 +69,7 @@ export default function Asistencias() {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
             || usuario.rol === 'Estudiante'
             || usuario.rol === 'Tutor'
     }
@@ -105,29 +106,37 @@ export default function Asistencias() {
     }
     return (
         <Layout>
-            <h3>Buscar Alumno</h3>
-            <FormControl style={{ marginRight: "20px" }}>
-                <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    // value={value}
-                    name="idAlumno"
-                    onChange={handleAlumno}
-                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                    options={alumnos}
-                    sx={{ width: "250px" }}
-                    isOptionEqualToValue={(option, value) =>
-                        option?.apellido === value?.apellido
-                    }
-                    noOptionsText={"No existe un alumno con ese nombre"}
-                    renderOption={(props, alumnos) => (
-                        <Box component="li" {...props} key={alumnos?.id}>
-                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                        </Box>
-                    )}
-                    renderInput={(params) => <TextField {...params} label="Alumno" />}
-                />
-            </FormControl>
+            {
+                !usuario.rol === 'Estudiante' && !usuario.rol === 'Tutor'(
+                    <FormControl>
+                        <h3>Buscar Alumno</h3>
+                        <FormControl style={{ marginRight: "20px" }}>
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                // value={value}
+                                name="idAlumno"
+                                onChange={handleAlumno}
+                                getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                                options={alumnos}
+                                sx={{ width: "250px" }}
+                                isOptionEqualToValue={(option, value) =>
+                                    option?.apellido === value?.apellido
+                                }
+                                noOptionsText={"No existe un alumno con ese nombre"}
+                                renderOption={(props, alumnos) => (
+                                    <Box component="li" {...props} key={alumnos?.id}>
+                                        {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                    </Box>
+                                )}
+                                renderInput={(params) => <TextField {...params} label="Alumno" />}
+                            />
+                        </FormControl>
+                    </FormControl>
+                )
+
+            }
+
             <FormControl>
                 <InputLabel id="demo-simple-select-label">Mes</InputLabel>
                 <Select

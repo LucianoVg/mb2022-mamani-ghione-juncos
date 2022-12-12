@@ -100,50 +100,58 @@ export default function Notas() {
     }
     return (
         <Layout>
-            <h3>Buscar Alumno</h3>
+            {
+                !usuario.rol === 'Estudiante' && !usuario.rol === 'Tutor'(
+                    <FormControl>
+                        <h3>Buscar Alumno</h3>
 
-            <Box direction="row" rowSpacing={2}>
-                <FormControl style={{ marginRight: "20px" }}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                        options={alumnos}
-                        sx={{ width: "250px" }}
-                        isOptionEqualToValue={(option, value) =>
-                            option?.apellido === value?.apellido
-                        }
-                        noOptionsText={"No existe un alumno con ese nombre"}
-                        renderOption={(props, alumnos) => (
-                            <Box component="li" {...props} key={alumnos?.id}>
-                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Alumno" />}
-                    />
-                </FormControl>
-                <FormControl sx={{ width: '150px' }}>
-                    <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={idMateria}
-                        label="Materia"
-                        onChange={handleMateria}>
-                        {
-                            materias?.map(m => (
-                                <MenuItem key={m.id} value={m.id}>{m.nombre}</MenuItem>
-                            ))
-                        }
-                    </Select>
-                </FormControl>
-            </Box>
-            <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" sx={{ marginTop: '20px' }}>
-                Buscar
-            </Button>
+                        <Box direction="row" rowSpacing={2}>
+                            <FormControl style={{ marginRight: "20px" }}>
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                                    options={alumnos}
+                                    sx={{ width: "250px" }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.apellido === value?.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumnos) => (
+                                        <Box component="li" {...props} key={alumnos?.id}>
+                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                />
+                            </FormControl>
+                            <FormControl sx={{ width: '150px' }}>
+                                <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={idMateria}
+                                    label="Materia"
+                                    onChange={handleMateria}>
+                                    {
+                                        materias?.map(m => (
+                                            <MenuItem key={m.id} value={m.id}>{m.nombre}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" sx={{ marginTop: '20px' }}>
+                            Buscar
+                        </Button>
+                    </FormControl>
+                )
+
+            }
+
 
             <Grid container spacing={2}>
                 <Grid item xs>

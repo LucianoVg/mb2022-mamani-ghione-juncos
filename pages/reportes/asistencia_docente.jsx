@@ -71,8 +71,8 @@ export default function AsistenciasDocentes() {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-            || usuario.rol === 'Estudiante'
-            || usuario.rol === 'Tutor'
+            || usuario.rol === 'Vicedirector'
+     
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

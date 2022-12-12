@@ -49,6 +49,7 @@ export default function Sancion() {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
+            || usuario.rol === 'Vicedirector'
             || usuario.rol === 'Estudiante'
             || usuario.rol === 'Tutor'
     }
@@ -78,39 +79,46 @@ export default function Sancion() {
 
     return (
         <Layout>
-            <h3>Buscar Alumno</h3>
-            <Grid container spacing={2} marginBottom={2}>
-                <Grid item xs={4}>
-                    <FormControl style={{ marginRight: "20px" }}>
-                        <Autocomplete
-                            size='small'
-                            disablePortal
-                            id="combo-box-demo"
-                            // value={value}
-                            name="idAlumno"
-                            onChange={handleAlumno}
-                            getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                            options={alumnos}
-                            sx={{ width: "250px" }}
-                            isOptionEqualToValue={(option, value) =>
-                                option?.apellido === value?.apellido
-                            }
-                            noOptionsText={"No existe un alumno con ese nombre"}
-                            renderOption={(props, alumnos) => (
-                                <Box component="li" {...props} key={alumnos?.id}>
-                                    {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                                </Box>
-                            )}
-                            renderInput={(params) => <TextField {...params} label="Alumno" />}
-                        />
+            {
+                !usuario.rol === 'Estudiante' && !usuario.rol === 'Tutor' (
+                    <FormControl>
+                        <h3>Buscar Alumno</h3>
+                        <Grid container spacing={2} marginBottom={2}>
+                            <Grid item xs={4}>
+                                <FormControl style={{ marginRight: "20px" }}>
+                                    <Autocomplete
+                                        size='small'
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        // value={value}
+                                        name="idAlumno"
+                                        onChange={handleAlumno}
+                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                                        options={alumnos}
+                                        sx={{ width: "250px" }}
+                                        isOptionEqualToValue={(option, value) =>
+                                            option?.apellido === value?.apellido
+                                        }
+                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                        renderOption={(props, alumnos) => (
+                                            <Box component="li" {...props} key={alumnos?.id}>
+                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >
+                                    Buscar
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </FormControl>
-                </Grid>
-                <Grid item xs={3}>
-                    <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >
-                        Buscar
-                    </Button>
-                </Grid>
-            </Grid>
+                )
+            }
+
             {/* <Box direction="row" rowSpacing={2}>
                 <TextField
                     sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
