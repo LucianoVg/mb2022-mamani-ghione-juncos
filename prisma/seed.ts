@@ -94,6 +94,7 @@ async function main() {
     //         console.log(docente);
     //     })
     // })
+
     //  docentes = await prisma.docentexmateria.findMany()
     // docentes.map(async (d) => {
     //      asistencia = await prisma.asistenciadocente.create({
@@ -242,27 +243,27 @@ async function main() {
     //     })
     // })
 
-    fechas && fechas.map(async (fecha) => {
-        const asistencia = await prisma.asistenciadocente.create({
-            data: {
-                iddocentexmateria: 1,
-                presente: false,
-                ausente: false,
-                ausentejustificado: false,
-                llegadatarde: false,
-                llegadatardejustificada: false,
-                mediafalta: false,
-                mediafaltajustificada: false,
-                motivo: "",
-                creadoen: fecha,
-                idusuario: 1,
-                actualizadoen: ""
-            }
+    // fechas && fechas.map(async (fecha) => {
+    //     const asistencia = await prisma.asistenciadocente.create({
+    //         data: {
+    //             iddocentexmateria: 1,
+    //             presente: false,
+    //             ausente: false,
+    //             ausentejustificado: false,
+    //             llegadatarde: false,
+    //             llegadatardejustificada: false,
+    //             mediafalta: false,
+    //             mediafaltajustificada: false,
+    //             motivo: "",
+    //             creadoen: fecha,
+    //             idusuario: 1,
+    //             actualizadoen: ""
+    //         }
 
-        })
-        console.log(asistencia)
+    //     })
+    //     console.log(asistencia)
 
-    })
+    // })
 
     //  nota = await prisma.nota.findMany({
     //     where: {
@@ -1506,68 +1507,6 @@ async function main() {
     //     })
     // }
 
-    // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
-    // usuarios.map(async (u) => {
-    //      asistencia = await prisma.asistencia.create({
-    //         data: {
-    //             presente: false,
-    //             ausente: false,
-    //             ausenteJustificado: false,
-    //             llegadaTarde: false,
-    //             llegadaTardeJustificada: false,
-    //             mediaFalta: false,
-    //             mediaFaltaJustificada: false,
-    //             creadoEn: new Date().toISOString().split('T')[0],
-    //             motivo: '',
-    //             usuario: {
-    //                 connect: {
-    //                     id: 57
-    //                 }
-    //             },
-    //             alumnoXcursoXdivision: {
-    //                 create: {
-    //                     anoActual: 2022,
-    //                     idCursoXdivision: 1,
-    //                     idEstadoAlumno: 1,
-    //                     idUsuario: u.id,
-    //                 }
-    //             }
-    //         }
-    //     })
-    //     console.log(asistencia);
-    // })
-
-    // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
-    // usuarios.map(async (u) => {
-    //      asistencia = await prisma.asistencia.create({
-    //         data: {
-    //             presente: false,
-    //             ausente: false,
-    //             ausenteJustificado: false,
-    //             llegadaTarde: false,
-    //             llegadaTardeJustificada: false,
-    //             mediaFalta: false,
-    //             mediaFaltaJustificada: false,
-    //             creadoEn: new Date().toISOString().split('T')[0],
-    //             motivo: '',
-    //             usuario: {
-    //                 connect: {
-    //                     id: 57
-    //                 }
-    //             },
-    //             alumnoXcursoXdivision: {
-    //                 create: {
-    //                     anoActual: 2022,
-    //                     idCursoXdivision: 1,
-    //                     idEstadoAlumno: 1,
-    //                     idUsuario: u.id,
-    //                 }
-    //             }
-    //         }
-    //     })
-    //     console.log(asistencia);
-    // })
-
 
     //  menus = await prisma.menu.findMany()
     //  roles = await prisma.rol.findMany()
@@ -1644,24 +1583,10 @@ async function main() {
 
 
     // })
-
-
-}
-
-main()
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
-
-
- // materias && materias.map(m => {
+    // materias && materias.map(m => {
     //     trimestres && trimestres.map(t => {
     //         alumnos && alumnos.map(async (a) => {
-    //              nota = await prisma.nota.create({
+    //             nota = await prisma.nota.create({
     //                 data: {
     //                     idAlumnoXcursoXdivision: a.id,
     //                     idMateria: m.id,
@@ -1677,103 +1602,75 @@ main()
     //         })
     //     })
     // })
-    //  asistencias = await getAsistencias()
-    //  creation = await prisma.asistencia.createMany({
-    //     data: asistencias
-    // })
-    // console.log(creation);
 
 
 
-    // usuarios.map(async (u) => {
-    //      usuario = await prisma.usuario.create({
-    //         data: {
-    //             id: u.id,
-    //             nombre: u.nombre,
-    //             apellido: u.apellido,
-    //             correo: u.correo,
-    //             idrol: u.idRol,
-    //             legajo: u.legajo,
-    //             login: u.login,
-    //             localidad: u.localidad,
-    //             password: u.password,
-    //             sexo: u.sexo,
-    //             telefono: u.telefono,
-    //             direccion: u.direccion
-    //         }
-    //     })
-    //     console.log(usuario);
-    // })
 
-    //  tutores.map(async (t) => {
-    //          usuario = await prisma.usuario.create({
-    //             data: {
-    //                 id: t.id,
-    //                 nombre: t.nombre,
-    //                 apellido: t.apellido,
-    //                 correo: t.correo,
-    //                 idrol: t.idRol,
-    //                 legajo: t.legajo,
-    //                 login: t.login,
-    //                 localidad: t.localidad,
-    //                 password: t.password,
-    //                 sexo: t.sexo,
-    //                 telefono: t.telefono,
-    //                 direccion: t.direccion
-    //             }
-    //         })
-    //         console.log(usuario);
-    //     })
-    //  tutores = await prisma.usuario.findMany({
-    //     select: {
-    //         apellido: true,
-    //         id: true
-    //     },
-    //     where: {
-    //         idrol: 6
-    //     }
-    // })
-    // console.log(tutores)
 
 
     // roles.map(async (r) => {
 
-    //      roles = await prisma.rol.create({
+    //     const rol = await prisma.rol.create({
     //         data: {
     //             id: r.id,
     //             tipo: r.tipo
     //         }
     //     })
-    //     console.log(roles);
+    //     console.log(rol);
 
     // })
 
     // cursos.map(async (c) => {
 
-    //      roles = await prisma.curso.create({
+    //   const curso = await prisma.curso.create({
     //         data: {
     //             id: c.id,
     //             nombre: c.nombre
     //         }
     //     })
-    //     console.log(roles);
+    //     console.log(curso);
 
     // })
+
     // division.map(async (d) => {
 
-    //      roles = await prisma.division.create({
+    //      const division = await prisma.division.create({
     //         data: {
     //             id: d.id,
     //             division: d.division
     //         }
     //     })
-    //     console.log(roles);
+    //     console.log(division);
+
+    // })
+
+    // cursosxdivision.map(async (d) => {
+
+    //     const cursosxdivision = await prisma.cursoxdivision.create({
+    //         data: {
+    //             idcurso: d.idCurso,
+    //             iddivision: d.idDivision
+    //         }
+    //     })
+    //     console.log(cursosxdivision);
+
+    // })
+
+    // trimestres.map(async (d) => {
+
+    //     const trimestre = await prisma.trimestre.create({
+    //         data: {
+    //             id: d.id,
+    //             trimestre: d.trimestre
+    //         }
+    //     })
+    //     console.log(trimestre);
 
     // })
 
     // materias.map(async (m) => {
 
-    //      materi = await prisma.materia.create({
+    //     const materi = await prisma.materia.create({
     //         data: {
     //             id: m.id,
     //             nombre: m.nombre,
@@ -1807,28 +1704,28 @@ main()
     // })
 
     // menus.map(async (m) => {
-    //      enfer = await prisma.menu.create({
+    //     const menu = await prisma.menu.create({
     //         data: {
     //             menusistema: m.menuSistema,
     //             url: m.url
     //         }
     //     })
-    //     console.log(enfer);
+    //     console.log(menu);
     // })
 
 
     // menuXRoles.map(async (m) => {
-    //      enfer = await prisma.menuxrol.create({
+    //     const menuXRoles = await prisma.menuxrol.create({
     //         data: {
-    //            idmenu: m.idMenu,
-    //            idrol: m.idRol
+    //             idmenu: m.idMenu,
+    //             idrol: m.idRol
     //         }
     //     })
-    //     console.log(enfer);
+    //     console.log(menuXRoles);
     // })
 
     // enfermedades.map(async (m) => {
-    //      enfer = await prisma.enfermedad.create({
+    //     const enfer = await prisma.enfermedad.create({
     //         data: {
     //             descripcion: m.nombre
     //         }
@@ -1837,13 +1734,58 @@ main()
     // })
 
     // discapacidad.map(async (m) => {
-    //      disc = await prisma.discapacidad.create({
+    //     const disc = await prisma.discapacidad.create({
     //         data: {
     //             nombre: m.nombre
     //         }
     //     })
     //     console.log(disc);
     // })
+
+
+    // usuarios.map(async (u) => {
+    //     // if (u.id === i) {
+    //         const usuario = await prisma.usuario.create({
+    //             data: {
+    //                 id: Number(u.id),
+    //                 nombre: u.nombre,
+    //                 apellido: u.apellido,
+    //                 correo: u.correo,
+    //                 idrol: Number(u.idRol),
+    //                 legajo: u.legajo,
+    //                 login: u.login,
+    //                 localidad: u.localidad,
+    //                 password: u.password,
+    //                 sexo: u.sexo,
+    //                 telefono: u.telefono,
+    //                 direccion: u.direccion
+    //             }
+    //         })
+    //         console.log(usuario);
+    //     // }
+
+    // })
+
+    tutores.map(async (t) => {
+        const usuario = await prisma.usuario.create({
+            data: {
+                id: t.id,
+                nombre: t.nombre,
+                apellido: t.apellido,
+                correo: t.correo,
+                idrol: t.idRol,
+                legajo: t.legajo,
+                login: t.login,
+                localidad: t.localidad,
+                password: t.password,
+                sexo: t.sexo,
+                telefono: t.telefono,
+                direccion: t.direccion
+            }
+        })
+        console.log(usuario);
+    })
+
 
     // noticias.map(async (n) => {
     //      noticia = await prisma.noticiasynovedades.create({
@@ -1887,3 +1829,95 @@ main()
     //     })
     //     console.log(portada);
     // })
+
+}
+
+main()
+    .catch((e) => {
+        console.error(e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
+
+
+
+
+    // asistencias = await getAsistencias()
+    // creation = await prisma.asistencia.createMany({
+    //     data: asistencias
+    // })
+    // console.log(creation);
+
+
+
+
+
+
+
+
+
+
+      // // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
+    // usuarios.map(async (u) => {
+    //      asistencia = await prisma.asistencia.create({
+    //         data: {
+    //             presente: false,
+    //             ausente: false,
+    //             ausenteJustificado: false,
+    //             llegadaTarde: false,
+    //             llegadaTardeJustificada: false,
+    //             mediaFalta: false,
+    //             mediaFaltaJustificada: false,
+    //             creadoEn: new Date().toISOString().split('T')[0],
+    //             motivo: '',
+    //             usuario: {
+    //                 connect: {
+    //                     id: 57
+    //                 }
+    //             },
+    //             alumnoXcursoXdivision: {
+    //                 create: {
+    //                     anoActual: 2022,
+    //                     idCursoXdivision: 1,
+    //                     idEstadoAlumno: 1,
+    //                     idUsuario: u.id,
+    //                 }
+    //             }
+    //         }
+    //     })
+    //     console.log(asistencia);
+    // })
+
+    // LAS ASISTENCIAS NO DEBERIAN SER POR MATERIA? (ASISTENCIA_X_MATERIA)
+    // usuarios.map(async (u) => {
+    //      asistencia = await prisma.asistencia.create({
+    //         data: {
+    //             presente: false,
+    //             ausente: false,
+    //             ausenteJustificado: false,
+    //             llegadaTarde: false,
+    //             llegadaTardeJustificada: false,
+    //             mediaFalta: false,
+    //             mediaFaltaJustificada: false,
+    //             creadoEn: new Date().toISOString().split('T')[0],
+    //             motivo: '',
+    //             usuario: {
+    //                 connect: {
+    //                     id: 57
+    //                 }
+    //             },
+    //             alumnoXcursoXdivision: {
+    //                 create: {
+    //                     anoActual: 2022,
+    //                     idCursoXdivision: 1,
+    //                     idEstadoAlumno: 1,
+    //                     idUsuario: u.id,
+    //                 }
+    //             }
+    //         }
+    //     })
+    //     console.log(asistencia);
+    // })
+

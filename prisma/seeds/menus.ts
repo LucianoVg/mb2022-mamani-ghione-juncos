@@ -1,47 +1,48 @@
 export const menus = [
     {
-        menuSistema: "Sanciones",
-        url: "/gestion/sanciones"
+        menuSistema: "Asistencias",
+        url: "/gestion/asistencias"
     },
     {
-        menuSistema: "Usuarios",
-        url: "/gestion/usuarios/mantenimiento_usuario"
+        menuSistema: "Asistencias",
+        url: "/reportes/asistencias"
+    },
+    {
+        menuSistema: "Sanciones",
+        url: "/gestion/sanciones"
     },
     {
         menuSistema: "Notas",
         url: "/gestion/notas"
     },
     {
-        menuSistema: "Asistencias",
-        url: "/gestion/asistencias"
+        menuSistema: "Preanalitico",
+        url: "/reportes/preanalitico"
     },
     {
         menuSistema: "Mejor Promedio",
-        url: "/reportes/reporte_mejor_promedio"
-    },
-    {
-        menuSistema: "Sanciones",
-        url: "/reportes/reporte_sanciones"
-    },
-    {
-        menuSistema: "Preanalitico",
-        url: "/reportes/reporte_preanalitico"
-    },
-    {
-        menuSistema: "Notas",
-        url: "/reportes/reporte_notas"
-    },
-    {
-        menuSistema: "Asistencia Docente",
-        url: "/reportes/reporte_asistencia_Docente"
-    },
-    {
-        menuSistema: "Asistencias",
-        url: "/reportes/reporte_asistencias"
+        url: "/reportes/mejor_promedio"
     },
     {
         menuSistema: "Notificaciones",
         url: "/gestion/notificaciones"
+    },
+
+    {
+        menuSistema: "Notas",
+        url: "/reportes/notas"
+    },
+    {
+        menuSistema: "Asistencia Docente",
+        url: "/reportes/asistencia_Docente"
+    },
+    {
+        menuSistema: "Sanciones",
+        url: "/reportes/sanciones"
+    },
+    {
+        menuSistema: "Usuarios",
+        url: "/gestion/usuarios/mantenimiento_usuario"
     },
     {
         menuSistema: "Material de Estudio",
@@ -55,5 +56,5 @@ export const menus = [
         menuSistema: "Fecha de Examen",
         url: "/gestion/examenes"
     },
-    
+
 ]
