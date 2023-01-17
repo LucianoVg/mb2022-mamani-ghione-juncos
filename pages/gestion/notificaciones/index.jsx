@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Layout } from "../../../components/layout";
-import { Box, Button, TextareaAutosize, Container, Autocomplete, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, TextareaAutosize, Container, Checkbox, Autocomplete, IconButton, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography } from "@mui/material";
 import { Notificacion } from '../../../components/notificacion_panel'
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from '@mui/material/Divider';
@@ -110,19 +110,19 @@ const Notificaciones = () => {
             console.error(res.data);
         }
     }
+    const [inEditMode, setInEditMode] = useState({
+        status: false
+    });
 
 
     // const [value, setValue] = useState('');
     const [idAlumno, setIdAlumno] = useState(0)
-
-
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             setIdAlumno(newValue.id);
         }
     }
-
 
     return (
         <Layout>
@@ -135,49 +135,89 @@ const Notificaciones = () => {
                         <h1 className="text-center">Enviar Notificacion</h1>
                         <Box direction="column">
                             <Box direction='row'>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={idCurso}
-                                        name="idCurso"
-                                        label="Curso"
-                                        onChange={handleCurso}
-                                        sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}
-                                    >
-                                        <MenuItem value={'todos'}>Todos</MenuItem>
-                                        {
-                                            cursos && cursos.map((c, i) => (
-                                                <MenuItem key={i} value={c.id}>
-                                                    {c.curso?.nombre} {c.division?.division}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
+                                {
+                                    inEditMode.status === true ? (
+                                        <Box >
+                                            <Button
+                                                variant="contained"
+                                                color="info"
+                                                size="small"
+                                                style={{ marginRight: '20px', marginBottom: "20px" }}
+                                                onClick={() => {
+                                                    setInEditMode({ status: false })
 
-                                </FormControl>
-                                <FormControl >
-                                    <Autocomplete
-                                        disablePortal
-                                        id="combo-box-demo"
-                                        // value={value}
-                                        onChange={handleAlumno}
-                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
-                                        options={alumnos}
-                                        sx={{ width: "250px" }}
-                                        isOptionEqualToValue={(option, value) =>
-                                            option?.apellido === value?.apellido
-                                        }
-                                        noOptionsText={"No existe un alumno con ese nombre"}
-                                        renderOption={(props, alumnos) => (
-                                            <Box component="li" {...props} key={alumnos?.id}>
-                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                                }
+                                                }
+                                            >
+                                                Notificación Individual
+                                            </Button>
+                                            <Box>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={idCurso}
+                                                        name="idCurso"
+                                                        label="Curso"
+                                                        onChange={handleCurso}
+                                                        sx={{ width: '90px', marginRight: '20px' }}
+                                                    >
+                                                        <MenuItem value={'todos'}>Todos</MenuItem>
+                                                        {
+                                                            cursos && cursos.map((c, i) => (
+                                                                <MenuItem key={i} value={c.id}>
+                                                                    {c.curso?.nombre} {c.division?.division}
+                                                                </MenuItem>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </FormControl>
                                             </Box>
-                                        )}
-                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
-                                    />
-                                </FormControl>
+                                        </Box>
+
+                                    ) : (
+                                        <Box >
+                                            <Button
+                                                variant="contained"
+                                                color="info"
+                                                size="small"
+                                                style={{ marginRight: '20px', marginBottom: "20px" }}
+                                                onClick={() => {
+                                                    setInEditMode({ status: true })
+
+                                                }
+                                                }
+                                            >
+                                              Notificación Grupal
+                                            </Button>
+                                            <Box>
+                                                <FormControl >
+                                                    <Autocomplete
+                                                        disablePortal
+                                                        id="combo-box-demo"
+                                                        // value={value}
+                                                        onChange={handleAlumno}
+                                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
+                                                        options={alumnos}
+                                                        sx={{ width: "250px" }}
+                                                        isOptionEqualToValue={(option, value) =>
+                                                            option?.apellido === value?.apellido
+                                                        }
+                                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                                        renderOption={(props, alumnos) => (
+                                                            <Box component="li" {...props} key={alumnos?.id}>
+                                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                                            </Box>
+                                                        )}
+                                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                                    />
+                                                </FormControl>
+                                            </Box>
+                                        </Box>
+                                    )
+                                }
+
                             </Box>
 
 

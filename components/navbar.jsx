@@ -49,7 +49,7 @@ export const Navbar = ({ toggleDrawer }) => {
                     </Link>
                     {
                         !loading && authUser && (usuario.rol === 'Estudiante'
-                            || usuario.rol === 'Tutor') && (
+                            || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') && (
                             <>
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
