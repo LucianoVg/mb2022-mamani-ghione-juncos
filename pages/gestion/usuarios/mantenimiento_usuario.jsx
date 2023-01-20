@@ -1,5 +1,5 @@
 
-import { Button, Container, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Grid, Pagination, Paper, Table, TableBody,Stack, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -148,24 +148,44 @@ export default function MantenimientoUsuario() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Legajo</TableCell>
-                                    <TableCell align="right">Nombre</TableCell>
-                                    <TableCell align="right">Apellido</TableCell>
-                                    <TableCell align="right">Direccion</TableCell>
-                                    <TableCell align="right">Telefono</TableCell>
-                                    <TableCell align="right">Localidad</TableCell>
-                                    <TableCell align="right">Rol</TableCell>
+                                    <TableCell align="center">Rol</TableCell>
+                                    <TableCell align="center">Nombre</TableCell>
+                                    <TableCell align="center">Apellido</TableCell>
+                                    <TableCell align="center">Correo</TableCell>
+                                    <TableCell align="center">Direccion</TableCell>
+                                    <TableCell align="center">Telefono</TableCell>
+                                    <TableCell align="center">Localidad</TableCell>
+                                    <TableCell align="center">Accion</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {paginacion.dataActual().map((u, i) => (
                                     <TableRow key={i}>
+                                        <TableCell align="right">{u.rol?.tipo}</TableCell>
                                         <TableCell component="th" scope="row">{u.legajo}</TableCell>
                                         <TableCell align="right">{u.nombre}</TableCell>
                                         <TableCell align="right">{u.apellido}</TableCell>
+                                        <TableCell align="right">{u.correo}</TableCell>
                                         <TableCell align="right">{u.direccion}</TableCell>
                                         <TableCell align="right">{u.telefono}</TableCell>
                                         <TableCell align="right">{u.localidad}</TableCell>
-                                        <TableCell align="right">{u.rol?.tipo}</TableCell>
+
+                                        <TableCell align="right">
+                                            <Stack spacing={1} direction="row">
+                                                <Button variant="contained"
+                                                    sx={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                    // onClick={() => onSave(a?.id)}
+                                                    >
+                                                    Editar
+                                                </Button>
+                                                <Button variant="contained"
+                                                    color="secondary"
+                                                    // onClick={() => onCancel()}
+                                                    >
+                                                    Eliminar
+                                                </Button>
+                                            </Stack>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

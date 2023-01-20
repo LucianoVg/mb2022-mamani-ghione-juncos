@@ -284,7 +284,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 1 && (
 
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem selected={i === 1} key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
 
                                             ))
@@ -296,7 +296,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 2 && (
 
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
 
                                             ))
@@ -308,7 +308,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 3 && (
 
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }
@@ -318,7 +318,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 4 && (
 
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }
@@ -327,7 +327,7 @@ const MaterialEstudio = () => {
                                             materias && materias?.map((m, i) => (
                                                 m?.idcurso === 5 && (
 
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }
@@ -335,7 +335,7 @@ const MaterialEstudio = () => {
                                         {
                                             materias && materias?.map((m, i) => (
                                                 m?.idcurso === 6 && (
-                                                    <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }

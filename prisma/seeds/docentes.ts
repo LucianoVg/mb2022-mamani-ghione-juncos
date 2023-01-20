@@ -1,30 +1,362 @@
 export const docentes = [
     {
+        login: "cecilia",
+        password: "123456",
+        nombre: "Cecilia",
+        apellido: "Vizcaino",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "3453223",
+        sexo: "F",
+        localidad: "Cordoba",
+        telefono: "351433112",
+        direccion: "6718 Christop Street",
+        fechanacimiento: '10/12/1980'
+    },
+    {
+        login: "rosa",
+        password: "123456",
+        nombre: "Rosa ",
+        apellido: "Olivares",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "34563223",
+        sexo: "F",
+        localidad: "Cordoba",
+        telefono: "35154534",
+        direccion: "74731 Braun Village",
+        fechanacimiento: '10/12/1984'
+    },
+   
+    {
         login: "roberto",
         password: "123456",
         nombre: "Roberto",
         apellido: "Lopez",
-        correo: "roberto.lopez@gmail.com",
+        correo: "docente@gmail.com",
         idrol: 1,
         legajo: "312313123",
         sexo: "M",
-        localidad: "Buenos Aires",
-        telefono: "351612452",
-        direccion: "Caseros 343",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
         fechanacimiento: '10/12/1980'
     },
+   
     {
-        login: "mariela",
+        login: "roberto",
         password: "123456",
-        nombre: "Mariela",
-        apellido: "Perez",
-        correo: "mariela.perez@gmail.com",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
         idrol: 1,
-        legajo: "35123312",
-        sexo: "F",
+        legajo: "312313123",
+        sexo: "M",
         localidad: "Cordoba",
-        telefono: "356234432",
-        direccion: "Av. Colon 200",
-        fechanacimiento: '06/06/1960'
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
     },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+    {
+        login: "roberto",
+        password: "123456",
+        nombre: "Roberto",
+        apellido: "Lopez",
+        correo: "docente@gmail.com",
+        idrol: 1,
+        legajo: "312313123",
+        sexo: "M",
+        localidad: "Cordoba",
+        telefono: "351",
+        direccion: "",
+        fechanacimiento: '10/12/1980'
+    },
+   
+   
 ]
