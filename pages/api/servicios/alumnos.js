@@ -9,7 +9,8 @@ export default async function traerAlumnos() {
                         curso: true,
                         division: true
                     }
-                }
+                },
+                usuario: true
             }
         });
         return alumnos

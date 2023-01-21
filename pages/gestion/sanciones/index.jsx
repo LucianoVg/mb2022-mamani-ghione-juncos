@@ -61,13 +61,13 @@ const Sanciones = () => {
         setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`)
         if (res.data) {
-            console.log(res.data);
             setSanciones(res.data)
         }
         setCargandoInfo(false)
     }
     const traerAlumnos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+        console.log(res.data);
         if (res.data) {
             setAlumnos(res.data)
         }
@@ -121,16 +121,16 @@ const Sanciones = () => {
                         // value={value}
                         name="idAlumno"
                         onChange={handleAlumno}
-                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                        getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
                         options={alumnos}
                         sx={{ width: "250px" }}
                         isOptionEqualToValue={(option, value) =>
-                            option?.apellido === value?.apellido
+                            option?.usuario?.apellido === value?.usuario?.apellido
                         }
                         noOptionsText={"No existe un alumno con ese nombre"}
-                        renderOption={(props, alumnos) => (
-                            <Box component="li" {...props} key={alumnos?.id}>
-                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                        renderOption={(props, alumno) => (
+                            <Box component="li" {...props} key={alumno?.id}>
+                                {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                             </Box>
                         )}
                         renderInput={(params) => <TextField {...params} label="Alumno" />}
@@ -139,19 +139,20 @@ const Sanciones = () => {
                 <FormControl>
                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                     <Select
-                        sx={{ width: '100px', marginRight: '20px' }}
+                        sx={{ width: '200px', marginRight: '20px' }}
                         id="inputCurso"
+                        name={'idCurso'}
+                        defaultValue={0}
                         onChange={handleCurso}
                         label="Curso">
                         <MenuItem value={0}>Seleccione un curso</MenuItem>
                         {
-                            cursos && cursos.map((c, i) => (
+                            cursos && cursos?.map((c, i) => (
                                 <MenuItem key={i} value={c.id}>
                                     {c.curso?.nombre} {c.division.division}
                                 </MenuItem>
                             ))
                         }
-
                     </Select>
                 </FormControl>
             </Box>
