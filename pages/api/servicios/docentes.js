@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export async function traerDocente(legajo) {
+export async function traerDocente(idusuario) {
     try {
         const docente = await Prisma.newPrisma.docentexmateria.findFirst({
             include: {
@@ -8,7 +8,7 @@ export async function traerDocente(legajo) {
             },
             where: {
                 usuario: {
-                    legajo: legajo
+                    id: Number(idusuario)
                 }
             }
         })

@@ -1,35 +1,24 @@
 import { Prisma } from "./prisma";
 
-export default async function traerAlumnos(idCursoDivision = 1) {
+export default async function traerAlumnos() {
     try {
         const alumnos = await Prisma.newPrisma.alumnoxcursoxdivision.findMany({
             include: {
-                usuario: true,
                 cursoxdivision: {
                     include: {
-                        curso: true
+                        curso: true,
+                        division: true
                     }
                 }
-            },
-            where: {
-                cursoxdivision: {
-                    id: Number(idCursoDivision)
-                }
-            },
-            orderBy: {
-                usuario: {
-                    nombre: 'asc'
-                }
             }
-
-        })
+        });
         return alumnos
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function traerAlumno(id) {
+export async function traerAlumno(idusuario) {
     try {
         const alumno = await Prisma.newPrisma.alumnoxcursoxdivision.findFirst({
             include: {
@@ -43,7 +32,7 @@ export async function traerAlumno(id) {
             },
             where: {
                 usuario: {
-                    id: Number(id)
+                    id: Number(idusuario)
                 }
             }
         })

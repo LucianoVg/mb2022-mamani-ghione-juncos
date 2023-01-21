@@ -2,8 +2,8 @@ import { traerDocente } from "../../servicios/docentes";
 
 export default async function handler(req, res) {
     try {
-        const { legajo } = req.query
-        const docente = await traerDocente(legajo)
+        const { idusuario } = req.query
+        const docente = await traerDocente(idusuario)
         return res.status(200).json(docente)
     } catch (error) {
         console.log(error);

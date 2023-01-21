@@ -161,7 +161,9 @@ export async function contarNotas(idMateria) {
 
 export async function TraerNotas(options) {
     try {
-        return await Prisma.newPrisma.nota.findMany(options)
+        const notas = await Prisma.newPrisma.nota.findMany(options)
+        // console.log(notas);
+        return notas
     } catch (error) {
         console.error(error);
     }

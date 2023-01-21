@@ -1,7 +1,7 @@
 import NextCors from "nextjs-cors/dist";
 import { TraerNotas } from "../../servicios/notas";
 
-export default async function hORler(
+export default async function handler(
     req,
     res
 ) {
@@ -15,7 +15,7 @@ export default async function hORler(
 
         let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
-        let OR = [
+        let AND = [
             { idtrimestre: Number(idTrimestre) },
             { anoactual: 2022 }
         ]
@@ -41,10 +41,10 @@ export default async function hORler(
 
         }
         if (idMateria) {
-            OR.push({ idmateria: Number(idMateria) })
+            AND.push({ idmateria: Number(idMateria) })
         }
         if (idDivision) {
-            OR.push({
+            AND.push({
                 alumnoxcursoxdivision: {
                     cursoxdivision: {
                         division: {
@@ -55,7 +55,7 @@ export default async function hORler(
             })
         }
         if (nombreAlumno) {
-            OR.push({
+            AND.push({
                 alumnoxcursoxdivision: {
                     usuario: {
                         nombre: {
@@ -66,7 +66,7 @@ export default async function hORler(
             })
         }
         if (apellidoAlumno) {
-            OR.push({
+            AND.push({
                 alumnoxcursoxdivision: {
                     usuario: {
                         apellido: {
@@ -76,11 +76,11 @@ export default async function hORler(
                 },
             })
         }
-        if (OR.length) {
+        if (AND.length) {
             options = {
                 ...options,
                 where: {
-                    OR: OR
+                    AND: AND
                 }
             }
         }
@@ -89,4 +89,9 @@ export default async function hORler(
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
+}
+export const config = {
+    api: {
+        responseLimit: '8mb',
+    },
 }

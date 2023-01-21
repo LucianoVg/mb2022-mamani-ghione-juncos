@@ -355,7 +355,7 @@ export default function Notas() {
 
                                         m?.idcurso === 1 && (
 
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
@@ -367,7 +367,7 @@ export default function Notas() {
 
                                         m?.idcurso === 2 && (
 
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
 
                                     ))
@@ -379,7 +379,7 @@ export default function Notas() {
 
                                         m?.idcurso === 3 && (
 
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
                                     ))
                                 }
@@ -389,7 +389,7 @@ export default function Notas() {
 
                                         m?.idcurso === 4 && (
 
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
                                     ))
                                 }
@@ -398,7 +398,7 @@ export default function Notas() {
                                     materias && materias?.map((m, i) => (
                                         m?.idcurso === 5 && (
 
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
                                     ))
                                 }
@@ -406,7 +406,7 @@ export default function Notas() {
                                 {
                                     materias && materias?.map((m, i) => (
                                         m?.idcurso === 6 && (
-                                            <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
+                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                         )
                                     ))
                                 }
@@ -420,10 +420,11 @@ export default function Notas() {
                                 value={idDivision}
                                 onChange={handleDivision}
                                 label="Division"
-                                sx={{ width: '90px', marginRight: '20px', marginBottom: '20px' }}>
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
+                                <MenuItem value={0}>Division</MenuItem>
                                 {
                                     divisiones && divisiones?.map((d, i) => (
-                                        <MenuItem selected={i === 0} key={i} value={d.id}>{d.division}</MenuItem>
+                                        <MenuItem key={i} value={d.id}>{d.division}</MenuItem>
                                     ))
                                 }
                             </Select>
@@ -480,11 +481,9 @@ export default function Notas() {
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 800 }}>
                                 <TableHead>
-
-
                                     {
-                                        (usuario?.rol?.tipo === 'Docente'
-                                            || usuario?.rol?.tipo === 'Vicedirector') && (
+                                        (usuario?.rol === 'Docente'
+                                            || usuario?.rol === 'Vicedirector') && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -502,8 +501,8 @@ export default function Notas() {
 
                                     }
                                     {
-                                        (usuario?.rol?.tipo === 'Administrador'
-                                            || usuario?.rol?.tipo === 'Docente') && (
+                                        (usuario?.rol === 'Administrador'
+                                            || usuario?.rol === 'Docente') && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -523,8 +522,8 @@ export default function Notas() {
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        (usuario?.rol?.tipo === 'Director'
-                                            || usuario?.rol?.tipo === 'Vicedirector') && (
+                                        (usuario?.rol === 'Director'
+                                            || usuario?.rol === 'Vicedirector') && (
 
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
@@ -638,7 +637,7 @@ export default function Notas() {
                                         )
                                     }
                                     {
-                                        usuario?.rol?.tipo === 'Administrador' && (
+                                        usuario?.rol === 'Administrador' && (
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
                                                     <TableCell align="center">

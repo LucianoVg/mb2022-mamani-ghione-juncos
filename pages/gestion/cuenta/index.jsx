@@ -4,7 +4,7 @@ import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import { Typography, Divider, Stack, MenuItem, TextField, FormControl, InputLabel, Select, OutlinedInput, Button, Alert, Box } from "@mui/material";
 import { useRouter } from "next/router";
-import { Container } from "@mui/system";
+import Container from "@mui/material/Container";
 import Loading from '../../../components/loading';
 
 export default function Detalles() {
@@ -14,8 +14,8 @@ export default function Detalles() {
     const [enfermedades, setEnfermedades] = useState([])
     const [selectedEnf, setSelectedEnf] = useState([])
     const [alergias, setAlergias] = useState('')
-    const [alumno, setAlumno] = useState(null)
-    const [docente, setDocente] = useState(null)
+    const [alumno, setAlumno] = useState()
+    const [docente, setDocente] = useState()
     const [respuesta, setRespuesta] = useState({ status: 0, mensaje: '' })
     const [guardando, setGuardando] = useState(false)
     const [cargando, setCargando] = useState(false)
@@ -43,21 +43,27 @@ export default function Detalles() {
         );
     }
     const traerDocente = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.legajo}`)
-        if (res.status === 200) {
-            setDocente(res.data)
+        if (usuario) {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.id}`)
+            if (res.data) {
+                setDocente(res.data)
+            }
         }
     }
     const traerAlumno = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.legajo}`)
-        if (res.status === 200) {
+        if (usuario) {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`)
             console.log(res.data);
-            setAlumno(res.data)
+            if (res.data) {
+                console.log(res.data);
+                setAlumno(res.data)
+            }
         }
     }
     const traerUsuario = async () => {
         setCargando(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+        console.log(res.data);
         if (res.data) {
             setUsuario(res.data)
         }

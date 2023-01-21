@@ -3,7 +3,6 @@ import { useAuth } from "./context/authUserProvider"
 import { Toolbar, IconButton, Typography, Badge, Box, AppBar, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from '@mui/icons-material/Menu'
-import { styled } from '@mui/material/styles';
 import Notificacion from './notificacion_panel'
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -54,13 +53,12 @@ export const Navbar = ({ toggleDrawer }) => {
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
                                 </div>
-
+                                <IconButton onClick={() => router.push('/gestion/cuenta')}>
+                                    <AccountCircleIcon />
+                                </IconButton>
                             </>
                         )
                     }
-                    <IconButton onClick={() => router.push('/gestion/cuenta')}>
-                        <AccountCircleIcon />
-                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>
