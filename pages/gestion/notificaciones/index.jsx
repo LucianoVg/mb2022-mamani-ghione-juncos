@@ -149,7 +149,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                                Notificación Individual
+                                               Ir a Notificación Individual
                                             </Button>
                                             <Box>
                                                 <FormControl fullWidth>
@@ -189,7 +189,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                              Notificación Grupal
+                                             Volver a Notificación Grupal
                                             </Button>
                                             <Box>
                                                 <FormControl >

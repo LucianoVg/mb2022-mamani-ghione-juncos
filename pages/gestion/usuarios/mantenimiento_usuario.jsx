@@ -1,5 +1,5 @@
 
-import { Button, Container, Grid, Pagination, Paper, Table, TableBody,Stack, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Grid, Pagination, Paper, Table, TableBody, Stack, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -147,8 +147,8 @@ export default function MantenimientoUsuario() {
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Legajo</TableCell>
                                     <TableCell align="center">Rol</TableCell>
+                                    <TableCell align="center">Legajo</TableCell>
                                     <TableCell align="center">Nombre</TableCell>
                                     <TableCell align="center">Apellido</TableCell>
                                     <TableCell align="center">Correo</TableCell>
@@ -162,7 +162,7 @@ export default function MantenimientoUsuario() {
                                 {paginacion.dataActual().map((u, i) => (
                                     <TableRow key={i}>
                                         <TableCell align="right">{u.rol?.tipo}</TableCell>
-                                        <TableCell component="th" scope="row">{u.legajo}</TableCell>
+                                        <TableCell align="right">{u.legajo}</TableCell>
                                         <TableCell align="right">{u.nombre}</TableCell>
                                         <TableCell align="right">{u.apellido}</TableCell>
                                         <TableCell align="right">{u.correo}</TableCell>
@@ -174,14 +174,14 @@ export default function MantenimientoUsuario() {
                                             <Stack spacing={1} direction="row">
                                                 <Button variant="contained"
                                                     sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                    // onClick={() => onSave(a?.id)}
-                                                    >
+                                                // onClick={() => onSave(a?.id)}
+                                                >
                                                     Editar
                                                 </Button>
                                                 <Button variant="contained"
                                                     color="secondary"
-                                                    // onClick={() => onCancel()}
-                                                    >
+                                                // onClick={() => onCancel()}
+                                                >
                                                     Eliminar
                                                 </Button>
                                             </Stack>
