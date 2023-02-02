@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Modal, TextareaAutosize, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, IconButton } from "@mui/material";
+import { Box, Modal, TextareaAutosize, Stack, FormControl, FormControlLabel, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, IconButton } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -446,13 +446,11 @@ export default function Asistencias() {
                                         <TableCell align="center" scope="col">Apellido</TableCell>
                                         <TableCell align="center" scope="col">Nombre</TableCell>
                                         {/* <TableCell scope="col">Preceptor</TableCell> */}
-                                        <TableCell align="center" scope="col">P</TableCell>
-                                        <TableCell align="center" scope="col">A</TableCell>
-                                        <TableCell align="center" scope="col">AJ</TableCell>
-                                        <TableCell align="center" scope="col">LT</TableCell>
-                                        <TableCell align="center" scope="col">LTJ</TableCell>
-                                        <TableCell align="center" scope="col">MF</TableCell>
-                                        <TableCell align="center" scope="col">MFJ</TableCell>
+                                        <TableCell align="center" scope="col">Presente</TableCell>
+                                        <TableCell align="center" scope="col">Ausente</TableCell>
+                                        <TableCell align="center" scope="col">Ausente Justificado</TableCell>
+                                        <TableCell align="center" scope="col">Llegada Tarde</TableCell>
+                                        <TableCell align="center" scope="col">Media Falta</TableCell>
                                         <TableCell align="center" scope="col">
                                             {
                                                 guardando
@@ -544,7 +542,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                    <TableCell className="col-md-1">
+                                                    {/* <TableCell className="col-md-1">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                 <Switch
@@ -561,7 +559,7 @@ export default function Asistencias() {
                                                                     />
                                                                 )
                                                         }
-                                                    </TableCell>
+                                                    </TableCell> */}
                                                     <TableCell className="col-md-1 ">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -580,7 +578,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                    <TableCell className="col-md-1">
+                                                    {/* <TableCell className="col-md-1">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
 
@@ -598,7 +596,7 @@ export default function Asistencias() {
                                                                     />
                                                                 )
                                                         }
-                                                    </TableCell>
+                                                    </TableCell> */}
 
                                                     <TableCell className="col-md-2">
                                                         {
@@ -715,7 +713,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                                                        <TableCell className="col-md-1">
+                                                        {/* <TableCell className="col-md-1">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                     <Switch
@@ -732,7 +730,7 @@ export default function Asistencias() {
                                                                         />
                                                                     )
                                                             }
-                                                        </TableCell>
+                                                        </TableCell> */}
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -751,7 +749,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                                                        <TableCell className="col-md-1">
+                                                        {/* <TableCell className="col-md-1">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
 
@@ -769,7 +767,7 @@ export default function Asistencias() {
                                                                         />
                                                                     )
                                                             }
-                                                        </TableCell>
+                                                        </TableCell> */}
                                                         <TableCell className="col-md-2">
                                                             {
 
@@ -777,12 +775,13 @@ export default function Asistencias() {
 
                                                                     <React.Fragment>
                                                                         <Stack spacing={1} direction="row">
+                                                                  
                                                                             <Button variant="contained" color="success"
                                                                                 onClick={() => handleOpen(a)}
                                                                             >
                                                                                 Guardar
                                                                             </Button>
-
+                                                                      
                                                                             <Button variant="contained" color="error"
                                                                                 style={{ marginLeft: 8 }}
                                                                                 onClick={() => onCancel()}
@@ -891,7 +890,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                                            <TableCell className="col-md-1">
+                                                            {/* <TableCell className="col-md-1">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
                                                                         <Switch
@@ -908,7 +907,7 @@ export default function Asistencias() {
                                                                             />
                                                                         )
                                                                 }
-                                                            </TableCell>
+                                                            </TableCell> */}
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -927,7 +926,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                                            <TableCell className="col-md-1">
+                                                            {/* <TableCell className="col-md-1">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
 
@@ -945,7 +944,7 @@ export default function Asistencias() {
                                                                             />
                                                                         )
                                                                 }
-                                                            </TableCell>
+                                                            </TableCell> */}
                                                             <TableCell className="col-md-2">
                                                                 {
 
@@ -953,11 +952,13 @@ export default function Asistencias() {
 
                                                                         <React.Fragment>
                                                                             <Stack spacing={1} direction="row">
+                                                                          
                                                                                 <Button variant="contained" color="success"
                                                                                     onClick={() => handleOpen(a)}
                                                                                 >
                                                                                     Guardar
                                                                                 </Button>
+                                                                             
 
                                                                                 <Button variant="contained" color="error"
                                                                                     style={{ marginLeft: 8 }}

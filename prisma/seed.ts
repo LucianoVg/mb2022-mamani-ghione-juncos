@@ -288,10 +288,8 @@ async function main() {
     //                 ausente: false,
     //                 ausentejustificado: false,
     //                 llegadatarde: false,
-    //                 llegadatardejustificada: false,
     //                 mediafalta: false,
-    //                 mediafaltajustificada: false,
-    //                 motivo: "",
+    //                 justificado: false,
     //                 creadoen: fecha,
     //                 idusuario: 1,
     //                 actualizadoen: ""
@@ -497,7 +495,7 @@ async function main() {
 
 
     alumnos && alumnos.map(async (a) => {
-   
+
         switch (a.cursoxdivision?.idcurso) {
             case 1:
                 materias1 && materias1.map(m => {
