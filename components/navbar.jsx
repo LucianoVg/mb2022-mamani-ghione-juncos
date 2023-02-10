@@ -47,7 +47,7 @@ export const Navbar = ({ toggleDrawer }) => {
                         <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {
-                        !loading && authUser && (usuario.rol === 'Estudiante'
+                         authUser && (usuario.rol === 'Estudiante'
                             || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') && (
                             <>
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
