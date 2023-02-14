@@ -139,7 +139,8 @@ const AgregarNoticias = () => {
                                 onChange={handleForm}
                                 value={noticia.descripcion}
                             />
-                            <Button disabled={imagen === null} variant='contained' color='primary' type='submit'>Guardar Noticia</Button>
+                            <Button disabled={imagen === null} variant='contained' color='primary' type='submit' sx={{marginRight: "20px"}}>Guardar Noticia</Button>
+                            <Button  variant='contained' color='secondary' href={"/"}>Cancelar</Button>
                         </Grid>
 
                     </Grid>

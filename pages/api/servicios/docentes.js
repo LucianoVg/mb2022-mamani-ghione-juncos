@@ -1,16 +1,17 @@
 import { Prisma } from "./prisma";
 
-export async function traerDocente(idusuario) {
+export async function traerDocente() {
     try {
-        const docente = await Prisma.newPrisma.docentexmateria.findFirst({
+        const docente = await Prisma.newPrisma.docentexmateria.findMany({
             include: {
-                materia: true
+                materia: true,
+                usuario: true
             },
-            where: {
-                usuario: {
-                    id: Number(idusuario)
-                }
-            }
+            // where: {
+            //     usuario: {
+            //         id: Number(idusuario)
+            //     }
+            // }
         })
         return docente
     } catch (error) {

@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import styles from "../../../styles/notas.module.css";
-import { Box, Button, Container, Grid, InputLabel, MenuItem, Paper, ListSubheader, FormHelperText, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl, Pagination } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, MenuItem, Autocomplete, Paper, ListSubheader, FormHelperText, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, TextField, Typography, FormControl, Pagination } from "@mui/material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import { SearchOutlined } from "@mui/icons-material";
@@ -47,6 +47,7 @@ export default function Notas() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerAlumnos()
         traerUsuario()
         if (usuario.rol) {
             if (!tienePermisos()) {
@@ -334,6 +335,30 @@ export default function Notas() {
         console.log(nota)
         console.log(columnName)
     }
+
+    const traerAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+        console.log(res.data);
+        if (res.data) {
+            setAlumnos(res.data)
+        }
+    }
+    const [alumnos, setAlumnos] = useState([])
+
+    const [idAlumno, setIdAlumno] = useState(0)
+
+    const handleAlumno = (e, newValue) => {
+        if (newValue) {
+            setIdAlumno(newValue.id);
+        }
+    }
+
+
+
+
+
+
+
     return (
         <Layout>
             <Container maxWidth={'xl'} >
@@ -429,10 +454,44 @@ export default function Notas() {
                                 }
                             </Select>
                         </FormControl>
+                    
                     </Box>
 
 
-                    <Box direction='row'>
+                    <Box sx={{ marginTop: "25px" }}>
+                        <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                            <Autocomplete
+                                sx={{ width: "250px" }}
+                                disablePortal
+                                id="combo-box-demo"
+                                // value={value}
+                                name="idAlumno"
+                                onChange={handleAlumno}
+                                getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
+                                options={alumnos}
+
+                                isOptionEqualToValue={(option, value) =>
+                                    option?.usuario?.apellido === value?.usuario?.apellido
+                                }
+                                noOptionsText={"No existe un estudiante con ese nombre"}
+                                renderOption={(props, alumno) => (
+                                    <Box component="li" {...props} key={alumno?.id}>
+                                        {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                                    </Box>
+                                )}
+                                renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                            />
+                        </FormControl>
+                        <Button endIcon={<SearchOutlined />}
+                            sx={{ mt: 3, ml: 2 }}
+                            color="info"
+                            variant="outlined"
+                            onClick={() => traerNotas()}>
+                            Buscar
+                        </Button>
+                    </Box>
+
+                    {/* <Box direction='row'>
                         <TextField margin="normal"
                             name="nombreAlumno"
                             value={nombreAlumno}
@@ -453,7 +512,7 @@ export default function Notas() {
                             onClick={() => traerNotas()}>
                             Buscar
                         </Button>
-                    </Box>
+                    </Box> */}
                 </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={index} onChange={handleTrimestre}

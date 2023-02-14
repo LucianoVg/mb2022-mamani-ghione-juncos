@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material"
+import { Box, Button, Container, Grid, Stack, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -120,7 +120,7 @@ export default function DetallesNoticia() {
         <Layout>
             <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2 }}>Detalles de la noticia</Typography>
 
-            <Container maxWidth={'md'}>
+            <Container >
                 <Box textAlign={'center'}>
                     <Image src={imgUrl || noticia.url || '/assets/img/placeholder.png'} width={200} height={200} className="m-auto" />
                 </Box>
@@ -158,24 +158,16 @@ export default function DetallesNoticia() {
                                 placeholder={noticia.descripcion}
                                 onChange={handleForm} />
                         </Grid>
-
+                        <Grid item xs={6}>
+                            <Stack direction="row" spacing={1}>
+                                <Button type="submit" size="small" variant="contained" color="primary" >Actualizar</Button>
+                                <Button variant='contained' size="small" color='secondary' href={"/"} >Cancelar</Button>
+                                <Button variant="contained" size="small" color="error" onClick={borrarNoticia}>Eliminar</Button>
+                            </Stack>
+                        </Grid>
 
                     </Grid>
 
-                    <Grid container
-                        direction="row"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        sx={{ marginLeft: "210px" }}
-                    >
-                        <Grid item xs={2}>
-                            <Button type="submit" variant="contained" color="primary">Actualizar</Button>
-
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button variant="contained" color="warning" onClick={borrarNoticia}>Eliminar</Button>
-                        </Grid>
-                    </Grid>
                 </Box>
                 {
                     guardando && (

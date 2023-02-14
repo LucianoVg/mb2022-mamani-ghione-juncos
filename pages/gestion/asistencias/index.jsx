@@ -423,9 +423,9 @@ export default function Asistencias() {
                                     isOptionEqualToValue={(option, value) =>
                                         option?.usuario?.apellido === value?.usuario?.apellido
                                     }
-                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    noOptionsText={"No existe un estudiante con ese nombre"}
                                     renderOption={(props, alumno) => (
-                                        <Box disablePortal component="li" {...props} key={alumno?.id}>
+                                        <Box  component="li" {...props} key={alumno?.id}>
                                             {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                                         </Box>
                                     )}

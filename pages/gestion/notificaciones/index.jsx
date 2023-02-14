@@ -204,7 +204,7 @@ const Notificaciones = () => {
                                                         isOptionEqualToValue={(option, value) =>
                                                             option?.apellido === value?.apellido
                                                         }
-                                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                                        noOptionsText={"No existe un estudiante con ese nombre"}
                                                         renderOption={(props, alumnos) => (
                                                             <Box component="li" {...props} key={alumnos?.id}>
                                                                 {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}

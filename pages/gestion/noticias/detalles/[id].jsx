@@ -3,8 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "../../../../components/layout";
-import { Container, Box, Grid, Typography } from "@mui/material";
+import { Container, Box, Grid, Typography, IconButton, Button } from "@mui/material";
 import Loading from "../../../../components/loading";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 export default function DetallesNoticia() {
     const [noticia, setNoticia] = useState({
@@ -35,8 +37,17 @@ export default function DetallesNoticia() {
     return (
         <Layout>
             <Container sx={{ marginTop: "100px", textAlign: 'center' }} >
+                <Button variant="outlined" sx={{border: "none", float: 'left',}}
+                 className="buttonRegresar" 
+                 href="/"
+                 startIcon={<ArrowBackIosIcon />}
+                 >
+                    Regresar
+                </Button>
                 {
                     !cargando && noticia.id !== 0 && (
+
+
                         <Grid container
                             direction="column"
                             justifyContent="center"

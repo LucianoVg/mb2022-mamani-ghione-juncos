@@ -8,6 +8,8 @@ export default async function traerUsuarios(options) {
     }
 }
 
+
+
 export async function actualizarUsuario(id, enfermedades, alergias, password) {
     try {
         if (enfermedades) {

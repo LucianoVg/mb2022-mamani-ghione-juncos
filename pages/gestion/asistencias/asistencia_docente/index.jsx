@@ -2,7 +2,7 @@ import { Layout } from "../../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, Modal, TextareaAutosize, IconButton } from "@mui/material";
+import { Box, Stack, FormControl, Button, Container, Grid, InputLabel,Autocomplete, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, Modal, TextareaAutosize, IconButton } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -45,6 +45,7 @@ export default function Asistencias() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerDocentes()
         traerUsuario()
         if (usuario.rol) {
             if (!tienePermisos()) {
@@ -74,6 +75,30 @@ export default function Asistencias() {
         }
         setCargandoInfo(false)
     }
+
+
+
+
+    const traerDocentes = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes`)
+        console.log(res.data);
+        if (res.data) {
+            setDocentes(res.data)
+        }
+    }
+    const [docentes, setDocentes] = useState([])
+
+    const [idDocente, setIdDocente] = useState(0)
+
+    const handleDocente = (e, newValue) => {
+        if (newValue) {
+            setIdDocente(newValue.id);
+        }
+    }
+
+
+ 
+
 
     const buscarAsistencias = async () => {
         if (nombreDocente) {
@@ -329,7 +354,35 @@ export default function Asistencias() {
                         <Typography variant="h6" sx={{ mt: 2 }}>
                             Buscar Docente:
                         </Typography>
-                        <Box direction='row'>
+
+
+                        <Box sx={{ marginTop: "25px" }}>
+                            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                                <Autocomplete
+                                sx={{width: "250px"}}
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleDocente}
+                                    getOptionLabel={(docente) => `${docente?.usuario?.apellido} ${docente?.usuario?.nombre}`}
+                                    options={docentes}
+                       
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.usuario?.apellido === value?.usuario?.apellido
+                                    }
+                                    noOptionsText={"No existe un docente con ese nombre"}
+                                    renderOption={(props, docente) => (
+                                        <Box  component="li" {...props} key={docente?.id}>
+                                            {docente?.usuario?.apellido} {docente?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Docente" />}
+                                />
+                            </FormControl>
+                        </Box>
+
+                        {/* <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
                                 name="legajo"
@@ -349,7 +402,7 @@ export default function Asistencias() {
                                 value={apellidoDocente}
                                 onChange={handleApellidoDocente}
                                 label="Apellido" />
-                        </Box>
+                        </Box> */}
                         <Box sx={{ marginTop: '20px' }}>
                             <Button variant="outlined" onClick={buscarAsistencias} startIcon={<Search />} color="info">
                                 Buscar

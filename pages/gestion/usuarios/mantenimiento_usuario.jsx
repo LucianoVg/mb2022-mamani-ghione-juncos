@@ -26,10 +26,9 @@ export default function MantenimientoUsuario() {
     const [pagina, setPagina] = useState(1)
     const [cargandoInfo, setCargandoInfo] = useState(false)
     const [usuario, setUsuario] = useState({ rol: '' })
-    const [alumnos, setAlumnos] = useState([])
     const [rol, setRol] = useState(0)
     const [roles, setRoles] = useState([])
-    const [idAlumno, setIdAlumno] = useState(1)
+
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -102,6 +101,12 @@ export default function MantenimientoUsuario() {
 
     }
 
+
+
+    const [alumnos, setAlumnos] = useState([])
+
+    const [idAlumno, setIdAlumno] = useState(0)
+
     const listarAlumnos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
         if (res.status === 200) {
@@ -167,7 +172,7 @@ export default function MantenimientoUsuario() {
                         isOptionEqualToValue={(option, value) =>
                             option?.usuario?.apellido === value?.usuario?.apellido
                         }
-                        noOptionsText={"No existe un alumno con ese nombre"}
+                        noOptionsText={"No existe un usuario con ese nombre"}
                         renderOption={(props, alumno) => (
                             <Box component="li" {...props} key={alumno?.id}>
                                 {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
