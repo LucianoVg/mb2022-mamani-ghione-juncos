@@ -1,89 +1,24 @@
 body {
-  /* padding: 0;
-  margin: 0; */
+
   font-family: Roboto, sans-serif;
   /* font-size: .875rem; */
   /* font-weight: 500; */
   width: 100%;
-}
-
-
-/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
-@media screen and (min-width: 601px) {
-  #fontSize {
-    font-size: 60px;
-  }
-}
-
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 600px) {
-  #fontSize  {
-    font-size: 30px;
-  }
-}
-
-@media screen and (min-width: 601px) {
-  #fontSize2 {
-    font-size: 40px;
-  }
-}
-
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 600px) {
-  #fontSize2 {
-    font-size: 15px;
-  }
-}
-
-.bg-shape {
-  position: relative;
-  overflow: hidden;
-  /* padding: 50px; */
-}
-
-.bg-shape:after {
-  content: '';
-  position: absolute;
-  width: 1000px;
-  height: 1000px;
-  background: cyan;
-  border-radius: 50%;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  top: -60%; /* change value as required */
-  right: -20%; /* change value as required */
-}
-
-.triangle {
-  position: relative;
-  overflow: hidden;
 
 }
-.triangle:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-left: 1000px solid grey;
-  border-right: 1000px solid transparent;
-  border-bottom: 1000px solid transparent;
-  border-top: 1000px solid transparent;
-  z-index: -1;
-  top: 0; /* change value as required */
- 
-}
-/* html,
 
 
-a {
+
+
+/* a {
   color: inherit;
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
 } */
+
+/* * {
+  box-sizing: border-box;
+position: relative;
+}  */
 
 /* .text2 {
   overflow: hidden;

@@ -79,6 +79,7 @@ export const Notificacion = () => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
+                disableScrollLock
                 PaperProps={{
                     style: { width: '320px' },
                 }}

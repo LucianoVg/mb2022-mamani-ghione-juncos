@@ -149,7 +149,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                               Ir a Notificación Individual
+                                               Ir a notificación para tutor
                                             </Button>
                                             <Box>
                                                 <FormControl fullWidth>
@@ -189,7 +189,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                             Volver a Notificación Grupal
+                                             Volver a notificación por curso
                                             </Button>
                                             <Box>
                                                 <FormControl >

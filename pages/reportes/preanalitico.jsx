@@ -76,30 +76,29 @@ export default function Preanalitico() {
 
             <h3>Buscar Alumno</h3>
             <Box direction="row">
-                <FormControl style={{ marginRight: "20px" }}>
+            <FormControl style={{ marginRight: "20px" }}>
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         // value={value}
                         name="idAlumno"
-                        size='small'
                         onChange={handleAlumno}
-                        getOptionLabel={(alumnos2) => `${alumnos2?.usuario?.apellido} ${alumnos2?.usuario?.nombre}`}
+                        getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
                         options={alumnos}
                         sx={{ width: "250px" }}
                         isOptionEqualToValue={(option, value) =>
-                            option?.apellido === value?.apellido
+                            option?.usuario?.apellido === value?.usuario?.apellido
                         }
                         noOptionsText={"No existe un alumno con ese nombre"}
-                        renderOption={(props, alumnos2) => (
-                            <Box component="li" {...props} key={alumnos2?.id}>
-                                {alumnos2?.usuario?.apellido} {alumnos2?.usuario?.nombre}
+                        renderOption={(props, alumno) => (
+                            <Box component="li" {...props} key={alumno?.id}>
+                                {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                             </Box>
                         )}
-                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                        renderInput={(params) => <TextField {...params} label="Estudiante" />}
                     />
                 </FormControl>
-                <Button onClick={traerPreanalitico} variant="outlined" startIcon={<Search />} color="info" >
+                <Button onClick={traerPreanalitico} sx={{marginTop: "20px"}} variant="outlined" startIcon={<Search />} color="info" >
                     Buscar
                 </Button>
             </Box>

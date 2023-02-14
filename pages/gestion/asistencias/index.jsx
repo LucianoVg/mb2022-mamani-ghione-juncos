@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Modal, TextareaAutosize, Stack, FormControl, FormControlLabel, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, IconButton } from "@mui/material";
+import { Box, Modal, TextareaAutosize, Stack, FormControl, Autocomplete, FormControlLabel, Button, Container, Grid, InputLabel, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, IconButton } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -48,6 +48,7 @@ export default function Asistencias() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
+        traerAlumnos()
         traerUsuario()
         if (usuario.rol) {
             if (!tienePermisos()) {
@@ -120,6 +121,34 @@ export default function Asistencias() {
         resetValues()
         queryParams = []
     }
+
+
+    const traerAlumnos = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+        console.log(res.data);
+        if (res.data) {
+            setAlumnos(res.data)
+        }
+    }
+    const [alumnos, setAlumnos] = useState([])
+
+    const [idAlumno, setIdAlumno] = useState(0)
+
+    const handleAlumno = (e, newValue) => {
+        if (newValue) {
+            setIdAlumno(newValue.id);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
         paginacion.saltar(pagina)
@@ -375,11 +404,37 @@ export default function Asistencias() {
                             </LocalizationProvider>
                         </Box>
 
-                        <Typography variant="h6" sx={{ mt: 2 }}>
+                        <Typography variant="h6" sx={{ marginTop: "20px" }}>
                             Buscar Alumno:
                         </Typography>
 
-                        <Box direction='row'>
+                        <Box sx={{ marginTop: "25px" }}>
+                            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                                <Autocomplete
+                                sx={{width: "250px"}}
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
+                                    options={alumnos}
+                       
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.usuario?.apellido === value?.usuario?.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumno) => (
+                                        <Box disablePortal component="li" {...props} key={alumno?.id}>
+                                            {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                                />
+                            </FormControl>
+                        </Box>
+
+                        {/* <Box direction='row'>
                             <TextField
                                 sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
                                 name="legajo"
@@ -399,8 +454,8 @@ export default function Asistencias() {
                                 value={apellidoAlumno}
                                 onChange={handleApellidoAlumno}
                                 label="Apellido" />
-                        </Box>
-                        <Box sx={{ marginTop: '20px' }}>
+                        </Box> */}
+                        <Box >
                             <Button variant="outlined" onClick={buscarAsistencias} startIcon={<Search />} color="info">
                                 Buscar
                             </Button>

@@ -1,5 +1,5 @@
 /* not required */
-*,:active{
+/* *,:active{
     outline: none;
   }
   *{
@@ -15,8 +15,8 @@
     font-size: 96.5%;
     font-family: Helvetica, Arial, sans-serif;
   }
-  
-  input{
+   */
+  /* input{
     font-family: Helvetica, Arial, sans-serif;
   }
   
@@ -32,7 +32,7 @@
     text-decoration: none;
     color: #FF462B;
   }
-  
+   */
   .clearfix{
     clear: both;
   }

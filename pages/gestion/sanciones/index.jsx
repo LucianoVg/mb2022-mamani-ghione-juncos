@@ -133,7 +133,7 @@ const Sanciones = () => {
                                 {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                             </Box>
                         )}
-                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                        renderInput={(params) => <TextField {...params} label="Estudiante" />}
                     />
                 </FormControl>
                 <FormControl>

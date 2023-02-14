@@ -36,7 +36,7 @@ model asistencia {
   ausentejustificado      Boolean?
   llegadatarde            Boolean?
   mediafalta              Boolean?
-  motivo              String?
+  motivo                  String?
   alumnoxcursoxdivision   alumnoxcursoxdivision @relation(fields: [idalumnoxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario                 usuario               @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -140,7 +140,8 @@ model fechaexamen {
 model fichainstitucional {
   id                Int            @id @default(autoincrement())
   nombreinstitucion String?
-  ubicacion         String?
+  ciudad            String?
+  provincia         String?
   tipoinstitucion   String?
   descripcion       String?
   telefono1         String?
