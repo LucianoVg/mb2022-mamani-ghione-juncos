@@ -24,8 +24,17 @@ const Notificaciones = () => {
     const [idCurso, setIdCurso] = useState(0);
     // const [nombre, setNombre] = useState('');
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    const [alumnos, setAlumnos] = useState([])
     const [cargandoInfo, setCargandoInfo] = useState(false)
+
+    const [tutores, setTutores] = useState([])
+    const [idTutor, setIdTutor] = useState(0)
+
+    const handleTutor = (e, newValue) => {
+        if (newValue) {
+            setIdTutor(newValue.id);
+        }
+    }
+
 
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
@@ -49,7 +58,7 @@ const Notificaciones = () => {
             } else {
                 ListarNotificaciones()
                 listarCursos()
-                listarAlumnos()
+                listarTutores()
             }
         }
     }, [usuario.id, usuario.rol, loading, authUser])
@@ -68,11 +77,11 @@ const Notificaciones = () => {
         }
     }
 
-    const listarAlumnos = () => {
-        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
+    const listarTutores = () => {
+        axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores`)
             .then(res => {
                 console.log(res.data);
-                setAlumnos(res.data)
+                setTutores(res.data)
             }).catch(err => {
                 console.error(err);
             })
@@ -116,13 +125,7 @@ const Notificaciones = () => {
 
 
     // const [value, setValue] = useState('');
-    const [idAlumno, setIdAlumno] = useState(0)
 
-    const handleAlumno = (e, newValue) => {
-        if (newValue) {
-            setIdAlumno(newValue.id);
-        }
-    }
 
     return (
         <Layout>
@@ -149,7 +152,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                               Ir a notificación para tutor
+                                                Ir a notificación para tutor
                                             </Button>
                                             <Box>
                                                 <FormControl fullWidth>
@@ -189,28 +192,30 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                             Volver a notificación por curso
+                                                Volver a notificación por curso
                                             </Button>
                                             <Box>
-                                                <FormControl >
+                                                <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
                                                     <Autocomplete
+                                                        sx={{ width: "250px" }}
                                                         disablePortal
                                                         id="combo-box-demo"
                                                         // value={value}
-                                                        onChange={handleAlumno}
-                                                        getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
-                                                        options={alumnos}
-                                                        sx={{ width: "250px" }}
+                                                        name="idTutor"
+                                                        onChange={handleTutor}
+                                                        getOptionLabel={(tutor) => `${tutor?.apellido} ${tutor?.nombre}`}
+                                                        options={tutores}
+
                                                         isOptionEqualToValue={(option, value) =>
                                                             option?.apellido === value?.apellido
                                                         }
-                                                        noOptionsText={"No existe un estudiante con ese nombre"}
-                                                        renderOption={(props, alumnos) => (
-                                                            <Box component="li" {...props} key={alumnos?.id}>
-                                                                {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                                        noOptionsText={"No existe un tutor con ese nombre"}
+                                                        renderOption={(props, tutor) => (
+                                                            <Box component="li" {...props} key={tutor?.id}>
+                                                                {tutor?.apellido} {tutor?.nombre}
                                                             </Box>
                                                         )}
-                                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                                        renderInput={(params) => <TextField {...params} label="Tutores" />}
                                                     />
                                                 </FormControl>
                                             </Box>
