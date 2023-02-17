@@ -405,7 +405,7 @@ export default function Asistencias() {
                         </Box>
 
                         <Typography variant="h6" sx={{ marginTop: "20px" }}>
-                            Buscar Alumno:
+                            Buscar Estudiante:
                         </Typography>
 
                         <Box sx={{ marginTop: "25px" }}>

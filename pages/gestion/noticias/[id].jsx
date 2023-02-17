@@ -16,12 +16,13 @@ export default function DetallesNoticia() {
         url: '',
         idUsuario: 0
     })
-    const [noticiaActualizar, setNoticiaActualizar] = useState({
-        titulo: '',
-        descripcion: '',
-        url: '',
-        idUsuario: 0
-    })
+    // const [noticiaActualizar, setNoticiaActualizar] = useState({
+    //     id: 0,
+    //     titulo: '',
+    //     descripcion: '',
+    //     url: '',
+    //     idUsuario: 0
+    // })
     const router = useRouter()
     const hoy = new Date()
     const [imagen, setImagen] = useState(null)
@@ -67,9 +68,9 @@ export default function DetallesNoticia() {
             }
         } else {
             const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/noticias_novedades/detalles/${noticia.id}`, {
-                titulo: noticiaActualizar.titulo,
+                titulo: noticia.titulo,
                 url: noticia.url,
-                descripcion: noticiaActualizar.descripcion,
+                descripcion: noticia.descripcion,
                 actualizadaEn: hoy.toLocaleDateString('es-AR').split('T')[0]
             })
             setGuardando(false)
@@ -88,11 +89,12 @@ export default function DetallesNoticia() {
         }
     }
     const handleForm = (e) => {
-        setNoticiaActualizar({ ...noticiaActualizar, [e.target.name]: e.target.value })
+        setNoticia({ ...noticia, [e.target.name]: e.target.value })
     }
 
     const { loading, authUser } = useAuth()
     const { id } = router.query
+
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -105,7 +107,10 @@ export default function DetallesNoticia() {
                 traerNoticia(id)
             }
         }
+
     }, [id, authUser, loading, usuario.id, usuario.rol])
+
+
 
     const traerNoticia = async (id) => {
         if (id) {
@@ -113,9 +118,16 @@ export default function DetallesNoticia() {
             if (res.status === 200) {
                 console.log(res.data);
                 setNoticia(res.data)
+                // setNoticiaActualizar(res.data)
             }
         }
     }
+
+
+
+
+
+
     return (
         <Layout>
             <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2 }}>Detalles de la noticia</Typography>
@@ -141,22 +153,31 @@ export default function DetallesNoticia() {
                                 margin="normal"
                                 name="titulo"
                                 fullWidth
+                                focused 
                                 required
+                                multiline
                                 label="Titulo"
-                                placeholder={noticia.titulo}
-                                value={noticiaActualizar.titulo}
-                                onChange={handleForm} />
+                                placeholder={noticia?.titulo}
+                                // value={noticiaActualizar.titulo}
+                                defaultValue={noticia?.titulo}
+                                onChange={handleForm}
+
+                            />
                             <TextField
                                 margin="normal"
                                 fullWidth
+                                focused 
                                 name="descripcion"
                                 multiline
                                 rows={5}
                                 required
                                 label="Descripcion"
-                                value={noticiaActualizar.descripcion}
-                                placeholder={noticia.descripcion}
-                                onChange={handleForm} />
+                                // value={noticiaActualizar.descripcion}
+                                // placeholder={noticiaActualizar?.descripcion}
+                                onChange={handleForm}
+                                defaultValue={noticia.descripcion}
+
+                            />
                         </Grid>
                         <Grid item xs={6}>
                             <Stack direction="row" spacing={1}>

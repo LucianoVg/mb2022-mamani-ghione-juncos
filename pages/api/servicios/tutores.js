@@ -2,10 +2,16 @@ import { Prisma } from "./prisma";
 
 export default async function traerTutores() {
     try {
-        const tutores = await Prisma.newPrisma.usuario.findMany({
+        const tutores = await Prisma.newPrisma.alumnoxcursoxdivisionn.findMany({
+            include: {
+              tutor: true
+            },
             where: {
-                idrol: 6
+                tutor: {
+                    id: 6
+                }
             }
+         
         });
         return tutores
     } catch (error) {

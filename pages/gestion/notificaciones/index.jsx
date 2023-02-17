@@ -152,7 +152,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                                Ir a notificación para tutor
+                                                Volver a notificación para tutor
                                             </Button>
                                             <Box>
                                                 <FormControl fullWidth>
@@ -192,7 +192,7 @@ const Notificaciones = () => {
                                                 }
                                                 }
                                             >
-                                                Volver a notificación por curso
+                                                Ir a notificación por curso
                                             </Button>
                                             <Box>
                                                 <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
