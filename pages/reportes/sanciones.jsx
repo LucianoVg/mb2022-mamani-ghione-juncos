@@ -122,7 +122,9 @@ export default function Sancion() {
                                 <InputLabel htmlFor='selectCurso'>Curso</InputLabel>
                                 <Select
                                     sx={{ width: 120 }}
-                                    onChange={handleCurso}>
+                                    onChange={handleCurso}
+                                    MenuProps={{ disableScrollLock: true }}
+                                >
                                     {
                                         cursos.map(c => (
                                             <MenuItem key={c.id} value={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>

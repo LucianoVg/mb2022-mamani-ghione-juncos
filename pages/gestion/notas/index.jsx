@@ -372,7 +372,9 @@ export default function Notas() {
                                 name="idMateria"
                                 value={idMateria}
                                 label="Materia"
-                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                                MenuProps= {{ disableScrollLock: true } }
+                                >
                                 <ListSubheader>Primero</ListSubheader>
                                 {
 
@@ -445,7 +447,9 @@ export default function Notas() {
                                 value={idDivision}
                                 onChange={handleDivision}
                                 label="Division"
-                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}>
+                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
+                                MenuProps= {{ disableScrollLock: true } }
+                                >
                                 <MenuItem value={0}>Division</MenuItem>
                                 {
                                     divisiones && divisiones?.map((d, i) => (

@@ -250,6 +250,7 @@ const MaterialEstudio = () => {
                                                 vertical: 'center',
                                                 horizontal: 'left',
                                             },
+                                            disableScrollLock: true
 
                                         }}
                                         IconComponent={ArrowRightIcon}
@@ -257,6 +258,7 @@ const MaterialEstudio = () => {
                                         value={idCurso}
                                         label="Curso"
                                         onChange={handleCurso}
+
                                     >
                                         {
                                             cursos && cursos?.map((c, i) => (
@@ -276,7 +278,9 @@ const MaterialEstudio = () => {
                                         name="idMateria"
                                         value={idMateria}
                                         label="Materia"
-                                        sx={{ width: '150px' }}>
+                                        sx={{ width: '150px' }}
+                                        MenuProps= {{ disableScrollLock: true } }
+                                        >
                                         <ListSubheader>Primero</ListSubheader>
                                         {
 
@@ -296,7 +300,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 2 && (
 
-                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
 
                                             ))
@@ -318,7 +322,7 @@ const MaterialEstudio = () => {
 
                                                 m?.idcurso === 4 && (
 
-                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }
@@ -327,7 +331,7 @@ const MaterialEstudio = () => {
                                             materias && materias?.map((m, i) => (
                                                 m?.idcurso === 5 && (
 
-                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }
@@ -335,7 +339,7 @@ const MaterialEstudio = () => {
                                         {
                                             materias && materias?.map((m, i) => (
                                                 m?.idcurso === 6 && (
-                                                    <MenuItem  key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
                                                 )
                                             ))
                                         }

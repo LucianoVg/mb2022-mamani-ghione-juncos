@@ -382,7 +382,9 @@ export default function Asistencias() {
                                     label="Curso"
                                     name="idCurso"
                                     value={idCurso}
-                                    onChange={handleCurso}>
+                                    onChange={handleCurso}
+                                       MenuProps= {{ disableScrollLock: true } }
+                                    >
                                     <MenuItem value={0}>Seleccione un curso</MenuItem>
                                     {
                                         cursos && cursos.map((c, i) => (
@@ -400,6 +402,7 @@ export default function Asistencias() {
                                     value={fecha}
                                     onChange={handleFecha}
                                     renderInput={(params) => <TextField {...params} />}
+                                    MenuProps= {{ disableScrollLock: true } }
                                 />
                             </LocalizationProvider>
                         </Box>

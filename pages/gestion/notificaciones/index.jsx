@@ -165,6 +165,7 @@ const Notificaciones = () => {
                                                         label="Curso"
                                                         onChange={handleCurso}
                                                         sx={{ width: '90px', marginRight: '20px' }}
+                                                        MenuProps= {{ disableScrollLock: true } }
                                                     >
                                                         <MenuItem value={'todos'}>Todos</MenuItem>
                                                         {

@@ -149,7 +149,7 @@ export default function MantenimientoUsuario() {
 
     return (
         <Layout>
-            <div>
+            <div >
                 {
                     usuario.rol === 'Administrador' && (
                         <Link href={'/gestion/usuarios/nuevo'}>
@@ -159,28 +159,28 @@ export default function MantenimientoUsuario() {
                 }
                 <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
                 <Box direction='row'>
-                <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
-                        options={alumnos}
-                        sx={{ width: "250px" }}
-                        isOptionEqualToValue={(option, value) =>
-                            option?.usuario?.apellido === value?.usuario?.apellido
-                        }
-                        noOptionsText={"No existe un usuario con ese nombre"}
-                        renderOption={(props, alumno) => (
-                            <Box component="li" {...props} key={alumno?.id}>
-                                {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Estudiante" />}
-                    />
-                </FormControl>
+                    <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            // value={value}
+                            name="idAlumno"
+                            onChange={handleAlumno}
+                            getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
+                            options={alumnos}
+                            sx={{ width: "250px" }}
+                            isOptionEqualToValue={(option, value) =>
+                                option?.usuario?.apellido === value?.usuario?.apellido
+                            }
+                            noOptionsText={"No existe un usuario con ese nombre"}
+                            renderOption={(props, alumno) => (
+                                <Box component="li" {...props} key={alumno?.id}>
+                                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                                </Box>
+                            )}
+                            renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                        />
+                    </FormControl>
                     <FormControl>
                         <InputLabel id="select-label">Rol</InputLabel>
                         <Select labelId="select-label"
@@ -188,8 +188,8 @@ export default function MantenimientoUsuario() {
                             label="Rol"
                             onChange={handleRol}
                             value={rol}
-                            sx={{ width: '170px'}}
-                           
+                            sx={{ width: '170px' }}
+                            MenuProps={{ disableScrollLock: true }}
                         >
 
                             {
@@ -282,6 +282,7 @@ export default function MantenimientoUsuario() {
                                                     id={id}
                                                     open={open}
                                                     anchorEl={anchorEl}
+
                                                     onClose={handleClose}
                                                     anchorOrigin={{
                                                         vertical: 'bottom',
@@ -291,10 +292,10 @@ export default function MantenimientoUsuario() {
                                                         vertical: 'top',
                                                         horizontal: 'center',
                                                     }}
-                                                    disableScrollLock
                                                     PaperProps={{
-                                                        style: { width: '100px', boxShadow: "0,1" },
+                                                        style: { width: '100px', boxShadow: "0px 0px 6px 1px rgb(0 0 0 / 0.2)", position: "fixed" },
                                                     }}
+                                                  
 
                                                 >
                                                     <List>
@@ -346,6 +347,6 @@ export default function MantenimientoUsuario() {
                     )
                 }
             </div>
-        </Layout>
+        </Layout >
     )
 }

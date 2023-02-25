@@ -146,6 +146,7 @@ export default function Asistencias() {
                     label="Mes"
                     onChange={handleMes}
                     style={{ width: "160px" }}
+                    MenuProps= {{ disableScrollLock: true } }
                 >
                     <MenuItem value={3}>Marzo</MenuItem>
                     <MenuItem value={4}>Abril</MenuItem>

@@ -173,7 +173,9 @@ export default function DetalleSancion() {
                                         label="Tipo de Sancion"
                                         disabled
                                         renderValue={(value) => <span>{sancionxalumno?.sancion?.tiposancion?.tipo}</span>}
-                                        sx={{ width: '180px', marginBottom: '20px' }}>
+                                        sx={{ width: '180px', marginBottom: '20px' }}
+                                        MenuProps= {{ disableScrollLock: true } }
+                                        >
                                         {
                                             tipoSanciones && tipoSanciones.map((t, i) => (
                                                 <MenuItem selected={t.id === sancionxalumno?.sancion?.idtiposancion} key={i} value={t.id}>

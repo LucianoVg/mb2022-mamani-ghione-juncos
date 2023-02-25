@@ -3,9 +3,13 @@ body {
   font-family: Roboto, sans-serif;
   /* font-size: .875rem; */
   /* font-weight: 500; */
-  width: 100%;
+  width: 100% !important;
+  /* overflow: auto !important; */
+  /* padding: 0 !important; */
 
+  /* overflow-y: scroll !important; */
 }
+
 
 .buttonRegresar:hover {
   border: none;

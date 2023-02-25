@@ -171,6 +171,7 @@ export default function NuevaSancion() {
                                         id="inputCurso"
                                         label="Curso"
                                         sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+                                        MenuProps={{ disableScrollLock: true }}
                                     >
                                         {
                                             cursos && cursos.map((c, i) => (

@@ -132,7 +132,8 @@ export default function Notas() {
                                     label="Curso"
                                     name="idCurso"
                                     value={idCurso}
-                                    onChange={handleCurso}>
+                                    onChange={handleCurso}
+                                    MenuProps= {{ disableScrollLock: true } }>
                                     <MenuItem value={0}>Seleccione un curso</MenuItem>
                                     {
                                         cursos && cursos.map((c, i) => (
@@ -172,6 +173,7 @@ export default function Notas() {
                                     label="Materia"
                                     onChange={handleMateria}
                                     style={{ marginRight: "30px" }}
+                                    MenuProps= {{ disableScrollLock: true } }
                                 >
                                     <ListSubheader>Primero</ListSubheader>
                                     {
@@ -254,6 +256,7 @@ export default function Notas() {
                                 label="Materia"
                                 onChange={handleMateria}
                                 style={{ marginRight: "30px" }}
+                                MenuProps= {{ disableScrollLock: true } }
                             >
                                 <ListSubheader>Primero</ListSubheader>
                                 {

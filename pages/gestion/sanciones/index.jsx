@@ -144,7 +144,9 @@ const Sanciones = () => {
                         name={'idCurso'}
                         defaultValue={0}
                         onChange={handleCurso}
-                        label="Curso">
+                        label="Curso"
+                        MenuProps= {{ disableScrollLock: true } }
+                        >
                         <MenuItem value={0}>Seleccione un curso</MenuItem>
                         {
                             cursos && cursos?.map((c, i) => (

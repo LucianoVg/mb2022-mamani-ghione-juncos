@@ -17,6 +17,7 @@ export default function NuevoUsuario() {
                 width: 250,
             },
         },
+        disableScrollLock: true
     };
     function getStyles(materia, materias = []) {
         return {
@@ -141,7 +142,7 @@ export default function NuevoUsuario() {
         if (!existe) {
             console.log(idMaterias);
             usuario.idRol = rol
-            
+
 
             let data = {
                 login: usuario.correo.split('@')[0],
@@ -292,7 +293,9 @@ export default function NuevoUsuario() {
                             required
                             onChange={handleForm}
                             value={usuario.sexo}
-                            sx={{ marginRight: '20px', marginBottom: '20px' }}>
+                            sx={{ marginRight: '20px', marginBottom: '20px' }}
+                            MenuProps={{ disableScrollLock: true }}
+                        >
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Femenino</MenuItem>
                         </Select>
@@ -307,6 +310,7 @@ export default function NuevoUsuario() {
                             onChange={handleRol}
                             value={rol}
                             sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
+                            MenuProps={{ disableScrollLock: true }}
                         >
 
                             {
@@ -347,6 +351,7 @@ export default function NuevoUsuario() {
                                     onChange={handleCurso}
                                     value={curso}
                                     sx={{ width: '100px', marginBottom: '10px' }}
+                                    MenuProps={{ disableScrollLock: true }}
                                 >
 
                                     {
@@ -375,6 +380,7 @@ export default function NuevoUsuario() {
                                     onChange={handleMaterias}
                                     input={<OutlinedInput label="Materias" />}
                                     MenuProps={MenuProps}
+
                                 >
                                     {materias.map((materia) => (
                                         <MenuItem
