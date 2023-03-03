@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { Alert, CircularProgress } from "@mui/material";
 
 import { Layout } from "../../../components/layout";
-import { Box, Button, Stack, IconButton, FormControl, ListSubheader, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, Stack, IconButton, FormControl, ListSubheader, Item, TableContainer, TableRow, TableHead, Table, TableBody, TableCell, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import DownloadIcon from '@mui/icons-material/Download';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import axios from 'axios';
 import { useAuth } from '../../../components/context/authUserProvider';
 import { useRouter } from 'next/router';
@@ -278,9 +279,9 @@ const MaterialEstudio = () => {
                                         name="idMateria"
                                         value={idMateria}
                                         label="Materia"
-                                        sx={{ width: '150px' }}
-                                        MenuProps= {{ disableScrollLock: true } }
-                                        >
+                                        sx={{ width: '260px' }}
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
                                         <ListSubheader>Primero</ListSubheader>
                                         {
 
@@ -349,222 +350,139 @@ const MaterialEstudio = () => {
                         </>
                     )
                 }
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs >
-                            <h3>Primer Trimestre</h3>
+                <Box sx={{ marginTop: "30px" }}>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
 
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                {
-                                    usuario.rol !== 'Estudiante' ? (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                            >
-                                                {
-                                                    !docs1erTrimestre && <span>Subir apunte</span>
-                                                }
-                                                {
-                                                    docs1erTrimestre &&
-                                                    <span>{`${docs1erTrimestre.item(0)?.name}...`}</span>
-                                                }
-                                                <input hidden name='docs1erTrimestre' onChange={handleDocs1erTrimestre}
-                                                    accept=".pdf,.xlsx,.pptx,.docx"
-                                                    multiple type="file" />
+                                    <TableCell colSpan={12}
+                                        sx={{
+                                            color: 'black',
+                                            backgroundColor: 'lightblue',
+                                        }}>
+
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+
+
+                                            }}
+                                        >
+                                            <Button variant="contained" size="small" endIcon={<FileUploadIcon />}>
+                                                Subir apunte
                                             </Button>
-                                            {
-                                                !subiendoT1 && (
-                                                    <IconButton spacing={4} color="primary">
-                                                        <Upload />
-                                                    </IconButton>
-                                                )
-                                            }
-                                            {
-                                                subiendoT1 && (
-                                                    <Loading size={30} />
-                                                )
-                                            }
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                                onClick={() => descargarMaterial(1)}>
-                                                {
-                                                    !bajandoT1 && <span>Descargar apunte</span>
-                                                }
-                                                {
-                                                    bajandoT1 && (
-                                                        <Loading size={30} />
-                                                    )
-                                                }
-                                            </Button>
-                                            <IconButton spacing={4} color="primary">
-                                                <DownloadIcon />
-                                            </IconButton>
 
-                                        </>
-                                    )
-                                }
-                            </Stack>
-                        </Grid>
-                        <Grid item xs>
-                            <h3>Segundo Trimestre</h3>
+                                            <Typography variant="h6"   >Primer Trimestre</Typography>
+<h1></h1>
 
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                {
-                                    usuario.rol !== 'Estudiante' ? (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                            >
+                                        </Box>
 
-                                                {
-                                                    !docs2doTrimestre && <span>Subir apunte</span>
-                                                }
-                                                {
-                                                    docs2doTrimestre &&
-                                                    <span>{`${docs2doTrimestre.item(0)?.name}...`}</span>
-                                                }
-                                                <input hidden name='docs2doTrimestre' onChange={handleDocs2doTrimestre}
-                                                    accept=".pdf,.xlsx,.pptx,.docx"
-                                                    multiple type="file" />
-                                            </Button>
-                                            {
-                                                !subiendoT2 && (
-                                                    <IconButton spacing={4} color="primary">
-                                                        <Upload />
-                                                    </IconButton>
-                                                )
-                                            }
-                                            {
-                                                subiendoT2 && (
-                                                    <Loading size={30} />
-                                                )
-                                            }
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                                onClick={() => descargarMaterial(2)}>
 
-                                                {
-                                                    !bajandoT2 && <span>Descargar apunte</span>
-                                                }
-                                                {
-                                                    bajandoT2 && (
-                                                        <Loading size={30} />
-                                                    )
-                                                }
-                                            </Button>
-                                            <IconButton spacing={4} color="primary">
-                                                <DownloadIcon />
-                                            </IconButton>
 
-                                        </>
-                                    )
-                                }
-                            </Stack>
-                        </Grid>
-                        <Grid item xs >
-                            <h3>Tercer Trimestre</h3>
 
-                            <Stack direction="row" mt={2} sx={{ minWidth: '200px' }}>
-                                {
-                                    usuario.rol !== 'Estudiante' ? (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                            >
-                                                {
-                                                    !subiendoT3 && <span>Subir apunte</span>
-                                                }
-                                                {
-                                                    subiendoT3 && <Loading size={30} />
-                                                }
-                                                <input hidden name='docs3erTrimestre'
-                                                    onChange={handleDocs3erTrimestre}
-                                                    accept=".pdf,.xlsx,.pptx,.docx"
-                                                    multiple type="file" />
-                                            </Button>
-                                            {
-                                                !subiendoT3 && (
-                                                    <IconButton spacing={4} color="primary">
-                                                        <Upload />
-                                                    </IconButton>
-                                                )
-                                            }
-                                            {
-                                                subiendoT3 && (
-                                                    <Loading size={30} />
-                                                )
-                                            }
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Button variant='outlined' component="label"
-                                                sx={{ width: '180px' }}
-                                                spacing={4}
-                                                onClick={() => descargarMaterial(3)}>
-                                                {
-                                                    !bajandoT3 && <span>Descargar apunte</span>
-                                                }
-                                                {
-                                                    bajandoT3 && <Loading size={30} />
-                                                }
-                                            </Button>
-                                            <IconButton spacing={4} color="primary">
-                                                <DownloadIcon />
-                                            </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
 
-                                        </>
-                                    )
-                                }
-                            </Stack>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={2} sx={{ mt: 2 }}>
-                        {
-                            <ul>
-                                {
-                                    materialEstudio?.map(m => (
-                                        <li key={m?.id}>
-                                            <a href={m?.url}>{m?.titulo}</a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        }
-                    </Grid>
-                </Box>
-                {
-                    t1SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t1SubidoMsg}</Alert>
-                }
-                {
-                    t2SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t2SubidoMsg}</Alert>
+                                <TableRow >
+                                    <TableCell variant="head"
+                                        sx={{
+                                            color: 'black',
 
-                }
-                {
-                    t3SubidoMsg && <Alert sx={{ mt: 2 }} severity="success">{t3SubidoMsg}</Alert>
-                }
-                {
-                    usuario.rol !== 'Estudiante' && (
-                        <Box mt={2}>
-                            <Button disabled={subiendoT1 || subiendoT2 || subiendoT3 || !idCurso || !idMateria} variant="contained" onClick={guardarMaterial} color="primary">
-                                Guardar
-                            </Button>
-                        </Box>
-                    )
-                }
-                {
-                    mensaje && <Alert sx={{ mt: 2 }} severity="warning">{mensaje}</Alert>
-                }
+                                        }}
+                                        colSpan={7}
+                                    >
+                                        Archivo
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        20/03/23
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        <IconButton aria-label="fingerprint" color="primary"
+                                            sx={{ marginRight: "20px" }}
+                                        >
+                                            <DownloadIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="fingerprint" color="primary">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+
+                                </TableRow>
+                                <TableRow >
+                                    <TableCell variant="head"
+                                        sx={{
+                                            color: 'black',
+
+                                        }}
+                                        colSpan={7}
+                                    >
+                                        Archivo
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        20/03/23
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        <IconButton aria-label="fingerprint" color="primary"
+                                            sx={{ marginRight: "20px" }}
+                                        >
+                                            <DownloadIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="fingerprint" color="primary">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+
+                                </TableRow>
+                                <TableRow >
+                                    <TableCell variant="head"
+                                        sx={{
+                                            color: 'black',
+
+                                        }}
+                                        colSpan={7}
+                                    >
+                                        Archivo
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        20/03/23
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        <IconButton aria-label="fingerprint" color="primary"
+                                            sx={{ marginRight: "20px" }}
+                                        >
+                                            <DownloadIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="fingerprint" color="primary">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+
+                                </TableRow>
+
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+
+                </Box >
+
+
+
             </div>
         </Layout >
     )
