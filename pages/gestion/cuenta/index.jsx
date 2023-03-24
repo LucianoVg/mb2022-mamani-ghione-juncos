@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Typography, Divider, Stack, MenuItem, TextField, FormControl, InputLabel, Select, OutlinedInput, Button, Alert, Box } from "@mui/material";
+import { Typography, Divider, Stack, MenuItem, Grid, TextField, FormControl, InputLabel, Select, OutlinedInput, Button, Alert, Box } from "@mui/material";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Loading from '../../../components/loading';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 export default function Detalles() {
     const { loading, authUser } = useAuth()
@@ -123,10 +124,23 @@ export default function Detalles() {
 
     return (
         <Layout>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Button variant="outlined" sx={{ border: "none", marginLeft: "-20px" }}
+                        className="buttonRegresar"
+                        href="/"
+                        startIcon={<ArrowBackIosIcon />}
+                    >
+                        Regresar
+                    </Button>
+                </Grid>
+            </Grid>
             {
                 !cargando && (
-                    <div>
-                        <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+
+                    <Container sx={{marginLeft: "20px"}}>
+
+                        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
                             <strong>
                                 Datos Personales
                             </strong>
@@ -137,17 +151,17 @@ export default function Detalles() {
                             sx={{ marginBottom: '30px' }}
                         >
 
-                            <Typography variant="h5" sx={{ width: '200px' }} >
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Nombre</strong> <br />
                                 {usuario?.nombre}
                             </Typography>
 
 
-                            <Typography variant="h5" sx={{ width: '200px' }} >
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Apellido</strong> <br />
                                 {usuario?.apellido}
                             </Typography>
-                            <Typography variant="h5" sx={{ width: '200px' }} >
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Legajo</strong> <br />
                                 {usuario?.legajo}
                             </Typography>
@@ -158,19 +172,16 @@ export default function Detalles() {
                             spacing={{ xs: 2, sm: 2, md: 23 }}
                             sx={{ marginBottom: '30px' }}
                         >
-                            <Typography variant="h5" sx={{ width: '200px' }} >
-                                <strong>Mail</strong> <br />
-                                {usuario?.correo}
-                            </Typography>
-                            <Typography variant="h5" sx={{ width: '200px' }} >
+
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Localidad</strong> <br />
                                 {usuario?.localidad}
                             </Typography>
-                            <Typography variant="h5" sx={{ width: '400px' }} >
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Direccion</strong> <br />
                                 {usuario?.direccion}
                             </Typography>
-                            <Typography variant="h5" sx={{ width: '150px' }} >
+                            <Typography variant="h6" sx={{ width: '150px' }} >
                                 <strong>Telefono</strong> <br />
                                 {usuario?.telefono}
                             </Typography>
@@ -180,18 +191,18 @@ export default function Detalles() {
                             spacing={{ xs: 2, sm: 2, md: 23 }}
                             sx={{ marginBottom: '30px' }}
                         >
-                            <Typography variant="h5" sx={{ width: '200px' }} >
+                            <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Edad</strong> <br />
                                 {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechanacimiento).getFullYear()) : 'N/A'}
                             </Typography>
-                            <Typography variant="h5" sx={{ width: '250px' }} >
+                            <Typography variant="h6" sx={{ width: '250px' }} >
                                 <strong>Fecha de Nacimiento</strong> <br />
                                 {usuario?.fechanacimiento || 'N/A'}
                             </Typography>
 
                         </Stack>
                         <Divider sx={{ marginTop: '20px' }}></Divider>
-                        <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+                        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
                             <strong>
                                 Datos de Usuario
                             </strong>
@@ -240,12 +251,12 @@ export default function Detalles() {
                                         sx={{ marginBottom: '30px' }}
                                     >
 
-                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Correo</strong> <br />
                                             {usuario?.correo}
                                         </Typography>
                                         <FormControl>
-                                            <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña Actual</strong> <br />
                                             </Typography>
                                             <TextField error={mensaje.length > 0} name="confirmPassword" value={confirmPassword} style={{ marginBottom: "15px", width: "220px" }}
@@ -257,7 +268,7 @@ export default function Detalles() {
 
                                         </FormControl>
                                         <FormControl>
-                                            <Typography variant="h5" sx={{ width: '200px' }} >
+                                            <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña Nueva</strong> <br />
                                             </Typography>
                                             <TextField
@@ -276,12 +287,12 @@ export default function Detalles() {
                                     spacing={{ xs: 2, sm: 2, md: 23 }}
                                     sx={{ marginBottom: '30px' }}
                                 >
-                                    <Typography variant="h5" sx={{ width: '200px' }} >
+                                    <Typography variant="h6" sx={{ width: '200px' }} >
                                         <strong>Correo</strong> <br />
                                         {usuario?.correo}
                                     </Typography>
                                     <FormControl>
-                                        <Typography variant="h5" sx={{ width: '200px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
                                         <TextField
@@ -305,7 +316,7 @@ export default function Detalles() {
                         <Divider sx={{ marginTop: '20px' }}></Divider>
                         {
                             docente && (
-                                <Typography variant="h5" sx={{ width: '250px' }} >
+                                <Typography variant="h6" sx={{ width: '250px' }} >
                                     <strong>Materia/s Impartidas</strong> <br />
                                     {
                                         docente?.materia?.map(m => (
@@ -315,7 +326,7 @@ export default function Detalles() {
                                 </Typography>
                             )
                         }
-                        <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>
+                        {/* <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>
                             <strong>
                                 Datos de salud
                             </strong>
@@ -403,14 +414,14 @@ export default function Detalles() {
 
                             )
 
-                        }
+                        } */}
 
                         {
                             alumno && (
                                 <>
                                     <Divider sx={{ marginTop: '20px' }}></Divider>
 
-                                    <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>
+                                    <Typography variant="h5" sx={{ marginBottom: '20px', marginTop: '20px' }}>
                                         <strong>
                                             Datos del Tutor
                                         </strong>
@@ -420,16 +431,16 @@ export default function Detalles() {
                                         direction={{ xs: 'column', sm: 'row' }}
                                         spacing={{ xs: 2, sm: 2, md: 23 }}
                                     >
-                                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px', marginBottom: '20px' }} >
                                             <strong>Nombre</strong> <br />
                                             {alumno?.tutor?.nombre || 'N/A'}
                                         </Typography>
-                                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px', marginBottom: '20px' }} >
                                             <strong>Apellido</strong> <br />
                                             {alumno?.tutor?.apellido || 'N/A'}
                                         </Typography>
-                                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
-                                            <strong>Dni</strong> <br />
+                                        <Typography variant="h6" sx={{ width: '200px', marginBottom: '20px' }} >
+                                            <strong>Legajo</strong> <br />
                                             {alumno?.tutor?.legajo || 'N/A'}
                                         </Typography>
                                     </Stack>
@@ -438,11 +449,11 @@ export default function Detalles() {
                                         direction={{ xs: 'column', sm: 'row' }}
                                         spacing={{ xs: 2, sm: 2, md: 23 }}
                                     >
-                                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px', marginBottom: '20px' }} >
                                             <strong>Mail</strong> <br />
                                             {alumno?.tutor?.correo || 'N/A'}
                                         </Typography>
-                                        <Typography variant="h5" sx={{ width: '200px', marginBottom: '20px' }} >
+                                        <Typography variant="h6" sx={{ width: '200px', marginBottom: '20px' }} >
                                             <strong>Telefono</strong> <br />
                                             {alumno?.tutor?.telefono || 'N/A'}
                                         </Typography>
@@ -451,7 +462,7 @@ export default function Detalles() {
 
                                     <Divider sx={{ marginTop: '20px' }}></Divider>
 
-                                    <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>
+                                    <Typography variant="h5" sx={{ marginBottom: '20px', marginTop: '20px' }}>
                                         <strong>
                                             Datos de Matriculacion
                                         </strong>
@@ -461,11 +472,11 @@ export default function Detalles() {
                                         direction={{ xs: 'column', sm: 'row' }}
                                         spacing={{ xs: 2, sm: 2, md: 23 }}
                                     >
-                                        <Typography variant="h5" sx={{ width: '250px' }} >
+                                        <Typography variant="h6" sx={{ width: '250px' }} >
                                             <strong>Año de Matriculacion</strong> <br />
                                             {alumno?.fechamatriculacion || 'N/A'}
                                         </Typography>
-                                        <Typography variant="h5" sx={{ width: '250px' }} >
+                                        <Typography variant="h6" sx={{ width: '250px' }} >
                                             <strong>Curso</strong> <br />
                                             {`${alumno?.cursoxdivision?.curso?.nombre} ${alumno?.cursoxdivision?.division?.division}` || 'N/A'}
                                         </Typography>
@@ -474,7 +485,7 @@ export default function Detalles() {
                                 </>
                             )
                         }
-                    </div>
+                    </Container>
                 )
             }
             {
