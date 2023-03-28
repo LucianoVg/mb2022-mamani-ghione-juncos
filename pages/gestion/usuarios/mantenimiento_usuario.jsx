@@ -153,7 +153,7 @@ export default function MantenimientoUsuario() {
                 {
                     usuario.rol === 'Administrador' && (
                         <Link href={'/gestion/usuarios/nuevo'}>
-                            <Button variant="outlined">Nuevo Usuario</Button>
+                            <Button variant="contained">Nuevo Usuario</Button>
                         </Link>
                     )
                 }
