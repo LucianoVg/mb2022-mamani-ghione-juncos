@@ -7,6 +7,7 @@ import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@m
 import Loading from '../../../components/loading';
 import Link from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const MasInfo = () => {
     const { loading, authUser } = useAuth()
@@ -15,7 +16,7 @@ const MasInfo = () => {
     const [asistencia, setAsistencia] = useState()
     const [cargando, setCargando] = useState(false)
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-
+    console.log(asistencia)
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
@@ -58,16 +59,20 @@ const MasInfo = () => {
                 !cargando && (
                     <div>
                         <Grid container spacing={2}>
-                            <Grid item xs={10}>
+                            <Grid item xs={12}>
+                                <Button variant="outlined" sx={{ border: "none", marginLeft: "-20px" }}
+                                    className="buttonRegresar"
+                                    href="/gestion/asistencias"
+                                    startIcon={<ArrowBackIosIcon />}
+                                >
+                                    Regresar
+                                </Button>
+
+                            </Grid>
+                            <Grid item xs={12}>
                                 <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
                             </Grid>
-                            <Grid item xs={2}>
-                                <Link href={'/gestion/asistencias'}>
-                                    <Button endIcon={<ArrowBack />} color="secondary" variant="outlined">
-                                        Volver
-                                    </Button>
-                                </Link>
-                            </Grid>
+
                         </Grid>
                         <div className='hstack gap-2 '>
                             <Box component='div' sx={{ marginBottom: 2 }}>
@@ -114,16 +119,11 @@ const MasInfo = () => {
                                                                 <h4>Llegada Tarde</h4>
                                                             ) :
                                                                 (
-                                                                    asistencia?.llegadatardejustificada ? (
-                                                                        <h4>llegada Tarde Justificada</h4>
+                                                                    asistencia?.mediafalta ? (
+                                                                        <h4>Media Falta</h4>
                                                                     ) :
                                                                         (
-                                                                            asistencia?.mediafalta ? (
-                                                                                <h4>Media Falta</h4>
-                                                                            ) :
-                                                                                (
-                                                                                    <h4>-</h4>
-                                                                                )
+                                                                            <h4>-</h4>
                                                                         )
                                                                 )
                                                         )

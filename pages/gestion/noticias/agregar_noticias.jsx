@@ -140,7 +140,7 @@ const AgregarNoticias = () => {
                                 value={noticia.descripcion}
                             />
                             <Button disabled={imagen === null} variant='contained' color='primary' type='submit' sx={{marginRight: "20px"}}>Guardar Noticia</Button>
-                            <Button  variant='contained' color='secondary' href={"/"}>Cancelar</Button>
+                            <Button  variant='contained' color='error' href={"/"}>Cancelar</Button>
                         </Grid>
 
                     </Grid>

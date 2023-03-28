@@ -486,14 +486,15 @@ export default function Notas() {
                                 renderInput={(params) => <TextField {...params} label="Estudiante" />}
                             />
                         </FormControl>
-                        <Button endIcon={<SearchOutlined />}
-                            sx={{ mt: 3, ml: 2 }}
+                     
+                    </Box>
+                    <Button endIcon={<SearchOutlined />}
+                            sx={{marginBottom: "20px" }}
                             color="info"
                             variant="outlined"
                             onClick={() => traerNotas()}>
                             Buscar
                         </Button>
-                    </Box>
 
                     {/* <Box direction='row'>
                         <TextField margin="normal"
@@ -578,7 +579,7 @@ export default function Notas() {
                                                 <TableCell align="center">Nota 4</TableCell>
                                                 <TableCell align="center">Nota 5</TableCell>
                                                 <TableCell align="center">Trimestre</TableCell>
-                                                <TableCell align="center">Operacion</TableCell>
+                                                <TableCell align="center">Acción</TableCell>
                                             </TableRow>
                                         )
                                     }
@@ -820,7 +821,7 @@ export default function Notas() {
                                                                             <Grid container spacing={11}>
                                                                                 <Grid item xs={5}>
                                                                                     <Button variant="contained"
-                                                                                        color="primary"
+                                                                                        color="success"
                                                                                         size="small"
                                                                                         onClick={() => onSave(n.id)}>
                                                                                         Guardar
@@ -828,8 +829,8 @@ export default function Notas() {
                                                                                 </Grid>
                                                                                 <Grid item xs={5}>
                                                                                     <Button
-                                                                                        variant="outlined"
-                                                                                        color="secondary"
+                                                                                        variant="contained"
+                                                                                        color="error"
                                                                                         size="small"
                                                                                         onClick={() => onCancel()}
                                                                                     >

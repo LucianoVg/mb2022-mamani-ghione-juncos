@@ -54,7 +54,9 @@ export const Navbar = ({ toggleDrawer }) => {
                                     <Notificacion disablePadding />
                                 </div>
                                 <IconButton onClick={() => router.push('/gestion/cuenta')}>
-                                    <AccountCircleIcon />
+                                    <AccountCircleIcon 
+                                    sx={{color: "white"}}
+                                    />
                                 </IconButton>
                             </>
                         )

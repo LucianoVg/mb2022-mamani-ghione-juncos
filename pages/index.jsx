@@ -6,7 +6,7 @@ import TarjetaNovedades from '../components/tarjeta_noticias'
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
-import { Grid, Pagination, Box } from "@mui/material";
+import { Grid, Pagination,Typography, Box } from "@mui/material";
 import { usePagination } from '../components/hooks/paginationHook'
 import { Container } from '@mui/system'
 import Loading from "../components/loading";
@@ -52,6 +52,11 @@ const Home = () => {
   return (
     <Layout>
       <Container maxWidth={'xl'} sx={{ marginTop: "90px" }} >
+      <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Noticias y Novedades</Typography>
+
         {
           cargando && (
             <Container sx={{ textAlign: 'center' }}>

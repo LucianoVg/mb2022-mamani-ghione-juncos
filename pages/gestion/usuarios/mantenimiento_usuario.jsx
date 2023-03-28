@@ -38,7 +38,7 @@ export default function MantenimientoUsuario() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        listarAlumnos()
+        // listarUsuarios()
         traerRoles()
         traerUsuario()
         if (usuario.rol) {
@@ -103,21 +103,21 @@ export default function MantenimientoUsuario() {
 
 
 
-    const [alumnos, setAlumnos] = useState([])
 
-    const [idAlumno, setIdAlumno] = useState(0)
 
-    const listarAlumnos = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
+    const [idUsuario, setIdUsuario] = useState(0)
+
+    const listarUsuarios = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/`)
         if (res.status === 200) {
             console.log(res.data);
             setAlumnos(res.data)
         }
     }
 
-    const handleAlumno = (e, newValue) => {
+    const handleUsuario = (e, newValue) => {
         if (newValue) {
-            setIdAlumno(newValue.id);
+            setIdUsuario(newValue.id);
         }
     }
 
@@ -164,21 +164,21 @@ export default function MantenimientoUsuario() {
                             disablePortal
                             id="combo-box-demo"
                             // value={value}
-                            name="idAlumno"
-                            onChange={handleAlumno}
-                            getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
-                            options={alumnos}
+                            name="idUsuario"
+                            onChange={handleUsuario}
+                            getOptionLabel={(usuario) => `${usuario?.apellido} ${usuario?.nombre}`}
+                            options={usuarios}
                             sx={{ width: "250px" }}
                             isOptionEqualToValue={(option, value) =>
-                                option?.usuario?.apellido === value?.usuario?.apellido
+                                option?.apellido === value?.apellido
                             }
                             noOptionsText={"No existe un usuario con ese nombre"}
-                            renderOption={(props, alumno) => (
-                                <Box component="li" {...props} key={alumno?.id}>
-                                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                            renderOption={(props, usuario) => (
+                                <Box component="li" {...props} key={usuario?.id}>
+                                    {usuario?.apellido} {usuario?.nombre}
                                 </Box>
                             )}
-                            renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                            renderInput={(params) => <TextField {...params} label="Usuarios" />}
                         />
                     </FormControl>
                     <FormControl>

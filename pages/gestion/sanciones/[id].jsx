@@ -131,7 +131,7 @@ export default function DetalleSancion() {
     return (
         <Layout>
             <Container maxWidth={'xl'}>
-                <Typography variant="h4">Detalle Sancion</Typography>
+                <Typography variant="h4">Detalle Sanción</Typography>
                 {
 
                     !loadSancion && (
@@ -141,13 +141,13 @@ export default function DetalleSancion() {
                                 {
                                     !esSancionGrupal && (
                                         <FormControl>
-                                            <InputLabel htmlFor="inputAlumno">Alumno</InputLabel>
+                                            <InputLabel htmlFor="inputAlumno">Estudiante</InputLabel>
                                             <Select
                                                 value={idalumno}
                                                 // onChange={handleIdAlumno}
                                                 name="idalumno"
                                                 id="inputAlumno"
-                                                label="Alumno"
+                                                label="Estudiante"
                                                 displayEmpty
                                                 disabled
                                                 renderValue={(value) => value ? value : <a>{selected}</a>}
@@ -165,7 +165,7 @@ export default function DetalleSancion() {
                                 }
 
                                 <FormControl>
-                                    <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
+                                    <InputLabel htmlFor="inputTipoSancion">Tipo de Sanción</InputLabel>
                                     <Select
                                         value={sancionxalumno?.sancion?.idtiposancion}
                                         name="idtiposancion"

@@ -9,6 +9,15 @@ export default async function traerUsuarios(options) {
 }
 
 
+export async function traerUsuario() {
+    try {
+        return Prisma.newPrisma.usuario.findMany()
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 export async function actualizarUsuario(id, enfermedades, alergias, password) {
     try {

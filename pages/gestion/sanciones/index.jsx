@@ -111,7 +111,10 @@ const Sanciones = () => {
 
     return (
         <Layout>
-            <Typography variant="h4" textAlign={'center'}>Sanciones</Typography>
+            <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Sanciones</Typography>
 
             <Box direction='row' sx={{ marginBottom: '10px' }}>
                 <FormControl style={{ marginRight: "20px" }}>
@@ -195,7 +198,7 @@ const Sanciones = () => {
                                     <TableCell align="right">Curso</TableCell>
                                     <TableCell align="right">Division</TableCell>
                                     <TableCell align="right">Fecha</TableCell>
-                                    <TableCell align="right">Operaciones</TableCell>
+                                    <TableCell align="right">Acción</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
