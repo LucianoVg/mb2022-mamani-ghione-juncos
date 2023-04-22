@@ -40,7 +40,7 @@ export const usuarios = [
     password: "123456",
     nombre: "Bruno",
     apellido: "Carnero",
-    correo: "carnero@gmail.com",
+    correo: "estudiante@gmail.com",
     idRol: 7,
     legajo: "555463",
     sexo: "M",

@@ -47,15 +47,16 @@ export const Navbar = ({ toggleDrawer }) => {
                         <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {
-                         authUser && (usuario.rol === 'Estudiante'
-                            || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') && (
+                        authUser && (usuario.rol === 'Estudiante'
+                            || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') &&
+                        (
                             <>
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
                                 </div>
                                 <IconButton onClick={() => router.push('/gestion/cuenta')}>
-                                    <AccountCircleIcon 
-                                    sx={{color: "white"}}
+                                    <AccountCircleIcon
+                                        sx={{ color: "white" }}
                                     />
                                 </IconButton>
                             </>

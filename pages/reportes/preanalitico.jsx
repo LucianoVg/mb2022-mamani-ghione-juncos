@@ -53,7 +53,7 @@ export default function Preanalitico() {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-            || usuario.rol === 'Secretario'
+            || usuario.rol === 'Secretaria'
             || usuario.rol === 'Tutor'
     }
 

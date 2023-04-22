@@ -6,7 +6,7 @@ export const tutores = [
         password: "123456",
         nombre: "Fernando",
         apellido: "Carnero",
-        correo: "carnerofernando@gmail.com",
+        correo: "tutor@gmail.com",
         idRol: 6,
         legajo: "2308654",
         sexo: "M",

@@ -42,7 +42,7 @@ const FichaInstitucional = () => {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-            || usuario.rol === 'Secretario'
+     
     }
 
     const handleImagenes = (e) => {

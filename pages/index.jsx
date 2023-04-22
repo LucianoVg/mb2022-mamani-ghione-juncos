@@ -65,7 +65,7 @@ const Home = () => {
           )
         }
         {
-          authUser && (usuario?.rol?.tipo === 'Director' || usuario?.rol?.tipo === 'Administrador' || usuario?.rol?.tipo === 'Vicedirector') && (
+          authUser && (usuario?.rol?.tipo === 'Director' || usuario?.rol?.tipo === 'Administrador' || usuario?.rol?.tipo === 'Preceptor') && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => router.push('/gestion/noticias/agregar_noticias')}>
               Agregar
             </Button>

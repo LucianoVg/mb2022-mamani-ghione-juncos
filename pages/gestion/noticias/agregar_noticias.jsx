@@ -61,7 +61,7 @@ const AgregarNoticias = () => {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
     }
     const onSubmitData = async (e) => {
         e.preventDefault()
@@ -139,8 +139,14 @@ const AgregarNoticias = () => {
                                 onChange={handleForm}
                                 value={noticia.descripcion}
                             />
-                            <Button disabled={imagen === null} variant='contained' color='primary' type='submit' sx={{marginRight: "20px"}}>Guardar Noticia</Button>
-                            <Button  variant='contained' color='error' href={"/"}>Cancelar</Button>
+                            <Button disabled={imagen === null} variant='contained' color='primary' type='submit' sx={{ marginRight: "20px" }}>Guardar Noticia</Button>
+                            <Button variant='contained' sx={{
+                                backgroundColor: "gray",
+                                ":hover": {
+                                    backgroundColor: "gray"
+                                }
+
+                            }} href={"/"}>Cancelar</Button>
                         </Grid>
 
                     </Grid>

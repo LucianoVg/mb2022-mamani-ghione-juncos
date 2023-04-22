@@ -33,7 +33,7 @@ export default function DetallesNoticia() {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Preceptor'
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -153,7 +153,7 @@ export default function DetallesNoticia() {
                                 margin="normal"
                                 name="titulo"
                                 fullWidth
-                                focused 
+                                focused
                                 required
                                 multiline
                                 label="Titulo"
@@ -166,7 +166,7 @@ export default function DetallesNoticia() {
                             <TextField
                                 margin="normal"
                                 fullWidth
-                                focused 
+                                focused
                                 name="descripcion"
                                 multiline
                                 rows={5}
@@ -181,23 +181,30 @@ export default function DetallesNoticia() {
                         </Grid>
                         <Grid item xs={6}>
                             <Stack direction="row" spacing={1}>
-                                <Button type="submit" size="small" variant="contained" color="primary" >Actualizar</Button>
-                                <Button variant='contained' size="small" color='secondary' href={"/"} >Cancelar</Button>
-                                <Button variant="contained" size="small" color="error" onClick={borrarNoticia}>Eliminar</Button>
-                            </Stack>
-                        </Grid>
-
+                                <Button type="submit" size="small" variant="contained" color="success" >Actualizar</Button>
+                                <Button variant='contained' size="small"
+                                    sx={{
+                                        backgroundColor: "gray",
+                                        ":hover": {
+                                            backgroundColor: "gray"
+                                        }
+                                    }}
+                                href={ "/"} > Cancelar</Button>
+                            <Button variant="contained" size="small" color="error" onClick={borrarNoticia}>Eliminar</Button>
+                        </Stack>
                     </Grid>
 
-                </Box>
-                {
-                    guardando && (
-                        <Container sx={{ textAlign: 'center' }}>
-                            <Loading size={80} />
-                        </Container>
-                    )
-                }
-            </Container>
-        </Layout>
+                </Grid>
+
+            </Box>
+            {
+                guardando && (
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
+                    </Container>
+                )
+            }
+        </Container>
+        </Layout >
     )
 }

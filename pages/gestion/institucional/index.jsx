@@ -1,21 +1,21 @@
 import axios from "axios";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Carrusel from "../../../components/carrusel";
-import {useAuth} from "../../../components/context/authUserProvider";
-import {Layout} from "../../../components/layout";
+import { useAuth } from "../../../components/context/authUserProvider";
+import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import {Typography, Button, Container, Grid, Divider} from "@mui/material";
-import {AddBoxRounded} from "@mui/icons-material";
+import { Typography, Button, Container, Grid, Divider } from "@mui/material";
+import { AddBoxRounded } from "@mui/icons-material";
 import styles from "../../../styles/fontSize.module.css"
-import {Box} from "devextreme-react";
+import { Box } from "devextreme-react";
 
 export default function Institucional() {
     const [fichaInstitucional, setFichaInstitucional] = useState()
     const [cargando, setCargando] = useState(false)
-    const {authUser} = useAuth()
+    const { authUser } = useAuth()
     const [usuario, setUsuario] = useState({
-        rol:  ''
+        rol: ''
     })
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function Institucional() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({rol: res.data?.rol?.tipo})
+            setUsuario({ rol: res.data?.rol?.tipo })
         }
     }
     const traerFicha = async () => {
@@ -45,8 +45,8 @@ export default function Institucional() {
 
             {
                 !fichaInstitucional && (
-                    <div style={{marginBottom: "20px"}}>
-                        <Typography sx={{mb: 3}} component={'h3'} variant="h4">No hay ninguna ficha</Typography>
+                    <div style={{ marginBottom: "20px" }}>
+                        <Typography sx={{ mb: 3 }} component={'h3'} variant="h4">No hay ninguna ficha</Typography>
                     </div>
 
                 )
@@ -55,14 +55,28 @@ export default function Institucional() {
             {
                 !cargando && authUser && !fichaInstitucional && (usuario?.rol === 'Administrador'
                     || usuario?.rol === 'Director'
-                    || usuario?.rol === 'Vicedirector'
-                    || usuario?.rol === 'Secretario')
-                && (
-                    <div style={{marginBottom: "20px"}}>
+                )
+                    (
+                        <div style={{ marginBottom: "20px" }}>
+                            <Link href={'/gestion/institucional/generar_ficha_institucional'}>
+                                <Button variant="outlined">
+                                    <AddBoxRounded />
+                                    Nueva Ficha Institucional
+                                </Button>
+                            </Link>
+                        </div>
+                    )
+            }
+            {
+                fichaInstitucional && (usuario?.rol === 'Administrador'
+                    || usuario?.rol === 'Director'
+                ) &&
+                (
+                    <div style={{ marginBottom: "20px" }}>
                         <Link href={'/gestion/institucional/generar_ficha_institucional'}>
-                            <Button variant="outlined">
-                                <AddBoxRounded/>
-                                Nueva Ficha Institucional
+                            <Button variant="contained" color="success">
+
+                                Actualizar Ficha Institucional
                             </Button>
                         </Link>
                     </div>
@@ -72,72 +86,72 @@ export default function Institucional() {
             {
                 !cargando && fichaInstitucional && (
                     <div>
-                        <Carrusel imagenes={fichaInstitucional?.portadasficha}/>
-                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
+                        <Carrusel imagenes={fichaInstitucional?.portadasficha} />
+                        <Grid container spacing={2} sx={{ minWidth: '300px' }}>
 
                             <Grid item xs={12}>
                                 <Typography variant="h5"
-                                            sx={{marginTop: '30px'}}
-                                            className={`${styles.Typography}`}
+                                    sx={{ marginTop: '30px' }}
+                                    className={`${styles.Typography}`}
                                 >{fichaInstitucional?.nombreinstitucion}</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body1"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 >{fichaInstitucional?.descripcion}</Typography>
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={2} sx={{minWidth: '300px'}}>
+                        <Grid container spacing={2} sx={{ minWidth: '300px' }}>
                             <Grid item xs={12}>
-                                <Divider sx={{mb: 1}}/>
+                                <Divider sx={{ mb: 1 }} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="h5"
-                                            className={`${styles.Typography}`}
+                                    className={`${styles.Typography}`}
                                 >Datos de Contacto</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 ><strong>Ubicación:</strong> {fichaInstitucional?.ubicacion}</Typography>
 
                             </Grid>
                             <Grid item xs={12}>
 
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 ><strong>Correo:</strong> {fichaInstitucional?.mail}</Typography>
                             </Grid>
 
                             <Grid item xs>
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 >
                                     <strong>{fichaInstitucional?.oficina1}</strong>
                                 </Typography>
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 >
                                     {fichaInstitucional?.telefono1}
                                 </Typography>
 
 
                             </Grid>
-                            <Grid item xs={9} sx={{minWidth: '300px'}}>
+                            <Grid item xs={9} sx={{ minWidth: '300px' }}>
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}
+                                    className={`${styles.Typography2}`}
                                 >
                                     <strong>{fichaInstitucional?.oficina2}</strong>
                                 </Typography>
                                 <Typography variant="body2"
-                                            className={`${styles.Typography2}`}>
+                                    className={`${styles.Typography2}`}>
                                     {fichaInstitucional?.telefono2}
                                 </Typography>
 
                             </Grid>
                             <Grid item xs={12}>
-                                <Divider sx={{mb: 1}}/>
+                                <Divider sx={{ mb: 1 }} />
                             </Grid>
                         </Grid>
                     </div>
@@ -145,8 +159,8 @@ export default function Institucional() {
             }
             {
                 cargando && (
-                    <Container sx={{textAlign: 'center'}}>
-                        <Loading size={80}/>
+                    <Container sx={{ textAlign: 'center' }}>
+                        <Loading size={80} />
                     </Container>
                 )
             }

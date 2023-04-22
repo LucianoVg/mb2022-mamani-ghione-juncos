@@ -84,7 +84,9 @@ export default function NuevoUsuario() {
     }
     const tienePermisos = () => {
         return usuarioLogeado.rol === 'Administrador'
-            || usuarioLogeado.rol === 'Secretario'
+            || usuarioLogeado.rol === 'Secretaria'
+            || usuarioLogeado.rol === 'Director'
+            || usuarioLogeado.rol === 'Vicedirector'
     }
     const traerCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
@@ -225,6 +227,8 @@ export default function NuevoUsuario() {
             })
         }
     }
+
+   
     return (
         <Layout>
 
@@ -358,26 +362,114 @@ export default function NuevoUsuario() {
                             </Select>
                         </FormControl>
 
-                        <FormControl>
-                            <InputLabel id="select-label">Rol</InputLabel>
-                            <Select labelId="select-label"
-                                name="rol"
-                                label="Rol"
-                                required
-                                onChange={handleRol}
-                                value={rol}
-                                sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
-                                MenuProps={{ disableScrollLock: true }}
-                            >
+                        {
+                            usuarioLogeado?.rol === 'Administrador' &&
+                            (
+                                <FormControl>
+                                    <InputLabel id="select-label">Rol</InputLabel>
+                                    <Select labelId="select-label"
+                                        name="rol"
+                                        label="Rol"
+                                        required
+                                        onChange={handleRol}
+                                        value={rol}
+                                        sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
 
-                                {
-                                    roles && roles.map((r, i) => (
-                                        <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
-                                    ))
-                                }
-                            </Select>
-                        </FormControl>
+                                        {
+                                            roles && roles.map((r, i) => (
+                                                <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
+                        {
+                            usuarioLogeado?.rol === 'Director' &&
+                            (
+                                <FormControl>
+                                    <InputLabel id="select-label">Rol</InputLabel>
+                                    <Select labelId="select-label"
+                                        name="rol"
+                                        label="Rol"
+                                        required
+                                        onChange={handleRol}
+                                        value={rol}
+                                        sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
 
+                                        {
+                                            roles && roles.map((r, i) => (
+                                                r?.tipo != 'Administrador' &&
+                                                (
+                                                    <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
+                                                )
+
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
+                        {
+                            usuarioLogeado?.rol === 'Vicedirector' &&
+                            (
+                                <FormControl>
+                                    <InputLabel id="select-label">Rol</InputLabel>
+                                    <Select labelId="select-label"
+                                        name="rol"
+                                        label="Rol"
+                                        required
+                                        onChange={handleRol}
+                                        value={rol}
+                                        sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
+  {
+                                            roles && roles.map((r, i) => (
+                                                r?.tipo != 'Administrador' &&  r?.tipo != 'Director' &&
+                                                (
+                                                    <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
+                                                )
+
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
+                        {
+                            usuarioLogeado?.rol === 'Secretaria' &&
+                            (
+                                <FormControl>
+                                    <InputLabel id="select-label">Rol</InputLabel>
+                                    <Select labelId="select-label"
+                                        name="rol"
+                                        label="Rol"
+                                        required
+                                     
+                                        onChange={handleRol}
+                                        value={rol}
+                                        sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
+
+{
+                                            roles && roles.map((r, i) => (
+                                                r?.tipo === 'Estudiante' &&
+                                                (
+                                                    <MenuItem   key={i} value={r.id}>{r.tipo}</MenuItem>
+                                                )
+
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
                     </Box>
                     <Box>
 
@@ -504,7 +596,7 @@ export default function NuevoUsuario() {
                     esAlumno && (
                         <>
                             <Box sx={{ marginLeft: "40px" }}>
-                               <h2>Datos de Tutor</h2>
+                                <h2>Datos de Tutor</h2>
                                 <Box component={'form'} onSubmit={registrarTutor}>
 
                                     <Box direction='row'>

@@ -1,13 +1,5 @@
 export const menuXRoles = [
     {
-        idMenu: 14,
-        idRol: 1
-    },
-    {
-        idMenu: 12,
-        idRol: 1
-    },
-    {
         idMenu: 4,
         idRol: 1
     },
@@ -16,7 +8,27 @@ export const menuXRoles = [
         idRol: 1
     },
     {
+        idMenu: 12,
+        idRol: 1
+    },
+    {
+        idMenu: 14,
+        idRol: 1
+    },
+    {
+        idMenu: 9,
+        idRol: 1
+    },
+    {
         idMenu: 11,
+        idRol: 2
+    },
+    {
+        idMenu: 7,
+        idRol: 2
+    },
+    {
+        idMenu: 13,
         idRol: 2
     },
     {
@@ -24,7 +36,7 @@ export const menuXRoles = [
         idRol: 2
     },
     {
-        idMenu: 3,
+        idMenu: 11,
         idRol: 3
     },
     {
@@ -36,23 +48,11 @@ export const menuXRoles = [
         idRol: 3
     },
     {
-        idMenu: 13,
-        idRol: 3
-    },
-    {
-        idMenu: 2,
-        idRol: 3
-    },
-    {
-        idMenu: 8,
-        idRol: 3
-    },
-    {
-        idMenu: 10,
-        idRol: 3
-    },
-    {
         idMenu: 9,
+        idRol: 3
+    },
+    {
+        idMenu: 15,
         idRol: 3
     },
     {
@@ -63,6 +63,10 @@ export const menuXRoles = [
         idMenu: 6,
         idRol: 3
     },
+  
+  
+  
+
 
     {
         idMenu: 1,
@@ -129,15 +133,11 @@ export const menuXRoles = [
         idRol: 5
     },
     {
-        idMenu: 3,
-        idRol: 5
-    },
-    {
-        idMenu: 7,
-        idRol: 5
-    },
-    {
         idMenu: 13,
+        idRol: 5
+    },
+    {
+        idMenu: 3,
         idRol: 5
     },
     {
@@ -149,7 +149,23 @@ export const menuXRoles = [
         idRol: 5
     },
     {
+        idMenu: 10,
+        idRol: 5
+    },
+    {
+        idMenu: 14,
+        idRol: 6
+    },
+    {
+        idMenu: 8,
+        idRol: 6
+    },
+    {
         idMenu: 2,
+        idRol: 6
+    },
+    {
+        idMenu: 10,
         idRol: 6
     },
     {
@@ -157,23 +173,11 @@ export const menuXRoles = [
         idRol: 6
     },
     {
-        idMenu: 8,
-        idRol: 6
-    },
-    {
-        idMenu: 10,
-        idRol: 6
-    },
-    {
-        idMenu: 14,
-        idRol: 6
-    },
-    {
-        idMenu: 10,
+        idMenu: 12,
         idRol: 7
     },
     {
-        idMenu: 12,
+        idMenu: 14,
         idRol: 7
     },
     {
@@ -185,15 +189,15 @@ export const menuXRoles = [
         idRol: 7
     },
     {
-        idMenu: 14,
+        idMenu: 10,
         idRol: 7
     },
     {
-        idMenu: 3,
-        idRol: 8
+        idMenu: 5,
+        idRol: 7
     },
     {
-        idMenu: 14,
+        idMenu: 11,
         idRol: 8
     },
     {
@@ -201,24 +205,25 @@ export const menuXRoles = [
         idRol: 8
     },
     {
-        idMenu: 13,
-        idRol: 8
-    },
-    {
-        idMenu: 2,
-        idRol: 8
-    },
-    {
-        idMenu: 4,
-        idRol: 8
-    },
-    {
-        idMenu: 10,
+        idMenu: 3,
         idRol: 8
     },
     {
         idMenu: 9,
         idRol: 8
     },
+    {
+        idMenu: 5,
+        idRol: 8
+    },
+    {
+        idMenu: 6,
+        idRol: 8
+    },
+    {
+        idMenu: 15,
+        idRol: 8
+    },
+ 
 
 ]

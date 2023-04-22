@@ -52,7 +52,9 @@ export default function MantenimientoUsuario() {
 
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
-            || usuario.rol === 'Secretario'
+            || usuario.rol === 'Secretaria'
+            || usuario.rol === 'Vicedirector'
+            || usuario.rol === 'Director'
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -151,9 +153,16 @@ export default function MantenimientoUsuario() {
         <Layout>
             <div >
                 {
-                    usuario.rol === 'Administrador' && (
+                    (usuario.rol === 'Director' || usuario.rol === 'Administrador' || usuario.rol === 'Vicedirector') && (
                         <Link href={'/gestion/usuarios/nuevo'}>
                             <Button variant="contained">Nuevo Usuario</Button>
+                        </Link>
+                    )
+                }
+                {
+                    usuario.rol === 'Secretaria' && (
+                        <Link href={'/gestion/usuarios/nuevo'}>
+                            <Button variant="contained">Nuevo Estudiante</Button>
                         </Link>
                     )
                 }
@@ -295,7 +304,7 @@ export default function MantenimientoUsuario() {
                                                     PaperProps={{
                                                         style: { width: '100px', boxShadow: "0px 0px 6px 1px rgb(0 0 0 / 0.2)", position: "fixed" },
                                                     }}
-                                                  
+
 
                                                 >
                                                     <List>
