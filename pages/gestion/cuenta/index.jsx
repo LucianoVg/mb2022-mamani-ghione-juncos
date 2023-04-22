@@ -138,7 +138,7 @@ export default function Detalles() {
             {
                 !cargando && (
 
-                    <Container sx={{marginLeft: "20px"}}>
+                    <Container sx={{ marginLeft: "20px" }}>
 
                         <Typography variant="h6" sx={{ marginBottom: '20px' }}>
                             <strong>
@@ -201,16 +201,11 @@ export default function Detalles() {
                             </Typography>
 
                         </Stack>
-                        <Divider sx={{ marginTop: '20px' }}></Divider>
-                        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
-                            <strong>
-                                Datos de Usuario
-                            </strong>
-                        </Typography>
+                        <Divider sx={{ marginTop: '20px', marginBottom: "20px" }}></Divider>
                         {
                             !editMode && (
                                 <Button
-                                    style={{ height: "40px", width: "220px", marginBottom: "15px" }}
+                                sx={{ marginBottom: '15px' }}
                                     variant="contained"
                                     onClick={() => setEditMode(!editMode)}>
 
@@ -220,14 +215,13 @@ export default function Detalles() {
                             )
                         }
                         {
-                            editMode ? (
+                            editMode && (
                                 <Box>
                                     <Stack
-                                        direction={{ xs: 'column', sm: 'row' }}
-                                        spacing={{ xs: 2, sm: 2 }}
+                                        direction="row" spacing={2}
                                         sx={{ marginBottom: '15px' }}
                                     >
-                                        <Button disabled={guardando} variant="contained" onClick={updateProfile} sx={{ height: "40px", width: "220px" }}>
+                                        <Button disabled={guardando} variant="contained" color='success' onClick={updateProfile}>
                                             {
                                                 guardando && (
                                                     <Loading size={10} />
@@ -238,13 +232,26 @@ export default function Detalles() {
                                             }
                                         </Button>
                                         <Button
-                                            style={{ height: "40px", width: "220px" }}
+
                                             variant="contained"
                                             color="error"
                                             onClick={() => setEditMode(!editMode)}>
                                             <span>Cancelar</span>
                                         </Button>
                                     </Stack>
+                                </Box>
+                            )
+                        }
+                        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
+                            <strong>
+                                Datos de Usuario
+                            </strong>
+                        </Typography>
+
+                        {
+                            editMode ? (
+                                <Box>
+
                                     <Stack
                                         direction={{ xs: 'column', sm: 'row' }}
                                         spacing={{ xs: 2, sm: 2, md: 23 }}
@@ -259,7 +266,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña Actual</strong> <br />
                                             </Typography>
-                                            <TextField error={mensaje.length > 0} name="confirmPassword" value={confirmPassword} style={{ marginBottom: "15px", width: "220px" }}
+                                            <TextField error={mensaje.length > 0} name="confirmPassword" size="small"value={confirmPassword} style={{ marginBottom: "15px", width: "220px" }}
                                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                             />
                                             {
@@ -272,6 +279,7 @@ export default function Detalles() {
                                                 <strong>Contraseña Nueva</strong> <br />
                                             </Typography>
                                             <TextField
+                                            size="small"
                                                 value={newPassword}
                                                 type="newPassword"
                                                 onChange={(e) => setNewPassword(e.target.value)}
@@ -296,6 +304,7 @@ export default function Detalles() {
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
                                         <TextField
+                                                size="small"
                                             value="12341342342141321312"
                                             type="password"
                                             disabled
@@ -326,96 +335,7 @@ export default function Detalles() {
                                 </Typography>
                             )
                         }
-                        {/* <Typography variant="h4" sx={{ marginBottom: '20px', marginTop: '20px' }}>
-                            <strong>
-                                Datos de salud
-                            </strong>
-                        </Typography>
-
-                        {
-                            editMode ? (
-                                <Stack
-                                    direction={{ xs: 'column', sm: 'row' }}
-                                    spacing={{ xs: 2, sm: 2 }}
-                                >
-
-                                    <FormControl >
-                                        <InputLabel id="demo-multiple-name-label">Tienes alguna enfermedad?</InputLabel>
-                                        <Select
-                                            labelId="demo-multiple-name-label"
-                                            id="demo-multiple-name"
-                                            multiple
-                                            value={selectedEnf}
-                                            onChange={handleEnfermedad}
-                                            input={<OutlinedInput label="Enfermedad" />}
-                                            style={{ minWidth: "250px" }}>
-                                            {enfermedades.length > 0 && enfermedades?.map((enf) => (
-                                                <MenuItem
-                                                    key={enf.id}
-                                                    value={enf.descripcion}>
-                                                    {enf.descripcion}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                    <FormControl>
-                                        <TextField label="Tienes alguna alergia?" multiline value={alergias} onChange={(e) => { setAlergias(e.target.value) }} />
-                                    </FormControl>
-
-
-                                </Stack>
-
-                            ) : (
-                                <Stack
-                                    direction={{ xs: 'column', sm: 'row' }}
-                                    spacing={{ xs: 2, sm: 2, md: 23 }}
-                                    sx={{ marginBottom: '30px' }}
-                                >
-
-
-                                    {
-                                        !usuario?.enfermedadesxusuario ? (
-                                            <Typography variant="h5">
-                                                <strong>Enfermedades:</strong> <br />
-                                                No tiene enfermedad/es
-                                            </Typography>
-                                        ) : (
-                                            <Box>
-                                                <Typography variant="h5">
-                                                    <strong>Enfermedades:</strong>
-                                                </Typography>
-                                                <ul>
-                                                    {
-                                                        usuario?.enfermedadesxusuario.length > 0 && usuario?.enfermedadesxusuario.map((e) => (
-                                                            <li key={e.id}>{e.enfemedad?.descripcion}</li>
-                                                        ))
-                                                    }
-
-                                                </ul>
-                                            </Box>
-                                        )
-                                    }
-
-                                    {
-                                        !usuario?.alergias ? (
-                                            <Typography variant="h5">
-                                                <strong>Alergias:</strong> <br />
-                                                No tiene alergia/s
-                                            </Typography>
-                                        ) : (
-                                            <Typography variant="h5">
-                                                <strong>Alergias:</strong> <br />
-                                                {usuario?.alergias}
-                                            </Typography>
-                                        )
-                                    }
-
-                                </Stack>
-
-                            )
-
-                        } */}
-
+                    
                         {
                             alumno && (
                                 <>
@@ -458,29 +378,7 @@ export default function Detalles() {
                                             {alumno?.tutor?.telefono || 'N/A'}
                                         </Typography>
                                     </Stack>
-
-
-                                    <Divider sx={{ marginTop: '20px' }}></Divider>
-
-                                    <Typography variant="h5" sx={{ marginBottom: '20px', marginTop: '20px' }}>
-                                        <strong>
-                                            Datos de Matriculacion
-                                        </strong>
-                                    </Typography>
-
-                                    <Stack
-                                        direction={{ xs: 'column', sm: 'row' }}
-                                        spacing={{ xs: 2, sm: 2, md: 23 }}
-                                    >
-                                        <Typography variant="h6" sx={{ width: '250px' }} >
-                                            <strong>Año de Matriculacion</strong> <br />
-                                            {alumno?.fechamatriculacion || 'N/A'}
-                                        </Typography>
-                                        <Typography variant="h6" sx={{ width: '250px' }} >
-                                            <strong>Curso</strong> <br />
-                                            {`${alumno?.cursoxdivision?.curso?.nombre} ${alumno?.cursoxdivision?.division?.division}` || 'N/A'}
-                                        </Typography>
-                                    </Stack>
+                             
 
                                 </>
                             )

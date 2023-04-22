@@ -6,8 +6,8 @@ export default async function handler(
 ) {
     try {
         const { id } = req.query
-        const detalle = await DetalleAsistencia(id)
-        return res.status(200).json(detalle)
+        const detalles = await DetalleAsistencia(id)
+        return res.status(200).json(detalles)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }

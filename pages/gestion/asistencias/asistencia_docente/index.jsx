@@ -410,7 +410,7 @@ export default function Asistencias() {
                         </Box>
 
                     </Grid>
-                    <Grid item xs>
+                    {/* <Grid item xs>
                         <Box component="span">
                             <div style={{ fontFamily: "roboto", fontSize: "20px" }}>
                                 <Stack spacing={1} direction="row" >
@@ -429,7 +429,7 @@ export default function Asistencias() {
                                 </h5>
                             </div>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 {
                     cargandoInfo && (

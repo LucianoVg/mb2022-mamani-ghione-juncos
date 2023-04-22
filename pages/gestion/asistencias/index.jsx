@@ -383,8 +383,8 @@ export default function Asistencias() {
                                     name="idCurso"
                                     value={idCurso}
                                     onChange={handleCurso}
-                                       MenuProps= {{ disableScrollLock: true } }
-                                    >
+                                    MenuProps={{ disableScrollLock: true }}
+                                >
                                     <MenuItem value={0}>Seleccione un curso</MenuItem>
                                     {
                                         cursos && cursos.map((c, i) => (
@@ -402,7 +402,7 @@ export default function Asistencias() {
                                     value={fecha}
                                     onChange={handleFecha}
                                     renderInput={(params) => <TextField {...params} />}
-                                    MenuProps= {{ disableScrollLock: true } }
+                                    MenuProps={{ disableScrollLock: true }}
                                 />
                             </LocalizationProvider>
                         </Box>
@@ -414,7 +414,7 @@ export default function Asistencias() {
                         <Box sx={{ marginTop: "25px" }}>
                             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
                                 <Autocomplete
-                                sx={{width: "250px"}}
+                                    sx={{ width: "250px" }}
                                     disablePortal
                                     id="combo-box-demo"
                                     // value={value}
@@ -422,13 +422,13 @@ export default function Asistencias() {
                                     onChange={handleAlumno}
                                     getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
                                     options={alumnos}
-                       
+
                                     isOptionEqualToValue={(option, value) =>
                                         option?.usuario?.apellido === value?.usuario?.apellido
                                     }
                                     noOptionsText={"No existe un estudiante con ese nombre"}
                                     renderOption={(props, alumno) => (
-                                        <Box  component="li" {...props} key={alumno?.id}>
+                                        <Box component="li" {...props} key={alumno?.id}>
                                             {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                                         </Box>
                                     )}
@@ -464,7 +464,7 @@ export default function Asistencias() {
                             </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs>
+                    {/* <Grid item xs>
                         <Box component="span">
                             <div style={{ fontFamily: "roboto", fontSize: "20px" }}>
                                 <Stack spacing={1} direction="row" >
@@ -483,7 +483,7 @@ export default function Asistencias() {
                                 </h5>
                             </div>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
 
                 {
@@ -663,7 +663,7 @@ export default function Asistencias() {
                                                                 ? (
                                                                     <Stack spacing={1} direction="row">
                                                                         <Button variant="contained"
-                                                                            sx={{ backgroundColor: 'lightblue', color: 'black' }}
+                                                                            color="primary"
                                                                             onClick={() => onSave(a?.id)}>
                                                                             Cargar
                                                                         </Button>
@@ -988,7 +988,7 @@ export default function Asistencias() {
                                                                                     <Button variant="contained" color="success"
                                                                                         onClick={() => handleOpen(a)}
                                                                                     >
-                                                                                        Guardar
+                                                                                        Actualizar
                                                                                     </Button>
 
                                                                                     <Button variant="contained" color="error"
@@ -1167,7 +1167,7 @@ export default function Asistencias() {
                                                                                         <Button variant="contained" color="success"
                                                                                             onClick={() => handleOpen(a)}
                                                                                         >
-                                                                                            Guardar
+                                                                                            Actualizar
                                                                                         </Button>
 
 
@@ -1190,7 +1190,7 @@ export default function Asistencias() {
                                                                                     >Editar</Button>
                                                                                     <Button variant="contained"
                                                                                         sx={{ backgroundColor: 'lightblue', color: 'black' }}
-                                                                                        onClick={() => router.push(`/gestion/asistencias/${a?.id}`)}>
+                                                                                        onClick={() => router.push(`/gestion/asistencias/${a.id}`)}>
                                                                                         Info.
                                                                                     </Button>
                                                                                 </Stack>

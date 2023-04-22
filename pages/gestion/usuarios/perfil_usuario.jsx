@@ -33,6 +33,8 @@ export default function Detalles() {
         };
     }
 
+    const [idCurso, setIdCurso] = useState([])
+
     const [cursos, setCursos] = useState()
     const [idCursos, setIdCursos] = useState([])
     const [materias, setMaterias] = useState([])
@@ -182,18 +184,16 @@ export default function Detalles() {
 
     }
 
-    const [age, setAge] = useState('');
-
-    const handleChange = (e) => {
-        setAge(e.target.value);
-    };
+    const handleCurso = (e) => {
+        setIdCurso(Number(e.target.value))
+    }
     return (
         <Layout>
             <Grid container >
                 <Grid item xs={12} sx={{ marginBottom: "20px" }}>
                     <Button variant="outlined" sx={{ border: "none", marginLeft: "-20px" }}
                         className="buttonRegresar"
-                        href="/"
+                        href="/gestion/usuarios/mantenimiento_usuario"
                         startIcon={<ArrowBackIosIcon />}
                     >
                         Regresar
@@ -357,7 +357,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Nombre</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
 
@@ -365,14 +365,14 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Apellido</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Legajo</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "170px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "170px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         {
@@ -382,15 +382,23 @@ export default function Detalles() {
                                                         <strong>Curso</strong> <br />
                                                     </Typography>
                                                     <FormControl>
-                                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
                                                         <Select
-                                                            value={age}
-                                                            label="Age"
-                                                            onChange={handleChange}
+                                                            sx={{ width: '90px', marginRight: '20px' }}
+                                                            labelId="demo-simple-select-label"
+                                                            id="demo-simple-select"
+                                                            size="small"
+                                                            label="Curso"
+                                                            name="idCurso"
+                                                            value={idCurso}
+                                                            onChange={handleCurso}
+                                                            MenuProps={{ disableScrollLock: true }}
                                                         >
-                                                            <MenuItem value={10}>Ten</MenuItem>
-                                                            <MenuItem value={20}>Twenty</MenuItem>
-                                                            <MenuItem value={30}>Thirty</MenuItem>
+                                                            <MenuItem value={0}>Seleccione un curso</MenuItem>
+                                                            {
+                                                                cursos && cursos.map((c, i) => (
+                                                                    <MenuItem selected={i === 0} value={c.id} key={c.id}>{c.curso?.nombre} {c.division?.division}</MenuItem>
+                                                                ))
+                                                            }
                                                         </Select>
                                                     </FormControl>
 
@@ -409,28 +417,28 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Mail</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" variant="outlined" sx={{ width: "250px" }} />
+                                            <TextField id="outlined-basic" variant="outlined" size="small" sx={{ width: "250px" }} />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Localidad</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Dirección</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} variant="outlined" />
+                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
 
@@ -444,14 +452,14 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Teléfono</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" variant="outlined" />
+                                            <TextField id="outlined-basic" size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Edad</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" variant="outlined" />
+                                            <TextField id="outlined-basic" size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
@@ -460,7 +468,8 @@ export default function Detalles() {
                                             </Typography>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <MobileDatePicker
-                                                    label="Fecha"
+                                                    InputProps={{ sx: { height: '40px' } }}
+                                                    // label="Fecha"
                                                     name="fecha"
                                                     value={fecha}
                                                     onChange={handleFecha}
@@ -513,6 +522,7 @@ export default function Detalles() {
                                         <FormControl>
                                             <Select
                                                 required
+                                                size="small"
                                                 labelId="demo-multiple-name-label"
                                                 id="demo-multiple-name"
                                                 multiple
@@ -572,6 +582,7 @@ export default function Detalles() {
                                         </Typography>
                                         <FormControl>
                                             <Select
+                                                size="small"
                                                 required
                                                 labelId="demo-multiple-name-label"
                                                 id="demo-multiple-name"

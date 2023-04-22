@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import { guardarImagen, traerImagen } from "../../api/servicios/portada";
-import { Typography, TextField, Button, Select, Box, Grid, MenuItem, InputLabel } from "@mui/material";
+import { Typography, TextField, Button, Select, Box, Grid, MenuItem, FormControl, InputLabel, Stack } from "@mui/material";
 
 
 const FichaInstitucional = () => {
@@ -42,7 +42,7 @@ const FichaInstitucional = () => {
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
-     
+
     }
 
     const handleImagenes = (e) => {
@@ -107,100 +107,112 @@ const FichaInstitucional = () => {
 
     return (
         <Layout title={'Generar Ficha Institucional'}>
-            <Typography component={'h1'} variant={'h3'}>Generar Ficha Institucional</Typography>
+            <Typography component={'h3'} variant={'h3'} sx={{ marginBottom: '40px' }}>Generar Ficha Institucional</Typography>
             <Box component={'form'} onSubmit={guardarFicha}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
+
+                <Box>
+                    <Typography variant="h5" sx={{ marginBottom: '40px' }}>
+                        <strong>
+                            Datos Generales
+                        </strong>
+                    </Typography>
+                </Box>
+                <Button variant="contained" component="label" sx={{ marginBottom: "30px", marginLeft: '60px' }}>
+                    <input hidden type="file" name="imagenes" id="inputImg" className="form-control" accept="image/*" multiple={true} onChange={handleImagenes} />
+                    Subir Imágenes
+                </Button>
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Nombre de la Institución:
+                    </Typography>
+                    <FormControl >
+                        <TextField sx={{ marginTop: "-10px", width: "400px" }}
+                            size='small'
                             label="Nombre de la institucion"
                             value={fichaInstitucional.nombreInstitucion}
                             name="nombreInstitucion"
                             onChange={handleForm}
+
                             required />
-                    </Grid>
-                    <Grid item xs={6}>
+                    </FormControl>
+
+                </Stack>
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '40px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Descripción:
+                    </Typography>
+                    <FormControl>
                         <TextField
-                            margin="normal"
-                            fullWidth
+                            sx={{ width: "500px" }}
+
+                            label="Descripcion"
+                            value={fichaInstitucional.descripcion}
+                            name="descripcion"
+                            multiline
+                            rows={2}
+                            onChange={handleForm}
+                            required />
+
+                    </FormControl>
+                </Stack>
+
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '25px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Ciudad:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
                             label="Ubicacion"
                             value={fichaInstitucional.ubicacion}
                             name="ubicacion"
                             onChange={handleForm}
                             required />
-                    </Grid>
-                    <Grid item xs={6}>
+                    </FormControl>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Provincia:
+                    </Typography>
+                    <FormControl>
                         <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Correo electronico"
-                            value={fichaInstitucional.mail}
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Provincia"
+                            value={fichaInstitucional.provincia}
                             name="ubicacion"
-                            autoComplete="email"
-                            type={'email'}
                             onChange={handleForm}
                             required />
-                    </Grid>
-                    <Grid item xs={6}>
+
+                    </FormControl>
+
+                </Stack>
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Dirección:
+                    </Typography>
+                    <FormControl>
                         <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Descripcion"
-                            value={fichaInstitucional.descripcion}
-                            name="descripcion"
-                            multiline
-                            rows={3}
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Direccion"
+                            value={fichaInstitucional.direccion}
+                            name="nombreInstitucion"
                             onChange={handleForm}
+
                             required />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Telefono 1"
-                            value={fichaInstitucional.telefono1}
-                            name="telefono1"
-                            type={'tel'}
-                            onChange={handleForm}
-                            required />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Telefono 2"
-                            value={fichaInstitucional.telefono2}
-                            name="telefono2"
-                            type={'tel'}
-                            onChange={handleForm}
-                            required />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Oficina 1"
-                            value={fichaInstitucional.oficina1}
-                            name="oficina1"
-                            onChange={handleForm}
-                            required />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            label="Oficina 2"
-                            value={fichaInstitucional.oficina2}
-                            name="oficina2"
-                            onChange={handleForm}
-                            required />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <InputLabel id="selectTipo">Tipo de Institucion</InputLabel>
+                    </FormControl>
+
+                </Stack>
+
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Tipo de Institución:
+                    </Typography>
+                    <FormControl>
+                        {/* <InputLabel >Tipo de Institucion</InputLabel> */}
                         <Select
-                            id="selectTipo"
-                            fullWidth
+                            size="small"
+                            sx={{ marginTop: "-10px", width: "120px" }}
                             label="Tipo de Institucion"
                             onChange={handleForm}
                             value={fichaInstitucional.tipoInstitucion}
@@ -208,21 +220,118 @@ const FichaInstitucional = () => {
                             <MenuItem value={'Privada'}>Privada</MenuItem>
                             <MenuItem value={'Publica'}>Publica</MenuItem>
                         </Select>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button variant="outlined" component="label">
-                            <input hidden type="file" name="imagenes" id="inputImg" className="form-control" accept="image/*" multiple={true} onChange={handleImagenes} />
-                            Subir Imagenes
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button variant="contained" type="submit">
-                            Guardar Ficha
-                        </Button>
-                    </Grid>
-                </Grid>
+                    </FormControl>
+
+                </Stack>
+
+                <Box>
+                    <Typography variant="h5" sx={{ marginBottom: '40px' }}>
+                        <strong>
+                            Datos de Contacto
+                        </strong>
+                    </Typography>
+                </Box>
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Teléfono 1:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Telefono 1"
+                            value={fichaInstitucional.telefono1}
+                            name="telefono1"
+                            type={'tel'}
+                            onChange={handleForm}
+                            required />
+                    </FormControl>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Oficina 1:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Oficina 1"
+                            value={fichaInstitucional.oficina1}
+                            name="oficina1"
+                            onChange={handleForm}
+                            required />
+                    </FormControl>
+                </Stack>
+
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Teléfono 2:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Telefono 2"
+                            value={fichaInstitucional.telefono2}
+                            name="telefono2"
+                            type={'tel'}
+                            onChange={handleForm}
+                            required />
+                    </FormControl>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Oficina 2:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Oficina 2"
+                            value={fichaInstitucional.oficina2}
+                            name="oficina2"
+                            onChange={handleForm}
+                            required />
+                    </FormControl>
+                </Stack>
+
+                <Stack direction='row' spacing={1} sx={{ marginLeft: "60px", marginBottom: '15px' }}>
+                    <Typography variant="h7" sx={{ marginBottom: "40px" }} >
+                        Correo:
+                    </Typography>
+                    <FormControl>
+                        <TextField
+                            sx={{ marginTop: "-10px" }}
+                            size='small'
+                            label="Correo electronico"
+                            value={fichaInstitucional.mail}
+                            name="ubicacion"
+                            autoComplete="email"
+                            type={'email'}
+                            onChange={handleForm}
+                            required />
+                    </FormControl>
+
+                </Stack>
+
+
+
+
+
+                <Stack direction='row' spacing={1} >
+                    <Button variant="contained" type="submit">
+                        Guardar Ficha
+                    </Button>
+                    <Button variant='contained' size="small"
+                        sx={{
+                            backgroundColor: "gray",
+                            ":hover": {
+                                backgroundColor: "gray"
+                            }
+                        }}
+                        href={"/"} > Cancelar</Button>
+                </Stack>
+
+
+
             </Box>
-        </Layout>
+        </Layout >
     )
 }
 

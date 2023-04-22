@@ -53,29 +53,27 @@ export default function Institucional() {
             }
 
             {
-                !cargando && authUser && !fichaInstitucional && (usuario?.rol === 'Administrador'
-                    || usuario?.rol === 'Director'
-                )
-                    (
-                        <div style={{ marginBottom: "20px" }}>
-                            <Link href={'/gestion/institucional/generar_ficha_institucional'}>
-                                <Button variant="outlined">
-                                    <AddBoxRounded />
-                                    Nueva Ficha Institucional
-                                </Button>
-                            </Link>
-                        </div>
-                    )
-            }
-            {
-                fichaInstitucional && (usuario?.rol === 'Administrador'
+                (usuario?.rol === 'Administrador'
                     || usuario?.rol === 'Director'
                 ) &&
                 (
                     <div style={{ marginBottom: "20px" }}>
                         <Link href={'/gestion/institucional/generar_ficha_institucional'}>
-                            <Button variant="contained" color="success">
-
+                            <Button variant="outlined">
+                                <AddBoxRounded />
+                                Nueva Ficha Institucional
+                            </Button>
+                        </Link>
+                    </div>
+                )
+            }
+            {
+                authUser && fichaInstitucional && (usuario?.rol === 'Administrador'
+                    || usuario?.rol === 'Director') &&
+                (
+                    <div style={{ marginBottom: "20px" }}>
+                        <Link href={'/gestion/institucional/generar_ficha_institucional'}>
+                            <Button variant="contained" color="primary">
                                 Actualizar Ficha Institucional
                             </Button>
                         </Link>

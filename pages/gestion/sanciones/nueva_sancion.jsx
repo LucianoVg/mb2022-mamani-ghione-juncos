@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import { Container, Typography, TextField, Button, Autocomplete, Checkbox, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
+import { Container, Typography, TextField, Button, Autocomplete, Checkbox, Stack, Box, Grid, InputLabel, Select, MenuItem, FormControlLabel, FormControl } from "@mui/material";
 import Loading from "../../../components/loading";
 
 export default function NuevaSancion() {
@@ -118,7 +118,7 @@ export default function NuevaSancion() {
 
                         {
                             !esSancionGrupal && (
-                                <FormControl style={{ marginRight: "20px" }}>
+                                <FormControl style={{ marginRight: "20px", marginBottom: "20px" }}>
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
@@ -163,7 +163,7 @@ export default function NuevaSancion() {
                         }
                         {
                             esSancionGrupal && (
-                                <FormControl>
+                                <FormControl style={{ marginRight: "20px", marginBottom: "20px" }}>
                                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                                     <Select value={sancion.idCurso}
                                         onChange={handleSancion}
@@ -224,7 +224,8 @@ export default function NuevaSancion() {
                     </Box>
 
                     <Box>
-                        <Button disabled={guardando} variant="contained" sx={{ width: '170px' }} color="primary" type="submit">
+                        <Stack direction="row" spacing={2}>
+                        <Button disabled={guardando} variant="contained" sx={{ width: '170px', marginRight: "20px"}} color="primary" type="submit">
                             {
                                 guardando && <Loading size={30} />
                             }
@@ -232,6 +233,19 @@ export default function NuevaSancion() {
                                 !guardando && <span>Generar Sancion</span>
                             }
                         </Button>
+                        <Button  variant="contained"
+                            sx={{
+                                width: '170px', backgroundColor: "white", color: "black",
+                                ":hover": {
+                                    backgroundColor: "lightgray"
+                                }
+                            }}
+                           href='/gestion/sanciones'
+                                                      >
+                            Volver
+                        </Button>
+                        </Stack>
+                     
                     </Box>
                 </Box>
             </div>

@@ -311,7 +311,7 @@ export default function MantenimientoUsuario() {
                                                         <ListItem
                                                             disablePadding
                                                         >
-                                                            <ListItemButton component="a" >
+                                                            <ListItemButton component="a" href="/gestion/usuarios/perfil_usuario" >
                                                                 <ListItemText primary="Detalles" />
                                                             </ListItemButton>
                                                         </ListItem>

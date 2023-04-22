@@ -27,7 +27,7 @@ const MasInfo = () => {
     const listarAsistencia = async () => {
         if (id) {
             setCargando(true)
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`, )
             if (res.data) {
                 console.log(res.data)
                 setAsistencia(res.data)

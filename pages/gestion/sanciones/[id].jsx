@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Typography, FormControl, Box, Grid, InputLabel, MenuItem, Select, TextField, Container } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Typography, FormControl, Box, Grid, Stack, InputLabel, MenuItem, Select, TextField, Container } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -174,8 +174,8 @@ export default function DetalleSancion() {
                                         disabled
                                         renderValue={(value) => <span>{sancionxalumno?.sancion?.tiposancion?.tipo}</span>}
                                         sx={{ width: '180px', marginBottom: '20px' }}
-                                        MenuProps= {{ disableScrollLock: true } }
-                                        >
+                                        MenuProps={{ disableScrollLock: true }}
+                                    >
                                         {
                                             tipoSanciones && tipoSanciones.map((t, i) => (
                                                 <MenuItem selected={t.id === sancionxalumno?.sancion?.idtiposancion} key={i} value={t.id}>
@@ -222,21 +222,30 @@ export default function DetalleSancion() {
                             {
                                 inEditMode.status === true ? (
                                     <Box direction='row'>
-                                        <Button disabled={guardando} variant="contained"
-                                            color="primary"
-                                            onClick={actualizarSancion}
-                                            style={{ marginRight: '20px' }}>
-                                            {
-                                                guardando && <Loading size={30} />
-                                            }
-                                            {
-                                                !guardando && <span>Guardar Sancion</span>
-                                            }
-                                        </Button>
+                                        <Stack direction="row" spacing={2}>
+                                            <Button disabled={guardando} variant="contained"
+                                                color="success"
+                                                onClick={actualizarSancion}
+                                            >
+                                                {
+                                                    guardando && <Loading size={30} />
+                                                }
+                                                {
+                                                    !guardando && <span>Actualizar Sanción</span>
+                                                }
+                                            </Button>
+                                            <Button variant='contained' sx={{
+                                                backgroundColor: "gray",
+                                                ":hover": {
+                                                    backgroundColor: "gray"
+                                                }
 
-                                        <Button variant="outlined" component="label" onClick={() => onCancel()}>
-                                            Cancelar
-                                        </Button>
+                                            }} href={"/"} 
+                                            onClick={() => onCancel()}>
+                                                Cancelar
+                                            </Button>
+                                        </Stack>
+
                                     </Box>
 
                                 ) : (
@@ -244,7 +253,7 @@ export default function DetalleSancion() {
                                         <Button
                                             variant="contained"
                                             color="info"
-                                            size="small"
+                                            // size="small"
                                             style={{ marginRight: '20px' }}
                                             onClick={() => {
                                                 setInEditMode({ status: true })
@@ -252,13 +261,19 @@ export default function DetalleSancion() {
                                             }
                                             }
                                         >
-                                            Actualizar Sancion
+                                            Editar Sanción
                                         </Button>
-                                        <Link href={'/gestion/sanciones'}>
-                                            <Button variant="outlined" size="small">
-                                                Volver
-                                            </Button>
-                                        </Link>
+                                        <Button variant="contained"
+                                            sx={{
+                                                width: '170px', backgroundColor: "white", color: "black",
+                                                ":hover": {
+                                                    backgroundColor: "lightgray"
+                                                }
+                                            }}
+                                            href='/gestion/sanciones'
+                                        >
+                                            Volver
+                                        </Button>
                                     </Box>
                                 )
                             }
