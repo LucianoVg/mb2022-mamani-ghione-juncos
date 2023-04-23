@@ -34,7 +34,7 @@ export const menus = [
     },
     {
         menuSistema: "Asistencia Docente",
-        url: "/reportes/asistencia_Docente"
+        url: "/reportes/asistencia_docente"
     },
     {
         menuSistema: "Sanciones",

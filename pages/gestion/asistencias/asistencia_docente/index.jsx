@@ -784,7 +784,7 @@ export default function Asistencias() {
                                                                             <Button variant="contained" color="success"
                                                                                 onClick={() => handleOpen(a)}
                                                                             >
-                                                                                Guardar
+                                                                                Actualizar
                                                                             </Button>
 
                                                                             <Button variant="contained" color="error"
@@ -959,7 +959,7 @@ export default function Asistencias() {
                                                                                 <Button variant="contained" color="success"
                                                                                     onClick={() => handleOpen(a)}
                                                                                 >
-                                                                                    Guardar
+                                                                                    Actualizar
                                                                                 </Button>
 
                                                                                 <Button variant="contained" color="error"

@@ -72,7 +72,7 @@ export default function AsistenciasDocentes() {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
             || usuario.rol === 'Vicedirector'
-     
+
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -106,51 +106,64 @@ export default function AsistenciasDocentes() {
     return (
         <Layout>
             <h3>Buscar Docente</h3>
-            <FormControl style={{ marginRight: "20px" }}>
-                <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    // value={value}
-                    name="idDocente"
-                    onChange={handleDocente}
-                    getOptionLabel={(docentes) => `${docentes?.apellido} ${docentes?.nombre}`}
-                    options={docentes}
-                    sx={{ width: "250px" }}
-                    isOptionEqualToValue={(option, value) =>
-                        option?.apellido === value?.apellido
-                    }
-                    noOptionsText={"No existe un docente con ese nombre"}
-                    renderOption={(props, docentes) => (
-                        <Box component="li" {...props} key={docentes?.id}>
-                            {docentes?.apellido} {docentes?.nombre}
-                        </Box>
-                    )}
-                    renderInput={(params) => <TextField {...params} label="Docente" />}
-                />
-            </FormControl>
-            <FormControl>
-                <InputLabel id="demo-simple-select-label">Mes</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={mes}
-                    label="Mes"
-                    onChange={handleMes}
-                    style={{ width: "160px" }}
-                    MenuProps= {{ disableScrollLock: true } }
-                >
-                    <MenuItem value={3}>Marzo</MenuItem>
-                    <MenuItem value={4}>Abril</MenuItem>
-                    <MenuItem value={5}>Mayo</MenuItem>
-                    <MenuItem value={6}>Junio</MenuItem>
-                    <MenuItem value={7}>Julio</MenuItem>
-                    <MenuItem value={8}>Agosto</MenuItem>
-                    <MenuItem value={9}>Septiembre</MenuItem>
-                    <MenuItem value={10}>Octubre</MenuItem>
-                    <MenuItem value={11}>Noviembre</MenuItem>
-                    <MenuItem value={12}>Diciembre</MenuItem>
-                </Select>
-            </FormControl>
+
+            {
+                usuario.rol != 'Docente' &&
+                (
+                    <Box>
+
+                        <FormControl >
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                // value={value}
+                                name="idDocente"
+                                onChange={handleDocente}
+                                getOptionLabel={(docentes) => `${docentes?.apellido} ${docentes?.nombre}`}
+                                options={docentes}
+                                sx={{ width: "250px" }}
+                                isOptionEqualToValue={(option, value) =>
+                                    option?.apellido === value?.apellido
+                                }
+                                noOptionsText={"No existe un docente con ese nombre"}
+                                renderOption={(props, docentes) => (
+                                    <Box component="li" {...props} key={docentes?.id}>
+                                        {docentes?.apellido} {docentes?.nombre}
+                                    </Box>
+                                )}
+                                renderInput={(params) => <TextField {...params} label="Docente" />}
+                            />
+                        </FormControl>
+                    </Box>
+                )
+            }
+            {
+                usuario.rol === 'Docente' && (
+                    <FormControl style={{ marginRight: "20px" }}>
+                        <InputLabel id="demo-simple-select-label">Mes</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={mes}
+                            label="Mes"
+                            onChange={handleMes}
+                            style={{ width: "160px" }}
+                            MenuProps={{ disableScrollLock: true }}
+                        >
+                            <MenuItem value={3}>Marzo</MenuItem>
+                            <MenuItem value={4}>Abril</MenuItem>
+                            <MenuItem value={5}>Mayo</MenuItem>
+                            <MenuItem value={6}>Junio</MenuItem>
+                            <MenuItem value={7}>Julio</MenuItem>
+                            <MenuItem value={8}>Agosto</MenuItem>
+                            <MenuItem value={9}>Septiembre</MenuItem>
+                            <MenuItem value={10}>Octubre</MenuItem>
+                            <MenuItem value={11}>Noviembre</MenuItem>
+                            <MenuItem value={12}>Diciembre</MenuItem>
+                        </Select>
+                    </FormControl>
+                )
+            }
             <Box sx={{ marginBottom: '20px', marginTop: 2 }}>
                 <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" >
                     Buscar

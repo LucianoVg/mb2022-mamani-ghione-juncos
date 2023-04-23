@@ -108,12 +108,19 @@ export default function DetallesNoticia() {
                                                 >
                                                     Actualizar
                                                 </Button>
-
+                                                <Button variant='contained' size="small"
+                                                    sx={{
+                                                        backgroundColor: "gray",
+                                                        ":hover": {
+                                                            backgroundColor: "gray"
+                                                        }
+                                                    }}
+                                                    onClick={() => onCancel()} > Cancelar</Button>
                                                 <Button variant="contained" color="error"
                                                     sx={{ marginLeft: '40px', marginTop: '20px' }}
-                                                    onClick={() => onCancel()}
+                                                  
                                                 >
-                                                    Cancelar
+                                                    Eliminar
                                                 </Button>
                                             </Stack>
 

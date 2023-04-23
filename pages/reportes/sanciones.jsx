@@ -118,7 +118,7 @@ export default function Sancion() {
                             spacing={{ xs: 2, sm: 2, md: 5 }}
                             sx={{ marginBottom: '30px' }}
                         >
-                            <FormControl style={{ marginRight: "20px" }} size={'small'}>
+                            <FormControl  size={'small'}>
                                 <InputLabel htmlFor='selectCurso'>Curso</InputLabel>
                                 <Select
                                     sx={{ width: 120 }}
@@ -132,7 +132,7 @@ export default function Sancion() {
                                     }
                                 </Select>
                             </FormControl>
-                            <FormControl style={{ marginRight: "20px" }}>
+                            <FormControl >
                                 <Autocomplete
                                     size='small'
                                     disablePortal
@@ -146,13 +146,13 @@ export default function Sancion() {
                                     isOptionEqualToValue={(option, value) =>
                                         option?.apellido === value?.apellido
                                     }
-                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    noOptionsText={"No existe un estudiante con ese nombre"}
                                     renderOption={(props, alumnos) => (
                                         <Box component="li" {...props} key={alumnos?.id}>
                                             {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
                                         </Box>
                                     )}
-                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                    renderInput={(params) => <TextField {...params} label="Estudiante" />}
                                 />
                             </FormControl>
                             <Button onClick={listarSanciones} variant="outlined" startIcon={<Search />} color="info" >

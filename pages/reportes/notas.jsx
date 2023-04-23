@@ -126,14 +126,14 @@ export default function Notas() {
                             <FormControl>
                                 <InputLabel id="demo-simple-select-label">Curso</InputLabel>
                                 <Select
-                                    sx={{ width: '90px', marginRight: '20px' }}
+                                    sx={{ width: '90px' }}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     label="Curso"
                                     name="idCurso"
                                     value={idCurso}
                                     onChange={handleCurso}
-                                    MenuProps= {{ disableScrollLock: true } }>
+                                    MenuProps={{ disableScrollLock: true }}>
                                     <MenuItem value={0}>Seleccione un curso</MenuItem>
                                     {
                                         cursos && cursos.map((c, i) => (
@@ -142,28 +142,7 @@ export default function Notas() {
                                     }
                                 </Select>
                             </FormControl>
-                            <FormControl style={{ marginRight: "20px" }}>
-                                <Autocomplete
-                                    disablePortal
-                                    id="combo-box-demo"
-                                    // value={value}
-                                    name="idAlumno"
-                                    onChange={handleAlumno}
-                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
-                                    options={alumnos}
-                                    sx={{ width: "250px" }}
-                                    isOptionEqualToValue={(option, value) =>
-                                        option?.apellido === value?.apellido
-                                    }
-                                    noOptionsText={"No existe un alumno con ese nombre"}
-                                    renderOption={(props, alumnos) => (
-                                        <Box component="li" {...props} key={alumnos?.id}>
-                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                                        </Box>
-                                    )}
-                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
-                                />
-                            </FormControl>
+
                             <FormControl sx={{ width: '150px' }}>
                                 <InputLabel id="demo-simple-select-label">Materia</InputLabel>
                                 <Select
@@ -172,8 +151,8 @@ export default function Notas() {
                                     value={idMateria}
                                     label="Materia"
                                     onChange={handleMateria}
-                                    style={{ marginRight: "30px" }}
-                                    MenuProps= {{ disableScrollLock: true } }
+                                   
+                                    MenuProps={{ disableScrollLock: true }}
                                 >
                                     <ListSubheader>Primero</ListSubheader>
                                     {
@@ -239,6 +218,28 @@ export default function Notas() {
                                     }
                                 </Select>
                             </FormControl>
+                            <FormControl style={{ marginRight: "20px" }}>
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    // value={value}
+                                    name="idAlumno"
+                                    onChange={handleAlumno}
+                                    getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`}
+                                    options={alumnos}
+                                    sx={{ width: "250px" }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option?.apellido === value?.apellido
+                                    }
+                                    noOptionsText={"No existe un alumno con ese nombre"}
+                                    renderOption={(props, alumnos) => (
+                                        <Box component="li" {...props} key={alumnos?.id}>
+                                            {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                                        </Box>
+                                    )}
+                                    renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                />
+                            </FormControl>
                         </Stack>
 
                         <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" sx={{ marginTop: '20px' }}>
@@ -255,8 +256,8 @@ export default function Notas() {
                                 value={idMateria}
                                 label="Materia"
                                 onChange={handleMateria}
-                                style={{ marginRight: "30px" }}
-                                MenuProps= {{ disableScrollLock: true } }
+              
+                                MenuProps={{ disableScrollLock: true }}
                             >
                                 <ListSubheader>Primero</ListSubheader>
                                 {

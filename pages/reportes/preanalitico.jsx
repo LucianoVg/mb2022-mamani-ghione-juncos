@@ -74,41 +74,48 @@ export default function Preanalitico() {
     return (
         <Layout>
 
-            <h3>Buscar Alumno</h3>
-            <Box direction="row">
-            <FormControl style={{ marginRight: "20px" }}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
-                        options={alumnos}
-                        sx={{ width: "250px" }}
-                        isOptionEqualToValue={(option, value) =>
-                            option?.usuario?.apellido === value?.usuario?.apellido
-                        }
-                        noOptionsText={"No existe un alumno con ese nombre"}
-                        renderOption={(props, alumno) => (
-                            <Box component="li" {...props} key={alumno?.id}>
-                                {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Estudiante" />}
-                    />
-                </FormControl>
-                <Button onClick={traerPreanalitico} sx={{marginTop: "20px"}} variant="outlined" startIcon={<Search />} color="info" >
-                    Buscar
-                </Button>
-            </Box>
+            {
+                usuario.rol === 'Estudiante' && (
+                    <Box>
+                        <h3>Buscar Alumno</h3>
+
+                        <FormControl sx={{ marginRight: "20px" }}>
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                // value={value}
+                                name="idAlumno"
+                                onChange={handleAlumno}
+                                getOptionLabel={(alumno) => `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`}
+                                options={alumnos}
+                                sx={{ width: "250px" }}
+                                isOptionEqualToValue={(option, value) =>
+                                    option?.usuario?.apellido === value?.usuario?.apellido
+                                }
+                                noOptionsText={"No existe un alumno con ese nombre"}
+                                renderOption={(props, alumno) => (
+                                    <Box component="li" {...props} key={alumno?.id}>
+                                        {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                                    </Box>
+                                )}
+                                renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                            />
+
+                            <Button onClick={traerPreanalitico} sx={{ marginTop: "20px" }} variant="outlined" startIcon={<Search />} color="info" >
+                                Buscar
+                            </Button>
+                        </FormControl>
+                    </Box>
+
+                )
+            }
 
             <div>
                 {
                     !cargando && preanalitico.length > 0 && (
                         <TableContainer component={Paper} >
                             <Table size="small" aria-label="customized table"
-                                style={{ minWidth: "600px" }}
+                                sx={{ minWidth: "600px" }}
                             >
                                 <TableHead>
                                     <TableRow >
