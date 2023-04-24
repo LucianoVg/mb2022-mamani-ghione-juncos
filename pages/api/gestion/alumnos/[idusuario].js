@@ -1,4 +1,4 @@
-import traerAlumno from "../../servicios/alumnos";
+import { traerAlumno } from "../../servicios/alumnos";
 
 
 export default async function handler(req, res) {

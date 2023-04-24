@@ -1,7 +1,7 @@
 import NextCors from "nextjs-cors/dist";
 import { generarSancion, traerSanciones } from "../../servicios/sanciones"
 
-export default async function hORler(req, res) {
+export default async function handler(req, res) {
     try {
         await NextCors(req, res, {
             // Options

@@ -89,14 +89,8 @@ export default function Asistencias() {
     }
 
     const buscarAsistencias = async () => {
-        if (nombreAlumno) {
-            queryParams.push({ nombreAlumno: nombreAlumno })
-        }
-        if (apellidoAlumno) {
-            queryParams.push({ apellidoAlumno: apellidoAlumno })
-        }
-        if (legajo) {
-            queryParams.push({ legajo: legajo })
+        if (idAlumno) {
+            queryParams.push({ idAlumno: idAlumno })
         }
         if (idCurso) {
             queryParams.push({ idCurso: idCurso })
@@ -139,15 +133,6 @@ export default function Asistencias() {
             setIdAlumno(newValue.id);
         }
     }
-
-
-
-
-
-
-
-
-
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)

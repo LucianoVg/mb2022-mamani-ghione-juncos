@@ -13,11 +13,11 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
 
-        let { idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno } = req.query
-        console.log({ idMateria, idTrimestre, idDivision, nombreAlumno, apellidoAlumno });
+        let { idMateria, idTrimestre, idDivision, idAlumno } = req.query
+        console.log({ idMateria, idTrimestre, idDivision, idAlumno });
         let AND = [
             { idtrimestre: Number(idTrimestre) },
-            { anoactual: 2022 }
+            { anoactual: new Date().getFullYear() }
         ]
 
         let options = {
@@ -54,28 +54,14 @@ export default async function handler(
                 }
             })
         }
-        if (nombreAlumno) {
+        if (idAlumno) {
             AND.push({
                 alumnoxcursoxdivision: {
-                    usuario: {
-                        nombre: {
-                            contains: nombreAlumno[0].toUpperCase() + nombreAlumno.slice(1)
-                        }
-                    }
+                    id: Number(idAlumno)
                 },
             })
         }
-        if (apellidoAlumno) {
-            AND.push({
-                alumnoxcursoxdivision: {
-                    usuario: {
-                        apellido: {
-                            contains: apellidoAlumno[0].toUpperCase() + apellidoAlumno.slice(1)
-                        }
-                    }
-                },
-            })
-        }
+
         if (AND.length) {
             options = {
                 ...options,

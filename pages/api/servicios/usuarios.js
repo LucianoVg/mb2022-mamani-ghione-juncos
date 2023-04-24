@@ -2,7 +2,8 @@ import { Prisma } from "./prisma";
 
 export default async function traerUsuarios(options) {
     try {
-        return Prisma.newPrisma.usuario.findMany(options)
+        console.log(options);
+        return await Prisma.newPrisma.usuario.findMany(options)
     } catch (error) {
         console.log(error);
     }
@@ -17,55 +18,47 @@ export async function traerUsuario() {
     }
 }
 
-
-
-export async function actualizarUsuario(id, enfermedades, alergias, password) {
+export async function actualizarUsuario(id, dataUsuario) {
     try {
-        if (enfermedades) {
-            enfermedades?.map(async (e) => {
-                const enf = await Prisma.newPrisma.enfermedad.findFirst({ where: { descripcion: e } })
-                const usuario = await Prisma.newPrisma.usuario.update({
-                    data: {
-                        enfermedadesxusuario: {
-                            create: {
-                                enfermedad: {
-                                    connect: {
-                                        id: enf?.id
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    where: {
-                        id: Number(id)
-                    }
-                })
-                console.log(usuario);
-            })
+        let data = {}
+        if (dataUsuario.nombre) {
+            data = { ...data, nombre: dataUsuario.nombre }
         }
-        if (alergias) {
-            const usuario = await Prisma.newPrisma.usuario.update({
-                data: {
-                    alergias: alergias
-                },
-                where: {
-                    id: Number(id)
-                }
-            })
-            console.log(usuario);
+        if (dataUsuario.apellido) {
+            data = { ...data, apellido: dataUsuario.apellido }
         }
-        if (password) {
-            const usuario = await Prisma.newPrisma.usuario.update({
-                data: {
-                    password: password
-                },
-                where: {
-                    id: Number(id)
-                }
-            })
-            console.log(usuario);
+        if (dataUsuario.password) {
+            data = { ...data, password: dataUsuario.password }
         }
+        if (dataUsuario.legajo) {
+            data = { ...data, legajo: dataUsuario.legajo }
+        }
+        if (dataUsuario.correo) {
+            data = { ...data, correo: dataUsuario.correo }
+        }
+        if (dataUsuario.localidad) {
+            data = { ...data, localidad: dataUsuario.localidad }
+        }
+        if (dataUsuario.direccion) {
+            data = { ...data, direccion: dataUsuario.direccion }
+        }
+        if (dataUsuario.telefono) {
+            data = { ...data, telefono: dataUsuario.telefono }
+        }
+        if (dataUsuario.fechanacimiento) {
+            data = { ...data, fechanacimiento: dataUsuario.fechanacimiento }
+        }
+        console.log(data);
+        const usuario = await Prisma.newPrisma.usuario.update({
+            data: data,
+            where: {
+                id: Number(id)
+            }
+        })
+        console.log(usuario);
+        return "Usuario actualizado"
     } catch (error) {
         console.log(error);
+        return error.message
     }
 }

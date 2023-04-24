@@ -35,12 +35,8 @@ const Notificaciones = () => {
         }
     }
 
-
     const handleCurso = (e) => {
         setIdCurso(e.target.value);
-    };
-    const handleNombre = (e) => {
-        setNombre(e.target.value);
     };
 
     const handleNotificacion = (e) => {
@@ -110,8 +106,8 @@ const Notificaciones = () => {
             contenido: notificacion.contenido,
             fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
             idCurso: idCurso,
-            idAlumno: idAlumno,
-            idUsuario: usuario.id
+            idUsuario: usuario.id,
+            idTutor: idTutor
         })
         if (res.status === 200) {
             router.reload()
@@ -122,10 +118,6 @@ const Notificaciones = () => {
     const [inEditMode, setInEditMode] = useState({
         status: false
     });
-
-
-    // const [value, setValue] = useState('');
-
 
     return (
         <Layout>
@@ -165,7 +157,7 @@ const Notificaciones = () => {
                                                         label="Curso"
                                                         onChange={handleCurso}
                                                         sx={{ width: '90px', marginRight: '20px' }}
-                                                        MenuProps= {{ disableScrollLock: true } }
+                                                        MenuProps={{ disableScrollLock: true }}
                                                     >
                                                         <MenuItem value={'todos'}>Todos</MenuItem>
                                                         {

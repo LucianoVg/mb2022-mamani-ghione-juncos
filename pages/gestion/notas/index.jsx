@@ -12,14 +12,13 @@ import { usePagination } from "../../../components/hooks/paginationHook";
 
 export default function Notas() {
     const [notas, setNotas] = useState([])
+    const [alumnos, setAlumnos] = useState([])
     const [index, setIndex] = useState(0)
     // const [trimestres, setTrimestres] = useState([])
     // const [idTrimestre, setIdTrimestre] = useState("")
     const [idMateria, setIdMateria] = useState(0)
     const [idDivision, setIdDivision] = useState(0)
-    const [nombreAlumno, setNombreAlumno] = useState("")
-    const [apellidoAlumno, setApellidoAlumno] = useState("")
-
+    const [idAlumno, setIdAlumno] = useState(0)
     const [usuario, setUsuario] = useState({ rol: '' })
     const [divisiones, setDivisiones] = useState([])
     const [materias, setMaterias] = useState([])
@@ -32,6 +31,7 @@ export default function Notas() {
     const paginacion = usePagination(notas || [], pageSize)
     const [pagina, setPagina] = useState(1)
     const [trimestres, setTrimestres] = useState([])
+
     let queryParams = []
 
     const [inEditMode, setInEditMode] = useState({
@@ -80,13 +80,7 @@ export default function Notas() {
     const handleDivision = (e) => {
         setIdDivision(Number(e.target.value))
     }
-    const handleNombreAlumno = (e) => {
-        setNombreAlumno(e.target.value)
-    }
 
-    const handleApellidoAlumno = (e) => {
-        setApellidoAlumno(e.target.value)
-    }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
@@ -113,11 +107,8 @@ export default function Notas() {
     }
 
     const traerNotas = async (value = 0) => {
-        if (nombreAlumno) {
-            queryParams.push({ nombreAlumno })
-        }
-        if (apellidoAlumno) {
-            queryParams.push({ apellidoAlumno })
+        if (idAlumno) {
+            queryParams.push({ idAlumno })
         }
         if (idMateria) {
             queryParams.push({ idMateria })
@@ -139,14 +130,11 @@ export default function Notas() {
             setNotas(res.data)
         }
         setCargandoInfo(false)
+        queryParams = []
+        setIdAlumno(0)
+        setIdMateria(0)
+        setIdDivision(0)
     }
-
-    // const onEdit = (id) => {
-    //     setInEditMode({
-    //         status: true,
-    //         rowKey: id
-    //     })
-    // }
 
     const onSave = async (id) => {
         console.log(nota, columnName, id);
@@ -343,21 +331,13 @@ export default function Notas() {
             setAlumnos(res.data)
         }
     }
-    const [alumnos, setAlumnos] = useState([])
 
-    const [idAlumno, setIdAlumno] = useState(0)
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
             setIdAlumno(newValue.id);
         }
     }
-
-
-
-
-
-
 
     return (
         <Layout>
@@ -373,8 +353,8 @@ export default function Notas() {
                                 value={idMateria}
                                 label="Materia"
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                                MenuProps= {{ disableScrollLock: true } }
-                                >
+                                MenuProps={{ disableScrollLock: true }}
+                            >
                                 <ListSubheader>Primero</ListSubheader>
                                 {
 
@@ -448,8 +428,8 @@ export default function Notas() {
                                 onChange={handleDivision}
                                 label="Division"
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                                MenuProps= {{ disableScrollLock: true } }
-                                >
+                                MenuProps={{ disableScrollLock: true }}
+                            >
                                 <MenuItem value={0}>Division</MenuItem>
                                 {
                                     divisiones && divisiones?.map((d, i) => (
@@ -458,7 +438,7 @@ export default function Notas() {
                                 }
                             </Select>
                         </FormControl>
-                    
+
                     </Box>
 
 
@@ -486,15 +466,15 @@ export default function Notas() {
                                 renderInput={(params) => <TextField {...params} label="Estudiante" />}
                             />
                         </FormControl>
-                     
+
                     </Box>
                     <Button endIcon={<SearchOutlined />}
-                            sx={{marginBottom: "20px" }}
-                            color="info"
-                            variant="outlined"
-                            onClick={() => traerNotas()}>
-                            Buscar
-                        </Button>
+                        sx={{ marginBottom: "20px" }}
+                        color="info"
+                        variant="outlined"
+                        onClick={() => traerNotas()}>
+                        Buscar
+                    </Button>
 
                     {/* <Box direction='row'>
                         <TextField margin="normal"

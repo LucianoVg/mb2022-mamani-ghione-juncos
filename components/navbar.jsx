@@ -14,7 +14,7 @@ export const Navbar = ({ toggleDrawer }) => {
     const [title, setTitle] = useState("Instituto Privado \"El Salvador\"")
     const router = useRouter()
     const windowSize = useWindowSize()
-    const [usuario, setUsuario] = useState({ rol: '' })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     useEffect(() => {
         setTitle(windowSize.width <= 900 ? "\"El Salvador\"" : "Instituto Privado \"El Salvador\"")
         traerUsuario()
@@ -22,7 +22,7 @@ export const Navbar = ({ toggleDrawer }) => {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.status === 200) {
-            setUsuario({ rol: res.data?.rol?.tipo })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
 
@@ -54,7 +54,7 @@ export const Navbar = ({ toggleDrawer }) => {
                                 <div style={{ alignContent: 'right', marginLeft: '-30px', marginRight: '-20px' }} >
                                     <Notificacion disablePadding />
                                 </div>
-                                <IconButton onClick={() => router.push('/gestion/cuenta')}>
+                                <IconButton onClick={() => router.push(`/gestion/cuenta`)}>
                                     <AccountCircleIcon
                                         sx={{ color: "white" }}
                                     />

@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 
-export default async function traerAlumnos() {
+export async function traerAlumnos() {
     try {
         const alumnos = await Prisma.newPrisma.alumnoxcursoxdivision.findMany({
             include: {

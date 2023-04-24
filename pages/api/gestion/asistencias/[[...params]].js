@@ -3,9 +3,9 @@ import { TraerAsistencias } from "../../servicios/asistencia";
 export default async function hORler(req, res) {
     try {
         if (req.method === 'GET') {
-            let { legajo, fecha, idCurso, nombreAlumno, apellidoAlumno } = req.query
-            console.log(legajo, fecha, idCurso, nombreAlumno, apellidoAlumno);
-            
+            let { fecha, idCurso, idAlumno } = req.query
+            console.log(fecha, idCurso, idAlumno);
+
             let OR = []
             let options = {
                 include: {
@@ -22,36 +22,11 @@ export default async function hORler(req, res) {
                     creadoen: 'asc'
                 }
             }
-            if (legajo) {
+
+            if (idAlumno) {
                 OR.push({
                     alumnoxcursoxdivision: {
-                        usuario: {
-                            legajo: {
-                                contains: legajo
-                            }
-                        }
-                    }
-                })
-            }
-            if (nombreAlumno) {
-                OR.push({
-                    alumnoxcursoxdivision: {
-                        usuario: {
-                            nombre: {
-                                contains: nombreAlumno[0].toUpperCase() + nombreAlumno.slice(1)
-                            }
-                        }
-                    }
-                })
-            }
-            if (apellidoAlumno) {
-                OR.push({
-                    alumnoxcursoxdivision: {
-                        usuario: {
-                            apellido: {
-                                contains: apellidoAlumno[0].toUpperCase() + apellidoAlumno.slice(1)
-                            }
-                        }
+                        id: Number(idAlumno)
                     }
                 })
             }

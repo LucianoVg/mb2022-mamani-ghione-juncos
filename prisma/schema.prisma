@@ -251,6 +251,7 @@ model notificacion {
   idusuario           Int
   usuario             usuario               @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   notificacionxalumno notificacionxalumno[]
+  notificacionxtutor  notificacionxtutor[]
 }
 
 model notificacionxalumno {
@@ -259,6 +260,14 @@ model notificacionxalumno {
   idnotificacion          Int
   alumnoxcursoxdivision   alumnoxcursoxdivision @relation(fields: [idalumnoxcursoxdivision], references: [id])
   notificacion            notificacion          @relation(fields: [idnotificacion], references: [id])
+}
+
+model notificacionxtutor {
+  id             Int          @id @default(autoincrement())
+  idnotificacion Int
+  idtutor        Int
+  notificacion   notificacion @relation(fields: [idnotificacion], references: [id])
+  tutor          usuario      @relation(fields: [idtutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model permisos {
@@ -379,4 +388,5 @@ model usuario {
   noticiasynovedades                                             noticiasynovedades[]
   notificacion                                                   notificacion[]
   sancion                                                        sancion[]
+  notificacionxtutor                                             notificacionxtutor[]
 }

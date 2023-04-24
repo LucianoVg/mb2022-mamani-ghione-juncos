@@ -54,11 +54,10 @@ export default function Detalles() {
     const traerAlumno = async () => {
         if (usuario) {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`)
-            console.log(res.data);
             if (res.data) {
-                console.log(res.data);
                 setAlumno(res.data)
             }
+            console.log(res.data);
         }
     }
     const traerUsuario = async () => {
@@ -70,56 +69,43 @@ export default function Detalles() {
         }
         setCargando(false)
     }
-    // const traerEnfermedades = async () => {
-    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/enfermedades/${usuario?.id}`)
-    //     if (res.status === 200) {
-    //         setEnfermedades(res.data)
-    //         console.log(res.data)
-    //     }
-    // }
+
     const updateProfile = async () => {
-        console.log(selectedEnf, alergias);
         console.log(usuario);
 
-        let campos = {}
-        if (selectedEnf.length) {
-            campos = {
-                ...campos,
-                enfermedades: selectedEnf
-            }
-        }
-        if (alergias) {
-            campos = {
-                ...campos,
-                alergias: alergias
-            }
-        }
+        let dataUsuario = {}
+
         if (newPassword) {
-            if (usuario?.password === confirmPassword) {
+            if (usuario?.password !== confirmPassword) {
                 setMensaje("Contraseña invalida")
+                setTimeout(() => {
+                    setMensaje("")
+                }, 3000);
+                return
             }
-            campos = {
-                ...campos,
+            dataUsuario = {
+                ...dataUsuario,
                 password: newPassword
             }
         }
-        console.log(campos);
-        // setGuardando(true)
-        // const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${usuario?.id}`, campos)
-        // setGuardando(false)
-        // setRespuesta({
-        //     ...respuesta,
-        //     status: res.status,
-        //     mensaje: res.data?.mensaje
-        // })
-        // setTimeout(() => {
-        //     setRespuesta({
-        //         ...respuesta,
-        //         status: 0,
-        //         mensaje: ''
-        //     })
-        // }, 2000);
-
+        console.log(dataUsuario);
+        setGuardando(true)
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${usuario?.id}`, dataUsuario)
+        setGuardando(false)
+        setRespuesta({
+            ...respuesta,
+            status: res.status,
+            mensaje: res.data?.mensaje
+        })
+        setTimeout(() => {
+            setRespuesta({
+                ...respuesta,
+                status: 0,
+                mensaje: ''
+            })
+            setEditMode(false)
+            traerUsuario()
+        }, 2000);
     }
 
     return (
@@ -137,9 +123,7 @@ export default function Detalles() {
             </Grid>
             {
                 !cargando && (
-
                     <Container sx={{ marginLeft: "20px" }}>
-
                         <Typography variant="h6" sx={{ marginBottom: '20px' }}>
                             <strong>
                                 Datos Personales
@@ -150,12 +134,10 @@ export default function Detalles() {
                             spacing={{ xs: 2, sm: 2, md: 23 }}
                             sx={{ marginBottom: '30px' }}
                         >
-
                             <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Nombre</strong> <br />
                                 {usuario?.nombre}
                             </Typography>
-
 
                             <Typography variant="h6" sx={{ width: '200px' }} >
                                 <strong>Apellido</strong> <br />
@@ -205,7 +187,7 @@ export default function Detalles() {
                         {
                             !editMode && (
                                 <Button
-                                sx={{ marginBottom: '15px' }}
+                                    sx={{ marginBottom: '15px' }}
                                     variant="contained"
                                     onClick={() => setEditMode(!editMode)}>
 
@@ -217,6 +199,16 @@ export default function Detalles() {
                         {
                             editMode && (
                                 <Box>
+                                    {
+                                        respuesta.status !== 0 && (
+                                            <Alert
+                                                sx={{ my: 2 }}
+                                                variant="outlined"
+                                                color={respuesta.status === 200 ? 'success' : 'error'}>
+                                                {respuesta.mensaje}
+                                            </Alert>
+                                        )
+                                    }
                                     <Stack
                                         direction="row" spacing={2}
                                         sx={{ marginBottom: '15px' }}
@@ -266,7 +258,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña Actual</strong> <br />
                                             </Typography>
-                                            <TextField error={mensaje.length > 0} name="confirmPassword" size="small"value={confirmPassword} style={{ marginBottom: "15px", width: "220px" }}
+                                            <TextField error={mensaje.length > 0} name="confirmPassword" size="small" value={confirmPassword} style={{ marginBottom: "15px", width: "220px" }}
                                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                             />
                                             {
@@ -279,7 +271,7 @@ export default function Detalles() {
                                                 <strong>Contraseña Nueva</strong> <br />
                                             </Typography>
                                             <TextField
-                                            size="small"
+                                                size="small"
                                                 value={newPassword}
                                                 type="newPassword"
                                                 onChange={(e) => setNewPassword(e.target.value)}
@@ -304,7 +296,7 @@ export default function Detalles() {
                                             <strong>Contraseña</strong> <br />
                                         </Typography>
                                         <TextField
-                                                size="small"
+                                            size="small"
                                             value="12341342342141321312"
                                             type="password"
                                             disabled
@@ -335,12 +327,11 @@ export default function Detalles() {
                                 </Typography>
                             )
                         }
-                    
+
                         {
                             alumno && (
                                 <>
                                     <Divider sx={{ marginTop: '20px' }}></Divider>
-
                                     <Typography variant="h5" sx={{ marginBottom: '20px', marginTop: '20px' }}>
                                         <strong>
                                             Datos del Tutor
@@ -378,7 +369,7 @@ export default function Detalles() {
                                             {alumno?.tutor?.telefono || 'N/A'}
                                         </Typography>
                                     </Stack>
-                             
+
 
                                 </>
                             )

@@ -34,7 +34,12 @@ export default function Detalles() {
     }
 
     const [idCurso, setIdCurso] = useState([])
-
+    const [dataUsuario, setDataUsuario] = useState({
+        nombre: "", apellido: "",
+        legajo: "", correo: "", localidad: "",
+        direccion: "", password: "", telefono: "",
+        fechanacimiento: ""
+    })
     const [cursos, setCursos] = useState()
     const [idCursos, setIdCursos] = useState([])
     const [materias, setMaterias] = useState([])
@@ -42,7 +47,7 @@ export default function Detalles() {
 
     const { loading, authUser } = useAuth()
     const router = useRouter()
-    const [usuarioLogeado, setUsuarioLogueado] = useState()
+    const [usuario, setUsuario] = useState()
     const [selectedEnf, setSelectedEnf] = useState([])
     const [fecha, setFecha] = useState(null)
 
@@ -58,6 +63,8 @@ export default function Detalles() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [editMode, setEditMode] = useState(false)
     const [mensaje, setMensaje] = useState("")
+
+    const { id } = router.query
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
@@ -71,7 +78,7 @@ export default function Detalles() {
     }, [loading, authUser])
 
 
-
+    console.log(usuario);
     const traerCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
         if (res.data) {
@@ -85,38 +92,30 @@ export default function Detalles() {
             setMaterias(res.data?.map(d => ({ id: d.id, nombre: d.nombre })))
         }
     }
-    // const traerDocente = async () => {
-    //     if (usuario) {
-    //         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.id}`)
-    //         if (res.data) {
-    //             setDocente(res.data)
-    //         }
-    //     }
-    // }
-    // const traerAlumno = async () => {
-    //     if (usuario) {
-    //         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`)
-    //         console.log(res.data);
-    //         if (res.data) {
-    //             console.log(res.data);
-    //             setAlumno(res.data)
-    //         }
-    //     }
-    // }
+
     const traerUsuario = async () => {
         setCargando(true)
+        if (id) {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`)
+            setUsuario(res.data[0])
+            setCargando(false)
+            return
+        }
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         console.log(res.data);
         if (res.data) {
-            setUsuarioLogueado(res.data)
+            setUsuario(res.data)
         }
         setCargando(false)
     }
 
+    const handleUsuario = (e) => {
+        setDataUsuario({ ...dataUsuario, [e.target.name]: e.target.value })
+    }
     const handleFecha = (value) => {
         setFecha(new Date(value))
+        setDataUsuario({ ...dataUsuario, fechanacimiento: new Date(value).toLocaleDateString('es-AR').split('T')[0] })
     }
-
 
     const handleCursos = (event) => {
         const {
@@ -138,50 +137,25 @@ export default function Detalles() {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
-
     const updateProfile = async () => {
-        console.log(selectedEnf, alergias);
-        console.log(usuario);
+        setGuardando(true)
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${usuario?.id}`, dataUsuario)
+        setGuardando(false)
 
-        let campos = {}
-        if (selectedEnf.length) {
-            campos = {
-                ...campos,
-                enfermedades: selectedEnf
-            }
-        }
-        if (alergias) {
-            campos = {
-                ...campos,
-                alergias: alergias
-            }
-        }
-        if (newPassword) {
-            if (usuario?.password === confirmPassword) {
-                setMensaje("Contraseña invalida")
-            }
-            campos = {
-                ...campos,
-                password: newPassword
-            }
-        }
-        console.log(campos);
-        // setGuardando(true)
-        // const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${usuario?.id}`, campos)
-        // setGuardando(false)
-        // setRespuesta({
-        //     ...respuesta,
-        //     status: res.status,
-        //     mensaje: res.data?.mensaje
-        // })
-        // setTimeout(() => {
-        //     setRespuesta({
-        //         ...respuesta,
-        //         status: 0,
-        //         mensaje: ''
-        //     })
-        // }, 2000);
-
+        setRespuesta({
+            ...respuesta,
+            status: res.status,
+            mensaje: res.data?.mensaje
+        })
+        setTimeout(() => {
+            setRespuesta({
+                ...respuesta,
+                status: 0,
+                mensaje: ''
+            })
+            setEditMode(false)
+            traerUsuario()
+        }, 2000);
     }
 
     const handleCurso = (e) => {
@@ -189,6 +163,13 @@ export default function Detalles() {
     }
     return (
         <Layout>
+            {
+                respuesta.status !== 0 && (
+                    <Alert variant="outlined" color={respuesta.status === 200 ? 'success' : 'error'}>
+                        {respuesta.mensaje}
+                    </Alert>
+                )
+            }
             <Grid container >
                 <Grid item xs={12} sx={{ marginBottom: "20px" }}>
                     <Button variant="outlined" sx={{ border: "none", marginLeft: "-20px" }}
@@ -274,18 +255,18 @@ export default function Detalles() {
 
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Nombre</strong> <br />
-                                            Juan
-                                            {/* {usuario?.nombre} */}
+
+                                            {usuario?.nombre}
                                         </Typography>
 
 
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Apellido</strong> <br />
-                                            {/* {usuario?.apellido} */}
+                                            {usuario?.apellido}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Legajo</strong> <br />
-                                            {/* {usuario?.legajo} */}
+                                            {usuario?.legajo}
                                         </Typography>
                                         {
                                             alumno && (
@@ -305,20 +286,20 @@ export default function Detalles() {
                                     >
 
                                         <Typography variant="h6" sx={{ width: '200px' }} >
-                                            <strong>Mail</strong> <br />
-                                            {/* {usuario?.localidad} */}
+                                            <strong>Correo</strong> <br />
+                                            {usuario?.correo}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Contraseña</strong> <br />
-                                            {/* {usuario?.direccion} */}
+                                            {usuario?.password}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '150px' }} >
                                             <strong>Localidad</strong> <br />
-                                            {/* {usuario?.telefono} */}
+                                            {usuario?.localidad}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '150px' }} >
                                             <strong>Dirección</strong> <br />
-                                            {/* {usuario?.telefono} */}
+                                            {usuario?.direccion}
                                         </Typography>
                                     </Stack>
                                     <Stack
@@ -328,15 +309,15 @@ export default function Detalles() {
                                     >
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Telefono</strong> <br />
-                                            {/* {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechanacimiento).getFullYear()) : 'N/A'} */}
+                                            {usuario?.telefono}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '200px' }} >
                                             <strong>Edad</strong> <br />
-                                            {/* {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechanacimiento).getFullYear()) : 'N/A'} */}
+                                            {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechanacimiento.split('/')[2]).getFullYear()) : 'N/A'}
                                         </Typography>
                                         <Typography variant="h6" sx={{ width: '250px' }} >
                                             <strong>Fecha de Nacimiento</strong> <br />
-                                            {/* {usuario?.fechanacimiento || 'N/A'} */}
+                                            {usuario?.fechanacimiento || 'N/A'}
                                         </Typography>
 
                                     </Stack>
@@ -357,7 +338,8 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Nombre</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
+                                            <TextField name="nombre" value={dataUsuario.nombre}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
 
@@ -365,14 +347,16 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Apellido</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
+                                            <TextField name="apellido" value={dataUsuario.apellido}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Legajo</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "170px" }} size="small" variant="outlined" />
+                                            <TextField name="legajo" value={dataUsuario.legajo}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "170px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         {
@@ -415,33 +399,35 @@ export default function Detalles() {
                                     >
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
-                                                <strong>Mail</strong> <br />
+                                                <strong>Correo</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" variant="outlined" size="small" sx={{ width: "250px" }} />
+                                            <TextField name="correo" value={dataUsuario.correo}
+                                                onChange={handleUsuario} id="outlined-basic" variant="outlined" size="small" sx={{ width: "250px" }} />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
+                                            <TextField name="password" value={dataUsuario.password}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Localidad</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
+                                            <TextField name="localidad" value={dataUsuario.localidad}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Dirección</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
-
+                                            <TextField name="direccion" value={dataUsuario.direccion}
+                                                onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
                                         </FormControl>
-
                                     </Stack>
                                     <Stack
                                         direction={{ xs: 'column', sm: 'row' }}
@@ -452,15 +438,8 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Teléfono</strong> <br />
                                             </Typography>
-                                            <TextField id="outlined-basic" size="small" variant="outlined" />
-
-                                        </FormControl>
-                                        <FormControl>
-                                            <Typography variant="h6" sx={{ width: '200px' }} >
-                                                <strong>Edad</strong> <br />
-                                            </Typography>
-                                            <TextField id="outlined-basic" size="small" variant="outlined" />
-
+                                            <TextField name="telefono" value={dataUsuario.telefono}
+                                                onChange={handleUsuario} id="outlined-basic" size="small" variant="outlined" />
                                         </FormControl>
                                         <FormControl>
                                             <Typography variant="h6" sx={{ width: '200px' }} >
@@ -477,9 +456,7 @@ export default function Detalles() {
                                                     MenuProps={{ disableScrollLock: true }}
                                                 />
                                             </LocalizationProvider>
-
                                         </FormControl>
-
                                     </Stack>
                                 </Box>
                             )
@@ -489,7 +466,7 @@ export default function Detalles() {
 
                         <Divider sx={{ marginTop: '20px' }}></Divider>
                         {
-                            docente && !editmode && (
+                            docente && !editMode && (
                                 <Box>
                                     <Typography variant="h5" sx={{ marginBottom: '20px' }}>
                                         <strong>
@@ -508,7 +485,7 @@ export default function Detalles() {
                             )
                         }
                         {
-                            docente && editmode && (
+                            docente && editMode && (
                                 <Box>
                                     <Typography variant="h5" sx={{ marginBottom: '20px' }}>
                                         <strong>
@@ -550,7 +527,7 @@ export default function Detalles() {
                             )
                         }
                         {
-                            preceptor && !editmode && (
+                            preceptor && !editMode && (
                                 <Box>
                                     <Typography variant="h5" sx={{ marginBottom: '20px' }}>
                                         <strong>
@@ -569,7 +546,7 @@ export default function Detalles() {
                             )
                         }
                         {
-                            preceptor && editmode && (
+                            preceptor && editMode && (
                                 <Box>
                                     <Typography variant="h5" sx={{ marginBottom: '20px' }}>
                                         <strong>

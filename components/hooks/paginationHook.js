@@ -7,7 +7,7 @@ export function usePagination(data, itemsPorPagina) {
     function dataActual() {
         const inicio = (paginaActual - 1) * itemsPorPagina
         const fin = inicio + itemsPorPagina
-        return data.slice(inicio, fin)
+        return data?.slice(inicio, fin)
     }
 
     function siguiente() {

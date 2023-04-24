@@ -13,47 +13,38 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            let { correo, legajo, nombre, apellido } = req.query
-            console.log(correo, legajo, nombre, apellido);
-            let OR = []
+            let { idUsuario, idRol, idLogged } = req.query
+            console.log(idUsuario, idRol, idLogged);
+            let and = []
             let options = {
                 include: {
                     rol: true
                 },
             }
-            if (correo) {
-                OR.push({
-                    correo: {
-                        contains: correo
+            if (idUsuario) {
+                and.push({
+                    id: Number(idUsuario)
+                })
+            }
+            if (idRol) {
+                and.push({
+                    rol: {
+                        id: Number(idRol)
                     }
                 })
             }
-            if (legajo) {
-                OR.push({
-                    legajo: {
-                        contains: legajo
+            if (idLogged) {
+                and.push({
+                    id: {
+                        not: Number(idLogged)
                     }
                 })
             }
-            if (nombre) {
-                OR.push({
-                    nombre: {
-                        contains: nombre[0].toUpperCase() + nombre.slice(1)
-                    }
-                })
-            }
-            if (apellido) {
-                OR.push({
-                    apellido: {
-                        contains: apellido[0].toUpperCase() + apellido.slice(1)
-                    }
-                })
-            }
-            if (OR.length) {
+            if (and.length) {
                 options = {
                     ...options,
                     where: {
-                        OR: OR
+                        AND: and
                     }
                 }
             }

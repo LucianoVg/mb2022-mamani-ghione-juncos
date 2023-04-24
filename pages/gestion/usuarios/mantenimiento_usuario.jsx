@@ -16,19 +16,16 @@ export default function MantenimientoUsuario() {
     const [usuarios, setUsuarios] = useState([])
     const router = useRouter()
     const { loading, authUser } = useAuth()
-    // const [nombre, setNombre] = useState("")
-    // const [apellido, setApellido] = useState("")
-    // const [legajo, setLegajo] = useState("")
-    const queryParams = []
+    let queryParams = []
     const pageSize = 5
     const cantidadPaginas = Math.ceil(usuarios?.length / pageSize)
-    const paginacion = usePagination(usuarios || [], pageSize)
+    const paginacion = usePagination(usuarios, pageSize)
     const [pagina, setPagina] = useState(1)
     const [cargandoInfo, setCargandoInfo] = useState(false)
-    const [usuario, setUsuario] = useState({ rol: '' })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const [rol, setRol] = useState(0)
     const [roles, setRoles] = useState([])
-
+    const [idSelectedUser, setIdSelectedUser] = useState(0)
 
     const handlerCambioPagina = (e, pagina) => {
         setPagina(pagina)
@@ -59,40 +56,36 @@ export default function MantenimientoUsuario() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ rol: res.data?.rol?.tipo })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
     const traerUsuarios = async () => {
-        // if (legajo) {
-        //     queryParams.push({ legajo })
-        // }
-        // if (nombre) {
-        //     queryParams.push({ nombre })
-        // }
-        // if (apellido) {
-        //     queryParams.push({ apellido })
-        // }
+        queryParams.push({ idLogged: usuario.id })
+        if (idUsuario) {
+            queryParams.push({ idUsuario })
+        }
+        if (rol) {
+            queryParams.push({ idRol: rol })
+        }
         let params = ""
         queryParams.forEach(qp => {
             for (const key in qp) {
                 params += `${key}=${qp[key]}&`
             }
         })
+        console.log(params);
         setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?${params}`)
         if (res.data) {
             setUsuarios(res.data)
-            // limpiarCampos()
+            queryParams = []
+            setRol(0)
         }
         setCargandoInfo(false)
     }
-    // const limpiarCampos = () => {
-    //     setNombre("")
-    //     setApellido("")
-    //     setLegajo("")
-    // }
     const traerRoles = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles`)
+        let param = `?rol=${usuario.rol}`
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles${param}`)
         if (res.status === 200) {
             console.log(res.data);
             setRoles(res.data)
@@ -100,46 +93,26 @@ export default function MantenimientoUsuario() {
     }
     const handleRol = (e) => {
         setRol(e.target.value)
-
     }
-
-
-
-
 
     const [idUsuario, setIdUsuario] = useState(0)
-
-    const listarUsuarios = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/`)
-        if (res.status === 200) {
-            console.log(res.data);
-            setAlumnos(res.data)
-        }
-    }
 
     const handleUsuario = (e, newValue) => {
         if (newValue) {
             setIdUsuario(newValue.id);
+        } else {
+            setIdUsuario(0)
         }
     }
 
-    // const handleNombre = (e) => {
-    //     setNombre(e.target.value)
-    // }
-    // const handleLegajo = (e) => {
-    //     setLegajo(e.target.value)
-    // }
-    // const handleApellido = (e) => {
-    //     setApellido(e.target.value)
-    // }
-
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (e) => {
+    const handleClick = (e, id) => {
         setAnchorEl(e.currentTarget);
         if (!localStorage.getItem('vistas')) {
             localStorage.setItem('vistas', true)
         }
+        setIdSelectedUser(id)
     };
 
     const handleClose = () => {
@@ -167,7 +140,7 @@ export default function MantenimientoUsuario() {
                     )
                 }
                 <Typography variant="h4" sx={{ textAlign: 'center', m: 2 }}>Usuarios del Sistema</Typography>
-                <Box direction='row'>
+                <Box direction='row' sx={{ flex: 1, alignItems: 'center', justifyContent: 'space-evenly' }}>
                     <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
                         <Autocomplete
                             disablePortal
@@ -200,7 +173,6 @@ export default function MantenimientoUsuario() {
                             sx={{ width: '170px' }}
                             MenuProps={{ disableScrollLock: true }}
                         >
-
                             {
                                 roles && roles.map((r, i) => (
                                     <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
@@ -208,44 +180,14 @@ export default function MantenimientoUsuario() {
                             }
                         </Select>
                     </FormControl>
-                </Box>
-
-                {/* <Grid container xs={12}>
-                <Grid item md={'auto'} m={1}>
-                    <TextField
-                        name="legajo"
-                        value={legajo}
-                        type="number"
-                        onChange={handleLegajo}
-                        variant="outlined"
-                        label="Legajo" />
-                </Grid>
-                <Grid item md={'auto'} m={1}>
-                    <TextField
-                        name="nombre"
-                        value={nombre}
-                        onChange={handleNombre}
-                        variant="outlined"
-                        label="Nombre" />
-                </Grid>
-                <Grid item md={'auto'} m={1}>
-                    <TextField
-                        name="apellido"
-                        value={apellido}
-                        onChange={handleApellido}
-                        variant="outlined"
-                        label="Apellido" />
-                </Grid>
-                <Grid item md={'auto'} m={1}>
                     <Button
+                        sx={{ mx: 3 }}
+                        onClick={traerUsuarios}
                         variant="outlined"
-                        endIcon={<Search />}
-                        color="info"
-                        onClick={traerUsuarios}>
+                        startIcon={<Search />}>
                         Buscar
                     </Button>
-                </Grid>
-            </Grid> */}
+                </Box>
 
                 {
                     !cargandoInfo && (
@@ -265,7 +207,7 @@ export default function MantenimientoUsuario() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {paginacion.dataActual().map((u, i) => (
+                                    {paginacion.dataActual()?.map((u, i) => (
                                         <TableRow key={i}>
                                             <TableCell align="right">{u.rol?.tipo}</TableCell>
                                             <TableCell align="right">{u.legajo}</TableCell>
@@ -277,21 +219,13 @@ export default function MantenimientoUsuario() {
                                             <TableCell align="right">{u.localidad}</TableCell>
 
                                             <TableCell align="right">
-
-
-
-                                                <IconButton onClick={handleClick}>
-
+                                                <IconButton onClick={(e) => handleClick(e, u.id)}>
                                                     <MoreVertIcon sx={{ cursor: 'pointer', color: 'black' }} />
-
                                                 </IconButton>
-
-
                                                 <Popover
                                                     id={id}
                                                     open={open}
                                                     anchorEl={anchorEl}
-
                                                     onClose={handleClose}
                                                     anchorOrigin={{
                                                         vertical: 'bottom',
@@ -304,21 +238,18 @@ export default function MantenimientoUsuario() {
                                                     PaperProps={{
                                                         style: { width: '100px', boxShadow: "0px 0px 6px 1px rgb(0 0 0 / 0.2)", position: "fixed" },
                                                     }}
-
-
                                                 >
                                                     <List>
                                                         <ListItem
                                                             disablePadding
                                                         >
-                                                            <ListItemButton component="a" href="/gestion/usuarios/perfil_usuario" >
+                                                            <ListItemButton component="a" href={`/gestion/usuarios/${idSelectedUser}`} >
                                                                 <ListItemText primary="Detalles" />
                                                             </ListItemButton>
                                                         </ListItem>
                                                         <ListItem
                                                             disablePadding
                                                         >
-
                                                             <ListItemButton component="a" >
                                                                 <ListItemText primary="Eliminar" />
                                                             </ListItemButton>

@@ -12,7 +12,8 @@ export default async function handler(
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     try {
-        const roles = await traerRoles()
+        const { rol } = req.query
+        const roles = await traerRoles(rol)
         return res.status(200).json(roles)
     } catch (error) {
         return res.status(400).send(error)
