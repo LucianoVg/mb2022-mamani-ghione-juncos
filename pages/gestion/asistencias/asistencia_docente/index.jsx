@@ -2,7 +2,7 @@ import { Layout } from "../../../../components/layout";
 import React from 'react';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Stack, FormControl, Button, Container, Grid, InputLabel,Autocomplete, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, Modal, TextareaAutosize, IconButton } from "@mui/material";
+import { Box, Stack, FormControl, Button, Container, Grid, InputLabel, Autocomplete, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Pagination, Typography, Modal, TextareaAutosize, IconButton } from "@mui/material";
 import Switch from '@mui/material/Switch';
 // DATEPICKER
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -28,10 +28,6 @@ export default function Asistencias() {
     const [asistencias, setAsistencias] = useState()
     const cantidadPaginas = Math.ceil(asistencias?.length / pageSize)
     const paginacion = usePagination(asistencias || [], pageSize)
-
-    const [nombreDocente, setNombreDocente] = useState("")
-    const [apellidoDocente, setApellidoDocente] = useState("")
-    const [legajo, setLegajo] = useState("")
     const [fecha, setFecha] = useState(null)
 
     const { loading, authUser } = useAuth()
@@ -76,11 +72,8 @@ export default function Asistencias() {
         setCargandoInfo(false)
     }
 
-
-
-
     const traerDocentes = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario.id}`)
         console.log(res.data);
         if (res.data) {
             setDocentes(res.data)
@@ -93,22 +86,13 @@ export default function Asistencias() {
     const handleDocente = (e, newValue) => {
         if (newValue) {
             setIdDocente(newValue.id);
+        } else {
+            setIdDocente(0)
         }
     }
-
-
- 
-
-
     const buscarAsistencias = async () => {
-        if (nombreDocente) {
-            queryParams.push({ nombreDocente })
-        }
-        if (apellidoDocente) {
-            queryParams.push({ apellidoDocente })
-        }
-        if (legajo) {
-            queryParams.push({ legajo })
+        if (idDocente) {
+            queryParams.push({ idDocente })
         }
         if (fecha) {
             queryParams.push({ fecha: fecha.toLocaleDateString('es-AR').split('T')[0] })
@@ -133,16 +117,6 @@ export default function Asistencias() {
         paginacion.saltar(pagina)
     }
 
-    const handleNombreDocente = (e) => {
-        setNombreDocente(e.target.value)
-    }
-
-    const handleApellidoDocente = (e) => {
-        setApellidoDocente(e.target.value)
-    }
-    const handleLegajo = (e) => {
-        setLegajo(e.target.value)
-    }
     const handleFecha = (value) => {
         setFecha(new Date(value))
     }
@@ -359,7 +333,7 @@ export default function Asistencias() {
                         <Box sx={{ marginTop: "25px" }}>
                             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
                                 <Autocomplete
-                                sx={{width: "250px"}}
+                                    sx={{ width: "250px" }}
                                     disablePortal
                                     id="combo-box-demo"
                                     // value={value}
@@ -367,13 +341,13 @@ export default function Asistencias() {
                                     onChange={handleDocente}
                                     getOptionLabel={(docente) => `${docente?.usuario?.apellido} ${docente?.usuario?.nombre}`}
                                     options={docentes}
-                       
+
                                     isOptionEqualToValue={(option, value) =>
                                         option?.usuario?.apellido === value?.usuario?.apellido
                                     }
                                     noOptionsText={"No existe un docente con ese nombre"}
                                     renderOption={(props, docente) => (
-                                        <Box  component="li" {...props} key={docente?.id}>
+                                        <Box component="li" {...props} key={docente?.id}>
                                             {docente?.usuario?.apellido} {docente?.usuario?.nombre}
                                         </Box>
                                     )}

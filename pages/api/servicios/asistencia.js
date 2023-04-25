@@ -123,17 +123,14 @@ export async function DetalleAsistencia(id) {
     }
 }
 
-export async function updateAsistencia(id, presente, ausente, ausenteJustificado, llegadaTarde, llegadaTardeJustificada, mediaFalta, mediaFaltaJustificada, motivo = "", idUsuario) {
+export async function updateAsistencia(id, presente, ausente, llegadaTarde, mediaFalta, motivo = "", idUsuario) {
     try {
         const asistencia = await Prisma.newPrisma.asistencia.update({
             data: {
                 presente: presente,
                 ausente: ausente,
-                ausentejustificado: ausenteJustificado,
                 llegadatarde: llegadaTarde,
-                llegadatardejustificada: llegadaTardeJustificada,
                 mediafalta: mediaFalta,
-                mediafaltajustificada: mediaFaltaJustificada,
                 motivo: motivo,
                 idusuario: Number(idUsuario),
                 actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]

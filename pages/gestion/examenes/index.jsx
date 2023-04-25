@@ -118,7 +118,8 @@ export default function FechasExamen() {
       <Typography variant='h4' sx={{ textAlign: 'center' }}>Fechas de Examen</Typography>
       {
         !guardandoEvento && !cargando && (
-          <Calendar data={fechasExamen}
+          <Calendar
+            data={fechasExamen}
             onAdd={onAdd}
             onUpdate={onUpdate}
             onDelete={onDelete} />

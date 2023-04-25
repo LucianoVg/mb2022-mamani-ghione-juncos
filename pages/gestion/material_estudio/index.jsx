@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Alert, CircularProgress } from "@mui/material";
+import { useEffect, useRef, useState } from 'react'
+import { Alert, CircularProgress, LinearProgress, Tab, Tabs } from "@mui/material";
 
 import { Layout } from "../../../components/layout";
 import { Box, Button, Stack, IconButton, FormControl, ListSubheader, Item, TableContainer, TableRow, TableHead, Table, TableBody, TableCell, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
@@ -13,38 +13,34 @@ import { useAuth } from '../../../components/context/authUserProvider';
 import { useRouter } from 'next/router';
 import { guardarImagen, traerImagen } from "../../api/servicios/portada";
 import { Container } from '@mui/system';
-import { Upload } from '@mui/icons-material';
+import { FileOpenSharp, Upload } from '@mui/icons-material';
 import Loading from '../../../components/loading';
+import { TabPanel } from '../../../components/tabPanel';
 
 const MaterialEstudio = () => {
-    const [idCurso, setIdCurso] = useState(0);
+    const [idCurso, setIdCurso] = useState('');
     const [materias, setMaterias] = useState()
     const [cursos, setCursos] = useState()
     const handleCurso = (e) => {
         setIdCurso(Number(e.target.value));
+        descargarMaterial(tabIndex + 1, Number(e.target.value))
     };
 
     const { loading, authUser } = useAuth()
     const [idMateria, setIdMateria] = useState('');
-    const [docs1erTrimestre, setDocs1erTrimestre] = useState(null)
-    const [docs2doTrimestre, setDocs2doTrimestre] = useState(null)
-    const [docs3erTrimestre, setDocs3erTrimestre] = useState(null)
+    const [subiendo, setSubiendo] = useState(false)
     const [trimestres, setTrimestres] = useState()
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    const [subiendoT1, setSubiendoT1] = useState(false)
-    const [subiendoT2, setSubiendoT2] = useState(false)
-    const [subiendoT3, setSubiendoT3] = useState(false)
-    const [bajandoT1, setBajandoT1] = useState(false)
-    const [bajandoT2, setBajandoT2] = useState(false)
-    const [bajandoT3, setBajandoT3] = useState(false)
-    const [t1SubidoMsg, setT1SubidoMsg] = useState("")
-    const [t2SubidoMsg, setT2SubidoMsg] = useState("")
-    const [t3SubidoMsg, setT3SubidoMsg] = useState("")
-    const [materialEstudio, setMaterialEstudio] = useState()
     const [alumno, setAlumno] = useState()
     const [mensaje, setMensaje] = useState("")
+    const [tabIndex, setTabIndex] = useState(0)
+    const [subir, setSubir] = useState(false)
+    const [archivos, setArchivos] = useState(null)
+    const [materiales, setMateriales] = useState([])
+
     const handleMateria = (e) => {
         setIdMateria(e.target.value);
+        descargarMaterial(tabIndex + 1, 0, e.target.value)
     };
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
@@ -76,137 +72,79 @@ const MaterialEstudio = () => {
             setAlumno(res.data)
         }
     }
-    const handleDocs1erTrimestre = (e) => {
-        console.log(e.currentTarget.files);
-        setDocs1erTrimestre(e.currentTarget.files)
-    }
-    const handleDocs2doTrimestre = (e) => {
-        setDocs2doTrimestre(e.currentTarget.files)
-    }
-    const handleDocs3erTrimestre = (e) => {
-        setDocs3erTrimestre(e.currentTarget.files)
-    }
-
-    const guardarMaterial = async () => {
-        // console.log("Id Curso", idCurso);
-        // console.log("Id Materia", idMateria);
-        // console.log("Material 1er Trimestre", docs1erTrimestre);
-        // console.log("Material 2do Trimestre", docs2doTrimestre);
-        // console.log("Material 3er Trimestre", docs3erTrimestre);
-        if (docs1erTrimestre) {
-            setSubiendoT1(true)
-            for (let i = 0; i < docs1erTrimestre?.length; i++) {
-                const doc = docs1erTrimestre[i];
-                await guardarImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`, doc)
-                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[0]?.trimestre}/${doc.name}`)
-                if (url.length) {
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                        titulo: doc.name,
-                        url: url,
-                        idCurso: idCurso,
-                        idMateria: idMateria,
-                        idTrimestre: trimestres[0]?.id,
-                        idUsuario: usuario.id,
-                        fecha: new Date().toISOString().split('T')[0]
-                    })
-                    if (res.data && i === docs1erTrimestre.length - 1) {
-                        setT1SubidoMsg("Material 1 Subido!")
-                        setTimeout(() => {
-                            setT1SubidoMsg("")
-                        }, 2000);
-                        setDocs1erTrimestre(null)
-                    }
+    const subirMaterial = async (idTrimestre) => {
+        if (idCurso && idMateria) {
+            for (const key in archivos) {
+                const file = archivos[key]
+                if (typeof file === 'object') {
+                    setSubiendo(true)
+                    guardarImagen(`materialEstudio/Trimestre ${idTrimestre}/${file.name}`, file)
+                        .then(async result => {
+                            const url = await traerImagen(`materialEstudio/Trimestre ${idTrimestre}/${file.name}`)
+                            console.log("FILE UPLOADED: ", url);
+                            const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
+                                titulo: file.name,
+                                url: url,
+                                idCurso: idCurso,
+                                idMateria: idMateria,
+                                idTrimestre: idTrimestre,
+                                idUsuario: usuario.id
+                            })
+                            if (res.status === 200) {
+                                setMensaje("Material subido correctamente")
+                                descargarMaterial(idTrimestre, idCurso, idMateria)
+                            } else {
+                                setMensaje("No se pudo subir el material")
+                            }
+                        }).catch(error => {
+                            console.log(error);
+                            setMensaje(error.message)
+                        }).finally(() => {
+                            setTimeout(() => {
+                                setMensaje("")
+                            }, 2000);
+                            setSubiendo(false)
+                            setSubir(false)
+                        })
                 }
             }
-            setSubiendoT1(false)
-        }
-        if (docs2doTrimestre) {
-            setSubiendoT2(true)
-            for (let i = 0; i < docs2doTrimestre?.length; i++) {
-                const doc = docs2doTrimestre[i];
-                const result = await guardarImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`, doc)
-                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[1]?.trimestre}/${doc.name}`)
-                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                    titulo: doc.name,
-                    url: url,
-                    idCurso: idCurso,
-                    idMateria: idMateria,
-                    idTrimestre: trimestres[1]?.id,
-                    idUsuario: usuario.id,
-                    fecha: new Date().toISOString().split('T')[0]
-                })
-                if (res.data && i === docs2doTrimestre.length - 1) {
-                    setT2SubidoMsg("Material 2 Subido!")
-                    setTimeout(() => {
-                        setT2SubidoMsg("")
-                    }, 2000);
-                    setDocs2doTrimestre(null)
-                }
-            }
-            setSubiendoT2(false)
-        }
-        if (docs3erTrimestre) {
-            setSubiendoT3(true)
-            for (let i = 0; i < docs3erTrimestre?.length; i++) {
-                const doc = docs3erTrimestre[i];
-                await guardarImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`, doc)
-                const url = await traerImagen(`materialEstudio/${idMateria}/${trimestres[2]?.trimestre}/${doc.name}`)
-                const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio`, {
-                    titulo: doc.name,
-                    url: url,
-                    idCurso: idCurso,
-                    idMateria: idMateria,
-                    idTrimestre: trimestres[2]?.id,
-                    idUsuario: usuario.id,
-                    fecha: new Date().toISOString().split('T')[0]
-                })
-                if (res.data && i === docs3erTrimestre.length - 1) {
-                    setT3SubidoMsg("Material 3 Subido!")
-                    setTimeout(() => {
-                        setT3SubidoMsg("")
-                    }, 2000);
-                    setDocs3erTrimestre(null)
-                }
-            }
-            setSubiendoT3(false)
-        }
-    }
-    const descargarMaterial = async (idTrimestre) => {
-        switch (idTrimestre) {
-            case 1:
-                setBajandoT1(true)
-                break;
-            case 2:
-                setBajandoT2(true)
-                break;
-            case 3:
-                setBajandoT3(true)
-                break;
-        }
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/${idTrimestre}/${alumno?.cursoxdivision?.id}`)
-        console.log(res.data);
-        if (res.status === 200) {
-            setMaterialEstudio(res.data)
-        }
-        if (!res.data?.length) {
-            setMensaje('No hay material de estudio en este trimestre')
+        } else {
+            setMensaje("Elija un curso y una materia")
             setTimeout(() => {
-                setMensaje('')
+                setMensaje("")
             }, 2000);
         }
-        switch (idTrimestre) {
-            case 1:
-                setBajandoT1(false)
-                break;
-            case 2:
-                setBajandoT2(false)
-                break;
-            case 3:
-                setBajandoT3(false)
-                break;
+    }
+    const descargarMaterial = async (idTrimestre, idCurso, idMateria) => {
+        try {
+            let params = `?idTrimestre=${idTrimestre}`
+            if (idCurso) {
+                params += `&idCurso=${idCurso}`
+            }
+            if (idMateria) {
+                params += `&idMateria=${idMateria}`
+            }
+            console.log(params);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/search${params}`)
+            console.log(res.data);
+            if (res.status === 200) {
+                setMateriales(res.data)
+            }
+        } catch (error) {
+            console.log(error);
+            setMensaje(error)
+            setTimeout(() => {
+                setMensaje("")
+            }, 2000);
+        }
+
+    }
+    const handleArchivos = (e) => {
+        if (e.target.files.length) {
+            setArchivos(e.target.files)
+            setSubir(true)
         }
     }
-
     const router = useRouter()
     useEffect(() => {
         if (!loading && !authUser) {
@@ -221,6 +159,7 @@ const MaterialEstudio = () => {
                 traerMaterias()
                 traerTrimestres()
                 traerAlumno()
+                descargarMaterial(1)
             }
         }
     }, [loading, authUser, usuario.id, usuario.rol])
@@ -228,6 +167,20 @@ const MaterialEstudio = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Docente'
             || usuario.rol === 'Estudiante'
+    }
+    const borrarMaterial = async (e, id, idTrimestre) => {
+        try {
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/delete/${id}`)
+            setMensaje(res.data)
+            descargarMaterial(idTrimestre)
+        } catch (error) {
+            console.log(error);
+            setMensaje(error.message)
+        } finally {
+            setTimeout(() => {
+                setMensaje("")
+            }, 2000);
+        }
     }
     return (
         <Layout>
@@ -258,6 +211,7 @@ const MaterialEstudio = () => {
                                         name='idCurso'
                                         value={idCurso}
                                         label="Curso"
+                                        required
                                         onChange={handleCurso}
 
                                     >
@@ -279,6 +233,7 @@ const MaterialEstudio = () => {
                                         name="idMateria"
                                         value={idMateria}
                                         label="Materia"
+                                        required
                                         sx={{ width: '260px' }}
                                         MenuProps={{ disableScrollLock: true }}
                                     >
@@ -350,134 +305,121 @@ const MaterialEstudio = () => {
                         </>
                     )
                 }
+                {
+                    subiendo && <LinearProgress sx={{ my: 2 }} />
+                }
+                {
+                    mensaje && <Alert sx={{ my: 2 }} variant='outlined' color='info'>{mensaje}</Alert>
+                }
                 <Box sx={{ marginTop: "30px" }}>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
+                    {
+                        trimestres && (
+                            <>
+                                <Tabs value={tabIndex} onChange={(e, newValue) => {
+                                    setTabIndex((_) => newValue);
+                                    descargarMaterial(newValue + 1)
+                                }}>
+                                    {
+                                        trimestres?.map(t => (
+                                            <Tab key={t.id} label={t.trimestre} />
+                                        ))
+                                    }
+                                </Tabs>
+                                {
+                                    trimestres?.map((t, i) => (
+                                        <TabPanel key={t.id} value={tabIndex} index={i}>
+                                            <TableContainer key={t.id}>
+                                                <Table>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell colSpan={12}
+                                                                sx={{
+                                                                    color: 'black',
+                                                                    backgroundColor: 'lightblue',
+                                                                }}>
+                                                                <Box
+                                                                    sx={{
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between'
+                                                                    }}>
 
-                                    <TableCell colSpan={12}
-                                        sx={{
-                                            color: 'black',
-                                            backgroundColor: 'lightblue',
-                                        }}>
+                                                                    {
+                                                                        subir ? (
+                                                                            tienePermisos()
+                                                                            && <Button
+                                                                                onClick={() => subirMaterial(t.id)} variant="contained" size="small"
+                                                                                endIcon={<FileUploadIcon />}>
+                                                                                Subir apunte
+                                                                            </Button>
+                                                                        ) : (
+                                                                            tienePermisos() && <Button variant="contained"
+                                                                                component={"label"}
+                                                                                size="small" endIcon={<FileOpenSharp />}>
+                                                                                Elegir apuntes
 
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
+                                                                                <input
+                                                                                    name='archivos'
+                                                                                    onChange={handleArchivos}
+                                                                                    hidden accept="file/**"
+                                                                                    multiple type="file" />
+                                                                            </Button>
+                                                                        )
+                                                                    }
+                                                                    <Typography variant="h6"   >
+                                                                        {t.trimestre}
+                                                                    </Typography>
+                                                                    <h1></h1>
+                                                                </Box>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {
+                                                            materiales.length > 0 && materiales.map(m => (
+                                                                <TableRow key={m.id}>
+                                                                    <TableCell variant="head"
+                                                                        sx={{
+                                                                            color: 'black',
+                                                                        }}
+                                                                        colSpan={7}>
+                                                                        {m.titulo}
+                                                                    </TableCell>
+                                                                    <TableCell
+                                                                        sx={{ textAlign: "right" }}
+                                                                    >
+                                                                        {m.fecha}
+                                                                    </TableCell>
+                                                                    <TableCell
+                                                                        sx={{ textAlign: "right" }}>
+                                                                        <a href={m.url} target='_blank'>
+                                                                            <IconButton aria-label="fingerprint" color="primary"
+                                                                                sx={{ marginRight: "20px" }}
+                                                                            >
+                                                                                <DownloadIcon />
+                                                                            </IconButton>
+                                                                        </a>
+                                                                        {
+                                                                            tienePermisos() && (
+                                                                                <IconButton aria-label="fingerprint" color="primary"
+                                                                                    onClick={(e) => borrarMaterial(e, m.id, t.id)}>
+                                                                                    <DeleteIcon />
+                                                                                </IconButton>
+                                                                            )
+                                                                        }
+                                                                    </TableCell>
 
-
-                                            }}
-                                        >
-                                            <Button variant="contained" size="small" endIcon={<FileUploadIcon />}>
-                                                Subir apunte
-                                            </Button>
-
-                                            <Typography variant="h6"   >Primer Trimestre</Typography>
-<h1></h1>
-
-                                        </Box>
-
-
-
-
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-
-                                <TableRow >
-                                    <TableCell variant="head"
-                                        sx={{
-                                            color: 'black',
-
-                                        }}
-                                        colSpan={7}
-                                    >
-                                        Archivo
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        20/03/23
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        <IconButton aria-label="fingerprint" color="primary"
-                                            sx={{ marginRight: "20px" }}
-                                        >
-                                            <DownloadIcon />
-                                        </IconButton>
-                                        <IconButton aria-label="fingerprint" color="primary">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell variant="head"
-                                        sx={{
-                                            color: 'black',
-
-                                        }}
-                                        colSpan={7}
-                                    >
-                                        Archivo
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        20/03/23
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        <IconButton aria-label="fingerprint" color="primary"
-                                            sx={{ marginRight: "20px" }}
-                                        >
-                                            <DownloadIcon />
-                                        </IconButton>
-                                        <IconButton aria-label="fingerprint" color="primary">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-
-                                </TableRow>
-                                <TableRow >
-                                    <TableCell variant="head"
-                                        sx={{
-                                            color: 'black',
-
-                                        }}
-                                        colSpan={7}
-                                    >
-                                        Archivo
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        20/03/23
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        <IconButton aria-label="fingerprint" color="primary"
-                                            sx={{ marginRight: "20px" }}
-                                        >
-                                            <DownloadIcon />
-                                        </IconButton>
-                                        <IconButton aria-label="fingerprint" color="primary">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-
-                                </TableRow>
-
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                                                </TableRow>
+                                                            ))
+                                                        }
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        </TabPanel>
+                                    ))
+                                }
+                            </>
+                        )
+                    }
 
                 </Box >
 

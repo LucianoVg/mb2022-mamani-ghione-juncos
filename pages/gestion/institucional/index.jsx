@@ -55,7 +55,7 @@ export default function Institucional() {
             {
                 (usuario?.rol === 'Administrador'
                     || usuario?.rol === 'Director'
-                ) &&
+                ) && !fichaInstitucional &&
                 (
                     <div style={{ marginBottom: "20px" }}>
                         <Link href={'/gestion/institucional/generar_ficha_institucional'}>

@@ -115,8 +115,11 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                     setFechaInicio(e.appointmentData.startDate)
                     setFechaFin(e.appointmentData.endDate)
                 }}
-                onAppointmentFormOpening={onFormOpening}
-                onAppointmentAdded={() => onAdd(idCurso, asunto, fechaInicio, fechaFin)}
+                onAppointmentFormOpening={(e) => {
+                    e.popup.focus()
+                    onFormOpening(e)
+                }}
+                onAppointmentAdded={(e) => onAdd(idCurso, asunto, fechaInicio, fechaFin)}
                 onAppointmentUpdated={(e) => onUpdate(e.appointmentData)}
                 onAppointmentDeleted={(e) => onDelete(e.appointmentData)}>
 

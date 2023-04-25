@@ -1,12 +1,12 @@
 import { Prisma } from "./prisma";
 
-export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso, idMateria, idTrimestre, idUsuario) {
+export default async function guardarMaterialEstudio(titulo, url, idCurso, idMateria, idTrimestre, idUsuario) {
     try {
         const materialEstudio = await Prisma.newPrisma.materialestudio.create({
             data: {
                 titulo: titulo,
                 url: url,
-                fecha: fecha,
+                fecha: new Date().toLocaleDateString('es-AR').split('T')[0],
                 idcursoxdivision: Number(idCurso),
                 idmateria: Number(idMateria),
                 idtrimestre: Number(idTrimestre),
@@ -20,22 +20,19 @@ export default async function guardarMaterialEstudio(titulo, url, fecha, idCurso
     }
 }
 
-export async function descargarMaterialEstudio(idTrimestre, idCurso) {
+export async function descargarMaterialEstudio(idTrimestre, idCurso, idMateria) {
     try {
+        let and = [{ trimestre: { id: Number(idTrimestre) } }]
+
+        if (idCurso) {
+            and.push({ cursoxdivision: { id: Number(idCurso) } })
+        }
+        if (idMateria) {
+            and.push({ materia: { id: Number(idMateria) } })
+        }
         const material_estudio = await Prisma.newPrisma.materialestudio.findMany({
             where: {
-                AND: [
-                    {
-                        trimestre: {
-                            id: Number(idTrimestre)
-                        }
-                    },
-                    {
-                        cursoxdivision: {
-                            id: Number(idCurso)
-                        }
-                    }
-                ]
+                AND: and
             }
         })
         return material_estudio

@@ -5,7 +5,7 @@ export default async function handler(
     res
 ) {
     try {
-        const { legajo, fecha, nombreDocente, apellidoDocente } = req.query
+        const { fecha, idDocente } = req.query
         let OR = []
         let options = {
             include: {
@@ -24,35 +24,10 @@ export default async function handler(
                 }
             }
         }
-
-        if (legajo) {
+        if (idDocente) {
             OR.push({
                 docentexmateria: {
-                    usuario: {
-                        legajo: legajo
-                    }
-                }
-            })
-        }
-        if (nombreDocente) {
-            OR.push({
-                docentexmateria: {
-                    usuario: {
-                        nombre: {
-                            contains: nombreDocente[0].toUpperCase() + nombreDocente.slice(1)
-                        }
-                    }
-                }
-            })
-        }
-        if (apellidoDocente) {
-            OR.push({
-                docentexmateria: {
-                    usuario: {
-                        apellido: {
-                            contains: apellidoDocente[0].toUpperCase() + apellidoDocente.slice(1)
-                        }
-                    }
+                    id: Number(idDocente)
                 }
             })
         }
