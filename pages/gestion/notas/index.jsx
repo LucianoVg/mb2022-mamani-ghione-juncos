@@ -19,7 +19,7 @@ export default function Notas() {
     const [idMateria, setIdMateria] = useState(0)
     const [idDivision, setIdDivision] = useState(0)
     const [idAlumno, setIdAlumno] = useState(0)
-    const [usuario, setUsuario] = useState({ rol: '' })
+    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
     const [divisiones, setDivisiones] = useState([])
     const [materias, setMaterias] = useState([])
     const { loading, authUser } = useAuth()
@@ -31,6 +31,7 @@ export default function Notas() {
     const paginacion = usePagination(notas || [], pageSize)
     const [pagina, setPagina] = useState(1)
     const [trimestres, setTrimestres] = useState([])
+    const [docente, setDocente] = useState()
 
     let queryParams = []
 
@@ -53,13 +54,16 @@ export default function Notas() {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
+                if (usuario.rol === "Docente") {
+                    traerDocente()
+                }
                 traerDivisiones()
                 traerMaterias()
                 traerTrimestres()
                 traerNotas(0)
             }
         }
-    }, [loading, authUser, usuario.rol])
+    }, [loading, authUser, usuario.rol, usuario.id])
 
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
@@ -84,7 +88,7 @@ export default function Notas() {
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
-            setUsuario({ rol: res.data?.rol?.tipo })
+            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
         }
     }
     const traerDivisiones = async () => {
@@ -126,6 +130,7 @@ export default function Notas() {
         console.log(params);
         setCargandoInfo(true)
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notas?${params}`)
+        console.log("Notas", res.data);
         if (res.data) {
             setNotas(res.data)
         }
@@ -332,6 +337,13 @@ export default function Notas() {
         }
     }
 
+    const traerDocente = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario.id}`)
+        console.log(res.data);
+        if (res.data) {
+            setDocente(res.data)
+        }
+    }
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
@@ -355,67 +367,77 @@ export default function Notas() {
                                 sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
                                 MenuProps={{ disableScrollLock: true }}
                             >
-                                <ListSubheader>Primero</ListSubheader>
                                 {
-
-                                    materias && materias?.map((m, i) => (
-
-                                        m?.idcurso === 1 && (
-
+                                    docente ? (
+                                        [docente.materia].map((m, i) => (
                                             <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
+                                        ))
+                                    ) : (
+                                        <>
+                                            <ListSubheader>Primero</ListSubheader>
+                                            {
 
-                                    ))
-                                }
-                                <ListSubheader>Segundo</ListSubheader>
-                                {
+                                                materias && materias?.map((m, i) => (
 
-                                    materias && materias?.map((m, i) => (
+                                                    m?.idcurso === 1 && (
 
-                                        m?.idcurso === 2 && (
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
 
-                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
+                                                ))
+                                            }
+                                            <ListSubheader>Segundo</ListSubheader>
+                                            {
 
-                                    ))
-                                }
-                                <ListSubheader>Tercero</ListSubheader>
-                                {
+                                                materias && materias?.map((m, i) => (
 
-                                    materias && materias?.map((m, i) => (
+                                                    m?.idcurso === 2 && (
 
-                                        m?.idcurso === 3 && (
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
 
-                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
-                                    ))
-                                }
-                                <ListSubheader>Cuarto</ListSubheader>
-                                {
-                                    materias && materias?.map((m, i) => (
+                                                ))
+                                            }
+                                            <ListSubheader>Tercero</ListSubheader>
+                                            {
 
-                                        m?.idcurso === 4 && (
+                                                materias && materias?.map((m, i) => (
 
-                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
-                                    ))
-                                }
-                                <ListSubheader>Quinto</ListSubheader>
-                                {
-                                    materias && materias?.map((m, i) => (
-                                        m?.idcurso === 5 && (
+                                                    m?.idcurso === 3 && (
 
-                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
-                                    ))
-                                }
-                                <ListSubheader>Sexto</ListSubheader>
-                                {
-                                    materias && materias?.map((m, i) => (
-                                        m?.idcurso === 6 && (
-                                            <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
-                                        )
-                                    ))
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
+                                                ))
+                                            }
+                                            <ListSubheader>Cuarto</ListSubheader>
+                                            {
+                                                materias && materias?.map((m, i) => (
+
+                                                    m?.idcurso === 4 && (
+
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
+                                                ))
+                                            }
+                                            <ListSubheader>Quinto</ListSubheader>
+                                            {
+                                                materias && materias?.map((m, i) => (
+                                                    m?.idcurso === 5 && (
+
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
+                                                ))
+                                            }
+                                            <ListSubheader>Sexto</ListSubheader>
+                                            {
+                                                materias && materias?.map((m, i) => (
+                                                    m?.idcurso === 6 && (
+                                                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                                                    )
+                                                ))
+                                            }
+                                        </>
+                                    )
                                 }
                             </Select>
                         </FormControl>
@@ -472,32 +494,9 @@ export default function Notas() {
                         sx={{ marginBottom: "20px" }}
                         color="info"
                         variant="outlined"
-                        onClick={() => traerNotas()}>
+                        onClick={() => traerNotas(index)}>
                         Buscar
                     </Button>
-
-                    {/* <Box direction='row'>
-                        <TextField margin="normal"
-                            name="nombreAlumno"
-                            value={nombreAlumno}
-                            onChange={handleNombreAlumno}
-                            label="Nombre del alumno"
-                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                        />
-                        <TextField margin="normal"
-                            name="apellidoAlumno"
-                            value={apellidoAlumno}
-                            onChange={handleApellidoAlumno}
-                            label="Apellido del alumno" />
-
-                        <Button endIcon={<SearchOutlined />}
-                            sx={{ mt: 3, ml: 2 }}
-                            color="info"
-                            variant="outlined"
-                            onClick={() => traerNotas()}>
-                            Buscar
-                        </Button>
-                    </Box> */}
                 </Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={index} onChange={handleTrimestre}
@@ -509,8 +508,6 @@ export default function Notas() {
                                 <Tab key={t.id} label={t.trimestre} tabIndex={t.id} />
                             ))
                         }
-                        {/* <Tab label="Segundo Trimestre" />
-                        <Tab label="Tercer Trimestre" /> */}
                     </Tabs>
                 </Box>
                 {
@@ -526,8 +523,7 @@ export default function Notas() {
                             <Table sx={{ minWidth: 800 }}>
                                 <TableHead>
                                     {
-                                        (usuario?.rol === 'Docente'
-                                            || usuario?.rol === 'Vicedirector') && (
+                                        (usuario?.rol === 'Vicedirector') && (
                                             <TableRow>
                                                 <TableCell align="center">Legajo</TableCell>
                                                 <TableCell align="center">Sexo</TableCell>
@@ -681,7 +677,8 @@ export default function Notas() {
                                         )
                                     }
                                     {
-                                        usuario?.rol === 'Administrador' && (
+                                        (usuario?.rol === 'Administrador'
+                                            || usuario?.rol === "Docente") && (
                                             notas && paginacion.dataActual()?.map((n, i) => (
                                                 <TableRow key={i}>
                                                     <TableCell align="center">

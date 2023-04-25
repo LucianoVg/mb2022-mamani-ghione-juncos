@@ -15,9 +15,8 @@ export default async function handler(
 
         let { idMateria, idTrimestre, idDivision, idAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, idAlumno });
-        let AND = [
+        let OR = [
             { idtrimestre: Number(idTrimestre) },
-            { anoactual: new Date().getFullYear() }
         ]
 
         let options = {
@@ -41,10 +40,10 @@ export default async function handler(
 
         }
         if (idMateria) {
-            AND.push({ idmateria: Number(idMateria) })
+            OR.push({ idmateria: Number(idMateria) })
         }
         if (idDivision) {
-            AND.push({
+            OR.push({
                 alumnoxcursoxdivision: {
                     cursoxdivision: {
                         division: {
@@ -55,18 +54,18 @@ export default async function handler(
             })
         }
         if (idAlumno) {
-            AND.push({
+            OR.push({
                 alumnoxcursoxdivision: {
                     id: Number(idAlumno)
                 },
             })
         }
 
-        if (AND.length) {
+        if (OR.length) {
             options = {
                 ...options,
                 where: {
-                    AND: AND
+                    AND: OR
                 }
             }
         }

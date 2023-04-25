@@ -34,6 +34,7 @@ export async function traerDocentes(idusuario) {
                 }
             }
         })
+        console.log(docente);
         return docente
     } catch (error) {
         console.log(error);
