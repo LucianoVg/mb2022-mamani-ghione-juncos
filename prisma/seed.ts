@@ -290,7 +290,6 @@ async function main() {
     //                 ausentejustificado: false,
     //                 llegadatarde: false,
     //                 mediafalta: false,
-    //                 justificado: false,
     //                 creadoen: fecha,
     //                 idusuario: 1,
     //                 actualizadoen: ""
@@ -312,13 +311,11 @@ async function main() {
     //             ausente: false,
     //             ausentejustificado: false,
     //             llegadatarde: false,
-    //             llegadatardejustificada: false,
     //             mediafalta: false,
-    //             mediafaltajustificada: false,
-    //             motivo: "",
     //             creadoen: fecha,
     //             idusuario: 1,
     //             actualizadoen: ""
+               
     //         }
 
     //     })

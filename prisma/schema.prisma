@@ -51,9 +51,7 @@ model asistenciadocente {
   ausente                 Boolean?
   ausentejustificado      Boolean?
   llegadatarde            Boolean?
-  llegadatardejustificada Boolean?
   mediafalta              Boolean?
-  mediafaltajustificada   Boolean?
   motivo                  String?
   usuario                 usuario         @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
   docentexmateria         docentexmateria @relation(fields: [iddocentexmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)

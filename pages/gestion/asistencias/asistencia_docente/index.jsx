@@ -423,13 +423,11 @@ export default function Asistencias() {
                                         <TableCell scope="col">Apellido</TableCell>
                                         <TableCell scope="col">Nombre</TableCell>
                                         {/* <TableCell scope="col">Preceptor</TableCell> */}
-                                        <TableCell scope="col">P</TableCell>
-                                        <TableCell scope="col">A</TableCell>
-                                        <TableCell scope="col">AJ</TableCell>
-                                        <TableCell scope="col">LT</TableCell>
-                                        <TableCell scope="col">LTJ</TableCell>
-                                        <TableCell scope="col">MF</TableCell>
-                                        <TableCell scope="col">MFJ</TableCell>
+                                        <TableCell align="center" scope="col">Presente</TableCell>
+                                        <TableCell align="center" scope="col">Ausente</TableCell>
+                                        <TableCell align="center" scope="col">Ausente Justificado</TableCell>
+                                        <TableCell align="center" scope="col">Llegada Tarde</TableCell>
+                                        <TableCell align="center" scope="col">Media Falta</TableCell>
                                         <TableCell scope="col">
                                             {
                                                 !guardando && <span>Acción</span>
@@ -522,24 +520,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                    <TableCell className="col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === a?.id ? (
-                                                                <Switch
-                                                                    name="ltj"
-                                                                    checked={ltj}
-                                                                    onChange={handleLtj}
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    <Switch
-                                                                        type="checkbox"
-                                                                        checked={a.llegadatardejustificada}
-                                                                        disabled={bloquearCheck(a)}
-                                                                    />
-                                                                )
-                                                        }
-                                                    </TableCell>
+                                                   
                                                     <TableCell className="col-md-1 ">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -558,25 +539,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                    <TableCell className="col-md-1">
-                                                        {
-                                                            inEditMode.status && inEditMode.rowKey === a?.id ? (
-
-                                                                <Switch
-                                                                    name="mfj"
-                                                                    checked={mfj}
-                                                                    onChange={handleMfj}
-                                                                />
-                                                            ) :
-                                                                (
-                                                                    <Switch
-                                                                        type="checkbox"
-                                                                        checked={a.mediafaltajustificada}
-                                                                        disabled={bloquearCheck(a)}
-                                                                    />
-                                                                )
-                                                        }
-                                                    </TableCell>
+                                                   
 
                                                     <TableCell className="col-md-2">
                                                         {
@@ -693,24 +656,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                                                        <TableCell className="col-md-1">
-                                                            {
-                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
-                                                                    <Switch
-                                                                        name="ltj"
-                                                                        checked={ltj}
-                                                                        onChange={handleLtj}
-                                                                    />
-                                                                ) :
-                                                                    (
-                                                                        <Switch
-                                                                            type="checkbox"
-                                                                            checked={a.llegadatardejustificada}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    )
-                                                            }
-                                                        </TableCell>
+                                                       
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -729,25 +675,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                                                        <TableCell className="col-md-1">
-                                                            {
-                                                                inEditMode.status && inEditMode.rowKey === a?.id ? (
-
-                                                                    <Switch
-                                                                        name="mfj"
-                                                                        checked={mfj}
-                                                                        onChange={handleMfj}
-                                                                    />
-                                                                ) :
-                                                                    (
-                                                                        <Switch
-                                                                            type="checkbox"
-                                                                            checked={a.mediafaltajustificada}
-                                                                            disabled={bloquearCheck(a)}
-                                                                        />
-                                                                    )
-                                                            }
-                                                        </TableCell>
+                       
                                                         <TableCell className="col-md-2">
                                                             {
 
@@ -868,24 +796,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                                            <TableCell className="col-md-1">
-                                                                {
-                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
-                                                                        <Switch
-                                                                            name="ltj"
-                                                                            checked={ltj}
-                                                                            onChange={handleLtj}
-                                                                        />
-                                                                    ) :
-                                                                        (
-                                                                            <Switch
-                                                                                type="checkbox"
-                                                                                checked={a.llegadatardejustificada}
-                                                                                disabled={bloquearCheck(a)}
-                                                                            />
-                                                                        )
-                                                                }
-                                                            </TableCell>
+                                                     
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -904,25 +815,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                                            <TableCell className="col-md-1">
-                                                                {
-                                                                    inEditMode.status && inEditMode.rowKey === a?.id ? (
-
-                                                                        <Switch
-                                                                            name="mfj"
-                                                                            checked={mfj}
-                                                                            onChange={handleMfj}
-                                                                        />
-                                                                    ) :
-                                                                        (
-                                                                            <Switch
-                                                                                type="checkbox"
-                                                                                checked={a.mediafaltajustificada}
-                                                                                disabled={bloquearCheck(a)}
-                                                                            />
-                                                                        )
-                                                                }
-                                                            </TableCell>
+                                        
                                                             <TableCell className="col-md-2">
                                                                 {
 
