@@ -1,6 +1,6 @@
 import { TraerAsistencias } from "../../servicios/asistencia";
 
-export default async function hORler(req, res) {
+export default async function handler(req, res) {
     try {
         if (req.method === 'GET') {
             let { fecha, idCurso, idAlumno } = req.query

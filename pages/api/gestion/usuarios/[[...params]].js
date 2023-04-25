@@ -13,8 +13,8 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         if (req.method === 'GET') {
-            let { idUsuario, idRol, idLogged } = req.query
-            console.log(idUsuario, idRol, idLogged);
+            let { idUsuario, idRol, idLogged, rol } = req.query
+            console.log(idUsuario, idRol, idLogged, rol);
             let and = []
             let options = {
                 include: {
@@ -37,6 +37,22 @@ export default async function handler(
                 and.push({
                     id: {
                         not: Number(idLogged)
+                    }
+                })
+            }
+            if (rol === "Secretaria") {
+                and.push({
+                    rol: {
+                        tipo: "Estudiante"
+                    }
+                })
+            }
+            if (rol === "Director") {
+                and.push({
+                    rol: {
+                        tipo: {
+                            not: "Administrador"
+                        }
                     }
                 })
             }

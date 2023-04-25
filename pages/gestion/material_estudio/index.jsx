@@ -168,6 +168,10 @@ const MaterialEstudio = () => {
             || usuario.rol === 'Docente'
             || usuario.rol === 'Estudiante'
     }
+    const puedeSubirArchivos = () => {
+        return usuario.rol === 'Administrador'
+            || usuario.rol === 'Docente'
+    }
     const borrarMaterial = async (e, id, idTrimestre) => {
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/delete/${id}`)
@@ -345,14 +349,13 @@ const MaterialEstudio = () => {
 
                                                                     {
                                                                         subir ? (
-                                                                            tienePermisos()
-                                                                            && <Button
+                                                                            <Button
                                                                                 onClick={() => subirMaterial(t.id)} variant="contained" size="small"
                                                                                 endIcon={<FileUploadIcon />}>
                                                                                 Subir apunte
                                                                             </Button>
                                                                         ) : (
-                                                                            tienePermisos() && <Button variant="contained"
+                                                                            puedeSubirArchivos() && <Button variant="contained"
                                                                                 component={"label"}
                                                                                 size="small" endIcon={<FileOpenSharp />}>
                                                                                 Elegir apuntes
@@ -399,7 +402,7 @@ const MaterialEstudio = () => {
                                                                             </IconButton>
                                                                         </a>
                                                                         {
-                                                                            tienePermisos() && (
+                                                                            puedeSubirArchivos() && (
                                                                                 <IconButton aria-label="fingerprint" color="primary"
                                                                                     onClick={(e) => borrarMaterial(e, m.id, t.id)}>
                                                                                     <DeleteIcon />

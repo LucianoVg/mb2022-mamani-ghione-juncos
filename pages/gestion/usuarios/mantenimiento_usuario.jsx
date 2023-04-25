@@ -60,7 +60,7 @@ export default function MantenimientoUsuario() {
         }
     }
     const traerUsuarios = async () => {
-        queryParams.push({ idLogged: usuario.id })
+        queryParams.push({ idLogged: usuario.id, rol: usuario.rol })
         if (idUsuario) {
             queryParams.push({ idUsuario })
         }
@@ -163,23 +163,27 @@ export default function MantenimientoUsuario() {
                             renderInput={(params) => <TextField {...params} label="Usuarios" />}
                         />
                     </FormControl>
-                    <FormControl>
-                        <InputLabel id="select-label">Rol</InputLabel>
-                        <Select labelId="select-label"
-                            name="rol"
-                            label="Rol"
-                            onChange={handleRol}
-                            value={rol}
-                            sx={{ width: '170px' }}
-                            MenuProps={{ disableScrollLock: true }}
-                        >
-                            {
-                                roles && roles.map((r, i) => (
-                                    <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
+                    {
+                        usuario.rol !== "Secretaria" && (
+                            <FormControl>
+                                <InputLabel id="select-label">Rol</InputLabel>
+                                <Select labelId="select-label"
+                                    name="rol"
+                                    label="Rol"
+                                    onChange={handleRol}
+                                    value={rol}
+                                    sx={{ width: '170px' }}
+                                    MenuProps={{ disableScrollLock: true }}
+                                >
+                                    {
+                                        roles && roles.map((r, i) => (
+                                            <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </FormControl>
+                        )
+                    }
                     <Button
                         sx={{ mx: 3 }}
                         onClick={traerUsuarios}
