@@ -8,7 +8,7 @@ export default async function handler(
     await NextCors(req, res, {
         // Options
         methods: ['GET'],
-        origin: '*',
+        origin: process.env.HOST,
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     try {
