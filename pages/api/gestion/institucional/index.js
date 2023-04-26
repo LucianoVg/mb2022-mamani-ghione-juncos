@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { guardarFichaInstitucional, traerFichaInstitucional } from "../../servicios/ficha_institucional"
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -15,7 +15,7 @@ export default async function handler(
         if (req.method === 'POST') {
             const { nombreInstitucion, ubicacion, tipoInstitucion, descripcion, telefono1, telefono2, oficina1, oficina2, mail, idUsuario } = req.body
 
-            const guardado = await guardarFichaInstitucional('', nombreInstitucion, ubicacion, tipoInstitucion, descripcion, telefono1, telefono2, oficina1, oficina2, mail, idUsuario)
+            const guardado = await guardarFichaInstitucional(0, nombreInstitucion, ubicacion, tipoInstitucion, descripcion, telefono1, telefono2, oficina1, oficina2, mail, idUsuario)
 
             return res.status(200).json(guardado)
         }
@@ -27,4 +27,57 @@ export default async function handler(
         console.error(error);
         return res.status(200).json(error)
     }
+}
+
+export async function guardarFichaInstitucional(id = 0, nombreInstitucion = '', ubicacion = '', tipoInstitucion = '', descripcion = '', telefono1 = '', telefono2 = '', oficina1 = '', oficina2 = '', mail = '', idUsuario = 0) {
+
+    const guardado = await db.fichainstitucional.upsert({
+        where: {
+            id: Number(id)
+        },
+        update: {
+            nombreinstitucion: nombreInstitucion,
+            descripcion: descripcion,
+            ubicacion: ubicacion,
+            tipoinstitucion: tipoInstitucion,
+            telefono1: telefono1,
+            telefono2: telefono2,
+            oficina1: oficina1,
+            oficina2: oficina2,
+            mail: mail,
+            idusuario: Number(idUsuario)
+        },
+        create: {
+            nombreinstitucion: nombreInstitucion,
+            descripcion: descripcion,
+            ubicacion: ubicacion,
+            tipoinstitucion: tipoInstitucion,
+            telefono1: telefono1,
+            telefono2: telefono2,
+            oficina1: oficina1,
+            oficina2: oficina2,
+            mail: mail,
+            idusuario: Number(idUsuario)
+        }
+    })
+    return guardado
+}
+
+export async function traerFichaInstitucional(id = 0) {
+    const fichaInstitucional = id !== 0 ? await db.fichainstitucional.findFirst({
+        where: {
+            OR: [
+                { id: id },
+                { idusuario: id }
+            ]
+        },
+        include: {
+            portadasficha: true
+        }
+    }) : await db.fichainstitucional.findMany({
+        include: {
+            portadasficha: true
+        }
+    })
+    return fichaInstitucional
 }

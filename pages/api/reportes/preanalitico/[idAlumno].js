@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { Preanalitico } from "../../servicios/notas"
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -38,5 +38,24 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error);
         return res.status(500).send(error)
+    }
+}
+
+async function Preanalitico(idAlumno) {
+    try {
+        return await db.$queryRaw`select m.id as id ,m.nombre as materia, m.idcurso as curso , idalumnoxcursoxdivision,
+        avg ((SELECT AVG(c)
+               FROM   (VALUES(nota1),
+                             (nota2),
+                             (nota3),
+                             (nota4),
+                             (nota5)) T (c))) as notafinal
+       from nota as hn
+       INNER JOIN materia as m ON m.id = hn.idmateria
+       where idalumnoxcursoxdivision = ${Number(idAlumno)}
+       group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
+       order by m.idcurso asc, m.id asc`
+    } catch (error) {
+        console.error(error);
     }
 }

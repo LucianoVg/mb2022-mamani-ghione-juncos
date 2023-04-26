@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { generarSancion, traerSanciones } from "../../servicios/sanciones"
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -80,5 +80,94 @@ export default async function handler(req, res) {
         }
     } catch (error) {
         return res.status(400).send(error)
+    }
+}
+
+async function traerSanciones(options) {
+    try {
+        const sanciones = await db.sancionxalumno.findMany(options)
+        return sanciones
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function generarSancion(idUsuario, idAlumno = 0, idCurso = 0, motivo, idTipoSancion, fecha) {
+    try {
+        // console.log(idUsuario, idAlumno, idCurso, motivo, idTipoSancion, fecha);
+        if (idCurso !== 0) {
+            const alumnos = await db.alumnoxcursoxdivision.findMany({
+                select: {
+                    id: true
+                },
+                where: {
+                    idcursoxdivision: Number(idCurso)
+                }
+            })
+            const sancion = await db.sancion.create({
+                data: {
+                    fecha: fecha,
+                    motivo: motivo,
+                    tiposancion: {
+                        connect: {
+                            id: Number(idTipoSancion)
+                        }
+                    },
+                    usuario: {
+                        connect: {
+                            id: Number(idUsuario)
+                        }
+                    }
+                }
+            })
+            alumnos.forEach(async (a) => {
+                const sancionXAlumno = await db.sancionxalumno.create({
+                    data: {
+                        alumnoxcursoxdivision: {
+                            connect: {
+                                id: a.id
+                            }
+                        },
+                        sancion: {
+                            connect: {
+                                id: sancion.id
+                            }
+                        }
+                    }
+                })
+                console.log(sancionXAlumno);
+            })
+            return "Sanciones creadas"
+        } else {
+            const sancion = await db.sancion.create({
+                data: {
+                    fecha: fecha,
+                    motivo: motivo,
+                    tiposancion: {
+                        connect: {
+                            id: Number(idTipoSancion)
+                        }
+                    },
+                    sancionxalumno: {
+                        create: {
+                            alumnoxcursoxdivision: {
+                                connect: {
+                                    id: Number(idAlumno)
+                                }
+                            }
+                        }
+                    },
+                    usuario: {
+                        connect: {
+                            id: Number(idUsuario)
+                        }
+                    }
+                }
+            })
+            console.log(sancion);
+            return sancion
+        }
+    } catch (error) {
+        console.log(error);
     }
 }

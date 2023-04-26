@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import traerTutores from "../../servicios/tutores";
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -13,6 +13,23 @@ export default async function handler(req, res) {
             const tutores = await traerTutores()
             return res.status(200).json(tutores)
         }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function traerTutores() {
+    try {
+        const tutores = await db.usuario.findMany({
+            // include: {
+            //   tutor: true
+            // },
+            where: {
+                idrol: 6
+            }
+
+        });
+        return tutores
     } catch (error) {
         console.error(error);
     }

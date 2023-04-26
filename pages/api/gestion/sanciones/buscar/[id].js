@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { obtenerSancion } from "../../../servicios/sanciones"
+import { db } from "../../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -20,5 +20,36 @@ export default async function handler(req, res) {
     } catch (error) {
         console.error(error);
         return res.status(400).send(error)
+    }
+}
+async function obtenerSancion(id) {
+    try {
+        const sancion = await db.sancionxalumno.findFirst({
+            include: {
+                sancion: {
+                    include: {
+                        tiposancion: true
+                    }
+                },
+                alumnoxcursoxdivision: {
+                    include: {
+                        usuario: true,
+                        cursoxdivision: {
+                            include: {
+                                curso: true,
+                                division: true
+                            }
+                        }
+                    }
+                }
+            },
+            where: {
+                idsancion: Number(id)
+            }
+        })
+        console.log(sancion);
+        return sancion
+    } catch (error) {
+        console.error(error);
     }
 }

@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import traerUsuarios from "../../servicios/usuarios";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -71,5 +71,14 @@ export default async function handler(
         }
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
+    }
+}
+
+async function traerUsuarios(options) {
+    try {
+        console.log(options);
+        return await db.usuario.findMany(options)
+    } catch (error) {
+        console.log(error);
     }
 }

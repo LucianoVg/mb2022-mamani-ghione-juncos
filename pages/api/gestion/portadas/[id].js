@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { editarPortadas, traerPortadas } from "../../servicios/ficha_institucional";
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -23,4 +23,28 @@ export default async function handler(req, res) {
         console.log(error);
         return res.status(200).json(error)
     }
+}
+async function editarPortadas(id, nombre, url, fichaInstitucionalId) {
+    const portada = await db.portadaficha.update({
+        where: {
+            id: Number(id)
+        },
+        data: {
+            nombre: nombre,
+            url: url,
+            idfichainstitucional: Number(fichaInstitucionalId)
+        }
+    })
+    return portada
+}
+async function traerPortadas(idFicha) {
+    const portadas = await db.portadaficha.findMany({
+        where: {
+            idfichainstitucional: Number(idFicha)
+        },
+        include: {
+            fichainstitucional: true
+        }
+    })
+    return portadas
 }

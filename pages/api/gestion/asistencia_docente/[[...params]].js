@@ -1,10 +1,17 @@
-import { TraerAsistencias } from "../../servicios/asistencia_docente";
+import NextCors from "nextjs-cors";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
     res
 ) {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         const { fecha, idDocente } = req.query
         let OR = []
         let options = {
@@ -52,3 +59,22 @@ export default async function handler(
         return res.status(200).json({ mensaje: error.message })
     }
 }
+
+
+export async function TraerAsistencias(options) {
+    try {
+        const asistencias = await db.asistenciadocente.findMany(options)
+        return asistencias
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
+
+
+

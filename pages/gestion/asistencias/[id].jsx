@@ -3,10 +3,8 @@ import axios from 'axios';
 import { Layout } from '../../../components/layout';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../../components/context/authUserProvider';
-import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Grid, Typography } from '@mui/material';
 import Loading from '../../../components/loading';
-import Link from 'next/link';
-import { ArrowBack } from '@mui/icons-material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const MasInfo = () => {
@@ -16,7 +14,6 @@ const MasInfo = () => {
     const [asistencia, setAsistencia] = useState()
     const [cargando, setCargando] = useState(false)
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    console.log(asistencia)
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
         if (res.data) {
@@ -27,32 +24,34 @@ const MasInfo = () => {
     const listarAsistencia = async () => {
         if (id) {
             setCargando(true)
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`, )
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias/detalles/${id}`)
             if (res.data) {
-                console.log(res.data)
                 setAsistencia(res.data)
             }
             setCargando(false)
         }
     }
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        if (usuario.rol) {
-            if (!tienePermisos()) {
-                router.push('/error')
-            } else {
-                traerUsuario()
-                listarAsistencia()
-            }
-        }
-    }, [id, loading, authUser, usuario.id, usuario.rol])
+
     const tienePermisos = () => {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Docente'
             || usuario.rol === 'Preceptor'
     }
+
+    useEffect(() => {
+        if (!loading && !authUser) {
+            router.push('/gestion/cuenta/login')
+        }
+        traerUsuario()
+        if (usuario.rol) {
+            if (!tienePermisos()) {
+                router.push('/error')
+            } else {
+
+                listarAsistencia()
+            }
+        }
+    }, [id, loading, authUser, usuario.id, usuario.rol])
     return (
         <Layout>
             {
@@ -60,7 +59,7 @@ const MasInfo = () => {
                     <div>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Button variant="outlined" sx={{ border: "none", marginLeft: "-20px" }}
+                                <Button sx={{ border: "none", marginLeft: "-20px" }}
                                     className="buttonRegresar"
                                     href="/gestion/asistencias"
                                     startIcon={<ArrowBackIosIcon />}

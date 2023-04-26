@@ -1,5 +1,6 @@
 import NextCors from "nextjs-cors/dist";
-import { ListarMaterias } from "../../servicios/materias";
+import { db } from "../../../../prisma";
+
 export default async function handler(
     req,
     res
@@ -15,5 +16,32 @@ export default async function handler(
         return res.status(200).json(materias)
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
+    }
+}
+
+export async function ListarMaterias(idCurso) {
+    try {
+
+        const materias = idCurso ? await db.materia.findMany({
+            include: {
+                curso: true
+            },
+            where: {
+                idcurso: Number(idCurso)
+            },
+            orderBy: {
+                id: "asc"
+            }
+        }) : await db.materia.findMany({
+            include: {
+                curso: true
+            },
+            orderBy: {
+                id: "asc"
+            }
+        })
+        return materias
+    } catch (error) {
+        console.error(error);
     }
 }

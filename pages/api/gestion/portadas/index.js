@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { guardarPortadas } from "../../servicios/ficha_institucional"
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -16,4 +16,14 @@ export default async function handler(
         const portadas = await guardarPortadas(nombre, url, fichaInstitucionalId)
         return res.status(200).json(portadas)
     }
+}
+async function guardarPortadas(nombre, url, fichaInstitucionalId) {
+    const portada = await db.portadaficha.create({
+        data: {
+            nombre: nombre,
+            url: url,
+            idfichainstitucional: Number(fichaInstitucionalId)
+        },
+    })
+    return portada
 }

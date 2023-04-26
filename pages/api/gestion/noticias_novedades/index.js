@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { agregarNoticia, traerNoticia } from "../../servicios/noticias_novedades";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -8,7 +8,7 @@ export default async function handler(
     try {
         await NextCors(req, res, {
             // Options
-            methods: ['POST'],
+            methods: ['POST', 'GET'],
             origin: '*',
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
@@ -26,5 +26,35 @@ export default async function handler(
 
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
+    }
+}
+
+async function agregarNoticia(titulo, creadaEn, url, descripcion, idUsuario) {
+    const agregar = await db.noticiasynovedades.create({
+        data: {
+            titulo: titulo,
+            creadaen: new Date(creadaEn),
+            url: url,
+            descripcion: descripcion,
+            idusuario: Number(idUsuario)
+        }
+    })
+    return agregar
+}
+
+async function traerNoticia(id = 0) {
+    try {
+        const noticias = id !== 0 ? await db.noticiasynovedades.findUnique({
+            where: {
+                id: Number(id)
+            }
+        }) : await db.noticiasynovedades.findMany({
+            orderBy: {
+                creadaen: 'desc'
+            }
+        })
+        return noticias
+    } catch (error) {
+        console.error(error);
     }
 }

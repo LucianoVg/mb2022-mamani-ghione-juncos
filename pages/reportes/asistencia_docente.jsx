@@ -72,6 +72,7 @@ export default function AsistenciasDocentes() {
         return usuario.rol === 'Administrador'
             || usuario.rol === 'Director'
             || usuario.rol === 'Vicedirector'
+            || usuario.rol === "Docente"
 
     }
     const traerUsuario = async () => {

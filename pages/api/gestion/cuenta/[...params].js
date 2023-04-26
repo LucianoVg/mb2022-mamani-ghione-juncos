@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerUsuario } from "../../servicios/cuenta";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -19,5 +19,29 @@ export default async function handler(
         }
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
+    }
+}
+
+export async function traerUsuario(correo, password) {
+    try {
+        const usuario = await db.usuario.findFirst({
+            include: {
+                rol: true,
+                enfermedadesxusuario: {
+                    include: {
+                        enfermedad: true
+                    }
+                }
+            },
+            where: {
+                AND: [
+                    { correo: correo },
+                    { password: password }
+                ]
+            }
+        })
+        return usuario
+    } catch (error) {
+        console.log(error);
     }
 }

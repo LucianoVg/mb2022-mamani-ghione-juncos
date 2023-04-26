@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import traerRoles from "../../servicios/roles";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -17,5 +17,24 @@ export default async function handler(
         return res.status(200).json(roles)
     } catch (error) {
         return res.status(400).send(error)
+    }
+}
+
+async function traerRoles(rol) {
+    try {
+        console.log(rol);
+        let opt = {}
+        let and = []
+        if (rol) and.push({ tipo: { not: rol } })
+        if (rol === "Director") and.push({ tipo: { not: "Administrador" } })
+        opt = {
+            ...opt,
+            where: {
+                AND: and
+            }
+        }
+        return await db.rol.findMany(opt)
+    } catch (error) {
+        console.log(error);
     }
 }
