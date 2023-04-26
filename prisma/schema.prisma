@@ -42,19 +42,19 @@ model asistencia {
 }
 
 model asistenciadocente {
-  id                      Int             @id @default(autoincrement())
-  iddocentexmateria       Int
-  idusuario               Int
-  creadoen                String?
-  actualizadoen           String?
-  presente                Boolean?
-  ausente                 Boolean?
-  ausentejustificado      Boolean?
-  llegadatarde            Boolean?
-  mediafalta              Boolean?
-  motivo                  String?
-  usuario                 usuario         @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  docentexmateria         docentexmateria @relation(fields: [iddocentexmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                 Int             @id @default(autoincrement())
+  iddocentexmateria  Int
+  idusuario          Int
+  creadoen           String?
+  actualizadoen      String?
+  presente           Boolean?
+  ausente            Boolean?
+  llegadatarde       Boolean?
+  mediafalta         Boolean?
+  motivo             String?
+  ausentejustificado Boolean?
+  docentexmateria    docentexmateria @relation(fields: [iddocentexmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario            usuario         @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model curso {
