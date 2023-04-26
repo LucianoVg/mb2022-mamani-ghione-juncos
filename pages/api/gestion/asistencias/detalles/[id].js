@@ -20,7 +20,7 @@ export default async function handler(
     }
 }
 
-export async function DetalleAsistencia(id) {
+async function DetalleAsistencia(id) {
     try {
         const asistencia = await db.asistencia.findUnique({
             include: {
