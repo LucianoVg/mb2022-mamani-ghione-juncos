@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { editarNoticia, eliminarNoticia, traerNoticia } from "../../../servicios/noticias_novedades"
+import { db } from "../../../../../prisma";
 
 export default async function handler(
     req,
@@ -31,4 +31,43 @@ export default async function handler(
     } catch (error) {
         return res.status(400).json(error)
     }
+}
+async function traerNoticia(id = 0) {
+    try {
+        const noticias = id !== 0 ? await db.noticiasynovedades.findUnique({
+            where: {
+                id: Number(id)
+            }
+        }) : await db.noticiasynovedades.findMany({
+            orderBy: {
+                creadaen: 'desc'
+            }
+        })
+        return noticias
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function editarNoticia(id, titulo, url, descripcion, actualizadaEn) {
+    const editar = db.noticiasynovedades.update({
+        data: {
+            titulo: titulo,
+            url: url,
+            descripcion: descripcion,
+            actualizadaen: new Date(actualizadaEn)
+        },
+        where: {
+            id: Number(id)
+        }
+    })
+    return editar
+}
+
+async function eliminarNoticia(id) {
+    const eliminar = await db.noticiasynovedades.delete({
+        where: {
+            id: Number(id)
+        }
+    })
+    return eliminar
 }

@@ -1,9 +1,9 @@
-import { Prisma } from "../../../servicios/prisma";
+import { db } from "../../../../../prisma";
 
 export default async function handler(req, res) {
     try {
         const { id } = req.query
-        const deleted = await Prisma.newPrisma.materialestudio.delete({
+        const deleted = await db.materialestudio.delete({
             where: {
                 id: Number(id)
             }

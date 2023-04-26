@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerTipoSanciones } from "../../../servicios/sanciones";
+import { db } from "../../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -13,6 +13,15 @@ export default async function handler(req, res) {
             const tipoSanciones = await traerTipoSanciones()
             return res.status(200).json(tipoSanciones)
         }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function traerTipoSanciones() {
+    try {
+        const tipoSanciones = await db.tiposancion.findMany()
+        return tipoSanciones
     } catch (error) {
         console.error(error);
     }

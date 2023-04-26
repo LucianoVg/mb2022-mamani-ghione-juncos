@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerAlumnos } from "../../servicios/alumnos";
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -13,6 +13,25 @@ export default async function handler(req, res) {
             const alumnos = await traerAlumnos()
             return res.status(200).json(alumnos)
         }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function traerAlumnos() {
+    try {
+        const alumnos = await db.alumnoxcursoxdivision.findMany({
+            include: {
+                cursoxdivision: {
+                    include: {
+                        curso: true,
+                        division: true
+                    }
+                },
+                usuario: true
+            }
+        });
+        return alumnos
     } catch (error) {
         console.error(error);
     }

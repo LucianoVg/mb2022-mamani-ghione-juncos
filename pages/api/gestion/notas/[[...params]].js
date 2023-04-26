@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { TraerNotas } from "../../servicios/notas";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -75,6 +75,16 @@ export default async function handler(
         return res.status(200).json({ mensaje: error.message })
     }
 }
+export async function TraerNotas(options) {
+    try {
+        const notas = await db.nota.findMany(options)
+        // console.log(notas);
+        return notas
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export const config = {
     api: {
         responseLimit: '8mb',

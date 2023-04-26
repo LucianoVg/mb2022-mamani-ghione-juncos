@@ -1,7 +1,14 @@
-import { TraerAsistencias } from "../../servicios/asistencia";
+import NextCors from "nextjs-cors";
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         if (req.method === 'GET') {
             let { fecha, idCurso, idAlumno } = req.query
             console.log(fecha, idCurso, idAlumno);
@@ -64,8 +71,11 @@ export default async function handler(req, res) {
     }
 }
 
-export const config = {
-    api: {
-        responseLimit: false
+export async function TraerAsistencias(options) {
+    try {
+        const asistencias = await db.asistencia.findMany(options)
+        return asistencias
+    } catch (error) {
+        console.log(error);
     }
 }

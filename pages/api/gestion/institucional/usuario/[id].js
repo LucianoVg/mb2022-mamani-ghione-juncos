@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerFichaInstitucional } from "../../../servicios/ficha_institucional"
+import { db } from "../../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -11,11 +11,30 @@ export default async function handler(req, res) {
         });
         const { id } = req.query
         if (req.method === 'GET') {
-            const fichaInstitucional = await traerFichaInstitucional(id !== undefined ? id : '')
+            const fichaInstitucional = await traerFichaInstitucional(id !== undefined ? id : 0)
             return res.status(200).json(fichaInstitucional)
         }
 
     } catch (error) {
         return res.status(400).send(error)
     }
+}
+
+export async function traerFichaInstitucional(id = 0) {
+    const fichaInstitucional = id !== 0 ? await db.fichainstitucional.findFirst({
+        where: {
+            OR: [
+                { id: id },
+                { idusuario: id }
+            ]
+        },
+        include: {
+            portadasficha: true
+        }
+    }) : await db.fichainstitucional.findMany({
+        include: {
+            portadasficha: true
+        }
+    })
+    return fichaInstitucional
 }

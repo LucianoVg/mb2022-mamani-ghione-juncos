@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerDivision } from "../../servicios/division"
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -11,7 +11,6 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             const division = await traerDivision()
-
             return res.status(200).json(division)
         } else {
             return res.status(405).send("Metodo no permitido")
@@ -19,5 +18,18 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error);
         return res.status(500).send(error)
+    }
+}
+
+export async function traerDivision() {
+    try {
+        const division = await db.division.findMany({
+            orderBy: {
+                division: 'asc'
+            }
+        })
+        return division
+    } catch (error) {
+        console.log(error);
     }
 }

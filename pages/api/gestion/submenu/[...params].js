@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { FiltrarMenu } from "../../servicios/menu";
+import { db } from "../../../../prisma";
 
 export default async function handler(
     req,
@@ -18,4 +18,27 @@ export default async function handler(
     } catch (error) {
         return res.status(200).json({ mensaje: error.message })
     }
+}
+
+
+export async function FiltrarMenu(idRol, prefijoUrl) {
+    const filtro = await db.menuxrol.findMany({
+        include: {
+            menu: true,
+            rol: true
+        },
+        where: {
+            AND: [
+                { idrol: Number(idRol) },
+                {
+                    menu: {
+                        url: {
+                            startsWith: `/${prefijoUrl}`
+                        }
+                    }
+                }
+            ]
+        }
+    })
+    return filtro
 }

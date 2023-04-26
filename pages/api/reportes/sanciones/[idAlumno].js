@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { ReporteSanciones } from "../../servicios/sanciones"
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -19,5 +19,37 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error);
         return res.status(500).send(error)
+    }
+}
+
+async function ReporteSanciones(idAlumno = 0) {
+    try {
+        let options = {
+            include: {
+                usuario: true,
+                tiposancion: true
+            },
+            orderBy: {
+                id: 'desc'
+            }
+        }
+        if (idAlumno > 0) {
+            options = {
+                ...options,
+                where: {
+                    sancionxalumno: {
+                        some: {
+                            idalumnoxcursoxdivision: {
+                                equals: Number(idAlumno)
+                            }
+                        }
+                    }
+                },
+            }
+        }
+        const sanciones = await db.sancion.findMany(options)
+        return sanciones
+    } catch (error) {
+        console.error(error);
     }
 }

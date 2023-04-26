@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors/dist";
-import { traerCursosXDivision } from "../../servicios/cursos"
+import { db } from "../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -11,7 +11,6 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             const cursoXDivision = await traerCursosXDivision()
-
             return res.status(200).json(cursoXDivision)
         } else {
             return res.status(405).send("Metodo no permitido")
@@ -19,5 +18,35 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error);
         return res.status(500).send(error)
+    }
+}
+
+export async function traerCursosXDivision() {
+    try {
+        const cursosXDivision = await db.cursoxdivision.findMany({
+            select: {
+                id: true,
+                curso: {
+                    select: {
+                        id: true,
+                        nombre: true
+                    }
+                },
+                division: {
+                    select: {
+                        id: true,
+                        division: true
+                    }
+                }
+            },
+            orderBy: {
+                curso: {
+                    nombre: 'asc'
+                }
+            }
+        })
+        return cursosXDivision
+    } catch (error) {
+        console.log(error);
     }
 }
