@@ -228,7 +228,7 @@ export default function Detalles() {
                                 setLocalidad(usuario?.localidad)
                                 setDireccion(usuario?.direccion)
                                 setTelefono(usuario?.telefono)
-                                setFechanacimiento(usuario?.fechanacimiento)
+                                setFechanacimiento(new Date(usuario?.fechanacimiento))
                             
                             }}>
 
