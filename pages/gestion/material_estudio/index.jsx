@@ -394,7 +394,8 @@ const MaterialEstudio = () => {
                                                                     </TableCell>
                                                                     <TableCell
                                                                         sx={{ textAlign: "right" }}>
-                                                                        <a href={m.url} target='_blank'>
+                                                                        <a href={m.url} target='_blank'
+                                                                            rel='noreferrer'>
                                                                             <IconButton aria-label="fingerprint" color="primary"
                                                                                 sx={{ marginRight: "20px" }}
                                                                             >
