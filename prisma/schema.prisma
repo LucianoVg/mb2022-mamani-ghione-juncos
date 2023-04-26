@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -75,19 +75,19 @@ model cursoxdivision {
   materialestudio       materialestudio[]
 }
 
-model discapacidad {
-  id                   Int                    @id @default(autoincrement())
-  nombre               String?
-  discapacidadxusuario discapacidadxusuario[]
-}
+// model discapacidad {
+//   id                   Int                    @id @default(autoincrement())
+//   nombre               String?
+//   discapacidadxusuario discapacidadxusuario[]
+// }
 
-model discapacidadxusuario {
-  id             Int          @id @default(autoincrement())
-  iddiscapacidad Int
-  idusuario      Int
-  usuario        usuario      @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  discapacidad   discapacidad @relation(fields: [iddiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
+// model discapacidadxusuario {
+//   id             Int          @id @default(autoincrement())
+//   iddiscapacidad Int
+//   idusuario      Int
+//   usuario        usuario      @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+//   discapacidad   discapacidad @relation(fields: [iddiscapacidad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+// }
 
 model division {
   id             Int              @id @default(autoincrement())
@@ -104,19 +104,19 @@ model docentexmateria {
   materia           materia             @relation(fields: [idmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model enfermedad {
-  id                   Int                    @id @default(autoincrement())
-  descripcion          String?
-  enfermedadesxusuario enfermedadesxusuario[]
-}
+// model enfermedad {
+//   id                   Int                    @id @default(autoincrement())
+//   descripcion          String?
+//   enfermedadesxusuario enfermedadesxusuario[]
+// }
 
-model enfermedadesxusuario {
-  id           Int        @id @default(autoincrement())
-  idenfermedad Int
-  idusuario    Int
-  usuario      usuario    @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  enfermedad   enfermedad @relation(fields: [idenfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
+// model enfermedadesxusuario {
+//   id           Int        @id @default(autoincrement())
+//   idenfermedad Int
+//   idusuario    Int
+//   usuario      usuario    @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+//   enfermedad   enfermedad @relation(fields: [idenfermedad], references: [id], onDelete: NoAction, onUpdate: NoAction)
+// }
 
 model estadoalumno {
   id                    Int                     @id @default(autoincrement())
@@ -375,9 +375,7 @@ model usuario {
   alumnoxcursoxdivision_alumnoxcursoxdivisionTousuario           alumnoxcursoxdivision[]
   asistencia                                                     asistencia[]
   asistenciadocente                                              asistenciadocente[]
-  discapacidadxusuario                                           discapacidadxusuario[]
   docentexmateria                                                docentexmateria[]
-  enfermedadesxusuario                                           enfermedadesxusuario[]
   fechaexamen                                                    fechaexamen[]
   fichainstitucional                                             fichainstitucional[]
   materialestudio                                                materialestudio[]
