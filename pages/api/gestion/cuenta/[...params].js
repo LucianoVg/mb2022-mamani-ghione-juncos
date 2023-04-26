@@ -26,12 +26,7 @@ export async function traerUsuario(correo, password) {
     try {
         const usuario = await db.usuario.findFirst({
             include: {
-                rol: true,
-                enfermedadesxusuario: {
-                    include: {
-                        enfermedad: true
-                    }
-                }
+                rol: true
             },
             where: {
                 AND: [
