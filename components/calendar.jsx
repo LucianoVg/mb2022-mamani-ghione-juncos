@@ -14,7 +14,6 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 editorType: 'dxSelectBox',
                 dataField: 'id',
                 editorOptions: {
-                    MenuProps:{ disableScrollLock: true },
                     items: cursos,
                     displayExpr: 'curso',
                     valueExpr: 'id',
@@ -109,7 +108,6 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                 dataSource={data}
                 defaultCurrentDate={new Date()}
                 views={['month']}
-                
                 onAppointmentClick={(e) => {
                     console.log(e.appointmentData)
                     setIdCurso(e.appointmentData.idCurso)
@@ -118,7 +116,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
                     setFechaFin(e.appointmentData.endDate)
                 }}
                 onAppointmentFormOpening={(e) => {
-                    // e.popup.focus()
+                    e.popup.focus()
                     onFormOpening(e)
                 }}
                 onAppointmentAdded={(e) => onAdd(idCurso, asunto, fechaInicio, fechaFin)}
