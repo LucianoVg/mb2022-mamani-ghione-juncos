@@ -56,6 +56,8 @@ export default function Detalles() {
     const [preceptor, setPreceptor] = useState()
 
 
+
+
     const [respuesta, setRespuesta] = useState({ status: 0, mensaje: '' })
     const [guardando, setGuardando] = useState(false)
     const [cargando, setCargando] = useState(false)
@@ -112,6 +114,7 @@ export default function Detalles() {
     const handleUsuario = (e) => {
         setDataUsuario({ ...dataUsuario, [e.target.name]: e.target.value })
     }
+
     const handleFecha = (value) => {
         setFecha(new Date(value))
         setDataUsuario({ ...dataUsuario, fechanacimiento: new Date(value).toLocaleDateString('es-AR').split('T')[0] })
@@ -161,6 +164,23 @@ export default function Detalles() {
     const handleCurso = (e) => {
         setIdCurso(Number(e.target.value))
     }
+
+    const [nombre, setNombre] = useState()
+    const [apellido, setApellido] = useState()
+    const [legajo, setLegajo] = useState()
+    const [mail, setMail] = useState()
+    const [contrasenia, setContrasenia] = useState()
+    const [localidad, setLocalidad] = useState()
+    const [direccion, setDireccion] = useState()
+    const [telefono, setTelefono] = useState()
+    const [fechanacimiento, setFechanacimiento] = useState()
+
+    console.log("datausuario:", dataUsuario)
+  
+    const handleFechaNacimiento = (value) => {
+        setFechanacimiento(value)
+       
+    }
     return (
         <Layout>
             {
@@ -197,7 +217,20 @@ export default function Detalles() {
                         <Button
                             style={{ marginLeft: "40px" }}
                             variant="contained"
-                            onClick={() => setEditMode(!editMode)}>
+                            onClick={() => {
+                                setEditMode(!editMode)
+                                setNombre(usuario?.nombre)
+                                setApellido(usuario?.apellido)
+                                setLegajo(usuario?.legajo)
+                                setMail(usuario?.correo)
+                                setContrasenia(usuario?.password)
+                                setTelefono(usuario?.telefono)
+                                setLocalidad(usuario?.localidad)
+                                setDireccion(usuario?.direccion)
+                                setTelefono(usuario?.telefono)
+                                setFechanacimiento(usuario?.fechanacimiento)
+                            
+                            }}>
 
                             Editar
 
@@ -293,11 +326,11 @@ export default function Detalles() {
                                             <strong>Contraseña</strong> <br />
                                             {usuario?.password}
                                         </Typography>
-                                        <Typography variant="h6" sx={{ width: '150px' }} >
+                                        <Typography variant="h6" sx={{ width: '250px' }} >
                                             <strong>Localidad</strong> <br />
                                             {usuario?.localidad}
                                         </Typography>
-                                        <Typography variant="h6" sx={{ width: '150px' }} >
+                                        <Typography variant="h6" sx={{ width: '220px' }} >
                                             <strong>Dirección</strong> <br />
                                             {usuario?.direccion}
                                         </Typography>
@@ -338,7 +371,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Nombre</strong> <br />
                                             </Typography>
-                                            <TextField name="nombre" value={dataUsuario.nombre}
+                                            <TextField name="nombre" defaultValue={nombre}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
@@ -347,7 +380,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Apellido</strong> <br />
                                             </Typography>
-                                            <TextField name="apellido" value={dataUsuario.apellido}
+                                            <TextField name="apellido" defaultValue={apellido}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
@@ -355,7 +388,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Legajo</strong> <br />
                                             </Typography>
-                                            <TextField name="legajo" value={dataUsuario.legajo}
+                                            <TextField name="legajo" defaultValue={legajo}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "170px" }} size="small" variant="outlined" />
 
                                         </FormControl>
@@ -373,7 +406,7 @@ export default function Detalles() {
                                                             size="small"
                                                             label="Curso"
                                                             name="idCurso"
-                                                            value={idCurso}
+                                                            defaultValue={idCurso}
                                                             onChange={handleCurso}
                                                             MenuProps={{ disableScrollLock: true }}
                                                         >
@@ -401,7 +434,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Correo</strong> <br />
                                             </Typography>
-                                            <TextField name="correo" value={dataUsuario.correo}
+                                            <TextField name="correo" defaultValue={mail}
                                                 onChange={handleUsuario} id="outlined-basic" variant="outlined" size="small" sx={{ width: "250px" }} />
 
                                         </FormControl>
@@ -409,7 +442,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Contraseña</strong> <br />
                                             </Typography>
-                                            <TextField name="password" value={dataUsuario.password}
+                                            <TextField name="password" defaultValue={contrasenia}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
@@ -417,7 +450,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Localidad</strong> <br />
                                             </Typography>
-                                            <TextField name="localidad" value={dataUsuario.localidad}
+                                            <TextField name="localidad" defaultValue={localidad}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
 
                                         </FormControl>
@@ -425,7 +458,7 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Dirección</strong> <br />
                                             </Typography>
-                                            <TextField name="direccion" value={dataUsuario.direccion}
+                                            <TextField name="direccion" defaultValue={direccion}
                                                 onChange={handleUsuario} id="outlined-basic" sx={{ width: "200px" }} size="small" variant="outlined" />
                                         </FormControl>
                                     </Stack>
@@ -438,10 +471,15 @@ export default function Detalles() {
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Teléfono</strong> <br />
                                             </Typography>
-                                            <TextField name="telefono" value={dataUsuario.telefono}
+                                            <TextField name="telefono" defaultValue={telefono}
                                                 onChange={handleUsuario} id="outlined-basic" size="small" variant="outlined" />
                                         </FormControl>
+                                        <Typography variant="h6" sx={{ width: '200px' }} >
+                                            <strong>Edad</strong> <br />
+                                            {usuario?.fechanacimiento ? (new Date().getFullYear() - new Date(usuario?.fechanacimiento.split('/')[2]).getFullYear()) : 'N/A'}
+                                        </Typography>
                                         <FormControl>
+
                                             <Typography variant="h6" sx={{ width: '200px' }} >
                                                 <strong>Fecha de Nacimiento</strong> <br />
                                             </Typography>
@@ -450,7 +488,7 @@ export default function Detalles() {
                                                     InputProps={{ sx: { height: '40px' } }}
                                                     // label="Fecha"
                                                     name="fecha"
-                                                    value={fecha}
+                                                    value={fechanacimiento}
                                                     onChange={handleFecha}
                                                     renderInput={(params) => <TextField {...params} />}
                                                     MenuProps={{ disableScrollLock: true }}
