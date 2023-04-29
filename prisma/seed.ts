@@ -182,7 +182,38 @@ async function main() {
     //     console.log(usuario);
     // })
 
+    docentes.map(async (t) => {
+        const usuario = await prisma.usuario.updateMany({
+            where: {
+                id: t.id
+            },
+            data: {
+                login: t.login,
+                nombre: t.nombre,
+                apellido: t.apellido,
+                correo: t.correo,
+                legajo: t.legajo,
+                sexo: t.sexo,
+                telefono: t.telefono,
+                direccion: t.direccion
+            }
 
+        })
+        console.log(usuario);
+    })
+
+    // materias.map(async (m) => {
+
+    //     const materi = await prisma.materia.create({
+    //         data: {
+    //             id: m.id,
+    //             nombre: m.nombre,
+    //             idcorrelativa: m.idCorrelativa,
+    //             idcurso: m.idCurso
+    //         }
+    //     })
+    //     console.log(materi);
+    // })
 
     // docentexmateria.map(async (n) => {
     //     const docentes = await prisma.docentexmateria.create({
@@ -289,18 +320,7 @@ async function main() {
 
     // })
 
-    // materias.map(async (m) => {
 
-    //     const materi = await prisma.materia.create({
-    //         data: {
-    //             id: m.id,
-    //             nombre: m.nombre,
-    //             idcorrelativa: m.idCorrelativa,
-    //             idcurso: m.idCurso
-    //         }
-    //     })
-    //     console.log(materi);
-    // })
 
 
 
