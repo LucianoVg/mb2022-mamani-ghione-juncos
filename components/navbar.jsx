@@ -47,8 +47,8 @@ export const Navbar = ({ toggleDrawer }) => {
                         <Button color="inherit" style={{ marginRight: "10px" }}>Institucional</Button>
                     </Link>
                     {
-                    // authUser && (usuario.rol === 'Estudiante'
-                    //     || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') &&
+                    // authUser && (usuario.rol == 'Estudiante'
+                    //     || usuario.rol == 'Tutor' || usuario.rol == 'Administrador') &&
                     authUser && (usuario.rol != 'Docente'
                     || usuario.rol != 'Director' || usuario.rol != 'Vicedirector' ||
                     usuario.rol != 'Preceptor' || usuario.rol != 'Secretaria') &&

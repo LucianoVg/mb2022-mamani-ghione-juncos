@@ -142,25 +142,25 @@ async function main() {
     //     console.log(usuario);
     // })
 
-    // otrosUsuarios.map(async (t) => {
-    //     const usuario = await prisma.usuario.create({
-    //         data: {
-
-    //             nombre: t.nombre,
-    //             apellido: t.apellido,
-    //             correo: t.correo,
-    //             idrol: t.idRol,
-    //             legajo: t.legajo,
-    //             login: t.login,
-    //             localidad: t.localidad,
-    //             password: t.password,
-    //             sexo: t.sexo,
-    //             telefono: t.telefono,
-    //             direccion: t.direccion
-    //         }
-    //     })
-    //     console.log(usuario);
-    // })
+    otrosUsuarios.map(async (t) => {
+        const usuario = await prisma.usuario.create({
+            data: {
+                id: t.id,
+                nombre: t.nombre,
+                apellido: t.apellido,
+                correo: t.correo,
+                idrol: t.idRol,
+                legajo: t.legajo,
+                login: t.login,
+                localidad: t.localidad,
+                password: t.password,
+                sexo: t.sexo,
+                telefono: t.telefono,
+                direccion: t.direccion
+            }
+        })
+        console.log(usuario);
+    })
 
 
 
@@ -315,7 +315,7 @@ async function main() {
     //             creadoen: fecha,
     //             idusuario: 1,
     //             actualizadoen: ""
-               
+
     //         }
 
     //     })

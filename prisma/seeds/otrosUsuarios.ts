@@ -1,21 +1,21 @@
 export const otrosUsuarios = [
-    {
+    // {
         
-        login: "docente",
-        password: "123456",
-        nombre: "Docente",
-        apellido: "Sistema",
-        correo: "docente@gmail.com",
-        idRol: 1,
-        legajo: "3423431",
-        sexo: "M",
-        localidad: "Buenos Aires",
-        telefono: "35163432",
-        direccion: "Caseros 564",
+    //     login: "docente",
+    //     password: "123456",
+    //     nombre: "Docente",
+    //     apellido: "Sistema",
+    //     correo: "docente@gmail.com",
+    //     idRol: 1,
+    //     legajo: "3423431",
+    //     sexo: "M",
+    //     localidad: "Buenos Aires",
+    //     telefono: "35163432",
+    //     direccion: "Caseros 564",
 
-    },
+    // },
     {
-        
+        id:122,
         login: "secretaria",
         password: "123456",
         nombre: "Secretaria",
@@ -30,7 +30,7 @@ export const otrosUsuarios = [
 
     },
     {
-       
+        id:123,
         login: "direccion",
         password: "123456",
         nombre: "Direccion",
@@ -45,7 +45,7 @@ export const otrosUsuarios = [
 
     },
     {
-       
+        id:124,
         login: "preceptoria",
         password: "123456",
         nombre: "Preceptoria",
@@ -60,7 +60,7 @@ export const otrosUsuarios = [
 
     },
     {
-       
+        id:125,
         login: "vicedireccion",
         password: "123456",
         nombre: "Vicedireccion",
