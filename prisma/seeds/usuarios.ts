@@ -29,10 +29,10 @@ export const usuarios = [
     idRol: 4,
     legajo: "3423431",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351612452",
-    direccion: "Caseros 343",
-
+    localidad: "Cordoba",
+    telefono: "351547930",
+    direccion: "83014 Vaughn Cove",
+    fechanacimiento: "27/07/1960"
   },
   {
     id: 2,
@@ -42,12 +42,12 @@ export const usuarios = [
     apellido: "Carnero",
     correo: "primeroa@gmail.com",
     idRol: 7,
-    legajo: "555463",
+    legajo: "45125463",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "56452445",
-    direccion: "Caseros 563",
-
+    localidad: "Cordoba",
+    telefono: "351513238",
+    direccion: "687 Feil Street",
+    fechanacimiento: "18/02/2010"
   },
   {
     id: 3,
@@ -57,12 +57,12 @@ export const usuarios = [
     apellido: "Aguilar",
     correo: "aguilar@gmail.com",
     idRol: 7,
-    legajo: "564352",
+    legajo: "43124352",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351545642",
-    direccion: "Caseros 234",
-
+    localidad: "Cordoba",
+    telefono: "351539729",
+    direccion: "228 Kiehn Passage",
+    fechanacimiento: "27/02/2010"
   },
   {
     id: 4,
@@ -72,12 +72,12 @@ export const usuarios = [
     apellido: "Paredez",
     correo: "paredez@gmail.com",
     idRol: 7,
-    legajo: "242333",
+    legajo: "45212333",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351678452",
-    direccion: "Casas 434",
-
+    localidad: "Cordoba",
+    telefono: "351654507",
+    direccion: "97440 Swift Islands",
+    fechanacimiento: "31/07/2010"
   },
   {
     id: 5,
@@ -85,14 +85,14 @@ export const usuarios = [
     password: "123456",
     nombre: "Lucia",
     apellido: "Rodriguez",
-    correo: "rodriguez@gmail.com",
+    correo: "rodriguezlucia@gmail.com",
     idRol: 7,
-    legajo: "3353233",
+    legajo: "43538233",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351467532",
-    direccion: "Siempre Viva 343",
-
+    localidad: "Cordoba",
+    telefono: "351111251",
+    direccion: "123 Paucek Plaza",
+    fechanacimiento: "11/11/2010"
   },
   {
     id: 6,
@@ -102,12 +102,12 @@ export const usuarios = [
     apellido: "Del Valle",
     correo: "delvalle@gmail.com",
     idRol: 7,
-    legajo: "3423431",
+    legajo: "45123431",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "35161755752",
-    direccion: "Caseros 343",
-
+    localidad: "Cordoba",
+    telefono: "351352950",
+    direccion: "83014 Vaughn Cove",
+    fechanacimiento: "01/05/2010"
   },
   {
     id: 7,
@@ -117,12 +117,12 @@ export const usuarios = [
     apellido: "Cardoso",
     correo: "primerob@gmail.com",
     idRol: 7,
-    legajo: "342655631",
+    legajo: "44265631",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351645564",
-    direccion: "Caseros 343",
-
+    localidad: "Cordoba",
+    telefono: "351875164",
+    direccion: "75027 Vaughn Cove",
+    fechanacimiento: "03/02/2010"
   },
   {
     id: 8,
@@ -130,13 +130,14 @@ export const usuarios = [
     password: "123456",
     nombre: "Hector",
     apellido: "Urbano",
-    correo: "hector@gmail.com",
+    correo: "hectorurbano@gmail.com",
     idRol: 7,
-    legajo: "2325312",
+    legajo: "45253121",
     sexo: "M",
-    localidad: "Buenos Aires",
-    telefono: "351615252",
-    direccion: "Caseros 323"
+    localidad: "Cordoba",
+    telefono: "351944250",
+    direccion: "73796 Guido Divide",
+    fechanacimiento: "09/10/2011"
   },
   {
     id: 9,
@@ -144,13 +145,14 @@ export const usuarios = [
     password: "123456",
     nombre: "Leonardo",
     apellido: "Trigo",
-    correo: "leonardo@gmail.com",
+    correo: "leonardotrigo@gmail.com",
     idRol: 7,
-    legajo: "435212",
+    legajo: "43521276",
     sexo: "M",
-    localidad: "Buenos Aires",
+    localidad: "Cordoba",
     telefono: "351645452",
-    direccion: "Caseros 423"
+    direccion: "2992 Danny Creek",
+    fechanacimiento: "18/08/2010"
   },
   {
     id: 10,
@@ -158,13 +160,14 @@ export const usuarios = [
     password: "123456",
     nombre: "Mireia",
     apellido: "Lucena",
-    correo: "lucena@gmail.com",
+    correo: "lucenamireia@gmail.com",
     idRol: 7,
-    legajo: "3431242",
+    legajo: "34312429",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "3516144352",
-    direccion: "9922 Domenica Passage"
+    telefono: "351453898",
+    direccion: "9922 Domenica Passage",
+    fechanacimiento: "17/12/2011"
   },
   {
     id: 11,
@@ -172,13 +175,14 @@ export const usuarios = [
     password: "123456",
     nombre: "Reyes ",
     apellido: "Gomis",
-    correo: "gomis@gmail.com",
+    correo: "gomisreyes@gmail.com",
     idRol: 7,
-    legajo: "3345312",
+    legajo: "43495312",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "3516125452",
-    direccion: "6844 Abshire Plaza"
+    telefono: "351433773",
+    direccion: "6844 Abshire Plaza",
+    fechanacimiento: "01/03/2010"
   },
   {
     id: 12,
@@ -188,11 +192,12 @@ export const usuarios = [
     apellido: "Morillas",
     correo: "segundoa@gmail.com",
     idRol: 7,
-    legajo: "434122",
+    legajo: "43412291",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "3516154352",
-    direccion: "1352 Alberta Loaf"
+    telefono: "351213348",
+    direccion: "1352 Alberta Loaf",
+    fechanacimiento: "02/08/2009"
   },
   {
     id: 13,
@@ -202,11 +207,12 @@ export const usuarios = [
     apellido: "Puerta",
     correo: "@gmail.com",
     idRol: 7,
-    legajo: "344312",
+    legajo: "45243128",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "3513412452",
-    direccion: "12900 White Spur"
+    telefono: "351284815",
+    direccion: "12900 White Spur",
+    fechanacimiento: "12/03/2009"
   },
   {
     id: 14,
@@ -216,11 +222,12 @@ export const usuarios = [
     apellido: "Penalver",
     correo: "patricia@gmail.com",
     idRol: 7,
-    legajo: "454332",
+    legajo: "45433722",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "3516124352",
-    direccion: "20424 Maximillian Hollow"
+    telefono: "351661405",
+    direccion: "20424 Maximillian Hollow",
+    fechanacimiento: "06/04/2009"
   },
   {
     id: 15,
@@ -230,11 +237,12 @@ export const usuarios = [
     apellido: "Crespo",
     correo: "crespo@gmail.com",
     idRol: 7,
-    legajo: "3431253",
+    legajo: "34312537",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351342452",
-    direccion: "035 Roberto Forges"
+    telefono: "351679144",
+    direccion: "035 Roberto Forges",
+    fechanacimiento: "06/08/2009"
   },
   {
     id: 16,
@@ -244,11 +252,12 @@ export const usuarios = [
     apellido: "Galindo",
     correo: "galindo@gmail.com",
     idRol: 7,
-    legajo: "3434212",
+    legajo: "34342129",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "124 Pollich Corner"
+    telefono: "351339537",
+    direccion: "124 Pollich Corner",
+    fechanacimiento: "22/02/2009"
   },
   {
     id: 17,
@@ -258,11 +267,12 @@ export const usuarios = [
     apellido: "del Moral",
     correo: "segundob@gmail.com",
     idRol: 7,
-    legajo: "433433",
+    legajo: "42343399",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "3516125442",
-    direccion: "966 Evalyn Manor"
+    telefono: "351509775",
+    direccion: "966 Evalyn Manor",
+    fechanacimiento: "15/04/2009"
   },
   {
     id: 18,
@@ -272,11 +282,12 @@ export const usuarios = [
     apellido: "Bustamante",
     correo: "antonio@gmail.com",
     idRol: 7,
-    legajo: "34344",
+    legajo: "43324344",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "3513232452",
-    direccion: "68313 Dawson Meadow"
+    telefono: "351763634",
+    direccion: "68313 Dawson Meadow",
+    fechanacimiento: "27/05/2009"
   },
   {
     id: 19,
@@ -286,11 +297,12 @@ export const usuarios = [
     apellido: "Cano",
     correo: "virgilio@gmail.com",
     idRol: 7,
-    legajo: "3544232",
+    legajo: "43144232",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351613432",
-    direccion: "4002 Schiller Creek"
+    telefono: "351251839",
+    direccion: "4002 Schiller Creek",
+    fechanacimiento: "04/11/2010"
   },
   {
     id: 20,
@@ -300,11 +312,12 @@ export const usuarios = [
     apellido: "Garzon",
     correo: "nicolae@gmail.com",
     idRol: 7,
-    legajo: "35323654",
+    legajo: "45323654",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351613252",
-    direccion: "4042 Schiller Creek"
+    telefono: "351418202",
+    direccion: "4042 Schiller Creek",
+    fechanacimiento: "11/10/2009"
   },
   {
     id: 21,
@@ -314,11 +327,12 @@ export const usuarios = [
     apellido: "Acuña",
     correo: "andres@gmail.com",
     idRol: 7,
-    legajo: "54643432",
+    legajo: "43643432",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351634223",
-    direccion: "4508 Madelyn Ways"
+    telefono: "351501556",
+    direccion: "4508 Madelyn Ways",
+    fechanacimiento: "20/02/2008"
   },
   {
     id: 22,
@@ -328,11 +342,12 @@ export const usuarios = [
     apellido: "Puente",
     correo: "terceroa@gmail.com",
     idRol: 7,
-    legajo: "4434324",
+    legajo: "44343124",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "3516565452",
-    direccion: "9414 Koepp Loop"
+    telefono: "351656676",
+    direccion: "9414 Koepp Loop",
+    fechanacimiento: "27/02/2008"
   },
   {
     id: 23,
@@ -342,11 +357,12 @@ export const usuarios = [
     apellido: "Aranda",
     correo: "florencio@gmail.com",
     idRol: 7,
-    legajo: "57564343",
+    legajo: "43564343",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351545452",
-    direccion: "80586 Petra Haven"
+    telefono: "351966105",
+    direccion: "80586 Petra Haven",
+    fechanacimiento: "13/04/2008"
   },
   {
     id: 24,
@@ -356,11 +372,12 @@ export const usuarios = [
     apellido: "Gamero",
     correo: "yurena@gmail.com",
     idRol: 7,
-    legajo: "4543432",
+    legajo: "45343432",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351675652",
-    direccion: "19289 Spencer Valleys"
+    telefono: "351266396",
+    direccion: "19289 Spencer Valleys",
+    fechanacimiento: "11/09/2008"
   },
   {
     id: 25,
@@ -370,11 +387,12 @@ export const usuarios = [
     apellido: "Hernando",
     correo: "nil@gmail.com",
     idRol: 7,
-    legajo: "7564434",
+    legajo: "43264434",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "19765 Spencer Valleys"
+    telefono: "351951112",
+    direccion: "19765 Spencer Valleys",
+    fechanacimiento: "10/10/2008"
   },
   {
     id: 26,
@@ -384,11 +402,12 @@ export const usuarios = [
     apellido: "Martos",
     correo: "martos@gmail.com",
     idRol: 7,
-    legajo: "768546",
+    legajo: "45428546",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "0032 Krajcik Path"
+    telefono: "351243912",
+    direccion: "0032 Krajcik Path",
+    fechanacimiento: "23/05/2008"
   },
   {
     id: 27,
@@ -398,11 +417,12 @@ export const usuarios = [
     apellido: "Moya",
     correo: "tercerob@gmail.com",
     idRol: 7,
-    legajo: "876568",
+    legajo: "42716568",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "3655 Jairo Mall"
+    telefono: "351484928",
+    direccion: "3655 Jairo Mall",
+    fechanacimiento: "23/05/2008"
   },
   {
     id: 28,
@@ -412,11 +432,12 @@ export const usuarios = [
     apellido: "Diego",
     correo: "eloisa@gmail.com",
     idRol: 7,
-    legajo: "456667",
+    legajo: "44664267",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "0728 Raymundo Plains"
+    telefono: "351678114",
+    direccion: "0728 Raymundo Plains",
+    fechanacimiento: "12/10/2009"
   },
   {
     id: 29,
@@ -426,11 +447,12 @@ export const usuarios = [
     apellido: "Cerda",
     correo: "fran@gmail.com",
     idRol: 7,
-    legajo: "543888",
+    legajo: "43213888",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "1760 Renner Loop"
+    telefono: "351819867",
+    direccion: "1760 Renner Loop",
+    fechanacimiento: "01/08/2008"
   },
   {
     id: 30,
@@ -440,11 +462,12 @@ export const usuarios = [
     apellido: "Nogales",
     correo: "mohammed@gmail.com",
     idRol: 7,
-    legajo: "656695",
+    legajo: "43216695",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "6199 Mara Street"
+    telefono: "351248407",
+    direccion: "6199 Mara Street",
+    fechanacimiento: "11/01/2008"
   },
   {
     id: 31,
@@ -454,11 +477,12 @@ export const usuarios = [
     apellido: "Rueda",
     correo: "malak@gmail.com",
     idRol: 7,
-    legajo: "4355876",
+    legajo: "43558716",
     sexo: "M",
     localidad: "Cordoba",
     telefono: "351612452",
-    direccion: "4874 Bauch Junctions"
+    direccion: "4874 Bauch Junctions",
+    fechanacimiento: "04/09/2007"
   },
   {
     id: 32,
@@ -468,11 +492,12 @@ export const usuarios = [
     apellido: "Santana",
     correo: "cuartoa@gmail.com",
     idRol: 7,
-    legajo: "464532",
+    legajo: "46453122",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "98849 Reilly Ports"
+    telefono: "351142752",
+    direccion: "98849 Reilly Ports",
+    fechanacimiento: "02/11/2008"
   },
   {
     id: 33,
@@ -482,11 +507,12 @@ export const usuarios = [
     apellido: "Quiros",
     correo: "isaias@gmail.com",
     idRol: 7,
-    legajo: "",
+    legajo: "43562123",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "2750 Trantow Stream"
+    telefono: "351401045",
+    direccion: "2750 Trantow Stream",
+    fechanacimiento: "17/10/2007"
   },
   {
     id: 34,
@@ -496,11 +522,12 @@ export const usuarios = [
     apellido: "Mata",
     correo: "minerva@gmail.com",
     idRol: 7,
-    legajo: "5434322",
+    legajo: "44394322",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "4283 Schamberger Crossroad"
+    telefono: "351488623",
+    direccion: "4283 Schamberger Crossroad",
+    fechanacimiento: "12/10/2007"
   },
   {
     id: 35,
@@ -510,11 +537,12 @@ export const usuarios = [
     apellido: "Canovas",
     correo: "mercedes@gmail.com",
     idRol: 7,
-    legajo: "567543",
+    legajo: "43217543",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "5544 Weissnat Rest"
+    telefono: "351836150",
+    direccion: "5544 Weissnat Rest",
+    fechanacimiento: "10/09/2007"
   },
   {
     id: 36,
@@ -524,11 +552,12 @@ export const usuarios = [
     apellido: "Peinado",
     correo: "sara@gmail.com",
     idRol: 7,
-    legajo: "4522323",
+    legajo: "45223243",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "369 Nathen Well"
+    telefono: "351233685",
+    direccion: "369 Nathen Well",
+    fechanacimiento: "30/05/2007"
   },
   {
     id: 37,
@@ -538,11 +567,12 @@ export const usuarios = [
     apellido: "Cid",
     correo: "cuartob@gmail.com",
     idRol: 7,
-    legajo: "4543453",
+    legajo: "45423453",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "251 Reinger Road"
+    telefono: "351233685",
+    direccion: "251 Reinger Road",
+    fechanacimiento: "05/11/2008"
   },
   {
     id: 38,
@@ -552,11 +582,12 @@ export const usuarios = [
     apellido: "Bermudez",
     correo: "oriol@gmail.com",
     idRol: 7,
-    legajo: "421323",
+    legajo: "42451323",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "3781 Gene Mission"
+    telefono: "351563408",
+    direccion: "3781 Gene Mission",
+    fechanacimiento: "10/05/2007"
   },
   {
     id: 39,
@@ -566,11 +597,12 @@ export const usuarios = [
     apellido: "Lopez",
     correo: "carolina@gmail.com",
     idRol: 7,
-    legajo: "456432",
+    legajo: "45456432",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "2553 Creola Springs"
+    telefono: "351131666",
+    direccion: "2553 Creola Springs",
+    fechanacimiento: "28/06/2007"
   },
   {
     id: 40,
@@ -580,11 +612,12 @@ export const usuarios = [
     apellido: "Miralles",
     correo: "mihaela@gmail.com",
     idRol: 7,
-    legajo: "4243532",
+    legajo: "42463532",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "1432 Hudson Point"
+    telefono: "351478626",
+    direccion: "1432 Hudson Point",
+    fechanacimiento: "01/01/2008"
   },
   {
     id: 41,
@@ -594,11 +627,12 @@ export const usuarios = [
     apellido: "Espin",
     correo: "angel@gmail.com",
     idRol: 7,
-    legajo: "4345324",
+    legajo: "43457324",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "533 Gleason Wall"
+    telefono: "351816382",
+    direccion: "533 Gleason Wall",
+    fechanacimiento: "05/09/2007"
   },
   {
     id: 42,
@@ -608,11 +642,12 @@ export const usuarios = [
     apellido: "Padilla",
     correo: "quintoa@gmail.com",
     idRol: 7,
-    legajo: "4346332",
+    legajo: "43467332",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "3718 Haag Forks"
+    telefono: "351433344",
+    direccion: "3718 Haag Forks",
+    fechanacimiento: "04/09/2006"
   },
   {
     id: 43,
@@ -622,11 +657,12 @@ export const usuarios = [
     apellido: "Varela",
     correo: "maribel@gmail.com",
     idRol: 7,
-    legajo: "434553",
+    legajo: "43445553",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "1081 Jones Forge"
+    telefono: "351295949",
+    direccion: "1081 Jones Forge",
+    fechanacimiento: "16/10/2006"
   },
   {
     id: 44,
@@ -636,11 +672,12 @@ export const usuarios = [
     apellido: "Boix",
     correo: "hafida@gmail.com",
     idRol: 7,
-    legajo: "4524332",
+    legajo: "45244332",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "073 Franecki Junction"
+    telefono: "351713340",
+    direccion: "073 Franecki Junction",
+    fechanacimiento: "10/01/2007"
   },
   {
     id: 45,
@@ -650,11 +687,12 @@ export const usuarios = [
     apellido: "Alcalde",
     correo: "merce@gmail.com",
     idRol: 7,
-    legajo: "434564334",
+    legajo: "43464334",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "79919 Amparo Route"
+    telefono: "351434805",
+    direccion: "79919 Amparo Route",
+    fechanacimiento: "01/05/2006"
   },
   {
     id: 46,
@@ -664,11 +702,12 @@ export const usuarios = [
     apellido: "Camino",
     correo: "aranzazu@gmail.com",
     idRol: 7,
-    legajo: "5343322",
+    legajo: "43433422",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "13776 Angela Gardens"
+    telefono: "351775201",
+    direccion: "13776 Angela Gardens",
+    fechanacimiento: "11/09/2006"
   },
   {
     id: 47,
@@ -678,11 +717,12 @@ export const usuarios = [
     apellido: "Chaparro",
     correo: "quintob@gmail.com",
     idRol: 7,
-    legajo: "43464644",
+    legajo: "43494644",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "90585 Isabel Union"
+    telefono: "351148599",
+    direccion: "90585 Isabel Union",
+    fechanacimiento: "09/06/2006"
   },
   {
     id: 48,
@@ -692,11 +732,12 @@ export const usuarios = [
     apellido: "Luna",
     correo: "marwa@gmail.com",
     idRol: 7,
-    legajo: "4356343",
-    sexo: "M",
+    legajo: "43568343",
+    sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "1483 Stoltenberg Viaduct"
+    telefono: "351220605",
+    direccion: "1483 Stoltenberg Viaduct",
+    fechanacimiento: "26/08/2006"
   },
   {
     id: 49,
@@ -706,11 +747,12 @@ export const usuarios = [
     apellido: "Fraga",
     correo: "mayte@gmail.com",
     idRol: 7,
-    legajo: "4453453",
+    legajo: "44531453",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "91963 Kenyatta Underpass"
+    telefono: "351506432",
+    direccion: "91963 Kenyatta Underpass",
+    fechanacimiento: "13/04/2007"
   },
   {
     id: 50,
@@ -720,11 +762,12 @@ export const usuarios = [
     apellido: "Ferrer",
     correo: "dominga@gmail.com",
     idRol: 7,
-    legajo: "4242434",
+    legajo: "42482434",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "59862 Bernhard Valleys"
+    telefono: "351494988",
+    direccion: "59862 Bernhard Valleys",
+    fechanacimiento: "08/12/2006"
   },
   {
     id: 51,
@@ -734,11 +777,12 @@ export const usuarios = [
     apellido: "Giraldo",
     correo: "gerardo@gmail.com",
     idRol: 7,
-    legajo: "4434342",
+    legajo: "43364342",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "5704 Kuhn Avenue"
+    telefono: "351608559",
+    direccion: "5704 Kuhn Avenue",
+    fechanacimiento: "06/10/2006"
   },
   {
     id: 52,
@@ -748,11 +792,12 @@ export const usuarios = [
     apellido: "Lozano",
     correo: "sextob@gmail.com",
     idRol: 7,
-    legajo: "445342",
+    legajo: "43465342",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "6845 Wolf Village"
+    telefono: "351675847",
+    direccion: "6845 Wolf Village",
+    fechanacimiento: "08/11/2005"
   },
   {
     id: 53,
@@ -762,11 +807,12 @@ export const usuarios = [
     apellido: "Cristobal",
     correo: "bilal@gmail.com",
     idRol: 7,
-    legajo: "4356443",
+    legajo: "43561443",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "137 VonRueden Pine"
+    telefono: "351419408",
+    direccion: "137 VonRueden Pine",
+    fechanacimiento: "24/08/2005"
   },
   {
     id: 54,
@@ -776,11 +822,12 @@ export const usuarios = [
     apellido: "Sierra",
     correo: "lydia@gmail.com",
     idRol: 7,
-    legajo: "4343334",
+    legajo: "43433342",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "52991 Camren Wells"
+    telefono: "351925089",
+    direccion: "52991 Camren Wells",
+    fechanacimiento: "25/07/2005"
   },
   {
     id: 55,
@@ -793,8 +840,9 @@ export const usuarios = [
     legajo: "43565564",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "42369 Cassin Tunnel"
+    telefono: "351298401",
+    direccion: "42369 Cassin Tunnel",
+    fechanacimiento: "11/08/2005"
   },
   {
     id: 56,
@@ -804,11 +852,12 @@ export const usuarios = [
     apellido: "Jurado",
     correo: "ainara@gmail.com",
     idRol: 7,
-    legajo: "435334",
+    legajo: "43534334",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "219 Becker Stravenue"
+    telefono: "351739650",
+    direccion: "219 Becker Stravenue",
+    fechanacimiento: "20/07/2005"
   },
   {
     id: 57,
@@ -818,11 +867,12 @@ export const usuarios = [
     apellido: "Navarrete",
     correo: "sextob@gmail.com",
     idRol: 7,
-    legajo: "435533",
+    legajo: "41465533",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "058 Rolfson Cove"
+    telefono: "351962202",
+    direccion: "058 Rolfson Cove",
+    fechanacimiento: "26/12/2005"
   },
   {
     id: 58,
@@ -832,11 +882,12 @@ export const usuarios = [
     apellido: "San Jose",
     correo: "ruben@gmail.com",
     idRol: 7,
-    legajo: "43534",
+    legajo: "43322534",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "71289 Steuber Hill"
+    telefono: "351353200",
+    direccion: "71289 Steuber Hill",
+    fechanacimiento: "10/04/2006"
   },
   {
     id: 59,
@@ -846,11 +897,12 @@ export const usuarios = [
     apellido: "Mendoza",
     correo: "andoni@gmail.com",
     idRol: 7,
-    legajo: "5343343",
+    legajo: "43423343",
     sexo: "M",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "376 Wyman Cliff"
+    telefono: "351857292",
+    direccion: "376 Wyman Cliff",
+    fechanacimiento: "11/05/2005"
   },
   {
     id: 60,
@@ -860,11 +912,12 @@ export const usuarios = [
     apellido: "Losada",
     correo: "basilisa@gmail.com",
     idRol: 7,
-    legajo: "4345344",
+    legajo: "43415344",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "04517 Aufderhar Circle"
+    telefono: "351857292",
+    direccion: "04517 Aufderhar Circle",
+    fechanacimiento: "19/03/2006"
   },
   {
     id: 61,
@@ -874,11 +927,12 @@ export const usuarios = [
     apellido: "Font",
     correo: "rebeca@gmail.com",
     idRol: 7,
-    legajo: "5433532",
+    legajo: "44353532",
     sexo: "F",
     localidad: "Cordoba",
-    telefono: "351612452",
-    direccion: "72891 Bednar Tunnel"
+    telefono: "351200700",
+    direccion: "72891 Bednar Tunnel",
+    fechanacimiento: "16/06/2005"
   }
 ]
 

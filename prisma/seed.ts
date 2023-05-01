@@ -182,25 +182,79 @@ async function main() {
     //     console.log(usuario);
     // })
 
-    docentes.map(async (t) => {
-        const usuario = await prisma.usuario.updateMany({
-            where: {
-                id: t.id
-            },
-            data: {
-                login: t.login,
-                nombre: t.nombre,
-                apellido: t.apellido,
-                correo: t.correo,
-                legajo: t.legajo,
-                sexo: t.sexo,
-                telefono: t.telefono,
-                direccion: t.direccion
-            }
+    // docentes.map(async (t) => {
+    //     const usuario = await prisma.usuario.updateMany({
+    //         where: {
+    //             id: t.id
+    //         },
+    //         data: {
 
-        })
-        console.log(usuario);
-    })
+    //             legajo: t.legajo,
+    //             sexo: t.sexo,
+    //             telefono: t.telefono,
+    //             direccion: t.direccion,
+    //             fechanacimiento: t.fechanacimiento
+    //         }
+
+    //     })
+    //     console.log(usuario);
+    // })
+    // otrosUsuarios.map(async (t) => {
+    //     const usuario = await prisma.usuario.updateMany({
+    //         where: {
+    //             id: t.id
+    //         },
+    //         data: {
+
+    //             legajo: t.legajo,
+    //             sexo: t.sexo,
+    //             telefono: t.telefono,
+    //             direccion: t.direccion,
+    //             fechanacimiento: t.fechanacimiento
+    //         }
+
+    //     })
+    //     console.log(usuario);
+    // })
+
+    // tutores.map(async (t) => {
+    //     const usuario = await prisma.usuario.updateMany({
+    //         where: {
+    //             id: t.id
+    //         },
+    //         data: {
+    //             localidad: t.localidad,
+    //             correo: t.correo,
+    //             legajo: t.legajo,
+    //             sexo: t.sexo,
+    //             telefono: t.telefono,
+    //             direccion: t.direccion,
+    //             fechanacimiento: t.fechanacimiento
+    //         }
+
+    //     })
+    //     console.log(usuario);
+    // })
+
+
+    // usuarios.map(async (t) => {
+    //     const usuario = await prisma.usuario.updateMany({
+    //         where: {
+    //             id: t.id
+    //         },
+    //         data: {
+    //             correo: t.correo,
+    //             legajo: t.legajo,
+    //             sexo: t.sexo,
+    //             telefono: t.telefono,
+    //             direccion: t.direccion,
+    //             fechanacimiento: t.fechanacimiento
+    //         }
+
+    //     })
+    //     console.log(usuario);
+    // })
+
 
     // materias.map(async (m) => {
 
@@ -393,18 +447,48 @@ async function main() {
 
 
 
-    // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
-    //     include: {
-    //         cursoxdivision: true
-    //     },
+    const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+        include: {
+            cursoxdivision: true
+        },
+
+    })
+
+    fechas && fechas.map((fecha) => {
+        alumnos && alumnos.map(async (a) => {
+            const asistencia = await prisma.asistencia.create({
+                data: {
+                    idalumnoxcursoxdivision: a.id,
+                    presente: false,
+                    ausente: false,
+                    ausentejustificado: false,
+                    llegadatarde: false,
+                    mediafalta: false,
+                    creadoen: fecha,
+                    idusuario: 1,
+                    actualizadoen: ""
+                }
+
+            })
+            console.log(asistencia)
+        })
+    })
+
+
+
+    // const docentes = await prisma.usuario.findMany({
+    //     where: {
+    //         idrol: 1
+    //     }
 
     // })
 
+
     // fechas && fechas.map((fecha) => {
-    //     alumnos && alumnos.map(async (a) => {
-    //         const asistencia = await prisma.asistencia.create({
+    //     docentes && docentes.map(async (d) => {
+    //         const asistencia = await prisma.asistenciadocente.create({
     //             data: {
-    //                 idalumnoxcursoxdivision: a.id,
+    //                 iddocentexmateria: d.id,
     //                 presente: false,
     //                 ausente: false,
     //                 ausentejustificado: false,
@@ -413,33 +497,13 @@ async function main() {
     //                 creadoen: fecha,
     //                 idusuario: 1,
     //                 actualizadoen: ""
+
     //             }
 
     //         })
     //         console.log(asistencia)
-    //     })
-    // })
-
-
-
-
-    // fechas && fechas.map(async (fecha) => {
-    //     const asistencia = await prisma.asistenciadocente.create({
-    //         data: {
-    //             iddocentexmateria: 1,
-    //             presente: false,
-    //             ausente: false,
-    //             ausentejustificado: false,
-    //             llegadatarde: false,
-    //             mediafalta: false,
-    //             creadoen: fecha,
-    //             idusuario: 1,
-    //             actualizadoen: ""
-
-    //         }
 
     //     })
-    //     console.log(asistencia)
 
     // })
 

@@ -7,12 +7,12 @@ export const docentes = [
         apellido: "Vizcaino",
         correo: "docente@gmail.com",
         idrol: 1,
-        legajo: "3453223",
+        legajo: "34532923",
         sexo: "F",
         localidad: "Cordoba",
         telefono: "351433112",
         direccion: "6718 Christop Street",
-        fechanacimiento: '10/12/1980'
+        fechanacimiento: '03/04/1972'
     },
     {
         id: 127,
@@ -25,9 +25,9 @@ export const docentes = [
         legajo: "34563223",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "35154534",
+        telefono: "351574534",
         direccion: "74731 Braun Village",
-        fechanacimiento: '10/12/1984'
+        fechanacimiento: '25/10/1985'
     },
 
     {
@@ -41,9 +41,9 @@ export const docentes = [
         legajo: "21342323",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "35145335",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351459335",
+        direccion: "766 Corrine Mews",
+        fechanacimiento: '11/03/1972'
     },
 
     {
@@ -54,12 +54,12 @@ export const docentes = [
         apellido: "Alcantara",
         correo: "alcantaraval@gmail.com",
         idrol: 1,
-        legajo: "212435344",
+        legajo: "21243844",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351456322",
+        direccion: "6223 Lance Via",
+        fechanacimiento: '08/09/1984'
     },
 
     {
@@ -70,12 +70,12 @@ export const docentes = [
         apellido: "Cerezo",
         correo: "cerezowill@gmail.com",
         idrol: 1,
-        legajo: "3534322",
+        legajo: "35434322",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351785463",
+        direccion: "8167 Aliyah Crest",
+        fechanacimiento: '22/08/1977'
     },
 
     {
@@ -89,9 +89,9 @@ export const docentes = [
         legajo: "23242524",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351575893",
+        direccion: "08149 Justina Field",
+        fechanacimiento: '16/06/1981'
     },
 
     {
@@ -105,9 +105,9 @@ export const docentes = [
         legajo: "24332424",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351575324",
+        direccion: "81320 Oberbrunner Overpass",
+        fechanacimiento: '05/05/1977'
     },
 
     {
@@ -121,9 +121,9 @@ export const docentes = [
         legajo: "24231423",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351644342",
+        direccion: "974 Mueller Stravenue",
+        fechanacimiento: '02/03/1979'
     },
 
     {
@@ -137,9 +137,9 @@ export const docentes = [
         legajo: "34342322",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351551232",
+        direccion: "1715 Joelle Pass",
+        fechanacimiento: '09/06/1979'
     },
 
     {
@@ -150,12 +150,12 @@ export const docentes = [
         apellido: "Miguez",
         correo: "miguezenric@gmail.com",
         idrol: 1,
-        legajo: "312313123",
+        legajo: "31231123",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351324633",
+        direccion: "2665 Gaston Hill",
+        fechanacimiento: '02/10/1978'
     },
 
     {
@@ -166,12 +166,12 @@ export const docentes = [
         apellido: "Ruiz",
         correo: "ruizdina@gmail.com",
         idrol: 1,
-        legajo: "324531211",
+        legajo: "32451211",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351456342",
+        direccion: "28851 Nienow Lane",
+        fechanacimiento: '05/04/1973'
     },
 
     {
@@ -185,9 +185,9 @@ export const docentes = [
         legajo: "22321442",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351564533",
+        direccion: "64212 Isabella Stravenue",
+        fechanacimiento: '27/10/1975'
     },
 
     {
@@ -201,9 +201,9 @@ export const docentes = [
         legajo: "23421242",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351345221",
+        direccion: "3393 Devin Bypass",
+        fechanacimiento: '03/10/1982'
     },
 
     {
@@ -217,9 +217,9 @@ export const docentes = [
         legajo: "2345225",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "351",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351564533",
+        direccion: "949 Guiseppe Burgs",
+        fechanacimiento: '13/07/1985'
     },
 
     {
@@ -233,9 +233,9 @@ export const docentes = [
         legajo: "23421232",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "35134222",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351341222",
+        direccion: "453 Hintz Drive",
+        fechanacimiento: '05/02/1970'
     },
 
     {
@@ -249,9 +249,9 @@ export const docentes = [
         legajo: "23453223",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "35133242",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351332242",
+        direccion: "95557 Ebert Station",
+        fechanacimiento: '19/07/1982'
     },
 
     {
@@ -266,8 +266,8 @@ export const docentes = [
         sexo: "M",
         localidad: "Cordoba",
         telefono: "351345342",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        direccion: "25862 Jameson Fort",
+        fechanacimiento: '30/01/1979'
     },
 
     {
@@ -282,8 +282,8 @@ export const docentes = [
         sexo: "F",
         localidad: "Cordoba",
         telefono: "351232453",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        direccion: "584 Sherman Drive",
+        fechanacimiento: '26/03/1983'
     },
 
     {
@@ -294,12 +294,12 @@ export const docentes = [
         apellido: "Powell",
         correo: "powelldennis@gmail.com",
         idrol: 1,
-        legajo: "245431132",
+        legajo: "24543112",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "3513533",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351351233",
+        direccion: "922 Wiza Courts",
+        fechanacimiento: '05/05/1981'
     },
 
     {
@@ -314,8 +314,8 @@ export const docentes = [
         sexo: "M",
         localidad: "Cordoba",
         telefono: "351354323",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        direccion: "24489 Grady Spur",
+        fechanacimiento: '31/07/1969'
     },
 
     {
@@ -329,9 +329,9 @@ export const docentes = [
         legajo: "34225522",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "35134522",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351344522",
+        direccion: "06716 Cortney Spring",
+        fechanacimiento: '20/02/1981'
     },
 
     {
@@ -345,9 +345,9 @@ export const docentes = [
         legajo: "23456231",
         sexo: "F",
         localidad: "Cordoba",
-        telefono: "35134522",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        telefono: "351364522",
+        direccion: "7487 Satterfield Viaduct",
+        fechanacimiento: '17/08/1983'
     },
 
     {
@@ -358,12 +358,12 @@ export const docentes = [
         apellido: "Scott",
         correo: "scottronald@gmail.com",
         idrol: 1,
-        legajo: "235214522",
+        legajo: "23521522",
         sexo: "M",
         localidad: "Cordoba",
         telefono: "351453362",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        direccion: "0944 Victoria Shoal",
+        fechanacimiento: '20/02/1976'
     },
 
     {
@@ -374,12 +374,12 @@ export const docentes = [
         apellido: "Fox",
         correo: "foxkristie@gmail.com",
         idrol: 1,
-        legajo: "255742342",
+        legajo: "25572342",
         sexo: "F",
         localidad: "Cordoba",
         telefono: "351337578",
-        direccion: "",
-        fechanacimiento: '10/12/1980'
+        direccion: "1172 Kuhn Mountains",
+        fechanacimiento: '02/02/1970'
     },
 
 

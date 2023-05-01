@@ -22,11 +22,12 @@ export const otrosUsuarios = [
         apellido: "Sistema",
         correo: "secretaria@gmail.com",
         idRol: 2,
-        legajo: "2243322",
+        legajo: "22433212",
         sexo: "M",
         localidad: "Cordoba",
-        telefono: "3516787",
-        direccion: "Caseros 4453",
+        telefono: "351250311",
+        direccion: "60354 Kirlin Walk",
+        fechanacimiento: "04/04/1978"
 
     },
     {
@@ -37,12 +38,12 @@ export const otrosUsuarios = [
         apellido: "Sistema",
         correo: "direccion@gmail.com",
         idRol: 3,
-        legajo: "5435642",
+        legajo: "23351642",
         sexo: "M",
         localidad: "Buenos Aires",
-        telefono: "35345352",
-        direccion: "Roca 352",
-
+        telefono: "351835621",
+        direccion: "643 Hazel Manor",
+        fechanacimiento: "02/09/1978"
     },
     {
         id:124,
@@ -52,12 +53,12 @@ export const otrosUsuarios = [
         apellido: "Sistema",
         correo: "preceptoria@gmail.com",
         idRol: 5,
-        legajo: "2435642",
+        legajo: "24355642",
         sexo: "M",
-        localidad: "Buenos Aires",
-        telefono: "11343352",
-        direccion: "Juarez 2341",
-
+        localidad: "Cordoba",
+        telefono: "351282099",
+        direccion: "2110 Collier Tunnel",
+        fechanacimiento: "24/12/1970"
     },
     {
         id:125,
@@ -67,12 +68,12 @@ export const otrosUsuarios = [
         apellido: "Sistema",
         correo: "vicedireccion@gmail.com",
         idRol: 8,
-        legajo: "234234",
+        legajo: "23423234",
         sexo: "M",
-        localidad: "Buenos Aires",
-        telefono: "1123215352",
-        direccion: "Roca 4542",
-
+        localidad: "Cordoba",
+        telefono: "351113359",
+        direccion: "71385 Sporer Drive",
+        fechanacimiento: "01/06/1970"
     },
   
 ]
