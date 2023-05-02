@@ -211,7 +211,7 @@ export default function Sancion() {
       <div sx={{ marginTop: "200px" }}>
         {!cargando && (
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="customized table" s>
+            <Table sx={{ minWidth: 650 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <TableCell
