@@ -38,7 +38,7 @@ export default function Notas() {
   const [notas, setNotas] = useState([]);
   const [alumnos, setAlumnos] = useState([]);
   const [index, setIndex] = useState(0);
-  const [idMateria, setIdMateria] = useState(1);
+  const [idMateria, setIdMateria] = useState("");
   const [idDivision, setIdDivision] = useState("");
   const [idAlumno, setIdAlumno] = useState("");
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
@@ -142,7 +142,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`
     );
     if (res.data) {
-      setTrimestres(() => res.data);
+      setTrimestres((_) => res.data);
     }
   };
 
@@ -173,10 +173,6 @@ export default function Notas() {
       setNotas(res.data);
     }
     setCargandoInfo(false);
-    queryParams = [];
-    setIdAlumno(0);
-    setIdMateria(0);
-    setIdDivision(0);
   };
 
   const onSave = async (id) => {
@@ -400,27 +396,27 @@ export default function Notas() {
           <Box direction="row">
             <FormControl>
               <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-              <Select
-                id="inputMateria"
-                onChange={handleMateria}
-                name="idMateria"
-                value={idMateria}
-                label="Materia"
-                sx={{
-                  width: "150px",
-                  marginRight: "20px",
-                  marginBottom: "20px",
-                }}
-                MenuProps={{ disableScrollLock: true }}
-              >
-                {docente ? (
-                  [docente.materia].map((m, i) => (
-                    <MenuItem key={i} value={m.id}>
-                      {m.nombre}
-                    </MenuItem>
-                  ))
-                ) : (
-                  <>
+              {docente ? (
+                [docente.materia].map((m, i) => (
+                  <MenuItem key={i} value={m.id}>
+                    {m.nombre}
+                  </MenuItem>
+                ))
+              ) : (
+                <>
+                  <Select
+                    id="inputMateria"
+                    onChange={handleMateria}
+                    name="idMateria"
+                    value={idMateria}
+                    label="Materia"
+                    sx={{
+                      width: "150px",
+                      marginRight: "20px",
+                      marginBottom: "20px",
+                    }}
+                    MenuProps={{ disableScrollLock: true }}
+                  >
                     <ListSubheader>Primero</ListSubheader>
                     {materias &&
                       materias?.map(
@@ -481,9 +477,9 @@ export default function Notas() {
                             </MenuItem>
                           )
                       )}
-                  </>
-                )}
-              </Select>
+                  </Select>
+                </>
+              )}
             </FormControl>
 
             <FormControl>
@@ -549,6 +545,19 @@ export default function Notas() {
           >
             Buscar
           </Button>
+          <Button
+            sx={{ marginBottom: "20px" }}
+            color="info"
+            variant="text"
+            onClick={() => {
+              setIdAlumno("");
+              setIdDivision("");
+              setIdMateria("");
+              traerNotas(index);
+            }}
+          >
+            Quitar Filtros
+          </Button>
         </Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -558,13 +567,15 @@ export default function Notas() {
             scrollButtons
             allowScrollButtonsMobile
           >
-            {trimestres?.map((t) => (
-              <Tab key={t.id} label={t.trimestre} tabIndex={t.id} />
-            ))}
+            {trimestres
+              ?.sort((a, b) => a.id - b.id)
+              .map((t) => (
+                <Tab key={t.id} label={t.trimestre} tabIndex={t.id} />
+              ))}
           </Tabs>
         </Box>
         {cargandoInfo && (
-          <Container sx={{ textAlign: "center" }}>
+          <Container sx={{ textAlign: "center", marginTop: 3 }}>
             <Loading size={80} />
           </Container>
         )}
