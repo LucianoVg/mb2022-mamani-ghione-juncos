@@ -90,7 +90,7 @@ async function contarNotas(idMateria) {
              (select count(*) from nota where   nota4= 10  and idmateria =${Number(idMateria)}) +
              (select count(*) from nota where   nota5= 10  and idmateria =${Number(idMateria)}) 
         ) as nota10
-        FROM historialnota as n
+        FROM nota as n
         where idmateria= ${Number(idMateria)}
         group by n.idmateria`
 

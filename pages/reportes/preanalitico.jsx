@@ -55,15 +55,10 @@ export default function Preanalitico() {
             || usuario.rol === 'Director'
             || usuario.rol === 'Secretaria'
             || usuario.rol === 'Tutor'
+            || usuario.rol === 'Estudiante'
     }
 
-    const listarAlumnos = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`)
-        if (res.status === 200) {
-            console.log(res.data);
-            setAlumnos(res.data)
-        }
-    }
+
 
     const handleAlumno = (e, newValue) => {
         if (newValue) {
@@ -75,8 +70,8 @@ export default function Preanalitico() {
         <Layout>
 
             {
-                usuario.rol === 'Estudiante' && (
-                    <Box>
+                usuario.rol != 'Estudiante' && (
+                    <Box sx={{marginBottom: "20px"}}>
                         <h3>Buscar Alumno</h3>
 
                         <FormControl sx={{ marginRight: "20px" }}>

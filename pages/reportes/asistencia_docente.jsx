@@ -113,7 +113,7 @@ export default function AsistenciasDocentes() {
                 (
                     <Box>
 
-                        <FormControl >
+                        <FormControl  style={{ marginRight: "20px" }} >
                             <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
@@ -135,36 +135,33 @@ export default function AsistenciasDocentes() {
                                 renderInput={(params) => <TextField {...params} label="Docente" />}
                             />
                         </FormControl>
+                        <FormControl style={{ marginRight: "20px" }}>
+                            <InputLabel id="demo-simple-select-label">Mes</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={mes}
+                                label="Mes"
+                                onChange={handleMes}
+                                style={{ width: "160px" }}
+                                MenuProps={{ disableScrollLock: true }}
+                            >
+                                <MenuItem value={3}>Marzo</MenuItem>
+                                <MenuItem value={4}>Abril</MenuItem>
+                                <MenuItem value={5}>Mayo</MenuItem>
+                                <MenuItem value={6}>Junio</MenuItem>
+                                <MenuItem value={7}>Julio</MenuItem>
+                                <MenuItem value={8}>Agosto</MenuItem>
+                                <MenuItem value={9}>Septiembre</MenuItem>
+                                <MenuItem value={10}>Octubre</MenuItem>
+                                <MenuItem value={11}>Noviembre</MenuItem>
+                                <MenuItem value={12}>Diciembre</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Box>
                 )
             }
-            {
-                usuario.rol === 'Docente' && (
-                    <FormControl style={{ marginRight: "20px" }}>
-                        <InputLabel id="demo-simple-select-label">Mes</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={mes}
-                            label="Mes"
-                            onChange={handleMes}
-                            style={{ width: "160px" }}
-                            MenuProps={{ disableScrollLock: true }}
-                        >
-                            <MenuItem value={3}>Marzo</MenuItem>
-                            <MenuItem value={4}>Abril</MenuItem>
-                            <MenuItem value={5}>Mayo</MenuItem>
-                            <MenuItem value={6}>Junio</MenuItem>
-                            <MenuItem value={7}>Julio</MenuItem>
-                            <MenuItem value={8}>Agosto</MenuItem>
-                            <MenuItem value={9}>Septiembre</MenuItem>
-                            <MenuItem value={10}>Octubre</MenuItem>
-                            <MenuItem value={11}>Noviembre</MenuItem>
-                            <MenuItem value={12}>Diciembre</MenuItem>
-                        </Select>
-                    </FormControl>
-                )
-            }
+         
             <Box sx={{ marginBottom: '20px', marginTop: 2 }}>
                 <Button onClick={handleSearch} variant="outlined" startIcon={<Search />} color="info" >
                     Buscar

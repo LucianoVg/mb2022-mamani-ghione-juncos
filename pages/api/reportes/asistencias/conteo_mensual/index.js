@@ -36,11 +36,11 @@ export async function ConteoAsistenciasMensual(idAlumno, mes) {
     (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
     (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausentejustificado ,
     (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistencia WHERE llegadatardejustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatardejustificada,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafaltajustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafaltajustificada
+    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta
 FROM asistencia as a
-where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and idalumnoxcursoxdivision = ${Number(idAlumno)}
+where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+and TO_DATE(${fechaFin},'DD/MM/YYYY') ) 
+and idalumnoxcursoxdivision = ${Number(idAlumno)}
 group by a.idalumnoxcursoxdivision`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)

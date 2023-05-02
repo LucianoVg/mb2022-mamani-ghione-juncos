@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 
 async function notasTrimestres(idAlumno, idMateria) {
     try {
-        return await db.$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from historialnota hn
-         INNER JOIN materia as m ON m.id = hn.idmateria
+        return await db.$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from nota n
+         INNER JOIN materia as m ON m.id = n.idmateria
         where idmateria = ${Number(idMateria)} and idalumnoxcursoxdivision = ${Number(idAlumno)}
         group by idtrimestre,nota1,nota2,nota3,nota4,nota5, m.nombre`
 

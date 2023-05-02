@@ -31,40 +31,44 @@ export default function PieChart({ data }) {
 
     let delayed
     const options = {
-        animation: {
-            onComplete: () => {
-                delayed = true;
-            },
-            delay: (context) => {
-                let delay = 0;
-                if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
-                }
-                return delay;
-            },
+        Animation: {
+            duration: 0
         },
-        scales: {
-            x: {
-                stacked: true,
+        // animation: {
+        //     onComplete: () => {
+        //         delayed = true;
+        //     },
+        //     delay: (context) => {
+        //         let delay = 0;
+        //         if (context.type === 'data' && context.mode === 'default' && !delayed) {
+        //             delay = context.dataIndex * 300 + context.datasetIndex * 100;
+        //         }
+        //         return delay;
+        //     },
+        // },
+  
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
             },
-            y: {
-                stacked: true
-            }
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: 'Mejores Promedios',
-                padding: {
-                    top: 10,
-                    bottom: 30
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Mejores Promedios',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    }
                 }
             }
-        }
-    };
-    return (
+        };
+        return(
         <div>
-            <Pie data={chartData} options={options} />
-        </div>
+        <Pie data={chartData} options={options} />
+        </div >
     )
 }

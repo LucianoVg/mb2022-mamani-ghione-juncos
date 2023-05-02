@@ -31,17 +31,17 @@ export async function ConteoAsistenciasMensual(idDocente, mes) {
     let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     try {
         console.log(fechaInicio, fechaFin);
-        const conteo = await db.$queryRaw`SELECT a.iddocentexmateria,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocentexmateria = ${Number(idDocente)}) as presente,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocentexmateria = ${Number(idDocente)}) as ausente,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocentexmateria = ${Number(idDocente)}) as ausentejustificado ,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocentexmateria = ${Number(idDocente)}) as llegadatarde,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE llegadatardejustificada= true and iddocentexmateria = ${Number(idDocente)}) as llegadatardejustificada,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocentexmateria = ${Number(idDocente)}) as mediafalta,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafaltajustificada= true and iddocentexmateria = ${Number(idDocente)}) as mediafaltajustificada
+        const conteo = await db.$queryRaw`SELECT a.iddocente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocente = ${Number(idDocente)}) as presente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocente = ${Number(idDocente)}) as ausente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}) as llegadatarde,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocente = ${Number(idDocente)}) as mediafalta
         FROM asistenciadocente as a
-        where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
-        group by a.iddocentexmateria`
+        where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+        and TO_DATE(${fechaFin},'DD/MM/YYYY') ) 
+        and iddocente = ${Number(idDocente)}
+        group by a.iddocente`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
         let present = JSON.parse(presente)

@@ -30,9 +30,7 @@ async function ConteoAsistenciasAnual(idAlumno) {
     (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
     (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausentejustificado ,
     (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistencia WHERE llegadatardejustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatardejustificada,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafaltajustificada= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafaltajustificada
+    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta
 FROM asistencia as a
 where idalumnoxcursoxdivision = ${Number(idAlumno)}
 group by a.idalumnoxcursoxdivision`

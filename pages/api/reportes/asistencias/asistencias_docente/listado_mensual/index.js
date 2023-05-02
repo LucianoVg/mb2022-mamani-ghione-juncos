@@ -28,12 +28,12 @@ export async function ListadoAsistenciasMensual(idDocente, mes) {
     let fechaInicio = `01/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
     try {
-        return await db.$queryRaw`SELECT 
-        *
-    FROM asistenciadocente a
-    inner join alumnoxcursoxdivision al on al.id = a.iddocentexmateria
-    inner join usuario u on u.id = al.idusuario
-    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') and TO_DATE(${fechaFin},'DD/MM/YYYY') ) and iddocentexmateria = ${Number(idDocente)}
+        return await db.$queryRaw`SELECT * FROM asistenciadocente a
+    -- inner join usuario d on d.id = a.iddocente
+    inner join usuario u on u.id = a.idusuario
+    where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') )
+    and iddocente = ${Number(idDocente)}
       order by creadoen asc`
     } catch (error) {
         console.error(error);

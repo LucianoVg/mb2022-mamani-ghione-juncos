@@ -444,9 +444,9 @@ export default function Asistencias() {
                                             !a.presente && !a.ausente && !a.ausentejustificado && !a.llegadatarde && !a.llegadatardejustificada && !a.mediafalta && !a.mediafaltajustificada ? (
                                                 <TableRow key={a.id} >
                                                     <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                    <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
-                                                    <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
+                                                    <TableCell className="col-md-1">{a.docente?.usuario?.legajo}</TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize" >{a.docente?.apellido} </TableCell>
+                                                    <TableCell className="col-md-1 text-capitalize">{a.docente?.nombre}</TableCell>
                                                     <TableCell className="col-md-1 ">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -580,9 +580,9 @@ export default function Asistencias() {
                                                     <TableRow
                                                         key={a.id} style={{ backgroundColor: 'lightsteelblue', color: 'black' }} >
                                                         <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                        <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
-                                                        <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
+                                                        <TableCell className="col-md-1">{a.docente?.legajo}</TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize" >{a.docente?.apellido} </TableCell>
+                                                        <TableCell className="col-md-1 text-capitalize">{a.docente?.nombre}</TableCell>
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -720,9 +720,9 @@ export default function Asistencias() {
                                                     (
                                                         <TableRow key={a.id} >
                                                             <TableCell className="col-md-1 text-capitalize">{a.creadoen}</TableCell>
-                                                            <TableCell className="col-md-1">{a.docentexmateria?.usuario?.legajo}</TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize" >{a.docentexmateria?.usuario?.apellido} </TableCell>
-                                                            <TableCell className="col-md-1 text-capitalize">{a.docentexmateria?.usuario?.nombre}</TableCell>
+                                                            <TableCell className="col-md-1">{a.docente?.legajo}</TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize" >{a.docente?.apellido} </TableCell>
+                                                            <TableCell className="col-md-1 text-capitalize">{a.docente?.nombre}</TableCell>
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (

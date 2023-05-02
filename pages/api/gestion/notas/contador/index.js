@@ -10,7 +10,7 @@ export default async function handler(req, res) {
                optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
           });
           if (req.method === 'GET') {
-               const contador = await contarNotas()
+               const contador = await Notas()
 
                return res.status(200).json(contador)
           } else {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
           return res.status(500).send(error)
      }
 }
-async function contarNotas(idMateria) {
+async function Notas(idMateria) {
      try {
           const conteo = await db.$queryRaw`SELECT n.idmateria,
         (
@@ -94,7 +94,7 @@ async function contarNotas(idMateria) {
              (select count(*) from nota where   nota4= 10  and idmateria =${Number(idMateria)}) +
              (select count(*) from nota where   nota5= 10  and idmateria =${Number(idMateria)}) 
         ) as nota10
-        FROM historialnota as n
+        FROM nota as n
         where idmateria= ${Number(idMateria)}
         group by n.idmateria`
 

@@ -17,25 +17,17 @@ export default async function handler(
         let options = {
             include: {
                 usuario: true,
-                docentexmateria: {
-                    include: {
-                        usuario: true
-                    }
-                }
+                docente: true
             },
             orderBy: {
-                docentexmateria: {
-                    usuario: {
-                        nombre: 'asc'
-                    }
+                docente: {
+                    nombre: 'asc'
                 }
             }
         }
         if (idDocente) {
             OR.push({
-                docentexmateria: {
-                    id: Number(idDocente)
-                }
+                idocente: idDocente
             })
         }
         if (fecha) {

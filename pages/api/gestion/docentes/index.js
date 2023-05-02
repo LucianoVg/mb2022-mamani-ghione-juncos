@@ -18,22 +18,21 @@ export default async function handler(req, res) {
     }
 }
 
-export async function traerDocentes(idusuario) {
+export async function traerDocentes() {
     try {
-        const docente = await db.docentexmateria.findMany({
+        const docente = await db.usuario.findMany({
             include: {
-                materia: true,
-                usuario: true
-            },
-            where: {
-                usuario: {
-                    id: {
-                        not: Number(idusuario)
+                docentexmateria: {
+                    include: {
+                        materia: true
                     }
                 }
+            },
+            where: {
+                idrol: 1
             }
         })
-        console.log(docente);
+        // console.log(docente);
         return docente
     } catch (error) {
         console.log(error);
