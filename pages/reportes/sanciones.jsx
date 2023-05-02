@@ -228,7 +228,7 @@ export default function Sancion() {
                     Motivo
                   </TableCell>
                   <TableCell
-                    colSpan={2}
+                    colSpan={1}
                     sx={{
                       color: "black",
                       backgroundColor: "lightblue",
@@ -240,16 +240,27 @@ export default function Sancion() {
                   >
                     Autoridad
                   </TableCell>
-
                   <TableCell
                     colSpan={1}
-                    align="center"
                     sx={{
                       color: "black",
                       backgroundColor: "lightblue",
                       borderRightColor: "black",
                       borderRight: 1,
-
+                      borderBottom: 1,
+                      borderBottomColor: "black",
+                    }}
+                  >
+                    Cargo
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="left"
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                      borderRightColor: "black",
+                      borderRight: 1,
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
@@ -291,7 +302,22 @@ export default function Sancion() {
                         {s?.motivo}
                       </TableCell>
                       <TableCell
-                        colSpan={2}
+                        colSpan={1}
+                        component="th"
+                        scope="row"
+                        sx={{
+                          borderRightColor: "black",
+                          borderRight: 1,
+                          borderTop: 1,
+                          borderTopColor: "black",
+                          borderBottom: 1,
+                          borderBottomColor: "black",
+                        }}
+                      >
+                        {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
+                      </TableCell>
+                      <TableCell
+                        colSpan={1}
                         component="th"
                         scope="row"
                         sx={{
