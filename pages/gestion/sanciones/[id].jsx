@@ -1,4 +1,18 @@
-import { Button, Checkbox, FormControlLabel, Typography, FormControl, Box, Grid, Stack, InputLabel, MenuItem, Select, TextField, Container } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  FormControl,
+  Box,
+  Grid,
+  Stack,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Container,
+} from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,286 +22,302 @@ import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
 
 export default function DetalleSancion() {
-    const [sancionxalumno, setSancionXAlumno] = useState()
-    const [alumnos, setAlumnos] = useState()
-    const [cursos, setCursos] = useState()
-    const [tipoSanciones, setTipoSanciones] = useState()
-    const router = useRouter()
-    const [esSancionGrupal, setEsSancionGrupal] = useState(false)
-    const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    const { loading, authUser } = useAuth()
-    // const [idtiposancion, setIdtiposancion] = useState(0)
-    const [idalumno, setIdalumno] = useState(0)
-    // const [idcurso, setIdcurso] = useState(0)
-    const [loadSancion, setLoadSancion] = useState(false)
-    // const [editMode, setEditMode] = useState(false)
-    const [motivo, setMotivo] = useState('')
-    const [guardando, setGuardando] = useState(false)
+  const [sancionxalumno, setSancionXAlumno] = useState();
+  const [alumnos, setAlumnos] = useState();
+  const [cursos, setCursos] = useState();
+  const [tipoSanciones, setTipoSanciones] = useState();
+  const router = useRouter();
+  const [esSancionGrupal, setEsSancionGrupal] = useState(false);
+  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
+  const { loading, authUser } = useAuth();
+  // const [idtiposancion, setIdtiposancion] = useState(0)
+  const [idalumno, setIdalumno] = useState(0);
+  // const [idcurso, setIdcurso] = useState(0)
+  const [loadSancion, setLoadSancion] = useState(false);
+  // const [editMode, setEditMode] = useState(false)
+  const [motivo, setMotivo] = useState("");
+  const [guardando, setGuardando] = useState(false);
 
-
-    const { id } = router.query
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        traerUsuario()
-        if (usuario.rol) {
-            if (!tienePermisos()) {
-                router.push('/error')
-            } else {
-                traerCursos()
-                traerAlumnos()
-                traerTiposSancion()
-                traerSancion(id)
-            }
-        }
-    }, [loading, authUser, id, usuario.id, usuario.rol])
-
-    const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
-            || usuario.rol === 'Docente'
+  const { id } = router.query;
+  useEffect(() => {
+    if (!loading && !authUser) {
+      router.push("/gestion/cuenta/login");
     }
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-        }
+    traerUsuario();
+    if (usuario.rol) {
+      if (!tienePermisos()) {
+        router.push("/error");
+      } else {
+        traerCursos();
+        traerAlumnos();
+        traerTiposSancion();
+        traerSancion(id);
+      }
     }
+  }, [loading, authUser, id, usuario.id, usuario.rol]);
 
-    const traerSancion = async (id) => {
-        if (id) {
-            setLoadSancion(true)
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${id}`)
-            if (res.status === 200) {
-                setSancionXAlumno(res.data)
-            }
-            setLoadSancion(false)
-        }
-    }
-    const traerAlumnos = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`)
-        if (res.data) {
-            setAlumnos(res.data)
-        }
-    }
-    const traerCursos = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
-        if (res.data) {
-            setCursos(res.data)
-        }
-    }
-    const traerTiposSancion = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
-        if (res.data) {
-            setTipoSanciones(res.data)
-        }
-    }
-    const handleMotivo = (e) => {
-        setMotivo(e.target.value)
-        // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
-    }
-
-    let selected = ""
-
-    alumnos && alumnos.map((a, i) => (
-        a.id === sancionxalumno?.alumnoxcursoxdivision?.id && (
-            selected = `${a.usuario?.apellido} ${a.usuario?.nombre}`
-            // idAlumno: Number(a.id)
-        )
-    ))
-
-
-    const [inEditMode, setInEditMode] = useState({
-        status: false
-    });
-
-    const actualizarSancion = async (e) => {
-        e.preventDefault()
-        console.log(motivo, sancionxalumno);
-        setGuardando(true)
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancionxalumno?.sancion?.id}`, {
-            // idSancionXAlumno: sancionxalumno?.id,
-            idUsuario: usuario.id,
-            // idTipoSancion: idtiposancion,
-            motivo: motivo.length ? motivo : sancionxalumno?.sancion?.motivo
-        })
-        setGuardando(false)
-        if (res.status === 200) {
-            router.push('/gestion/sanciones')
-        }
-    }
-
-    const onCancel = () => {
-        // reset the inEditMode state value
-        setInEditMode({
-            status: false
-        })
-        setMotivo(sancionxalumno?.sancion?.motivo)
-    }
-
+  const tienePermisos = () => {
     return (
-        <Layout>
-            <Container maxWidth={'xl'}>
-                <Typography variant="h4">Detalle Sanción</Typography>
-                {
+      usuario.rol === "Administrador" ||
+      usuario.rol === "Director" ||
+      usuario.rol === "Vicedirector" ||
+      usuario.rol === "Preceptor" ||
+      usuario.rol === "Docente"
+    );
+  };
+  const traerUsuario = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+    );
+    if (res.data) {
+      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
+    }
+  };
 
-                    !loadSancion && (
-                        <Box style={{ marginTop: "30px" }}>
+  const traerSancion = async (id) => {
+    if (id) {
+      setLoadSancion(true);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${id}`
+      );
+      if (res.status === 200) {
+        setSancionXAlumno(res.data);
+      }
+      setLoadSancion(false);
+    }
+  };
+  const traerAlumnos = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`
+    );
+    if (res.data) {
+      setAlumnos(res.data);
+    }
+  };
+  const traerCursos = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
+    );
+    if (res.data) {
+      setCursos(res.data);
+    }
+  };
+  const traerTiposSancion = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`
+    );
+    if (res.data) {
+      setTipoSanciones(res.data);
+    }
+  };
+  const handleMotivo = (e) => {
+    setMotivo(e.target.value);
+    // setEditMode((idalumno || idcurso) && idtiposancion && motivo)
+  };
 
-                            <Box direction='row'>
-                                {
-                                    !esSancionGrupal && (
-                                        <FormControl>
-                                            <InputLabel htmlFor="inputAlumno">Estudiante</InputLabel>
-                                            <Select
-                                                value={idalumno}
-                                                // onChange={handleIdAlumno}
-                                                name="idalumno"
-                                                id="inputAlumno"
-                                                label="Estudiante"
-                                                displayEmpty
-                                                disabled
-                                                renderValue={(value) => value ? value : <a>{selected}</a>}
-                                                sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}>
-                                                {/* {
+  let selected = "";
+
+  alumnos &&
+    alumnos.map(
+      (a, i) =>
+        a.id === sancionxalumno?.alumnoxcursoxdivision?.id &&
+        (selected = `${a.usuario?.apellido} ${a.usuario?.nombre}`)
+      // idAlumno: Number(a.id)
+    );
+
+  const [inEditMode, setInEditMode] = useState({
+    status: false,
+  });
+
+  const actualizarSancion = async (e) => {
+    e.preventDefault();
+    console.log(motivo, sancionxalumno);
+    setGuardando(true);
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancionxalumno?.sancion?.id}`,
+      {
+        // idSancionXAlumno: sancionxalumno?.id,
+        idUsuario: usuario.id,
+        // idTipoSancion: idtiposancion,
+        motivo: motivo.length ? motivo : sancionxalumno?.sancion?.motivo,
+      }
+    );
+    setGuardando(false);
+    if (res.status === 200) {
+      router.push("/gestion/sanciones");
+    }
+  };
+
+  const onCancel = () => {
+    // reset the inEditMode state value
+    setInEditMode({
+      status: false,
+    });
+    setMotivo(sancionxalumno?.sancion?.motivo);
+  };
+
+  return (
+    <Layout>
+      <Container maxWidth={"xl"}>
+        <Typography variant="h4">Detalle Sanción</Typography>
+        {!loadSancion && (
+          <Box style={{ marginTop: "30px" }}>
+            <Box direction="row">
+              {!esSancionGrupal && (
+                <FormControl>
+                  <InputLabel htmlFor="inputAlumno">Estudiante</InputLabel>
+                  <Select
+                    value={idalumno}
+                    // onChange={handleIdAlumno}
+                    name="idalumno"
+                    id="inputAlumno"
+                    label="Estudiante"
+                    displayEmpty
+                    disabled
+                    renderValue={(value) => (value ? value : <a>{selected}</a>)}
+                    sx={{
+                      width: "200px",
+                      marginRight: "20px",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    {/* {
                                                 alumnos && alumnos.map((a, i) => (
                                                     <MenuItem selected={a.id === sancionxalumno.alumnoxcursoxdivision?.id} key={i} inputVa={a.id === sancionxalumno.alumnoxcursoxdivision?.id}>
                                                         {a.usuario.nombre} {a.usuario.apellido}
                                                     </MenuItem>
                                                 ))
                                             } */}
-                                            </Select>
-                                        </FormControl>
-                                    )
-                                }
+                  </Select>
+                </FormControl>
+              )}
 
-                                <FormControl>
-                                    <InputLabel htmlFor="inputTipoSancion">Tipo de Sanción</InputLabel>
-                                    <Select
-                                        value={sancionxalumno?.sancion?.idtiposancion}
-                                        name="idtiposancion"
-                                        id="inputTipoSancion"
-                                        label="Tipo de Sancion"
-                                        disabled
-                                        renderValue={(value) => <span>{sancionxalumno?.sancion?.tiposancion?.tipo}</span>}
-                                        sx={{ width: '180px', marginBottom: '20px' }}
-                                        MenuProps={{ disableScrollLock: true }}
-                                    >
-                                        {
-                                            tipoSanciones && tipoSanciones.map((t, i) => (
-                                                <MenuItem selected={t.id === sancionxalumno?.sancion?.idtiposancion} key={i} value={t.id}>
-                                                    {t.tipo}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </FormControl>
-                            </Box>
+              <FormControl>
+                <InputLabel htmlFor="inputTipoSancion">
+                  Tipo de Sanción
+                </InputLabel>
+                <Select
+                  value={sancionxalumno?.sancion?.idtiposancion}
+                  name="idtiposancion"
+                  id="inputTipoSancion"
+                  label="Tipo de Sancion"
+                  disabled
+                  renderValue={(value) => (
+                    <span>{sancionxalumno?.sancion?.tiposancion?.tipo}</span>
+                  )}
+                  sx={{ width: "180px", marginBottom: "20px" }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {tipoSanciones &&
+                    tipoSanciones.map((t, i) => (
+                      <MenuItem
+                        selected={
+                          t.id === sancionxalumno?.sancion?.idtiposancion
+                        }
+                        key={i}
+                        value={t.id}
+                      >
+                        {t.tipo}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Box>
 
-                            {
-                                inEditMode.status === true ? (
-                                    <Box sx={{ marginBottom: '20px' }}>
-                                        <TextField
-                                            multiline
-                                            rows={6}
-                                            required
-                                            placeholder={sancionxalumno?.sancion?.motivo}
-                                            name="motivo"
-                                            value={motivo}
-                                            label="Motivo"
-                                            onChange={handleMotivo}
-                                            sx={{ maxWidth: '350px', minWidth: "300px" }}
-                                        />
-                                    </Box>
-                                ) :
-                                    (
-                                        <Box sx={{ marginBottom: '20px' }}>
-                                            <TextField
-                                                multiline
-                                                rows={6}
-                                                required
-                                                name="motivo"
-                                                value={sancionxalumno?.sancion?.motivo}
-                                                label="Motivo"
-                                                disabled
-                                                sx={{ maxWidth: '350px', minWidth: "300px" }}
-                                            />
-                                        </Box>
-                                    )
-                            }
+            {inEditMode.status === true ? (
+              <Box sx={{ marginBottom: "20px" }}>
+                <TextField
+                  multiline
+                  rows={6}
+                  required
+                  placeholder={sancionxalumno?.sancion?.motivo}
+                  name="motivo"
+                  value={motivo}
+                  label="Motivo"
+                  onChange={handleMotivo}
+                  sx={{ maxWidth: "350px", minWidth: "300px" }}
+                />
+              </Box>
+            ) : (
+              <Box sx={{ marginBottom: "20px" }}>
+                <TextField
+                  multiline
+                  rows={6}
+                  required
+                  name="motivo"
+                  value={sancionxalumno?.sancion?.motivo}
+                  label="Motivo"
+                  disabled
+                  sx={{ maxWidth: "350px", minWidth: "300px" }}
+                />
+              </Box>
+            )}
 
-                            {
-                                inEditMode.status === true ? (
-                                    <Box direction='row'>
-                                        <Stack direction="row" spacing={2}>
-                                            <Button disabled={guardando} variant="contained"
-                                                color="success"
-                                                onClick={actualizarSancion}
-                                            >
-                                                {
-                                                    guardando && <Loading size={30} />
-                                                }
-                                                {
-                                                    !guardando && <span>Actualizar Sanción</span>
-                                                }
-                                            </Button>
-                                            <Button variant='contained' sx={{
-                                                backgroundColor: "gray",
-                                                ":hover": {
-                                                    backgroundColor: "gray"
-                                                }
-
-                                            }} href={"/"} 
-                                            onClick={() => onCancel()}>
-                                                Cancelar
-                                            </Button>
-                                        </Stack>
-
-                                    </Box>
-
-                                ) : (
-                                    <Box direction='row'>
-                                        <Button
-                                            variant="contained"
-                                            color="info"
-                                            // size="small"
-                                            style={{ marginRight: '20px' }}
-                                            onClick={() => {
-                                                setInEditMode({ status: true })
-                                                setMotivo(sancionxalumno?.sancion?.motivo)
-                                            }
-                                            }
-                                        >
-                                            Editar Sanción
-                                        </Button>
-                                        <Button variant="contained"
-                                            sx={{
-                                                width: '170px', backgroundColor: "white", color: "black",
-                                                ":hover": {
-                                                    backgroundColor: "lightgray"
-                                                }
-                                            }}
-                                            href='/gestion/sanciones'
-                                        >
-                                            Volver
-                                        </Button>
-                                    </Box>
-                                )
-                            }
-                        </Box>
-                    )
-                }
-                {
-                    loadSancion && (
-                        <Container sx={{ textAlign: 'center' }}>
-                            <Loading size={80} />
-                        </Container>
-                    )
-                }
-            </Container>
-        </Layout>
-    )
+            {inEditMode.status === true ? (
+              <Box direction="row">
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    disabled={guardando}
+                    variant="contained"
+                    color="success"
+                    onClick={actualizarSancion}
+                  >
+                    {guardando && <Loading size={30} />}
+                    {!guardando && <span>Actualizar Sanción</span>}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "gray",
+                      ":hover": {
+                        backgroundColor: "gray",
+                      },
+                    }}
+                    href={"/gestion/sanciones"}
+                    onClick={() => onCancel()}
+                  >
+                    Cancelar
+                  </Button>
+                </Stack>
+              </Box>
+            ) : (
+              <Box direction="row">
+                <Button
+                  variant="contained"
+                  color="info"
+                  // size="small"
+                  style={{ marginRight: "20px" }}
+                  onClick={() => {
+                    setInEditMode({ status: true });
+                    setMotivo(sancionxalumno?.sancion?.motivo);
+                  }}
+                >
+                  Editar Sanción
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: "170px",
+                    backgroundColor: "white",
+                    color: "black",
+                    ":hover": {
+                      backgroundColor: "lightgray",
+                    },
+                  }}
+                  href="/gestion/sanciones"
+                >
+                  Volver
+                </Button>
+              </Box>
+            )}
+          </Box>
+        )}
+        {loadSancion && (
+          <Container sx={{ textAlign: "center" }}>
+            <Loading size={80} />
+          </Container>
+        )}
+      </Container>
+    </Layout>
+  );
 }
