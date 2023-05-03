@@ -149,19 +149,17 @@ export default function MantenimientoUsuario() {
 
   const handleClick = (e, id) => {
     setAnchorEl(e.currentTarget);
-    if (!localStorage.getItem("vistas")) {
-      localStorage.setItem("vistas", true);
-    }
     setIdSelectedUser(id);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const onDeleteUser = async (id) => {
+  const onDeleteUser = async () => {
     const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/delete/${id}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/delete/${idSelectedUser}`
     );
+    handleClose();
     if (res.status === 200) {
       await traerUsuarios();
     }
@@ -313,7 +311,7 @@ export default function MantenimientoUsuario() {
                             </ListItemButton>
                           </ListItem>
                           <ListItem disablePadding>
-                            <ListItemButton onClick={() => onDeleteUser(u.id)}>
+                            <ListItemButton onClick={onDeleteUser}>
                               <ListItemText primary="Eliminar" />
                             </ListItemButton>
                           </ListItem>

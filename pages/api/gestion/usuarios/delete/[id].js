@@ -21,7 +21,9 @@ export default async function handler(req, res) {
 
 async function deleteUser(id) {
   return await db.usuario.update({
-    activo: false,
+    data: {
+      activo: false,
+    },
     where: {
       id: Number(id),
     },
