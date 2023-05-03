@@ -26,11 +26,11 @@ export default async function handler(req, res) {
 async function ConteoAsistenciasAnual(idDocente) {
     try {
         const conteo = await db.$queryRaw`SELECT a.iddocente,
-    (SELECT COUNT(*) FROM asistenciadocente a WHERE presente = true  and iddocente = ${Number(idDocente)}) as presente,
-    (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and iddocente = ${Number(idDocente)}) as ausente,
-    (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
-    (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and iddocente = ${Number(idDocente)}) as mediafalta
+    (SELECT COUNT(*) FROM asistenciadocente  WHERE presente = true  and iddocente = ${Number(idDocente)}) as presente,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocente = ${Number(idDocente)}) as ausente,
+    -- (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}) as llegadatarde,
+    (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocente = ${Number(idDocente)}) as mediafalta
    FROM asistenciadocente as a
 where iddocente = ${Number(idDocente)}
 group by a.iddocente`

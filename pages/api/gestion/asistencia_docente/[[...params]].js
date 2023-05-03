@@ -19,11 +19,19 @@ export default async function handler(
                 usuario: true,
                 docente: true
             },
-            orderBy: {
-                docente: {
-                    nombre: 'asc'
+            orderBy: [
+                {
+                    creadoen: "asc",
+                },
+                {
+                    docente: {
+                        apellido: 'asc'
+                    }
                 }
-            }
+            ]
+
+
+
         }
         if (idDocente) {
             OR.push({

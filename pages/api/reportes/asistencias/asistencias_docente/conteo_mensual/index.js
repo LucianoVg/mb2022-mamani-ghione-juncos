@@ -34,7 +34,7 @@ export async function ConteoAsistenciasMensual(idDocente, mes) {
         const conteo = await db.$queryRaw`SELECT a.iddocente,
             (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocente = ${Number(idDocente)}) as presente,
             (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocente = ${Number(idDocente)}) as ausente,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
+            -- (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
             (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}) as llegadatarde,
             (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocente = ${Number(idDocente)}) as mediafalta
         FROM asistenciadocente as a

@@ -852,12 +852,17 @@ export default function Notas() {
                             variant="contained"
                             color="info"
                             size="small"
-                            onClick={() =>
+                            onClick={() => {
                               setInEditMode({
                                 status: true,
                                 rowKey: i,
                               })
-                            }
+                              setNota({ ...nota, nota1: n.nota1,
+                                 nota2: n.nota2,
+                                 nota3: n.nota3, 
+                                 nota4: n.nota4,
+                                 nota5: n.nota5 })
+                            }}
                           >
                             Editar
                           </Button>

@@ -30,13 +30,18 @@ export default async function handler(
                     }
                 }
             },
-            orderBy: {
-                alumnoxcursoxdivision: {
-                    usuario: {
-                        nombre: 'asc'
+            orderBy: [
+                {
+                    alumnoxcursoxdivision: {
+                        usuario: {
+                            apellido: 'asc'
+                        }
                     }
-                }
-            },
+                },
+                {
+                    idmateria: 'asc',
+                },
+            ]
 
         }
         if (idMateria) {

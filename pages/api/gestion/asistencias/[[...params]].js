@@ -24,9 +24,20 @@ export default async function handler(req, res) {
             },
           },
         },
-        orderBy: {
-          creadoen: "asc",
-        },
+        orderBy: [
+          {
+            creadoen: "asc",
+          },
+          {
+            alumnoxcursoxdivision: {
+              usuario: {
+                apellido: 'asc'
+              }
+            }
+          }
+        ]
+
+
       };
 
       if (idAlumno) {
