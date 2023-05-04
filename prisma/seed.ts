@@ -317,7 +317,7 @@ async function main() {
     // portadaFicha.map(async (p) => {
     //     const portada = await prisma.portadaficha.create({
     //         data: {
-    //             nombre: p.nombre,
+
     //             url: p.url,
     //             idfichainstitucional: 1
     //         }

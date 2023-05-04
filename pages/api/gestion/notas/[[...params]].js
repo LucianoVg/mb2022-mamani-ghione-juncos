@@ -15,9 +15,9 @@ export default async function handler(
 
         let { idMateria, idTrimestre, idDivision, idAlumno } = req.query
         console.log({ idMateria, idTrimestre, idDivision, idAlumno });
-        let OR = [
-            { idtrimestre: Number(idTrimestre) },
-        ]
+        let OR = [ ]
+
+       
 
         let options = {
             include: {
@@ -44,6 +44,9 @@ export default async function handler(
             ],
             where: {
                 AND: [
+                    {
+                        idtrimestre: Number(idTrimestre)
+                    },
                     {
                         alumnoxcursoxdivision: {
                             usuario: {
