@@ -1,159 +1,354 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
-import { Container } from "@mui/system";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import Carrusel from "../../../components/carrusel";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import Loading from "../../../components/loading";
-import { guardarImagen, traerImagen } from "../../api/servicios/portada";
+import { guardarImagen } from "../../api/servicios/portada";
 
 export default function EditarFicha() {
-    const [ficha, setFicha] = useState({
-        id: '', nombreInstitucion: '', ubicacion: '', tipoInstitucion: false, descripcion: '', telefono1: '', telefono2: '', oficina1: '', oficina2: '', mail: '', idUsuario: '', portadasFicha: []
-    })
-    const [cargando, setCargando] = useState(false)
+  const [ficha, setFicha] = useState({
+    id: 0,
+    nombreinstitucion: "",
+    ciudad: "",
+    provincia: "",
+    tipoinstitucion: "",
+    descripcion: "",
+    telefono1: "",
+    telefono2: "",
+    oficina1: "",
+    oficina2: "",
+    mail: "",
+    idusuario: 0,
+    portadasficha: [],
+  });
+  const [cargando, setCargando] = useState(false);
+  const [imagenes, setImagenes] = useState(null);
+  const router = useRouter();
 
-    const router = useRouter()
+  const handleForm = (e) => {
+    setFicha({ ...ficha, [e.target.name]: e.target.value });
+  };
+  const guardarFicha = async (e) => {
+    e.preventDefault();
+    setCargando(true);
+    await cargarImagenes();
 
-    const handleForm = (e) => {
-        setFicha({ ...ficha, [e.target.name]: e.target.value })
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${ficha.id}`,
+      {
+        nombreinstitucion: ficha.nombreinstitucion,
+        ciudad: ficha.ciudad,
+        provincia: ficha.provincia,
+        tipoinstitucion: ficha.tipoinstitucion,
+        descripcion: ficha.descripcion,
+        telefono1: ficha.telefono1,
+        telefono2: ficha.telefono2,
+        oficina1: ficha.oficina1,
+        oficina2: ficha.oficina2,
+        mail: ficha.mail,
+        idusuario: ficha.idusuario,
+        portadasficha: ficha.portadasficha,
+      }
+    );
+    setCargando(false);
+    if (res.status === 200) {
+      router.push("/gestion/institucional");
     }
-    const guardarFicha = (e) => {
-        e.preventDefault()
-
-        axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${ficha.id}`, {
-            nombreInstitucion: ficha.nombreinstitucion,
-            ubicacion: ficha.ubicacion,
-            tipoInstitucion: ficha.tipoinstitucion,
-            descripcion: ficha.descripcion,
-            telefono1: ficha.telefono1,
-            telefono2: ficha.telefono2,
-            oficina1: ficha.oficina1,
-            oficina2: ficha.oficina2,
-            mail: ficha.mail,
-            idUsuario: ficha.idusuario
-        }).then(res => {
-            console.log(res.data);
-            ficha.portadasFicha.map(p => {
-                if (p.id) {
-                    axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas/${p.id}`, {
-                        nombre: p.nombre,
-                        url: p.url,
-                        fichaInstitucionalId: p.idfichainstitucional
-                    }).then(res => {
-                        console.log(res.data);
-                    }).catch(err => {
-                        console.log(err);
-                    })
-                } else {
-                    axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/portadas`, {
-                        nombre: p.nombre,
-                        url: p.url,
-                        fichaInstitucionalId: p.idfichainstitucional
-                    }).then(res => {
-                        console.log(res.data);
-                    }).catch(err => {
-                        console.log(err);
-                    })
-                }
-            })
-        }).catch(err => {
-            console.log(err);
-        })
-        router.push('/gestion/institucional')
+  };
+  const { authUser, loading } = useAuth();
+  const { id } = router.query;
+  useEffect(() => {
+    if (!loading && !authUser) {
+      router.push("/gestion/cuenta/login");
     }
-
-    const imgRef = useRef(null)
-    const { authUser, loading } = useAuth()
-    const { id } = router.query
-    useEffect(() => {
-        if (!loading && !authUser) {
-            router.push('/gestion/cuenta/login')
-        }
-        if (id) {
-            setCargando(true)
-            axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${id}`)
-                .then(res => {
-                    if (res.data) {
-                        console.log(res.data);
-                        setFicha(res.data)
-                    }
-                    setCargando(false)
-                })
-        }
-    }, [id, authUser, loading])
-
-    const cargarImagenes = () => {
-
-        if (imgRef.current.files.length > 0) {
-            for (let i = 0; i < imgRef.current.files.length; i++) {
-                const file = imgRef.current.files[i];
-                guardarImagen('portadas/' + file.name, file)
-                    .then(result => {
-                        traerImagen('portadas/' + file.name).then(url => {
-                            ficha.portadasFicha.push({
-                                nombre: file.name,
-                                url: url,
-                                fichaInstitucionalId: ficha.id
-                            })
-                            console.log(ficha.portadasFicha);
-                        })
-
-                        // console.log(fichaInstitucional);
-                    }).catch(err => {
-                        console.log(err);
-                    })
-            }
-        }
+    traerFicha();
+  }, [id, authUser, loading]);
+  const traerFicha = async () => {
+    if (id) {
+      setCargando(true);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional/${Number(
+          id
+        )}`
+      );
+      if (res.data) {
+        console.log(res.data);
+        setFicha(res.data);
+      }
+      setCargando(false);
     }
+  };
+  const handleImagenes = (e) => {
+    console.log(e?.currentTarget?.files);
+    setImagenes(e?.currentTarget?.files);
+    //  setTimeout(() => {
+    //    console.log(imagenes);
+    //  }, 5000);
+  };
+  const cargarImagenes = async () => {
+    if (imagenes && imagenes?.length > 0) {
+      for (const key in imagenes) {
+        if (typeof imagenes[key] === "object") {
+          const file = imagenes[key];
+          const url = await guardarImagen("portadas/" + file.name, file);
+          ficha.portadasficha.push({ id: 0, url: url });
+          console.log("FILES: ", ficha.portadasficha);
+        }
+      }
+    }
+  };
 
+  return (
+    <Layout>
+      {ficha && ficha.id !== 0 && (
+        <>
+          <Typography variant="h3">Editar Ficha Institucional</Typography>
+          <Box component={"form"} onSubmit={guardarFicha}>
+            <Box>
+              <Typography variant="h5" sx={{ marginBottom: "40px" }}>
+                <strong>Datos Generales</strong>
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ marginBottom: "30px", marginLeft: "60px" }}
+            >
+              <input
+                hidden
+                type="file"
+                name="imagenes"
+                id="inputImg"
+                className="form-control"
+                accept="image/*"
+                multiple={true}
+                onChange={handleImagenes}
+              />
+              Subir Imágenes
+            </Button>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "15px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Nombre de la Institución:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px", width: "400px" }}
+                  size="small"
+                  value={ficha.nombreinstitucion}
+                  name="nombreinstitucion"
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "40px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Descripción:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ width: "500px" }}
+                  value={ficha.descripcion}
+                  name="descripcion"
+                  multiline
+                  rows={2}
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
 
-    return (
-        <Layout>
-            {
-                ficha && ficha.id !== '' && (
-                    <Box component={'form'}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={2}>
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Nombre de la institucion"
-                                    name="nombreInstitucion"
-                                    value={ficha.nombreinstitucion}
-                                    required
-                                    onChange={handleForm} />
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Nombre de la institucion"
-                                    name="nombreInstitucion"
-                                    value={ficha.nombreinstitucion}
-                                    required
-                                    onChange={handleForm} />
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Nombre de la institucion"
-                                    name="nombreInstitucion"
-                                    value={ficha.nombreinstitucion}
-                                    required
-                                    onChange={handleForm} />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                )
-            }
-            {
-                cargando && (
-                    <Loading />
-                )
-            }
-        </Layout>
-    )
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "25px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Ciudad:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.ciudad}
+                  name="ciudad"
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Provincia:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.provincia}
+                  name="provincia"
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "15px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Tipo de Institución:
+              </Typography>
+              <FormControl>
+                <Select
+                  size="small"
+                  sx={{ marginTop: "-10px", width: "120px" }}
+                  onChange={handleForm}
+                  value={ficha.tipoinstitucion || "Privada"}
+                  name="tipoinstitucion"
+                >
+                  <MenuItem value={"Privada"}>Privada</MenuItem>
+                  <MenuItem value={"Publica"}>Publica</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+
+            <Box>
+              <Typography variant="h5" sx={{ marginBottom: "40px" }}>
+                <strong>Datos de Contacto</strong>
+              </Typography>
+            </Box>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "15px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Teléfono 1:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.telefono1}
+                  name="telefono1"
+                  type={"tel"}
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Oficina 1:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.oficina1}
+                  name="oficina1"
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
+
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "15px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Teléfono 2:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.telefono2}
+                  name="telefono2"
+                  type={"tel"}
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Oficina 2:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.oficina2}
+                  name="oficina2"
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
+
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginLeft: "60px", marginBottom: "15px" }}
+            >
+              <Typography variant="h7" sx={{ marginBottom: "40px" }}>
+                Correo:
+              </Typography>
+              <FormControl>
+                <TextField
+                  sx={{ marginTop: "-10px" }}
+                  size="small"
+                  value={ficha.mail}
+                  name="mail"
+                  autoComplete="email"
+                  type={"email"}
+                  onChange={handleForm}
+                  required
+                />
+              </FormControl>
+            </Stack>
+
+            <Stack direction="row" spacing={1}>
+              <Button variant="contained" size="small" type="submit">
+                Guardar Ficha
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  backgroundColor: "gray",
+                  ":hover": {
+                    backgroundColor: "gray",
+                  },
+                }}
+                href={"/"}
+              >
+                {" "}
+                Cancelar
+              </Button>
+            </Stack>
+          </Box>
+        </>
+      )}
+      {cargando && <Loading />}
+    </Layout>
+  );
 }
