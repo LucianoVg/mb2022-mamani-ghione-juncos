@@ -265,16 +265,16 @@ export default function MantenimientoUsuario() {
               <TableBody>
                 {paginacion.dataActual()?.map((u, i) => (
                   <TableRow key={i}>
-                    <TableCell align="right">{u.rol?.tipo}</TableCell>
-                    <TableCell align="right">{u.legajo}</TableCell>
-                    <TableCell align="right">{u.nombre}</TableCell>
-                    <TableCell align="right">{u.apellido}</TableCell>
-                    <TableCell align="right">{u.correo}</TableCell>
-                    <TableCell align="right">{u.direccion}</TableCell>
-                    <TableCell align="right">{u.telefono}</TableCell>
-                    <TableCell align="right">{u.localidad}</TableCell>
+                    <TableCell align="left">{u.rol?.tipo}</TableCell>
+                    <TableCell align="center">{u.legajo}</TableCell>
+                    <TableCell align="left">{u.nombre}</TableCell>
+                    <TableCell align="left">{u.apellido}</TableCell>
+                    <TableCell align="left">{u.correo}</TableCell>
+                    <TableCell align="left">{u.direccion}</TableCell>
+                    <TableCell align="center">{u.telefono}</TableCell>
+                    <TableCell align="left">{u.localidad}</TableCell>
 
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <IconButton onClick={(e) => handleClick(e, u.id)}>
                         <MoreVertIcon
                           sx={{ cursor: "pointer", color: "black" }}

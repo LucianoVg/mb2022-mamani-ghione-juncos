@@ -73,7 +73,7 @@ export default function Asistencias() {
     }
 
     const traerDocentes = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario.id}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/`)
         console.log(res.data);
         if (res.data) {
             setDocentes(res.data)
@@ -148,9 +148,9 @@ export default function Asistencias() {
             ausente: ausente,
             ausenteJustificado: aj,
             llegadaTarde: llegadaTarde,
-            llegadaTardeJustificada: ltj,
+            // llegadaTardeJustificada: ltj,
             mediaFalta: mf,
-            mediaFaltaJustificada: mfj,
+            // mediaFaltaJustificada: mfj,
             idUsuario: usuario.id,
             motivo: motivo
         })
@@ -339,16 +339,16 @@ export default function Asistencias() {
                                     // value={value}
                                     name="idAlumno"
                                     onChange={handleDocente}
-                                    getOptionLabel={(docente) => `${docente?.usuario?.apellido} ${docente?.usuario?.nombre}`}
+                                    getOptionLabel={(docente) => `${docente?.apellido} ${docente?.nombre}`}
                                     options={docentes}
 
                                     isOptionEqualToValue={(option, value) =>
-                                        option?.usuario?.apellido === value?.usuario?.apellido
+                                        option?.apellido === value?.apellido
                                     }
                                     noOptionsText={"No existe un docente con ese nombre"}
                                     renderOption={(props, docente) => (
                                         <Box component="li" {...props} key={docente?.id}>
-                                            {docente?.usuario?.apellido} {docente?.usuario?.nombre}
+                                            {docente?.apellido} {docente?.nombre}
                                         </Box>
                                     )}
                                     renderInput={(params) => <TextField {...params} label="Docente" />}

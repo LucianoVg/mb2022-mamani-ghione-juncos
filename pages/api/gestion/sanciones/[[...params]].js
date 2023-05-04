@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         });
         if (req.method === 'GET') {
             const { idAlumno, idCurso } = req.query
-
+            const OR = []
             let options = {
                 include: {
                     alumnoxcursoxdivision: {
@@ -31,19 +31,41 @@ export default async function handler(req, res) {
                         }
                     }
                 },
-                orderBy: {
-                    sancion: {
-                        id: 'desc'
+                orderBy: [
+                    {
+                        sancion: {
+                            id: 'desc'
+                        }
+                    },
+                    {
+                        sancion: {
+                            fecha: 'desc'
+                        }
                     }
+                ],
+                where: {
+                    AND: [
+                        {
+                            alumnoxcursoxdivision: {
+                                usuario: {
+                                    activo: true
+                                }
+                            }
+                        },
+                        {
+                            OR: OR
+                        }
+                    ]
                 }
             }
-            const OR = []
+           
             if (idAlumno) {
                 OR.push({
                     alumnoxcursoxdivision: {
                         id: Number(idAlumno)
                     }
-                })
+                },
+                )
             }
             if (idCurso) {
                 OR.push({
@@ -52,16 +74,17 @@ export default async function handler(req, res) {
                             id: Number(idCurso)
                         }
                     }
-                })
+                },
+                )
             }
-            if (OR.length) {
-                options = {
-                    ...options,
-                    where: {
-                        OR: OR
-                    }
-                }
-            }
+            // if (OR.length) {
+            //     options = {
+            //         ...options,
+            //         where: {
+            //             OR: OR
+            //         }
+            //     }
+            // }
             console.log(options);
             const sanciones = await traerSanciones(options)
             return res.status(200).json(sanciones)

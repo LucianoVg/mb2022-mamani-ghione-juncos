@@ -26,11 +26,7 @@ export async function DetalleAsistencia(id) {
         const asistencia = await db.asistenciadocente.findUnique({
             include: {
                 usuario: true,
-                docentexmateria: {
-                    include: {
-                        usuario: true
-                    }
-                }
+                docente: true
             },
             where: {
                 id: Number(id)

@@ -349,7 +349,7 @@ model usuario {
   localidad                                                      String?
   telefono                                                       String?
   direccion                                                      String?
-  activo Boolean?
+  activo                                                         Boolean?
   idrol                                                          Int
   alumnoxcursoxdivision_alumnoxcursoxdivisionTousuario           alumnoxcursoxdivision[]
   alumnoxcursoxdivision_alumnoxcursoxdivision_idusuarioTousuario alumnoxcursoxdivision[] @relation("alumnoxcursoxdivision_idusuarioTousuario")

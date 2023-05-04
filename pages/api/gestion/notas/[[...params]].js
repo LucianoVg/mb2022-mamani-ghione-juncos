@@ -41,7 +41,21 @@ export default async function handler(
                 {
                     idmateria: 'asc',
                 },
-            ]
+            ],
+            where: {
+                AND: [
+                    {
+                        alumnoxcursoxdivision: {
+                            usuario: {
+                                activo: true
+                            }
+                        }
+                    },
+                    {
+                        OR: OR
+                    }
+                ]
+            }
 
         }
         if (idMateria) {
@@ -66,14 +80,14 @@ export default async function handler(
             })
         }
 
-        if (OR.length) {
-            options = {
-                ...options,
-                where: {
-                    AND: OR
-                }
-            }
-        }
+        // if (OR.length) {
+        //     options = {
+        //         ...options,
+        //         where: {
+        //             AND: OR
+        //         }
+        //     }
+        // }
         const notas = await TraerNotas(options)
         return res.status(200).json(notas)
     } catch (error) {

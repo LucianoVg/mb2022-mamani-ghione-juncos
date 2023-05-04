@@ -29,7 +29,14 @@ export async function traerDocentes() {
                 }
             },
             where: {
-                idrol: 1
+                AND: [
+                    {
+                        idrol:1
+                    },
+                    {
+                        activo: true
+                    }
+                ]
             }
         })
         // console.log(docente);

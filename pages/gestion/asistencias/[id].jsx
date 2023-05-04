@@ -102,39 +102,40 @@ const MasInfo = () => {
                             <Box component={'div'} sx={{ marginBottom: 2 }}>
                                 <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
                                 {
-                                    asistencia?.presente ? (
-                                        <h4>Presente</h4>
-                                    ) :
-                                        (
-                                            asistencia?.ausente ? (
-                                                <h4>Ausente</h4>
-                                            ) :
-                                                (
-                                                    asistencia?.ausentejustificado ? (
-                                                        <h4>Ausente Justificado</h4>
-                                                    ) :
-                                                        (
-                                                            asistencia?.llegadatarde ? (
-                                                                <h4>Llegada Tarde</h4>
-                                                            ) :
-                                                                (
-                                                                    asistencia?.mediafalta ? (
-                                                                        <h4>Media Falta</h4>
-                                                                    ) :
-                                                                        (
-                                                                            <h4>-</h4>
-                                                                        )
-                                                                )
-                                                        )
-                                                )
-                                        )
+                                   asistencia?.presente ? (
+                                    <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Presente</Typography>
+
+                                ) :
+                                    (
+                                        asistencia?.ausente ? (
+                                            <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Ausente</Typography>
+                                        ) :
+                                            (
+                                                asistencia?.ausentejustificado ? (
+                                                    <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Ausente Justificado</Typography>
+                                                ) :
+                                                    (
+                                                        asistencia?.llegadatarde ? (
+                                                            <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Llegada Tarde</Typography>
+                                                        ) :
+                                                            (
+                                                                asistencia?.mediafalta ? (
+                                                                    <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Media Falta</Typography>
+                                                                ) :
+                                                                    (
+                                                                        <h4>-</h4>
+                                                                    )
+                                                            )
+                                                    )
+                                            )
+                                    )
                                 }
                             </Box>
                             <Box component={'div'} sx={{ marginBottom: 2 }}>
                                 <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
                                 <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoen}</Typography>
                             </Box>
-                            <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                            
                             {
                                 asistencia?.actualizadoen ? (
                                     <Box component='div' sx={{ marginBottom: 2 }}>
@@ -150,7 +151,7 @@ const MasInfo = () => {
                                     )
                             }
                         </div>
-
+                        <Divider sx={{ width: '100%', marginBottom: 2 }} />
                         <Box component={'div'} sx={{ margin: 'auto' }}>
                             <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
                             <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo || 'N/A'}</Typography>

@@ -70,8 +70,8 @@ const MasInfo = () => {
                         </Grid>
                         <div className='hstack gap-2 '>
                             <Box component='div' sx={{ marginBottom: 2 }}>
-                                <Typography variant='h5' sx={{ fontWeight: 500 }}>Alumno: </Typography>
-                                <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docentexmateria?.usuario?.apellido} {asistencia?.docentexmateria?.usuario?.nombre}</Typography>
+                                <Typography variant='h5' sx={{ fontWeight: 500 }}>Docente: </Typography>
+                                <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.docente?.apellido} {asistencia?.docente?.nombre}</Typography>
                             </Box>
                             {/* <Box component='div' sx={{ marginBottom: 2 }}>
                                 <Typography variant='h5' sx={{ fontWeight: 500 }}>Curso: </Typography>
@@ -98,31 +98,27 @@ const MasInfo = () => {
                                 <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Asistencia Actual</Typography>
                                 {
                                     asistencia?.presente ? (
-                                        <h4>Presente</h4>
+                                        <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Presente</Typography>
+
                                     ) :
                                         (
                                             asistencia?.ausente ? (
-                                                <h4>Ausente</h4>
+                                                <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Ausente</Typography>
                                             ) :
                                                 (
                                                     asistencia?.ausentejustificado ? (
-                                                        <h4>Ausente Justificado</h4>
+                                                        <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Ausente Justificado</Typography>
                                                     ) :
                                                         (
                                                             asistencia?.llegadatarde ? (
-                                                                <h4>Llegada Tarde</h4>
+                                                                <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Llegada Tarde</Typography>
                                                             ) :
                                                                 (
-                                                                    asistencia?.llegadatardejustificada ? (
-                                                                        <h4>llegada Tarde Justificada</h4>
+                                                                    asistencia?.mediafalta ? (
+                                                                        <Typography variant={'body1'}  sx={{ fontSize: 18 }}>Media Falta</Typography>
                                                                     ) :
                                                                         (
-                                                                            asistencia?.mediafalta ? (
-                                                                                <h4>Media Falta</h4>
-                                                                            ) :
-                                                                                (
-                                                                                    <h4>-</h4>
-                                                                                )
+                                                                            <h4>-</h4>
                                                                         )
                                                                 )
                                                         )
@@ -134,7 +130,7 @@ const MasInfo = () => {
                                 <Typography variant={'h5'} sx={{ fontWeight: 500 }}>Creado el: </Typography>
                                 <Typography variant={'body1'} sx={{ fontSize: 18 }}>{asistencia?.creadoen}</Typography>
                             </Box>
-                            <Divider sx={{ width: '100%', marginBottom: 2 }} />
+                          
                             {
                                 asistencia?.actualizadoen ? (
                                     <Box component='div' sx={{ marginBottom: 2 }}>
@@ -150,7 +146,7 @@ const MasInfo = () => {
                                     )
                             }
                         </div>
-
+                        <Divider sx={{ width: '100%', marginBottom: 2 }} />
                         <Box component={'div'} sx={{ margin: 'auto' }}>
                             <Typography variant='h5' sx={{ fontWeight: 500 }}>Motivo</Typography>
                             <Typography variant='body1' sx={{ fontSize: 18 }}>{asistencia?.motivo || 'N/A'}</Typography>

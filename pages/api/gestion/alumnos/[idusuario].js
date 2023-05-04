@@ -33,9 +33,19 @@ export async function traerAlumno(idusuario) {
                 tutor: true
             },
             where: {
-                usuario: {
-                    id: Number(idusuario)
-                }
+                and: [
+                    {
+                        usuario: {
+                            id: Number(idusuario)
+                        }
+                    },
+                    {
+                        usuario: {
+                            activo: true
+                        }
+                    }
+                ]
+
             }
         })
         return alumno

@@ -28,7 +28,7 @@ export default function Detalles() {
   const [usuario, setUsuario] = useState();
   const [enfermedades, setEnfermedades] = useState([]);
   const [selectedEnf, setSelectedEnf] = useState([]);
-  const [alergias, setAlergias] = useState("");
+  // const [alergias, setAlergias] = useState("");
   const [alumno, setAlumno] = useState();
   const [docente, setDocente] = useState();
   const [respuesta, setRespuesta] = useState({ status: 0, mensaje: "" });

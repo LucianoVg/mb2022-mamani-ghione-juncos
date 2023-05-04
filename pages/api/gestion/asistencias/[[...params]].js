@@ -35,7 +35,22 @@ export default async function handler(req, res) {
               }
             }
           }
-        ]
+        ],
+        where: {
+          AND: [
+            {
+              alumnoxcursoxdivision: {
+                usuario: {
+                  activo: true
+                }
+              },
+
+            },
+            {
+              OR: OR,
+            }
+          ]
+        },
 
 
       };
@@ -61,14 +76,12 @@ export default async function handler(req, res) {
           creadoen: fecha,
         });
       }
-      if (OR.length) {
-        options = {
-          ...options,
-          where: {
-            OR: OR,
-          },
-        };
-      }
+      // if (OR.length) {
+      //   options = {
+      //     ...options,
+
+      //   };
+      // }
       console.log(options);
       const asistencias = await TraerAsistencias(options);
       return res.status(200).json(asistencias);

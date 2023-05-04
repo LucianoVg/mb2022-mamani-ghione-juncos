@@ -15,7 +15,11 @@ export default async function handler(
         if (req.method === 'GET') {
             let { idUsuario, idRol, idLogged, rol } = req.query
             console.log(idUsuario, idRol, idLogged, rol);
-            let and = []
+            let and = [
+                {
+                    activo: true
+                },
+            ]
             let options = {
                 include: {
                     rol: true

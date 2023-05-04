@@ -27,21 +27,35 @@ export default async function handler(
                     docente: {
                         apellido: 'asc'
                     }
-                }
-            ]
+                },
+            ],
+            where: {
+                AND: [
+                    {
+                        docente: {
+                            activo: true
+                        }
+                    },
+                    {
+                        OR: OR
+                    }
+                ]
+            }
 
 
 
         }
         if (idDocente) {
             OR.push({
-                idocente: idDocente
-            })
+                iddocente: Number(idDocente)
+            },
+            )
         }
         if (fecha) {
             OR.push({
                 creadoen: fecha
-            })
+            },
+            )
         }
         if (OR.length) {
             options = {

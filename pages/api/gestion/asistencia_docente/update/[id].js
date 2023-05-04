@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     }
 }
 
-export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, llegadaTardeJustificada = false, mediaFalta = false, mediaFaltaJustificada = false, motivo = "", idUsuario) {
+export async function updateAsistencia(id, presente = false, ausente = false, ausenteJustificado = false, llegadaTarde = false, mediaFalta = false, motivo = "", idUsuario) {
     try {
         const asistencia = await db.asistenciadocente.update({
             data: {
@@ -30,9 +30,7 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 ausente: ausente,
                 ausentejustificado: ausenteJustificado,
                 llegadatarde: llegadaTarde,
-                llegadatardejustificada: llegadaTardeJustificada,
                 mediafalta: mediaFalta,
-                mediafaltajustificada: mediaFaltaJustificada,
                 motivo: motivo,
                 idusuario: Number(idUsuario),
                 actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]
