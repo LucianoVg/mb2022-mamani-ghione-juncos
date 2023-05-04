@@ -51,9 +51,11 @@ async function Preanalitico(idAlumno) {
                              (nota3),
                              (nota4),
                              (nota5)) T (c))) as notafinal
-       from nota as hn
-       INNER JOIN materia as m ON m.id = hn.idmateria
-       where idalumnoxcursoxdivision = ${Number(idAlumno)}
+       from nota as n
+       INNER JOIN materia as m ON m.id = n.idmateria
+       INNER JOIN alumnoxcursoxdivision as a ON a.id = n.idalumnoxcursoxdivision
+       INNER JOIN usuario as u ON u.id = a.idusuario
+       where idalumnoxcursoxdivision = ${Number(idAlumno)} and u.activo = true 
        group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
        order by m.idcurso asc, m.id asc`;
   } catch (error) {

@@ -32,10 +32,12 @@ async function PromedioXtrimestre(idAlumno, idMateria) {
                              (nota3),
                              (nota4),
                              (nota5)) T (c)) AS Promedio
-       from nota as hn
-       INNER JOIN materia as m ON m.id = hn.idmateria
-       INNER JOIN trimestre as t ON t.id = hn.idtrimestre
-       where idalumnoxcursoxdivision =${Number(idAlumno)} and idmateria = ${Number(idMateria)}
+       from nota as n
+       INNER JOIN materia as m ON m.id = n.idmateria
+       INNER JOIN trimestre as t ON t.id = n.idtrimestre
+       inner join alumnoxcursoxdivision as al on al.id = n.idalumnoxcursoxdivision
+       inner join usuario as u on u.id = al.idusuario
+       where idalumnoxcursoxdivision =${Number(idAlumno)} and idmateria = ${Number(idMateria)} and u.activo = true
        order by m.nombre asc, t.trimestre asc`
     } catch (error) {
         console.error(error);

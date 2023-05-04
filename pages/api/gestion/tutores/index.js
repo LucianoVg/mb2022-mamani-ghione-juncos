@@ -20,12 +20,35 @@ export default async function handler(req, res) {
 
 async function traerTutores() {
     try {
-        const tutores = await db.usuario.findMany({
-            // include: {
-            //   tutor: true
-            // },
+        const tutores = await db.alumnoxcursoxdivision.findMany({
+            include: {
+                tutor: true,
+                usuario: true
+            },
+            orderBy: {
+                tutor: {
+                    apellido: 'asc'
+                }
+            },
             where: {
-                idrol: 6
+                AND: [
+                    {
+                        tutor: {
+                            idrol: 6
+                        }
+                    },
+                    {
+                        tutor: {
+                            activo: true
+                        }
+                    },
+                    {
+                        usuario: {
+                            activo: true
+                        }
+                    }
+
+                ]
             }
 
         });

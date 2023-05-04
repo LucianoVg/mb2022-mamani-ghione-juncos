@@ -92,6 +92,9 @@ async function contarNotas(idMateria) {
              (select count(*) from nota where   nota5= 10  and idmateria =${Number(idMateria)} and anoactual = ${Number(anoActual)}) 
         ) as nota10
         FROM nota as n
+        inner join materia as m on m.id = n.idmateria
+     --    inner join docentexmateria as dm on m.id = dm.idmateria
+     --    inner join usuario as u on u.id = dm.idusuario
         where idmateria= ${Number(idMateria)} and anoactual = ${Number(anoActual)} 
         group by n.idmateria`
 

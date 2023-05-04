@@ -24,6 +24,10 @@ export default async function handler(
                 include: {
                     rol: true
                 },
+                orderBy: {
+                    apellido: 'asc'
+                },
+
             }
             if (idUsuario) {
                 and.push({
