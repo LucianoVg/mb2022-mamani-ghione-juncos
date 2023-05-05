@@ -86,7 +86,7 @@ export async function guardarFichaInstitucional(
       oficina2: oficina2,
       mail: mail,
       idusuario: Number(idusuario),
-      portadasficha: {
+      portadaficha: {
         upsert: portadasficha.map((pf) => ({
           create: {
             url: pf.url,
@@ -112,7 +112,7 @@ export async function guardarFichaInstitucional(
       oficina2: oficina2,
       mail: mail,
       idusuario: Number(idusuario),
-      portadasficha: {
+      portadaficha: {
         connectOrCreate: portadasficha.map((pf) => ({
           create: {
             url: pf.url,
