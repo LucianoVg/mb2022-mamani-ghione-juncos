@@ -130,7 +130,7 @@ export async function guardarFichaInstitucional(
 export async function traerFichaInstitucional(id = 0) {
   const fichaInstitucional = await db.fichainstitucional.findFirst({
     include: {
-      portadasficha: true,
+      portadaficha: true,
     },
     where: { id: id },
   });
