@@ -67,7 +67,8 @@ export default function Institucional() {
         )}
       {authUser &&
         fichaInstitucional &&
-        (usuario?.rol != "Administrador" || usuario?.rol === "Director") && (
+        (usuario?.rol?.tipo != 'Secretaria' && usuario?.rol?.tipo != 'Docente' && usuario?.rol?.tipo != 'Estudiante' &&
+          usuario?.rol?.tipo != 'Tutor' && usuario?.rol?.tipo != 'Vicedirector') && (
           <div style={{ marginBottom: "20px" }}>
             <Link href={`/gestion/institucional/${fichaInstitucional?.id}`}>
               <Button variant="contained" color="primary">

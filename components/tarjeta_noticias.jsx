@@ -37,7 +37,8 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
                             alt="imagen"
                         />
                         {
-                            authUser && (usuario?.rol?.tipo === 'Director' || usuario?.rol?.tipo === 'Administrador' || usuario?.rol?.tipo === 'Preceptor') && 
+                            authUser && (usuario?.rol?.tipo != 'Secretaria' && usuario?.rol?.tipo != 'Docente' && usuario?.rol?.tipo != 'Estudiante' &&
+                            usuario?.rol?.tipo != 'Tutor' && usuario?.rol?.tipo != 'Vicedirector') && 
                             (
                                 <a href={`/gestion/noticias/${id}`} style={{ position: 'absolute', left: 225, bottom: 235, }} >
                                     <IconButton  >
