@@ -38,7 +38,10 @@ export default function Notas() {
   const [notas, setNotas] = useState([]);
   const [alumnos, setAlumnos] = useState([]);
   const [index, setIndex] = useState(0);
-  const [idMateria, setIdMateria] = useState("");
+  const [docente, setDocente] = useState();
+  const [idMateria, setIdMateria] = useState(
+    docente ? docente?.materia?.id : ""
+  );
   const [idDivision, setIdDivision] = useState("");
   const [idAlumno, setIdAlumno] = useState("");
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
@@ -53,7 +56,8 @@ export default function Notas() {
   const paginacion = usePagination(notas || [], pageSize);
   const [pagina, setPagina] = useState(1);
   const [trimestres, setTrimestres] = useState([]);
-  const [docente, setDocente] = useState();
+  const [cursos, setCursos] = useState([]);
+  const [idCurso, setIdCurso] = useState("");
 
   let queryParams = [];
 
@@ -76,13 +80,15 @@ export default function Notas() {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
+        traerTrimestres();
         if (usuario.rol === "Docente") {
           traerDocente();
+          traerDivisiones();
+        } else {
+          traerCursos();
+          traerMaterias();
+          traerNotas(0);
         }
-        traerDivisiones();
-        traerMaterias();
-        traerTrimestres();
-        traerNotas(0);
       }
     }
   }, [loading, authUser, usuario.rol, usuario.id]);
@@ -129,9 +135,10 @@ export default function Notas() {
       setDivisiones(res.data);
     }
   };
-  const traerMaterias = async () => {
+  const traerMaterias = async (idCurso) => {
+    let param = idCurso ? `?idCurso=${idCurso}` : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias/`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
     );
     if (res.data) {
       setMaterias(res.data);
@@ -145,13 +152,25 @@ export default function Notas() {
       setTrimestres((_) => res.data);
     }
   };
-
+  const traerCursos = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
+      );
+      setCursos(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const traerNotas = async (value = 0) => {
     if (idAlumno) {
       queryParams.push({ idAlumno });
     }
     if (idMateria) {
       queryParams.push({ idMateria });
+    }
+    if (idCurso) {
+      queryParams.push({ idCurso });
     }
     if (idDivision) {
       queryParams.push({ idDivision });
@@ -388,6 +407,11 @@ export default function Notas() {
     }
   };
 
+  const handleCurso = async (e) => {
+    setIdCurso(Number(e.target.value));
+    await traerMaterias(e.target.value ? Number(e.target.value) : "");
+  };
+
   return (
     <Layout>
       <Container maxWidth={"xl"}>
@@ -397,11 +421,25 @@ export default function Notas() {
             <FormControl>
               <InputLabel htmlFor="inputMateria">Materia</InputLabel>
               {docente ? (
-                [docente.materia].map((m, i) => (
-                  <MenuItem key={i} value={m.id}>
-                    {m.nombre}
-                  </MenuItem>
-                ))
+                <Select
+                  id="inputMateria"
+                  onChange={handleMateria}
+                  name="idMateria"
+                  value={idMateria}
+                  label="Materia"
+                  sx={{
+                    width: "150px",
+                    marginRight: "20px",
+                    marginBottom: "20px",
+                  }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {[docente.materia].map((m, i) => (
+                    <MenuItem key={i} value={m.id}>
+                      {m.nombre}
+                    </MenuItem>
+                  ))}
+                </Select>
               ) : (
                 <>
                   <Select
@@ -482,30 +520,57 @@ export default function Notas() {
               )}
             </FormControl>
 
-            <FormControl>
-              <InputLabel htmlFor="inputCurso">Division</InputLabel>
-              <Select
-                id="inputCurso"
-                name="idDivision"
-                value={idDivision}
-                onChange={handleDivision}
-                label="Division"
-                sx={{
-                  width: "150px",
-                  marginRight: "20px",
-                  marginBottom: "20px",
-                }}
-                MenuProps={{ disableScrollLock: true }}
-              >
-                <MenuItem value={0}>Division</MenuItem>
-                {divisiones &&
-                  divisiones?.map((d, i) => (
-                    <MenuItem key={i} value={d.id}>
-                      {d.division}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+            {usuario.rol === "Docente" ? (
+              <FormControl>
+                <InputLabel htmlFor="inputCurso">Division</InputLabel>
+                <Select
+                  id="inputCurso"
+                  name={"idDivision"}
+                  value={idDivision}
+                  onChange={handleDivision}
+                  label="Division"
+                  sx={{
+                    width: "150px",
+                    marginRight: "20px",
+                    marginBottom: "20px",
+                  }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  <MenuItem value={""}>Division</MenuItem>
+                  {divisiones &&
+                    divisiones?.map((d, i) => (
+                      <MenuItem key={i} value={d.id}>
+                        {d.division}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            ) : (
+              <FormControl>
+                <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+                <Select
+                  id="inputCurso"
+                  name={"idCurso"}
+                  value={idCurso}
+                  onChange={handleCurso}
+                  label="Curso"
+                  sx={{
+                    width: "150px",
+                    marginRight: "20px",
+                    marginBottom: "20px",
+                  }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  <MenuItem value={""}>Curso</MenuItem>
+                  {cursos &&
+                    cursos?.map((c, i) => (
+                      <MenuItem key={i} value={c.curso?.id}>
+                        {c.curso?.nombre} {c.division?.division}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            )}
           </Box>
 
           <Box sx={{ marginTop: "25px" }}>
@@ -552,7 +617,7 @@ export default function Notas() {
             onClick={() => {
               setIdAlumno("");
               setIdDivision("");
-              setIdMateria("");
+              setIdMateria(docente ? docente?.materia?.id : "");
               traerNotas(index);
             }}
           >
@@ -856,12 +921,15 @@ export default function Notas() {
                               setInEditMode({
                                 status: true,
                                 rowKey: i,
-                              })
-                              setNota({ ...nota, nota1: n.nota1,
-                                 nota2: n.nota2,
-                                 nota3: n.nota3, 
-                                 nota4: n.nota4,
-                                 nota5: n.nota5 })
+                              });
+                              setNota({
+                                ...nota,
+                                nota1: n.nota1,
+                                nota2: n.nota2,
+                                nota3: n.nota3,
+                                nota4: n.nota4,
+                                nota5: n.nota5,
+                              });
                             }}
                           >
                             Editar
