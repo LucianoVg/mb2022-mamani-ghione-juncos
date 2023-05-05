@@ -13,7 +13,16 @@ export default async function handler(req, res) {
       let { fecha, idCurso, idAlumno } = req.query;
       console.log(fecha, idCurso, idAlumno);
 
-      let OR = [];
+      let AND = [
+        {
+          alumnoxcursoxdivision: {
+            usuario: {
+              activo: true
+            }
+          },
+
+        },
+      ];
       let options = {
         include: {
           usuario: true,
@@ -50,14 +59,14 @@ export default async function handler(req, res) {
         //       OR: OR,
         //     }
         //   ]
-          
+
         // },
 
 
       };
 
       if (idAlumno) {
-        OR.push(
+        AND.push(
           {
             alumnoxcursoxdivision: {
               id: Number(idAlumno),
@@ -66,7 +75,7 @@ export default async function handler(req, res) {
         );
       }
       if (idCurso) {
-        OR.push(
+        AND.push(
           {
             alumnoxcursoxdivision: {
               cursoxdivision: {
@@ -77,17 +86,17 @@ export default async function handler(req, res) {
         );
       }
       if (fecha) {
-        OR.push(
+        AND.push(
           {
             creadoen: fecha
           },
         );
       }
-      if (OR.length) {
+      if (AND.length) {
         options = {
           ...options,
           where: {
-            OR: OR
+            AND: AND
           },
         };
       }

@@ -13,7 +13,14 @@ export default async function handler(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         const { fecha, idDocente } = req.query
-        let OR = []
+        let AND = [
+            {
+                docente: {
+                    activo: true
+                }
+            },
+
+        ]
         let options = {
             include: {
                 usuario: true,
@@ -29,39 +36,35 @@ export default async function handler(
                     }
                 },
             ],
-            where: {
-                AND: [
-                    {
-                        docente: {
-                            activo: true
-                        }
-                    },
-                    {
-                        OR: OR
-                    }
-                ]
-            }
+            // where: {
+            //     // AND: [
+
+            //     //     {
+            //     //         OR: OR
+            //     //     }
+            //     // ]
+            // }
 
 
 
         }
         if (idDocente) {
-            OR.push({
+            AND.push({
                 iddocente: Number(idDocente)
             },
             )
         }
         if (fecha) {
-            OR.push({
+            AND.push({
                 creadoen: fecha
             },
             )
         }
-        if (OR.length) {
+        if (AND.length) {
             options = {
                 ...options,
                 where: {
-                    OR: OR
+                    AND: AND
                 }
             }
         }
