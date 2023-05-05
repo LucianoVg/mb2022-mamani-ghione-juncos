@@ -94,26 +94,16 @@ export async function guardarFichaInstitucional(
   return guardado;
 }
 
-export async function traerFichaInstitucional(id = 0) {
-  const fichaInstitucional =
-    id !== 0
-      ? await db.fichainstitucional.findFirst({
-          where: {
-            id: Number(id),
-          },
-          include: {
-            portadaficha: true,
-          },
-        })
-      : await db.fichainstitucional.findFirst({
-          include: {
-            portadaficha: true,
-          },
-          where: {
-            id: {
-              not: 0,
-            },
-          },
-        });
+export async function traerFichaInstitucional() {
+  const fichaInstitucional = await db.fichainstitucional.findFirst({
+    include: {
+      portadaficha: true,
+    },
+    where: {
+      id: {
+        not: 0,
+      },
+    },
+  });
   return fichaInstitucional;
 }
