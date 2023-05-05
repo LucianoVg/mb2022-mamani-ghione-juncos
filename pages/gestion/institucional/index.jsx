@@ -35,7 +35,7 @@ export default function Institucional() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`
     );
-    setFichaInstitucional(res.data[0]);
+    setFichaInstitucional(res.data);
     setCargando(false);
   };
 
@@ -65,21 +65,22 @@ export default function Institucional() {
             </Link>
           </div>
         )}
-      {authUser &&
-        fichaInstitucional &&
-        (usuario?.rol === "Administrador" || usuario?.rol === "Director") && (
-          <div style={{ marginBottom: "20px" }}>
-            <Link href={`/gestion/institucional/${fichaInstitucional?.id}`}>
-              <Button variant="contained" color="primary">
-                Actualizar Ficha Institucional
-              </Button>
-            </Link>
-          </div>
-        )}
-
       {!cargando && fichaInstitucional && (
         <div>
           <Carrusel imagenes={fichaInstitucional?.portadaficha} />
+          {!cargando &&
+            authUser &&
+            fichaInstitucional &&
+            (usuario?.rol === "Administrador" ||
+              usuario?.rol === "Director") && (
+              <div style={{ marginBottom: "20px" }}>
+                <Link href={`/gestion/institucional/${fichaInstitucional?.id}`}>
+                  <Button variant="contained" color="primary">
+                    Actualizar Ficha Institucional
+                  </Button>
+                </Link>
+              </div>
+            )}
           <Grid container spacing={2} sx={{ minWidth: "300px" }}>
             <Grid item xs={12}>
               <Typography
