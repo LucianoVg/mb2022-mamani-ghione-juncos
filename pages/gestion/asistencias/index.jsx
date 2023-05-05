@@ -365,7 +365,7 @@ export default function Asistencias() {
                 setInEditMode({ status: false });
               }}
             >
-              Ir a busqueda por Estudiante
+              Ir a búsqueda por Estudiante
             </Button>
             <Box>
               <Grid container spacing={2}>
@@ -432,7 +432,7 @@ export default function Asistencias() {
                 setInEditMode({ status: true });
               }}
             >
-              Ir a busqueda por curso
+              Ir a búsqueda por curso
             </Button>
             <Box>
               <Grid container spacing={2}>
