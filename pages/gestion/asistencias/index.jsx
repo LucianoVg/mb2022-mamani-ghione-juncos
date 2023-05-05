@@ -278,6 +278,10 @@ export default function Asistencias() {
     setOpen(false);
   };
 
+  const [filtros, setFiltros] = useState({
+    status: false,
+  });
+
   return (
     <Layout>
       <Container maxWidth="xl" style={{ position: "relative" }}>
@@ -350,7 +354,154 @@ export default function Asistencias() {
         </Modal>
         {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-        <Grid container spacing={2}>
+        {inEditMode.status === true ? (
+          <Box>
+            <Button
+              variant="contained"
+              color="info"
+              size="small"
+              style={{ marginRight: "20px", marginBottom: "20px" }}
+              onClick={() => {
+                setInEditMode({ status: false });
+              }}
+            >
+              Ir a busqueda por Estudiante
+            </Button>
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <Box sx={{ marginBottom: "20px" }}>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                      <Select
+                        sx={{ width: "90px", marginRight: "20px" }}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Curso"
+                        name="idCurso"
+                        value={idCurso}
+                        onChange={handleCurso}
+                        MenuProps={{ disableScrollLock: true }}
+                      >
+                        <MenuItem value={0}>Seleccione un curso</MenuItem>
+                        {cursos &&
+                          cursos.map((c, i) => (
+                            <MenuItem selected={i === 0} value={c.id} key={c.id}>
+                              {c.curso?.nombre} {c.division?.division}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box
+                    style={{ marginRight: "20px", marginBottom: "25px" }}
+                  >
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <MobileDatePicker
+                        label="Fecha"
+                        name="fecha"
+                        value={fecha}
+                        onChange={handleFecha}
+                        renderInput={(params) => <TextField {...params} />}
+                        MenuProps={{ disableScrollLock: true }}
+                      />
+                    </LocalizationProvider>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      onClick={buscarAsistencias}
+                      startIcon={<Search />}
+                      color="info"
+                    >
+                      Buscar
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        ) : (
+          <Box>
+            <Button
+              variant="contained"
+              color="info"
+              size="small"
+              style={{ marginRight: "20px", marginBottom: "20px" }}
+              onClick={() => {
+                setInEditMode({ status: true });
+              }}
+            >
+              Ir a busqueda por curso
+            </Button>
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+
+                  <Box>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <MobileDatePicker
+                        label="Fecha"
+                        name="fecha"
+                        value={fecha}
+                        onChange={handleFecha}
+                        renderInput={(params) => <TextField {...params} />}
+                        MenuProps={{ disableScrollLock: true }}
+                      />
+                    </LocalizationProvider>
+                  </Box>
+
+                  <Typography variant="h6" sx={{ marginTop: "20px" }}>
+                    Buscar Estudiante:
+                  </Typography>
+
+                  <Box sx={{ marginTop: "25px" }}>
+                    <FormControl
+                      style={{ marginRight: "20px", marginBottom: "25px" }}
+                    >
+                      <Autocomplete
+                        sx={{ width: "250px" }}
+                        disablePortal
+                        id="combo-box-demo"
+                        // value={value}
+                        name="idAlumno"
+                        onChange={handleAlumno}
+                        getOptionLabel={(alumno) =>
+                          `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                        }
+                        options={alumnos}
+                        isOptionEqualToValue={(option, value) =>
+                          option?.usuario?.apellido === value?.usuario?.apellido
+                        }
+                        noOptionsText={"No existe un estudiante con ese nombre"}
+                        renderOption={(props, alumno) => (
+                          <Box component="li" {...props} key={alumno?.id}>
+                            {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                          </Box>
+                        )}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Estudiante" />
+                        )}
+                      />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      onClick={buscarAsistencias}
+                      startIcon={<Search />}
+                      color="info"
+                    >
+                      Buscar
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        )}
+
+        {/* <Grid container spacing={2}>
           <Grid item xs={8}>
             <Box sx={{ marginBottom: "20px" }}>
               <FormControl>
@@ -433,7 +584,7 @@ export default function Asistencias() {
               </Button>
             </Box>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         {cargandoInfo && (
           <Container sx={{ m: "auto", textAlign: "center" }}>
@@ -481,10 +632,10 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                  !a.ausente &&
-                  !a.ausentejustificado &&
-                  !a.llegadatarde &&
-                  !a.mediafalta ? (
+                    !a.ausente &&
+                    !a.ausentejustificado &&
+                    !a.llegadatarde &&
+                    !a.mediafalta ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}

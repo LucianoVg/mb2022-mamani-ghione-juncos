@@ -1,14 +1,17 @@
 import NextCors from "nextjs-cors";
 import { db } from "../../../../prisma";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req,
+  res
+) {
   try {
-    await NextCors(req, res, {
-      // Options
-      methods: ["GET"],
-      origin: process.env.HOST,
-      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    });
+      await NextCors(req, res, {
+          // Options
+          methods: ['GET'],
+          origin: process.env.HOST,
+          optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+      });
     if (req.method === "GET") {
       let { fecha, idCurso, idAlumno } = req.query;
       console.log(fecha, idCurso, idAlumno);
