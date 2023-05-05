@@ -67,7 +67,7 @@ export default function Institucional() {
         )}
       {authUser &&
         fichaInstitucional &&
-        (usuario?.rol === "Administrador" || usuario?.rol === "Director") && (
+        (usuario?.rol != "Administrador" || usuario?.rol === "Director") && (
           <div style={{ marginBottom: "20px" }}>
             <Link href={`/gestion/institucional/${fichaInstitucional?.id}`}>
               <Button variant="contained" color="primary">
@@ -79,7 +79,7 @@ export default function Institucional() {
 
       {!cargando && fichaInstitucional && (
         <div>
-          <Carrusel imagenes={fichaInstitucional?.portadasficha} />
+          <Carrusel imagenes={fichaInstitucional?.portadaficha} />
           <Grid container spacing={2} sx={{ minWidth: "300px" }}>
             <Grid item xs={12}>
               <Typography
@@ -106,9 +106,14 @@ export default function Institucional() {
                 Datos de Contacto
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Typography variant="body2" className={`${styles.Typography2}`}>
-                <strong>Ubicación:</strong> {fichaInstitucional?.ubicacion}
+                <strong>Provincia:</strong> {fichaInstitucional?.provincia}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="body2" className={`${styles.Typography2}`}>
+                <strong>Ciudad:</strong> {fichaInstitucional?.ciudad}
               </Typography>
             </Grid>
             <Grid item xs={12}>

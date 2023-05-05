@@ -72,11 +72,11 @@ export async function traerFichaInstitucional(id = 0) {
             ]
         },
         include: {
-            portadasficha: true
+            portadaficha: true
         }
     }) : await db.fichainstitucional.findMany({
         include: {
-            portadasficha: true
+            portadaficha: true
         }
     })
     return fichaInstitucional

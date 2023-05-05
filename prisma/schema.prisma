@@ -121,7 +121,7 @@ model fichainstitucional {
   mail              String?
   idusuario         Int
   usuario           usuario        @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  portadasficha     portadaficha[]
+  portadaficha     portadaficha[]
 }
 
 model materia {
