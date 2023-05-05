@@ -37,19 +37,20 @@ export default async function handler(req, res) {
           }
         ],
         where: {
-          AND: [
-            {
-              alumnoxcursoxdivision: {
-                usuario: {
-                  activo: true
-                }
-              },
+          // AND: [
+          //   {
+          //     alumnoxcursoxdivision: {
+          //       usuario: {
+          //         activo: true
+          //       }
+          //     },
 
-            },
-            {
-              OR: OR,
-            }
-          ]
+          //   },
+          //   {
+          //     OR: OR,
+          //   }
+          // ]
+          OR: OR
         },
 
 
