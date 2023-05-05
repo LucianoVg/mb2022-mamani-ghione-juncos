@@ -36,53 +36,61 @@ export default async function handler(req, res) {
             }
           }
         ],
-        where: {
-          // AND: [
-          //   {
-          //     alumnoxcursoxdivision: {
-          //       usuario: {
-          //         activo: true
-          //       }
-          //     },
+        // where: {
+        //   AND: [
+        //     {
+        //       alumnoxcursoxdivision: {
+        //         usuario: {
+        //           activo: true
+        //         }
+        //       },
 
-          //   },
-          //   {
-          //     OR: OR,
-          //   }
-          // ]
-          OR: OR
-        },
+        //     },
+        //     {
+        //       OR: OR,
+        //     }
+        //   ]
+          
+        // },
 
 
       };
 
       if (idAlumno) {
-        OR.push({
-          alumnoxcursoxdivision: {
-            id: Number(idAlumno),
+        OR.push(
+          {
+            alumnoxcursoxdivision: {
+              id: Number(idAlumno),
+            }
           },
-        });
+        );
       }
       if (idCurso) {
-        OR.push({
-          alumnoxcursoxdivision: {
-            cursoxdivision: {
-              id: Number(idCurso),
-            },
+        OR.push(
+          {
+            alumnoxcursoxdivision: {
+              cursoxdivision: {
+                id: Number(idCurso),
+              }
+            }
           },
-        });
+        );
       }
       if (fecha) {
-        OR.push({
-          creadoen: fecha,
-        });
+        OR.push(
+          {
+            creadoen: fecha
+          },
+        );
       }
-      // if (OR.length) {
-      //   options = {
-      //     ...options,
-
-      //   };
-      // }
+      if (OR.length) {
+        options = {
+          ...options,
+          where: {
+            OR: OR
+          },
+        };
+      }
       console.log(options);
       const asistencias = await TraerAsistencias(options);
       return res.status(200).json(asistencias);
