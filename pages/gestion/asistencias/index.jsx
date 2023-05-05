@@ -123,7 +123,7 @@ export default function Asistencias() {
     }
     if (fecha) {
       queryParams.push({
-        fecha: fecha.toLocaleDateString("es-AR").split("T")[0],
+        fecha: fecha.toLocaleDateString("en-GB").split("T")[0],
       });
     }
     let params = "";

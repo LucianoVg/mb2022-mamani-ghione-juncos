@@ -95,7 +95,7 @@ export default function Asistencias() {
             queryParams.push({ idDocente })
         }
         if (fecha) {
-            queryParams.push({ fecha: fecha.toLocaleDateString('es-AR').split('T')[0] })
+            queryParams.push({ fecha: fecha.toLocaleDateString('en-GB').split('T')[0] })
         }
         let params = ""
         queryParams.forEach(qp => {
