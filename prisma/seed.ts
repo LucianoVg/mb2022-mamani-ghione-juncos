@@ -112,6 +112,7 @@ async function main() {
     //                 legajo: u.legajo,
     //                 login: u.login,
     //                 localidad: u.localidad,
+    //             fechanacimiento: t.fechanacimiento,
     //                 password: u.password,
     //                 sexo: u.sexo,
     //                 telefono: u.telefono,
@@ -134,6 +135,7 @@ async function main() {
     //             legajo: t.legajo,
     //             login: t.login,
     //             localidad: t.localidad,
+    //             fechanacimiento: t.fechanacimiento,
     //             password: t.password,
     //             sexo: t.sexo,
     //             telefono: t.telefono,
@@ -154,6 +156,7 @@ async function main() {
     //             legajo: t.legajo,
     //             login: t.login,
     //             localidad: t.localidad,
+    //             fechanacimiento: t.fechanacimiento,
     //             password: t.password,
     //             sexo: t.sexo,
     //             telefono: t.telefono,
@@ -174,6 +177,7 @@ async function main() {
     //             legajo: t.legajo,
     //             login: t.login,
     //             localidad: t.localidad,
+    //             fechanacimiento: t.fechanacimiento,
     //             password: t.password,
     //             sexo: t.sexo,
     //             telefono: t.telefono,
@@ -235,6 +239,7 @@ async function main() {
     //             legajo: t.legajo,
     //             login: t.login,
     //             localidad: t.localidad,
+    //             fechanacimiento: t.fechanacimiento,
     //             password: t.password,
     //             sexo: t.sexo,
     //             telefono: t.telefono,
@@ -243,7 +248,17 @@ async function main() {
     //     })
     //     console.log(usuario);
     // })
-
+    preceptores.map(async (t) => {
+        const usuario = await prisma.usuario.updateMany({
+            data: {
+                fechanacimiento: t.fechanacimiento,
+            },
+            where: {
+                id: t.id
+            }
+        })
+        console.log(usuario);
+    })
 
 
     // tutores.map(async (t) => {
@@ -309,16 +324,16 @@ async function main() {
 
     // })
 
-   preceptoresxcursos.map(async (n) => {
-        const docentes = await prisma.preceptorxcurso.create({
-            data: {
-                idusuario: n.idUsuario,
-                idcurso: n.idCurso
-            }
-        })
-        console.log(docentes);
+    //    preceptoresxcursos.map(async (n) => {
+    //         const docentes = await prisma.preceptorxcurso.create({
+    //             data: {
+    //                 idusuario: n.idUsuario,
+    //                 idcurso: n.idCurso
+    //             }
+    //         })
+    //         console.log(docentes);
 
-    })
+    //     })
 
 
 

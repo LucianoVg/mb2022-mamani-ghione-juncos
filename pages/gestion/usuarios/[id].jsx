@@ -315,12 +315,13 @@ export default function Detalles() {
                   <strong>Legajo</strong> <br />
                   {usuario?.legajo}
                 </Typography>
-                {alumno && (
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Curso</strong> <br />
-                    {/* {usuario?.legajo} */}
-                  </Typography>
-                )}
+                {
+                  usuario?.rol?.tipo === "Estudiante" && (
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Curso</strong> <br />
+                      {usuario?.alumnoxcursoxdivision1?.cursoxdivision?.curso?.nombre}{usuario?.alumnoxcursoxdivision1?.cursoxdivision?.division?.division}
+                    </Typography>
+                  )}
               </Stack>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
@@ -370,261 +371,266 @@ export default function Detalles() {
             </Box>
           )}
 
-          {editMode && (
-            <Box>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-                sx={{ marginBottom: "30px" }}
-              >
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Nombre</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="nombre"
-                    defaultValue={nombre}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "200px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Apellido</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="apellido"
-                    defaultValue={apellido}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "200px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Legajo</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="legajo"
-                    defaultValue={legajo}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "170px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-                {alumno && (
+          {
+            editMode && (
+              <Box>
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 23 }}
+                  sx={{ marginBottom: "30px" }}
+                >
                   <FormControl>
                     <Typography variant="h6" sx={{ width: "200px" }}>
-                      <strong>Curso</strong> <br />
+                      <strong>Nombre</strong> <br />
                     </Typography>
-                    <FormControl>
-                      <Select
-                        sx={{ width: "90px", marginRight: "20px" }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        size="small"
-                        label="Curso"
-                        name="idCurso"
-                        defaultValue={idCurso}
-                        onChange={handleCurso}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem value={0}>Seleccione un curso</MenuItem>
-                        {cursos &&
-                          cursos.map((c, i) => (
-                            <MenuItem
-                              selected={i === 0}
-                              value={c.id}
-                              key={c.id}
-                            >
-                              {c.curso?.nombre} {c.division?.division}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </FormControl>
-                )}
-              </Stack>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-                sx={{ marginBottom: "30px" }}
-              >
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Correo</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="correo"
-                    defaultValue={mail}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    variant="outlined"
-                    size="small"
-                    sx={{ width: "250px" }}
-                  />
-                </FormControl>
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Contraseña</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="password"
-                    defaultValue={contrasenia}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "200px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Localidad</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="localidad"
-                    defaultValue={localidad}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "200px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Dirección</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="direccion"
-                    defaultValue={direccion}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    sx={{ width: "200px" }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-              </Stack>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-                sx={{ marginBottom: "30px" }}
-              >
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Teléfono</strong> <br />
-                  </Typography>
-                  <TextField
-                    name="telefono"
-                    defaultValue={telefono}
-                    onChange={handleUsuario}
-                    id="outlined-basic"
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-                <Typography variant="h6" sx={{ width: "200px" }}>
-                  <strong>Edad</strong> <br />
-                  {usuario?.fechanacimiento
-                    ? new Date().getFullYear() -
-                    new Date(
-                      usuario?.fechanacimiento.split("/")[2]
-                    ).getFullYear()
-                    : "N/A"}
-                </Typography>
-                <FormControl>
-                  <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Fecha de Nacimiento</strong> <br />
-                  </Typography>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <MobileDatePicker
-                      InputProps={{ sx: { height: "40px" } }}
-                      // label="Fecha"
-                      name="fecha"
-                      value={fechanacimiento}
-                      onChange={handleFecha}
-                      renderInput={(params) => <TextField {...params} />}
-                      MenuProps={{ disableScrollLock: true }}
+                    <TextField
+                      name="nombre"
+                      defaultValue={nombre}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "200px" }}
+                      size="small"
+                      variant="outlined"
                     />
-                  </LocalizationProvider>
-                </FormControl>
-              </Stack>
-            </Box>
-          )}
+                  </FormControl>
+
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Apellido</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="apellido"
+                      defaultValue={apellido}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "200px" }}
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Legajo</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="legajo"
+                      defaultValue={legajo}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "170px" }}
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  {
+                    usuario?.rol?.tipo === "Estudiante" && editMode && (
+                      <FormControl>
+                        <Typography variant="h6" sx={{ width: "200px" }}>
+                          <strong>Curso</strong> <br />
+                        </Typography>
+                        <FormControl>
+                          <Select
+                            sx={{ width: "90px", marginRight: "20px" }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            size="small"
+                            label="Curso"
+                            name="idCurso"
+                            defaultValue={idCurso}
+                            onChange={handleCurso}
+                            MenuProps={{ disableScrollLock: true }}
+                          >
+                            <MenuItem value={0}>Seleccione un curso</MenuItem>
+                            {cursos &&
+                              cursos.map((c, i) => (
+                                <MenuItem
+                                  selected={i === 0}
+                                  value={c.id}
+                                  key={c.id}
+                                >
+                                  {c.curso?.nombre} {c.division?.division}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        </FormControl>
+                      </FormControl>
+                    )}
+                </Stack>
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 23 }}
+                  sx={{ marginBottom: "30px" }}
+                >
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Correo</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="correo"
+                      defaultValue={mail}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      variant="outlined"
+                      size="small"
+                      sx={{ width: "250px" }}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Contraseña</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="password"
+                      defaultValue={contrasenia}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "200px" }}
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Localidad</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="localidad"
+                      defaultValue={localidad}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "200px" }}
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Dirección</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="direccion"
+                      defaultValue={direccion}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      sx={{ width: "200px" }}
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                </Stack>
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 23 }}
+                  sx={{ marginBottom: "30px" }}
+                >
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Teléfono</strong> <br />
+                    </Typography>
+                    <TextField
+                      name="telefono"
+                      defaultValue={telefono}
+                      onChange={handleUsuario}
+                      id="outlined-basic"
+                      size="small"
+                      variant="outlined"
+                    />
+                  </FormControl>
+                  <Typography variant="h6" sx={{ width: "200px" }}>
+                    <strong>Edad</strong> <br />
+                    {usuario?.fechanacimiento
+                      ? new Date().getFullYear() -
+                      new Date(
+                        usuario?.fechanacimiento.split("/")[2]
+                      ).getFullYear()
+                      : "N/A"}
+                  </Typography>
+                  <FormControl>
+                    <Typography variant="h6" sx={{ width: "200px" }}>
+                      <strong>Fecha de Nacimiento</strong> <br />
+                    </Typography>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <MobileDatePicker
+                        InputProps={{ sx: { height: "40px" } }}
+                        // label="Fecha"
+                        name="fecha"
+                        value={fechanacimiento}
+                        onChange={handleFecha}
+                        renderInput={(params) => <TextField {...params} />}
+                        MenuProps={{ disableScrollLock: true }}
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Stack>
+              </Box>
+            )}
 
           <Divider sx={{ marginTop: "20px" }}></Divider>
-          {docente && !editMode && (
-            <Box>
-              <Typography variant="h5" sx={{ marginBottom: "20px" }}>
-                <strong>Datos Académicos</strong>
-              </Typography>
-              <Typography variant="h6" sx={{ width: "250px" }}>
-                <strong>Materia/s Impartidas</strong> <br />
-                {docente?.materia?.map((m) => (
-                  <span key={m.id}>{m.nombre}</span>
-                ))}
-              </Typography>
-            </Box>
-          )}
-          {docente && editMode && (
-            <Box>
-              <Typography variant="h5" sx={{ marginBottom: "20px" }}>
-                <strong>Datos Académicos</strong>
-              </Typography>
-              <FormControl>
+          {
+            usuario?.rol?.tipo === "Docente" && !editMode && (
+              <Box>
+                <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                  <strong>Datos Académicos</strong>
+                </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
                   <strong>Materia/s Impartidas</strong> <br />
+                  {docente?.materia?.map((m) => (
+                    <span key={m.id}>{m.nombre}</span>
+                  ))}
+                </Typography>
+              </Box>
+            )}
+          {
+            usuario?.rol?.tipo === "Docente" && editMode && (
+              <Box>
+                <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                  <strong>Datos Académicos</strong>
                 </Typography>
                 <FormControl>
-                  <Select
-                    required
-                    size="small"
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
-                    multiple
-                    value={idMaterias}
-                    onChange={handleMaterias}
-                    input={<OutlinedInput label="Materias" />}
-                    MenuProps={MenuProps}
-                  >
-                    {materias.map((materia) => (
-                      <MenuItem
-                        key={materia.id}
-                        value={materia.id}
-                        style={getStyles(materia, materias)}
-                      >
-                        {materia.nombre}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <Typography variant="h6" sx={{ width: "250px" }}>
+                    <strong>Materia/s Impartidas</strong> <br />
+                  </Typography>
+                  <FormControl>
+                    <Select
+                      required
+                      size="small"
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      value={idMaterias}
+                      onChange={handleMaterias}
+                      input={<OutlinedInput label="Materias" />}
+                      MenuProps={MenuProps}
+                    >
+                      {materias.map((materia) => (
+                        <MenuItem
+                          key={materia.id}
+                          value={materia.id}
+                          style={getStyles(materia, materias)}
+                        >
+                          {materia.nombre}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </FormControl>
-              </FormControl>
-            </Box>
-          )}
-          {preceptor && !editMode && (
-            <Box>
-              <Typography variant="h5" sx={{ marginBottom: "20px" }}>
-                <strong>Datos Académicos</strong>
-              </Typography>
-              <Typography variant="h6" sx={{ width: "250px" }}>
-                <strong>Curso/s</strong> <br />
-                {docente?.materia?.map((m) => (
-                  <span key={m.id}>{m.nombre}</span>
-                ))}
-              </Typography>
-            </Box>
-          )}
-          {preceptor && editMode && (
+              </Box>
+            )}
+          {
+            usuario?.rol?.tipo === "Preceptor" && !editMode && (
+              <Box>
+                <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                  <strong>Datos Académicos</strong>
+                </Typography>
+                <Typography variant="h6" sx={{ width: "250px" }}>
+                  <strong>Curso/s</strong> <br />
+                  {docente?.materia?.map((m) => (
+                    <span key={m.id}>{m.nombre}</span>
+                  ))}
+                </Typography>
+              </Box>
+            )}
+          {usuario?.rol?.tipo === "Preceptor" && editMode && (
             <Box>
               <Typography variant="h5" sx={{ marginBottom: "20px" }}>
                 <strong>Datos Académicos</strong>
@@ -659,63 +665,64 @@ export default function Detalles() {
               </FormControl>
             </Box>
           )}
-          {alumno && (
-            <>
-              <Typography
-                variant="h5"
-                sx={{ marginBottom: "20px", marginTop: "20px" }}
-              >
-                <strong>Datos del Tutor</strong>
-              </Typography>
+          {
+            usuario?.rol?.tipo === "Estudiante" && (
+              <>
+                <Typography
+                  variant="h5"
+                  sx={{ marginBottom: "20px", marginTop: "20px" }}
+                >
+                  <strong>Datos del Tutor</strong>
+                </Typography>
 
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 23 }}
                 >
-                  <strong>Nombre</strong> <br />
-                  {alumno?.tutor?.nombre || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Apellido</strong> <br />
-                  {alumno?.tutor?.apellido || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Legajo</strong> <br />
-                  {alumno?.tutor?.legajo || "N/A"}
-                </Typography>
-              </Stack>
+                  <Typography
+                    variant="h6"
+                    sx={{ width: "200px", marginBottom: "20px" }}
+                  >
+                    <strong>Nombre</strong> <br />
+                    {usuario?.alumnoxcursoxdivision1?.tutor?.nombre || "N/A"}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ width: "200px", marginBottom: "20px" }}
+                  >
+                    <strong>Apellido</strong> <br />
+                    {usuario?.alumnoxcursoxdivision1?.tutor?.apellido || "N/A"}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ width: "200px", marginBottom: "20px" }}
+                  >
+                    <strong>Legajo</strong> <br />
+                    {usuario?.alumnoxcursoxdivision1?.tutor?.legajo || "N/A"}
+                  </Typography>
+                </Stack>
 
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 23 }}
                 >
-                  <strong>Mail</strong> <br />
-                  {alumno?.tutor?.correo || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Telefono</strong> <br />
-                  {alumno?.tutor?.telefono || "N/A"}
-                </Typography>
-              </Stack>
-            </>
-          )}
+                  <Typography
+                    variant="h6"
+                    sx={{ width: "200px", marginBottom: "20px" }}
+                  >
+                    <strong>Mail</strong> <br />
+                    {usuario?.alumnoxcursoxdivision1?.tutor?.correo || "N/A"}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ width: "200px", marginBottom: "20px" }}
+                  >
+                    <strong>Telefono</strong> <br />
+                    {usuario?.alumnoxcursoxdivision1?.tutor?.telefono || "N/A"}
+                  </Typography>
+                </Stack>
+              </>
+            )}
         </Container>
       )}
       {cargando && (

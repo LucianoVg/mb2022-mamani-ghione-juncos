@@ -25,7 +25,17 @@ export default async function handler(
                     rol: true,
                     docentexmateria: true,
                     preceptorxcurso: true,
-                    alumnoxcursoxdivision1: true
+                    alumnoxcursoxdivision1: {
+                        include: {
+                            tutor: true,
+                            cursoxdivision: {
+                                include: {
+                                    curso: true,
+                                    division: true
+                                }
+                            }
+                        }
+                    }
                 },
                 orderBy: {
                     apellido: 'asc'
