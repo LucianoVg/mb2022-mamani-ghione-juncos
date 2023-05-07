@@ -55,7 +55,7 @@ export default function MantenimientoUsuario() {
   const [pagina, setPagina] = useState(1);
   const [cargandoInfo, setCargandoInfo] = useState(false);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
-  const [rol, setRol] = useState(0);
+  const [rol, setRol] = useState("");
   const [roles, setRoles] = useState([]);
   const [idSelectedUser, setIdSelectedUser] = useState(0);
 
@@ -132,16 +132,16 @@ export default function MantenimientoUsuario() {
     }
   };
   const handleRol = (e) => {
-    setRol(e.target.value);
+    setRol(e.target.value || "");
   };
 
-  const [idUsuario, setIdUsuario] = useState(0);
+  const [idUsuario, setIdUsuario] = useState("");
 
   const handleUsuario = (e, newValue) => {
     if (newValue) {
       setIdUsuario(newValue.id);
     } else {
-      setIdUsuario(0);
+      setIdUsuario("");
     }
   };
 
