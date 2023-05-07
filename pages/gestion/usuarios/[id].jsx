@@ -242,7 +242,7 @@ export default function Detalles() {
         style={{ marginLeft: "30px", marginBottom: "20px" }}
       >
         <Typography variant="h4">
-          <strong>Detalles del Usuario</strong>
+          <strong>Detalles de {usuario?.rol?.tipo}</strong>
         </Typography>
 
         {!editMode && (
@@ -357,9 +357,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -537,9 +537,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>

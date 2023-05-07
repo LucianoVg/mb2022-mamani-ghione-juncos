@@ -22,7 +22,8 @@ import { estadosAlumno } from './seeds/estadosAlumno';
 import { tutores } from './seeds/tutores';
 import { otrosUsuarios } from './seeds/otrosUsuarios';
 import { docentexmateria } from './seeds/docentexmateria';
-
+import { preceptores } from './seeds/preceptores';
+import { preceptoresxcursos } from './seeds/preceptoresxcurso';
 const prisma = new PrismaClient();
 
 //  getAsistencias = async () => {
@@ -182,6 +183,8 @@ async function main() {
     //     console.log(usuario);
     // })
 
+
+
     // docentes.map(async (t) => {
     //     const usuario = await prisma.usuario.updateMany({
     //         where: {
@@ -199,6 +202,10 @@ async function main() {
     //     })
     //     console.log(usuario);
     // })
+
+
+
+
     // otrosUsuarios.map(async (t) => {
     //     const usuario = await prisma.usuario.updateMany({
     //         where: {
@@ -216,6 +223,28 @@ async function main() {
     //     })
     //     console.log(usuario);
     // })
+
+    // preceptores.map(async (t) => {
+    //     const usuario = await prisma.usuario.create({
+    //         data: {
+    //             id: t.id,
+    //             nombre: t.nombre,
+    //             apellido: t.apellido,
+    //             correo: t.correo,
+    //             idrol: t.idRol,
+    //             legajo: t.legajo,
+    //             login: t.login,
+    //             localidad: t.localidad,
+    //             password: t.password,
+    //             sexo: t.sexo,
+    //             telefono: t.telefono,
+    //             direccion: t.direccion
+    //         }
+    //     })
+    //     console.log(usuario);
+    // })
+
+
 
     // tutores.map(async (t) => {
     //     const usuario = await prisma.usuario.updateMany({
@@ -279,6 +308,19 @@ async function main() {
     //     console.log(docentes);
 
     // })
+
+   preceptoresxcursos.map(async (n) => {
+        const docentes = await prisma.preceptorxcurso.create({
+            data: {
+                idusuario: n.idUsuario,
+                idcurso: n.idCurso
+            }
+        })
+        console.log(docentes);
+
+    })
+
+
 
     // noticias.map(async (n) => {
     //     const noticia = await prisma.noticiasynovedades.create({

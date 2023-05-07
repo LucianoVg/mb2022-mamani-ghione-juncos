@@ -22,7 +22,10 @@ export default async function handler(
             ]
             let options = {
                 include: {
-                    rol: true
+                    rol: true,
+                    docentexmateria: true,
+                    preceptorxcurso: true,
+                    alumnoxcursoxdivision1: true
                 },
                 orderBy: {
                     apellido: 'asc'

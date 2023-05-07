@@ -13,11 +13,11 @@ model alumnoxcursoxdivision {
   idcursoxdivision    Int
   idusuario           Int
   idestadoalumno      Int
-  idtutor             Int?
+  idtutor             Int
   cursoxdivision      cursoxdivision        @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   estadoalumno        estadoalumno          @relation(fields: [idestadoalumno], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tutor               usuario?              @relation(fields: [idtutor], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario             usuario               @relation("alumnoxcursoxdivision_idusuarioTousuario", fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tutor               usuario               @relation("tutor", fields: [idtutor], references: [id])
+  usuario             usuario               @relation("usuario", fields: [idusuario], references: [id])
   asistencia          asistencia[]
   historialnota       historialnota[]
   nota                nota[]
@@ -336,34 +336,34 @@ model preceptorxcurso {
 }
 
 model usuario {
-  id                                                             Int                     @id @default(autoincrement())
-  login                                                          String?
-  password                                                       String?
-  sexo                                                           String?
-  nombre                                                         String?
-  apellido                                                       String?
-  legajo                                                         String?
-  fechanacimiento                                                String?
-  correo                                                         String?
-  localidad                                                      String?
-  telefono                                                       String?
-  direccion                                                      String?
-  idrol                                                          Int
-  activo                                                         Boolean?
-  alumnoxcursoxdivision_alumnoxcursoxdivisionTousuario           alumnoxcursoxdivision[]
-  alumnoxcursoxdivision_alumnoxcursoxdivision_idusuarioTousuario alumnoxcursoxdivision[] @relation("alumnoxcursoxdivision_idusuarioTousuario")
-  asistencia                                                     asistencia[]
-  asistenciadocente1                                             asistenciadocente[]     @relation("docente")
-  asistenciadocente2                                             asistenciadocente[]     @relation("usuario")
-  docentexmateria                                                docentexmateria[]
-  fechaexamen                                                    fechaexamen[]
-  fichainstitucional                                             fichainstitucional[]
-  materialestudio                                                materialestudio[]
-  nota                                                           nota[]
-  noticiasynovedades                                             noticiasynovedades[]
-  notificacion                                                   notificacion[]
-  notificacionxtutor                                             notificacionxtutor[]
-  preceptorxcurso                                                preceptorxcurso[]
-  sancion                                                        sancion[]
-  rol                                                            rol                     @relation(fields: [idrol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                     Int                     @id @default(autoincrement())
+  login                  String?
+  password               String?
+  sexo                   String?
+  nombre                 String?
+  apellido               String?
+  legajo                 String?
+  fechanacimiento        String?
+  correo                 String?
+  localidad              String?
+  telefono               String?
+  direccion              String?
+  idrol                  Int
+  activo                 Boolean?
+  alumnoxcursoxdivision2 alumnoxcursoxdivision[] @relation("tutor")
+  alumnoxcursoxdivision1 alumnoxcursoxdivision[] @relation("usuario")
+  asistencia             asistencia[]
+  asistenciadocente1     asistenciadocente[]     @relation("docente")
+  asistenciadocente2     asistenciadocente[]     @relation("usuario")
+  docentexmateria        docentexmateria[]
+  fechaexamen            fechaexamen[]
+  fichainstitucional     fichainstitucional[]
+  materialestudio        materialestudio[]
+  nota                   nota[]
+  noticiasynovedades     noticiasynovedades[]
+  notificacion           notificacion[]
+  notificacionxtutor     notificacionxtutor[]
+  preceptorxcurso        preceptorxcurso[]
+  sancion                sancion[]
+  rol                    rol                     @relation(fields: [idrol], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

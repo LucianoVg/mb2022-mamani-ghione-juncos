@@ -45,21 +45,21 @@ export const otrosUsuarios = [
         direccion: "643 Hazel Manor",
         fechanacimiento: "02/09/1978"
     },
-    {
-        id:124,
-        login: "preceptoria",
-        password: "123456",
-        nombre: "Preceptoria",
-        apellido: "Sistema",
-        correo: "preceptoria@gmail.com",
-        idRol: 5,
-        legajo: "24355642",
-        sexo: "M",
-        localidad: "Cordoba",
-        telefono: "351282099",
-        direccion: "2110 Collier Tunnel",
-        fechanacimiento: "24/12/1970"
-    },
+    // {
+    //     id:124,
+    //     login: "preceptoria",
+    //     password: "123456",
+    //     nombre: "Preceptoria",
+    //     apellido: "Sistema",
+    //     correo: "preceptoria1@gmail.com",
+    //     idRol: 5,
+    //     legajo: "24355642",
+    //     sexo: "M",
+    //     localidad: "Cordoba",
+    //     telefono: "351282099",
+    //     direccion: "2110 Collier Tunnel",
+    //     fechanacimiento: "24/12/1970"
+    // },
     {
         id:125,
         login: "vicedireccion",
