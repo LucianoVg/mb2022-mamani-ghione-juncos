@@ -47,7 +47,7 @@ const Home = () => {
   useEffect(() => {
     traerNoticias()
     traerUsuario()
-  authUser
+
   }, [authUser])
 
   return (
