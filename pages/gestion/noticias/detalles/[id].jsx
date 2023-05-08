@@ -93,7 +93,7 @@ export default function DetallesNoticia() {
                 {
                     cargando && (
                         <Container sx={{ top: "60%", left: "70%" }}>
-                            <Loading />
+                            <Loading/>
                         </Container>
 
                     )

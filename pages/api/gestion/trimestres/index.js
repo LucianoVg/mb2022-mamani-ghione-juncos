@@ -21,7 +21,11 @@ export default async function handler(req, res) {
 
 async function traerTrimestres() {
     try {
-        const trimestres = await db.trimestre.findMany()
+        const trimestres = await db.trimestre.findMany({
+            orderBy: {
+                id: 'asc'
+            }
+        })
         return trimestres
     } catch (error) {
         console.log(error);

@@ -149,7 +149,7 @@ export default function Detalles() {
       {!cargando && (
         <Container sx={{ marginLeft: "20px" }}>
           <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-            <strong>Datos Personales</strong>
+            <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
           </Typography>
           <Stack
             direction={{ xs: "column", sm: "row" }}

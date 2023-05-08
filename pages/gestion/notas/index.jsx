@@ -261,7 +261,7 @@ export default function Notas() {
     columnName5: undefined,
   });
 
-  const min = 0;
+  const min = 1;
   const max = 10;
   const [value, setValue] = useState(1);
   const [value2, setValue2] = useState(1);
@@ -648,296 +648,636 @@ export default function Notas() {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 800 }}>
               <TableHead>
-                {usuario?.rol === "Vicedirector" && (
-                  <TableRow>
-                    <TableCell align="center">Legajo</TableCell>
-                    <TableCell align="center">Sexo</TableCell>
-                    <TableCell align="center">Nombre</TableCell>
-                    <TableCell align="center">Apellido</TableCell>
-                    <TableCell align="center">Materia</TableCell>
-                    <TableCell align="center">Nota 1</TableCell>
-                    <TableCell align="center">Nota 2</TableCell>
-                    <TableCell align="center">Nota 3</TableCell>
-                    <TableCell align="center">Nota 4</TableCell>
-                    <TableCell align="center">Nota 5</TableCell>
-                    <TableCell align="center">Trimestre</TableCell>
-                  </TableRow>
-                )}
-                {(usuario?.rol === "Administrador" ||
-                  usuario?.rol === "Docente") && (
-                  <TableRow>
-                    <TableCell align="center">Legajo</TableCell>
-                    <TableCell align="center">Sexo</TableCell>
-                    <TableCell align="center">Nombre</TableCell>
-                    <TableCell align="center">Apellido</TableCell>
-                    <TableCell align="center">Materia</TableCell>
-                    <TableCell align="center">Nota 1</TableCell>
-                    <TableCell align="center">Nota 2</TableCell>
-                    <TableCell align="center">Nota 3</TableCell>
-                    <TableCell align="center">Nota 4</TableCell>
-                    <TableCell align="center">Nota 5</TableCell>
-                    <TableCell align="center">Trimestre</TableCell>
-                    <TableCell align="center">Acción</TableCell>
-                  </TableRow>
-                )}
+
+                <TableRow>
+                  <TableCell align="center">Legajo</TableCell>
+                  <TableCell align="center">Sexo</TableCell>
+                  <TableCell align="center">Nombre</TableCell>
+                  <TableCell align="center">Apellido</TableCell>
+                  <TableCell align="center">Materia</TableCell>
+                  <TableCell align="center">Nota 1</TableCell>
+                  <TableCell align="center">Nota 2</TableCell>
+                  <TableCell align="center">Nota 3</TableCell>
+                  <TableCell align="center">Nota 4</TableCell>
+                  <TableCell align="center">Nota 5</TableCell>
+                  <TableCell align="center">Trimestre</TableCell>
+                  <TableCell align="center">Acción</TableCell>
+                </TableRow>
+
               </TableHead>
               <TableBody>
-                {(usuario?.rol === "Director" ||
-                  usuario?.rol === "Vicedirector") &&
-                  notas &&
-                  paginacion.dataActual()?.map((n, i) => (
-                    <TableRow key={i}>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.legajo}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.sexo}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.nombre}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.apellido}
-                      </TableCell>
-                      <TableCell align="center">{n.materia?.nombre}</TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <FormControl>
-                            <TextField
-                              type="number"
-                              margin="normal"
-                              variant="standard"
-                              name="nota1"
-                              value={nota.nota1}
-                              min={1}
-                              InputProps={{
-                                min,
-                                max,
-                              }}
-                              onChange={onChangeNotaColumna}
-                            />
-                          </FormControl>
-                        ) : (
-                          n.nota1
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota2"
-                            variant="standard"
-                            value={nota.nota2}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna2}
-                          />
-                        ) : (
-                          n.nota2
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota3"
-                            variant="standard"
-                            value={nota.nota3}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna3}
-                          />
-                        ) : (
-                          n.nota3
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota4"
-                            variant="standard"
-                            value={nota.nota4}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna4}
-                          />
-                        ) : (
-                          n.nota4
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota5"
-                            variant="standard"
-                            value={nota.nota5}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna5}
-                          />
-                        ) : (
-                          n.nota5
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.trimestre?.trimestre}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                {(usuario?.rol === "Administrador" ||
-                  usuario?.rol === "Docente") &&
-                  notas &&
-                  paginacion.dataActual()?.map((n, i) => (
-                    <TableRow key={i}>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.legajo}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.sexo}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.nombre}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.alumnoxcursoxdivision?.usuario?.apellido}
-                      </TableCell>
-                      <TableCell align="center">{n.materia?.nombre}</TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <FormControl>
-                            <TextField
-                              type="number"
-                              margin="normal"
-                              variant="standard"
-                              name="nota1"
-                              value={nota.nota1}
-                              min={1}
-                              InputProps={{
-                                min,
-                                max,
-                              }}
-                              onChange={onChangeNotaColumna}
-                            />
-                          </FormControl>
-                        ) : (
-                          n.nota1
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota2"
-                            variant="standard"
-                            value={nota.nota2}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna2}
-                          />
-                        ) : (
-                          n.nota2
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota3"
-                            variant="standard"
-                            value={nota.nota3}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna3}
-                          />
-                        ) : (
-                          n.nota3
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota4"
-                            variant="standard"
-                            value={nota.nota4}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna4}
-                          />
-                        ) : (
-                          n.nota4
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <TextField
-                            type="number"
-                            name="nota5"
-                            variant="standard"
-                            value={nota.nota5}
-                            InputProps={{ min, max }}
-                            onChange={onChangeNotaColumna5}
-                          />
-                        ) : (
-                          n.nota5
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        {n.trimestre?.trimestre}
-                      </TableCell>
-                      <TableCell align="center">
-                        {inEditMode.status && inEditMode.rowKey === i ? (
-                          <React.Fragment>
-                            {guardandoNotas ? (
-                              <Container sx={{ textAlign: "center" }}>
-                                <Loading size={50} />
-                              </Container>
+                {notas &&
+                  paginacion.dataActual()?.map((n, i) =>
+                    notas.nota1 === 0 &&
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ?
+                      (
+                        <TableRow key={i}>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.legajo}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.sexo}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.nombre}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.apellido}
+                          </TableCell>
+                          <TableCell align="center">{n.materia?.nombre}</TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota1}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+
                             ) : (
-                              <Grid container spacing={11}>
-                                <Grid item xs={5}>
-                                  <Button
-                                    variant="contained"
-                                    color="success"
-                                    size="small"
-                                    onClick={() => onSave(n.id)}
-                                  >
-                                    Guardar
-                                  </Button>
-                                </Grid>
-                                <Grid item xs={5}>
-                                  <Button
-                                    variant="contained"
-                                    color="error"
-                                    size="small"
-                                    onClick={() => onCancel()}
-                                  >
-                                    Cancelar
-                                  </Button>
-                                </Grid>
-                              </Grid>
+                              n.nota1 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota1
+                              )
                             )}
-                          </React.Fragment>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            color="info"
-                            size="small"
-                            onClick={() => {
-                              setInEditMode({
-                                status: true,
-                                rowKey: i,
-                              });
-                              setNota({
-                                ...nota,
-                                nota1: n.nota1,
-                                nota2: n.nota2,
-                                nota3: n.nota3,
-                                nota4: n.nota4,
-                                nota5: n.nota5,
-                              });
-                            }}
-                          >
-                            Editar
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota2}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna2}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+
+
+                            ) : (
+                              n.nota2 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota2
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota3}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna3}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+                            ) : (
+                              n.nota3 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota3
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota4}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna4}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+                            ) : (
+                              n.nota4 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota4
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota5}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna5}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+                            ) : (
+                              n.nota5 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota5
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.trimestre?.trimestre}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              <React.Fragment>
+                                {guardandoNotas ? (
+                                  <Container sx={{ textAlign: "center" }}>
+                                    <Loading size={50} />
+                                  </Container>
+                                ) : (
+                                  <Grid container spacing={11}>
+                                    <Grid item xs={5}>
+                                      <Button
+                                        variant="contained"
+                                        color="success"
+                                        size="small"
+                                        onClick={() => onSave(n.id)}
+                                      >
+                                        Guardar
+                                      </Button>
+                                    </Grid>
+                                    <Grid item xs={5}>
+                                      <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => onCancel()}
+                                      >
+                                        Cancelar
+                                      </Button>
+                                    </Grid>
+                                  </Grid>
+                                )}
+                              </React.Fragment>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                color="info"
+                                size="small"
+                                onClick={() => {
+                                  setInEditMode({
+                                    status: true,
+                                    rowKey: i,
+                                  });
+                                  setNota({
+                                    ...nota,
+                                    nota1: n.nota1,
+                                    nota2: n.nota2,
+                                    nota3: n.nota3,
+                                    nota4: n.nota4,
+                                    nota5: n.nota5,
+                                  });
+                                }}
+                              >
+                                Cargar
+                              </Button>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        <TableRow key={i}>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.legajo}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.sexo}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.nombre}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.alumnoxcursoxdivision?.usuario?.apellido}
+                          </TableCell>
+                          <TableCell align="center">{n.materia?.nombre}</TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+
+                              <FormControl >
+                                <Select
+                                  type="number"
+                                  margin="normal"
+                                  variant="standard"
+                                  name="nota1"
+                                  value={nota.nota1}
+                                  label="Age"
+                                  onChange={onChangeNotaColumna}
+                                  MenuProps={{ disableScrollLock: true }}
+                                >
+                                  <MenuItem value={1}>1</MenuItem>
+                                  <MenuItem value={2}>2</MenuItem>
+                                  <MenuItem value={3}>3</MenuItem>
+                                  <MenuItem value={4}>4</MenuItem>
+                                  <MenuItem value={5}>5</MenuItem>
+                                  <MenuItem value={6}>6</MenuItem>
+                                  <MenuItem value={7}>7</MenuItem>
+                                  <MenuItem value={8}>8</MenuItem>
+                                  <MenuItem value={9}>9</MenuItem>
+                                  <MenuItem value={10}>10</MenuItem>
+                                </Select>
+                              </FormControl>
+
+                            ) : (
+                              n.nota1 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota1
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+
+                              n.nota1 === 0 ? (
+                                <FormControl disabled >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota2}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna2}
+                                    MenuProps={{ disableScrollLock: true }}
+                                    disabled
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+                              ) : (
+                                <FormControl >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota2}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna2}
+                                    MenuProps={{ disableScrollLock: true }}
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+
+                              )
+
+                            ) : (
+                              n.nota2 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota2
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              n.nota2 === 0 ? (
+                                <FormControl disabled >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota3}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna3}
+                                    MenuProps={{ disableScrollLock: true }}
+                                    disabled
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+                              ) : (
+                                <FormControl >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota3}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna3}
+                                    MenuProps={{ disableScrollLock: true }}
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+
+                              )
+                            ) : (
+                              n.nota3 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota3
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              n.nota3 === 0 ? (
+                                <FormControl disabled >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota4}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna4}
+                                    MenuProps={{ disableScrollLock: true }}
+                                    disabled
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+                              ) : (
+                                <FormControl >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota4}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna4}
+                                    MenuProps={{ disableScrollLock: true }}
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+
+                              )
+
+                            ) : (
+                              n.nota4 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota4
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              n.nota4 === 0 ? (
+                                <FormControl disabled >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota5}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna5}
+                                    MenuProps={{ disableScrollLock: true }}
+                                    disabled
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+                                ) : (
+                                  <FormControl >
+                                  <Select
+                                    type="number"
+                                    margin="normal"
+                                    variant="standard"
+                                    name="nota1"
+                                    value={nota.nota5}
+                                    label="Age"
+                                    onChange={onChangeNotaColumna5}
+                                    MenuProps={{ disableScrollLock: true }}
+                                  >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={7}>7</MenuItem>
+                                    <MenuItem value={8}>8</MenuItem>
+                                    <MenuItem value={9}>9</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                  </Select>
+                                </FormControl>
+      
+                                )
+                            ) : (
+                              n.nota5 === 0 ? (
+                                ""
+                              ) : (
+                                n.nota5
+                              )
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {n.trimestre?.trimestre}
+                          </TableCell>
+                          <TableCell align="center">
+                            {inEditMode.status && inEditMode.rowKey === i ? (
+                              <React.Fragment>
+                                {guardandoNotas ? (
+                                  <Container sx={{ textAlign: "center" }}>
+                                    <Loading size={50} />
+                                  </Container>
+                                ) : (
+                                  <Grid container spacing={11}>
+                                    <Grid item xs={5}>
+                                      <Button
+                                        variant="contained"
+                                        color="success"
+                                        size="small"
+                                        onClick={() => onSave(n.id)}
+                                      >
+                                        Guardar
+                                      </Button>
+                                    </Grid>
+                                    <Grid item xs={5}>
+                                      <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => onCancel()}
+                                      >
+                                        Cancelar
+                                      </Button>
+                                    </Grid>
+                                  </Grid>
+                                )}
+                              </React.Fragment>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                color="info"
+                                size="small"
+                                onClick={() => {
+                                  setInEditMode({
+                                    status: true,
+                                    rowKey: i,
+                                  });
+                                  setNota({
+                                    ...nota,
+                                    nota1: n.nota1,
+                                    nota2: n.nota2,
+                                    nota3: n.nota3,
+                                    nota4: n.nota4,
+                                    nota5: n.nota5,
+                                  });
+                                }}
+                              >
+                                Editar
+                              </Button>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      )
+                  )}
               </TableBody>
             </Table>
           </TableContainer>

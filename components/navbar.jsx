@@ -61,7 +61,7 @@ export const Navbar = ({ toggleDrawer }) => {
           >
             <strong>{title}</strong>
           </Typography>
-          {!loading && usuario.rol && (
+          {usuario.rol && (
             <Typography variant="body1" color={"white"} sx={{ mx: 2 }}>
               Logueado como <strong>{usuario.rol}</strong>
             </Typography>
