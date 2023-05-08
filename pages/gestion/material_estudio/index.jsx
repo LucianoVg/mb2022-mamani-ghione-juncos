@@ -210,7 +210,7 @@ const MaterialEstudio = () => {
   };
   return (
     <Layout>
-      <Typography variant="h3" sx={{ mb: 2 }}>
+      <Typography variant="h4" sx={{ mb: 2 }}>
         Material de Estudio
       </Typography>
       <div>

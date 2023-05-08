@@ -161,7 +161,10 @@ const Notificaciones = () => {
       <div>
         <Grid container>
           <Grid item xs={7}>
-            <h1 className="text-center">Enviar Notificacion</h1>
+          <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Envio de Notificaciones</Typography>
             <Box direction="column">
               <Box direction="row">
                 {inEditMode.status === true ? (

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../components/context/authUserProvider";
 import { Layout } from "../../components/layout";
 import {
+  Typography,
   Box,
   Button,
   Autocomplete,
@@ -133,6 +134,10 @@ export default function AsistenciasDocentes() {
   };
   return (
     <Layout>
+           <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Reporte Asistencias Docentes</Typography>
       <h3>Buscar Docente</h3>
 
       {usuario.rol != "Docente" && (

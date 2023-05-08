@@ -92,6 +92,10 @@ export default function Preanalitico() {
 
   return (
     <Layout>
+           <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Reporte Historial Académico</Typography>
       {usuario.rol != "Estudiante" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Alumno</h3>

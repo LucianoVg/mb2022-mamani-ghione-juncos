@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from '../../components/context/authUserProvider';
 import { Layout } from "../../components/layout";
-import { Box, Button, Autocomplete, FormControl, Grid, InputLabel, Stack, ListSubheader, MenuItem, Paper, Select, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Autocomplete, FormControl,Typography, Grid, InputLabel, Stack, ListSubheader, MenuItem, Paper, Select, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import TableCell from '@mui/material/TableCell';
 import { Search } from "@mui/icons-material";
 import { Container } from '@mui/system';
@@ -114,7 +114,12 @@ export default function Notas() {
 
     return (
         <Layout>
+                 <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Reporte Notas</Typography>
             {
+                
                 usuario?.rol !== 'Estudiante' && !usuario?.rol !== 'Tutor' ? (
                     <Box>
                         <h3>Buscar Alumno</h3>

@@ -44,6 +44,10 @@ export default function DetallesNoticia() {
                  >
                     Regresar
                 </Button>
+                <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Detalles de Noticia</Typography>
                 {
                     !cargando && noticia.id !== 0 && (
 
@@ -67,7 +71,7 @@ export default function DetallesNoticia() {
 
                                 >
                                     <Typography component={'h3'}
-                                        variant="h3"
+                                        variant="h4"
                                         id="fontSize"
                                     >
                                         {noticia.titulo}</Typography>

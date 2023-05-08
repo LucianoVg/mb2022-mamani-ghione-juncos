@@ -93,6 +93,10 @@ export default function DetallesNoticia() {
 
     return (
         <Layout>
+                 <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Detalle de Notificación</Typography>
             {
                 !cargando && notificacion && (
                     <div className="container text-center">

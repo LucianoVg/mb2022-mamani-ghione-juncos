@@ -285,7 +285,7 @@ export default function Asistencias() {
   return (
     <Layout>
       <Container maxWidth="xl" style={{ position: "relative" }}>
-        <Typography variant="h3" sx={{ marginBottom: "20px" }}>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
           Asistencias
         </Typography>
 
@@ -354,151 +354,151 @@ export default function Asistencias() {
         </Modal>
         {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-        {inEditMode.status === true ? (
-          <Box>
-            <Button
-              variant="contained"
-              color="info"
-              size="small"
-              style={{ marginRight: "20px", marginBottom: "20px" }}
-              onClick={() => {
-                setInEditMode({ status: false });
-              }}
-            >
-              Ir a búsqueda por Estudiante
-            </Button>
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={8}>
-                  <Box sx={{ marginBottom: "20px" }}>
-                    <FormControl>
-                      <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                      <Select
-                        sx={{ width: "90px", marginRight: "20px" }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Curso"
-                        name="idCurso"
-                        value={idCurso}
-                        onChange={handleCurso}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem value={0}>Seleccione un curso</MenuItem>
-                        {cursos &&
-                          cursos.map((c, i) => (
-                            <MenuItem selected={i === 0} value={c.id} key={c.id}>
-                              {c.curso?.nombre} {c.division?.division}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  <Box
-                    style={{ marginRight: "20px", marginBottom: "25px" }}
-                  >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <MobileDatePicker
-                        label="Fecha"
-                        name="fecha"
-                        value={fecha}
-                        onChange={handleFecha}
-                        renderInput={(params) => <TextField {...params} />}
-                        MenuProps={{ disableScrollLock: true }}
-                      />
-                    </LocalizationProvider>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      onClick={buscarAsistencias}
-                      startIcon={<Search />}
-                      color="info"
-                    >
-                      Buscar
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
+        {inEditMode.status === false ? (
+           <Box>
+           <Button
+             variant="contained"
+             color="info"
+             size="small"
+             style={{ marginRight: "20px", marginBottom: "20px" }}
+             onClick={() => {
+               setInEditMode({ status: true });
+             }}
+           >
+             Ir a búsqueda por curso
+           </Button>
+           <Box>
+             <Grid container spacing={2}>
+               <Grid item xs={8}>
+
+                 <Box>
+                   <LocalizationProvider dateAdapter={AdapterDayjs}>
+                     <MobileDatePicker
+                       label="Fecha"
+                       name="fecha"
+                       value={fecha}
+                       onChange={handleFecha}
+                       renderInput={(params) => <TextField {...params} />}
+                       MenuProps={{ disableScrollLock: true }}
+                     />
+                   </LocalizationProvider>
+                 </Box>
+
+                 <Typography variant="h6" sx={{ marginTop: "20px" }}>
+                   Buscar Estudiante:
+                 </Typography>
+
+                 <Box sx={{ marginTop: "25px" }}>
+                   <FormControl
+                     style={{ marginRight: "20px", marginBottom: "25px" }}
+                   >
+                     <Autocomplete
+                       sx={{ width: "250px" }}
+                       disablePortal
+                       id="combo-box-demo"
+                       // value={value}
+                       name="idAlumno"
+                       onChange={handleAlumno}
+                       getOptionLabel={(alumno) =>
+                         `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                       }
+                       options={alumnos}
+                       isOptionEqualToValue={(option, value) =>
+                         option?.usuario?.apellido === value?.usuario?.apellido
+                       }
+                       noOptionsText={"No existe un estudiante con ese nombre"}
+                       renderOption={(props, alumno) => (
+                         <Box component="li" {...props} key={alumno?.id}>
+                           {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                         </Box>
+                       )}
+                       renderInput={(params) => (
+                         <TextField {...params} label="Estudiante" />
+                       )}
+                     />
+                   </FormControl>
+                 </Box>
+                 <Box>
+                   <Button
+                     variant="outlined"
+                     onClick={buscarAsistencias}
+                     startIcon={<Search />}
+                     color="info"
+                   >
+                     Buscar
+                   </Button>
+                 </Box>
+               </Grid>
+             </Grid>
+           </Box>
+         </Box>
         ) : (
           <Box>
-            <Button
-              variant="contained"
-              color="info"
-              size="small"
-              style={{ marginRight: "20px", marginBottom: "20px" }}
-              onClick={() => {
-                setInEditMode({ status: true });
-              }}
-            >
-              Ir a búsqueda por curso
-            </Button>
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={8}>
-
-                  <Box>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <MobileDatePicker
-                        label="Fecha"
-                        name="fecha"
-                        value={fecha}
-                        onChange={handleFecha}
-                        renderInput={(params) => <TextField {...params} />}
-                        MenuProps={{ disableScrollLock: true }}
-                      />
-                    </LocalizationProvider>
-                  </Box>
-
-                  <Typography variant="h6" sx={{ marginTop: "20px" }}>
-                    Buscar Estudiante:
-                  </Typography>
-
-                  <Box sx={{ marginTop: "25px" }}>
-                    <FormControl
-                      style={{ marginRight: "20px", marginBottom: "25px" }}
+          <Button
+            variant="contained"
+            color="info"
+            size="small"
+            style={{ marginRight: "20px", marginBottom: "20px" }}
+            onClick={() => {
+              setInEditMode({ status: false });
+            }}
+          >
+            Ir a búsqueda por Estudiante
+          </Button>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <Box sx={{ marginBottom: "20px" }}>
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                    <Select
+                      sx={{ width: "90px", marginRight: "20px" }}
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Curso"
+                      name="idCurso"
+                      value={idCurso}
+                      onChange={handleCurso}
+                      MenuProps={{ disableScrollLock: true }}
                     >
-                      <Autocomplete
-                        sx={{ width: "250px" }}
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumno) =>
-                          `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
-                        }
-                        options={alumnos}
-                        isOptionEqualToValue={(option, value) =>
-                          option?.usuario?.apellido === value?.usuario?.apellido
-                        }
-                        noOptionsText={"No existe un estudiante con ese nombre"}
-                        renderOption={(props, alumno) => (
-                          <Box component="li" {...props} key={alumno?.id}>
-                            {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                          </Box>
-                        )}
-                        renderInput={(params) => (
-                          <TextField {...params} label="Estudiante" />
-                        )}
-                      />
-                    </FormControl>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      onClick={buscarAsistencias}
-                      startIcon={<Search />}
-                      color="info"
-                    >
-                      Buscar
-                    </Button>
-                  </Box>
-                </Grid>
+                      <MenuItem value={0}>Seleccione un curso</MenuItem>
+                      {cursos &&
+                        cursos.map((c, i) => (
+                          <MenuItem selected={i === 0} value={c.id} key={c.id}>
+                            {c.curso?.nombre} {c.division?.division}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box
+                  style={{ marginRight: "20px", marginBottom: "25px" }}
+                >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <MobileDatePicker
+                      label="Fecha"
+                      name="fecha"
+                      value={fecha}
+                      onChange={handleFecha}
+                      renderInput={(params) => <TextField {...params} />}
+                      MenuProps={{ disableScrollLock: true }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+                <Box>
+                  <Button
+                    variant="outlined"
+                    onClick={buscarAsistencias}
+                    startIcon={<Search />}
+                    color="info"
+                  >
+                    Buscar
+                  </Button>
+                </Box>
               </Grid>
-            </Box>
+            </Grid>
           </Box>
+        </Box>
         )}
 
         {/* <Grid container spacing={2}>
@@ -927,6 +927,17 @@ export default function Asistencias() {
                         )}
                       </TableCell>
                       <TableCell className="col-md-1 ">
+                        {inEditMode.status && inEditMode.rowKey === a?.id ? (
+                          <Switch name="mf" checked={mf} onChange={handleMf} />
+                        ) : (
+                          <Switch
+                            type="checkbox"
+                            checked={a.mediafalta}
+                            disabled={bloquearCheck(a)}
+                          />
+                        )}
+                      </TableCell>
+                      <TableCell className="col-md-2">
                         <Button
                           variant="contained"
                           sx={{

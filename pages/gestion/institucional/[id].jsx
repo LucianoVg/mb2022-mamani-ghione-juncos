@@ -113,7 +113,7 @@ export default function EditarFicha() {
     <Layout>
       {ficha && ficha.id !== 0 && (
         <>
-          <Typography variant="h3">Editar Ficha Institucional</Typography>
+          <Typography variant="h4">Editar Ficha Institucional</Typography>
           <Box component={"form"} onSubmit={guardarFicha}>
             <Box>
               <Typography variant="h5" sx={{ marginBottom: "40px" }}>

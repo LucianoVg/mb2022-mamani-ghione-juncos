@@ -100,9 +100,10 @@ const AgregarNoticias = () => {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Typography component={"h3"} variant="h4">
-          Nueva Noticia
-        </Typography>
+      <Typography variant="h4" 
+            sx={{marginBottom:"30px"}}
+            >
+                Nueva Noticia</Typography>
         <Box component={"form"} onSubmit={onSubmitData} sx={{ mt: 1 }}>
           <Grid
             container

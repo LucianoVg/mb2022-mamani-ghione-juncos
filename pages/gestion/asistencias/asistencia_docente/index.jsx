@@ -256,7 +256,7 @@ export default function Asistencias() {
             <Container maxWidth="xl"
                 style={{ position: 'relative' }}>
 
-                <Typography variant="h3" sx={{ marginBottom: '20px' }}>Asistencia Docente</Typography>
+                <Typography variant="h4" sx={{ marginBottom: '20px' }}>Asistencia Docente</Typography>
 
                 {/* MODAL */}
                 <Modal
