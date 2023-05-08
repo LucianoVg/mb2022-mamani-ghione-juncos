@@ -927,65 +927,18 @@ export default function Asistencias() {
                         )}
                       </TableCell>
                       <TableCell className="col-md-1 ">
-                        {inEditMode.status && inEditMode.rowKey === a?.id ? (
-                          <Switch name="mf" checked={mf} onChange={handleMf} />
-                        ) : (
-                          <Switch
-                            type="checkbox"
-                            checked={a.mediafalta}
-                            disabled={bloquearCheck(a)}
-                          />
-                        )}
-                      </TableCell>
-                      <TableCell className="col-md-2">
-                        {inEditMode.status && inEditMode.rowKey === a?.id ? (
-                          <React.Fragment>
-                            <Stack spacing={1} direction="row">
-                              <Button
-                                variant="contained"
-                                color="success"
-                                onClick={() => handleOpen(a)}
-                              >
-                                Actualizar
-                              </Button>
-
-                              <Button
-                                variant="contained"
-                                color="error"
-                                style={{ marginLeft: 8 }}
-                                onClick={() => onCancel()}
-                              >
-                                Cancelar
-                              </Button>
-                            </Stack>
-                          </React.Fragment>
-                        ) : (
-                          <Stack spacing={1} direction="row">
-                            <Button
-                              variant="contained"
-                              onClick={() =>
-                                setInEditMode({
-                                  status: true,
-                                  rowKey: a?.id,
-                                })
-                              }
-                            >
-                              Editar
-                            </Button>
-                            <Button
-                              variant="contained"
-                              sx={{
-                                backgroundColor: "lightblue",
-                                color: "black",
-                              }}
-                              onClick={() =>
-                                router.push(`/gestion/asistencias/${a?.id}`)
-                              }
-                            >
-                              Info.
-                            </Button>
-                          </Stack>
-                        )}
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "lightblue",
+                            color: "black",
+                          }}
+                          onClick={() =>
+                            router.push(`/gestion/asistencias/${a?.id}`)
+                          }
+                        >
+                          Info.
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ) : (
