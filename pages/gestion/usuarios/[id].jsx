@@ -340,15 +340,15 @@ export default function Detalles() {
                   <strong>Correo</strong> <br />
                   {usuario?.correo}
                 </Typography>
-                <Typography variant="h6" sx={{ width: "200px" }}>
+                <Typography variant="h6" sx={{ width: "70px" }}>
                   <strong>Contraseña</strong> <br />
                   {usuario?.password}
                 </Typography>
-                <Typography variant="h6" sx={{ width: "250px" }}>
+                <Typography variant="h6" sx={{ width: "350px" }}>
                   <strong>Localidad</strong> <br />
                   {usuario?.localidad}
                 </Typography>
-                <Typography variant="h6" sx={{ width: "220px" }}>
+                <Typography variant="h6" sx={{ width: "400px" }}>
                   <strong>Dirección</strong> <br />
                   {usuario?.direccion}
                 </Typography>
@@ -588,7 +588,8 @@ export default function Detalles() {
                   flexWrap: "wrap",
                 }}
               >
-                {usuario?.docentexmateria?.map((dxm) => (
+               <Stack>
+               {usuario?.docentexmateria?.map((dxm) => (
                   <Chip
                     key={dxm.id}
                     variant="outlined"
@@ -596,6 +597,7 @@ export default function Detalles() {
                     sx={{ mx: 2, my: 1 }}
                   />
                 ))}
+               </Stack>
               </Typography>
             </Box>
           )}
