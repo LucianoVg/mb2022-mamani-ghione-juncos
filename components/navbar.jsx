@@ -30,7 +30,7 @@ export const Navbar = ({ toggleDrawer }) => {
         : 'Instituto Privado "El Salvador"'
     );
     traerUsuario();
-  }, [windowSize, usuario.rol, usuario.id]);
+  }, [windowSize, usuario.rol, usuario.id, authUser]);
   const traerUsuario = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`

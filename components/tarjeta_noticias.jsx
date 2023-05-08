@@ -22,7 +22,7 @@ const TarjetaNovedades = ({ id, url, titulo, descripcion }) => {
 
     useEffect(() => {
         traerUsuario()
-    }, [])
+    }, [authUser])
 
     return (
         <Box xs={3}>
