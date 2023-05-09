@@ -21,24 +21,49 @@ export async function ListarMaterias(idCurso) {
   try {
     const materias = idCurso
       ? await db.materia.findMany({
-          include: {
-            curso: true,
-          },
-          where: {
-            idcurso: Number(idCurso),
-          },
-          orderBy: {
-            id: "asc",
-          },
-        })
+        include: {
+          curso: true,
+          materiaxcursoxdivision: {
+            include: {
+              cursoxdivision: {
+                include: {
+                  curso: true,
+                  division: true
+                }
+              }
+            }
+          }
+        },
+        where: {
+          materiaxcursoxdivision: {
+            cursoxdivision: {
+              curso: {
+                id: Number(idCurso),
+              }
+            }
+          }
+        },
+        orderBy: {
+          id: "asc",
+        },
+      })
       : await db.materia.findMany({
-          include: {
-            curso: true,
-          },
-          orderBy: {
-            id: "asc",
-          },
-        });
+        include: {
+          materiaxcursoxdivision: {
+            include: {
+              cursoxdivision: {
+                include: {
+                  curso: true,
+                  division: true
+                }
+              }
+            }
+          }
+        },
+        orderBy: {
+          id: "asc",
+        },
+      });
     return materias;
   } catch (error) {
     console.error(error);

@@ -24,7 +24,16 @@ export default async function handler(req, res) {
             include: {
               materia: {
                 include: {
-                  curso: true
+                  materiaxcursoxdivision: {
+                    include: {
+                      cursoxdivision: {
+                        include: {
+                          curso: true,
+                          division: true
+                        }
+                      }
+                    }
+                  }
                 }
               },
             },
