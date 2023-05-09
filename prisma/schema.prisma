@@ -61,25 +61,33 @@ model curso {
   id              Int               @id @default(autoincrement())
   nombre          String?
   cursoxdivision  cursoxdivision[]
-  materia         materia[]
   preceptorxcurso preceptorxcurso[]
 }
 
 model cursoxdivision {
-  id                    Int                     @id @default(autoincrement())
-  idcurso               Int
-  iddivision            Int
-  alumnoxcursoxdivision alumnoxcursoxdivision[]
-  curso                 curso                   @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  division              division                @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  fechaexamen           fechaexamen[]
-  materialestudio       materialestudio[]
+  id                     Int                      @id @default(autoincrement())
+  idcurso                Int
+  iddivision             Int
+  alumnoxcursoxdivision  alumnoxcursoxdivision[]
+  curso                  curso                    @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  division               division                 @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fechaexamen            fechaexamen[]
+  materialestudio        materialestudio[]
+  materiaxcursoxdivision materiaxcursoxdivision[]
 }
 
 model division {
   id             Int              @id @default(autoincrement())
   division       String?
   cursoxdivision cursoxdivision[]
+}
+
+model materiaxcursoxdivision {
+  id               Int            @id @default(autoincrement())
+  idcursoxdivision Int
+  idmateria        Int
+  cursoxdivision   cursoxdivision @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  materia          materia        @relation(fields: [idmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model docentexmateria {
@@ -125,15 +133,14 @@ model fichainstitucional {
 }
 
 model materia {
-  id              Int               @id @default(autoincrement())
-  nombre          String?
-  idcurso         Int
-  idcorrelativa   Int?
-  docentexmateria docentexmateria[]
-  historialnota   historialnota[]
-  curso           curso             @relation(fields: [idcurso], references: [id])
-  materialestudio materialestudio[]
-  nota            nota[]
+  id                     Int                      @id @default(autoincrement())
+  nombre                 String?
+  idcorrelativa          Int?
+  docentexmateria        docentexmateria[]
+  historialnota          historialnota[]
+  materialestudio        materialestudio[]
+  materiaxcursoxdivision materiaxcursoxdivision[]
+  nota                   nota[]
 }
 
 model materialestudio {

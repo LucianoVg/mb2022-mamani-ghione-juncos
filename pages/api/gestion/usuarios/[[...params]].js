@@ -22,7 +22,11 @@ export default async function handler(req, res) {
           rol: true,
           docentexmateria: {
             include: {
-              materia: true,
+              materia: {
+                include: {
+                  curso: true
+                }
+              },
             },
           },
           preceptorxcurso: {

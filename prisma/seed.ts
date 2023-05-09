@@ -272,11 +272,23 @@ async function main() {
   //             id: m.id,
   //             nombre: m.nombre,
   //             idcorrelativa: m.idCorrelativa,
-  //             idcurso: m.idCurso
+  //            
   //         }
   //     })
   //     console.log(materi);
   // })
+
+   materias.map(async (m) => {
+      const materi = await prisma.materiaxcursoxdivision.create({
+          data: {
+              id: m.id,
+              nombre: m.nombre,
+              idcorrelativa: m.idCorrelativa,
+             
+          }
+      })
+      console.log(materi);
+  })
   // docentexmateria.map(async (n) => {
   //     const docentes = await prisma.docentexmateria.create({
   //         data: {

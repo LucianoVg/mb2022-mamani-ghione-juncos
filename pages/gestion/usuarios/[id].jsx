@@ -2,7 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {
+  Checkbox,
+  List,
+  ListItemText,
+  ListItemIcon,
+  ListItem,
   Typography,
   Divider,
   Stack,
@@ -64,10 +70,13 @@ export default function Detalles() {
   const [cursos, setCursos] = useState([]);
   const [idCursos, setIdCursos] = useState([]);
   const [materias, setMaterias] = useState([]);
-  const [idMaterias, setIdMaterias] = useState([]);
+
   const { loading, authUser } = useAuth();
   const router = useRouter();
   const [usuario, setUsuario] = useState();
+
+  const [idMaterias, setIdMaterias] = useState([]);
+
   const [selectedEnf, setSelectedEnf] = useState([]);
   const [fecha, setFecha] = useState(null);
   const [alumno, setAlumno] = useState();
@@ -152,6 +161,8 @@ export default function Detalles() {
     });
   };
 
+
+
   const handleCursos = (event) => {
     const {
       target: { value },
@@ -215,6 +226,8 @@ export default function Detalles() {
   const handleFechaNacimiento = (value) => {
     setFechanacimiento(value);
   };
+
+
   return (
     <Layout>
       {respuesta.status !== 0 && (
@@ -366,9 +379,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -546,9 +559,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>
@@ -577,28 +590,67 @@ export default function Detalles() {
               <Typography variant="h5" sx={{ marginBottom: "20px" }}>
                 <strong>Datos Académicos</strong>
               </Typography>
-              <strong>Materia/s Impartidas</strong> <br />
-              <Typography
-                variant="h6"
-                sx={{
-                  width: "auto",
-                  display: "flex",
-                  alignItems: "start",
-                  justifyContent: "flex-start",
-                  flexWrap: "wrap",
-                }}
-              >
-               <Stack>
-               {usuario?.docentexmateria?.map((dxm) => (
-                  <Chip
-                    key={dxm.id}
-                    variant="outlined"
-                    label={dxm.materia?.nombre}
-                    sx={{ mx: 2, my: 1 }}
-                  />
-                ))}
-               </Stack>
-              </Typography>
+
+              <Stack direction='row' spacing={10}>
+                <Box>
+                  <Typography variant="h6" >
+                    <strong>Materia/s Impartidas</strong>
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                  // sx={{
+                  //   width: "auto",
+                  //   display: "flex",
+                  //   alignItems: "start",
+                  //   justifyContent: "flex-start",
+                  //   flexWrap: "wrap",
+                  // }}
+                  >
+                    <List>
+                      {usuario?.docentexmateria?.map((dxm) => (
+                        <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
+                          <ListItemIcon>
+                            <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                          </ListItemIcon>
+                          <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                            <strong> {dxm.materia?.nombre}</strong>
+                          </ListItemText>
+                        </ListItem>
+                      ))}
+
+                    </List>
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="h6" >
+                    <strong>Curso/s</strong>
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                  // sx={{
+                  //   width: "auto",
+                  //   display: "flex",
+                  //   alignItems: "start",
+                  //   justifyContent: "flex-start",
+                  //   flexWrap: "wrap",
+                  // }}
+                  >
+                    <List>
+                      {usuario?.docentexmateria?.map((dxm) => (
+                        <ListItem key={dxm.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
+                          <ListItemIcon>
+                            <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                          </ListItemIcon>
+                          <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                            <strong >{`${dxm.materia?.curso?.nombre}° Año`}</strong>
+                          </ListItemText>
+                        </ListItem>
+                      ))}
+
+                    </List>
+                  </Typography>
+                </Box>
+              </Stack>
             </Box>
           )}
           {usuario?.rol?.tipo === "Docente" && editMode && (
@@ -620,6 +672,15 @@ export default function Detalles() {
                     value={idMaterias}
                     onChange={handleMaterias}
                     input={<OutlinedInput label="Materias" />}
+                    // renderValue={(usuario) => {
+                    //   return usuario.docentexmateria?.map((s, i) => (
+                    //     <MenuItem key={s.materia?.i} value={s.materia?.nombre}>
+                    //       <ListItemText
+                    //         primary={s.materia?.nombre}
+                    //       />
+                    //     </MenuItem>
+                    //   ));
+                    // }}
                     MenuProps={MenuProps}
                   >
                     {materias.map((materia) => (
@@ -643,14 +704,18 @@ export default function Detalles() {
               </Typography>
               <Typography variant="h6" sx={{ width: "250px" }}>
                 <strong>Curso/s</strong> <br />
-                {usuario?.preceptorxcurso?.map((pxc) => (
-                  <Chip
-                    key={pxc.id}
-                    variant="outlined"
-                    label={`${pxc.curso?.nombre}° Año`}
-                    sx={{ mx: 2, my: 1 }}
-                  />
-                ))}
+                <List>
+                  {usuario?.preceptorxcurso?.map((pxc) => (
+                    <ListItem key={pxc.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
+                      <ListItemIcon>
+                        <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                      </ListItemIcon>
+                      <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                        <strong >{`${pxc.curso?.nombre}° Año`}</strong>
+                      </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
               </Typography>
             </Box>
           )}
