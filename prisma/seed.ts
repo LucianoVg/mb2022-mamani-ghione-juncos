@@ -278,17 +278,16 @@ async function main() {
   //     console.log(materi);
   // })
 
-   materias.map(async (m) => {
-      const materi = await prisma.materiaxcursoxdivision.create({
-          data: {
-              id: m.id,
-              nombre: m.nombre,
-              idcorrelativa: m.idCorrelativa,
-             
-          }
-      })
-      console.log(materi);
-  })
+  // materias.map(async (m) => {
+  //   const materi = await prisma.materiaxcursoxdivision.create({
+  //     data: {
+  //       idmateria: m.id,
+  //       idcursoxdivision: 12
+
+  //     }
+  //   })
+  //   console.log(materi);
+  // })
   // docentexmateria.map(async (n) => {
   //     const docentes = await prisma.docentexmateria.create({
   //         data: {

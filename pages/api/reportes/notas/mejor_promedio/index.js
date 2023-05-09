@@ -19,6 +19,7 @@ export default async function handler(req, res) {
 
 async function MejorPromedio() {
     try {
+        let anoActual = new Date().getFullYear()
         return await db.$queryRaw`select  concat (u.nombre, ' ' , u.apellido) as alumno, idalumnoxcursoxdivision,
         avg ((SELECT AVG(c)
                FROM   (VALUES(nota1),
@@ -30,7 +31,7 @@ async function MejorPromedio() {
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
-       where  a.idcursoxdivision between 9 and 10 and u.activo = true
+       where  a.idcursoxdivision between 9 and 10 and u.activo = true and anoactual = ${Number(anoActual)} 
        group by alumno,idalumnoxcursoxdivision
        order by promediototal desc`
     } catch (error) {

@@ -25,11 +25,12 @@ export default async function handler(req, res) {
 
 async function notasTrimestres(idAlumno, idMateria) {
     try {
+        let anoActual = new Date().getFullYear()
         return await db.$queryRaw`select m.nombre as materia ,idtrimestre as id,nota1,nota2,nota3,nota4,nota5 from nota n
          INNER JOIN materia as m ON m.id = n.idmateria
          inner join alumnoxcursoxdivision as al on al.id = n.idalumnoxcursoxdivision
          inner join usuario as u on u.id = al.idusuario
-        where idmateria = ${Number(idMateria)} and idalumnoxcursoxdivision = ${Number(idAlumno)} and u.activo = true
+        where idmateria = ${Number(idMateria)} and idalumnoxcursoxdivision = ${Number(idAlumno)} and u.activo = true and anoactual = ${Number(anoActual)}
         group by idtrimestre,nota1,nota2,nota3,nota4,nota5, m.nombre`
 
     } catch (error) {
