@@ -27,8 +27,7 @@ export async function ListarMaterias(idCurso) {
             include: {
               cursoxdivision: {
                 include: {
-                  curso: true,
-                  division: true
+                  curso: true
                 }
               }
             }
@@ -38,7 +37,7 @@ export async function ListarMaterias(idCurso) {
           materiaxcursoxdivision: {
             cursoxdivision: {
               curso: {
-                id: Number(idCurso),
+                id: Number(idCurso)
               }
             }
           }
@@ -53,13 +52,19 @@ export async function ListarMaterias(idCurso) {
             include: {
               cursoxdivision: {
                 include: {
-                  curso: true,
-                  division: true
+                  curso: true
                 }
               }
             }
           }
         },
+        // where: {
+        //   materiaxcursoxdivision: {
+        //     cursoxdivision: {
+        //       idcurso: 1
+        //     }
+        //   }
+        // },
         orderBy: {
           id: "asc",
         },

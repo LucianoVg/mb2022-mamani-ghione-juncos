@@ -164,7 +164,7 @@ export default function Notas() {
 
                                         materias && materias?.map((m, i) => (
 
-                                            m?.idcurso === 1 && (
+                                            m?.materiaxcursoxdivision?.cursoxdivision?.idcurso === 1 && (
 
                                                 <MenuItem selected={i === 0} key={i} value={m.id}>{m.nombre}</MenuItem>
                                             )
