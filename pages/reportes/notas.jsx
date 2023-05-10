@@ -36,7 +36,7 @@ export default function Notas() {
   const [alumnos, setAlumnos] = useState([]);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
-  const [idAlumno, setIdAlumno] = useState(1);
+  const [idAlumno, setIdAlumno] = useState("");
   const router = useRouter();
   const [cargando1, setCargando1] = useState(false);
   const [cargando2, setCargando2] = useState(false);
@@ -114,7 +114,6 @@ export default function Notas() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`
     );
-    console.log("MATERIAS: ", res.data);
     if (res.status === 200) {
       setMaterias(res.data);
     }
@@ -137,6 +136,8 @@ export default function Notas() {
   const handleAlumno = (e, newValue) => {
     if (newValue) {
       setIdAlumno(newValue.id);
+    } else {
+      setIdAlumno("");
     }
   };
   const handleSearch = async () => {
@@ -257,18 +258,18 @@ export default function Notas() {
                 // value={value}
                 name="idAlumno"
                 onChange={handleAlumno}
-                getOptionLabel={(alumnos) =>
-                  `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
+                getOptionLabel={(alumno) =>
+                  `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
                 }
                 options={alumnos}
                 sx={{ width: "250px" }}
                 isOptionEqualToValue={(option, value) =>
-                  option?.apellido === value?.apellido
+                  option?.usuario?.apellido === value?.usuario?.apellido
                 }
                 noOptionsText={"No existe un alumno con ese nombre"}
-                renderOption={(props, alumnos) => (
-                  <Box component="li" {...props} key={alumnos?.id}>
-                    {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                renderOption={(props, alumno) => (
+                  <Box component="li" {...props} key={alumno?.id}>
+                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                   </Box>
                 )}
                 renderInput={(params) => (
@@ -467,7 +468,7 @@ export default function Notas() {
           <div sx={{ marginTop: "200px" }}>
             {!cargando2 && promedioTrimestre.length > 0 && (
               <TableContainer component={Paper}>
-                <Table aria-label="customized table" s>
+                <Table aria-label="customized table">
                   <TableHead>
                     <TableRow>
                       <TableCell
