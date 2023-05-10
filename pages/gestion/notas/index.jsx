@@ -112,6 +112,14 @@ export default function Notas() {
       setIdMateria("");
     }
   };
+  // const handleMateria = (e, newValue) => {
+  //   if (newValue) {
+  //     setIdMateria(newValue.idmateria);
+  //     console.log(idMateria)
+  //   } else {
+  //     setIdMateria("");
+  //   }
+  // };
 
   const handleDivision = (e) => {
     if (e.target.value) {
@@ -412,6 +420,34 @@ export default function Notas() {
       <Container maxWidth={"xl"}>
         <Typography variant="h4">Notas</Typography>
         <Box sx={{ marginTop: "20px" }}>
+          <Box>
+            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+              <Autocomplete
+                sx={{ width: "330px" }}
+                disablePortal
+                id="combo-box-demo"
+                // value={value}
+                name="idAlumno"
+                onChange={handleMateria}
+                options={materias}
+                getOptionLabel={(materia) =>
+                  `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option?.id === value?.id
+                }
+                noOptionsText={"No existe materia con ese nombre"}
+                renderOption={(props, materia) => (
+                  <Box component="li" {...props} key={materia?.id} value={materia?.idmateria}>
+                    {materia?.materia?.nombre}&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{materia?.cursoxdivision?.curso?.nombre}&nbsp;{materia?.cursoxdivision?.division?.division}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Materias" />
+                )}
+              />
+            </FormControl>
+          </Box>
           <Box direction="row">
             <FormControl>
               <InputLabel htmlFor="inputMateria">Materia</InputLabel>
@@ -430,7 +466,7 @@ export default function Notas() {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   {[docente.materia].map((m, i) => (
-                    <MenuItem key={i} value={m.id}>
+                    <MenuItem key={i} value={m.idmateria}>
                       {m.nombre}
                     </MenuItem>
                   ))}
@@ -662,10 +698,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                    notas.nota2 === 0 &&
-                    notas.nota3 === 0 &&
-                    notas.nota4 === 0 &&
-                    notas.nota5 === 0 ? (
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
@@ -1259,6 +1295,6 @@ export default function Notas() {
           </Container>
         )}
       </Container>
-    </Layout>
+    </Layout >
   );
 }
