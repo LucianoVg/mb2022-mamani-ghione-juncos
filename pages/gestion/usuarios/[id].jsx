@@ -613,7 +613,7 @@ export default function Detalles() {
                             <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
                           </ListItemIcon>
                           <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                            <strong> {dxm.materia?.nombre}</strong>
+                            <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong>
                           </ListItemText>
                         </ListItem>
                       ))}
@@ -642,7 +642,7 @@ export default function Detalles() {
                             <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
                           </ListItemIcon>
                           <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                            <strong >{`${dxm.materia?.curso?.nombre}° Año`}</strong>
+                            <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
                           </ListItemText>
                         </ListItem>
                       ))}
