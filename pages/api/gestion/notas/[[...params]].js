@@ -10,7 +10,14 @@ export default async function handler(req, res) {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
-    let { idMateria, idTrimestre, idDivision, idAlumno, idCurso, idCursoXdivision } = req.query;
+    let {
+      idMateria,
+      idTrimestre,
+      idDivision,
+      idAlumno,
+      idCurso,
+      idCursoXdivision,
+    } = req.query;
     console.log({ idMateria, idTrimestre, idDivision, idAlumno, idCurso });
     let options = {
       include: {
@@ -64,19 +71,13 @@ export default async function handler(req, res) {
       });
     }
 
-
-
-    
     if (idCursoXdivision) {
       AND.push({
         alumnoxcursoxdivision: {
-         idcursoxdivision: idCursoXdivision
+          idcursoxdivision: idCursoXdivision,
         },
       });
     }
-
-
-
 
     if (idAlumno) {
       AND.push({
@@ -88,8 +89,12 @@ export default async function handler(req, res) {
     if (idCurso) {
       AND.push({
         materia: {
-          curso: {
-            id: Number(idCurso),
+          materiaxcursoxdivision: {
+            some: {
+              cursoxdivision: {
+                idcurso: Number(idCurso),
+              },
+            },
           },
         },
       });

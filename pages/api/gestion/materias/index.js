@@ -20,55 +20,41 @@ export default async function handler(req, res) {
 export async function ListarMaterias(idCurso) {
   try {
     const materias = idCurso
-      ? await db.materia.findMany({
-        include: {
-          curso: true,
-          materiaxcursoxdivision: {
-            include: {
-              cursoxdivision: {
-                include: {
-                  curso: true
-                }
-              }
-            }
-          }
-        },
-        where: {
-          materiaxcursoxdivision: {
+      ? await db.materiaxcursoxdivision.findMany({
+          include: {
+            materia: true,
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              },
+            },
+          },
+          where: {
             cursoxdivision: {
               curso: {
-                id: Number(idCurso)
-              }
-            }
-          }
-        },
-        orderBy: {
-          id: "asc",
-        },
-      })
-      : await db.materia.findMany({
-        include: {
-          materiaxcursoxdivision: {
-            include: {
-              cursoxdivision: {
-                include: {
-                  curso: true
-                }
-              }
-            }
-          }
-        },
-        // where: {
-        //   materiaxcursoxdivision: {
-        //     cursoxdivision: {
-        //       idcurso: 1
-        //     }
-        //   }
-        // },
-        orderBy: {
-          id: "asc",
-        },
-      });
+                id: Number(idCurso),
+              },
+            },
+          },
+          orderBy: {
+            id: "asc",
+          },
+        })
+      : await db.materiaxcursoxdivision.findMany({
+          include: {
+            materia: true,
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              },
+            },
+          },
+          orderBy: {
+            id: "asc",
+          },
+        });
     return materias;
   } catch (error) {
     console.error(error);
