@@ -289,15 +289,15 @@ async function main() {
   //   console.log(materi);
   // })
 
-  docentexmateria.map(async (n) => {
-    const docentes = await prisma.docentexmateria.create({
-      data: {
-        idusuario: n.idusuario,
-        idmateriaxcursoxdivision: n.idmateriaxcursoxdivision
-      }
-    })
-    console.log(docentes);
-  })
+  // docentexmateria.map(async (n) => {
+  //   const docentes = await prisma.docentexmateria.create({
+  //     data: {
+  //       idusuario: n.idusuario,
+  //       idmateriaxcursoxdivision: n.idmateriaxcursoxdivision
+  //     }
+  //   })
+  //   console.log(docentes);
+  // })
   //    preceptoresxcursos.map(async (n) => {
   //         const docentes = await prisma.preceptorxcurso.create({
   //             data: {
