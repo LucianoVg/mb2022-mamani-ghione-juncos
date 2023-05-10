@@ -1,283 +1,688 @@
 export const docentexmateria = [
     {
         idusuario: 126,
-        idmateria: 1
+        idmateriaxcursoxdivision: 1
     },
     {
         idusuario: 126,
-        idmateria: 2
+        idmateriaxcursoxdivision: 11
     },
     {
         idusuario: 126,
-        idmateria: 3
+        idmateriaxcursoxdivision: 3
+    },
+    {
+        idusuario: 126,
+        idmateriaxcursoxdivision: 13
+    },
+    {
+        idusuario: 126,
+        idmateriaxcursoxdivision: 4
+    },
+    {
+        idusuario: 126,
+        idmateriaxcursoxdivision: 14
+    },
+
+
+
+
+    {
+        idusuario: 127,
+        idmateriaxcursoxdivision: 7
     },
     {
         idusuario: 127,
-        idmateria: 4
+        idmateriaxcursoxdivision: 15
     },
     {
         idusuario: 127,
-        idmateria: 5
+        idmateriaxcursoxdivision: 5
     },
     {
         idusuario: 127,
-        idmateria: 6
+        idmateriaxcursoxdivision: 16
+    },
+    {
+        idusuario: 127,
+        idmateriaxcursoxdivision: 2
+    },
+    {
+        idusuario: 127,
+        idmateriaxcursoxdivision: 12
+    },
+
+
+
+
+    {
+        idusuario: 128,
+        idmateriaxcursoxdivision: 6
     },
     {
         idusuario: 128,
-        idmateria: 7
+        idmateriaxcursoxdivision: 17
     },
     {
         idusuario: 128,
-        idmateria: 8
+        idmateriaxcursoxdivision: 10
     },
     {
         idusuario: 128,
-        idmateria: 9
+        idmateriaxcursoxdivision: 18
+    },
+    {
+        idusuario: 128,
+        idmateriaxcursoxdivision: 8
+    },
+    {
+        idusuario: 128,
+        idmateriaxcursoxdivision: 20
+    },
+
+
+
+
+
+    {
+        idusuario: 129,
+        idmateriaxcursoxdivision: 9
     },
     {
         idusuario: 129,
-        idmateria: 10
+        idmateriaxcursoxdivision: 19
     },
+
     {
         idusuario: 129,
-        idmateria: 11
+        idmateriaxcursoxdivision: 26
     },
+
     {
         idusuario: 129,
-        idmateria: 12
+        idmateriaxcursoxdivision: 31
+    },
+
+    {
+        idusuario: 129,
+        idmateriaxcursoxdivision: 21
+    },
+
+    {
+        idusuario: 129,
+        idmateriaxcursoxdivision: 33
+    },
+
+
+
+
+
+    {
+        idusuario: 130,
+        idmateriaxcursoxdivision: 23
     },
     {
         idusuario: 130,
-        idmateria: 13
+        idmateriaxcursoxdivision: 35
     },
     {
         idusuario: 130,
-        idmateria: 14
+        idmateriaxcursoxdivision: 24
     },
     {
         idusuario: 130,
-        idmateria: 15
+        idmateriaxcursoxdivision: 37
+    },
+    {
+        idusuario: 130,
+        idmateriaxcursoxdivision: 25
+    },
+    {
+        idusuario: 130,
+        idmateriaxcursoxdivision: 34
+    },
+
+
+
+
+    {
+        idusuario: 131,
+        idmateriaxcursoxdivision: 22
     },
     {
         idusuario: 131,
-        idmateria: 16
+        idmateriaxcursoxdivision: 32
     },
     {
         idusuario: 131,
-        idmateria: 17
+        idmateriaxcursoxdivision: 27
     },
     {
         idusuario: 131,
-        idmateria: 18
+        idmateriaxcursoxdivision: 36
+    },
+    {
+        idusuario: 131,
+        idmateriaxcursoxdivision: 30
+    },
+    {
+        idusuario: 131,
+        idmateriaxcursoxdivision: 38
+    },
+
+
+
+
+
+    {
+        idusuario: 132,
+        idmateriaxcursoxdivision: 28
     },
     {
         idusuario: 132,
-        idmateria: 19
+        idmateriaxcursoxdivision: 39
     },
     {
         idusuario: 132,
-        idmateria: 20
+        idmateriaxcursoxdivision: 29
     },
     {
         idusuario: 132,
-        idmateria: 21
+        idmateriaxcursoxdivision: 40
+    },
+    {
+        idusuario: 132,
+        idmateriaxcursoxdivision: 44
+    },
+    {
+        idusuario: 132,
+        idmateriaxcursoxdivision: 56
+    },
+
+    {
+        idusuario: 133,
+        idmateriaxcursoxdivision: 45
     },
     {
         idusuario: 133,
-        idmateria: 22
+        idmateriaxcursoxdivision: 55
     },
     {
         idusuario: 133,
-        idmateria: 23
+        idmateriaxcursoxdivision: 43
     },
     {
         idusuario: 133,
-        idmateria: 24
+        idmateriaxcursoxdivision: 52
+    },
+    {
+        idusuario: 133,
+        idmateriaxcursoxdivision: 41
+    },
+    {
+        idusuario: 133,
+        idmateriaxcursoxdivision: 54
+    },
+
+
+
+
+
+
+
+
+    {
+        idusuario: 134,
+        idmateriaxcursoxdivision: 46
     },
     {
         idusuario: 134,
-        idmateria: 25
+        idmateriaxcursoxdivision: 57
     },
     {
         idusuario: 134,
-        idmateria: 26
+        idmateriaxcursoxdivision: 42
     },
     {
         idusuario: 134,
-        idmateria: 27
+        idmateriaxcursoxdivision: 53
+    },
+    {
+        idusuario: 134,
+        idmateriaxcursoxdivision: 47
+    },
+    {
+        idusuario: 134,
+        idmateriaxcursoxdivision: 58
+        
+    },
+
+
+
+
+
+    {
+        idusuario: 135,
+        idmateriaxcursoxdivision: 48
     },
     {
         idusuario: 135,
-        idmateria: 28
+        idmateriaxcursoxdivision: 61
     },
     {
         idusuario: 135,
-        idmateria: 29
+        idmateriaxcursoxdivision: 50
     },
     {
         idusuario: 135,
-        idmateria: 30
+        idmateriaxcursoxdivision: 60
+    },
+    {
+        idusuario: 135,
+        idmateriaxcursoxdivision: 49
+    },
+    {
+        idusuario: 135,
+        idmateriaxcursoxdivision: 59
+    },
+  
+
+
+
+
+    {
+        idusuario: 136,
+        idmateriaxcursoxdivision: 51
     },
     {
         idusuario: 136,
-        idmateria: 31
+        idmateriaxcursoxdivision: 62
     },
     {
         idusuario: 136,
-        idmateria: 32
+        idmateriaxcursoxdivision: 68
     },
     {
         idusuario: 136,
-        idmateria: 33
+        idmateriaxcursoxdivision: 79
+    },
+    {
+        idusuario: 136,
+        idmateriaxcursoxdivision: 66
+    },
+    {
+        idusuario: 136,
+        idmateriaxcursoxdivision: 75
+    },
+  
+    
+
+
+
+    {
+        idusuario: 137,
+        idmateriaxcursoxdivision: 63
     },
     {
         idusuario: 137,
-        idmateria: 34
+        idmateriaxcursoxdivision: 78
     },
     {
         idusuario: 137,
-        idmateria: 35
+        idmateriaxcursoxdivision: 67
     },
     {
         idusuario: 137,
-        idmateria: 36
+        idmateriaxcursoxdivision: 80
+    },
+    {
+        idusuario: 137,
+        idmateriaxcursoxdivision: 65
+    },
+    {
+        idusuario: 137,
+        idmateriaxcursoxdivision: 77
+    },
+
+
+
+
+    {
+        idusuario: 138,
+        idmateriaxcursoxdivision: 64
     },
     {
         idusuario: 138,
-        idmateria: 37
+        idmateriaxcursoxdivision: 76
     },
     {
         idusuario: 138,
-        idmateria: 38
+        idmateriaxcursoxdivision: 69
     },
     {
         idusuario: 138,
-        idmateria: 39
+        idmateriaxcursoxdivision: 81
+    },
+    {
+        idusuario: 138,
+        idmateriaxcursoxdivision: 74
+    },
+    {
+        idusuario: 138,
+        idmateriaxcursoxdivision: 82
+    },
+
+
+
+
+
+    {
+        idusuario: 139,
+        idmateriaxcursoxdivision: 71
     },
     {
         idusuario: 139,
-        idmateria: 40
+        idmateriaxcursoxdivision: 83
+    },
+
+    {
+        idusuario: 139,
+        idmateriaxcursoxdivision: 72
+    },
+
+    {
+        idusuario: 139,
+        idmateriaxcursoxdivision: 85
+    },
+
+    {
+        idusuario: 139,
+        idmateriaxcursoxdivision: 73
+    },
+
+    {
+        idusuario: 139,
+        idmateriaxcursoxdivision: 84
+    },
+
+
+
+    {
+        idusuario: 140,
+        idmateriaxcursoxdivision: 70
     },
     {
         idusuario: 140,
-        idmateria: 41
+        idmateriaxcursoxdivision: 86
     },
     {
         idusuario: 140,
-        idmateria: 42
+        idmateriaxcursoxdivision: 92
     },
     {
         idusuario: 140,
-        idmateria: 43
+        idmateriaxcursoxdivision: 106
+    },
+    {
+        idusuario: 140,
+        idmateriaxcursoxdivision: 91
+    },
+    {
+        idusuario: 140,
+        idmateriaxcursoxdivision: 107
+    },
+
+
+
+
+
+    {
+        idusuario: 141,
+        idmateriaxcursoxdivision: 87
     },
     {
         idusuario: 141,
-        idmateria: 44
+        idmateriaxcursoxdivision: 103
     },
     {
         idusuario: 141,
-        idmateria: 45
+        idmateriaxcursoxdivision: 89
     },
     {
         idusuario: 141,
-        idmateria: 46
+        idmateriaxcursoxdivision: 101
+    },
+    {
+        idusuario: 141,
+        idmateriaxcursoxdivision: 90
+    },
+    {
+        idusuario: 141,
+        idmateriaxcursoxdivision: 104
+    },
+
+
+
+
+    {
+        idusuario: 142,
+        idmateriaxcursoxdivision: 88
     },
     {
         idusuario: 142,
-        idmateria: 47
+        idmateriaxcursoxdivision: 102
     },
+
     {
         idusuario: 142,
-        idmateria: 48
+        idmateriaxcursoxdivision: 93
     },
+
     {
         idusuario: 142,
-        idmateria: 49
+        idmateriaxcursoxdivision: 105
+    },
+
+    {
+        idusuario: 142,
+        idmateriaxcursoxdivision: 95
+    },
+
+    {
+        idusuario: 142,
+        idmateriaxcursoxdivision: 109
+    },
+
+
+
+
+    {
+        idusuario: 143,
+        idmateriaxcursoxdivision: 97
     },
     {
         idusuario: 143,
-        idmateria: 50
+        idmateriaxcursoxdivision: 108
     },
+
     {
         idusuario: 143,
-        idmateria: 51
+        idmateriaxcursoxdivision: 96
     },
+
     {
         idusuario: 143,
-        idmateria: 52
+        idmateriaxcursoxdivision: 110
+    },
+
+    {
+        idusuario: 143,
+        idmateriaxcursoxdivision: 94
+    },
+
+    {
+        idusuario: 143,
+        idmateriaxcursoxdivision: 112
+    },
+
+
+
+    {
+        idusuario: 144,
+        idmateriaxcursoxdivision: 98
     },
     {
         idusuario: 144,
-        idmateria: 53
+        idmateriaxcursoxdivision: 111
     },
     {
         idusuario: 144,
-        idmateria: 54
+        idmateriaxcursoxdivision: 100
     },
     {
         idusuario: 144,
-        idmateria: 55
+        idmateriaxcursoxdivision: 114
     },
     {
-        idusuario: 145,
-        idmateria: 56
+        idusuario: 144,
+        idmateriaxcursoxdivision: 99
     },
     {
-        idusuario: 145,
-        idmateria: 57
+        idusuario: 144,
+        idmateriaxcursoxdivision: 113
     },
+
+
+
     {
         idusuario: 145,
-        idmateria: 58
+        idmateriaxcursoxdivision: 119
+    },
+
+    {
+        idusuario: 145,
+        idmateriaxcursoxdivision: 133
+    },
+
+    {
+        idusuario: 145,
+        idmateriaxcursoxdivision: 115
+    },
+
+    {
+        idusuario: 145,
+        idmateriaxcursoxdivision: 131
+    },
+
+    {
+        idusuario: 145,
+        idmateriaxcursoxdivision: 117
+    },
+
+    {
+        idusuario: 145,
+        idmateriaxcursoxdivision: 128
+    },
+
+
+
+
+    {
+        idusuario: 146,
+        idmateriaxcursoxdivision: 118
     },
     {
         idusuario: 146,
-        idmateria: 59
+        idmateriaxcursoxdivision: 132
     },
     {
         idusuario: 146,
-        idmateria: 60
+        idmateriaxcursoxdivision: 120
     },
     {
         idusuario: 146,
-        idmateria: 61
+        idmateriaxcursoxdivision: 130
+    },
+    {
+        idusuario: 146,
+        idmateriaxcursoxdivision: 116
+    },
+    {
+        idusuario: 146,
+        idmateriaxcursoxdivision: 129
+    },
+
+
+
+    {
+        idusuario: 147,
+        idmateriaxcursoxdivision: 121
     },
     {
         idusuario: 147,
-        idmateria: 62
+        idmateriaxcursoxdivision: 134
+    }, {
+        idusuario: 147,
+        idmateriaxcursoxdivision: 122
     },
     {
         idusuario: 147,
-        idmateria: 63
+        idmateriaxcursoxdivision: 135
     },
     {
         idusuario: 147,
-        idmateria: 64
+        idmateriaxcursoxdivision: 123
     },
     {
-        idusuario: 148,
-        idmateria: 65
+        idusuario: 147,
+        idmateriaxcursoxdivision: 136
     },
+
+
+
+
     {
         idusuario: 148,
-        idmateria: 66
+        idmateriaxcursoxdivision: 124
     },
+
     {
         idusuario: 148,
-        idmateria: 67
+        idmateriaxcursoxdivision: 125
+    },
+
+    {
+        idusuario: 148,
+        idmateriaxcursoxdivision: 138
+    },
+
+    {
+        idusuario: 148,
+        idmateriaxcursoxdivision: 126
+    },
+
+ 
+
+
+    {
+        idusuario: 149,
+        idmateriaxcursoxdivision: 137
     },
     {
         idusuario: 149,
-        idmateria: 68
+        idmateriaxcursoxdivision: 140
     },
     {
         idusuario: 149,
-        idmateria: 69
+        idmateriaxcursoxdivision: 127
     },
     {
         idusuario: 149,
-        idmateria: 70
+        idmateriaxcursoxdivision: 139
     },
+   
+
+
+
 
 ]
