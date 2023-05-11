@@ -86,6 +86,7 @@ export default function Detalles() {
     console.log(res.data);
     if (res.data) {
       setUsuario(res.data);
+      console.log(res.data)
     }
     setCargando(false);
   };

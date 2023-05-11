@@ -11,29 +11,23 @@ export default async function handler(req, res) {
         });
         const { idusuario } = req.query
         console.log(idusuario);
-        const tutor = await traerTutor(idusuario)
-        return res.status(200).json(tutor)
+        const preceptor = await traerPreceptor(idusuario)
+        return res.status(200).json(preceptor)
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: error.message })
     }
 }
 
-async function traerTutor(idusuario) {
+async function traerPreceptor(idusuario) {
     try {
         const tutor = await db.usuario.findFirst({
             include: {
-                alumnoxcursoxdivision2: {
+                preceptorxcurso: {
                     include: {
-                        usuario: true,
-                        cursoxdivision: {
-                            include: {
-                                curso: true,
-                                division: true,
-                            },
-                        },
-                    }
-                }
+                        curso: true,
+                    },
+                },
             },
             where: {
 
