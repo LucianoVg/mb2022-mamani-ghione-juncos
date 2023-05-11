@@ -52,6 +52,17 @@ export default async function handler(req, res) {
               },
             },
           },
+          alumnoxcursoxdivision2: {
+            include: {
+              usuario: true,
+              cursoxdivision: {
+                include: {
+                  curso: true,
+                  division: true,
+                },
+              },
+            }
+          }
         },
         orderBy: {
           apellido: "asc",

@@ -148,9 +148,17 @@ export default function Detalles() {
       </Grid>
       {!cargando && (
         <Container sx={{ marginLeft: "20px" }}>
-          <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-            <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
-          </Typography>
+          {
+            usuario?.rol?.tipo === "Secretaria" ? (
+              <Typography variant="h6" sx={{ marginBottom: "20px" }}>
+                <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
+              </Typography>
+            ) : (
+              <Typography variant="h6" sx={{ marginBottom: "20px" }}>
+                <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
+              </Typography>
+            )
+          }
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 23 }}
@@ -197,7 +205,7 @@ export default function Detalles() {
               <strong>Edad</strong> <br />
               {usuario?.fechanacimiento
                 ? new Date().getFullYear() -
-                  new Date(usuario?.fechanacimiento.split("/")[2]).getFullYear()
+                new Date(usuario?.fechanacimiento.split("/")[2]).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
