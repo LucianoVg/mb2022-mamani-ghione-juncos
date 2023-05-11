@@ -112,14 +112,6 @@ export default function Notas() {
       setIdMateria("");
     }
   };
-  // const handleMateria = (e, newValue) => {
-  //   if (newValue) {
-  //     setIdMateria(newValue.idmateria);
-  //     console.log(idMateria)
-  //   } else {
-  //     setIdMateria("");
-  //   }
-  // };
 
   const handleDivision = (e) => {
     if (e.target.value) {
@@ -411,68 +403,25 @@ export default function Notas() {
   };
 
   const handleCurso = async (e) => {
-    setIdCurso(Number(e.target.value));
-    await traerMaterias(e.target.value ? Number(e.target.value) : "");
+    if (e.target.value) {
+      setIdCurso(Number(e.target.value));
+    } else {
+      setIdCurso("");
+    }
   };
 
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>Notas</Typography>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Notas
+        </Typography>
         <Box sx={{ marginTop: "20px" }}>
-          <Box>
-            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              <Autocomplete
-                sx={{ width: "330px" }}
-                disablePortal
-                id="combo-box-demo"
-                // value={value}
-                name="idAlumno"
-                onChange={handleMateria}
-                options={materias}
-                getOptionLabel={(materia) =>
-                  `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
-                }
-                isOptionEqualToValue={(option, value) =>
-                  option?.id === value?.id
-                }
-                noOptionsText={"No existe materia con ese nombre"}
-                renderOption={(props, materia) => (
-                  <Box component="li" {...props} key={materia?.id} value={materia?.idmateria}>
-                    {materia?.materia?.nombre}&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{materia?.cursoxdivision?.curso?.nombre}&nbsp;{materia?.cursoxdivision?.division?.division}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Materias" />
-                )}
-              />
-            </FormControl>
-          </Box>
           <Box direction="row">
-            <FormControl>
-              <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               {docente ? (
-                <Select
-                  id="inputMateria"
-                  onChange={handleMateria}
-                  name="idMateria"
-                  value={idMateria}
-                  label="Materia"
-                  sx={{
-                    width: "150px",
-                    marginRight: "20px",
-                    marginBottom: "20px",
-                  }}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  {[docente.materia].map((m, i) => (
-                    <MenuItem key={i} value={m.idmateria}>
-                      {m.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-              ) : (
                 <>
+                  <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                   <Select
                     id="inputMateria"
                     onChange={handleMateria}
@@ -486,122 +435,101 @@ export default function Notas() {
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    <ListSubheader>Primero</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 1 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
-                    <ListSubheader>Segundo</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 2 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
-                    <ListSubheader>Tercero</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 3 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
-                    <ListSubheader>Cuarto</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 4 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
-                    <ListSubheader>Quinto</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 5 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
-                    <ListSubheader>Sexto</ListSubheader>
-                    {materias &&
-                      materias?.map(
-                        (m, i) =>
-                          m?.cursoxdivision?.idcurso === 6 && (
-                            <MenuItem key={i} value={m.id}>
-                              {m.materia?.nombre}
-                            </MenuItem>
-                          )
-                      )}
+                    {[docente.materia].map((m, i) => (
+                      <MenuItem key={i} value={m.idmateria}>
+                        {m.nombre}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </>
+              ) : (
+                <Autocomplete
+                  sx={{ width: "330px" }}
+                  disablePortal
+                  id="inputMateria"
+                  // value={value}
+                  name="idMateria"
+                  onChange={handleMateria}
+                  options={materias}
+                  getOptionLabel={(materia) =>
+                    `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
+                  }
+                  isOptionEqualToValue={(option, value) => {
+                    return option?.materia?.id === value?.materia?.id;
+                  }}
+                  noOptionsText={"No existe materia con ese nombre"}
+                  renderOption={(props, materia) => (
+                    <Box
+                      component="li"
+                      {...props}
+                      key={materia?.id}
+                      value={materia?.idmateria}
+                    >
+                      {materia?.materia?.nombre}
+                      &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                      {materia?.cursoxdivision?.curso?.nombre}&nbsp;
+                      {materia?.cursoxdivision?.division?.division}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Materias" />
+                  )}
+                />
               )}
             </FormControl>
 
-            {usuario.rol === "Docente" ? (
-              <FormControl>
-                <InputLabel htmlFor="inputCurso">Division</InputLabel>
-                <Select
-                  id="inputCurso"
-                  name={"idDivision"}
-                  value={idDivision}
-                  onChange={handleDivision}
-                  label="Division"
-                  sx={{
-                    width: "150px",
-                    marginRight: "20px",
-                    marginBottom: "20px",
-                  }}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  <MenuItem value={""}>Division</MenuItem>
-                  {divisiones &&
-                    divisiones?.map((d, i) => (
-                      <MenuItem key={i} value={d.id}>
-                        {d.division}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            ) : (
-              <FormControl>
-                <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-                <Select
-                  id="inputCurso"
-                  name={"idCurso"}
-                  value={idCurso}
-                  onChange={handleCurso}
-                  label="Curso"
-                  sx={{
-                    width: "150px",
-                    marginRight: "20px",
-                    marginBottom: "20px",
-                  }}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  <MenuItem value={""}>Curso</MenuItem>
-                  {cursos &&
-                    cursos?.map((c, i) => (
-                      <MenuItem key={i} value={c.curso?.id}>
-                        {c.curso?.nombre} {c.division?.division}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            )}
+            {
+              usuario.rol === "Docente" && (
+                <FormControl>
+                  <InputLabel htmlFor="inputCurso">Division</InputLabel>
+                  <Select
+                    id="inputCurso"
+                    name={"idDivision"}
+                    value={idDivision}
+                    onChange={handleDivision}
+                    label="Division"
+                    sx={{
+                      width: "150px",
+                      marginRight: "20px",
+                      marginBottom: "20px",
+                    }}
+                    MenuProps={{ disableScrollLock: true }}
+                  >
+                    <MenuItem value={""}>Division</MenuItem>
+                    {divisiones &&
+                      divisiones?.map((d, i) => (
+                        <MenuItem key={i} value={d.id}>
+                          {d.division}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              )
+              //   <FormControl>
+              //     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+              //     <Select
+              //       id="inputCurso"
+              //       name={"idCurso"}
+              //       value={idCurso}
+              //       onChange={handleCurso}
+              //       label="Curso"
+              //       sx={{
+              //         width: "150px",
+              //         marginRight: "20px",
+              //         marginBottom: "20px",
+              //       }}
+              //       MenuProps={{ disableScrollLock: true }}
+              //     >
+              //       <MenuItem value={""}>Curso</MenuItem>
+              //       {cursos &&
+              //         cursos?.map((c, i) => (
+              //           <MenuItem key={i} value={c.curso?.id}>
+              //             {c.curso?.nombre} {c.division?.division}
+              //           </MenuItem>
+              //         ))}
+              //     </Select>
+              //   </FormControl>
+            }
           </Box>
 
           <Box sx={{ marginTop: "25px" }}>
@@ -645,11 +573,11 @@ export default function Notas() {
             sx={{ marginBottom: "20px" }}
             color="info"
             variant="text"
-            onClick={() => {
+            onClick={async () => {
               setIdAlumno("");
               setIdDivision("");
               setIdMateria(docente ? docente?.materia?.id : "");
-              traerNotas(index);
+              await traerNotas(index);
             }}
           >
             Quitar Filtros
@@ -698,10 +626,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                      notas.nota2 === 0 &&
-                      notas.nota3 === 0 &&
-                      notas.nota4 === 0 &&
-                      notas.nota5 === 0 ? (
+                    notas.nota2 === 0 &&
+                    notas.nota3 === 0 &&
+                    notas.nota4 === 0 &&
+                    notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
@@ -1295,6 +1223,6 @@ export default function Notas() {
           </Container>
         )}
       </Container>
-    </Layout >
+    </Layout>
   );
 }

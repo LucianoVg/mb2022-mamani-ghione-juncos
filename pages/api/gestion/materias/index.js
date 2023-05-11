@@ -21,57 +21,52 @@ export async function ListarMaterias(idCurso) {
   try {
     const materias = idCurso
       ? await db.materiaxcursoxdivision.findMany({
-        include: {
-          materia: true,
-          cursoxdivision: {
-            include: {
-              curso: true,
-              division: true,
-            },
-          },
-        },
-        where: {
-          cursoxdivision: {
-            curso: {
-              id: Number(idCurso),
-            },
-          },
-        },
-        orderBy: [
-          {
-            idmateria: "asc",
-
-          },
-          {
+          include: {
+            materia: true,
             cursoxdivision: {
-              iddivision: 'asc'
-            }
-          }
-        ]
-
-      })
+              include: {
+                curso: true,
+                division: true,
+              },
+            },
+          },
+          where: {
+            cursoxdivision: {
+              idcurso: Number(idCurso),
+            },
+          },
+          orderBy: [
+            {
+              idmateria: "asc",
+            },
+            {
+              cursoxdivision: {
+                iddivision: "asc",
+              },
+            },
+          ],
+        })
       : await db.materiaxcursoxdivision.findMany({
-        include: {
-          materia: true,
-          cursoxdivision: {
-            include: {
-              curso: true,
-              division: true,
+          include: {
+            materia: true,
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              },
             },
           },
-        },
-        orderBy: [
-          {
-            idmateria: "asc",
-
-          },
-          {
-            cursoxdivision: {
-              iddivision: 'asc'
-            }
-          }
-        ]
-      });
+          orderBy: [
+            {
+              idmateria: "asc",
+            },
+            {
+              cursoxdivision: {
+                iddivision: "asc",
+              },
+            },
+          ],
+        });
     return materias;
   } catch (error) {
     console.error(error);

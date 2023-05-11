@@ -36,7 +36,7 @@ export default function Notas() {
   const [alumnos, setAlumnos] = useState([]);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
-  const [idAlumno, setIdAlumno] = useState("");
+  const [idAlumno, setIdAlumno] = useState(1);
   const router = useRouter();
   const [cargando1, setCargando1] = useState(false);
   const [cargando2, setCargando2] = useState(false);
@@ -81,6 +81,7 @@ export default function Notas() {
   };
   const notasPorTrimestre = async () => {
     setCargando1(true);
+    console.log(idMateria, idAlumno);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${idAlumno}/${idMateria}`
     );
@@ -110,12 +111,18 @@ export default function Notas() {
       setAlumnos(res.data);
     }
   };
-  const traerMaterias = async () => {
+  const traerMaterias = async (idCurso) => {
+    let param = idCurso ? `?idCurso=${idCurso}` : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
     );
     if (res.status === 200) {
-      setMaterias(res.data);
+      let tempMaterias = [];
+      res.data.forEach((m) => {
+        if (!tempMaterias.find((mat) => mat.materia?.id === m.materia?.id))
+          tempMaterias.push(m);
+      });
+      setMaterias(tempMaterias);
     }
   };
   const listarCursos = async () => {
@@ -126,11 +133,16 @@ export default function Notas() {
       setCursos(res.data);
     }
   };
-  const handleCurso = (e) => {
+  const handleCurso = async (e) => {
     setIdCurso(Number(e.target.value));
+    await traerMaterias(Number(e.target.value));
   };
   const handleMateria = (e) => {
-    setIdMateria(Number(e.target.value));
+    if (e.target.value) {
+      setIdMateria(Number(e.target.value));
+    } else {
+      setIdMateria("");
+    }
   };
 
   const handleAlumno = (e, newValue) => {
@@ -172,7 +184,7 @@ export default function Notas() {
                 <MenuItem value={0}>Seleccione un curso</MenuItem>
                 {cursos &&
                   cursos.map((c, i) => (
-                    <MenuItem selected={i === 0} value={c.id} key={c.id}>
+                    <MenuItem selected={i === 0} value={c.curso?.id} key={i}>
                       {c.curso?.nombre} {c.division?.division}
                     </MenuItem>
                   ))}
@@ -194,7 +206,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 1 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
@@ -204,7 +220,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 2 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
@@ -214,7 +234,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 3 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
@@ -224,7 +248,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 4 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
@@ -234,7 +262,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 5 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
@@ -244,7 +276,11 @@ export default function Notas() {
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 6 && (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                        <MenuItem
+                          selected={i === 0}
+                          key={i}
+                          value={m.materia?.id}
+                        >
                           {m.materia?.nombre}
                         </MenuItem>
                       )
