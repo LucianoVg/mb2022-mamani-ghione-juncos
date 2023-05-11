@@ -58,7 +58,7 @@ const MasInfo = () => {
                     <div>
                         <Grid container spacing={2}>
                             <Grid item xs={10}>
-                                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                                <Typography variant='h4' sx={{ marginBottom: 2 }}>Detalle de Asistencia Docente</Typography>
                             </Grid>
                             <Grid item xs={2}>
                                 <Link href={'/gestion/asistencias/asistencia_docente'}>

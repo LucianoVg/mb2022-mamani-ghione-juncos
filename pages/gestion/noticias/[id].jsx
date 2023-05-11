@@ -147,7 +147,7 @@ export default function DetallesNoticia() {
   return (
     <Layout>
       <Typography variant="h4" sx={{ textAlign: "center", marginBottom: 2 }}>
-        Edición de Noticia
+        Editar Noticia
       </Typography>
 
       <Container>

@@ -159,7 +159,7 @@ export default function DetalleSancion() {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Typography variant="h4">Detalle Sanción</Typography>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>Detalle Sanción</Typography>
         {!loadSancion && (
           <Box style={{ marginTop: "30px" }}>
             <Box direction="row">

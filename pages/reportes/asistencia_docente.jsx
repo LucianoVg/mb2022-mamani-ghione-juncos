@@ -135,7 +135,7 @@ export default function AsistenciasDocentes() {
   return (
     <Layout>
            <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Reporte Asistencias Docentes</Typography>
       <h3>Buscar Docente</h3>

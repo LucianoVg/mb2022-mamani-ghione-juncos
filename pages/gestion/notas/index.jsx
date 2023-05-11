@@ -418,7 +418,7 @@ export default function Notas() {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Typography variant="h4">Notas</Typography>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>Notas</Typography>
         <Box sx={{ marginTop: "20px" }}>
           <Box>
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>

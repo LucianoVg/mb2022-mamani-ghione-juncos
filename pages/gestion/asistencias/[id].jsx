@@ -69,7 +69,7 @@ const MasInfo = () => {
 
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='h4' sx={{ marginBottom: 2 }}>Mas Información</Typography>
+                                <Typography variant='h4' sx={{ marginBottom: 2 }}>Detalle de Asistencia</Typography>
                             </Grid>
 
                         </Grid>

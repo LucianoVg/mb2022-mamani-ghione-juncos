@@ -229,7 +229,7 @@ export default function NuevoUsuario() {
     }
 
     console.log(idMaterias)
-   
+
     return (
         <Layout>
 
@@ -251,7 +251,10 @@ export default function NuevoUsuario() {
                 >
 
                     <Box>
-                        <h2>Nuevo Usuario</h2>
+                        <Typography variant="h4"
+                            sx={{ marginBottom: "20px" }}
+                        >
+                            Nuevo Usuario</Typography>
                     </Box>
                     <Box direction='row' >
                         <TextField
@@ -429,9 +432,9 @@ export default function NuevoUsuario() {
                                         sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
                                         MenuProps={{ disableScrollLock: true }}
                                     >
-  {
+                                        {
                                             roles && roles.map((r, i) => (
-                                                r?.tipo != 'Administrador' &&  r?.tipo != 'Director' &&
+                                                r?.tipo != 'Administrador' && r?.tipo != 'Director' &&
                                                 (
                                                     <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
                                                 )
@@ -451,18 +454,18 @@ export default function NuevoUsuario() {
                                         name="rol"
                                         label="Rol"
                                         required
-                                     
+
                                         onChange={handleRol}
                                         value={rol}
                                         sx={{ width: '170px', marginRight: '20px', marginBottom: '20px' }}
                                         MenuProps={{ disableScrollLock: true }}
                                     >
 
-{
+                                        {
                                             roles && roles.map((r, i) => (
                                                 r?.tipo === 'Estudiante' &&
                                                 (
-                                                    <MenuItem   key={i} value={r.id}>{r.tipo}</MenuItem>
+                                                    <MenuItem key={i} value={r.id}>{r.tipo}</MenuItem>
                                                 )
 
                                             ))

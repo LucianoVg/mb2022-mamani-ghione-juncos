@@ -45,6 +45,7 @@ export default function Institucional() {
 
   return (
     <Layout>
+       <Typography variant="h4" sx={{ marginBottom: "20px" }}> Ficha Institucional</Typography>
       {!cargando && !fichaInstitucional && (
         <div style={{ marginBottom: "20px" }}>
           <Typography sx={{ mb: 3 }} component={"h3"} variant="h4">

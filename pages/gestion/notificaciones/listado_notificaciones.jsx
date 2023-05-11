@@ -96,6 +96,10 @@ export default function ListadoNotificaciones() {
 
     return (
         <Layout>
+             <Typography variant="h4" 
+            sx={{marginBottom:"20px"}}
+            >
+                Notificaciones recibidas</Typography>
             <div xs={12}>
                 {
                     !cargando && (

@@ -107,7 +107,7 @@ export default function NuevaSancion() {
     return (
         <Layout>
             <div maxWidth={'md'}>
-                <Typography variant="h4">Nueva Sancion</Typography>
+                <Typography variant="h4" sx={{ marginBottom: "20px" }}>Nueva Sancion</Typography>
                 <Box component={'form'} onSubmit={generarSancion}>
 
                     <Box>

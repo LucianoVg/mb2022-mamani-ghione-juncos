@@ -144,7 +144,7 @@ export default function Asistencias() {
   return (
     <Layout>
        <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Reporte Asistencias</Typography>
       {usuario?.rol != "Estudiante" && usuario?.rol != "Tutor" && (
