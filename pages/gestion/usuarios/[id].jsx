@@ -400,7 +400,7 @@ export default function Detalles() {
                 sx={{ marginBottom: "30px" }}
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
-                  <strong>Telefono</strong> <br />
+                  <strong>Teléfono</strong> <br />
                   {usuario?.telefono}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "200px" }}>
@@ -615,6 +615,74 @@ export default function Detalles() {
           )}
 
           <Divider sx={{ marginTop: "20px" }}></Divider>
+
+{
+  usuario?.rol?.tipo === "Tutor" && (
+    <>
+    <Typography
+      variant="h5"
+      sx={{ marginBottom: "20px", marginTop: "20px" }}
+    >
+      <strong>Datos del Estudiante</strong>
+    </Typography>
+
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={{ xs: 2, sm: 2, md: 23 }}
+    >
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Nombre</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.nombre || "N/A"}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Apellido</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.apellido || "N/A"}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Legajo</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.legajo || "N/A"}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Curso</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.curso?.nombre}° Año &quot;{usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.division?.division || "N/A"}&quot; 
+      </Typography>
+    </Stack>
+
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={{ xs: 2, sm: 2, md: 23 }}
+    >
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Correo</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{ width: "200px", marginBottom: "20px" }}
+      >
+        <strong>Teléfono</strong> <br />
+        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.telefono || "N/A"}
+      </Typography>
+    </Stack>
+  </>
+  )
+}
+
           {usuario?.rol?.tipo === "Docente" && !editMode && (
             <Box>
               <Typography variant="h5" sx={{ marginBottom: "20px" }}>
@@ -829,14 +897,14 @@ export default function Detalles() {
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
-                  <strong>Mail</strong> <br />
+                  <strong>Correo</strong> <br />
                   {usuario?.alumnoxcursoxdivision1[0]?.tutor?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
-                  <strong>Telefono</strong> <br />
+                  <strong>Teléfono</strong> <br />
                   {usuario?.alumnoxcursoxdivision1[0]?.tutor?.telefono || "N/A"}
                 </Typography>
               </Stack>

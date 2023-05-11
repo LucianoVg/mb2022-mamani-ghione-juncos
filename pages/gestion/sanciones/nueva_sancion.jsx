@@ -131,13 +131,13 @@ export default function NuevaSancion() {
                                         isOptionEqualToValue={(option, value) =>
                                             option?.apellido === value?.apellido
                                         }
-                                        noOptionsText={"No existe un alumno con ese nombre"}
+                                        noOptionsText={"No existe un estudiante con ese nombre"}
                                         renderOption={(props, alumnos) => (
                                             <Box component="li" {...props} key={alumnos?.id}>
                                                 {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
                                             </Box>
                                         )}
-                                        renderInput={(params) => <TextField {...params} label="Alumno" />}
+                                        renderInput={(params) => <TextField {...params} label="Estudiante" />}
                                     />
                                 </FormControl>
                                 // <FormControl>
@@ -146,7 +146,7 @@ export default function NuevaSancion() {
                                 //         onChange={handleSancion}
                                 //         name="idAlumno"
                                 //         id="inputAlumno"
-                                //         label="Alumno"
+                                //         label="Estudiante"
                                 //         sx={{ width: '200px', marginRight: '20px', marginBottom: '20px' }}
                                 //     >
                                 //         {
