@@ -137,10 +137,10 @@ export default function Notas() {
   const handleCursoXdivision = async (e) => {
     if (e.target.value) {
       const cursoxdivision = cursos?.find(c => c.id === e.target.value);
-          setIdCursoXdivision(Number(cursoxdivision?.id));
+      setIdCursoXdivision(Number(cursoxdivision?.id));
       await traerMaterias(Number(cursoxdivision?.curso?.id));
       await listarAlumnos(Number(cursoxdivision?.id));
-      
+
       // console.log("cursoxdivision", cursoxdivision);
       // console.log("division", cursoxdivision?.curso?.id);
       // console.log("idmateria", cursoxdivision?.id)
@@ -213,81 +213,10 @@ export default function Notas() {
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
               >
-                <ListSubheader>Primero</ListSubheader>
                 {materias &&
                   materias?.map(
                     (m, i) =>
                       m?.cursoxdivision?.idcurso === 1 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
-                  )}
-                <ListSubheader>Segundo</ListSubheader>
-                {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 2 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
-                  )}
-                <ListSubheader>Tercero</ListSubheader>
-                {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 3 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
-                  )}
-                <ListSubheader>Cuarto</ListSubheader>
-                {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 4 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
-                  )}
-                <ListSubheader>Quinto</ListSubheader>
-                {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 5 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
-                  )}
-                <ListSubheader>Sexto</ListSubheader>
-                {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 6 && (
                         <MenuItem
                           selected={i === 0}
                           key={i}
