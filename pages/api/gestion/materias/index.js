@@ -21,40 +21,57 @@ export async function ListarMaterias(idCurso) {
   try {
     const materias = idCurso
       ? await db.materiaxcursoxdivision.findMany({
-          include: {
-            materia: true,
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
+        include: {
+          materia: true,
+          cursoxdivision: {
+            include: {
+              curso: true,
+              division: true,
             },
           },
-          where: {
-            cursoxdivision: {
-              curso: {
-                id: Number(idCurso),
-              },
+        },
+        where: {
+          cursoxdivision: {
+            curso: {
+              id: Number(idCurso),
             },
           },
-          orderBy: {
+        },
+        orderBy: [
+          {
             idmateria: "asc",
+
           },
-        })
+          {
+            cursoxdivision: {
+              iddivision: 'asc'
+            }
+          }
+        ]
+
+      })
       : await db.materiaxcursoxdivision.findMany({
-          include: {
-            materia: true,
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
+        include: {
+          materia: true,
+          cursoxdivision: {
+            include: {
+              curso: true,
+              division: true,
             },
           },
-          orderBy: {
+        },
+        orderBy: [
+          {
             idmateria: "asc",
+
           },
-        });
+          {
+            cursoxdivision: {
+              iddivision: 'asc'
+            }
+          }
+        ]
+      });
     return materias;
   } catch (error) {
     console.error(error);
