@@ -40,7 +40,7 @@ export default function Notas() {
   const router = useRouter();
   const [cargando1, setCargando1] = useState(false);
   const [cargando2, setCargando2] = useState(false);
-  const [idCurso, setIdCurso] = useState(1);
+  const [idCursoXdivision, setIdCursoXdivision] = useState(1);
   const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
@@ -101,8 +101,8 @@ export default function Notas() {
     }
     setCargando2(false);
   };
-  const listarAlumnos = async (idCurso) => {
-    let param = idCurso ? `?idCurso=${idCurso}` : "";
+  const listarAlumnos = async (idCursoXdivision) => {
+    let param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
@@ -134,11 +134,20 @@ export default function Notas() {
       setCursos(res.data);
     }
   };
-  const handleCurso = async (e) => {
-    setIdCurso(Number(e.target.value));
-    await traerMaterias(Number(e.target.value));
-    await listarAlumnos(Number(e.target.value));
-  };
+  const handleCursoXdivision = async (e) => {
+    if (e.target.value) {
+      const cursoxdivision = cursos?.find(c => c.id === e.target.value);
+          setIdCursoXdivision(Number(cursoxdivision?.id));
+      await traerMaterias(Number(cursoxdivision?.curso?.id));
+      await listarAlumnos(Number(cursoxdivision?.id));
+      
+      // console.log("cursoxdivision", cursoxdivision);
+      // console.log("division", cursoxdivision?.curso?.id);
+      // console.log("idmateria", cursoxdivision?.id)
+    } else {
+      setIdMateria("");
+    }
+  }
   const handleMateria = (e) => {
     if (e.target.value) {
       setIdMateria(Number(e.target.value));
@@ -180,14 +189,14 @@ export default function Notas() {
                 id="demo-simple-select"
                 label="Curso"
                 name="idCurso"
-                value={idCurso}
-                onChange={handleCurso}
+                value={idCursoXdivision}
+                onChange={handleCursoXdivision}
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value={0}>Seleccione un curso</MenuItem>
                 {cursos &&
                   cursos.map((c, i) => (
-                    <MenuItem selected={i === 0} value={c.curso?.id} key={i}>
+                    <MenuItem selected={i === 0} value={c.id} key={i}>
                       {c.curso?.nombre} {c.division?.division}
                     </MenuItem>
                   ))}

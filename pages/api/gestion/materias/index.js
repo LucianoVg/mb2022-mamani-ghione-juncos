@@ -21,52 +21,61 @@ export async function ListarMaterias(idCurso) {
   try {
     const materias = idCurso
       ? await db.materiaxcursoxdivision.findMany({
-          include: {
-            materia: true,
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
+        include: {
+          materia: true,
+          cursoxdivision: {
+            include: {
+              curso: true,
+              division: true,
             },
           },
-          where: {
+        },
+        where: {
+          cursoxdivision: {
+            idcurso: Number(idCurso),
+          },
+        },
+        orderBy: [
+          {
+            idmateria: "asc",
+          },
+          {
             cursoxdivision: {
-              idcurso: Number(idCurso),
+              iddivision: "asc",
             },
           },
-          orderBy: [
-            {
-              idmateria: "asc",
-            },
-            {
-              cursoxdivision: {
-                iddivision: "asc",
-              },
-            },
-          ],
-        })
+        ],
+      })
       : await db.materiaxcursoxdivision.findMany({
-          include: {
-            materia: true,
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
+        include: {
+          materia: true,
+          cursoxdivision: {
+            include: {
+              curso: true,
+              division: true,
             },
           },
-          orderBy: [
-            {
-              idmateria: "asc",
+        },
+        orderBy: [
+          {
+            idmateria: "asc",
+          },
+          {
+            cursoxdivision: {
+              division: {
+                id: "asc"
+              }
             },
-            {
-              cursoxdivision: {
-                iddivision: "asc",
-              },
+          },
+          {
+            cursoxdivision: {
+              curso: {
+                id: "asc"
+              }
             },
-          ],
-        });
+          },
+        ],
+      });
     return materias;
   } catch (error) {
     console.error(error);

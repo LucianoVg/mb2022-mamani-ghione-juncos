@@ -10,8 +10,8 @@ export default async function handler(req, res) {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     if (req.method === "GET") {
-      const { idCurso } = req.query;
-      const alumnos = await traerAlumnos(idCurso);
+      const { idCursoXdivision } = req.query;
+      const alumnos = await traerAlumnos(idCursoXdivision);
       return res.status(200).json(alumnos);
     }
   } catch (error) {
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 }
 
-export async function traerAlumnos(idCurso) {
+export async function traerAlumnos(idCursoXdivision) {
   try {
     let AND = [
       {
@@ -39,9 +39,9 @@ export async function traerAlumnos(idCurso) {
         usuario: true,
       },
     };
-    if (idCurso) {
+    if (idCursoXdivision) {
       AND.push({
-        idcursoxdivision: Number(idCurso),
+        idcursoxdivision: Number(idCursoXdivision),
       });
     }
     options = {

@@ -56,6 +56,7 @@ export default function Notas() {
   const [trimestres, setTrimestres] = useState([]);
   const [cursos, setCursos] = useState([]);
   const [idCurso, setIdCurso] = useState("");
+ 
 
   let queryParams = [];
 
@@ -105,9 +106,16 @@ export default function Notas() {
     traerNotas(Number(value));
   };
 
-  const handleMateria = (e) => {
+  const handleMateria = async (e) => {
     if (e.target.value) {
-      setIdMateria(Number(e.target.value));
+      const materiaxdivision = materias?.find(m => m.id === e.target.value);
+      setIdMateria(Number(materiaxdivision?.idmateria));
+      setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
+      await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
+  
+      // console.log("materiaxdivision", materiaxdivision);
+      // console.log("division", idDivision);
+      // console.log("idmateria", idMateria)
     } else {
       setIdMateria("");
     }
@@ -376,12 +384,13 @@ export default function Notas() {
     console.log(columnName);
   };
 
-  const traerAlumnos = async () => {
+  const traerAlumnos = async (idCursoXdivision) => {
+    let param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
-    console.log(res.data);
-    if (res.data) {
+    if (res.status === 200) {
+      console.log(res.data);
       setAlumnos(res.data);
     }
   };
@@ -455,7 +464,7 @@ export default function Notas() {
                     `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
                   }
                   isOptionEqualToValue={(option, value) => {
-                    return option?.materia?.id === value?.materia?.id;
+                    return option?.id === value?.id;
                   }}
                   noOptionsText={"No existe materia con ese nombre"}
                   renderOption={(props, materia) => (
@@ -463,7 +472,7 @@ export default function Notas() {
                       component="li"
                       {...props}
                       key={materia?.id}
-                      value={materia?.idmateria}
+                      value={materia?.id}
                     >
                       {materia?.materia?.nombre}
                       &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
@@ -626,10 +635,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                    notas.nota2 === 0 &&
-                    notas.nota3 === 0 &&
-                    notas.nota4 === 0 &&
-                    notas.nota5 === 0 ? (
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
