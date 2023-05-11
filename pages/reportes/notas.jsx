@@ -101,9 +101,10 @@ export default function Notas() {
     }
     setCargando2(false);
   };
-  const listarAlumnos = async () => {
+  const listarAlumnos = async (idCurso) => {
+    let param = idCurso ? `?idCurso=${idCurso}` : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -136,6 +137,7 @@ export default function Notas() {
   const handleCurso = async (e) => {
     setIdCurso(Number(e.target.value));
     await traerMaterias(Number(e.target.value));
+    await listarAlumnos(Number(e.target.value));
   };
   const handleMateria = (e) => {
     if (e.target.value) {

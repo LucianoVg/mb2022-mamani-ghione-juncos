@@ -24,10 +24,10 @@ export async function traerAlumnos(idCurso) {
     let AND = [
       {
         usuario: {
-          activo: true
+          activo: true,
         },
-      }
-    ]
+      },
+    ];
     let options = {
       include: {
         cursoxdivision: {
@@ -38,26 +38,18 @@ export async function traerAlumnos(idCurso) {
         },
         usuario: true,
       },
-      where: {
-        AND: AND
-      }
     };
     if (idCurso) {
       AND.push({
         idcursoxdivision: Number(idCurso),
-      },
-      );
+      });
     }
-    // if (idCurso) {
-    //   options = {
-    //     ...options,
-    //     where: {
-
-    //       idcursoxdivision: Number(idCurso),
-
-    //     },
-    //   };
-    // }
+    options = {
+      ...options,
+      where: {
+        AND: AND,
+      },
+    };
     const alumnos = await db.alumnoxcursoxdivision.findMany(options);
     return alumnos;
   } catch (error) {
