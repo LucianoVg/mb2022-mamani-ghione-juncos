@@ -117,6 +117,7 @@ export async function registrarUsuario(
           direccion: direccion,
           idrol: Number(idRol),
           sexo: sexo,
+          activo: true,
           password: contrasenia,
           alumnoxcursoxdivision: {
             create: {
@@ -173,6 +174,7 @@ export async function registrarUsuario(
           direccion: direccion,
           idrol: Number(idRol),
           sexo: sexo,
+          activo: true,
           password: contrasenia,
         },
       });
@@ -222,6 +224,7 @@ export async function registrarUsuario(
           direccion: direccion,
           idrol: Number(idRol),
           sexo: sexo,
+          activo: true,
           password: contrasenia,
         },
       });

@@ -742,7 +742,7 @@ export default function Detalles() {
                         <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
                       </ListItemIcon>
                       <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                        <strong >{`${pxc.curso?.nombre}° Año`}</strong>
+                        <strong >{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
                       </ListItemText>
                     </ListItem>
                   ))}
