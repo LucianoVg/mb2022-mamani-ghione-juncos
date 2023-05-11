@@ -2,6 +2,7 @@ import Scheduler, { Editing } from 'devextreme-react/scheduler'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from './context/authUserProvider';
+import 'dayjs/locale/es-mx';
 
 export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     const onFormOpening = (e) => {
@@ -101,13 +102,15 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     }
 
     return (
-        <div id="calendar">
+        <div id="calendar"   >
             <Scheduler
+                
                 firstDayOfWeek={1}
                 locale={'es-AR'}
                 dataSource={data}
                 defaultCurrentDate={new Date()}
-                views={['month']}
+                currentView="week"
+                views={['week']}
                 onAppointmentClick={(e) => {
                     console.log(e.appointmentData)
                     setIdCurso(e.appointmentData.idCurso)
