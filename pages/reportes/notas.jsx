@@ -101,7 +101,7 @@ export default function Notas() {
     }
     setCargando2(false);
   };
-  const listarAlumnos = async (idCursoXdivision) => {
+  const listarAlumnos = async (idCursoXdivision = 1) => {
     let param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
@@ -111,7 +111,7 @@ export default function Notas() {
       setAlumnos(res.data);
     }
   };
-  const traerMaterias = async (idCurso) => {
+  const traerMaterias = async (idCurso = 1) => {
     let param = idCurso ? `?idCurso=${idCurso}` : "";
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
@@ -214,17 +214,16 @@ export default function Notas() {
                 MenuProps={{ disableScrollLock: true }}
               >
                 {materias &&
-                  materias?.map(
-                    (m, i) =>
-                      m?.cursoxdivision?.idcurso === 1 && (
-                        <MenuItem
-                          selected={i === 0}
-                          key={i}
-                          value={m.materia?.id}
-                        >
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      )
+                  materias?.map((m, i) =>
+
+                    <MenuItem
+                      selected={i === 0}
+                      key={i}
+                      value={m.materia?.id}
+                    >
+                      {m.materia?.nombre}
+                    </MenuItem>
+
                   )}
               </Select>
             </FormControl>
