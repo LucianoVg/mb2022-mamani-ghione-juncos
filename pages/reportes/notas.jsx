@@ -242,14 +242,14 @@ export default function Notas() {
                 isOptionEqualToValue={(option, value) =>
                   option?.id === value?.id
                 }
-                noOptionsText={"No existe un alumno con ese nombre"}
+                noOptionsText={"No existe un estudiante con ese nombre"}
                 renderOption={(props, alumno) => (
                   <Box component="li" {...props} key={alumno?.id}>
                     {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
                   </Box>
                 )}
                 renderInput={(params) => (
-                  <TextField {...params} label="Alumno" />
+                  <TextField {...params} label="Estudiante" />
                 )}
               />
             </FormControl>
