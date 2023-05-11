@@ -42,7 +42,7 @@ export default function NuevoUsuario() {
     })
     const [cursos, setCursos] = useState()
     const [idCursos, setIdCursos] = useState([])
-    const [materias, setMaterias] = useState([])
+    const [materiasXcurso, setMateriasXcurso] = useState([])
     const [idMaterias, setIdMaterias] = useState([])
     const [tutor, setTutor] = useState({
         id: 0, nombre: '', apellido: '', legajo: '',
@@ -104,7 +104,7 @@ export default function NuevoUsuario() {
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
         if (res.status === 200) {
-            setMaterias(res.data?.map(d => ({ id: d.id, nombre: d.nombre })))
+            setMateriasXcurso(res.data)
         }
     }
 
@@ -157,7 +157,7 @@ export default function NuevoUsuario() {
         setBuscando(false)
 
         if (res.data.length) {
-            setMensaje('Ya existen usuarios con esa informacion (correo/legajo) 😡')
+            setMensaje('Ya existe un usuario con esa informacion (correo o legajo) 😡')
             return true
         }
         return false
@@ -188,7 +188,7 @@ export default function NuevoUsuario() {
                 esAlumno: esAlumno,
                 esDocente: esDocente,
                 idUsuario: usuarioLogeado.id,
-                idMaterias: idMaterias
+                idMateriasXcursoXdivision: idMaterias
             }
             console.log(data);
             setGuardando(true)
@@ -228,6 +228,7 @@ export default function NuevoUsuario() {
         }
     }
 
+    console.log(idMaterias)
    
     return (
         <Layout>
@@ -564,13 +565,13 @@ export default function NuevoUsuario() {
                                         MenuProps={MenuProps}
 
                                     >
-                                        {materias.map((materia) => (
+                                        {materiasXcurso.map((m) => (
                                             <MenuItem
-                                                key={materia.id}
-                                                value={materia.id}
-                                                style={getStyles(materia, materias)}
+                                                key={m.id}
+                                                value={m.id}
+                                                style={getStyles(m, materiasXcurso)}
                                             >
-                                                {materia.nombre}
+                                                {m.materia?.nombre} - {m.cursoxdivision?.curso?.nombre} {m.cursoxdivision?.division?.division}
                                             </MenuItem>
                                         ))}
                                     </Select>
