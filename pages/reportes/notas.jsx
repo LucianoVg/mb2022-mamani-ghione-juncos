@@ -81,7 +81,6 @@ export default function Notas() {
   };
   const notasPorTrimestre = async () => {
     setCargando1(true);
-    console.log(idMateria, idAlumno);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${idAlumno}/${idMateria}`
     );
@@ -117,6 +116,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
     );
     if (res.status === 200) {
+      console.log("Materias: ", res.data);
       let tempMaterias = [];
       res.data.forEach((m) => {
         if (!tempMaterias.find((mat) => mat.materia?.id === m.materia?.id))
@@ -147,6 +147,7 @@ export default function Notas() {
 
   const handleAlumno = (e, newValue) => {
     if (newValue) {
+      console.log(newValue);
       setIdAlumno(newValue.id);
     } else {
       setIdAlumno("");
@@ -300,7 +301,7 @@ export default function Notas() {
                 options={alumnos}
                 sx={{ width: "250px" }}
                 isOptionEqualToValue={(option, value) =>
-                  option?.usuario?.apellido === value?.usuario?.apellido
+                  option?.id === value?.id
                 }
                 noOptionsText={"No existe un alumno con ese nombre"}
                 renderOption={(props, alumno) => (
