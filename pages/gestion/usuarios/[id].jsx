@@ -32,6 +32,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { toArray } from "lodash";
 
 export default function Detalles() {
   const ITEM_HEIGHT = 48;
@@ -55,7 +56,7 @@ export default function Detalles() {
     };
   }
 
-  const [idCurso, setIdCurso] = useState([]);
+
   const [dataUsuario, setDataUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -68,14 +69,31 @@ export default function Detalles() {
     fechanacimiento: "",
   });
   const [cursos, setCursos] = useState([]);
-  const [idCursos, setIdCursos] = useState([]);
-  const [materias, setMaterias] = useState([]);
+  const [idCurso, setIdCurso] = useState([]);
+
+  const [materiasXcurso, setMateriasXcurso] = useState([]);
 
   const { loading, authUser } = useAuth();
   const router = useRouter();
   const [usuario, setUsuario] = useState();
 
+
+  let idCursales = usuario?.preceptorxcurso?.map(c => {
+    return c?.curso?.id
+  })
+  const [idCursos, setIdCursos] = useState([]);
+
+  // console.log('cursos', idCursales)
+  // console.log('idcursos', idCurso)
+  
+  let idMateriales = usuario?.docentexmateria?.map(m => {
+    return m?.materiaxcursoxdivision?.id
+  })
+
   const [idMaterias, setIdMaterias] = useState([]);
+
+  // console.log('materiales', idMateriales)
+  // console.log('idmaterias',idMaterias)
 
   const [selectedEnf, setSelectedEnf] = useState([]);
   const [fecha, setFecha] = useState(null);
@@ -122,7 +140,7 @@ export default function Detalles() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`
     );
     if (res.status === 200) {
-      setMaterias(res.data?.map((d) => ({ id: d.id, nombre: d.nombre })));
+      setMateriasXcurso(res.data);
     }
   };
 
@@ -227,14 +245,14 @@ export default function Detalles() {
     setFechanacimiento(value);
   };
 
-//   const materiasUnicas = usuario?.docentexmateria?.materiaxcursoxdivision?.materia?.reduce((m, item) => {
-//     const existingItem = m.find(({id}) => id === item.id);
-//     if(existingItem)
-//         existingItem.id = existingItem.qty + item.qty;
-//     else
-//         prev.push(item);
-//    return prev;
-//  }, [])
+  //   const materiasUnicas = usuario?.docentexmateria?.materiaxcursoxdivision?.materia?.reduce((m, item) => {
+  //     const existingItem = m.find(({id}) => id === item.id);
+  //     if(existingItem)
+  //         existingItem.id = existingItem.qty + item.qty;
+  //     else
+  //         prev.push(item);
+  //    return prev;
+  //  }, [])
   return (
     <Layout>
       {respuesta.status !== 0 && (
@@ -272,6 +290,8 @@ export default function Detalles() {
             style={{ marginLeft: "40px" }}
             variant="contained"
             onClick={() => {
+              setIdCursos(idCursales)
+              setIdMaterias(idMateriales);
               setEditMode(!editMode);
               setNombre(usuario?.nombre);
               setApellido(usuario?.apellido);
@@ -676,9 +696,6 @@ export default function Detalles() {
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    value={idMaterias}
-                    onChange={handleMaterias}
-                    input={<OutlinedInput label="Materias" />}
                     // renderValue={(usuario) => {
                     //   return usuario.docentexmateria?.map((s, i) => (
                     //     <MenuItem key={s.materia?.i} value={s.materia?.nombre}>
@@ -688,15 +705,19 @@ export default function Detalles() {
                     //     </MenuItem>
                     //   ));
                     // }}
+                    value={idMaterias}
+                    onChange={handleMaterias}
+                    input={<OutlinedInput label="Materias" />}
                     MenuProps={MenuProps}
+
                   >
-                    {materias.map((materia) => (
+                    {materiasXcurso.map((m) => (
                       <MenuItem
-                        key={materia.id}
-                        value={materia.id}
-                        style={getStyles(materia, materias)}
+                        key={m.id}
+                        value={m.id}
+                        style={getStyles(m, materiasXcurso)}
                       >
-                        {materia.nombre}
+                        {m.materia?.nombre} - {m.cursoxdivision?.curso?.nombre} {m.cursoxdivision?.division?.division}
                       </MenuItem>
                     ))}
                   </Select>
@@ -710,7 +731,7 @@ export default function Detalles() {
                 <strong>Datos Académicos</strong>
               </Typography>
               <Typography variant="h6" sx={{ width: "250px" }}>
-                <strong>Curso/s</strong> <br />
+                <strong>Curso/s a cargo</strong> <br />
                 <List>
                   {usuario?.preceptorxcurso?.map((pxc) => (
                     <ListItem key={pxc.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
