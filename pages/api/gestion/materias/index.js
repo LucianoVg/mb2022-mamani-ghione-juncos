@@ -38,7 +38,7 @@ export async function ListarMaterias(idCurso) {
             },
           },
           orderBy: {
-            id: "asc",
+            idmateria: "asc",
           },
         })
       : await db.materiaxcursoxdivision.findMany({
@@ -52,7 +52,7 @@ export async function ListarMaterias(idCurso) {
             },
           },
           orderBy: {
-            id: "asc",
+            idmateria: "asc",
           },
         });
     return materias;

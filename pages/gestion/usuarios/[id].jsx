@@ -227,7 +227,14 @@ export default function Detalles() {
     setFechanacimiento(value);
   };
 
-
+//   const materiasUnicas = usuario?.docentexmateria?.materiaxcursoxdivision?.materia?.reduce((m, item) => {
+//     const existingItem = m.find(({id}) => id === item.id);
+//     if(existingItem)
+//         existingItem.id = existingItem.qty + item.qty;
+//     else
+//         prev.push(item);
+//    return prev;
+//  }, [])
   return (
     <Layout>
       {respuesta.status !== 0 && (
@@ -613,7 +620,7 @@ export default function Detalles() {
                             <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
                           </ListItemIcon>
                           <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                            <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong>
+                            <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
                           </ListItemText>
                         </ListItem>
                       ))}
@@ -621,7 +628,7 @@ export default function Detalles() {
                     </List>
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Typography variant="h6" >
                     <strong>Curso/s</strong>
                   </Typography>
@@ -649,7 +656,7 @@ export default function Detalles() {
 
                     </List>
                   </Typography>
-                </Box>
+                </Box> */}
               </Stack>
             </Box>
           )}
