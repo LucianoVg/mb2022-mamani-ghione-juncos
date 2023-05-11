@@ -1,5 +1,6 @@
 import NextCors from "nextjs-cors";
 import { db } from "../../../../prisma";
+import { truncateSync } from "fs";
 
 export default async function handler(req, res) {
     try {
@@ -24,7 +25,17 @@ export async function traerDocentes() {
             include: {
                 docentexmateria: {
                     include: {
-                        materia: true
+                        materiaxcursoxdivision: {
+                            include:{
+                                materia: true,
+                                cursoxdivision: {
+                                    include: {
+                                        curso: true,
+                                        division: truncateSync
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
