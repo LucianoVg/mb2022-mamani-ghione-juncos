@@ -146,7 +146,7 @@ export default function Sancion() {
   return (
     <Layout>
            <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Reporte Sanciones</Typography>
       {usuario?.rol !== "Estudiante" && usuario?.rol !== "Tutor" && (

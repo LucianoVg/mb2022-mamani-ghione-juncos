@@ -101,7 +101,7 @@ const AgregarNoticias = () => {
     <Layout>
       <Container maxWidth={"xl"}>
       <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Nueva Noticia</Typography>
         <Box component={"form"} onSubmit={onSubmitData} sx={{ mt: 1 }}>

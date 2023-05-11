@@ -54,7 +54,7 @@ const Home = () => {
     <Layout>
       <Container maxWidth={'xl'} sx={{ marginTop: "90px" }} >
       <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Noticias y Novedades</Typography>
 

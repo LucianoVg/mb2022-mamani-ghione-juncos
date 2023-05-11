@@ -45,7 +45,7 @@ export default function DetallesNoticia() {
                     Regresar
                 </Button>
                 <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Detalles de Noticia</Typography>
                 {

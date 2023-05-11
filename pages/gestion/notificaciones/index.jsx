@@ -162,7 +162,7 @@ const Notificaciones = () => {
         <Grid container>
           <Grid item xs={7}>
           <Typography variant="h4" 
-            sx={{marginBottom:"30px"}}
+            sx={{marginBottom:"20px"}}
             >
                 Envio de Notificaciones</Typography>
             <Box direction="column">
