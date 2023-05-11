@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import 'dayjs/locale/es-mx';
 import {
   Checkbox,
   List,
@@ -85,7 +86,7 @@ export default function Detalles() {
 
   // console.log('cursos', idCursales)
   // console.log('idcursos', idCurso)
-  
+
   let idMateriales = usuario?.docentexmateria?.map(m => {
     return m?.materiaxcursoxdivision?.id
   })
@@ -595,7 +596,9 @@ export default function Detalles() {
                   <Typography variant="h6" sx={{ width: "200px" }}>
                     <strong>Fecha de Nacimiento</strong> <br />
                   </Typography>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider
+                    adapterLocale="es-mx"
+                    dateAdapter={AdapterDayjs}>
                     <MobileDatePicker
                       InputProps={{ sx: { height: "40px" } }}
                       // label="Fecha"

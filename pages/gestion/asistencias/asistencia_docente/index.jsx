@@ -14,6 +14,7 @@ import { Add, Search } from "@mui/icons-material";
 import { useAuth } from "../../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import Loading from '../../../../components/loading';
+import 'dayjs/locale/es-mx';
 
 export default function Asistencias() {
     const [pagina, setPagina] = useState(1)
@@ -314,7 +315,9 @@ export default function Asistencias() {
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <Box>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <LocalizationProvider
+                                adapterLocale="es-mx"
+                                dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
                                     label="Fecha"
                                     value={fecha}
@@ -520,7 +523,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                   
+
                                                     <TableCell className="col-md-1 ">
                                                         {
                                                             inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -539,7 +542,7 @@ export default function Asistencias() {
                                                                 )
                                                         }
                                                     </TableCell>
-                                                   
+
 
                                                     <TableCell className="col-md-2">
                                                         {
@@ -656,7 +659,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                                                       
+
                                                         <TableCell className="col-md-1 ">
                                                             {
                                                                 inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -675,7 +678,7 @@ export default function Asistencias() {
                                                                     )
                                                             }
                                                         </TableCell>
-                       
+
                                                         <TableCell className="col-md-2">
                                                             {
 
@@ -796,7 +799,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                                     
+
                                                             <TableCell className="col-md-1 ">
                                                                 {
                                                                     inEditMode.status && inEditMode.rowKey === a?.id ? (
@@ -815,7 +818,7 @@ export default function Asistencias() {
                                                                         )
                                                                 }
                                                             </TableCell>
-                                        
+
                                                             <TableCell className="col-md-2">
                                                                 {
 

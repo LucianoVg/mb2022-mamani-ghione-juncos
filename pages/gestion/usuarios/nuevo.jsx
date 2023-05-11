@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
+import 'dayjs/locale/es-mx';
 
 export default function NuevoUsuario() {
     const ITEM_HEIGHT = 48;
@@ -338,7 +338,9 @@ export default function NuevoUsuario() {
                     <Box direction='row'>
 
                         <FormControl sx={{ marginRight: "20px", marginBottom: "20px" }}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <LocalizationProvider
+                                adapterLocale="es-mx"
+                                dateAdapter={AdapterDayjs}>
                                 <MobileDatePicker
                                     label="Fecha de nacimiento *"
                                     name="fecha"
