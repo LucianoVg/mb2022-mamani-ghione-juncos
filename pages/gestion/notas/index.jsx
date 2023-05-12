@@ -56,7 +56,6 @@ export default function Notas() {
   const [trimestres, setTrimestres] = useState([]);
   const [cursos, setCursos] = useState([]);
   const [idCurso, setIdCurso] = useState("");
- 
 
   let queryParams = [];
 
@@ -108,11 +107,13 @@ export default function Notas() {
 
   const handleMateria = async (e) => {
     if (e.target.value) {
-      const materiaxdivision = materias?.find(m => m.id === e.target.value);
+      const materiaxdivision = materias?.find(
+        (m) => m.id === Number(e.target.value)
+      );
       setIdMateria(Number(materiaxdivision?.idmateria));
       setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
       await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
-  
+
       // console.log("materiaxdivision", materiaxdivision);
       // console.log("division", idDivision);
       // console.log("idmateria", idMateria)
@@ -635,10 +636,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                      notas.nota2 === 0 &&
-                      notas.nota3 === 0 &&
-                      notas.nota4 === 0 &&
-                      notas.nota5 === 0 ? (
+                    notas.nota2 === 0 &&
+                    notas.nota3 === 0 &&
+                    notas.nota4 === 0 &&
+                    notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}

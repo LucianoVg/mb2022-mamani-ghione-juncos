@@ -35,9 +35,10 @@ const MaterialEstudio = () => {
   const [idCurso, setIdCurso] = useState("");
   const [materias, setMaterias] = useState();
   const [cursos, setCursos] = useState();
-  const handleCurso = (e) => {
+  const handleCurso = async (e) => {
     setIdCurso(Number(e.target.value));
-    descargarMaterial(tabIndex + 1, Number(e.target.value));
+    await traerMaterias(Number(e.target.value));
+    await descargarMaterial(tabIndex + 1, Number(e.target.value));
   };
 
   const { loading, authUser } = useAuth();
@@ -56,12 +57,24 @@ const MaterialEstudio = () => {
     setIdMateria(e.target.value);
     descargarMaterial(tabIndex + 1, 0, e.target.value);
   };
-  const traerMaterias = async () => {
+  const traerMaterias = async (idCurso) => {
+    let param = idCurso ? `?idCurso=${idCurso}` : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
     );
     if (res.data) {
-      setMaterias(res.data);
+      let tempMaterias = [];
+      res.data.forEach((mxc) => {
+        if (!tempMaterias.find((mat) => mat?.id === mxc.materia?.id)) {
+          tempMaterias.push({
+            id: mxc.materia?.id,
+            idcurso: mxc.cursoxdivision?.idcurso,
+            nombre: mxc.materia?.nombre,
+          });
+        }
+      });
+      console.log("Materias: ", tempMaterias);
+      setMaterias(tempMaterias);
     }
   };
   const traerCursos = async () => {
@@ -120,6 +133,9 @@ const MaterialEstudio = () => {
           );
           if (res.status === 200) {
             setMensaje("Material subido correctamente");
+            setTimeout(() => {
+              setMensaje("");
+            }, 2000);
             await descargarMaterial(idTrimestre, idCurso, idMateria);
           } else {
             setMensaje("No se pudo subir el material");
@@ -150,6 +166,8 @@ const MaterialEstudio = () => {
       if (res.status === 200) {
         setMateriales(res.data);
       }
+      setSubiendo(false);
+      setSubir(false);
     } catch (error) {
       console.log(error);
       setMensaje(error);
@@ -157,6 +175,12 @@ const MaterialEstudio = () => {
         setMensaje("");
       }, 2000);
     }
+  };
+  const quitarFiltros = async () => {
+    setIdCurso("");
+    setIdMateria("");
+    setTabIndex(0);
+    await descargarMaterial(1);
   };
   const handleArchivos = (e) => {
     if (e.target.files.length) {
@@ -244,7 +268,7 @@ const MaterialEstudio = () => {
                     cursos?.map((c, i) => (
                       <MenuItem
                         key={i}
-                        value={c.id}
+                        value={c.idcurso}
                         sx={{ display: "inline-block" }}
                       >
                         {c.curso?.nombre} {c.division?.division}
@@ -253,7 +277,14 @@ const MaterialEstudio = () => {
                 </Select>
               </FormControl>
             </Box>
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "start",
+                justifyContent: "flex-start",
+              }}
+            >
               <FormControl>
                 <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                 <Select
@@ -328,6 +359,13 @@ const MaterialEstudio = () => {
                     )}
                 </Select>
               </FormControl>
+              <Button
+                sx={{ mx: 2, my: 1 }}
+                variant="outlined"
+                onClick={quitarFiltros}
+              >
+                Quitar Filtros
+              </Button>
             </Box>
           </>
         )}
@@ -347,9 +385,11 @@ const MaterialEstudio = () => {
                   descargarMaterial(newValue + 1);
                 }}
               >
-                {trimestres?.map((t) => (
-                  <Tab key={t.id} label={t.trimestre} />
-                ))}
+                {trimestres
+                  .sort((t1, t2) => t1.id - t2.id)
+                  ?.map((t) => (
+                    <Tab key={t.id} label={t.trimestre} />
+                  ))}
               </Tabs>
               {trimestres?.map((t, i) => (
                 <TabPanel key={t.id} value={tabIndex} index={i}>
