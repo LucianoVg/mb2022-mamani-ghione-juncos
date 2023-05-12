@@ -255,7 +255,7 @@ export default function MantenimientoUsuario() {
                   <TableCell align="center">Legajo</TableCell>
                   <TableCell align="center">Nombre</TableCell>
                   <TableCell align="center">Apellido</TableCell>
-                  <TableCell align="center">Correo</TableCell>
+                  <TableCell align="center">Mail</TableCell>
                   <TableCell align="center">Direccion</TableCell>
                   <TableCell align="center">Telefono</TableCell>
                   <TableCell align="center">Localidad</TableCell>

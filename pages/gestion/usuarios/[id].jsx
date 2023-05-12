@@ -378,7 +378,7 @@ export default function Detalles() {
                 sx={{ marginBottom: "30px" }}
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
-                  <strong>Correo</strong> <br />
+                  <strong>Mail</strong> <br />
                   {usuario?.correo}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "70px" }}>
@@ -510,7 +510,7 @@ export default function Detalles() {
               >
                 <FormControl>
                   <Typography variant="h6" sx={{ width: "200px" }}>
-                    <strong>Correo</strong> <br />
+                    <strong>Mail</strong> <br />
                   </Typography>
                   <TextField
                     name="correo"
@@ -668,7 +668,7 @@ export default function Detalles() {
         variant="h6"
         sx={{ width: "200px", marginBottom: "20px" }}
       >
-        <strong>Correo</strong> <br />
+        <strong>Mail</strong> <br />
         {usuario?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
       </Typography>
       <Typography
@@ -897,7 +897,7 @@ export default function Detalles() {
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
-                  <strong>Correo</strong> <br />
+                  <strong>Mail</strong> <br />
                   {usuario?.alumnoxcursoxdivision1[0]?.tutor?.correo || "N/A"}
                 </Typography>
                 <Typography

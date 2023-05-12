@@ -86,7 +86,7 @@ const Login = () => {
                     required
                     fullWidth
                     id="email"
-                    label="Correo Electronico"
+                    label="Mail"
                     name="correo"
                     onChange={handleCorreo}
                     autoComplete="email"

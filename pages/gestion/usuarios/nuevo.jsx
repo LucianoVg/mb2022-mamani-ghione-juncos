@@ -157,7 +157,7 @@ export default function NuevoUsuario() {
         setBuscando(false)
 
         if (res.data.length) {
-            setMensaje('Ya existe un usuario con esa informacion (correo o legajo) 😡')
+            setMensaje('Ya existe un usuario con esa informacion (Mail o Legajo) 😡')
             return true
         }
         return false
@@ -283,7 +283,7 @@ export default function NuevoUsuario() {
                             margin="normal"
                             name="correo"
                             onChange={handleForm}
-                            label="Correo"
+                            label="Mail"
                             type={'email'}
                             value={usuario.correo}
                             required
@@ -633,7 +633,7 @@ export default function NuevoUsuario() {
                                             margin="normal"
                                             name="correo"
                                             onChange={handleTutor}
-                                            label="Correo"
+                                            label="Mail"
                                             type={'email'}
                                             value={tutor.correo}
                                             required

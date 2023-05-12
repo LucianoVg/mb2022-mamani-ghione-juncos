@@ -31,6 +31,9 @@ export default function Detalles() {
   // const [alergias, setAlergias] = useState("");
   const [alumno, setAlumno] = useState();
   const [docente, setDocente] = useState();
+  const [tutor, setTutor] = useState();
+  const [preceptor, setPreceptor] = useState();
+
   const [respuesta, setRespuesta] = useState({ status: 0, mensaje: "" });
   const [guardando, setGuardando] = useState(false);
   const [cargando, setCargando] = useState(false);
@@ -45,6 +48,8 @@ export default function Detalles() {
     traerUsuario();
     traerAlumno();
     traerDocente();
+    traerPreceptor();
+    traerTutor();
     // traerEnfermedades()
   }, [loading, authUser]);
 
@@ -64,6 +69,26 @@ export default function Detalles() {
       );
       if (res.data) {
         setDocente(res.data);
+      }
+    }
+  };
+  const traerPreceptor = async () => {
+    if (usuario) {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${usuario?.id}`
+      );
+      if (res.data) {
+        setPreceptor(res.data);
+      }
+    }
+  };
+  const traerTutor = async () => {
+    if (usuario) {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${usuario?.id}`
+      );
+      if (res.data) {
+        setTutor(res.data);
       }
     }
   };
@@ -178,6 +203,14 @@ export default function Detalles() {
               <strong>Legajo</strong> <br />
               {usuario?.legajo}
             </Typography>
+            {
+              usuario?.rol?.tipo === "Estudiante" && (
+                <Typography variant="h6" sx={{ width: "200px" }}>
+                  <strong>Curso</strong> <br />
+                  {alumno?.cursoxdivision?.curso?.nombre}° Año &quot;{alumno?.cursoxdivision?.division?.division}&quot;
+                </Typography>
+              )
+            }
           </Stack>
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -267,7 +300,7 @@ export default function Detalles() {
                 sx={{ marginBottom: "30px" }}
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
-                  <strong>Correo</strong> <br />
+                  <strong>Mail</strong> <br />
                   {usuario?.correo}
                 </Typography>
                 <FormControl>
@@ -307,7 +340,7 @@ export default function Detalles() {
               sx={{ marginBottom: "30px" }}
             >
               <Typography variant="h6" sx={{ width: "200px" }}>
-                <strong>Correo</strong> <br />
+                <strong>Mail</strong> <br />
                 {usuario?.correo}
               </Typography>
               <FormControl>
@@ -329,7 +362,7 @@ export default function Detalles() {
             spacing={{ xs: 2, sm: 2 }}
           ></Stack>
           <Divider sx={{ marginTop: "20px" }}></Divider>
-          {docente && (
+          {usuario?.rol?.tipo === "Docente" && (
             <Typography variant="h6" sx={{ width: "250px" }}>
               <strong>Materia/s Impartidas</strong> <br />
               {docente?.materia?.map((m) => (
@@ -338,7 +371,7 @@ export default function Detalles() {
             </Typography>
           )}
 
-          {alumno && (
+          {usuario?.rol?.tipo === "Estudiante" && (
             <>
               <Divider sx={{ marginTop: "20px" }}></Divider>
               <Typography
