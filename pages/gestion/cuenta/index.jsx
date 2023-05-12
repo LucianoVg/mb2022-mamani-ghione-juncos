@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {
   Typography,
   Divider,
@@ -16,6 +17,10 @@ import {
   Button,
   Alert,
   Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
@@ -62,44 +67,50 @@ export default function Detalles() {
       typeof value === "string" ? value.split(",") : value
     );
   };
-  const traerDocente = async () => {
-    if (usuario) {
+
+  const traerDocente = async (idUsuario = usuario?.id) => {
+    if (usuario?.rol?.tipo === "Docente") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}`
       );
       if (res.data) {
         setDocente(res.data);
       }
+      console.log(res.data);
     }
   };
-  const traerPreceptor = async () => {
-    if (usuario) {
+
+
+  const traerPreceptor = async (idUsuario = usuario?.id) => {
+    if (usuario?.rol?.tipo === "Preceptor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${idUsuario}`
       );
       if (res.data) {
         setPreceptor(res.data);
-      }
+      };
+      console.log(res.data);
     }
   };
-  const traerTutor = async () => {
-    if (usuario) {
+  const traerTutor = async (idUsuario = usuario?.id) => {
+    if (usuario?.rol?.tipo === "Tutor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${idUsuario}`
       );
       if (res.data) {
         setTutor(res.data);
-      }
+      };
+      console.log(res.data);
     }
   };
-  const traerAlumno = async () => {
-    if (usuario) {
+  const traerAlumno = async (idUsuario = usuario?.id) => {
+    if (usuario?.rol?.tipo === "Estudiante") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${idUsuario}`
       );
       if (res.data) {
         setAlumno(res.data);
-      }
+      };
       console.log(res.data);
     }
   };
@@ -174,21 +185,23 @@ export default function Detalles() {
       </Grid>
       {!cargando && (
         <Container sx={{ marginLeft: "20px" }}>
-          {
-            usuario?.rol?.tipo === "Secretaria" ? (
-              <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-                <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
-              </Typography>
-            ) : (
-              <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-                <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
-              </Typography>
-            )
-          }
+          <Box >
+            {
+              usuario?.rol?.tipo === "Secretaria" ? (
+                <Typography variant="h5" sx={{ marginRight: "30px", marginBottom: "10px" }}>
+                  <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
+                </Typography>
+              ) : (
+                <Typography variant="h5" sx={{ marginBottom: "10px" }}>
+                  <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
+                </Typography>
+              )
+            }
+          </Box>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 23 }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", marginLeft: "20px" }}
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Nombre</strong> <br />
@@ -215,7 +228,7 @@ export default function Detalles() {
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 23 }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", marginLeft: "20px" }}
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Localidad</strong> <br />
@@ -233,7 +246,7 @@ export default function Detalles() {
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 23 }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", marginLeft: "20px" }}
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Edad</strong> <br />
@@ -288,7 +301,7 @@ export default function Detalles() {
               </Stack>
             </Box>
           )}
-          <Typography variant="h6" sx={{ marginBottom: "20px" }}>
+          <Typography variant="h5" sx={{ marginBottom: "20px" }}>
             <strong>Datos de Usuario</strong>
           </Typography>
 
@@ -297,7 +310,7 @@ export default function Detalles() {
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={{ xs: 2, sm: 2, md: 23 }}
-                sx={{ marginBottom: "30px" }}
+                sx={{ marginBottom: "30px", marginLeft: "20px" }}
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Mail</strong> <br />
@@ -337,7 +350,7 @@ export default function Detalles() {
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 2, sm: 2, md: 23 }}
-              sx={{ marginBottom: "30px" }}
+              sx={{ marginBottom: "30px", marginLeft: "20px" }}
             >
               <Typography variant="h6" sx={{ width: "200px" }}>
                 <strong>Mail</strong> <br />
@@ -357,23 +370,61 @@ export default function Detalles() {
             </Stack>
           )}
 
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 2, sm: 2 }}
-          ></Stack>
-          <Divider sx={{ marginTop: "20px" }}></Divider>
+          <Divider sx={{ marginTop: "20px", marginBottom: "20px" }}></Divider>
+
+          {usuario?.rol?.tipo === "Preceptor" && (
+            <Box>
+              <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                <strong>Datos Académicos</strong>
+              </Typography>
+              <Typography variant="h6" sx={{ width: "250px" }}>
+                <strong>Curso/s</strong> <br />
+                <List>
+                  {preceptor?.preceptorxcurso?.map((pxc) => (
+                    <ListItem key={pxc.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
+                      <ListItemIcon>
+                        <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                      </ListItemIcon>
+                      <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                        <strong >{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
+                      </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </Typography>
+            </Box>
+          )}
+
+
           {usuario?.rol?.tipo === "Docente" && (
-            <Typography variant="h6" sx={{ width: "250px" }}>
-              <strong>Materia/s Impartidas</strong> <br />
-              {docente?.materia?.map((m) => (
-                <span key={m.id}>{m.nombre}</span>
-              ))}
-            </Typography>
+            <Box>
+              <Typography variant="h6" >
+                <strong>Materia/s Impartidas</strong>
+              </Typography>
+              <Typography
+                variant="h6"
+              >
+                <List>
+                  {
+                    docente.map((dxm) => (
+                      <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
+                        <ListItemIcon>
+                          <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                        </ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                          <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
+                        </ListItemText>
+                      </ListItem>
+                    ))
+                  }
+
+                </List>
+              </Typography>
+            </Box>
           )}
 
           {usuario?.rol?.tipo === "Estudiante" && (
             <>
-              <Divider sx={{ marginTop: "20px" }}></Divider>
               <Typography
                 variant="h5"
                 sx={{ marginBottom: "20px", marginTop: "20px" }}
@@ -384,6 +435,7 @@ export default function Detalles() {
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={{ xs: 2, sm: 2, md: 23 }}
+                sx={{ marginLeft: "20px" }}
               >
                 <Typography
                   variant="h6"
@@ -411,6 +463,7 @@ export default function Detalles() {
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={{ xs: 2, sm: 2, md: 23 }}
+                sx={{ marginLeft: "20px" }}
               >
                 <Typography
                   variant="h6"
@@ -425,6 +478,65 @@ export default function Detalles() {
                 >
                   <strong>Telefono</strong> <br />
                   {alumno?.tutor?.telefono || "N/A"}
+                </Typography>
+              </Stack>
+            </>
+          )}
+           {usuario?.rol?.tipo === "Tutor" && (
+            <>
+              <Typography
+                variant="h5"
+                sx={{ marginBottom: "20px", marginTop: "20px" }}
+              >
+                <strong>Datos del Estudiante</strong>
+              </Typography>
+
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 2, sm: 2, md: 23 }}
+                sx={{ marginLeft: "20px" }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Nombre</strong> <br />
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.nombre || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Apellido</strong> <br />
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.apellido || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Legajo</strong> <br />
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.legajo || "N/A"}
+                </Typography>
+              </Stack>
+
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 2, sm: 2, md: 23 }}
+                sx={{ marginLeft: "20px" }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Mail</strong> <br />
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.correo || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Telefono</strong> <br />
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>

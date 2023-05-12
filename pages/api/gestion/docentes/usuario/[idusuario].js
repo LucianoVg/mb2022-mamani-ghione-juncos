@@ -23,8 +23,18 @@ export async function traerDocente(idusuario) {
     try {
         const docente = await db.docentexmateria.findFirst({
             include: {
-                materia: true,
-                usuario: true
+                usuario: true,
+                materiaxcursoxdivision: {
+                    include: {
+                        materia: true,
+                        cursoxdivision: {
+                            include: {
+                                curso: true,
+                                division: true
+                            }
+                        }
+                    }
+                }
             },
             where: {
                 usuario: {

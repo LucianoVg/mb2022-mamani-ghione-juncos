@@ -75,26 +75,26 @@ export const Navbar = ({ toggleDrawer }) => {
             </Button>
           </Link>
           {
-            // authUser && (usuario.rol == 'Estudiante'
-            //     || usuario.rol == 'Tutor' || usuario.rol == 'Administrador') &&
-            !loading &&
-              authUser &&
-              (usuario.rol != "Docente" ||
-                usuario.rol != "Director" ||
-                usuario.rol != "Vicedirector" ||
-                usuario.rol != "Preceptor" ||
-                usuario.rol != "Secretaria") && (
-                <>
-                  <div
-                    style={{
-                      alignContent: "right",
-                      marginLeft: "-30px",
-                      marginRight: "-20px",
-                    }}
-                  >
-                    <Notificacion disablePadding />
-                  </div>
-                </>
+            !loading && authUser && (usuario.rol === 'Estudiante'
+              || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') && (
+            // !loading &&
+            //   authUser &&
+            //   (usuario.rol != "Docente" ||
+            //     usuario.rol != "Director" ||
+            //     usuario.rol != "Vicedirector" ||
+            //     usuario.rol != "Preceptor" ||
+            //     usuario.rol != "Secretaria") && (
+            <>
+              <div
+                style={{
+                  alignContent: "right",
+                  marginLeft: "-30px",
+                  marginRight: "-20px",
+                }}
+              >
+                <Notificacion disablePadding />
+              </div>
+            </>
               )
           }
           {!loading && authUser && (
