@@ -50,7 +50,7 @@ export const Navbar = ({ toggleDrawer }) => {
           >
             <strong>{title}</strong>
           </Typography>
-          {!loading && authUser?.rol && (
+          {!loading && authUser && authUser?.rol && (
             <Typography variant="body1" color={"white"} sx={{ mx: 2 }}>
               Logueado como <strong>{authUser?.rol?.tipo}</strong>
             </Typography>

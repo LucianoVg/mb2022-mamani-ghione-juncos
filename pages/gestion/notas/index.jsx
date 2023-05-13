@@ -42,7 +42,7 @@ export default function Notas() {
   const [idMateria, setIdMateria] = useState("");
   const [idDivision, setIdDivision] = useState("");
   const [idAlumno, setIdAlumno] = useState("");
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
+  const [usuario, setUsuario] = useState([]);
   const [divisiones, setDivisiones] = useState([]);
   const [materias, setMaterias] = useState([]);
   const { loading, authUser } = useAuth();
@@ -132,7 +132,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
     );
     if (res.data) {
-      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
+      setUsuario(res.data);
     }
   };
   const traerDivisiones = async () => {
