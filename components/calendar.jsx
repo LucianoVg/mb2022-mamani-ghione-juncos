@@ -80,7 +80,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     const [idCurso, setIdCurso] = useState(0)
 
     useEffect(() => {
-        traerUsuario()
+        // traerUsuario()
         traerCursos()
     }, [authUser.id, authUser.rol, authUser])
 
@@ -90,12 +90,12 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
             setCursos(res.data?.map(c => ({ id: c?.id, curso: `${c?.curso?.nombre} ${c?.division?.division}` })))
         }
     }
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-        }
-    }
+    // const traerUsuario = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    //     if (res.data) {
+    //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+    //     }
+    // }
     const tienePermisos = () => {
         return authUser.rol === 'Administrador'
             || authUser.rol === 'Docente'

@@ -114,7 +114,7 @@ export default function Detalles() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    traerUsuario();
+    // traerUsuario();
     traerCursos();
     traerMaterias();
     // traerAlumno()
@@ -145,26 +145,26 @@ export default function Detalles() {
     }
   };
 
-  const traerUsuario = async () => {
-    setCargando(true);
-    if (id) {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`
-      );
-      console.log("USUARIO: ", res.data);
-      setUsuario(res.data[0]);
-      setCargando(false);
-      return;
-    }
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    console.log(res.data);
-    if (res.data) {
-      setUsuario(res.data);
-    }
-    setCargando(false);
-  };
+  // const traerUsuario = async () => {
+  //   setCargando(true);
+  //   if (id) {
+  //     const res = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`
+  //     );
+  //     console.log("USUARIO: ", res.data);
+  //     setUsuario(res.data[0]);
+  //     setCargando(false);
+  //     return;
+  //   }
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   console.log(res.data);
+  //   if (res.data) {
+  //     setUsuario(res.data);
+  //   }
+  //   setCargando(false);
+  // };
 
   const handleUsuario = (e) => {
     setDataUsuario({ ...dataUsuario, [e.target.name]: e.target.value });
@@ -222,7 +222,7 @@ export default function Detalles() {
         mensaje: "",
       });
       setEditMode(false);
-      traerUsuario();
+      // traerUsuario();
     }, 2000);
   };
 

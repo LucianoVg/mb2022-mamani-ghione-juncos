@@ -41,7 +41,7 @@ const FichaInstitucional = () => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    traerUsuario();
+    // traerUsuario();
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
@@ -49,18 +49,18 @@ const FichaInstitucional = () => {
     }
   }, [authUser, loading, authUser.id, authUser.rol]);
 
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      console.log(res.data);
-      setUsuario({
-        id: res.data.id,
-        rol: res.data?.rol?.tipo,
-      });
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     console.log(res.data);
+  //     setUsuario({
+  //       id: res.data.id,
+  //       rol: res.data?.rol?.tipo,
+  //     });
+  //   }
+  // };
   const tienePermisos = () => {
     return authUser.rol === "Administrador" || authUser.rol === "Director";
   };

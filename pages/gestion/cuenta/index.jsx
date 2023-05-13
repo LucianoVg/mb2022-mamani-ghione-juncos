@@ -49,7 +49,7 @@ export default function Detalles() {
       router.push("/gestion/cuenta/login");
     }
     (async () => {
-      await traerUsuario();
+      // await traerUsuario();
       await traerAlumno();
       await traerPreceptor();
       await traerTutor();
@@ -103,17 +103,17 @@ export default function Detalles() {
       }
     }
   };
-  const traerUsuario = async () => {
-    setCargando(true);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.status === 200 && res.data) {
-      setUsuario(res.data);
-      console.log(res.data);
-    }
-    setCargando(false);
-  };
+  // const traerUsuario = async () => {
+  //   setCargando(true);
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.status === 200 && res.data) {
+  //     setUsuario(res.data);
+  //     console.log(res.data);
+  //   }
+  //   setCargando(false);
+  // };
 
   const updateProfile = async () => {
     console.log(usuario);
@@ -152,7 +152,7 @@ export default function Detalles() {
         mensaje: "",
       });
       setEditMode(false);
-      traerUsuario();
+      // traerUsuario();
     }, 2000);
   };
 

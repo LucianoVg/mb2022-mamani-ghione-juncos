@@ -45,17 +45,17 @@ export default function DetallesNoticia() {
       authUser.rol === "Preceptor"
     );
   };
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      setUsuario({
-        id: res.data.id,
-        rol: res.data?.rol?.tipo,
-      });
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     setUsuario({
+  //       id: res.data.id,
+  //       rol: res.data?.rol?.tipo,
+  //     });
+  //   }
+  // };
   const handleImagen = (e) => {
     setImagen(e.target.files[0]);
     setImgUrl(URL.createObjectURL(e.target.files[0]));

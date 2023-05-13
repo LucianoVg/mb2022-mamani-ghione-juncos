@@ -20,7 +20,7 @@ export default function FechasExamen() {
     if (!loading && !authUser) {
       router.push('/gestion/cuenta/login')
     }
-    traerUsuario()
+    // traerUsuario()
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push('/error')
@@ -37,12 +37,12 @@ export default function FechasExamen() {
       || authUser.rol === 'Estudiante'
       || authUser.rol === 'Tutor'
   }
-  const traerUsuario = async () => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-    if (res.data) {
-      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-    }
-  }
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+  //   if (res.data) {
+  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+  //   }
+  // }
   const traerExamenes = async () => {
     setCargando(true)
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`)

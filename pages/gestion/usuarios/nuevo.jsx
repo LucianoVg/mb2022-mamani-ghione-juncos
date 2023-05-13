@@ -64,7 +64,7 @@ export default function NuevoUsuario() {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        traerUsuario()
+        // traerUsuario()
         if (usuarioLogeado.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
@@ -76,12 +76,12 @@ export default function NuevoUsuario() {
         }
     }, [authUser, loading, usuarioLogeado.id, usuarioLogeado.rol])
 
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id), rol: res.data?.rol?.tipo })
-        }
-    }
+    // const traerUsuario = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    //     if (res.data) {
+    //         setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id), rol: res.data?.rol?.tipo })
+    //     }
+    // }
     const tienePermisos = () => {
         return usuarioLogeado.rol === 'Administrador'
             || usuarioLogeado.rol === 'Secretaria'
