@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import {
   Typography,
   Divider,
@@ -20,7 +20,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
@@ -31,9 +31,6 @@ export default function Detalles() {
   const { loading, authUser } = useAuth();
   const router = useRouter();
   const [usuario, setUsuario] = useState();
-  const [enfermedades, setEnfermedades] = useState([]);
-  const [selectedEnf, setSelectedEnf] = useState([]);
-  // const [alergias, setAlergias] = useState("");
   const [alumno, setAlumno] = useState();
   const [docente, setDocente] = useState();
   const [tutor, setTutor] = useState();
@@ -46,72 +43,64 @@ export default function Detalles() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [mensaje, setMensaje] = useState("");
+
   useEffect(() => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    traerUsuario();
-    traerAlumno();
-    traerDocente();
-    traerPreceptor();
-    traerTutor();
-    // traerEnfermedades()
+    (async () => {
+      await traerUsuario();
+      await traerAlumno();
+      await traerPreceptor();
+      await traerTutor();
+      await traerDocente();
+    })();
   }, [loading, authUser]);
 
-  const handleEnfermedad = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedEnf(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const traerDocente = async (idUsuario = usuario?.id) => {
+  const traerDocente = async () => {
     if (usuario?.rol?.tipo === "Docente") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario?.id}`
       );
-      if (res.data) {
+
+      if (res.status === 200 && res.data) {
         setDocente(res.data);
+        console.log(res.data);
       }
-      console.log(res.data);
     }
   };
 
-
-  const traerPreceptor = async (idUsuario = usuario?.id) => {
+  const traerPreceptor = async () => {
     if (usuario?.rol?.tipo === "Preceptor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${idUsuario}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${usuario?.id}`
       );
-      if (res.data) {
+      if (res.status === 200 && res.data) {
         setPreceptor(res.data);
-      };
-      console.log(res.data);
+        console.log(res.data);
+      }
     }
   };
-  const traerTutor = async (idUsuario = usuario?.id) => {
+  const traerTutor = async () => {
     if (usuario?.rol?.tipo === "Tutor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${idUsuario}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${usuario?.id}`
       );
-      if (res.data) {
+      if (res.status === 200 && res.data) {
         setTutor(res.data);
-      };
-      console.log(res.data);
+        console.log(res.data);
+      }
     }
   };
-  const traerAlumno = async (idUsuario = usuario?.id) => {
+  const traerAlumno = async () => {
     if (usuario?.rol?.tipo === "Estudiante") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${idUsuario}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`
       );
-      if (res.data) {
+      if (res.status === 200 && res.data) {
         setAlumno(res.data);
-      };
-      console.log(res.data);
+        console.log(res.data);
+      }
     }
   };
   const traerUsuario = async () => {
@@ -119,10 +108,9 @@ export default function Detalles() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
     );
-    console.log(res.data);
-    if (res.data) {
+    if (res.status === 200 && res.data) {
       setUsuario(res.data);
-      console.log(res.data)
+      console.log(res.data);
     }
     setCargando(false);
   };
@@ -185,18 +173,19 @@ export default function Detalles() {
       </Grid>
       {!cargando && (
         <Container sx={{ marginLeft: "20px" }}>
-          <Box >
-            {
-              usuario?.rol?.tipo === "Secretaria" ? (
-                <Typography variant="h5" sx={{ marginRight: "30px", marginBottom: "10px" }}>
-                  <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
-                </Typography>
-              ) : (
-                <Typography variant="h5" sx={{ marginBottom: "10px" }}>
-                  <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
-                </Typography>
-              )
-            }
+          <Box>
+            {usuario?.rol?.tipo === "Secretaria" ? (
+              <Typography
+                variant="h5"
+                sx={{ marginRight: "30px", marginBottom: "10px" }}
+              >
+                <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
+              </Typography>
+            ) : (
+              <Typography variant="h5" sx={{ marginBottom: "10px" }}>
+                <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
+              </Typography>
+            )}
           </Box>
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -216,14 +205,13 @@ export default function Detalles() {
               <strong>Legajo</strong> <br />
               {usuario?.legajo}
             </Typography>
-            {
-              usuario?.rol?.tipo === "Estudiante" && (
-                <Typography variant="h6" sx={{ width: "200px" }}>
-                  <strong>Curso</strong> <br />
-                  {alumno?.cursoxdivision?.curso?.nombre}° Año &quot;{alumno?.cursoxdivision?.division?.division}&quot;
-                </Typography>
-              )
-            }
+            {usuario?.rol?.tipo === "Estudiante" && (
+              <Typography variant="h6" sx={{ width: "200px" }}>
+                <strong>Curso</strong> <br />
+                {alumno?.cursoxdivision?.curso?.nombre}° Año &quot;
+                {alumno?.cursoxdivision?.division?.division}&quot;
+              </Typography>
+            )}
           </Stack>
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -252,7 +240,7 @@ export default function Detalles() {
               <strong>Edad</strong> <br />
               {usuario?.fechanacimiento
                 ? new Date().getFullYear() -
-                new Date(usuario?.fechanacimiento.split("/")[2]).getFullYear()
+                  new Date(usuario?.fechanacimiento.split("/")[2]).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
@@ -381,12 +369,23 @@ export default function Detalles() {
                 <strong>Curso/s</strong> <br />
                 <List>
                   {preceptor?.preceptorxcurso?.map((pxc) => (
-                    <ListItem key={pxc.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
+                    <ListItem
+                      key={pxc.id}
+                      sx={{ marginTop: "-10px", fontSize: "70px" }}
+                    >
                       <ListItemIcon>
-                        <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                        <FiberManualRecordIcon
+                          sx={{
+                            color: "black",
+                            fontSize: "10px",
+                            marginLeft: "25px",
+                          }}
+                        />
                       </ListItemIcon>
-                      <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                        <strong >{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
+                      <ListItemText
+                        primaryTypographyProps={{ fontSize: "20px" }}
+                      >
+                        <strong>{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
                       </ListItemText>
                     </ListItem>
                   ))}
@@ -395,30 +394,16 @@ export default function Detalles() {
             </Box>
           )}
 
-
           {usuario?.rol?.tipo === "Docente" && (
             <Box>
-              <Typography variant="h6" >
+              <Typography variant="h6">
                 <strong>Materia/s Impartidas</strong>
               </Typography>
-              <Typography
-                variant="h6"
-              >
-                <List>
-                  {
-                    docente.map((dxm) => (
-                      <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
-                        <ListItemIcon>
-                          <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
-                        </ListItemIcon>
-                        <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                          <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
-                        </ListItemText>
-                      </ListItem>
-                    ))
-                  }
-
-                </List>
+              <Typography variant="h6">
+                <strong>
+                  {docente?.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                  <strong>{`${docente?.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${docente?.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
+                </strong>
               </Typography>
             </Box>
           )}
@@ -482,7 +467,7 @@ export default function Detalles() {
               </Stack>
             </>
           )}
-           {usuario?.rol?.tipo === "Tutor" && (
+          {usuario?.rol?.tipo === "Tutor" && (
             <>
               <Typography
                 variant="h5"
