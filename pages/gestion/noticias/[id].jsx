@@ -121,7 +121,7 @@ export default function DetallesNoticia() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    traerUsuario();
+    // traerUsuario();
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");

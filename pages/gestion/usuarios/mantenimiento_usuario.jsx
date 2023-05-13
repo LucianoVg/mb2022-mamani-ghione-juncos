@@ -69,12 +69,12 @@ export default function MantenimientoUsuario() {
     }
     // listarUsuarios()
     traerRoles();
-    traerUsuario();
+    // traerUsuario();
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
-        traerUsuarios();
+        // traerUsuarios();
       }
     }
   }, [authUser, loading, authUser.id, authUser.rol]);
@@ -87,14 +87,14 @@ export default function MantenimientoUsuario() {
       authUser.rol === "Director"
     );
   };
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
+  //   }
+  // };
   const traerUsuarios = async () => {
     queryParams.push({ idLogged: usuario.id, rol: usuario.rol });
     if (idUsuario) {
