@@ -74,13 +74,14 @@ export default function Notas() {
     }
     traerAlumnos();
     traerUsuario();
-    traerDocente();
+
     if (usuario.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         traerTrimestres();
         if (usuario.rol === "Docente") {
+          traerDocente();
           traerDivisiones();
         } else {
           traerCursos();
@@ -451,22 +452,12 @@ export default function Notas() {
                     MenuProps={{ disableScrollLock: true }}
                   >
                     {docente &&
-                      docente?.map((d, i) => (
+                    docente?.materiaxcursoxdivision?.map((d, i) => (
                         <MenuItem
                           key={i}
-                          value={d.materiaxcursoxdivision?.idmateria}
+                          value={d.idmateria}
                         >
-                          {d.materiaxcursoxdivision.materia?.nombre} -{" "}
-                          {
-                            d.materiaxcursoxdivision.cursoxdivision?.curso
-                              ?.nombre
-                          }
-                          ° Año &quot;
-                          {
-                            d.materiaxcursoxdivision.cursoxdivision?.division
-                              ?.division
-                          }
-                          &quot;
+                          {d.materia?.nombre}   -   {d.cursoxdivision?.curso?.nombre} {d.cursoxdivision?.division?.division}
                         </MenuItem>
                       ))}
                   </Select>
@@ -656,10 +647,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                    notas.nota2 === 0 &&
-                    notas.nota3 === 0 &&
-                    notas.nota4 === 0 &&
-                    notas.nota5 === 0 ? (
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}

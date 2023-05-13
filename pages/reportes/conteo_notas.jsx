@@ -18,6 +18,8 @@ export default function Dashboard() {
     const [cargando2, setCargando2] = useState(false)
     const { loading, authUser } = useAuth()
     const [materias, setMaterias] = useState([])
+    const [docenteA, setDocenteA] = useState([])
+    const [docenteB, setDocenteB] = useState([])
     // const [idDivision, setIdDivision] = useState([])
     const [idMateria, setIdMateria] = useState([])
     useEffect(() => {
@@ -32,6 +34,8 @@ export default function Dashboard() {
                 traerMaterias()
                 traerConteoNotasA()
                 traerConteoNotasB()
+                traerDocenteA()
+                traerDocenteB()
             }
         }
     }, [loading, authUser, usuario.rol])
@@ -72,11 +76,26 @@ export default function Dashboard() {
         }
         setCargando(false)
     }
-  
+    const traerDocenteA = async (idUsuario = usuario.id, division = "A") => {
+        const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
+        );
+        if (res.status === 200 && res.data) {
+            setDocenteA(res.data);
+        }
+    };
+    const traerDocenteB = async (idUsuario = usuario.id, division = "B") => {
+        const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
+        );
+        if (res.status === 200 && res.data) {
+            setDocenteB(res.data);
+        }
+    };
     const handleSelect = (e) => {
         traerConteoNotas(Number(e.target.value))
         setIdMateria(Number(e.target.value))
-        
+
     }
     return (
         <Layout>
