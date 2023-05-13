@@ -43,7 +43,13 @@ export default function useFirebaseAuth() {
     }
   };
 
-  const cerrarSesion = () => signOut(auth).then(clear);
+  const cerrarSesion = () =>
+    signOut(auth)
+      .then(clear)
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      });
 
   const authStateChanged = async (authState) => {
     if (!authState) {
@@ -53,12 +59,12 @@ export default function useFirebaseAuth() {
     }
 
     console.log("Auth State:", authState);
-    //  setLoading(true);
-    //  const res = await axios.get(
-    //    `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta?correo=${authState.email}&password=${password}`
-    //  );
-    //  setAuthUser(res.data);
-    //  setLoading(false);
+    setLoading(true);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta?correo=${authState.email}`
+    );
+    setAuthUser(res.data);
+    setLoading(false);
   };
 
   useEffect(() => {

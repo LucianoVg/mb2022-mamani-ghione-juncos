@@ -168,12 +168,10 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
     </Box>
   );
   const logout = async () => {
-    try {
-      await cerrarSesion();
+    await cerrarSesion();
+    setTimeout(() => {
       router.reload();
-    } catch (error) {
-      console.error("Error al cerrar sesion: ", error);
-    }
+    }, 2000);
   };
 
   return (
