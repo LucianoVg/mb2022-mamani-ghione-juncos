@@ -80,12 +80,12 @@ export default function Notas() {
         router.push("/error");
       } else {
         traerTrimestres();
+        traerMaterias();
         if (usuario.rol === "Docente") {
           traerDocente();
           traerDivisiones();
         } else {
           traerCursos();
-          traerMaterias();
           traerNotas(0);
         }
       }
@@ -111,14 +111,11 @@ export default function Notas() {
       const materiaxdivision = materias?.find(
         (m) => m.id === Number(e.target.value)
       );
-      setIdMateria(Number(materiaxdivision?.idmateria));
-      setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
-      await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
-
-      // console.log("materiaxdivision", materiaxdivision);
-      // console.log("division", idDivision);
-      // console.log("idmateria", idMateria)
-      setIdMateria(Number(e.target.value));
+      if (materiaxdivision) {
+        setIdMateria(Number(materiaxdivision?.idmateria));
+        setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
+        await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
+      }
     } else {
       setIdMateria("");
     }
@@ -436,8 +433,6 @@ export default function Notas() {
                   <Select
                     id="inputMateria"
                     onChange={handleMateria}
-                    name="idMateria"
-                    value={idMateria}
                     label="Materia"
                     sx={{
                       width: "150px",
@@ -448,7 +443,7 @@ export default function Notas() {
                     {docente && (
                       <MenuItem
                         defaultValue={""}
-                        value={docente.materiaxcursoxdivision?.idmateria}
+                        value={docente.idmateriaxcursoxdivision}
                       >
                         {docente.materiaxcursoxdivision?.materia?.nombre} -{" "}
                         {
