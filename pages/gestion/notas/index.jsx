@@ -81,11 +81,11 @@ export default function Notas() {
       } else {
         if (authUser?.rol?.tipo === "Docente") {
           // traerDocente();
-          traerNotas(0);
           traerTrimestres();
+          traerNotas(0);
           traerMaterias();
           traerDivisiones();
-      
+
         } else {
           traerTrimestres();
           traerMaterias();
@@ -161,7 +161,17 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`
     );
     if (res.data) {
-      setTrimestres((_) => res.data);
+      if (authUser?.rol?.tipo === "Docente") {
+        let materia = authUser.docentexmateria[0]
+        // console.log(authUser)
+        // console.log("MATERIAAAAA", materia)
+        setIdMateria(materia.materiaxcursoxdivision?.idmateria)
+        setTrimestres((_) => res.data);
+      } else {
+        setTrimestres((_) => res.data);
+
+      }
+
     }
   };
   const traerCursos = async () => {
@@ -178,17 +188,11 @@ export default function Notas() {
     if (idAlumno) {
       queryParams.push({ idAlumno });
     }
-    if (authUser?.rol?.tipo === "Docente") {
-      let materia = authUser.docentexmateria[0]
-      console.log(authUser)
-      console.log("MATERIAAAAA", materia)
-      setIdMateria(materia.materiaxcursoxdivision?.idmateria)
+
+    if (idMateria) {
       queryParams.push({ idMateria });
-    } else {
-      if (idMateria) {
-        queryParams.push({ idMateria });
-      }
     }
+
     if (idCurso) {
       queryParams.push({ idCurso });
     }
@@ -453,7 +457,7 @@ export default function Notas() {
                     id="inputMateria"
                     onChange={handleMateria}
                     label="Materia"
-                    defaultValue={ authUser.docentexmateria[0]?.materiaxcursoxdivision.idmateria}
+                    defaultValue={idMateria}
                     sx={{
                       width: "150px",
                       marginRight: "20px",
