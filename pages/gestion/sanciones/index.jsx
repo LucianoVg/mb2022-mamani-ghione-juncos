@@ -72,18 +72,18 @@ const Sanciones = () => {
             setAlumnos(res.data)
         }
     }
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ rol: res.data?.rol?.tipo })
-            console.log(usuario);
-        }
-    }
+    // const traerUsuario = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    //     if (res.data) {
+    //         setUsuario({ rol: res.data?.rol?.tipo })
+    //         console.log(usuario);
+    //     }
+    // }
     useEffect(() => {
         if (!loading && !authUser) {
             router.push('/')
         }
-        traerUsuario()
+        // traerUsuario()
         if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')

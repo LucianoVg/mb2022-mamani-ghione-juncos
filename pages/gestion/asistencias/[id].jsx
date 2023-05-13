@@ -14,12 +14,12 @@ const MasInfo = () => {
     const [asistencia, setAsistencia] = useState()
     const [cargando, setCargando] = useState(false)
     const [usuario, setUsuario] = useState({ id: 0, rol: '' })
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-        }
-    }
+    // const traerUsuario = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    //     if (res.data) {
+    //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+    //     }
+    // }
 
     const listarAsistencia = async () => {
         if (id) {
@@ -42,7 +42,7 @@ const MasInfo = () => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        traerUsuario()
+        // traerUsuario()
         if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')

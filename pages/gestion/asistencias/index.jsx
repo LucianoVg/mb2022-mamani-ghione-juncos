@@ -69,7 +69,7 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     traerAlumnos();
-    traerUsuario();
+    // traerUsuario();
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
@@ -87,14 +87,14 @@ export default function Asistencias() {
       authUser.rol === "Preceptor"
     );
   };
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
+  //   }
+  // };
   const listarCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`

@@ -25,7 +25,7 @@ export default function NuevaSancion() {
         if (!loading && !authUser) {
             router.push('/')
         }
-        traerUsuario()
+        // traerUsuario()
         if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
@@ -62,13 +62,13 @@ export default function NuevaSancion() {
             setAlumnos(res.data)
         }
     }
-    const traerUsuario = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-        if (res.data) {
-            setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-            console.log(usuario);
-        }
-    }
+    // const traerUsuario = async () => {
+    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
+    //     if (res.data) {
+    //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
+    //         console.log(usuario);
+    //     }
+    // }
     const handleSancion = (e) => {
         setSancion({ ...sancion, [e.target.name]: e.target.value })
     }

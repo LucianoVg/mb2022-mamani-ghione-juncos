@@ -19,17 +19,17 @@ export default function Institucional() {
   });
 
   useEffect(() => {
-    traerUsuario();
+    // traerUsuario();
   }, [authUser.rol]);
 
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      setUsuario({ rol: res.data?.rol?.tipo });
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     setUsuario({ rol: res.data?.rol?.tipo });
+  //   }
+  // };
   const traerFicha = async () => {
     setCargando(true);
     const res = await axios.get(

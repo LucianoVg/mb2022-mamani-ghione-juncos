@@ -73,7 +73,7 @@ export default function Notas() {
       router.push("/gestion/cuenta/login");
     }
     traerAlumnos();
-    traerUsuario();
+    // traerUsuario();
 
     if (authUser.rol) {
       if (!tienePermisos()) {
@@ -127,14 +127,14 @@ export default function Notas() {
     }
   };
 
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      setUsuario(res.data);
-    }
-  };
+  // const traerUsuario = async () => {
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
+  //   );
+  //   if (res.data) {
+  //     setUsuario(res.data);
+  //   }
+  // };
   const traerDivisiones = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/division`
