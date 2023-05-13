@@ -77,14 +77,14 @@ export default function MantenimientoUsuario() {
         // traerUsuarios();
       }
     }
-  }, [authUser, loading, authUser.id, authUser.rol]);
+  }, [authUser, loading, authUser?.id, authUser?.rol?.tipo]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Secretaria" ||
-      authUser.rol.tipo === "Vicedirector" ||
-      authUser.rol.tipo ===o === "Director"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Secretaria" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
+      authUser?.rol?.tipo ===o === "Director"
     );
   };
   // const traerUsuario = async () => {
@@ -170,14 +170,14 @@ export default function MantenimientoUsuario() {
   return (
     <Layout>
       <div>
-        {(authUser.rol.tipo === "Director" ||
-          authUser.rol.tipo === "Administrador" ||
-          authUser.rol.tipo === "Vicedirector") && (
+        {(authUser?.rol?.tipo === "Director" ||
+          authUser?.rol?.tipo === "Administrador" ||
+          authUser?.rol?.tipo === "Vicedirector") && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Usuario</Button>
           </Link>
         )}
-        {authUser.rol.tipo === "Secretaria" && (
+        {authUser?.rol?.tipo === "Secretaria" && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Estudiante</Button>
           </Link>
@@ -215,7 +215,7 @@ export default function MantenimientoUsuario() {
               )}
             />
           </FormControl>
-          {authUser.rol !== "Secretaria" && (
+          {authUser?.rol?.tipo !== "Secretaria" && (
             <FormControl>
               <InputLabel id="select-label">Rol</InputLabel>
               <Select

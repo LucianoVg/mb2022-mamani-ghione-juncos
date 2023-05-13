@@ -28,10 +28,10 @@ const MasInfo = () => {
         }
     }
     const tienePermisos = () => {
-        return authUser.rol.tipo === 'Administrador'
-            || authUser.rol.tipo === 'Director'
-            || authUser.rol.tipo === 'Vicedirector'
-            || authUser.rol.tipo === 'Preceptor'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Director'
+            || authUser?.rol?.tipo === 'Vicedirector'
+            || authUser?.rol?.tipo === 'Preceptor'
     }
     // const traerUsuario = async () => {
     //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -43,13 +43,13 @@ const MasInfo = () => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        if (authUser.rol) {
+        if (authUser?.rol?.tipo) {
             if (!tienePermisos()) {
                 router.push('/error')
             }
         }
         listarAsistencia()
-    }, [id, loading, authUser, authUser.rol])
+    }, [id, loading, authUser, authUser?.rol?.tipo])
 
     return (
         <Layout>

@@ -55,7 +55,7 @@ export default function AsistenciasDocentes() {
         listarAsistenciasMensuales();
       }
     }
-  }, [authUser.id, authUser.rol, loading, authUser]);
+  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const listarAsistenciasAnuales = async () => {
     setCargando3(true);
@@ -93,10 +93,10 @@ export default function AsistenciasDocentes() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Vicedirector" ||
-      authUser.rol.tipo === "Docente"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
+      authUser?.rol?.tipo === "Docente"
     );
   };
   // const traerUsuario = async () => {
@@ -140,7 +140,7 @@ export default function AsistenciasDocentes() {
                 Reporte Asistencias Docentes</Typography>
       <h3>Buscar Docente</h3>
 
-      {authUser.rol != "Docente" && (
+      {authUser?.rol?.tipo != "Docente" && (
         <Box>
           <FormControl style={{ marginRight: "20px" }}>
             <Autocomplete

@@ -47,7 +47,7 @@ const FichaInstitucional = () => {
         router.push("/error");
       }
     }
-  }, [authUser, loading, authUser.id, authUser.rol]);
+  }, [authUser, loading, authUser?.id, authUser?.rol?.tipo]);
 
   // const traerUsuario = async () => {
   //   const res = await axios.get(
@@ -62,7 +62,7 @@ const FichaInstitucional = () => {
   //   }
   // };
   const tienePermisos = () => {
-    return authUser.rol.tipo === "Administrador" || authUser.rol.tipo === "Director";
+    return authUser?.rol?.tipo === "Administrador" || authUser?.rol?.tipo === "Director";
   };
 
   const handleImagenes = (e) => {

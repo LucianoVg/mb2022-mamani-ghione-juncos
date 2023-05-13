@@ -83,14 +83,14 @@ const Notificaciones = () => {
         listarTutores();
       }
     }
-  }, [authUser.id, authUser.rol, loading, authUser]);
+  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Vicedirector" ||
-      authUser.rol.tipo === "Preceptor"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
+      authUser?.rol?.tipo === "Preceptor"
     );
   };
   // const traerUsuario = async () => {

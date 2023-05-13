@@ -82,7 +82,7 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     useEffect(() => {
         // traerUsuario()
         traerCursos()
-    }, [authUser.id, authUser.rol, authUser])
+    }, [authUser?.id, authUser?.rol?.tipo, authUser])
 
     const traerCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
@@ -97,8 +97,8 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     //     }
     // }
     const tienePermisos = () => {
-        return authUser.rol.tipo === 'Administrador'
-            || authUser.rol.tipo === 'Docente'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Docente'
     }
 
     return (

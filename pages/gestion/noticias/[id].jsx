@@ -40,9 +40,9 @@ export default function DetallesNoticia() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Preceptor"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Preceptor"
     );
   };
   // const traerUsuario = async () => {
@@ -129,7 +129,7 @@ export default function DetallesNoticia() {
         traerNoticia(id);
       }
     }
-  }, [id, authUser, loading, authUser.id, authUser.rol]);
+  }, [id, authUser, loading, authUser?.id, authUser?.rol?.tipo]);
 
   const traerNoticia = async (id) => {
     if (id) {

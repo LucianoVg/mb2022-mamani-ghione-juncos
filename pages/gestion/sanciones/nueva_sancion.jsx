@@ -35,14 +35,14 @@ export default function NuevaSancion() {
                 traerTiposSancion()
             }
         }
-    }, [loading, authUser, authUser.id, authUser.rol])
+    }, [loading, authUser, authUser?.id, authUser?.rol?.tipo])
 
     const tienePermisos = () => {
-        return authUser.rol.tipo === 'Administrador'
-            || authUser.rol.tipo === 'Director'
-            || authUser.rol.tipo === 'Vicedirector'
-            || authUser.rol.tipo === 'Preceptor'
-            || authUser.rol.tipo === 'Docente'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Director'
+            || authUser?.rol?.tipo === 'Vicedirector'
+            || authUser?.rol?.tipo === 'Preceptor'
+            || authUser?.rol?.tipo === 'Docente'
     }
     const traerTiposSancion = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)

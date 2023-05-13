@@ -205,16 +205,16 @@ const MaterialEstudio = () => {
         descargarMaterial(1);
       }
     }
-  }, [loading, authUser, authUser.id, authUser.rol]);
+  }, [loading, authUser, authUser?.id, authUser.rol]);
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Docente" ||
-      authUser.rol.tipo === "Estudiante"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Docente" ||
+      authUser?.rol?.tipo === "Estudiante"
     );
   };
   const puedeSubirArchivos = () => {
-    return authUser.rol.tipo === "Administrador" || authUser.rol.tipo === "Docente";
+    return authUser?.rol?.tipo === "Administrador" || authUser?.rol?.tipo === "Docente";
   };
   const borrarMaterial = async (e, id, idTrimestre) => {
     try {

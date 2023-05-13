@@ -21,21 +21,21 @@ export default function FechasExamen() {
       router.push('/gestion/cuenta/login')
     }
     // traerUsuario()
-    if (authUser.rol) {
+    if (authUser?.rol?.tipo) {
       if (!tienePermisos()) {
         router.push('/error')
       } else {
         traerExamenes()
       }
     }
-  }, [loading, authUser, authUser.id, authUser.rol])
+  }, [loading, authUser, authUser?.id, authUser?.rol?.tipo])
 
   const tienePermisos = () => {
-    return authUser.rol.tipo === 'Administrador'
-      || authUser.rol.tipo === 'Vicedirector'
-      || authUser.rol.tipo === 'Docente'
-      || authUser.rol.tipo === 'Estudiante'
-      || authUser.rol.tipo === 'Tutor'
+    return authUser?.rol?.tipo === 'Administrador'
+      || authUser?.rol?.tipo === 'Vicedirector'
+      || authUser?.rol?.tipo === 'Docente'
+      || authUser?.rol?.tipo === 'Estudiante'
+      || authUser?.rol?.tipo === 'Tutor'
   }
   // const traerUsuario = async () => {
   //   const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

@@ -54,15 +54,15 @@ export default function DetalleSancion() {
         traerSancion(id);
       }
     }
-  }, [loading, authUser, id, authUser.id, authUser.rol]);
+  }, [loading, authUser, id, authUser?.id, authUser?.rol?.tipo]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Vicedirector" ||
-      authUser.rol.tipo === "Preceptor" ||
-      authUser.rol.tipo === "Docente"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
+      authUser?.rol?.tipo === "Preceptor" ||
+      authUser?.rol?.tipo === "Docente"
     );
   };
   // const traerUsuario = async () => {

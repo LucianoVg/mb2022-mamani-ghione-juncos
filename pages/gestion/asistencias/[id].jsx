@@ -33,9 +33,9 @@ const MasInfo = () => {
     }
 
     const tienePermisos = () => {
-        return authUser.rol.tipo === 'Administrador'
-            || authUser.rol.tipo === 'Docente'
-            || authUser.rol.tipo === 'Preceptor'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Docente'
+            || authUser?.rol?.tipo === 'Preceptor'
     }
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const MasInfo = () => {
                 listarAsistencia()
             }
         }
-    }, [id, loading, authUser, authUser.id, authUser.rol])
+    }, [id, loading, authUser, authUser?.id, authUser?.rol?.tipo])
     return (
         <Layout>
             {

@@ -44,7 +44,7 @@ export default function Preanalitico() {
         traerPreanalitico();
       }
     }
-  }, [authUser.id, authUser.rol, loading, authUser]);
+  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const traerPreanalitico = async () => {
     setCargando(true);
@@ -68,11 +68,11 @@ export default function Preanalitico() {
   // };
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Secretaria" ||
-      authUser.rol.tipo === "Tutor" ||
-      authUser.rol.tipo === "Estudiante"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Secretaria" ||
+      authUser?.rol?.tipo === "Tutor" ||
+      authUser?.rol?.tipo === "Estudiante"
     );
   };
   const listarAlumnos = async () => {
@@ -96,7 +96,7 @@ export default function Preanalitico() {
             sx={{marginBottom:"20px"}}
             >
                 Reporte Historial Académico</Typography>
-      {authUser.rol != "Estudiante" && (
+      {authUser?.rol?.tipo != "Estudiante" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Alumno</h3>
 

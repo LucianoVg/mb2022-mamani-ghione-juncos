@@ -93,13 +93,13 @@ const Sanciones = () => {
                 traerSanciones()
             }
         }
-    }, [loading, authUser, authUser.rol])
+    }, [loading, authUser, authUser?.rol?.tipo])
     const tienePermisos = () => {
-        return authUser.rol.tipo === 'Administrador'
-            || authUser.rol.tipo === 'Director'
-            || authUser.rol.tipo === 'Vicedirector'
-            || authUser.rol.tipo === 'Preceptor'
-            || authUser.rol.tipo === 'Docente'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Director'
+            || authUser?.rol?.tipo === 'Vicedirector'
+            || authUser?.rol?.tipo === 'Preceptor'
+            || authUser?.rol?.tipo === 'Docente'
     }
     const handleAlumno = (e, newValue) => {
         if (newValue) {

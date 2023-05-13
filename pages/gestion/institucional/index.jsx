@@ -20,7 +20,7 @@ export default function Institucional() {
 
   useEffect(() => {
     // traerUsuario();
-  }, [authUser.rol]);
+  }, [authUser?.rol?.tipo]);
 
   // const traerUsuario = async () => {
   //   const res = await axios.get(

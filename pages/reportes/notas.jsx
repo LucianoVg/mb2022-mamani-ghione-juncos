@@ -59,7 +59,7 @@ export default function Notas() {
         listarCursos();
       }
     }
-  }, [authUser.id, authUser.rol, loading, authUser]);
+  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   // const traerUsuario = async () => {
   //   const res = await axios.get(
@@ -72,11 +72,11 @@ export default function Notas() {
   // };
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo ===o === "Vicedirector" ||
-      authUser.rol.tipo === "Estudiante" ||
-      authUser.rol.tipo === "Tutor"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo ===o === "Vicedirector" ||
+      authUser?.rol?.tipo === "Estudiante" ||
+      authUser?.rol?.tipo === "Tutor"
     );
   };
   const notasPorTrimestre = async () => {

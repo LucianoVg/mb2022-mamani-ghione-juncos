@@ -59,13 +59,13 @@ const AgregarNoticias = () => {
         router.push("/error");
       }
     }
-  }, [loading, authUser, authUser.id, authUser.rol]);
+  }, [loading, authUser, authUser?.id, authUser?.rol?.tipo]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Preceptor"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Preceptor"
     );
   };
   const onSubmitData = async (e) => {
