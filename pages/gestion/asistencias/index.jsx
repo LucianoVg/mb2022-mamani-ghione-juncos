@@ -70,7 +70,7 @@ export default function Asistencias() {
     }
     traerAlumnos();
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -78,13 +78,13 @@ export default function Asistencias() {
         listarAsistencias();
       }
     }
-  }, [loading, authUser, usuario.id, usuario.rol]);
+  }, [loading, authUser, authUser.id, authUser.rol]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Preceptor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Preceptor"
     );
   };
   const traerUsuario = async () => {
@@ -208,7 +208,7 @@ export default function Asistencias() {
         ausenteJustificado: aj,
         llegadaTarde: llegadaTarde,
         mediaFalta: mf,
-        idUsuario: usuario.id,
+        idUsuario: authUser.id,
         motivo: motivo,
       }
     );

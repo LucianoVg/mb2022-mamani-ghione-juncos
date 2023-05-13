@@ -44,19 +44,19 @@ export default function Asistencias() {
         }
         traerDocentes()
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
                 listarAsistencias()
             }
         }
-    }, [loading, authUser, usuario.id, usuario.rol])
+    }, [loading, authUser, authUser.id, authUser.rol])
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -141,7 +141,7 @@ export default function Asistencias() {
         //     llegadaTardeJustificada: ltj,
         //     mediaFalta: mf,
         //     mediaFaltaJustificada: mfj,
-        //     idUsuario: usuario.id
+        //     idUsuario: authUser.id
         // });
         setGuardando(true)
         const res = await axios.put(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente/update/${id}`, {
@@ -152,7 +152,7 @@ export default function Asistencias() {
             // llegadaTardeJustificada: ltj,
             mediaFalta: mf,
             // mediaFaltaJustificada: mfj,
-            idUsuario: usuario.id,
+            idUsuario: authUser.id,
             motivo: motivo
         })
         console.log(res.data);

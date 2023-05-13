@@ -75,13 +75,13 @@ export default function Notas() {
     traerAlumnos();
     traerUsuario();
 
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         traerTrimestres();
         traerMaterias();
-        if (usuario.rol === "Docente") {
+        if (authUser.rol === "Docente") {
           traerDocente();
           traerDivisiones();
         } else {
@@ -90,14 +90,14 @@ export default function Notas() {
         }
       }
     }
-  }, [loading, authUser, usuario.rol, usuario.id]);
+  }, [loading, authUser, authUser.rol, authUser.id]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Docente"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Docente"
     );
   };
   const handleTrimestre = (e, value) => {
@@ -396,7 +396,7 @@ export default function Notas() {
 
   const traerDocente = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario.id}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${authUser.id}`
     );
     if (res.status === 200 && res.data) {
       console.log("Docente:", res.data);
@@ -427,7 +427,7 @@ export default function Notas() {
         <Box sx={{ marginTop: "20px" }}>
           <Box direction="row">
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              {usuario.rol === "Docente" ? (
+              {authUser.rol === "Docente" ? (
                 <FormControl>
                   <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                   <Select
@@ -497,7 +497,7 @@ export default function Notas() {
             </FormControl>
 
             {/* {
-              usuario.rol === "Docente" && (
+              authUser.rol === "Docente" && (
                 <FormControl>
                   <InputLabel htmlFor="inputCurso">Division</InputLabel>
                   <Select

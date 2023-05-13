@@ -44,7 +44,7 @@ export default function DetalleSancion() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -54,15 +54,15 @@ export default function DetalleSancion() {
         traerSancion(id);
       }
     }
-  }, [loading, authUser, id, usuario.id, usuario.rol]);
+  }, [loading, authUser, id, authUser.id, authUser.rol]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Preceptor" ||
-      usuario.rol === "Docente"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Preceptor" ||
+      authUser.rol === "Docente"
     );
   };
   const traerUsuario = async () => {
@@ -137,7 +137,7 @@ export default function DetalleSancion() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancionxalumno?.sancion?.id}`,
       {
         // idSancionXAlumno: sancionxalumno?.id,
-        idUsuario: usuario.id,
+        idUsuario: authUser.id,
         // idTipoSancion: idtiposancion,
         motivo: motivo.length ? motivo : sancionxalumno?.sancion?.motivo,
       }

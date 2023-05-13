@@ -74,7 +74,7 @@ const Notificaciones = () => {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
@@ -83,14 +83,14 @@ const Notificaciones = () => {
         listarTutores();
       }
     }
-  }, [usuario.id, usuario.rol, loading, authUser]);
+  }, [authUser.id, authUser.rol, loading, authUser]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Preceptor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Preceptor"
     );
   };
   const traerUsuario = async () => {
@@ -141,7 +141,7 @@ const Notificaciones = () => {
         contenido: notificacion.contenido,
         fecha: new Date().toLocaleDateString("es-AR").split("T")[0],
         idCurso: idCurso,
-        idUsuario: usuario.id,
+        idUsuario: authUser.id,
         idTutor: idTutor,
       }
     );

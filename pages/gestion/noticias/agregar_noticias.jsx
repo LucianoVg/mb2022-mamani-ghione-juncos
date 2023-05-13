@@ -54,18 +54,18 @@ const AgregarNoticias = () => {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       }
     }
-  }, [loading, authUser, usuario.id, usuario.rol]);
+  }, [loading, authUser, authUser.id, authUser.rol]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Preceptor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Preceptor"
     );
   };
   const onSubmitData = async (e) => {
@@ -87,7 +87,7 @@ const AgregarNoticias = () => {
           creadaEn: hoy.toLocaleDateString().split("T")[0],
           url: url,
           descripcion: noticia.descripcion,
-          idUsuario: usuario.id,
+          idUsuario: authUser.id,
         }
       );
       setGuardando(false);

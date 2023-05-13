@@ -36,7 +36,7 @@ export default function Preanalitico() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -44,7 +44,7 @@ export default function Preanalitico() {
         traerPreanalitico();
       }
     }
-  }, [usuario.id, usuario.rol, loading, authUser]);
+  }, [authUser.id, authUser.rol, loading, authUser]);
 
   const traerPreanalitico = async () => {
     setCargando(true);
@@ -68,11 +68,11 @@ export default function Preanalitico() {
   };
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Secretaria" ||
-      usuario.rol === "Tutor" ||
-      usuario.rol === "Estudiante"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Secretaria" ||
+      authUser.rol === "Tutor" ||
+      authUser.rol === "Estudiante"
     );
   };
   const listarAlumnos = async () => {
@@ -96,7 +96,7 @@ export default function Preanalitico() {
             sx={{marginBottom:"20px"}}
             >
                 Reporte Historial Académico</Typography>
-      {usuario.rol != "Estudiante" && (
+      {authUser.rol != "Estudiante" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Alumno</h3>
 

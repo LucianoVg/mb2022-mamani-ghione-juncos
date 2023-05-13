@@ -84,7 +84,7 @@ const Sanciones = () => {
             router.push('/')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -93,13 +93,13 @@ const Sanciones = () => {
                 traerSanciones()
             }
         }
-    }, [loading, authUser, usuario.rol])
+    }, [loading, authUser, authUser.rol])
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
-            || usuario.rol === 'Docente'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
+            || authUser.rol === 'Docente'
     }
     const handleAlumno = (e, newValue) => {
         if (newValue) {

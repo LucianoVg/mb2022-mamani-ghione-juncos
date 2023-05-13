@@ -28,10 +28,10 @@ const MasInfo = () => {
         }
     }
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -43,13 +43,13 @@ const MasInfo = () => {
         if (!loading && !authUser) {
             router.push('/gestion/cuenta/login')
         }
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             }
         }
         listarAsistencia()
-    }, [id, loading, authUser, usuario.rol])
+    }, [id, loading, authUser, authUser.rol])
 
     return (
         <Layout>

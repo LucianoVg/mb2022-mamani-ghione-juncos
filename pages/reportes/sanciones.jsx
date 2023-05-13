@@ -51,11 +51,11 @@ export default function Sancion() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
-        if (usuario.rol === "Estudiante") {
+        if (authUser.rol === "Estudiante") {
           traerAlumno();
         } else {
           traerCursos();
@@ -64,7 +64,7 @@ export default function Sancion() {
         listarSanciones();
       }
     }
-  }, [usuario.id, usuario.rol, loading, authUser]);
+  }, [authUser.id, authUser.rol, loading, authUser]);
 
   const traerCursos = async () => {
     const res = await axios.get(
@@ -96,11 +96,11 @@ export default function Sancion() {
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Estudiante" ||
-      usuario.rol === "Tutor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Estudiante" ||
+      authUser.rol === "Tutor"
     );
   };
   const traerUsuario = async () => {

@@ -59,23 +59,23 @@ export default function ListadoNotificaciones() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
                 ListarNotificaciones()
             }
         }
-    }, [usuario.id, usuario.rol, loading, authUser])
+    }, [authUser.id, authUser.rol, loading, authUser])
 
     const [notificaciones, setNotificaciones] = useState()
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
-            || usuario.rol === 'Estudiante'
-            || usuario.rol === 'Tutor'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
+            || authUser.rol === 'Estudiante'
+            || authUser.rol === 'Tutor'
     }
     const traerUsuario = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

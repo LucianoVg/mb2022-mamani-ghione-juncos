@@ -26,7 +26,7 @@ export default function NuevaSancion() {
             router.push('/')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -35,14 +35,14 @@ export default function NuevaSancion() {
                 traerTiposSancion()
             }
         }
-    }, [loading, authUser, usuario.id, usuario.rol])
+    }, [loading, authUser, authUser.id, authUser.rol])
 
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
-            || usuario.rol === 'Docente'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
+            || authUser.rol === 'Docente'
     }
     const traerTiposSancion = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)
@@ -76,7 +76,7 @@ export default function NuevaSancion() {
         e.preventDefault()
         setGuardando(true)
         const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`, {
-            idUsuario: usuario.id,
+            idUsuario: authUser.id,
             idAlumno: sancion.idAlumno,
             idCurso: sancion.idCurso,
             idTipoSancion: sancion.idTipoSancion,

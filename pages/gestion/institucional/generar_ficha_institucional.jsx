@@ -42,12 +42,12 @@ const FichaInstitucional = () => {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       }
     }
-  }, [authUser, loading, usuario.id, usuario.rol]);
+  }, [authUser, loading, authUser.id, authUser.rol]);
 
   const traerUsuario = async () => {
     const res = await axios.get(
@@ -62,7 +62,7 @@ const FichaInstitucional = () => {
     }
   };
   const tienePermisos = () => {
-    return usuario.rol === "Administrador" || usuario.rol === "Director";
+    return authUser.rol === "Administrador" || authUser.rol === "Director";
   };
 
   const handleImagenes = (e) => {
@@ -81,7 +81,7 @@ const FichaInstitucional = () => {
     e.preventDefault();
     await cargarImagenes();
 
-    fichaInstitucional.idUsuario = usuario.id;
+    fichaInstitucional.idUsuario = authUser.id;
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`,

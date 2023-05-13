@@ -40,9 +40,9 @@ export default function DetallesNoticia() {
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Preceptor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Preceptor"
     );
   };
   const traerUsuario = async () => {
@@ -122,14 +122,14 @@ export default function DetallesNoticia() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         traerNoticia(id);
       }
     }
-  }, [id, authUser, loading, usuario.id, usuario.rol]);
+  }, [id, authUser, loading, authUser.id, authUser.rol]);
 
   const traerNoticia = async (id) => {
     if (id) {

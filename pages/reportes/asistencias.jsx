@@ -54,7 +54,7 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
@@ -64,7 +64,7 @@ export default function Asistencias() {
         conteoAsistenciasMensuales();
       }
     }
-  }, [usuario.id, usuario.rol, loading, authUser]);
+  }, [authUser.id, authUser.rol, loading, authUser]);
 
   const conteoAsistenciasAnuales = async () => {
     setCargando2(true);
@@ -99,11 +99,11 @@ export default function Asistencias() {
   };
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Estudiante" ||
-      usuario.rol === "Tutor"
+      authUser.rol === "Administrador" ||
+      authUser.roll === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Estudiante" ||
+      authUser.rol === "Tutor"
     );
   };
   const traerUsuario = async () => {
@@ -201,7 +201,7 @@ export default function Asistencias() {
         </Box>
       )}
 
-      {usuario.rol === "Estudiante" && (
+      {authUser.rol === "Estudiante" && (
         <FormControl>
           <InputLabel id="demo-simple-select-label">Mes</InputLabel>
           <Select

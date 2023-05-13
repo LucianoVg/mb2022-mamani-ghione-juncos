@@ -44,21 +44,21 @@ export default function DetallesNoticia() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
                 traerDetalle()
             }
         }
-    }, [usuario.id, usuario.rol, loading, authUser])
+    }, [authUser.id, authUser.rol, loading, authUser])
 
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
-            || usuario.rol === 'Vicedirector'
-            || usuario.rol === 'Preceptor'
-            || usuario.rol === 'Estudiante'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
+            || authUser.rol === 'Vicedirector'
+            || authUser.rol === 'Preceptor'
+            || authUser.rol === 'Estudiante'
     }
     const traerDetalle = async () => {
         if (id) {
@@ -188,8 +188,8 @@ export default function DetallesNoticia() {
                                     ) : (
                                         <Box>
                                             {
-                                                usuario.rol !== 'Estudiante'
-                                                && usuario.rol !== 'Tutor' && (
+                                                authUser.rol !== 'Estudiante'
+                                                && authUser.rol !== 'Tutor' && (
                                                     <Button variant="contained"
                                                         sx={{ marginLeft: '30px', marginTop: '20px' }}
                                                         onClick={() => {

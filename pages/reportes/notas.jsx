@@ -48,7 +48,7 @@ export default function Notas() {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -59,7 +59,7 @@ export default function Notas() {
         listarCursos();
       }
     }
-  }, [usuario.id, usuario.rol, loading, authUser]);
+  }, [authUser.id, authUser.rol, loading, authUser]);
 
   const traerUsuario = async () => {
     const res = await axios.get(
@@ -72,11 +72,11 @@ export default function Notas() {
   };
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Director" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Estudiante" ||
-      usuario.rol === "Tutor"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Director" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Estudiante" ||
+      authUser.rolllll === "Tutor"
     );
   };
   const notasPorTrimestre = async () => {

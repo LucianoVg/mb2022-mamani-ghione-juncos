@@ -103,7 +103,7 @@ const MaterialEstudio = () => {
   };
   const traerAlumno = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${authUser.id}`
     );
     if (res.status === 200) {
       setAlumno(res.data);
@@ -128,7 +128,7 @@ const MaterialEstudio = () => {
               idCurso: idCurso,
               idMateria: idMateria,
               idTrimestre: idTrimestre,
-              idUsuario: usuario.id,
+              idUsuario: authUser.id,
             }
           );
           if (res.status === 200) {
@@ -194,7 +194,7 @@ const MaterialEstudio = () => {
       router.push("/gestion/cuenta/login");
     }
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -205,16 +205,16 @@ const MaterialEstudio = () => {
         descargarMaterial(1);
       }
     }
-  }, [loading, authUser, usuario.id, usuario.rol]);
+  }, [loading, authUser, authUser.id, authUser.rol]);
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Docente" ||
-      usuario.rol === "Estudiante"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Docente" ||
+      authUser.rol === "Estudiante"
     );
   };
   const puedeSubirArchivos = () => {
-    return usuario.rol === "Administrador" || usuario.rol === "Docente";
+    return authUser.rol === "Administrador" || authUser.rol === "Docente";
   };
   const borrarMaterial = async (e, id, idTrimestre) => {
     try {
@@ -238,7 +238,7 @@ const MaterialEstudio = () => {
         Material de Estudio
       </Typography>
       <div>
-        {usuario.rol !== "Estudiante" && (
+        {authUser.rol !== "Estudiante" && (
           <>
             <Box sx={{ marginBottom: "20px" }}>
               <FormControl sx={{ width: "100px" }}>

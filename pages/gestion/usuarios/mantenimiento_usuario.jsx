@@ -70,21 +70,21 @@ export default function MantenimientoUsuario() {
     // listarUsuarios()
     traerRoles();
     traerUsuario();
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         traerUsuarios();
       }
     }
-  }, [authUser, loading, usuario.id, usuario.rol]);
+  }, [authUser, loading, authUser.id, authUser.rol]);
 
   const tienePermisos = () => {
     return (
-      usuario.rol === "Administrador" ||
-      usuario.rol === "Secretaria" ||
-      usuario.rol === "Vicedirector" ||
-      usuario.rol === "Director"
+      authUser.rol === "Administrador" ||
+      authUser.rol === "Secretaria" ||
+      authUser.rol === "Vicedirector" ||
+      authUser.rol === "Director"
     );
   };
   const traerUsuario = async () => {
@@ -170,14 +170,14 @@ export default function MantenimientoUsuario() {
   return (
     <Layout>
       <div>
-        {(usuario.rol === "Director" ||
-          usuario.rol === "Administrador" ||
-          usuario.rol === "Vicedirector") && (
+        {(authUser.rol === "Director" ||
+          authUser.rol === "Administrador" ||
+          authUser.rol === "Vicedirector") && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Usuario</Button>
           </Link>
         )}
-        {usuario.rol === "Secretaria" && (
+        {authUser.rol === "Secretaria" && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Estudiante</Button>
           </Link>
@@ -215,7 +215,7 @@ export default function MantenimientoUsuario() {
               )}
             />
           </FormControl>
-          {usuario.rol !== "Secretaria" && (
+          {authUser.rol !== "Secretaria" && (
             <FormControl>
               <InputLabel id="select-label">Rol</InputLabel>
               <Select

@@ -27,7 +27,7 @@ export default function Dashboard() {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -38,11 +38,11 @@ export default function Dashboard() {
                 traerDocenteB()
             }
         }
-    }, [loading, authUser, usuario.rol])
+    }, [loading, authUser, authUser.rol])
 
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Director'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Director'
     }
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)

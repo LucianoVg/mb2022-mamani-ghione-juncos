@@ -21,21 +21,21 @@ export default function FechasExamen() {
       router.push('/gestion/cuenta/login')
     }
     traerUsuario()
-    if (usuario.rol) {
+    if (authUser.rol) {
       if (!tienePermisos()) {
         router.push('/error')
       } else {
         traerExamenes()
       }
     }
-  }, [loading, authUser, usuario.id, usuario.rol])
+  }, [loading, authUser, authUser.id, authUser.rol])
 
   const tienePermisos = () => {
-    return usuario.rol === 'Administrador'
-      || usuario.rol === 'Vicedirector'
-      || usuario.rol === 'Docente'
-      || usuario.rol === 'Estudiante'
-      || usuario.rol === 'Tutor'
+    return authUser.rol === 'Administrador'
+      || authUser.rol === 'Vicedirector'
+      || authUser.rol === 'Docente'
+      || authUser.rol === 'Estudiante'
+      || authUser.rol === 'Tutor'
   }
   const traerUsuario = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
@@ -76,7 +76,7 @@ export default function FechasExamen() {
       fechaInicio: startDate,
       fechaFin: endDate,
       idCurso: idCurso,
-      idUsuario: usuario.id
+      idUsuario: authUser.id
     })
     setGuardandoEvento(false)
     if (res.status === 200) {
@@ -102,11 +102,11 @@ export default function FechasExamen() {
     */
 
   const onAdd = (idCurso, asunto, fechaInicio, fechaFin) => {
-    // console.log(idCurso, asunto, fechaInicio, fechaFin, usuario.id);
-    guardarExamen(idCurso, asunto, fechaInicio, fechaFin, usuario.id)
+    // console.log(idCurso, asunto, fechaInicio, fechaFin, authUser.id);
+    guardarExamen(idCurso, asunto, fechaInicio, fechaFin, authUser.id)
   }
   const onUpdate = ({ id, asunto, fechaInicio, fechaFin, idCurso }) => {
-    // console.log(id, asunto, fechaInicio, fechaFin, idCurso, usuario.id);
+    // console.log(id, asunto, fechaInicio, fechaFin, idCurso, authUser.id);
     modificarExamen(id, asunto, fechaInicio, fechaFin, idCurso)
   }
   const onDelete = ({ id }) => {

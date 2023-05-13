@@ -33,9 +33,9 @@ const MasInfo = () => {
     }
 
     const tienePermisos = () => {
-        return usuario.rol === 'Administrador'
-            || usuario.rol === 'Docente'
-            || usuario.rol === 'Preceptor'
+        return authUser.rol === 'Administrador'
+            || authUser.rol === 'Docente'
+            || authUser.rol === 'Preceptor'
     }
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const MasInfo = () => {
             router.push('/gestion/cuenta/login')
         }
         traerUsuario()
-        if (usuario.rol) {
+        if (authUser.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -51,7 +51,7 @@ const MasInfo = () => {
                 listarAsistencia()
             }
         }
-    }, [id, loading, authUser, usuario.id, usuario.rol])
+    }, [id, loading, authUser, authUser.id, authUser.rol])
     return (
         <Layout>
             {
