@@ -81,7 +81,6 @@ export default function Notas() {
       } else {
         traerTrimestres();
         if (usuario.rol === "Docente") {
-        
           traerDivisiones();
         } else {
           traerCursos();
@@ -392,22 +391,17 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
     if (res.status === 200) {
-      console.log(res.data);
       setAlumnos(res.data);
     }
   };
 
-  const traerDocente = async (idUsuario = usuario.id, division= 'A') => {
-    // let param = idUsuario ? `?idUsuario=${idUsuario}` : "";
+  const traerDocente = async (idUsuario = usuario.id, division = "A") => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario, division}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
     );
-    if (res.status === 200) {
+    if (res.status === 200 && res.data) {
       setDocente(res.data);
-      console.log(res.data);
     }
-   
-    
   };
 
   const handleAlumno = (e, newValue) => {
@@ -456,14 +450,27 @@ export default function Notas() {
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    {docente && docente?.map((d, i) => (
-                      <MenuItem key={i} value={d.materiaxcursoxdivision?.idmateria}>
-                        {d.materiaxcursoxdivision.materia?.nombre}   -  {d.materiaxcursoxdivision.cursoxdivision?.curso?.nombre}° Año &quot;{d.materiaxcursoxdivision.cursoxdivision?.division?.division}&quot;
-                      </MenuItem>
-                    ))}
+                    {docente &&
+                      docente?.map((d, i) => (
+                        <MenuItem
+                          key={i}
+                          value={d.materiaxcursoxdivision?.idmateria}
+                        >
+                          {d.materiaxcursoxdivision.materia?.nombre} -{" "}
+                          {
+                            d.materiaxcursoxdivision.cursoxdivision?.curso
+                              ?.nombre
+                          }
+                          ° Año &quot;
+                          {
+                            d.materiaxcursoxdivision.cursoxdivision?.division
+                              ?.division
+                          }
+                          &quot;
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
-
               ) : (
                 <Autocomplete
                   sx={{ width: "330px" }}
@@ -649,10 +656,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                      notas.nota2 === 0 &&
-                      notas.nota3 === 0 &&
-                      notas.nota4 === 0 &&
-                      notas.nota5 === 0 ? (
+                    notas.nota2 === 0 &&
+                    notas.nota3 === 0 &&
+                    notas.nota4 === 0 &&
+                    notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
