@@ -60,7 +60,7 @@ export default async function handler(req, res) {
 
         const docente = await traerDocente(options)
         console.log(docente);
-        return res.status(200).json(docente, division)
+        return res.status(200).json(docente)
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.message })
