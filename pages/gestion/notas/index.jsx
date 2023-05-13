@@ -75,29 +75,33 @@ export default function Notas() {
     traerAlumnos();
     // traerUsuario();
 
-    if (authUser.rol) {
+    if (authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
-        traerTrimestres();
-        traerMaterias();
-        if (authUser.rol.tipo === "Docente") {
-          traerDocente();
+        if (authUser?.rol?.tipo === "Docente") {
+          // traerDocente();
+          traerNotas(0);
+          traerTrimestres();
+          traerMaterias();
           traerDivisiones();
+      
         } else {
+          traerTrimestres();
+          traerMaterias();
           traerCursos();
           traerNotas(0);
         }
       }
     }
-  }, [loading, authUser, authUser.rol, authUser.id]);
+  }, [loading, authUser, authUser?.rol?.tipo, authUser?.id]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol.tipo === "Administrador" ||
-      authUser.rol.tipo === "Director" ||
-      authUser.rol.tipo === "Vicedirector" ||
-      authUser.rol.tipo === "Docente"
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
+      authUser?.rol?.tipo === "Docente"
     );
   };
   const handleTrimestre = (e, value) => {
@@ -174,8 +178,16 @@ export default function Notas() {
     if (idAlumno) {
       queryParams.push({ idAlumno });
     }
-    if (idMateria) {
+    if (authUser?.rol?.tipo === "Docente") {
+      let materia = authUser.docentexmateria[0]
+      console.log(authUser)
+      console.log("MATERIAAAAA", materia)
+      setIdMateria(materia.materiaxcursoxdivision?.idmateria)
       queryParams.push({ idMateria });
+    } else {
+      if (idMateria) {
+        queryParams.push({ idMateria });
+      }
     }
     if (idCurso) {
       queryParams.push({ idCurso });
@@ -385,7 +397,14 @@ export default function Notas() {
   };
 
   const traerAlumnos = async (idCursoXdivision) => {
-    let param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
+    let param
+    if (authUser?.rol?.tipo === "Docente") {
+      idCursoXdivision = authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision
+      // console.log("divisioooon", idCursoXdivision)
+      param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
+    } else {
+      param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
+    }
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
@@ -427,36 +446,39 @@ export default function Notas() {
         <Box sx={{ marginTop: "20px" }}>
           <Box direction="row">
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              {authUser.rol.tipo === "Docente" ? (
+              {authUser?.rol?.tipo === "Docente" ? (
                 <FormControl>
                   <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                   <Select
                     id="inputMateria"
                     onChange={handleMateria}
                     label="Materia"
+                    defaultValue={ authUser.docentexmateria[0]?.materiaxcursoxdivision.idmateria}
                     sx={{
                       width: "150px",
                       marginRight: "20px",
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    {docente && (
-                      <MenuItem
-                        defaultValue={""}
-                        value={docente.idmateriaxcursoxdivision}
-                      >
-                        {docente.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                        {
-                          docente.materiaxcursoxdivision?.cursoxdivision?.curso
-                            ?.nombre
-                        }
-                        ° Año &quot;
-                        {
-                          docente.materiaxcursoxdivision?.cursoxdivision
-                            ?.division?.division
-                        }
-                        &quot;
-                      </MenuItem>
+                    {authUser && authUser.docentexmateria?.map((m, i) =>
+                      m.materiaxcursoxdivision.idmateria === idMateria ? (
+                        <MenuItem
+                          key={i}
+                          // defaultValue={""}
+                          selected
+                          value={m.idmateriaxcursoxdivision}
+                        >
+                          {m.materiaxcursoxdivision?.materia?.nombre}   -   {m.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} {m.materiaxcursoxdivision?.cursoxdivision?.division?.division}
+                        </MenuItem>
+                      ) : (
+                        <MenuItem
+                          key={i}
+                          // defaultValue={""}
+                          value={m.idmateriaxcursoxdivision}
+                        >
+                          {m.materiaxcursoxdivision?.materia?.nombre}   -   {m.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} {m.materiaxcursoxdivision?.cursoxdivision?.division?.division}
+                        </MenuItem>
+                      )
                     )}
                   </Select>
                 </FormControl>
@@ -497,7 +519,7 @@ export default function Notas() {
             </FormControl>
 
             {/* {
-              authUser.rol.tipo === "Docente" && (
+              authUser?.rol?.tipo === "Docente" && (
                 <FormControl>
                   <InputLabel htmlFor="inputCurso">Division</InputLabel>
                   <Select
@@ -647,10 +669,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                    notas.nota2 === 0 &&
-                    notas.nota3 === 0 &&
-                    notas.nota4 === 0 &&
-                    notas.nota5 === 0 ? (
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
