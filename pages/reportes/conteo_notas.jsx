@@ -76,20 +76,20 @@ export default function Dashboard() {
         }
         setCargando(false)
     }
-    const traerDocenteA = async (idUsuario = usuario.id, division = "A") => {
+    const traerDocenteA = async (idMateria = idMateria, division = "A") => {
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
+            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
         );
         if (res.status === 200 && res.data) {
-            setDocenteA(res.data);
+            setDocenteA('DOCENTE DEL A', res.data);
         }
     };
-    const traerDocenteB = async (idUsuario = usuario.id, division = "B") => {
+    const traerDocenteB = async (idMateria = idMateria, division = "B") => {
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
+            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
         );
         if (res.status === 200 && res.data) {
-            setDocenteB(res.data);
+            setDocenteB('DOCENTE DEL B', res.data);
         }
     };
     const handleSelect = (e) => {
@@ -103,7 +103,7 @@ export default function Dashboard() {
             <Grid container spacing={2} flex>
                 <Grid item xs={6}>
                     {
-                        !cargando && conteoNotas.length > 0 && (
+                        !cargando && conteoNotasA.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
                                     <BarChart
@@ -143,7 +143,7 @@ export default function Dashboard() {
                 </Grid>
                 <Grid item xs={6}>
                     {
-                        !cargando && conteoNotas.length > 0 && (
+                        !cargando && conteoNotasB.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
                                     <BarChart
