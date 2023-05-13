@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
 }
 
-export async function traerDocente(idusuario) {
+export async function traerDocente(idusuario, division) {
     try {
         const docente = await db.docentexmateria.findFirst({
             include: {
@@ -37,9 +37,19 @@ export async function traerDocente(idusuario) {
                 }
             },
             where: {
-                usuario: {
-                    id: Number(idusuario)
-                }
+                AND:[
+                   {
+                    usuario: {
+                        id: Number(idusuario)
+                    },
+                   },
+                   {
+                    cursoxdivision: {
+                        division: division
+                    }
+                   }
+
+                ]
             }
         })
         return docente

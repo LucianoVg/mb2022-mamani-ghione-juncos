@@ -1,5 +1,5 @@
 import NextCors from "nextjs-cors";
-import { db } from "../../../../../prisma";
+import { db } from "../../../../../../prisma";
 
 export default async function handler(req, res) {
     try {
@@ -31,7 +31,10 @@ async function MejorPromedio() {
        INNER JOIN materia as m ON m.id = hn.idmateria
        INNER JOIN alumnoxcursoxdivision as a ON a.id = hn.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
-       where  a.idcursoxdivision between 9 and 10 and u.activo = true and anoactual = ${Number(anoActual)} 
+       inner join cursoxdivision as cd on cd.id = a.idcursoxdivision
+       inner join division as d on d.id = cd.iddivision 
+      
+       where  a.idcursoxdivision between 9 and 10 and u.activo = true and anoactual = ${Number(anoActual)} and d.division like 'A'
        group by alumno,idalumnoxcursoxdivision
        order by promediototal desc`
     } catch (error) {
