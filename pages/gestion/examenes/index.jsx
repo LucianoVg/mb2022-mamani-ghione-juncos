@@ -25,23 +25,17 @@ export default function FechasExamen() {
         traerExamenes();
       }
     }
-  }, [loading, authUser, authUser.id, authUser.rol]);
+  }, [loading, authUser]);
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Docente" ||
-      authUser.rol === "Estudiante" ||
-      authUser.rol === "Tutor"
+      authUser.rol?.tipo === "Administrador" ||
+      authUser.rol?.tipo === "Vicedirector" ||
+      authUser.rol?.tipo === "Docente" ||
+      authUser.rol?.tipo === "Estudiante" ||
+      authUser.rol?.tipo === "Tutor"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-  //   if (res.data) {
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-  //   }
-  // }
   const traerExamenes = async () => {
     setCargando(true);
     const res = await axios.get(
@@ -91,7 +85,7 @@ export default function FechasExamen() {
         fechaInicio: startDate,
         fechaFin: endDate,
         idCurso: idCurso,
-        idUsuario: authUser.id,
+        idUsuario: authUser?.id,
       }
     );
     setGuardandoEvento(false);
