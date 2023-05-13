@@ -73,6 +73,11 @@ export const menus = [
     {
         id:15,
         menuSistema: "Conteo de Notas",
-        url: "/dashboard"
+        url: "/reportes/conteo_notas"
+    },
+    {
+        id:16,
+        menuSistema: "Mejor Promedio",
+        url: "/reportes/mejor_promedio"
     },
 ]

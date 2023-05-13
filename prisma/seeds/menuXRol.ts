@@ -63,6 +63,10 @@ export const menuXRoles = [
         idMenu: 6,
         idRol: 3
     },
+    {
+        idMenu: 16,
+        idRol: 3
+    },
 
 
 
@@ -124,6 +128,16 @@ export const menuXRoles = [
         idMenu: 14,
         idRol: 4
     },
+    {
+        idMenu: 15,
+        idRol: 4
+    }, {
+        idMenu: 16,
+        idRol: 4
+    },
+
+
+
 
     {
         idMenu: 1,
@@ -221,6 +235,9 @@ export const menuXRoles = [
         idMenu: 15,
         idRol: 8
     },
-
+    {
+        idMenu: 16,
+        idRol: 8
+    },
 
 ]

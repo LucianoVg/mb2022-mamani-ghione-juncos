@@ -9,8 +9,8 @@ export default async function handler(req, res) {
                origin: process.env.HOST,
                optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
           });
-          const { idMateria, division } = req.query
-          const contar = await contarNotas(idMateria, division)
+          const { idMateria } = req.query
+          const contar = await contarNotas(idMateria)
           return res.status(200).json(contar)
      } catch (error) {
           console.log(error);
