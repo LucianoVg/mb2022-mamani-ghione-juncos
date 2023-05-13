@@ -103,7 +103,7 @@ const MaterialEstudio = () => {
   };
   const traerAlumno = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${authUser.id}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`
     );
     if (res.status === 200) {
       setAlumno(res.data);
