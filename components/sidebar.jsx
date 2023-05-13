@@ -33,22 +33,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
   const router = useRouter();
   const { loading, authUser, cerrarSesion } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [usuario, setUsuario] = useState({ rol: "" });
 
-  useEffect(() => {
-    traerUsuario();
-  }, [authUser, usuario.rol]);
-
-  const traerUsuario = async () => {
-    if (!loading && authUser) {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-      );
-      if (res.status === 200) {
-        setUsuario({ rol: res.data?.rol?.tipo });
-      }
-    }
-  };
   const list = () => (
     <Box
       style={{ width: 250 }}
@@ -66,7 +51,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
           </Link>
         </ListItemButton>
       </ListItem>
-      {authUser && usuario.rol !== "Estudiante" && (
+      {!loading && authUser && authUser?.rol?.tipo !== "Estudiante" && (
         <ListItem disablePadding sx={{ mt: 3 }}>
           <ListItemButton>
             <ListItemIcon>
@@ -164,7 +149,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
         </>
       )}
 
-      {authUser && (
+      {!loading && authUser && (
         <ListItemButton onClick={logout}>
           <ListItemIcon>
             <LogoutIcon />
@@ -172,7 +157,7 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
           <ListItemText primary="Cerrar Sesion" />
         </ListItemButton>
       )}
-      {!authUser && (
+      {!loading && !authUser && (
         <ListItemButton onClick={() => router.push("/gestion/cuenta/login")}>
           <ListItemIcon>
             <LoginIcon />

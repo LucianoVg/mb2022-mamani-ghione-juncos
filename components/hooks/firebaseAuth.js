@@ -6,15 +6,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-
-const formatAuthUser = (user) => ({
-  uid: user.uid,
-  email: user.email,
-});
+import axios from "axios";
 
 export default function useFirebaseAuth() {
   const [authUser, setAuthUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const auth = getAuth(app);
 
@@ -22,11 +19,29 @@ export default function useFirebaseAuth() {
     setAuthUser(null);
   };
 
-  const iniciarSesion = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
-
-  const registrarse = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
+  const iniciarSesion = async (email, password) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta?correo=${email}&password=${password}`
+      );
+      if (res.status === 200 && res.data) {
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          console.log("FirebaseError:", error);
+          await createUserWithEmailAndPassword(auth, email, password);
+        } finally {
+          setAuthUser(res.data);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const cerrarSesion = () => signOut(auth).then(clear);
 
@@ -36,10 +51,14 @@ export default function useFirebaseAuth() {
       setLoading(false);
       return;
     }
-    setLoading(true);
-    var formattedUser = formatAuthUser(authState);
-    setAuthUser(formattedUser);
-    setLoading(false);
+
+    console.log("Auth State:", authState);
+    //  setLoading(true);
+    //  const res = await axios.get(
+    //    `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta?correo=${authState.email}&password=${password}`
+    //  );
+    //  setAuthUser(res.data);
+    //  setLoading(false);
   };
 
   useEffect(() => {
@@ -50,8 +69,8 @@ export default function useFirebaseAuth() {
   return {
     authUser,
     loading,
+    error,
     iniciarSesion,
-    registrarse,
     cerrarSesion,
   };
 }

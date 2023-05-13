@@ -15,31 +15,20 @@ import Notificacion from "./notificacion_panel";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useWindowSize from "./hooks/windowSize";
-import axios from "axios";
 
 export const Navbar = ({ toggleDrawer }) => {
   const { loading, authUser } = useAuth();
   const [title, setTitle] = useState('Instituto Privado "El Salvador"');
   const router = useRouter();
   const windowSize = useWindowSize();
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
+
   useEffect(() => {
     setTitle(
       windowSize.width <= 900
         ? '"El Salvador"'
         : 'Instituto Privado "El Salvador"'
     );
-    traerUsuario();
-  }, [windowSize, usuario.rol, usuario.id, authUser]);
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.status === 200) {
-      setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-    }
-  };
-
+  }, [windowSize]);
   return (
     <Box>
       <AppBar position="fixed">
@@ -61,9 +50,9 @@ export const Navbar = ({ toggleDrawer }) => {
           >
             <strong>{title}</strong>
           </Typography>
-          {usuario.rol && (
+          {!loading && authUser?.rol && (
             <Typography variant="body1" color={"white"} sx={{ mx: 2 }}>
-              Logueado como <strong>{usuario.rol}</strong>
+              Logueado como <strong>{authUser?.rol?.tipo}</strong>
             </Typography>
           )}
           <Link
@@ -74,29 +63,23 @@ export const Navbar = ({ toggleDrawer }) => {
               Institucional
             </Button>
           </Link>
-          {
-            !loading && authUser && (usuario.rol === 'Estudiante'
-              || usuario.rol === 'Tutor' || usuario.rol === 'Administrador') && (
-            // !loading &&
-            //   authUser &&
-            //   (usuario.rol != "Docente" ||
-            //     usuario.rol != "Director" ||
-            //     usuario.rol != "Vicedirector" ||
-            //     usuario.rol != "Preceptor" ||
-            //     usuario.rol != "Secretaria") && (
-            <>
-              <div
-                style={{
-                  alignContent: "right",
-                  marginLeft: "-30px",
-                  marginRight: "-20px",
-                }}
-              >
-                <Notificacion disablePadding />
-              </div>
-            </>
-              )
-          }
+          {!loading &&
+            authUser &&
+            (authUser.rol?.tipo === "Estudiante" ||
+              authUser.rol?.tipo === "Tutor" ||
+              authUser.rol?.tipo === "Administrador") && (
+              <>
+                <div
+                  style={{
+                    alignContent: "right",
+                    marginLeft: "-30px",
+                    marginRight: "-20px",
+                  }}
+                >
+                  <Notificacion disablePadding />
+                </div>
+              </>
+            )}
           {!loading && authUser && (
             <>
               <IconButton onClick={() => router.push(`/gestion/cuenta`)}>

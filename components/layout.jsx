@@ -1,9 +1,5 @@
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Box } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import { useRouter } from "next/router";
 import { useAuth } from "./context/authUserProvider";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -18,7 +14,8 @@ export function Layout({ children }) {
 
   useEffect(() => {
     if (!loading && authUser) {
-      traerUsuario();
+      traerMenuGestion(authUser?.rol?.id);
+      traerMenuReportes(authUser?.rol?.id);
     }
   }, [authUser, loading]);
   const traerMenuGestion = async (idRol) => {
@@ -37,15 +34,6 @@ export function Layout({ children }) {
     if (res.data) {
       console.log(res.data);
       setMenusReportes(res.data);
-    }
-  };
-  const traerUsuario = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-    );
-    if (res.data) {
-      await traerMenuGestion(res.data?.rol?.id);
-      await traerMenuReportes(res.data?.rol?.id);
     }
   };
   return (

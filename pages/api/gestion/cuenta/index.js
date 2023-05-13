@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
     await NextCors(req, res, {
       // Options
-      methods: ["POST"],
+      methods: ["POST", "GET"],
       origin: process.env.HOST,
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
@@ -70,8 +70,14 @@ export default async function handler(req, res) {
       );
 
       return res.status(200).json(creado);
-    } else {
-      return res.status(400).json({ mensaje: "Metodo no permitido" });
+    } else if (req.method === "GET") {
+      const { correo, password } = req.query;
+      const usuario = await traerUsuario(correo, password);
+      console.log(usuario);
+      if (!usuario) {
+        return res.status(401).send("Credenciales incorrectas");
+      }
+      return res.status(200).json(usuario);
     }
   } catch (error) {
     console.log(error);
@@ -230,6 +236,62 @@ export async function registrarUsuario(
       });
       return usuario;
     }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function traerUsuario(correo, password) {
+  try {
+    const usuario = await db.usuario.findFirst({
+      include: {
+        rol: true,
+        alumnoxcursoxdivision1: {
+          include: {
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              },
+            },
+          },
+        },
+        alumnoxcursoxdivision2: {
+          include: {
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              },
+            },
+          },
+        },
+        preceptorxcurso: {
+          include: {
+            curso: true,
+          },
+        },
+        docentexmateria: {
+          include: {
+            materiaxcursoxdivision: {
+              include: {
+                materia: true,
+                cursoxdivision: {
+                  include: {
+                    curso: true,
+                    division: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      where: {
+        AND: [{ correo: correo }, { password: password }],
+      },
+    });
+    return usuario;
   } catch (error) {
     console.log(error);
   }
