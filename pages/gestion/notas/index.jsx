@@ -81,7 +81,7 @@ export default function Notas() {
       } else {
         traerTrimestres();
         traerMaterias();
-        if (authUser.rol === "Docente") {
+        if (authUser.rol.tipo === "Docente") {
           traerDocente();
           traerDivisiones();
         } else {
@@ -94,10 +94,10 @@ export default function Notas() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Docente"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo === "Vicedirector" ||
+      authUser.rol.tipo === "Docente"
     );
   };
   const handleTrimestre = (e, value) => {
@@ -427,7 +427,7 @@ export default function Notas() {
         <Box sx={{ marginTop: "20px" }}>
           <Box direction="row">
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              {authUser.rol === "Docente" ? (
+              {authUser.rol.tipo === "Docente" ? (
                 <FormControl>
                   <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                   <Select
@@ -497,7 +497,7 @@ export default function Notas() {
             </FormControl>
 
             {/* {
-              authUser.rol === "Docente" && (
+              authUser.rol.tipo === "Docente" && (
                 <FormControl>
                   <InputLabel htmlFor="inputCurso">Division</InputLabel>
                   <Select

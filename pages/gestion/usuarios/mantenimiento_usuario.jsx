@@ -81,10 +81,10 @@ export default function MantenimientoUsuario() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Secretaria" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Director"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Secretaria" ||
+      authUser.rol.tipo === "Vicedirector" ||
+      authUser.rol.tipo ===o === "Director"
     );
   };
   // const traerUsuario = async () => {
@@ -170,14 +170,14 @@ export default function MantenimientoUsuario() {
   return (
     <Layout>
       <div>
-        {(authUser.rol === "Director" ||
-          authUser.rol === "Administrador" ||
-          authUser.rol === "Vicedirector") && (
+        {(authUser.rol.tipo === "Director" ||
+          authUser.rol.tipo === "Administrador" ||
+          authUser.rol.tipo === "Vicedirector") && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Usuario</Button>
           </Link>
         )}
-        {authUser.rol === "Secretaria" && (
+        {authUser.rol.tipo === "Secretaria" && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Estudiante</Button>
           </Link>

@@ -62,7 +62,7 @@ const FichaInstitucional = () => {
   //   }
   // };
   const tienePermisos = () => {
-    return authUser.rol === "Administrador" || authUser.rol === "Director";
+    return authUser.rol.tipo === "Administrador" || authUser.rol.tipo === "Director";
   };
 
   const handleImagenes = (e) => {

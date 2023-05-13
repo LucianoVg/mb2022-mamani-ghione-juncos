@@ -31,11 +31,11 @@ export default function FechasExamen() {
   }, [loading, authUser, authUser.id, authUser.rol])
 
   const tienePermisos = () => {
-    return authUser.rol === 'Administrador'
-      || authUser.rol === 'Vicedirector'
-      || authUser.rol === 'Docente'
-      || authUser.rol === 'Estudiante'
-      || authUser.rol === 'Tutor'
+    return authUser.rol.tipo === 'Administrador'
+      || authUser.rol.tipo === 'Vicedirector'
+      || authUser.rol.tipo === 'Docente'
+      || authUser.rol.tipo === 'Estudiante'
+      || authUser.rol.tipo === 'Tutor'
   }
   // const traerUsuario = async () => {
   //   const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

@@ -68,11 +68,11 @@ export default function Preanalitico() {
   // };
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Secretaria" ||
-      authUser.rol === "Tutor" ||
-      authUser.rol === "Estudiante"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo === "Secretaria" ||
+      authUser.rol.tipo === "Tutor" ||
+      authUser.rol.tipo === "Estudiante"
     );
   };
   const listarAlumnos = async () => {

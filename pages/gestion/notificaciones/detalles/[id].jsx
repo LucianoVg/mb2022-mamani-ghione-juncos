@@ -54,11 +54,11 @@ export default function DetallesNoticia() {
     }, [authUser.id, authUser.rol, loading, authUser])
 
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
-            || authUser.rol === 'Vicedirector'
-            || authUser.rol === 'Preceptor'
-            || authUser.rol === 'Estudiante'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Director'
+            || authUser.rol.tipo === 'Vicedirector'
+            || authUser.rol.tipo === 'Preceptor'
+            || authUser.rol.tipo === 'Estudiante'
     }
     const traerDetalle = async () => {
         if (id) {

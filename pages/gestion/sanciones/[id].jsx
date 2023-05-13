@@ -58,11 +58,11 @@ export default function DetalleSancion() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Preceptor" ||
-      authUser.rol === "Docente"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo === "Vicedirector" ||
+      authUser.rol.tipo === "Preceptor" ||
+      authUser.rol.tipo === "Docente"
     );
   };
   // const traerUsuario = async () => {

@@ -208,13 +208,13 @@ const MaterialEstudio = () => {
   }, [loading, authUser, authUser.id, authUser.rol]);
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Docente" ||
-      authUser.rol === "Estudiante"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Docente" ||
+      authUser.rol.tipo === "Estudiante"
     );
   };
   const puedeSubirArchivos = () => {
-    return authUser.rol === "Administrador" || authUser.rol === "Docente";
+    return authUser.rol.tipo === "Administrador" || authUser.rol.tipo === "Docente";
   };
   const borrarMaterial = async (e, id, idTrimestre) => {
     try {

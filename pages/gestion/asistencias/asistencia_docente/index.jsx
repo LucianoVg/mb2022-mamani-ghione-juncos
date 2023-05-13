@@ -53,10 +53,10 @@ export default function Asistencias() {
         }
     }, [loading, authUser, authUser.id, authUser.rol])
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
-            || authUser.rol === 'Vicedirector'
-            || authUser.rol === 'Preceptor'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Director'
+            || authUser.rol.tipo === 'Vicedirector'
+            || authUser.rol.tipo === 'Preceptor'
     }
     // const traerUsuario = async () => {
     //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

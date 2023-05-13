@@ -97,8 +97,8 @@ export default function Calendar({ data, onAdd, onUpdate, onDelete }) {
     //     }
     // }
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Docente'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Docente'
     }
 
     return (

@@ -72,11 +72,11 @@ export default function Notas() {
   // };
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Estudiante" ||
-      authUser.rolllll === "Tutor"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo ===o === "Vicedirector" ||
+      authUser.rol.tipo === "Estudiante" ||
+      authUser.rol.tipo === "Tutor"
     );
   };
   const notasPorTrimestre = async () => {

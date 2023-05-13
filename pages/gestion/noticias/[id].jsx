@@ -40,9 +40,9 @@ export default function DetallesNoticia() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Preceptor"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo === "Preceptor"
     );
   };
   // const traerUsuario = async () => {

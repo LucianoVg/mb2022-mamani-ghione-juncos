@@ -38,11 +38,11 @@ export default function NuevaSancion() {
     }, [loading, authUser, authUser.id, authUser.rol])
 
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
-            || authUser.rol === 'Vicedirector'
-            || authUser.rol === 'Preceptor'
-            || authUser.rol === 'Docente'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Director'
+            || authUser.rol.tipo === 'Vicedirector'
+            || authUser.rol.tipo === 'Preceptor'
+            || authUser.rol.tipo === 'Docente'
     }
     const traerTiposSancion = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/tipos`)

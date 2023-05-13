@@ -55,7 +55,7 @@ export default function Sancion() {
       if (!tienePermisos()) {
         router.push("/");
       } else {
-        if (authUser.rol === "Estudiante") {
+        if (authUser.rol.tipo === "Estudiante") {
           traerAlumno();
         } else {
           traerCursos();
@@ -96,11 +96,11 @@ export default function Sancion() {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Estudiante" ||
-      authUser.rol === "Tutor"
+      authUser.rol.tipo === "Administrador" ||
+      authUser.rol.tipo === "Director" ||
+      authUser.rol.tipo === "Vicedirector" ||
+      authUser.rol.tipo === "Estudiante" ||
+      authUser.rol.tipo === "Tutor"
     );
   };
   // const traerUsuario = async () => {

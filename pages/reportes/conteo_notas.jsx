@@ -41,8 +41,8 @@ export default function Dashboard() {
     }, [loading, authUser, authUser.rol])
 
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Director'
     }
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)

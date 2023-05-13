@@ -70,12 +70,12 @@ export default function ListadoNotificaciones() {
 
     const [notificaciones, setNotificaciones] = useState()
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
-            || authUser.rol === 'Vicedirector'
-            || authUser.rol === 'Preceptor'
-            || authUser.rol === 'Estudiante'
-            || authUser.rol === 'Tutor'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Director'
+            || authUser.rol.tipo === 'Vicedirector'
+            || authUser.rol.tipo === 'Preceptor'
+            || authUser.rol.tipo === 'Estudiante'
+            || authUser.rol.tipo === 'Tutor'
     }
     // const traerUsuario = async () => {
     //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)

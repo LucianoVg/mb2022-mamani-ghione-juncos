@@ -33,9 +33,9 @@ const MasInfo = () => {
     }
 
     const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Docente'
-            || authUser.rol === 'Preceptor'
+        return authUser.rol.tipo === 'Administrador'
+            || authUser.rol.tipo === 'Docente'
+            || authUser.rol.tipo === 'Preceptor'
     }
 
     useEffect(() => {
