@@ -108,6 +108,16 @@ export default function Notas() {
 
   const handleMateria = async (e) => {
     if (e.target.value) {
+      const materiaxdivision = materias?.find(
+        (m) => m.id === Number(e.target.value)
+      );
+      setIdMateria(Number(materiaxdivision?.idmateria));
+      setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
+      await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
+
+      // console.log("materiaxdivision", materiaxdivision);
+      // console.log("division", idDivision);
+      // console.log("idmateria", idMateria)
       setIdMateria(Number(e.target.value));
     } else {
       setIdMateria("");
@@ -387,9 +397,9 @@ export default function Notas() {
     }
   };
 
-  const traerDocente = async (division = "A") => {
+  const traerDocente = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario.id}/${division}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario.id}`
     );
     if (res.status === 200 && res.data) {
       console.log("Docente:", res.data);
