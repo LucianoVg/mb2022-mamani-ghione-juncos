@@ -56,6 +56,7 @@ export default async function handler(req, res) {
     };
 
     const docente = await traerDocente(options);
+    console.log("Docente:", docente);
     return res.status(200).json(docente);
   } catch (error) {
     console.log(error);
