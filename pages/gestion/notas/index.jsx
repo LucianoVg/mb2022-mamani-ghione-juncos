@@ -108,16 +108,7 @@ export default function Notas() {
 
   const handleMateria = async (e) => {
     if (e.target.value) {
-      const materiaxdivision = materias?.find(
-        (m) => m.id === Number(e.target.value)
-      );
-      setIdMateria(Number(materiaxdivision?.idmateria));
-      setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
-      await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
-
-      // console.log("materiaxdivision", materiaxdivision);
-      // console.log("division", idDivision);
-      // console.log("idmateria", idMateria)
+      setIdMateria(Number(e.target.value));
     } else {
       setIdMateria("");
     }
@@ -396,11 +387,12 @@ export default function Notas() {
     }
   };
 
-  const traerDocente = async (idUsuario = usuario.id, division = "A") => {
+  const traerDocente = async (division = "A") => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idUsuario}/${division}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario.id}/${division}`
     );
     if (res.status === 200 && res.data) {
+      console.log("Docente:", res.data);
       setDocente(res.data);
     }
   };
@@ -429,13 +421,6 @@ export default function Notas() {
           <Box direction="row">
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               {usuario.rol === "Docente" ? (
-                // <Box>
-                //   <h1> hola docente</h1>
-                //   <p>
-                //     {docente?.materiaxcursoxdivision?.materia?.nombre}
-                //   </p>
-                // </Box>
-
                 <FormControl>
                   <InputLabel htmlFor="inputMateria">Materia</InputLabel>
                   <Select
@@ -447,19 +432,27 @@ export default function Notas() {
                     sx={{
                       width: "150px",
                       marginRight: "20px",
-                      marginBottom: "20px",
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    {docente &&
-                    docente?.materiaxcursoxdivision?.map((d, i) => (
-                        <MenuItem
-                          key={i}
-                          value={d.idmateria}
-                        >
-                          {d.materia?.nombre}   -   {d.cursoxdivision?.curso?.nombre} {d.cursoxdivision?.division?.division}
-                        </MenuItem>
-                      ))}
+                    {docente && (
+                      <MenuItem
+                        defaultValue={""}
+                        value={docente.materiaxcursoxdivision?.idmateria}
+                      >
+                        {docente.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                        {
+                          docente.materiaxcursoxdivision?.cursoxdivision?.curso
+                            ?.nombre
+                        }
+                        ° Año &quot;
+                        {
+                          docente.materiaxcursoxdivision?.cursoxdivision
+                            ?.division?.division
+                        }
+                        &quot;
+                      </MenuItem>
+                    )}
                   </Select>
                 </FormControl>
               ) : (
@@ -553,8 +546,8 @@ export default function Notas() {
            */}
           </Box>
 
-          <Box sx={{ marginTop: "25px" }}>
-            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+          <Box>
+            <FormControl style={{ marginRight: "20px", marginBottom: 10 }}>
               <Autocomplete
                 sx={{ width: "250px" }}
                 disablePortal
@@ -595,16 +588,18 @@ export default function Notas() {
             color="info"
             variant="text"
             onClick={async () => {
-              setIdAlumno("");
+              setIdAlumno((_) => "");
               setIdDivision("");
-              setIdMateria(docente ? docente?.materia?.id : "");
+              setIdMateria(
+                docente ? docente?.materiaxcursoxdivision?.materia?.id : ""
+              );
               await traerNotas(index);
             }}
           >
             Quitar Filtros
           </Button>
         </Box>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box sx={{ mb: 1 }}>
           <Tabs
             value={index}
             onChange={handleTrimestre}
@@ -647,10 +642,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                      notas.nota2 === 0 &&
-                      notas.nota3 === 0 &&
-                      notas.nota4 === 0 &&
-                      notas.nota5 === 0 ? (
+                    notas.nota2 === 0 &&
+                    notas.nota3 === 0 &&
+                    notas.nota4 === 0 &&
+                    notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
