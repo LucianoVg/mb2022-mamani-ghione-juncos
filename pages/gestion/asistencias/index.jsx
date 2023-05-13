@@ -2,7 +2,7 @@ import { Layout } from "../../../components/layout";
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import 'dayjs/locale/es-mx';
+import "dayjs/locale/es-mx";
 
 import {
   Box,
@@ -51,7 +51,6 @@ export default function Asistencias() {
   const [idCurso, setIdCurso] = useState("");
   const [fecha, setFecha] = useState(null);
   const { loading, authUser } = useAuth();
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const router = useRouter();
   const [guardando, setGuardando] = useState(false);
   const [cargandoInfo, setCargandoInfo] = useState(false);
@@ -69,7 +68,6 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     traerAlumnos();
-    // traerUsuario();
     if (authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
@@ -82,19 +80,11 @@ export default function Asistencias() {
 
   const tienePermisos = () => {
     return (
-      authUser?.rol?.tipo === "Administrador" ||
-      authUser?.rol?.tipo === "Director" ||
-      authUser?.rol?.tipo === "Preceptor"
+      authUser.rol?.tipo === "Administrador" ||
+      authUser.rol?.tipo === "Director" ||
+      authUser.rol?.tipo === "Preceptor"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
   const listarCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
@@ -158,7 +148,7 @@ export default function Asistencias() {
     }
   };
   const [alumnos, setAlumnos] = useState([]);
-  const [idAlumno, setIdAlumno] = useState(0);
+  const [idAlumno, setIdAlumno] = useState("");
 
   const handleAlumno = (e, newValue) => {
     if (newValue) {
@@ -280,10 +270,6 @@ export default function Asistencias() {
     setOpen(false);
   };
 
-  const [filtros, setFiltros] = useState({
-    status: false,
-  });
-
   return (
     <Layout>
       <Container maxWidth="xl" style={{ position: "relative" }}>
@@ -372,11 +358,11 @@ export default function Asistencias() {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={8}>
-
                   <Box>
                     <LocalizationProvider
                       adapterLocale="es-mx"
-                      dateAdapter={AdapterDayjs}>
+                      dateAdapter={AdapterDayjs}
+                    >
                       <MobileDatePicker
                         label="Fecha"
                         name="fecha"
@@ -413,7 +399,8 @@ export default function Asistencias() {
                         noOptionsText={"No existe un estudiante con ese nombre"}
                         renderOption={(props, alumno) => (
                           <Box component="li" {...props} key={alumno?.id}>
-                            {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                            {alumno?.usuario?.apellido}{" "}
+                            {alumno?.usuario?.nombre}
                           </Box>
                         )}
                         renderInput={(params) => (
@@ -454,7 +441,9 @@ export default function Asistencias() {
                 <Grid item xs={8}>
                   <Box sx={{ marginBottom: "20px" }}>
                     <FormControl>
-                      <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                      <InputLabel id="demo-simple-select-label">
+                        Curso
+                      </InputLabel>
                       <Select
                         sx={{ width: "90px", marginRight: "20px" }}
                         labelId="demo-simple-select-label"
@@ -465,22 +454,25 @@ export default function Asistencias() {
                         onChange={handleCurso}
                         MenuProps={{ disableScrollLock: true }}
                       >
-                        <MenuItem value={0}>Seleccione un curso</MenuItem>
+                        <MenuItem value={""}>Seleccione un curso</MenuItem>
                         {cursos &&
                           cursos.map((c, i) => (
-                            <MenuItem selected={i === 0} value={c.id} key={c.id}>
+                            <MenuItem
+                              selected={i === 0}
+                              value={c.id}
+                              key={c.id}
+                            >
                               {c.curso?.nombre} {c.division?.division}
                             </MenuItem>
                           ))}
                       </Select>
                     </FormControl>
                   </Box>
-                  <Box
-                    style={{ marginRight: "20px", marginBottom: "25px" }}
-                  >
-                     <LocalizationProvider
+                  <Box style={{ marginRight: "20px", marginBottom: "25px" }}>
+                    <LocalizationProvider
                       adapterLocale="es-mx"
-                      dateAdapter={AdapterDayjs}>
+                      dateAdapter={AdapterDayjs}
+                    >
                       <MobileDatePicker
                         label="Fecha"
                         name="fecha"
@@ -639,10 +631,10 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                    !a.ausente &&
-                    !a.ausentejustificado &&
-                    !a.llegadatarde &&
-                    !a.mediafalta ? (
+                  !a.ausente &&
+                  !a.ausentejustificado &&
+                  !a.llegadatarde &&
+                  !a.mediafalta ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}
