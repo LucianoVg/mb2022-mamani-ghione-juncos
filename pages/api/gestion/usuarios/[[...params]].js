@@ -18,7 +18,6 @@ export default async function handler(req, res) {
         },
       ];
       let options = {
-      
         include: {
           rol: true,
           docentexmateria: {
@@ -29,12 +28,12 @@ export default async function handler(req, res) {
                   cursoxdivision: {
                     include: {
                       curso: true,
-                      division: true
-                    }
-                  }
-                }
-              }
-            }
+                      division: true,
+                    },
+                  },
+                },
+              },
+            },
           },
           preceptorxcurso: {
             include: {
@@ -61,8 +60,8 @@ export default async function handler(req, res) {
                   division: true,
                 },
               },
-            }
-          }
+            },
+          },
         },
         orderBy: {
           apellido: "asc",

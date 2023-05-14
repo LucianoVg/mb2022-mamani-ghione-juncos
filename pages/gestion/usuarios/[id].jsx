@@ -2,10 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { Layout } from "../../../components/layout";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import 'dayjs/locale/es-mx';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import "dayjs/locale/es-mx";
 import {
-  Checkbox,
   List,
   ListItemText,
   ListItemIcon,
@@ -18,13 +17,11 @@ import {
   TextField,
   useTheme,
   FormControl,
-  InputLabel,
   Select,
   OutlinedInput,
   Button,
   Alert,
   Box,
-  Chip,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
@@ -33,7 +30,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { toArray } from "lodash";
 
 export default function Detalles() {
   const ITEM_HEIGHT = 48;
@@ -57,7 +53,6 @@ export default function Detalles() {
     };
   }
 
-
   const [dataUsuario, setDataUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -71,57 +66,44 @@ export default function Detalles() {
   });
   const [cursos, setCursos] = useState([]);
   const [idCurso, setIdCurso] = useState([]);
-
+  const [usuario, setUsuario] = useState();
   const [materiasXcurso, setMateriasXcurso] = useState([]);
 
   const { loading, authUser } = useAuth();
   const router = useRouter();
-  const [usuario, setUsuario] = useState();
-
-
-  let idCursales = usuario?.preceptorxcurso?.map(c => {
-    return c?.curso?.id
-  })
+  let idCursales = usuario?.preceptorxcurso?.map((c) => {
+    return c?.curso?.id;
+  });
   const [idCursos, setIdCursos] = useState([]);
 
-  // console.log('cursos', idCursales)
-  // console.log('idcursos', idCurso)
+  console.log("cursos", idCursales);
+  console.log("idcursos", idCursos);
 
-  let idMateriales = usuario?.docentexmateria?.map(m => {
-    return m?.materiaxcursoxdivision?.id
-  })
+  let idMateriales = usuario?.docentexmateria?.map((m) => {
+    return m?.materiaxcursoxdivision?.id;
+  });
 
   const [idMaterias, setIdMaterias] = useState([]);
 
-  // console.log('materiales', idMateriales)
-  // console.log('idmaterias',idMaterias)
+  console.log("materiales", idMateriales);
+  console.log("idmaterias", idMaterias);
 
-  const [selectedEnf, setSelectedEnf] = useState([]);
   const [fecha, setFecha] = useState(null);
-  const [alumno, setAlumno] = useState();
-  const [docente, setDocente] = useState();
-  const [preceptor, setPreceptor] = useState();
   const [respuesta, setRespuesta] = useState({ status: 0, mensaje: "" });
   const [guardando, setGuardando] = useState(false);
   const [cargando, setCargando] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [mensaje, setMensaje] = useState("");
 
   const { id } = router.query;
   useEffect(() => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
+    traerUsuario();
     traerCursos();
     traerMaterias();
-    // traerAlumno()
-    // traerDocente()
-  }, [loading, authUser]);
+  }, [loading, authUser, id]);
 
-  console.log(usuario);
   const traerCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos/listar`
@@ -144,32 +126,22 @@ export default function Detalles() {
       setMateriasXcurso(res.data);
     }
   };
-
-  // const traerUsuario = async () => {
-  //   setCargando(true);
-  //   if (id) {
-  //     const res = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`
-  //     );
-  //     console.log("USUARIO: ", res.data);
-  //     setUsuario(res.data[0]);
-  //     setCargando(false);
-  //     return;
-  //   }
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   console.log(res.data);
-  //   if (res.data) {
-  //     setUsuario(res.data);
-  //   }
-  //   setCargando(false);
-  // };
-
+  const traerUsuario = async () => {
+    setCargando(true);
+    if (id) {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`
+      );
+      console.log("USUARIO: ", res.data);
+      setUsuario(res.data[0]);
+      setCargando(false);
+      return;
+    }
+    setCargando(false);
+  };
   const handleUsuario = (e) => {
     setDataUsuario({ ...dataUsuario, [e.target.name]: e.target.value });
   };
-
   const handleFecha = (value) => {
     setFecha(new Date(value));
     setDataUsuario({
@@ -179,9 +151,6 @@ export default function Detalles() {
         .split("T")[0],
     });
   };
-
-
-
   const handleCursos = (event) => {
     const {
       target: { value },
@@ -222,10 +191,9 @@ export default function Detalles() {
         mensaje: "",
       });
       setEditMode(false);
-      // traerUsuario();
+      traerUsuario();
     }, 2000);
   };
-
   const handleCurso = (e) => {
     setIdCurso(Number(e.target.value));
   };
@@ -241,10 +209,6 @@ export default function Detalles() {
   const [fechanacimiento, setFechanacimiento] = useState();
 
   console.log("datausuario:", dataUsuario);
-
-  const handleFechaNacimiento = (value) => {
-    setFechanacimiento(value);
-  };
 
   //   const materiasUnicas = usuario?.docentexmateria?.materiaxcursoxdivision?.materia?.reduce((m, item) => {
   //     const existingItem = m.find(({id}) => id === item.id);
@@ -291,7 +255,7 @@ export default function Detalles() {
             style={{ marginLeft: "40px" }}
             variant="contained"
             onClick={() => {
-              setIdCursos(idCursales)
+              setIdCursos(idCursales);
               setIdMaterias(idMateriales);
               setEditMode(!editMode);
               setNombre(usuario?.nombre);
@@ -407,9 +371,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                    new Date(
-                      usuario?.fechanacimiento.split("/")[2]
-                    ).getFullYear()
+                      new Date(
+                        usuario?.fechanacimiento.split("/")[2]
+                      ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -587,9 +551,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                    new Date(
-                      usuario?.fechanacimiento.split("/")[2]
-                    ).getFullYear()
+                      new Date(
+                        usuario?.fechanacimiento.split("/")[2]
+                      ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>
@@ -598,7 +562,8 @@ export default function Detalles() {
                   </Typography>
                   <LocalizationProvider
                     adapterLocale="es-mx"
-                    dateAdapter={AdapterDayjs}>
+                    dateAdapter={AdapterDayjs}
+                  >
                     <MobileDatePicker
                       InputProps={{ sx: { height: "40px" } }}
                       // label="Fecha"
@@ -616,106 +581,124 @@ export default function Detalles() {
 
           <Divider sx={{ marginTop: "20px" }}></Divider>
 
-{
-  usuario?.rol?.tipo === "Tutor" && (
-    <>
-    <Typography
-      variant="h5"
-      sx={{ marginBottom: "20px", marginTop: "20px" }}
-    >
-      <strong>Datos del Estudiante</strong>
-    </Typography>
+          {usuario?.rol?.tipo === "Tutor" && (
+            <>
+              <Typography
+                variant="h5"
+                sx={{ marginBottom: "20px", marginTop: "20px" }}
+              >
+                <strong>Datos del Estudiante</strong>
+              </Typography>
 
-    <Stack
-      direction={{ xs: "column", sm: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 23 }}
-    >
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Nombre</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.nombre || "N/A"}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Apellido</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.apellido || "N/A"}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Legajo</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.legajo || "N/A"}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Curso</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.curso?.nombre}° Año &quot;{usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.division?.division || "N/A"}&quot; 
-      </Typography>
-    </Stack>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 2, sm: 2, md: 23 }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Nombre</strong> <br />
+                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.nombre || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Apellido</strong> <br />
+                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.apellido ||
+                    "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Legajo</strong> <br />
+                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.legajo || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Curso</strong> <br />
+                  {
+                    usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.curso
+                      ?.nombre
+                  }
+                  ° Año &quot;
+                  {usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.division
+                    ?.division || "N/A"}
+                  &quot;
+                </Typography>
+              </Stack>
 
-    <Stack
-      direction={{ xs: "column", sm: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 23 }}
-    >
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Mail</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ width: "200px", marginBottom: "20px" }}
-      >
-        <strong>Teléfono</strong> <br />
-        {usuario?.alumnoxcursoxdivision2[0]?.usuario?.telefono || "N/A"}
-      </Typography>
-    </Stack>
-  </>
-  )
-}
-
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 2, sm: 2, md: 23 }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Mail</strong> <br />
+                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ width: "200px", marginBottom: "20px" }}
+                >
+                  <strong>Teléfono</strong> <br />
+                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.telefono ||
+                    "N/A"}
+                </Typography>
+              </Stack>
+            </>
+          )}
           {usuario?.rol?.tipo === "Docente" && !editMode && (
             <Box>
               <Typography variant="h5" sx={{ marginBottom: "20px" }}>
                 <strong>Datos Académicos</strong>
               </Typography>
 
-              <Stack direction='row' spacing={10}>
+              <Stack direction="row" spacing={10}>
                 <Box>
-                  <Typography variant="h6" >
+                  <Typography variant="h6">
                     <strong>Materia/s Impartidas</strong>
                   </Typography>
                   <Typography
                     variant="h6"
-                  // sx={{
-                  //   width: "auto",
-                  //   display: "flex",
-                  //   alignItems: "start",
-                  //   justifyContent: "flex-start",
-                  //   flexWrap: "wrap",
-                  // }}
+                    // sx={{
+                    //   width: "auto",
+                    //   display: "flex",
+                    //   alignItems: "start",
+                    //   justifyContent: "flex-start",
+                    //   flexWrap: "wrap",
+                    // }}
                   >
                     <List>
                       {usuario?.docentexmateria?.map((dxm) => (
-                        <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
+                        <ListItem key={dxm.id} sx={{ marginTop: "-10px" }}>
                           <ListItemIcon>
-                            <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                            <FiberManualRecordIcon
+                              sx={{
+                                color: "black",
+                                fontSize: "10px",
+                                marginLeft: "25px",
+                              }}
+                            />
                           </ListItemIcon>
-                          <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                            <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
+                          <ListItemText
+                            primaryTypographyProps={{ fontSize: "20px" }}
+                          >
+                            <strong>
+                              {" "}
+                              {dxm.materiaxcursoxdivision?.materia?.nombre}
+                            </strong>{" "}
+                            -{" "}
+                            <strong>{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
                           </ListItemText>
                         </ListItem>
                       ))}
-
                     </List>
                   </Typography>
                 </Box>
@@ -780,7 +763,6 @@ export default function Detalles() {
                     onChange={handleMaterias}
                     input={<OutlinedInput label="Materias" />}
                     MenuProps={MenuProps}
-
                   >
                     {materiasXcurso.map((m) => (
                       <MenuItem
@@ -788,7 +770,8 @@ export default function Detalles() {
                         value={m.id}
                         style={getStyles(m, materiasXcurso)}
                       >
-                        {m.materia?.nombre} - {m.cursoxdivision?.curso?.nombre} {m.cursoxdivision?.division?.division}
+                        {m.materia?.nombre} - {m.cursoxdivision?.curso?.nombre}{" "}
+                        {m.cursoxdivision?.division?.division}
                       </MenuItem>
                     ))}
                   </Select>
@@ -805,12 +788,23 @@ export default function Detalles() {
                 <strong>Curso/s a cargo</strong> <br />
                 <List>
                   {usuario?.preceptorxcurso?.map((pxc) => (
-                    <ListItem key={pxc.id} sx={{ marginTop: '-10px', fontSize: '70px' }}>
+                    <ListItem
+                      key={pxc.id}
+                      sx={{ marginTop: "-10px", fontSize: "70px" }}
+                    >
                       <ListItemIcon>
-                        <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                        <FiberManualRecordIcon
+                          sx={{
+                            color: "black",
+                            fontSize: "10px",
+                            marginLeft: "25px",
+                          }}
+                        />
                       </ListItemIcon>
-                      <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                        <strong >{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
+                      <ListItemText
+                        primaryTypographyProps={{ fontSize: "20px" }}
+                      >
+                        <strong>{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
                       </ListItemText>
                     </ListItem>
                   ))}

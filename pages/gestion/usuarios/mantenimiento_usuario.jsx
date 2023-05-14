@@ -54,7 +54,6 @@ export default function MantenimientoUsuario() {
   const paginacion = usePagination(usuarios, pageSize);
   const [pagina, setPagina] = useState(1);
   const [cargandoInfo, setCargandoInfo] = useState(false);
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const [rol, setRol] = useState("");
   const [roles, setRoles] = useState([]);
   const [idSelectedUser, setIdSelectedUser] = useState(0);
@@ -67,36 +66,26 @@ export default function MantenimientoUsuario() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // listarUsuarios()
     traerRoles();
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
-        // traerUsuarios();
+        traerUsuarios();
       }
     }
-  }, [authUser, loading, authUser?.id, authUser?.rol?.tipo]);
+  }, [authUser, loading]);
 
   const tienePermisos = () => {
     return (
       authUser?.rol?.tipo === "Administrador" ||
       authUser?.rol?.tipo === "Secretaria" ||
       authUser?.rol?.tipo === "Vicedirector" ||
-      authUser?.rol?.tipo ===o === "Director"
+      authUser?.rol?.tipo === "Director"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
   const traerUsuarios = async () => {
-    queryParams.push({ idLogged: usuario.id, rol: usuario.rol });
+    queryParams.push({ idLogged: authUser?.id, rol: authUser?.rol?.tipo });
     if (idUsuario) {
       queryParams.push({ idUsuario });
     }
@@ -122,7 +111,7 @@ export default function MantenimientoUsuario() {
     setCargandoInfo(false);
   };
   const traerRoles = async () => {
-    let param = `?rol=${usuario.rol}`;
+    let param = `?rol=${authUser?.rol?.tipo}`;
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/roles${param}`
     );

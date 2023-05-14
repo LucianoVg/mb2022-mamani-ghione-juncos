@@ -20,7 +20,6 @@ const AgregarNoticias = () => {
   });
   var hoy = new Date();
   const [imagen, setImagen] = useState(null);
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const router = useRouter();
   const [imagenPrev, setImagenPrev] = useState("/assets/img/placeholder.png");
   const [guardando, setGuardando] = useState(false);
@@ -38,28 +37,16 @@ const AgregarNoticias = () => {
   };
   const { loading, authUser } = useAuth();
 
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario({
-  //       id: res.data.id,
-  //       rol: res.data?.rol?.tipo,
-  //     });
-  //   }
-  // };
   useEffect(() => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       }
     }
-  }, [loading, authUser, authUser?.id, authUser?.rol?.tipo]);
+  }, [loading, authUser]);
 
   const tienePermisos = () => {
     return (
@@ -70,8 +57,6 @@ const AgregarNoticias = () => {
   };
   const onSubmitData = async (e) => {
     e.preventDefault();
-    // noticia.fecha = fecha
-
     console.log(imagen);
     console.log(noticia);
     setGuardando(true);
@@ -87,7 +72,7 @@ const AgregarNoticias = () => {
           creadaEn: hoy.toLocaleDateString().split("T")[0],
           url: url,
           descripcion: noticia.descripcion,
-          idUsuario: authUser.id,
+          idUsuario: authUser?.id,
         }
       );
       setGuardando(false);
@@ -100,10 +85,9 @@ const AgregarNoticias = () => {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-      <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
-            >
-                Nueva Noticia</Typography>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Nueva Noticia
+        </Typography>
         <Box component={"form"} onSubmit={onSubmitData} sx={{ mt: 1 }}>
           <Grid
             container

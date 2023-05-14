@@ -7,33 +7,18 @@ import {
   Button,
   TextareaAutosize,
   Container,
-  Checkbox,
   Autocomplete,
-  IconButton,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import { Notificacion } from "../../../components/notificacion_panel";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { Edit } from "@mui/icons-material";
-import Icon from "@mui/material/Icon";
 import { useAuth } from "../../../components/context/authUserProvider";
-import { setInterval } from "timers";
 import Loading from "../../../components/loading";
 
 const Notificaciones = () => {
@@ -46,10 +31,7 @@ const Notificaciones = () => {
   const [listNotificaciones, setListNotificaciones] = useState([]);
   const [cursos, setCursos] = useState([]);
   const [idCurso, setIdCurso] = useState("");
-  // const [nombre, setNombre] = useState('');
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const [cargandoInfo, setCargandoInfo] = useState(false);
-
   const [tutores, setTutores] = useState([]);
   const [idTutor, setIdTutor] = useState("");
 
@@ -73,8 +55,7 @@ const Notificaciones = () => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
@@ -83,7 +64,7 @@ const Notificaciones = () => {
         listarTutores();
       }
     }
-  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
+  }, [loading, authUser]);
 
   const tienePermisos = () => {
     return (
@@ -93,15 +74,6 @@ const Notificaciones = () => {
       authUser?.rol?.tipo === "Preceptor"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
 
   const listarTutores = async () => {
     const res = await axios.get(
@@ -141,7 +113,7 @@ const Notificaciones = () => {
         contenido: notificacion.contenido,
         fecha: new Date().toLocaleDateString("es-AR").split("T")[0],
         idCurso: idCurso,
-        idUsuario: authUser.id,
+        idUsuario: authUser?.id,
         idTutor: idTutor,
       }
     );
@@ -157,14 +129,12 @@ const Notificaciones = () => {
 
   return (
     <Layout>
-      {/* <Notificacion /> */}
       <div>
         <Grid container>
           <Grid item xs={7}>
-          <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
-            >
-                Envio de Notificaciones</Typography>
+            <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+              Envio de Notificaciones
+            </Typography>
             <Box direction="column">
               <Box direction="row">
                 {inEditMode.status === true ? (
@@ -275,6 +245,7 @@ const Notificaciones = () => {
                   name="contenido"
                   value={notificacion.contenido}
                   onChange={handleNotificacion}
+                  maxLength={300}
                   style={{
                     width: "350px",
                     maxLenght: "300",
@@ -285,7 +256,7 @@ const Notificaciones = () => {
                 />
 
                 {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
-                <Box xs={12}>
+                <Box xs={12} sx={{ mt: 2 }}>
                   <Button variant="contained" type="submit">
                     Enviar
                   </Button>
