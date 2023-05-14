@@ -80,8 +80,6 @@ export default function Notas() {
         if (authUser?.rol?.tipo === "Docente") {
           traerTrimestres();
           traerNotas(0);
-          traerMaterias();
-          traerDivisiones();
         } else {
           traerTrimestres();
           traerMaterias();
@@ -149,8 +147,6 @@ export default function Notas() {
     if (res.data) {
       if (authUser?.rol?.tipo === "Docente") {
         let materia = authUser.docentexmateria[0];
-        // console.log(authUser)
-        // console.log("MATERIAAAAA", materia)
         setIdMateria(materia.materiaxcursoxdivision?.idmateria);
         setTrimestres((_) => res.data);
       } else {
@@ -390,25 +386,13 @@ export default function Notas() {
       idCursoXdivision =
         authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision;
       // console.log("divisioooon", idCursoXdivision)
-      param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
-    } else {
-      param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     }
+    param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
     );
     if (res.status === 200) {
       setAlumnos(res.data);
-    }
-  };
-
-  const traerDocente = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${authUser.id}`
-    );
-    if (res.status === 200 && res.data) {
-      console.log("Docente:", res.data);
-      setDocente(res.data);
     }
   };
 
@@ -456,43 +440,6 @@ export default function Notas() {
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    {authUser &&
-                      authUser.docentexmateria?.map((m, i) =>
-                        m.materiaxcursoxdivision.idmateria === idMateria ? (
-                          <MenuItem
-                            key={i}
-                            // defaultValue={""}
-                            selected
-                            value={m.idmateriaxcursoxdivision}
-                          >
-                            {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                            {
-                              m.materiaxcursoxdivision?.cursoxdivision?.curso
-                                ?.nombre
-                            }{" "}
-                            {
-                              m.materiaxcursoxdivision?.cursoxdivision?.division
-                                ?.division
-                            }
-                          </MenuItem>
-                        ) : (
-                          <MenuItem
-                            key={i}
-                            // defaultValue={""}
-                            value={m.idmateriaxcursoxdivision}
-                          >
-                            {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                            {
-                              m.materiaxcursoxdivision?.cursoxdivision?.curso
-                                ?.nombre
-                            }{" "}
-                            {
-                              m.materiaxcursoxdivision?.cursoxdivision?.division
-                                ?.division
-                            }
-                          </MenuItem>
-                        )
-                      )}
                     {materiasOrdenadas?.map((m, i) =>
                       m.materiaxcursoxdivision.idmateria === idMateria ? (
                         <MenuItem
