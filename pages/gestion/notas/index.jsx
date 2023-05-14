@@ -79,6 +79,7 @@ export default function Notas() {
       } else {
         if (authUser?.rol?.tipo === "Docente") {
           traerTrimestres();
+          traerMaterias();
           traerNotas(0);
         } else {
           traerTrimestres();
@@ -104,15 +105,16 @@ export default function Notas() {
     traerNotas(Number(value));
   };
 
-  const handleMateria = async (e) => {
+  const handleMateria = (e) => {
     if (e.target.value) {
       const materiaxdivision = materias?.find(
         (m) => m.id === Number(e.target.value)
       );
+      console.log(materiaxdivision);
       if (materiaxdivision) {
         setIdMateria(Number(materiaxdivision?.idmateria));
         setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
-        await traerAlumnos(Number(materiaxdivision?.cursoxdivision?.id));
+        traerAlumnos(Number(materiaxdivision?.idcursoxdivision));
       }
     } else {
       setIdMateria("");
@@ -173,8 +175,15 @@ export default function Notas() {
       queryParams.push({ idMateria });
     }
 
-    if (idCurso) {
-      queryParams.push({ idCurso });
+    if (authUser?.rol?.tipo === "Docente" && !idCurso) {
+      queryParams.push({
+        idCurso:
+          authUser?.docentexmateria[0].materiaxcursoxdivision?.idcursoxdivision,
+      });
+    } else {
+      if (idCurso) {
+        queryParams.push({ idCurso });
+      }
     }
     if (idDivision) {
       queryParams.push({ idDivision });
@@ -382,11 +391,11 @@ export default function Notas() {
 
   const traerAlumnos = async (idCursoXdivision) => {
     let param;
-    if (authUser?.rol?.tipo === "Docente") {
-      idCursoXdivision =
-        authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision;
-      // console.log("divisioooon", idCursoXdivision)
-    }
+    //  if (authUser?.rol?.tipo === "Docente") {
+    //    idCursoXdivision =
+    //      authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision;
+    //    // console.log("divisioooon", idCursoXdivision)
+    //  }
     param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos${param}`
@@ -614,7 +623,8 @@ export default function Notas() {
               setIdAlumno((_) => "");
               setIdDivision("");
               setIdMateria(
-                docente ? docente?.materiaxcursoxdivision?.materia?.id : ""
+                authUser.docentexmateria[0]?.materiaxcursoxdivision
+                  ?.idmateria || ""
               );
               await traerNotas(index);
             }}
