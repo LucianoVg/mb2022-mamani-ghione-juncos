@@ -98,44 +98,37 @@ const Sanciones = () => {
     if (res.data) {
       setAlumnos(res.data);
     }
-    // const traerUsuario = async () => {
-    //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-    //     if (res.data) {
-    //         setUsuario({ rol: res.data?.rol?.tipo })
-    //         console.log(usuario);
-    //     }
-    // }
-    useEffect(() => {
-      if (!loading && !authUser) {
-        router.push("/");
-      }
-      // traerUsuario()
-      if (authUser.rol) {
-        if (!tienePermisos()) {
-          router.push("/error");
-        } else {
-          traerCursos();
-          traerAlumnos();
-          traerSanciones();
-        }
-      }
-    }, [loading, authUser, authUser.rol]);
-    const tienePermisos = () => {
-      return (
-        authUser.rol === "Administrador" ||
-        authUser.rol === "Director" ||
-        authUser.rol === "Vicedirector" ||
-        authUser.rol === "Preceptor" ||
-        authUser.rol === "Docente"
-      );
-    };
-    const handleAlumno = (e, newValue) => {
-      if (newValue) {
-        queryParams.push({ idAlumno: newValue.id });
+  };
+  useEffect(() => {
+    if (!loading && !authUser) {
+      router.push("/");
+    }
+    if (!loading && authUser?.rol) {
+      if (!tienePermisos()) {
+        router.push("/error");
       } else {
+        traerCursos();
+        traerAlumnos();
         traerSanciones();
       }
-    };
+    }
+  }, [loading, authUser]);
+
+  const tienePermisos = () => {
+    return (
+      authUser.rol?.tipo === "Administrador" ||
+      authUser.rol?.tipo === "Director" ||
+      authUser.rol?.tipo === "Vicedirector" ||
+      authUser.rol?.tipo === "Preceptor" ||
+      authUser.rol?.tipo === "Docente"
+    );
+  };
+  const handleAlumno = (e, newValue) => {
+    if (newValue) {
+      queryParams.push({ idAlumno: newValue.id });
+    } else {
+      traerSanciones();
+    }
   };
 
   return (
