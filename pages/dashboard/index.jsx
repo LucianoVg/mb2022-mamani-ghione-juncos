@@ -33,7 +33,7 @@ export default function Dashboard() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    if (!tienePermisos()) {
+    if (!loading && !tienePermisos()) {
       router.push("/error");
     } else {
       traerMaterias();
@@ -42,18 +42,22 @@ export default function Dashboard() {
     }
   }, [loading, authUser]);
 
-    const tienePermisos = () => {
-        return authUser.rol === 'Administrador'
-            || authUser.rol === 'Director'
-    }
-    const traerMaterias = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
-        console.log(res.data);
-        if (res.status === 200) {
-            setMaterias(res.data)
-        }
+  const tienePermisos = () => {
+    return (
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director"
+    );
+  };
+  const traerMaterias = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`
+    );
+    console.log(res.data);
+    if (res.status === 200) {
+      setMaterias(res.data);
     }
   };
+
   const traerConteoNotas = async (idMateria) => {
     setCargando(true);
     const res = await axios.get(
