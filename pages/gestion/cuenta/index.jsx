@@ -30,7 +30,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 export default function Detalles() {
   const { loading, authUser } = useAuth();
   const router = useRouter();
-  const [usuario, setUsuario] = useState();
   const [alumno, setAlumno] = useState();
   const [docente, setDocente] = useState();
   const [tutor, setTutor] = useState();
@@ -49,18 +48,19 @@ export default function Detalles() {
       router.push("/gestion/cuenta/login");
     }
     (async () => {
-      // await traerUsuario();
-      await traerAlumno();
-      await traerPreceptor();
-      await traerTutor();
-      await traerDocente();
+      if (authUser) {
+        await traerAlumno();
+        await traerPreceptor();
+        await traerTutor();
+        await traerDocente();
+      }
     })();
   }, [loading, authUser]);
 
   const traerDocente = async () => {
-    if (usuario?.rol?.tipo === "Docente") {
+    if (authUser?.rol?.tipo === "Docente") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/authUser/${authUser?.id}`
       );
 
       if (res.status === 200 && res.data) {
@@ -71,9 +71,9 @@ export default function Detalles() {
   };
 
   const traerPreceptor = async () => {
-    if (usuario?.rol?.tipo === "Preceptor") {
+    if (authUser?.rol?.tipo === "Preceptor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${authUser?.id}`
       );
       if (res.status === 200 && res.data) {
         setPreceptor(res.data);
@@ -82,9 +82,9 @@ export default function Detalles() {
     }
   };
   const traerTutor = async () => {
-    if (usuario?.rol?.tipo === "Tutor") {
+    if (authUser?.rol?.tipo === "Tutor") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${authUser?.id}`
       );
       if (res.status === 200 && res.data) {
         setTutor(res.data);
@@ -93,9 +93,9 @@ export default function Detalles() {
     }
   };
   const traerAlumno = async () => {
-    if (usuario?.rol?.tipo === "Estudiante") {
+    if (authUser?.rol?.tipo === "Estudiante") {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario?.id}`
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${authUser?.id}`
       );
       if (res.status === 200 && res.data) {
         setAlumno(res.data);
@@ -103,25 +103,14 @@ export default function Detalles() {
       }
     }
   };
-  // const traerUsuario = async () => {
-  //   setCargando(true);
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.status === 200 && res.data) {
-  //     setUsuario(res.data);
-  //     console.log(res.data);
-  //   }
-  //   setCargando(false);
-  // };
 
   const updateProfile = async () => {
-    console.log(usuario);
+    console.log(authUser);
 
     let dataUsuario = {};
 
     if (newPassword) {
-      if (usuario?.password !== confirmPassword) {
+      if (authUser?.password !== confirmPassword) {
         setMensaje("Contraseña invalida");
         setTimeout(() => {
           setMensaje("");
@@ -136,7 +125,7 @@ export default function Detalles() {
     console.log(dataUsuario);
     setGuardando(true);
     const res = await axios.put(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${usuario?.id}`,
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/update/${authUser?.id}`,
       dataUsuario
     );
     setGuardando(false);
@@ -152,7 +141,6 @@ export default function Detalles() {
         mensaje: "",
       });
       setEditMode(false);
-      // traerUsuario();
     }, 2000);
   };
 
@@ -174,16 +162,16 @@ export default function Detalles() {
       {!cargando && (
         <Container sx={{ marginLeft: "20px" }}>
           <Box>
-            {usuario?.rol?.tipo === "Secretaria" ? (
+            {authUser?.rol?.tipo === "Secretaria" ? (
               <Typography
                 variant="h5"
                 sx={{ marginRight: "30px", marginBottom: "10px" }}
               >
-                <strong>Datos Personales de {usuario?.rol?.tipo}</strong>
+                <strong>Datos Personales de {authUser?.rol?.tipo}</strong>
               </Typography>
             ) : (
               <Typography variant="h5" sx={{ marginBottom: "10px" }}>
-                <strong>Datos Personales del {usuario?.rol?.tipo}</strong>
+                <strong>Datos Personales del {authUser?.rol?.tipo}</strong>
               </Typography>
             )}
           </Box>
@@ -194,18 +182,18 @@ export default function Detalles() {
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Nombre</strong> <br />
-              {usuario?.nombre}
+              {authUser?.nombre}
             </Typography>
 
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Apellido</strong> <br />
-              {usuario?.apellido}
+              {authUser?.apellido}
             </Typography>
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Legajo</strong> <br />
-              {usuario?.legajo}
+              {authUser?.legajo}
             </Typography>
-            {usuario?.rol?.tipo === "Estudiante" && (
+            {authUser?.rol?.tipo === "Estudiante" && (
               <Typography variant="h6" sx={{ width: "200px" }}>
                 <strong>Curso</strong> <br />
                 {alumno?.cursoxdivision?.curso?.nombre}° Año &quot;
@@ -220,15 +208,15 @@ export default function Detalles() {
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Localidad</strong> <br />
-              {usuario?.localidad}
+              {authUser?.localidad}
             </Typography>
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Direccion</strong> <br />
-              {usuario?.direccion}
+              {authUser?.direccion}
             </Typography>
             <Typography variant="h6" sx={{ width: "150px" }}>
               <strong>Telefono</strong> <br />
-              {usuario?.telefono}
+              {authUser?.telefono}
             </Typography>
           </Stack>
           <Stack
@@ -238,14 +226,16 @@ export default function Detalles() {
           >
             <Typography variant="h6" sx={{ width: "200px" }}>
               <strong>Edad</strong> <br />
-              {usuario?.fechanacimiento
+              {authUser?.fechanacimiento
                 ? new Date().getFullYear() -
-                  new Date(usuario?.fechanacimiento.split("/")[2]).getFullYear()
+                  new Date(
+                    authUser?.fechanacimiento.split("/")[2]
+                  ).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
               <strong>Fecha de Nacimiento</strong> <br />
-              {usuario?.fechanacimiento || "N/A"}
+              {authUser?.fechanacimiento || "N/A"}
             </Typography>
           </Stack>
           <Divider sx={{ marginTop: "20px", marginBottom: "20px" }}></Divider>
@@ -302,7 +292,7 @@ export default function Detalles() {
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Mail</strong> <br />
-                  {usuario?.correo}
+                  {authUser?.correo}
                 </Typography>
                 <FormControl>
                   <Typography variant="h6" sx={{ width: "200px" }}>
@@ -342,7 +332,7 @@ export default function Detalles() {
             >
               <Typography variant="h6" sx={{ width: "200px" }}>
                 <strong>Mail</strong> <br />
-                {usuario?.correo}
+                {authUser?.correo}
               </Typography>
               <FormControl>
                 <Typography variant="h6" sx={{ width: "200px" }}>
@@ -360,7 +350,7 @@ export default function Detalles() {
 
           <Divider sx={{ marginTop: "20px", marginBottom: "20px" }}></Divider>
 
-          {usuario?.rol?.tipo === "Preceptor" && (
+          {authUser?.rol?.tipo === "Preceptor" && (
             <Box>
               <Typography variant="h5" sx={{ marginBottom: "20px" }}>
                 <strong>Datos Académicos</strong>
@@ -394,7 +384,7 @@ export default function Detalles() {
             </Box>
           )}
 
-          {usuario?.rol?.tipo === "Docente" && (
+          {authUser?.rol?.tipo === "Docente" && (
             <Box>
               <Typography variant="h6">
                 <strong>Materia/s Impartidas</strong>
@@ -408,7 +398,7 @@ export default function Detalles() {
             </Box>
           )}
 
-          {usuario?.rol?.tipo === "Estudiante" && (
+          {authUser?.rol?.tipo === "Estudiante" && (
             <>
               <Typography
                 variant="h5"
@@ -467,7 +457,7 @@ export default function Detalles() {
               </Stack>
             </>
           )}
-          {usuario?.rol?.tipo === "Tutor" && (
+          {authUser?.rol?.tipo === "Tutor" && (
             <>
               <Typography
                 variant="h5"
@@ -486,21 +476,21 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Nombre</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.usuario?.nombre || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.authUser?.nombre || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Apellido</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.usuario?.apellido || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.authUser?.apellido || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Legajo</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.usuario?.legajo || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.authUser?.legajo || "N/A"}
                 </Typography>
               </Stack>
 
@@ -514,14 +504,14 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Mail</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.usuario?.correo || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.authUser?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Telefono</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.usuario?.telefono || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.authUser?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>

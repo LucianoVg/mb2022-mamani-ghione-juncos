@@ -63,29 +63,22 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     traerDocentes();
-    // traerUsuario()
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         listarAsistencias();
       }
     }
-  }, [loading, authUser, authUser.id, authUser.rol]);
+  }, [loading, authUser]);
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Director" ||
-      authUser.rol === "Vicedirector" ||
-      authUser.rol === "Preceptor"
+      authUser.rol?.tipo === "Administrador" ||
+      authUser.rol?.tipo === "Director" ||
+      authUser.rol?.tipo === "Vicedirector" ||
+      authUser.rol?.tipo === "Preceptor"
     );
   };
-  // const traerUsuario = async () => {
-  //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
-  //     if (res.data) {
-  //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
-  //     }
-  // }
   const listarAsistencias = async () => {
     setCargandoInfo(true);
     const res = await axios.get(

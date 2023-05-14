@@ -49,13 +49,13 @@ const MasInfo = () => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       }
     }
     listarAsistencia();
-  }, [id, loading, authUser, authUser.rol]);
+  }, [id, loading, authUser]);
 
   return (
     <Layout>

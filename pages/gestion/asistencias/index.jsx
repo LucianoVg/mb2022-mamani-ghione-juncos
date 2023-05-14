@@ -68,7 +68,7 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     traerAlumnos();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -76,7 +76,7 @@ export default function Asistencias() {
         listarAsistencias();
       }
     }
-  }, [loading, authUser, authUser?.id, authUser?.rol?.tipo]);
+  }, [loading, authUser]);
 
   const tienePermisos = () => {
     return (

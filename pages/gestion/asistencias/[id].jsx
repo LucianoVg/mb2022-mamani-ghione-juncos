@@ -36,9 +36,9 @@ const MasInfo = () => {
 
   const tienePermisos = () => {
     return (
-      authUser.rol === "Administrador" ||
-      authUser.rol === "Docente" ||
-      authUser.rol === "Preceptor"
+      authUser.rol?.tipo === "Administrador" ||
+      authUser.rol?.tipo === "Docente" ||
+      authUser.rol?.tipo === "Preceptor"
     );
   };
 
@@ -46,15 +46,14 @@ const MasInfo = () => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario()
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         listarAsistencia();
       }
     }
-  }, [id, loading, authUser, authUser.id, authUser.rol]);
+  }, [id, loading, authUser]);
   return (
     <Layout>
       {!cargando && (
