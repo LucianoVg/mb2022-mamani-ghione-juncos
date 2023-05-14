@@ -144,8 +144,8 @@ export default function Detalles() {
             {authUser?.rol?.tipo === "Estudiante" && (
               <Typography variant="h6" sx={{ width: "200px" }}>
                 <strong>Curso</strong> <br />
-                {authUser?.cursoxdivision[0]?.curso?.nombre}° Año &quot;
-                {authUser?.cursoxdivision[0]?.division?.division}&quot;
+                {authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.curso?.nombre}° Año &quot;
+                {authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.division?.division}&quot;
               </Typography>
             )}
           </Stack>
@@ -371,21 +371,21 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Nombre</strong> <br />
-                  {authUser?.tutor?.nombre || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.nombre || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Apellido</strong> <br />
-                  {authUser?.tutor?.apellido || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.apellido || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Legajo</strong> <br />
-                  {authUser?.tutor?.legajo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.legajo || "N/A"}
                 </Typography>
               </Stack>
 
@@ -399,14 +399,14 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Mail</strong> <br />
-                  {authUser?.tutor?.correo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Telefono</strong> <br />
-                  {authUser?.tutor?.telefono || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>

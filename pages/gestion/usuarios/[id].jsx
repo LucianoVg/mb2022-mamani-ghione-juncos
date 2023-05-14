@@ -340,10 +340,10 @@ export default function Detalles() {
                       usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision?.curso
                         ?.nombre
                     }
-                    {
-                      usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision
-                        ?.division?.division
-                    }
+                    ° Año &quot;
+                    {usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision?.division
+                      ?.division || "N/A"}
+                    &quot;
                   </Typography>
                 )}
               </Stack>
@@ -382,9 +382,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -562,9 +562,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>
@@ -678,13 +678,13 @@ export default function Detalles() {
                   </Typography>
                   <Typography
                     variant="h6"
-                    // sx={{
-                    //   width: "auto",
-                    //   display: "flex",
-                    //   alignItems: "start",
-                    //   justifyContent: "flex-start",
-                    //   flexWrap: "wrap",
-                    // }}
+                  // sx={{
+                  //   width: "auto",
+                  //   display: "flex",
+                  //   alignItems: "start",
+                  //   justifyContent: "flex-start",
+                  //   flexWrap: "wrap",
+                  // }}
                   >
                     <List>
                       {materiasOrdenadas2.map((dxm) => (
