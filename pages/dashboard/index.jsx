@@ -15,8 +15,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../components/context/authUserProvider";
-import BarChart from "../../components/graficos/BarChart";
-import PieChart from "../../components/graficos/PieChart";
+import BarChartA from "../../components/graficos/BarChartA";
+import PieChartA from "../../components/graficos/PieChartA";
 import { Layout } from "../../components/layout";
 import Loading from "../../components/loading";
 
@@ -44,8 +44,9 @@ export default function Dashboard() {
 
   const tienePermisos = () => {
     return (
-      authUser?.rol?.tipo === "Administrador" ||
-      authUser?.rol?.tipo === "Director"
+      authUser &&
+      (authUser?.rol?.tipo === "Administrador" ||
+        authUser?.rol?.tipo === "Director")
     );
   };
   const traerMaterias = async () => {
@@ -101,7 +102,7 @@ export default function Dashboard() {
               }}
             >
               <CardContent>
-                <BarChart data={conteoNotas} />
+                <BarChartA data={conteoNotas} />
               </CardContent>
               {materias.length > 0 && (
                 <CardActions>
@@ -140,7 +141,7 @@ export default function Dashboard() {
               }}
             >
               <CardContent>
-                <PieChart data={mejoresPromedios} />
+                <PieChartA data={mejoresPromedios} />
               </CardContent>
             </Card>
           )}
