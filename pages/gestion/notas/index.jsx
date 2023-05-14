@@ -73,19 +73,15 @@ export default function Notas() {
       router.push("/gestion/cuenta/login");
     }
     traerAlumnos();
-    // traerUsuario();
-
-    if (authUser?.rol) {
+    if (authUser && authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
         if (authUser?.rol?.tipo === "Docente") {
-          // traerDocente();
           traerTrimestres();
           traerNotas(0);
           traerMaterias();
           traerDivisiones();
-
         } else {
           traerTrimestres();
           traerMaterias();
@@ -94,7 +90,7 @@ export default function Notas() {
         }
       }
     }
-  }, [loading, authUser, authUser?.rol?.tipo, authUser?.id]);
+  }, [loading, authUser]);
 
   const tienePermisos = () => {
     return (
@@ -124,21 +120,11 @@ export default function Notas() {
       setIdMateria("");
     }
   };
-
   const handleDivision = (e) => {
     if (e.target.value) {
       setIdDivision(Number(e.target.value));
     }
   };
-
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario(res.data);
-  //   }
-  // };
   const traerDivisiones = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/division`
@@ -162,16 +148,14 @@ export default function Notas() {
     );
     if (res.data) {
       if (authUser?.rol?.tipo === "Docente") {
-        let materia = authUser.docentexmateria[0]
+        let materia = authUser.docentexmateria[0];
         // console.log(authUser)
         // console.log("MATERIAAAAA", materia)
-        setIdMateria(materia.materiaxcursoxdivision?.idmateria)
+        setIdMateria(materia.materiaxcursoxdivision?.idmateria);
         setTrimestres((_) => res.data);
       } else {
         setTrimestres((_) => res.data);
-
       }
-
     }
   };
   const traerCursos = async () => {
@@ -401,9 +385,10 @@ export default function Notas() {
   };
 
   const traerAlumnos = async (idCursoXdivision) => {
-    let param
+    let param;
     if (authUser?.rol?.tipo === "Docente") {
-      idCursoXdivision = authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision
+      idCursoXdivision =
+        authUser.docentexmateria[0]?.materiaxcursoxdivision?.idcursoxdivision;
       // console.log("divisioooon", idCursoXdivision)
       param = idCursoXdivision ? `?idCursoXdivision=${idCursoXdivision}` : "";
     } else {
@@ -441,12 +426,13 @@ export default function Notas() {
     }
   };
 
-  const materiasOrdenadas = authUser?.docentexmateria?.sort((a, b) =>
-  (
-    a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision,
-    a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-  )
-  )
+  const materiasOrdenadas = authUser?.docentexmateria?.sort(
+    (a, b) => (
+      a.materiaxcursoxdivision?.idcursoxdivision -
+        b.materiaxcursoxdivision?.idcursoxdivision,
+      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+    )
+  );
   return (
     <Layout>
       <Container maxWidth={"xl"}>
@@ -470,6 +456,43 @@ export default function Notas() {
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
+                    {authUser &&
+                      authUser.docentexmateria?.map((m, i) =>
+                        m.materiaxcursoxdivision.idmateria === idMateria ? (
+                          <MenuItem
+                            key={i}
+                            // defaultValue={""}
+                            selected
+                            value={m.idmateriaxcursoxdivision}
+                          >
+                            {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                            {
+                              m.materiaxcursoxdivision?.cursoxdivision?.curso
+                                ?.nombre
+                            }{" "}
+                            {
+                              m.materiaxcursoxdivision?.cursoxdivision?.division
+                                ?.division
+                            }
+                          </MenuItem>
+                        ) : (
+                          <MenuItem
+                            key={i}
+                            // defaultValue={""}
+                            value={m.idmateriaxcursoxdivision}
+                          >
+                            {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                            {
+                              m.materiaxcursoxdivision?.cursoxdivision?.curso
+                                ?.nombre
+                            }{" "}
+                            {
+                              m.materiaxcursoxdivision?.cursoxdivision?.division
+                                ?.division
+                            }
+                          </MenuItem>
+                        )
+                      )}
                     {materiasOrdenadas?.map((m, i) =>
                       m.materiaxcursoxdivision.idmateria === idMateria ? (
                         <MenuItem
@@ -478,7 +501,15 @@ export default function Notas() {
                           selected
                           value={m.idmateriaxcursoxdivision}
                         >
-                          {m.materiaxcursoxdivision?.materia?.nombre}   -   {m.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} {m.materiaxcursoxdivision?.cursoxdivision?.division?.division}
+                          {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                          {
+                            m.materiaxcursoxdivision?.cursoxdivision?.curso
+                              ?.nombre
+                          }{" "}
+                          {
+                            m.materiaxcursoxdivision?.cursoxdivision?.division
+                              ?.division
+                          }
                         </MenuItem>
                       ) : (
                         <MenuItem
@@ -486,7 +517,15 @@ export default function Notas() {
                           // defaultValue={""}
                           value={m.idmateriaxcursoxdivision}
                         >
-                          {m.materiaxcursoxdivision?.materia?.nombre}   -   {m.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} {m.materiaxcursoxdivision?.cursoxdivision?.division?.division}
+                          {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                          {
+                            m.materiaxcursoxdivision?.cursoxdivision?.curso
+                              ?.nombre
+                          }{" "}
+                          {
+                            m.materiaxcursoxdivision?.cursoxdivision?.division
+                              ?.division
+                          }
                         </MenuItem>
                       )
                     )}
@@ -679,10 +718,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                      notas.nota2 === 0 &&
-                      notas.nota3 === 0 &&
-                      notas.nota4 === 0 &&
-                      notas.nota5 === 0 ? (
+                    notas.nota2 === 0 &&
+                    notas.nota3 === 0 &&
+                    notas.nota4 === 0 &&
+                    notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}
