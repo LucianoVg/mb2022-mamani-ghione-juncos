@@ -145,12 +145,14 @@ export default function Detalles() {
     }, 2000);
   };
 
-  
-const materiasOrdendas = authUser?.docentexmateria?.sort( (a,b) => 
 
-a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-)
-console.log("ORDENADASSS", materiasOrdendas);
+  const materiasOrdenadas = authUser?.docentexmateria?.sort((a, b) =>
+  (
+    a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision,
+    a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+  )
+  )
+  console.log("ORDENADASSS", materiasOrdenadas);
   return (
     <Layout>
       <Grid container>
@@ -235,7 +237,7 @@ console.log("ORDENADASSS", materiasOrdendas);
               <strong>Edad</strong> <br />
               {authUser?.fechanacimiento
                 ? new Date().getFullYear() -
-                  new Date(authUser?.fechanacimiento.split("/")[2]).getFullYear()
+                new Date(authUser?.fechanacimiento.split("/")[2]).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
@@ -390,28 +392,28 @@ console.log("ORDENADASSS", materiasOrdendas);
           )}
 
           {authUser?.rol?.tipo === "Docente" && (
-         <Box>
-         <Typography variant="h6" >
-           <strong>Materia/s Impartidas</strong>
-         </Typography>
-         <Typography
-           variant="h6"
-                 >
-           <List>
-             {materiasOrdendas.map((dxm) => (
-               <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
-                 <ListItemIcon>
-                   <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
-                 </ListItemIcon>
-                 <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
-                   <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
-                 </ListItemText>
-               </ListItem>
-             ))}
+            <Box>
+              <Typography variant="h6" >
+                <strong>Materia/s Impartidas</strong>
+              </Typography>
+              <Typography
+                variant="h6"
+              >
+                <List>
+                  {materiasOrdenadas.map((dxm) => (
+                    <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
+                      <ListItemIcon>
+                        <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                      </ListItemIcon>
+                      <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                        <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
+                      </ListItemText>
+                    </ListItem>
+                  ))}
 
-           </List>
-         </Typography>
-       </Box>
+                </List>
+              </Typography>
+            </Box>
           )}
 
           {authUser?.rol?.tipo === "Estudiante" && (

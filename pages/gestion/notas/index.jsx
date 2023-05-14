@@ -441,6 +441,12 @@ export default function Notas() {
     }
   };
 
+  const materiasOrdenadas = authUser?.docentexmateria?.sort((a, b) =>
+  (
+    a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision,
+    a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+  )
+  )
   return (
     <Layout>
       <Container maxWidth={"xl"}>
@@ -464,7 +470,7 @@ export default function Notas() {
                     }}
                     MenuProps={{ disableScrollLock: true }}
                   >
-                    {authUser && authUser.docentexmateria?.map((m, i) =>
+                    {materiasOrdenadas?.map((m, i) =>
                       m.materiaxcursoxdivision.idmateria === idMateria ? (
                         <MenuItem
                           key={i}
