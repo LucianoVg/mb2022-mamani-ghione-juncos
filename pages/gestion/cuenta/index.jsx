@@ -30,14 +30,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 export default function Detalles() {
   const { loading, authUser } = useAuth();
   const router = useRouter();
-  const [alumno, setAlumno] = useState();
-  const [docente, setDocente] = useState();
-  const [tutor, setTutor] = useState();
-  const [preceptor, setPreceptor] = useState();
-
   const [respuesta, setRespuesta] = useState({ status: 0, mensaje: "" });
   const [guardando, setGuardando] = useState(false);
-  const [cargando, setCargando] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
@@ -47,63 +41,7 @@ export default function Detalles() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    (async () => {
-      // if (authUser) {
-      //   // PENDIENTE DE CAMBIOS, YA QUE EL USUARIO LOGUEADO TRAE TODA ESTA INFO POR DEFECTO
-      //   await traerAlumno();
-      //   await traerPreceptor();
-      //   await traerTutor();
-      //   await traerDocente();
-      // }
-    })();
   }, [loading, authUser]);
-
-  const traerDocente = async () => {
-    if (authUser?.rol?.tipo === "Docente") {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/authUser/${authUser?.id}`
-      );
-
-      if (res.status === 200 && res.data) {
-        setDocente(res.data);
-        console.log(res.data);
-      }
-    }
-  };
-
-  //   const traerPreceptor = async () => {
-  //     if (authUser?.rol?.tipo === "Preceptor") {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/preceptores/${authUser?.id}`
-  //       );
-  //       if (res.status === 200 && res.data) {
-  //         setPreceptor(res.data);
-  //         console.log(res.data);
-  //       }
-  //     }
-  //   };
-  //   const traerTutor = async () => {
-  //     if (authUser?.rol?.tipo === "Tutor") {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores/${authUser?.id}`
-  //       );
-  //       if (res.status === 200 && res.data) {
-  //         setTutor(res.data);
-  //         console.log(res.data);
-  //       }
-  //     }
-  //   };
-  //   const traerAlumno = async () => {
-  //     if (authUser?.rol?.tipo === "Estudiante") {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${authUser?.id}`
-  //       );
-  //       if (res.status === 200 && res.data) {
-  //         setAlumno(res.data);
-  //         console.log(res.data);
-  //       }
-  //     }
-  //   };
 
   const updateProfile = async () => {
     console.log(authUser);
@@ -150,7 +88,7 @@ export default function Detalles() {
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
-  console.log("ORDENADASSS", materiasOrdenadas);
+  //   console.log("ORDENADASSS", materiasOrdenadas);
   return (
     <Layout>
       <Grid container>
@@ -166,7 +104,7 @@ export default function Detalles() {
           </Button>
         </Grid>
       </Grid>
-      {!cargando && (
+      {!loading && (
         <Container sx={{ marginLeft: "20px" }}>
           <Box>
             {authUser?.rol?.tipo === "Secretaria" ? (
@@ -203,8 +141,8 @@ export default function Detalles() {
             {authUser?.rol?.tipo === "Estudiante" && (
               <Typography variant="h6" sx={{ width: "200px" }}>
                 <strong>Curso</strong> <br />
-                {alumno?.cursoxdivision[0]?.curso?.nombre}° Año &quot;
-                {alumno?.cursoxdivision[0]?.division?.division}&quot;
+                {authUser?.cursoxdivision[0]?.curso?.nombre}° Año &quot;
+                {authUser?.cursoxdivision[0]?.division?.division}&quot;
               </Typography>
             )}
           </Stack>
@@ -365,7 +303,7 @@ export default function Detalles() {
               <Typography variant="h6" sx={{ width: "250px" }}>
                 <strong>Curso/s</strong> <br />
                 <List>
-                  {preceptor?.preceptorxcurso?.map((pxc) => (
+                  {authUser?.preceptorxcurso?.map((pxc) => (
                     <ListItem
                       key={pxc.id}
                       sx={{ marginTop: "-10px", fontSize: "70px" }}
@@ -397,10 +335,16 @@ export default function Detalles() {
                 <strong>Materia/s Impartidas</strong>
               </Typography>
               <Typography variant="h6">
-                <strong>
-                  {docente?.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                  <strong>{`${docente?.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${docente?.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
-                </strong>
+                <ul>
+                  {materiasOrdenadas.map((m) => (
+                    <li key={m.id}>
+                      <strong>
+                        {m?.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                        {`${m?.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${m?.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}
+                      </strong>
+                    </li>
+                  ))}
+                </ul>
               </Typography>
             </Box>
           )}
@@ -525,7 +469,7 @@ export default function Detalles() {
           )}
         </Container>
       )}
-      {cargando && (
+      {loading && (
         <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
           <Loading size={80} />
         </Container>
