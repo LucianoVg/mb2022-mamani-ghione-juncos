@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 async function contarNotas(idMateria) {
      try {
           let anoActual = new Date().getFullYear()
-          const conteo = await db.$queryRaw`SELECT n.idmateria,
+          const conteo = await db.$queryRaw`SELECT n.idmateria, m.nombre,
         (
              (select count(*) from nota as n     
              inner join alumnoxcursoxdivision as a on a.id = n.idalumnoxcursoxdivision
@@ -244,13 +244,15 @@ async function contarNotas(idMateria) {
         ) as nota10
         from nota as n
         inner join materia as m on m.id = n.idmateria
+-- inner join materiaxcursoxdivision as mcd on mcd.idmateria = n.idmateria
+             --    inner join docentexmateria as dm on m.id = dm.idmateria
      --    inner join alumnoxcursoxdivision as a on a.id = n.idalumnoxcursoxdivision
      --    inner join cursoxdivision as cd on cd.id = a.idcursoxdivision
      --    inner join division as d on d.id = cd.iddivision
-     --    inner join docentexmateria as dm on m.id = dm.idmateria
+
      --    inner join usuario as u on u.id = dm.idusuario
         where idmateria= ${Number(idMateria)} and anoactual = ${Number(anoActual)}
-        group by n.idmateria`
+        group by n.idmateria, m.nombre`
 
           var string = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
           let notas = JSON.parse(string)

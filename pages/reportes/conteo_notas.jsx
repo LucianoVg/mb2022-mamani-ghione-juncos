@@ -3,8 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../components/context/authUserProvider";
-import BarChart from "../../components/graficos/BarChart";
-import PieChart from "../../components/graficos/PieChart";
+import BarChartA from "../../components/graficos/BarChartA";
+import BarChartB from "../../components/graficos/BarChartB";
 import { Layout } from "../../components/layout";
 import Loading from "../../components/loading";
 
@@ -27,15 +27,15 @@ export default function Dashboard() {
             router.push('/gestion/cuenta/login')
         }
         // traerUsuario()
-        if (authUser.rol) {
+        if (authUser?.rol) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
                 traerMaterias()
                 traerConteoNotasA()
                 traerConteoNotasB()
-                traerDocenteA()
-                traerDocenteB()
+                // traerDocenteA()
+                // traerDocenteB()
             }
         }
     }, [loading, authUser, authUser?.rol?.tipo])
@@ -46,9 +46,10 @@ export default function Dashboard() {
     }
     const traerMaterias = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias`)
-        console.log(res.data);
+
         if (res.status === 200) {
             setMaterias(res.data)
+            console.log(res.data);
         }
     }
     // const traerUsuario = async () => {
@@ -76,24 +77,25 @@ export default function Dashboard() {
         }
         setCargando(false)
     }
-    const traerDocenteA = async (idMateria = idMateria, division = "A") => {
-        const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
-        );
-        if (res.status === 200 && res.data) {
-            setDocenteA('DOCENTE DEL A', res.data);
-        }
-    };
-    const traerDocenteB = async (idMateria = idMateria, division = "B") => {
-        const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
-        );
-        if (res.status === 200 && res.data) {
-            setDocenteB('DOCENTE DEL B', res.data);
-        }
-    };
+    // const traerDocenteA = async (idMateria = idMateria, division = "A") => {
+    //     const res = await axios.get(
+    //         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
+    //     );
+    //     if (res.status === 200 && res.data) {
+    //         setDocenteA('DOCENTE DEL A', res.data);
+    //     }
+    // };
+    // const traerDocenteB = async (idMateria = idMateria, division = "B") => {
+    //     const res = await axios.get(
+    //         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/usuario/${idMateria}/${division}`
+    //     );
+    //     if (res.status === 200 && res.data) {
+    //         setDocenteB('DOCENTE DEL B', res.data);
+    //     }
+    // };
     const handleSelect = (e) => {
-        traerConteoNotas(Number(e.target.value))
+        traerConteoNotasA(Number(e.target.value))
+        traerConteoNotasB(Number(e.target.value))
         setIdMateria(Number(e.target.value))
 
     }
@@ -106,25 +108,34 @@ export default function Dashboard() {
                         !cargando && conteoNotasA.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
-                                    <BarChart
+                                    <BarChartA
                                         data={conteoNotasA}
                                     />
                                 </CardContent>
                                 {materias.length > 0 &&
                                     (
                                         <CardActions>
-                                            <FormControl sx={{ minWidth: 120 }} size="small">
-                                                <InputLabel htmlFor="materiaSelect">Materia</InputLabel>
+                                            <FormControl sx={{ width: "150px" }}>
+                                                <InputLabel id="demo-simple-select-label">Materia</InputLabel>
                                                 <Select
-                                                    color="info"
-                                                    id="materiaSelect"
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={idMateria}
+                                                    label="Materia"
                                                     onChange={handleSelect}
-                                                    variant="outlined">
-                                                    {
-                                                        materias?.map(m => (
-                                                            <MenuItem value={m.id} key={m.id}>{m.nombre}</MenuItem>
-                                                        ))
-                                                    }
+                                                    MenuProps={{ disableScrollLock: true }}
+                                                >
+                                                    {materias &&
+                                                        materias?.map((m, i) =>
+
+                                                            <MenuItem
+                                                                key={i}
+                                                                value={m.materia?.id}
+                                                            >
+                                                                {m.materia?.nombre}
+                                                            </MenuItem>
+
+                                                        )}
                                                 </Select>
                                             </FormControl>
                                         </CardActions>
@@ -146,30 +157,10 @@ export default function Dashboard() {
                         !cargando && conteoNotasB.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
-                                    <BarChart
+                                    <BarChartB
                                         data={conteoNotasB}
                                     />
                                 </CardContent>
-                                {materias.length > 0 &&
-                                    (
-                                        <CardActions>
-                                            <FormControl sx={{ minWidth: 120 }} size="small">
-                                                <InputLabel htmlFor="materiaSelect">Materia</InputLabel>
-                                                <Select
-                                                    color="info"
-                                                    id="materiaSelect"
-                                                    onChange={handleSelect}
-                                                    variant="outlined">
-                                                    {
-                                                        materias?.map(m => (
-                                                            <MenuItem value={m.id} key={m.id}>{m.nombre}</MenuItem>
-                                                        ))
-                                                    }
-                                                </Select>
-                                            </FormControl>
-                                        </CardActions>
-                                    )
-                                }
                             </Card>
                         )
                     }

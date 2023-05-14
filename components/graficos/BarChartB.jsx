@@ -55,7 +55,7 @@ export default function BarChart({ data }) {
         plugins: {
             title: {
                 display: true,
-                text: 'Conteo Notas por Materia',
+                text: `Conteo Notas por Materia de ${data[0].nombre} división B`,
                 padding: {
                     top: 10,
                     bottom: 30
