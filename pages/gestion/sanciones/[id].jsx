@@ -28,13 +28,9 @@ export default function DetalleSancion() {
   const [tipoSanciones, setTipoSanciones] = useState();
   const router = useRouter();
   const [esSancionGrupal, setEsSancionGrupal] = useState(false);
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
-  // const [idtiposancion, setIdtiposancion] = useState(0)
   const [idalumno, setIdalumno] = useState(0);
-  // const [idcurso, setIdcurso] = useState(0)
   const [loadSancion, setLoadSancion] = useState(false);
-  // const [editMode, setEditMode] = useState(false)
   const [motivo, setMotivo] = useState("");
   const [guardando, setGuardando] = useState(false);
 
@@ -43,8 +39,7 @@ export default function DetalleSancion() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -54,7 +49,7 @@ export default function DetalleSancion() {
         traerSancion(id);
       }
     }
-  }, [loading, authUser, id, authUser?.id, authUser?.rol?.tipo]);
+  }, [loading, authUser, id]);
 
   const tienePermisos = () => {
     return (
@@ -65,14 +60,6 @@ export default function DetalleSancion() {
       authUser?.rol?.tipo === "Docente"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
 
   const traerSancion = async (id) => {
     if (id) {
@@ -80,6 +67,7 @@ export default function DetalleSancion() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/buscar/${id}`
       );
+      console.log("Sancion:", res.data);
       if (res.status === 200) {
         setSancionXAlumno(res.data);
       }
@@ -122,7 +110,6 @@ export default function DetalleSancion() {
       (a, i) =>
         a.id === sancionxalumno?.alumnoxcursoxdivision?.id &&
         (selected = `${a.usuario?.apellido} ${a.usuario?.nombre}`)
-      // idAlumno: Number(a.id)
     );
 
   const [inEditMode, setInEditMode] = useState({
@@ -136,9 +123,7 @@ export default function DetalleSancion() {
     const res = await axios.put(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones/actualizar/${sancionxalumno?.sancion?.id}`,
       {
-        // idSancionXAlumno: sancionxalumno?.id,
         idUsuario: authUser.id,
-        // idTipoSancion: idtiposancion,
         motivo: motivo.length ? motivo : sancionxalumno?.sancion?.motivo,
       }
     );
@@ -159,7 +144,11 @@ export default function DetalleSancion() {
   return (
     <Layout>
       <Container maxWidth={"xl"}>
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>Detalle Sanción</Typography>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Detalle Sanción de{" "}
+          {sancionxalumno?.alumnoxcursoxdivision?.usuario?.apellido}{" "}
+          {sancionxalumno?.alumnoxcursoxdivision?.usuario?.nombre}
+        </Typography>
         {!loadSancion && (
           <Box style={{ marginTop: "30px" }}>
             <Box direction="row">
@@ -180,15 +169,7 @@ export default function DetalleSancion() {
                       marginRight: "20px",
                       marginBottom: "20px",
                     }}
-                  >
-                    {/* {
-                                                alumnos && alumnos.map((a, i) => (
-                                                    <MenuItem selected={a.id === sancionxalumno.alumnoxcursoxdivision?.id} key={i} inputVa={a.id === sancionxalumno.alumnoxcursoxdivision?.id}>
-                                                        {a.usuario.nombre} {a.usuario.apellido}
-                                                    </MenuItem>
-                                                ))
-                                            } */}
-                  </Select>
+                  ></Select>
                 </FormControl>
               )}
 

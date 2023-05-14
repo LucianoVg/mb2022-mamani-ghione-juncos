@@ -31,9 +31,8 @@ export default function AsistenciasDocentes() {
   const [listado, setListado] = useState([]);
   const [mensual, setMensual] = useState([]);
   const [anual, setAnual] = useState([]);
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
-  const [idDocente, setIdDocente] = useState(1);
+  const [idDocente, setIdDocente] = useState("");
   const [mes, setMes] = useState(3);
   const router = useRouter();
   const [cargando1, setCargando1] = useState(false);
@@ -44,23 +43,30 @@ export default function AsistenciasDocentes() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
-        listarDocentes();
+        if (authUser?.rol?.tipo !== "Docente") {
+          listarDocentes();
+        }
         listadoAsistencias();
         listarAsistenciasAnuales();
         listarAsistenciasMensuales();
       }
     }
-  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
+  }, [loading, authUser]);
 
   const listarAsistenciasAnuales = async () => {
     setCargando3(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_anual/${idDocente}`
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_anual/${
+        idDocente || authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0].idusuario
+          : 1
+      }`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -71,7 +77,13 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasMensuales = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${idDocente}&mes=${mes}`
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${
+        idDocente || authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0].idusuario
+          : 1
+      }&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -82,7 +94,13 @@ export default function AsistenciasDocentes() {
   const listadoAsistencias = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${idDocente}&mes=${mes}`
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${
+        idDocente || authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0].idusuario
+          : 1
+      }&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -99,15 +117,6 @@ export default function AsistenciasDocentes() {
       authUser?.rol?.tipo === "Docente"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
 
   const listarDocentes = async () => {
     const res = await axios.get(
@@ -134,76 +143,78 @@ export default function AsistenciasDocentes() {
   };
   return (
     <Layout>
-           <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
-            >
-                Reporte Asistencias Docentes</Typography>
-      <h3>Buscar Docente</h3>
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        Reporte Asistencias Docentes{" "}
+        {authUser?.rol?.tipo === "Docente" ? `de ${authUser?.nombre}` : ""}
+      </Typography>
 
       {authUser?.rol?.tipo != "Docente" && (
-        <Box>
-          <FormControl style={{ marginRight: "20px" }}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              // value={value}
-              name="idDocente"
-              onChange={handleDocente}
-              getOptionLabel={(docentes) =>
-                `${docentes?.apellido} ${docentes?.nombre}`
-              }
-              options={docentes}
-              sx={{ width: "250px" }}
-              isOptionEqualToValue={(option, value) =>
-                option?.apellido === value?.apellido
-              }
-              noOptionsText={"No existe un docente con ese nombre"}
-              renderOption={(props, docentes) => (
-                <Box component="li" {...props} key={docentes?.id}>
-                  {docentes?.apellido} {docentes?.nombre}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField {...params} label="Docente" />
-              )}
-            />
-          </FormControl>
-          <FormControl style={{ marginRight: "20px" }}>
-            <InputLabel id="demo-simple-select-label">Mes</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={mes}
-              label="Mes"
-              onChange={handleMes}
-              style={{ width: "160px" }}
-              MenuProps={{ disableScrollLock: true }}
-            >
-              <MenuItem value={3}>Marzo</MenuItem>
-              <MenuItem value={4}>Abril</MenuItem>
-              <MenuItem value={5}>Mayo</MenuItem>
-              <MenuItem value={6}>Junio</MenuItem>
-              <MenuItem value={7}>Julio</MenuItem>
-              <MenuItem value={8}>Agosto</MenuItem>
-              <MenuItem value={9}>Septiembre</MenuItem>
-              <MenuItem value={10}>Octubre</MenuItem>
-              <MenuItem value={11}>Noviembre</MenuItem>
-              <MenuItem value={12}>Diciembre</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+        <>
+          <h3>Buscar Docente</h3>
+          <Box>
+            <FormControl style={{ marginRight: "20px" }}>
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                // value={value}
+                name="idDocente"
+                onChange={handleDocente}
+                getOptionLabel={(docentes) =>
+                  `${docentes?.apellido} ${docentes?.nombre}`
+                }
+                options={docentes}
+                sx={{ width: "250px" }}
+                isOptionEqualToValue={(option, value) =>
+                  option?.apellido === value?.apellido
+                }
+                noOptionsText={"No existe un docente con ese nombre"}
+                renderOption={(props, docentes) => (
+                  <Box component="li" {...props} key={docentes?.id}>
+                    {docentes?.apellido} {docentes?.nombre}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Docente" />
+                )}
+              />
+            </FormControl>
+            <FormControl style={{ marginRight: "20px" }}>
+              <InputLabel id="demo-simple-select-label">Mes</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={mes}
+                label="Mes"
+                onChange={handleMes}
+                style={{ width: "160px" }}
+                MenuProps={{ disableScrollLock: true }}
+              >
+                <MenuItem value={3}>Marzo</MenuItem>
+                <MenuItem value={4}>Abril</MenuItem>
+                <MenuItem value={5}>Mayo</MenuItem>
+                <MenuItem value={6}>Junio</MenuItem>
+                <MenuItem value={7}>Julio</MenuItem>
+                <MenuItem value={8}>Agosto</MenuItem>
+                <MenuItem value={9}>Septiembre</MenuItem>
+                <MenuItem value={10}>Octubre</MenuItem>
+                <MenuItem value={11}>Noviembre</MenuItem>
+                <MenuItem value={12}>Diciembre</MenuItem>
+              </Select>
+            </FormControl>
+            <Box sx={{ marginBottom: "20px", marginTop: 2 }}>
+              <Button
+                onClick={handleSearch}
+                variant="outlined"
+                startIcon={<Search />}
+                color="info"
+              >
+                Buscar
+              </Button>
+            </Box>
+          </Box>
+        </>
       )}
 
-      <Box sx={{ marginBottom: "20px", marginTop: 2 }}>
-        <Button
-          onClick={handleSearch}
-          variant="outlined"
-          startIcon={<Search />}
-          color="info"
-        >
-          Buscar
-        </Button>
-      </Box>
       <div sx={{ marginTop: 10 }}>
         <Grid container spacing={2}>
           <Grid item xs>

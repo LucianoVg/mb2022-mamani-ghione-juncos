@@ -86,6 +86,7 @@ const Sanciones = () => {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/sanciones`
     );
     if (res.data) {
+      console.log("Sanciones:", res.data);
       setSanciones(res.data);
     }
     setCargandoInfo(false);
@@ -248,7 +249,7 @@ const Sanciones = () => {
                   </TableCell>
                   <TableCell align="right">{s.sancion?.fecha}</TableCell>
                   <TableCell align="right">
-                    <Link href={`/gestion/sanciones/${s.sancion?.id}`}>
+                    <Link href={`/gestion/sanciones/${s?.id}`}>
                       <Button variant="outlined" component="label" color="info">
                         Detalles
                       </Button>
