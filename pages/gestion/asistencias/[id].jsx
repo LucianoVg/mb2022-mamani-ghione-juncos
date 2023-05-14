@@ -198,3 +198,5 @@ const MasInfo = () => {
     </Layout>
   );
 };
+
+export default MasInfo;
