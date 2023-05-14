@@ -32,7 +32,6 @@ const FichaInstitucional = () => {
     idUsuario: 0,
     portadaficha: [],
   });
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const router = useRouter();
   const { loading, authUser } = useAuth();
   const [imagenes, setImagenes] = useState(null);
@@ -41,28 +40,18 @@ const FichaInstitucional = () => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       }
     }
-  }, [authUser, loading, authUser?.id, authUser?.rol?.tipo]);
+  }, [authUser, loading]);
 
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({
-  //       id: res.data.id,
-  //       rol: res.data?.rol?.tipo,
-  //     });
-  //   }
-  // };
   const tienePermisos = () => {
-    return authUser?.rol?.tipo === "Administrador" || authUser?.rol?.tipo === "Director";
+    return (
+      authUser?.rol?.tipo === "Administrador" ||
+      authUser?.rol?.tipo === "Director"
+    );
   };
 
   const handleImagenes = (e) => {
@@ -81,7 +70,7 @@ const FichaInstitucional = () => {
     e.preventDefault();
     await cargarImagenes();
 
-    fichaInstitucional.idUsuario = authUser.id;
+    fichaInstitucional.idUsuario = authUser?.id;
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/institucional`,

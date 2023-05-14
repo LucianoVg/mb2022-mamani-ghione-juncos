@@ -49,6 +49,7 @@ export default function Detalles() {
     }
     (async () => {
       if (authUser) {
+        // PENDIENTE DE CAMBIOS, YA QUE EL USUARIO LOGUEADO TRAE TODA ESTA INFO POR DEFECTO
         await traerAlumno();
         await traerPreceptor();
         await traerTutor();

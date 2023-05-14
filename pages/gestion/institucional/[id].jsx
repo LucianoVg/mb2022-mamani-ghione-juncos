@@ -92,9 +92,6 @@ export default function EditarFicha() {
   const handleImagenes = (e) => {
     console.log(e?.currentTarget?.files);
     setImagenes(e?.currentTarget?.files);
-    //  setTimeout(() => {
-    //    console.log(imagenes);
-    //  }, 5000);
   };
   const cargarImagenes = async () => {
     if (imagenes && imagenes?.length > 0) {

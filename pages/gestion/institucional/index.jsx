@@ -14,22 +14,7 @@ export default function Institucional() {
   const [fichaInstitucional, setFichaInstitucional] = useState();
   const [cargando, setCargando] = useState(false);
   const { authUser } = useAuth();
-  const [usuario, setUsuario] = useState({
-    rol: "",
-  });
 
-  useEffect(() => {
-    // traerUsuario();
-  }, [authUser?.rol?.tipo]);
-
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     setUsuario({ rol: res.data?.rol?.tipo });
-  //   }
-  // };
   const traerFicha = async () => {
     setCargando(true);
     const res = await axios.get(
@@ -45,7 +30,10 @@ export default function Institucional() {
 
   return (
     <Layout>
-       <Typography variant="h4" sx={{ marginBottom: "20px" }}> Ficha Institucional</Typography>
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        {" "}
+        Ficha Institucional
+      </Typography>
       {!cargando && !fichaInstitucional && (
         <div style={{ marginBottom: "20px" }}>
           <Typography sx={{ mb: 3 }} component={"h3"} variant="h4">
@@ -54,7 +42,8 @@ export default function Institucional() {
         </div>
       )}
 
-      {(usuario?.rol === "Administrador" || usuario?.rol === "Director") &&
+      {(authUser?.rol?.tipo === "Administrador" ||
+        authUser?.rol?.tipo === "Director") &&
         !fichaInstitucional &&
         !cargando && (
           <div style={{ marginBottom: "20px" }}>
@@ -72,8 +61,8 @@ export default function Institucional() {
           {!cargando &&
             authUser &&
             fichaInstitucional &&
-            (usuario?.rol === "Administrador" ||
-              usuario?.rol === "Director") && (
+            (authUser?.rol?.tipo === "Administrador" ||
+              authUser?.rol?.tipo === "Director") && (
               <div style={{ marginBottom: "20px" }}>
                 <Link href={`/gestion/institucional/${fichaInstitucional?.id}`}>
                   <Button variant="contained" color="primary">
