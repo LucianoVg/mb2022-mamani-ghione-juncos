@@ -219,7 +219,7 @@ export default function Detalles() {
   //    return prev;
   //  }, [])
 
-  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
+  const materiasOrdenadas1 = usuario?.docentexmateria?.sort(
     (a, b) => (
       a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
     )
@@ -258,7 +258,7 @@ export default function Detalles() {
         style={{ marginLeft: "30px", marginBottom: "20px" }}
       >
         <Typography variant="h4">
-          <strong>Detalles de {authUser?.rol?.tipo}</strong>
+          <strong>Detalles de {usuario?.rol?.tipo}</strong>
         </Typography>
 
         {!editMode && (
@@ -322,26 +322,26 @@ export default function Detalles() {
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Nombre</strong> <br />
-                  {authUser?.nombre}
+                  {usuario?.nombre}
                 </Typography>
 
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Apellido</strong> <br />
-                  {authUser?.apellido}
+                  {usuario?.apellido}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Legajo</strong> <br />
-                  {authUser?.legajo}
+                  {usuario?.legajo}
                 </Typography>
-                {authUser?.rol?.tipo === "Estudiante" && (
+                {usuario?.rol?.tipo === "Estudiante" && (
                   <Typography variant="h6" sx={{ width: "200px" }}>
                     <strong>Curso</strong> <br />
                     {
-                      authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.curso
+                      usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision?.curso
                         ?.nombre
                     }
                     {
-                      authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision
+                      usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision
                         ?.division?.division
                     }
                   </Typography>
@@ -354,19 +354,19 @@ export default function Detalles() {
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Mail</strong> <br />
-                  {authUser?.correo}
+                  {usuario?.correo}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "70px" }}>
                   <strong>Contraseña</strong> <br />
-                  {authUser?.password}
+                  {usuario?.password}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "350px" }}>
                   <strong>Localidad</strong> <br />
-                  {authUser?.localidad}
+                  {usuario?.localidad}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "400px" }}>
                   <strong>Dirección</strong> <br />
-                  {authUser?.direccion}
+                  {usuario?.direccion}
                 </Typography>
               </Stack>
               <Stack
@@ -376,20 +376,20 @@ export default function Detalles() {
               >
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Teléfono</strong> <br />
-                  {authUser?.telefono}
+                  {usuario?.telefono}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "200px" }}>
                   <strong>Edad</strong> <br />
-                  {authUser?.fechanacimiento
+                  {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
                       new Date(
-                        authUser?.fechanacimiento.split("/")[2]
+                        usuario?.fechanacimiento.split("/")[2]
                       ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
                   <strong>Fecha de Nacimiento</strong> <br />
-                  {authUser?.fechanacimiento || "N/A"}
+                  {usuario?.fechanacimiento || "N/A"}
                 </Typography>
               </Stack>
             </Box>
@@ -445,7 +445,7 @@ export default function Detalles() {
                     variant="outlined"
                   />
                 </FormControl>
-                {authUser?.rol?.tipo === "Estudiante" && editMode && (
+                {usuario?.rol?.tipo === "Estudiante" && editMode && (
                   <FormControl>
                     <Typography variant="h6" sx={{ width: "200px" }}>
                       <strong>Curso</strong> <br />
