@@ -81,10 +81,13 @@ export default function Detalles() {
     }, 2000);
   };
 
-  const materiasOrdenadas = authUser?.docentexmateria?.sort(
+  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
     (a, b) => (
-      a.materiaxcursoxdivision?.idcursoxdivision -
-        b.materiaxcursoxdivision?.idcursoxdivision,
+      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
+    )
+  );
+  const materiasOrdenadas2 = materiasOrdenadas1?.sort(
+    (a, b) => (
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
@@ -173,9 +176,9 @@ export default function Detalles() {
               <strong>Edad</strong> <br />
               {authUser?.fechanacimiento
                 ? new Date().getFullYear() -
-                  new Date(
-                    authUser?.fechanacimiento.split("/")[2]
-                  ).getFullYear()
+                new Date(
+                  authUser?.fechanacimiento.split("/")[2]
+                ).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
@@ -336,7 +339,7 @@ export default function Detalles() {
               </Typography>
               <Typography variant="h6">
                 <ul>
-                  {materiasOrdenadas.map((m) => (
+                  {materiasOrdenadas2?.map((m) => (
                     <li key={m.id}>
                       <strong>
                         {m?.materiaxcursoxdivision?.materia?.nombre} -{" "}

@@ -110,7 +110,7 @@ export default function Notas() {
       const materiaxdivision = materias?.find(
         (m) => m.id === Number(e.target.value)
       );
-      console.log(materiaxdivision);
+      // console.log(materiaxdivision);
       if (materiaxdivision) {
         setIdMateria(Number(materiaxdivision?.idmateria));
         setIdDivision(Number(materiaxdivision?.cursoxdivision?.iddivision));
@@ -146,15 +146,8 @@ export default function Notas() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`
     );
-    if (res.data) {
-      if (authUser?.rol?.tipo === "Docente") {
-        let materia = authUser.docentexmateria[0];
-        setIdMateria(materia.materiaxcursoxdivision?.idmateria);
-        setTrimestres((_) => res.data);
-      } else {
-        setTrimestres((_) => res.data);
-      }
-    }
+    setTrimestres((_) => res.data);
+  
   };
   const traerCursos = async () => {
     try {
@@ -170,20 +163,18 @@ export default function Notas() {
     if (idAlumno) {
       queryParams.push({ idAlumno });
     }
-
-    if (idMateria) {
-      queryParams.push({ idMateria });
-    }
-
-    if (authUser?.rol?.tipo === "Docente" && !idCurso) {
+    if (authUser?.rol?.tipo === "Docente") {
       queryParams.push({
-        idCurso:
-          authUser?.docentexmateria[0].materiaxcursoxdivision?.idcursoxdivision,
+        idMateria:
+          authUser?.docentexmateria[0].materiaxcursoxdivision?.idmateria
       });
     } else {
-      if (idCurso) {
-        queryParams.push({ idCurso });
+      if (idMateria) {
+        queryParams.push({ idMateria });
       }
+    }
+    if (idCurso) {
+      queryParams.push({ idCurso });
     }
     if (idDivision) {
       queryParams.push({ idDivision });
@@ -421,8 +412,7 @@ export default function Notas() {
 
   const materiasOrdenadas = authUser?.docentexmateria?.sort(
     (a, b) => (
-      a.materiaxcursoxdivision?.idcursoxdivision -
-        b.materiaxcursoxdivision?.idcursoxdivision,
+      a.materiaxcursoxdivision?.idcursoxdivision -b.materiaxcursoxdivision?.idcursoxdivision &&
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
@@ -675,10 +665,10 @@ export default function Notas() {
                 {notas &&
                   paginacion.dataActual()?.map((n, i) =>
                     notas.nota1 === 0 &&
-                    notas.nota2 === 0 &&
-                    notas.nota3 === 0 &&
-                    notas.nota4 === 0 &&
-                    notas.nota5 === 0 ? (
+                      notas.nota2 === 0 &&
+                      notas.nota3 === 0 &&
+                      notas.nota4 === 0 &&
+                      notas.nota5 === 0 ? (
                       <TableRow key={i}>
                         <TableCell align="center">
                           {n.alumnoxcursoxdivision?.usuario?.legajo}

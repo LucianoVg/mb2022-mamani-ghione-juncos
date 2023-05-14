@@ -219,13 +219,16 @@ export default function Detalles() {
   //    return prev;
   //  }, [])
 
-  const materiasOrdenadas = authUser?.docentexmateria?.sort((a, b) =>
-  (
-    a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision,
-    a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-  )
-  )
-
+  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
+    (a, b) => (
+      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
+    )
+  );
+  const materiasOrdenadas2 = materiasOrdenadas1?.sort(
+    (a, b) => (
+      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+    )
+  );
   return (
     <Layout>
       {respuesta.status !== 0 && (
@@ -684,7 +687,7 @@ export default function Detalles() {
                     // }}
                   >
                     <List>
-                      {usuario?.docentexmateria?.map((dxm) => (
+                      {materiasOrdenadas2.map((dxm) => (
                         <ListItem key={dxm.id} sx={{ marginTop: "-10px" }}>
                           <ListItemIcon>
                             <FiberManualRecordIcon
