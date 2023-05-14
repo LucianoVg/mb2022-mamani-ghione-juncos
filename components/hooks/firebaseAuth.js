@@ -25,7 +25,7 @@ export default function useFirebaseAuth() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta?correo=${email}&password=${password}`
       );
-      if (res.status === 200 && res.data) {
+      if (!res.data.error) {
         try {
           await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
@@ -34,6 +34,8 @@ export default function useFirebaseAuth() {
         } finally {
           setAuthUser(res.data);
         }
+      } else {
+        setError(res.data.error);
       }
     } catch (error) {
       console.log(error);

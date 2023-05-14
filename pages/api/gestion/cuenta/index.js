@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       const usuario = await traerUsuario(correo, password);
       console.log(usuario);
       if (!usuario) {
-        return res.status(401).send("Credenciales incorrectas");
+        return res.json({ error: "No se encontro al usuario" });
       }
       return res.status(200).json(usuario);
     }
@@ -293,6 +293,7 @@ export async function traerUsuario(correo, password) {
         AND: [{ correo: correo }, { password: password }],
       },
     });
+    console.log("Usuario:", usuario);
     return usuario;
   } catch (error) {
     console.log(error);

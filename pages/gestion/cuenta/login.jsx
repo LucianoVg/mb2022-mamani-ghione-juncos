@@ -32,9 +32,13 @@ const Login = () => {
 
   const onSubmitData = async (e) => {
     e.preventDefault();
-    setIngresando(true);
-    await iniciarSesion(correo, password);
-    setIngresando(false);
+    try {
+      setIngresando(true);
+      await iniciarSesion(correo, password);
+      setIngresando(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
