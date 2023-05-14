@@ -91,7 +91,8 @@ export default function Detalles() {
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
-  //   console.log("ORDENADASSS", materiasOrdenadas);
+
+  console.log("USUARIO", authUser)
   return (
     <Layout>
       <Grid container>
@@ -113,12 +114,12 @@ export default function Detalles() {
             {authUser?.rol?.tipo === "Secretaria" ? (
               <Typography
                 variant="h5"
-                sx={{ marginRight: "30px", marginBottom: "10px" }}
+                sx={{ marginRight: "30px", marginBottom: "20px", marginTop: "20px" }}
               >
                 <strong>Datos Personales de {authUser?.rol?.tipo}</strong>
               </Typography>
             ) : (
-              <Typography variant="h5" sx={{ marginBottom: "10px" }}>
+              <Typography variant="h5" sx={{ marginBottom: "20px", marginTop: "20px"}}>
                 <strong>Datos Personales del {authUser?.rol?.tipo}</strong>
               </Typography>
             )}
@@ -323,7 +324,7 @@ export default function Detalles() {
                       <ListItemText
                         primaryTypographyProps={{ fontSize: "20px" }}
                       >
-                        <strong>{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
+                        <strong>{`${pxc.curso?.nombre}° Año "A" y "B"`}</strong>
                       </ListItemText>
                     </ListItem>
                   ))}
@@ -371,21 +372,21 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Nombre</strong> <br />
-                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.nombre || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.nombre || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Apellido</strong> <br />
-                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.apellido || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.apellido || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Legajo</strong> <br />
-                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.legajo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.legajo || "N/A"}
                 </Typography>
               </Stack>
 
@@ -399,14 +400,14 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Mail</strong> <br />
-                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.correo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Telefono</strong> <br />
-                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.usuario?.telefono || "N/A"}
+                  {authUser?.alumnoxcursoxdivision1[0]?.tutor?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>
@@ -430,22 +431,33 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Nombre</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.nombre || "N/A"}
+                  {authUser?.alumnoxcursoxdivision2[0]?.usuario?.nombre || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Apellido</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.apellido || "N/A"}
+                  {authUser?.alumnoxcursoxdivision2[0]?.usuario?.apellido || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Legajo</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.legajo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision2[0]?.usuario?.legajo || "N/A"}
                 </Typography>
+                <Typography variant="h6" sx={{ width: "200px" }}>
+                    <strong>Curso</strong> <br />
+                    {
+                      authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.curso
+                        ?.nombre
+                    }
+                    ° Año &quot;
+                    {authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.division
+                      ?.division || "N/A"}
+                    &quot;
+                  </Typography>
               </Stack>
 
               <Stack
@@ -458,14 +470,14 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Mail</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.correo || "N/A"}
+                  {authUser?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Telefono</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.telefono || "N/A"}
+                  {authUser?.alumnoxcursoxdivision2[0]?.usuario?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>

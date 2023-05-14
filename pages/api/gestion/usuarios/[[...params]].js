@@ -29,16 +29,16 @@ export default async function handler(req, res) {
                     include: {
                       curso: true,
                       division: true,
-                    },
-                  },
-                },
-              },
-            },
+                    }
+                  }
+                }
+              }
+            }
           },
           preceptorxcurso: {
             include: {
               curso: true,
-            },
+            }
           },
           alumnoxcursoxdivision1: {
             include: {
@@ -47,9 +47,9 @@ export default async function handler(req, res) {
                 include: {
                   curso: true,
                   division: true,
-                },
-              },
-            },
+                }
+              }
+            }
           },
           alumnoxcursoxdivision2: {
             include: {
@@ -58,9 +58,9 @@ export default async function handler(req, res) {
                 include: {
                   curso: true,
                   division: true,
-                },
-              },
-            },
+                }
+              }
+            }
           },
         },
         orderBy: {

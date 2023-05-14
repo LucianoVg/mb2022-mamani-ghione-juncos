@@ -815,7 +815,7 @@ export default function Detalles() {
                       <ListItemText
                         primaryTypographyProps={{ fontSize: "20px" }}
                       >
-                        <strong>{`${pxc.curso?.nombre}° Año "A" Y "B"`}</strong>
+                        <strong>{`${pxc.curso?.nombre}° Año "A" y "B"`}</strong>
                       </ListItemText>
                     </ListItem>
                   ))}

@@ -246,31 +246,6 @@ export async function traerUsuario(correo, password) {
     const usuario = await db.usuario.findFirst({
       include: {
         rol: true,
-        alumnoxcursoxdivision1: {
-          include: {
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
-            },
-          },
-        },
-        alumnoxcursoxdivision2: {
-          include: {
-            cursoxdivision: {
-              include: {
-                curso: true,
-                division: true,
-              },
-            },
-          },
-        },
-        preceptorxcurso: {
-          include: {
-            curso: true,
-          },
-        },
         docentexmateria: {
           include: {
             materiaxcursoxdivision: {
@@ -280,11 +255,38 @@ export async function traerUsuario(correo, password) {
                   include: {
                     curso: true,
                     division: true,
-                  },
-                },
-              },
-            },
-          },
+                  }
+                }
+              }
+            }
+          }
+        },
+        preceptorxcurso: {
+          include: {
+            curso: true,
+          }
+        },
+        alumnoxcursoxdivision1: {
+          include: {
+            tutor: true,
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              }
+            }
+          }
+        },
+        alumnoxcursoxdivision2: {
+          include: {
+            usuario: true,
+            cursoxdivision: {
+              include: {
+                curso: true,
+                division: true,
+              }
+            }
+          }
         },
       },
       where: {
