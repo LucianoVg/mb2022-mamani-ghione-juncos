@@ -12,7 +12,8 @@ export default function Dashboard() {
     const [usuario, setUsuario] = useState({ rol: '' })
     const router = useRouter()
     const [conteoNotas, setConteoNotas] = useState([])
-    const [mejoresPromedios, setMejoresPromedios] = useState([])
+    const [mejoresPromedios1, setMejoresPromedios1] = useState([])
+    const [mejoresPromedios2, setMejoresPromedios2] = useState([])
     const [cargando, setCargando] = useState(false)
     const [cargando2, setCargando2] = useState(false)
     const { loading, authUser } = useAuth()
@@ -28,8 +29,8 @@ export default function Dashboard() {
                 router.push('/error')
             } else {
                 traerMaterias()
-                traerConteoNotas()
-                traerMejoresPromedios()
+                traerMejoresPromedios1()
+                traerMejoresPromedios2()
             }
         }
     }, [loading, authUser, authUser?.rol?.tipo])
@@ -52,21 +53,22 @@ export default function Dashboard() {
     //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
     //     }
     // }
-    const traerConteoNotas = async (idMateria) => {
-        setCargando(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/contador_notas/${idMateria || 1}`)
-        console.log(res.data);
-        if (res.status === 200) {
-            setConteoNotas(res.data)
-        }
-        setCargando(false)
-    }
-    const traerMejoresPromedios = async () => {
+
+    const traerMejoresPromedios1 = async () => {
         setCargando2(true)
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/mejor_promedio`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/mejor_promedio/a`)
         console.log(res.data);
         if (res.status === 200) {
-            setMejoresPromedios(res.data)
+            setMejoresPromedios1(res.data)
+        }
+        setCargando2(false)
+    }
+    const traerMejoresPromedios2 = async () => {
+        setCargando2(true)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/mejor_promedio/b`)
+        console.log(res.data);
+        if (res.status === 200) {
+            setMejoresPromedios2(res.data)
         }
         setCargando2(false)
     }
@@ -79,36 +81,17 @@ export default function Dashboard() {
             <Grid container spacing={2} flex>
                 <Grid item xs={6}>
                     {
-                        !cargando && conteoNotas.length > 0 && (
+                        !cargando2 && mejoresPromedios1.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
-                                    <BarChart
-                                        data={conteoNotas}
+                                    <PieChart
+                                        data={mejoresPromedios1}
                                     />
                                 </CardContent>
-                                {materias.length > 0 &&
-                                    (
-                                        <CardActions>
-                                            <FormControl sx={{ minWidth: 120 }} size="small">
-                                                <InputLabel htmlFor="materiaSelect">Materia</InputLabel>
-                                                <Select
-                                                    color="info"
-                                                    id="materiaSelect"
-                                                    onChange={handleSelect}
-                                                    variant="outlined">
-                                                    {
-                                                        materias?.map(m => (
-                                                            <MenuItem value={m.id} key={m.id}>{m.nombre}</MenuItem>
-                                                        ))
-                                                    }
-                                                </Select>
-                                            </FormControl>
-                                        </CardActions>
-                                    )
-                                }
                             </Card>
                         )
                     }
+
                     {
                         cargando && (
                             <Container sx={{ textAlign: 'center' }}>
@@ -119,11 +102,11 @@ export default function Dashboard() {
                 </Grid>
                 <Grid item xs={6}>
                     {
-                        !cargando2 && mejoresPromedios.length > 0 && (
+                        !cargando2 && mejoresPromedios2.length > 0 && (
                             <Card sx={{ backgroundColor: '#f9f9f9', minWidth: "400px", minHeight: "200px" }}>
                                 <CardContent>
                                     <PieChart
-                                        data={mejoresPromedios}
+                                        data={mejoresPromedios2}
                                     />
                                 </CardContent>
                             </Card>

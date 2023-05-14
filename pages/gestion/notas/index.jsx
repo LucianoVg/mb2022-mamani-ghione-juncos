@@ -657,7 +657,7 @@ export default function Notas() {
                   <TableCell align="center">Nota 3</TableCell>
                   <TableCell align="center">Nota 4</TableCell>
                   <TableCell align="center">Nota 5</TableCell>
-                  <TableCell align="center">Trimestre</TableCell>
+                  {/* <TableCell align="center">Trimestre</TableCell> */}
                   <TableCell align="center">Acción</TableCell>
                 </TableRow>
               </TableHead>
@@ -840,9 +840,9 @@ export default function Notas() {
                             n.nota5
                           )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {n.trimestre?.trimestre}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="center">
                           {inEditMode.status && inEditMode.rowKey === i ? (
                             <React.Fragment>
@@ -1180,9 +1180,9 @@ export default function Notas() {
                             n.nota5
                           )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {n.trimestre?.trimestre}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="center">
                           {inEditMode.status && inEditMode.rowKey === i ? (
                             <React.Fragment>
