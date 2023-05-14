@@ -48,28 +48,28 @@ export default function Detalles() {
       router.push("/gestion/cuenta/login");
     }
     (async () => {
-      if (authUser) {
-        // PENDIENTE DE CAMBIOS, YA QUE EL USUARIO LOGUEADO TRAE TODA ESTA INFO POR DEFECTO
-        await traerAlumno();
-        await traerPreceptor();
-        await traerTutor();
-        await traerDocente();
-      }
+      // if (authUser) {
+      //   // PENDIENTE DE CAMBIOS, YA QUE EL USUARIO LOGUEADO TRAE TODA ESTA INFO POR DEFECTO
+      //   await traerAlumno();
+      //   await traerPreceptor();
+      //   await traerTutor();
+      //   await traerDocente();
+      // }
     })();
   }, [loading, authUser]);
 
-  const traerDocente = async () => {
-    if (authUser?.rol?.tipo === "Docente") {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/authUser/${authUser?.id}`
-      );
+  // const traerDocente = async () => {
+  //   if (authUser?.rol?.tipo === "Docente") {
+  //     const res = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/authUser/${authUser?.id}`
+  //     );
 
-      if (res.status === 200 && res.data) {
-        setDocente(res.data);
-        console.log(res.data);
-      }
-    }
-  };
+  //     if (res.status === 200 && res.data) {
+  //       setDocente(res.data);
+  //       console.log(res.data);
+  //     }
+  //   }
+  // };
 
   const traerPreceptor = async () => {
     if (authUser?.rol?.tipo === "Preceptor") {
@@ -145,6 +145,12 @@ export default function Detalles() {
     }, 2000);
   };
 
+  
+const materiasOrdendas = authUser?.docentexmateria?.sort( (a,b) => 
+
+a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+)
+console.log("ORDENADASSS", materiasOrdendas);
   return (
     <Layout>
       <Grid container>
@@ -229,9 +235,7 @@ export default function Detalles() {
               <strong>Edad</strong> <br />
               {authUser?.fechanacimiento
                 ? new Date().getFullYear() -
-                  new Date(
-                    authUser?.fechanacimiento.split("/")[2]
-                  ).getFullYear()
+                  new Date(authUser?.fechanacimiento.split("/")[2]).getFullYear()
                 : "N/A"}
             </Typography>
             <Typography variant="h6" sx={{ width: "250px" }}>
@@ -386,17 +390,28 @@ export default function Detalles() {
           )}
 
           {authUser?.rol?.tipo === "Docente" && (
-            <Box>
-              <Typography variant="h6">
-                <strong>Materia/s Impartidas</strong>
-              </Typography>
-              <Typography variant="h6">
-                <strong>
-                  {docente?.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                  <strong>{`${docente?.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${docente?.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
-                </strong>
-              </Typography>
-            </Box>
+         <Box>
+         <Typography variant="h6" >
+           <strong>Materia/s Impartidas</strong>
+         </Typography>
+         <Typography
+           variant="h6"
+                 >
+           <List>
+             {materiasOrdendas.map((dxm) => (
+               <ListItem key={dxm.id} sx={{ marginTop: '-10px' }}>
+                 <ListItemIcon>
+                   <FiberManualRecordIcon sx={{ color: 'black', fontSize: '10px', marginLeft: '25px' }} />
+                 </ListItemIcon>
+                 <ListItemText primaryTypographyProps={{ fontSize: '20px' }}>
+                   <strong> {dxm.materiaxcursoxdivision?.materia?.nombre}</strong> -  <strong >{`${dxm.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre}° Año "${dxm.materiaxcursoxdivision?.cursoxdivision?.division?.division}"`}</strong>
+                 </ListItemText>
+               </ListItem>
+             ))}
+
+           </List>
+         </Typography>
+       </Box>
           )}
 
           {authUser?.rol?.tipo === "Estudiante" && (
@@ -477,21 +492,21 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Nombre</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.nombre || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.nombre || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Apellido</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.apellido || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.apellido || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Legajo</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.legajo || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.legajo || "N/A"}
                 </Typography>
               </Stack>
 
@@ -505,14 +520,14 @@ export default function Detalles() {
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Mail</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.correo || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.correo || "N/A"}
                 </Typography>
                 <Typography
                   variant="h6"
                   sx={{ width: "200px", marginBottom: "20px" }}
                 >
                   <strong>Telefono</strong> <br />
-                  {tutor?.alumnoxcursoxdivision2?.authUser?.telefono || "N/A"}
+                  {tutor?.alumnoxcursoxdivision2?.usuario?.telefono || "N/A"}
                 </Typography>
               </Stack>
             </>
