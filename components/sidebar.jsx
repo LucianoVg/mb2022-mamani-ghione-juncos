@@ -51,21 +51,6 @@ const Sidebar = ({ menusGestion, menusReportes }) => {
           </Link>
         </ListItemButton>
       </ListItem>
-      {!loading && authUser && authUser?.rol?.tipo !== "Estudiante" && (
-        <ListItem disablePadding sx={{ mt: 3 }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <Assessment />
-            </ListItemIcon>
-            <Link
-              href={"/dashboard"}
-              style={{ textDecoration: "none", color: "#212121" }}
-            >
-              <Typography variant="h6">Estadisticas</Typography>
-            </Link>
-          </ListItemButton>
-        </ListItem>
-      )}
       {menusGestion && menusGestion?.length > 0 && (
         <>
           <List>
