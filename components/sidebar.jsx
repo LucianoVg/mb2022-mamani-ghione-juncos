@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "./context/authUserProvider";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import { Assessment, Home, TableChart } from "@mui/icons-material";
+import { Home, TableChart } from "@mui/icons-material";
 import {
   ListItemButton,
   ListItem,
@@ -27,7 +27,6 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import SegmentIcon from "@mui/icons-material/Segment";
 import { Navbar } from "./navbar";
 import Link from "next/link";
-import axios from "axios";
 
 const Sidebar = ({ menusGestion, menusReportes }) => {
   const router = useRouter();
