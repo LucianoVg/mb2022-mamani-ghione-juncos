@@ -14,7 +14,7 @@ export default function PieChart({ data }) {
         labels: labels,
         datasets: [
             {
-                label: 'Mejores Promedios',
+                label: 'Promedio',
                 backgroundColor: [
                     "rgba(75,192,192,1)",
                     "#ecf0f1",

@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         };
         let AND = [];
 
-        if (params[0]) {
+        if (params[1]=== "") {
             AND.push({
                 usuario: {
                     id: Number(params[0]),
