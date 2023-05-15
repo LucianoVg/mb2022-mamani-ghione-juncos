@@ -55,11 +55,18 @@ export default function BarChart({ data }) {
         plugins: {
             title: {
                 display: true,
-                text: `${data[0].nombre} división A`,
-                padding: {
-                    top: 10,
-                    bottom: 30
-                }
+                text: `${data[0].nombre} - "A"`,
+                color: 'black',
+                font: {
+                    size: "18px",
+                    // family: 'tahoma',
+                    // weight: 'normal',
+                    // style: 'italic'
+                },
+                // padding: {
+                //     top: 10,
+                //     bottom: 30
+                // }
             }
         }
     };
