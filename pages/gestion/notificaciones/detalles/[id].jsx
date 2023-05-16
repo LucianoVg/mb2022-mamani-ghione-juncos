@@ -152,6 +152,7 @@ export default function DetallesNoticia() {
                         fullWidth
                         sx={{ alignItems: "center" }}
                         maxRows={2}
+                        
                         inputProps={{
                           className: styles.Typography,
                           style: {
@@ -163,6 +164,7 @@ export default function DetallesNoticia() {
                             marginRight: "30px",
                           },
                           disableunderline: "true",
+                          maxLength: 30 
                         }}
                         placeholder={notificacion?.asunto}
                         name="asunto"
@@ -185,6 +187,7 @@ export default function DetallesNoticia() {
                             marginRight: "20px",
                           },
                           disableunderline: "true",
+                          maxLength: 300
                         }}
                         placeholder={notificacion?.contenido}
                         name="contenido"
@@ -234,6 +237,7 @@ export default function DetallesNoticia() {
                           marginTop: "20px",
                           marginLeft: "30px",
                           marginRight: "30px",
+               
                         }}
                         className={`${styles.Typography}`}
                       >

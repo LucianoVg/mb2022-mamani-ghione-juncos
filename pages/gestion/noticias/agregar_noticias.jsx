@@ -11,6 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import { Container } from "@mui/system";
 import Loading from "../../../components/loading";
+import { kMaxLength } from "buffer";
 
 const AgregarNoticias = () => {
   const [noticia, setNoticia] = useState({
@@ -132,6 +133,7 @@ const AgregarNoticias = () => {
                 autoFocus
                 onChange={handleForm}
                 value={noticia.titulo}
+                inputProps={{ maxLength: 30 }}
               />
               <TextField
                 margin="normal"
@@ -142,6 +144,7 @@ const AgregarNoticias = () => {
                 name="descripcion"
                 autoFocus
                 multiline
+                inputProps={{ maxLength: 500 }}
                 rows={3}
                 onChange={handleForm}
                 value={noticia.descripcion}

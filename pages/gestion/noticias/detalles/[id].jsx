@@ -106,7 +106,7 @@ export default function DetallesNoticia() {
                         // sx={{ textAlign: "justify" }}
                         variant="h4"
                         id="fontSize"
-                        sx={{ fontWeight: "bold" }}
+                        sx={{ fontWeight: "bold", textAlign: "center", width: "600px", }}
                       >
                         {noticia.titulo}
                       </Typography>
@@ -117,9 +117,9 @@ export default function DetallesNoticia() {
                         variant="p"
                         id="fontSize2"
                         style={{
-                          marginTop: "40px",
+                          marginTop: "30px",
                           textAlign: "left",
-                          width: "500px",
+                          width: "600px",
                           textJustify: "inter-word",
                           whiteSpace: 'pre-line',
                           alignItems: "baseline",

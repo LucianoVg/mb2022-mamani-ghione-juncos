@@ -66,7 +66,7 @@ const Home = () => {
               Agregar
             </Button>
           )}
-        <Box sx={{ flexGrow: 1, marginLeft: "-25px" }}>
+        <Box sx={{ flexGrow: 1 }}>
           <Grid container>
             {paginacion.dataActual().map((n, i) => (
               <Grid item key={i} xs="auto">

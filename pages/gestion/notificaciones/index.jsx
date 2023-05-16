@@ -224,87 +224,113 @@ const Notificaciones = () => {
               </Box>
 
               <Box component={"form"} onSubmit={CrearNotificacion}>
-                <h2>
-                  <strong>Asunto</strong>
-                </h2>
-                <TextareaAutosize
-                  name="asunto"
-                  value={notificacion.asunto}
-                  onChange={handleNotificacion}
-                  style={{
-                    width: "350px",
-                    height: "35px",
-                    resize: "none",
-                    fontSize: "20px",
-                  }}
-                />
-                <h2>
-                  <strong>Contenido</strong>
-                </h2>
-                <TextareaAutosize
-                  name="contenido"
-                  value={notificacion.contenido}
-                  onChange={handleNotificacion}
-                  maxLength={300}
-                  style={{
-                    width: "350px",
-                    maxLenght: "300",
-                    height: "200px",
-                    resize: "none",
-                    fontSize: "20px",
-                  }}
-                />
+                <Box>
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    Asunto
+                  </Typography>
+                  <FormControl 
+                  sx={{
+                    marginBottom: "30px"
+                  }}>
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    focused
+                    name="asunto"
+                    multiline
+                    rows={1}
+                    required
+                    value={notificacion.asunto}
+                    onChange={handleNotificacion}
+                    style={{
+                      width: "350px",
+                      height: "35px",
+                      resize: "none",
+                      fontSize: "20px",
+                    }}
+                    inputProps={{ maxLength: 30 }}
+                  />
+                </FormControl>
+              </Box>
+              <Box>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                  Contenido
+                </Typography>
+                <FormControl>
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    focused
+                    name="contenido"
+                    multiline
+                    rows={5}
+                    required
+                    // label="Contenido"
+                    inputProps={{ maxLength: 300 }}
+                    // value={noticiaActualizar.descripcion}
+                    // placeholder={noticiaActualizar?.descripcion}
+                    value={notificacion.contenido}
+                    onChange={handleNotificacion}
+                    style={{
+                      width: "350px",
+                      // height: "400px",
+                      resize: "none",
+                      fontSize: "20px",
+                    }}
+                  />
+                </FormControl>
+              </Box>
 
-                {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
-                <Box xs={12} sx={{ mt: 2 }}>
-                  <Button variant="contained" type="submit">
-                    Enviar
-                  </Button>
-                </Box>
+              {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
+              <Box xs={12} >
+                <Button variant="contained" type="submit">
+                  Enviar
+                </Button>
               </Box>
             </Box>
-          </Grid>
-          <Grid item xs>
-            {cargandoInfo && (
-              <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-                <Loading size={50} />
-              </Container>
-            )}
-            {!cargandoInfo && (
-              <>
-                <h1>Notificaciones enviadas</h1>
-                <Box sx={{ width: "350px" }}>
-                  <List
-                    style={{
-                      boxShadow:
-                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                      border: "0 10px 15px black",
-                      borderRadius: "15px",
-                    }}
-                  >
-                    {listNotificaciones.map((n, i) => (
-                      <ListItem disablePadding key={i} value={n.id}>
-                        <ListItemButton
-                          component="a"
-                          onClick={() =>
-                            router.push(
-                              `/gestion/notificaciones/detalles/${n.id}`
-                            )
-                          }
-                        >
-                          <ListItemText primary={n.asunto} />
-                        </ListItemButton>
-                        <Divider />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Box>
-              </>
-            )}
-          </Grid>
+          </Box>
         </Grid>
-      </div>
-    </Layout>
+        <Grid item xs>
+          {cargandoInfo && (
+            <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+              <Loading size={50} />
+            </Container>
+          )}
+          {!cargandoInfo && (
+            <>
+              <h1>Notificaciones enviadas</h1>
+              <Box sx={{ width: "350px" }}>
+                <List
+                  style={{
+                    boxShadow:
+                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                    border: "0 10px 15px black",
+                    borderRadius: "15px",
+                  }}
+                >
+                  {listNotificaciones.map((n, i) => (
+                    <ListItem disablePadding key={i} value={n.id}>
+                      <ListItemButton
+                        component="a"
+                        onClick={() =>
+                          router.push(
+                            `/gestion/notificaciones/detalles/${n.id}`
+                          )
+                        }
+                      >
+                        <ListItemText primary={n.asunto} />
+                      </ListItemButton>
+                      <Divider />
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            </>
+          )}
+        </Grid>
+      </Grid>
+    </div>
+    </Layout >
   );
 };
 

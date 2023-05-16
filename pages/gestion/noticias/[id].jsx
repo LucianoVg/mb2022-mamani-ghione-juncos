@@ -175,6 +175,7 @@ export default function DetallesNoticia() {
                 // value={noticiaActualizar.titulo}
                 defaultValue={noticia?.titulo}
                 onChange={handleForm}
+                inputProps={{ maxLength: 30 }}
               />
               <TextField
                 margin="normal"
@@ -185,6 +186,7 @@ export default function DetallesNoticia() {
                 rows={5}
                 required
                 label="Descripcion"
+                inputProps={{ maxLength: 500 }}
                 // value={noticiaActualizar.descripcion}
                 // placeholder={noticiaActualizar?.descripcion}
                 onChange={handleForm}
