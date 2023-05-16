@@ -50,7 +50,8 @@ async function traerNoticia(id = 0) {
             }
         }) : await db.noticiasynovedades.findMany({
             orderBy: {
-                creadaen: 'desc'
+                id: 'desc',
+                
             }
         })
         return noticias

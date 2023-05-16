@@ -6,6 +6,7 @@ import { Layout } from "../../../../components/layout";
 import {
   Container,
   Box,
+  Card,
   Grid,
   Typography,
   IconButton,
@@ -58,6 +59,84 @@ export default function DetallesNoticia() {
           Detalles de Noticia
         </Typography>
         {!cargando && noticia.id !== 0 && (
+          <div className="container text-center">
+            <Card
+              sx={{
+                width: "1100px",
+                height: "450px",
+                boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
+                backgroundColor: "white",
+                borderRadius: "30px",
+                
+              }}
+            >
+
+              <Grid container spacing={1}>
+                <Grid item xs={4}>
+                  <Box sx={{ marginTop: "80px", marginLeft: "40px" }}>
+                    <Image
+                      alt="noticia"
+                      src={
+                        noticia.url !== ""
+                          ? noticia.url
+                          : "/assets/img/placeholder.png"
+                      }
+                      width="800"
+                      height="700"
+                      style={{
+                        // boxShadow:
+                        //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                        border: "0 10px 15px black",
+                        borderRadius: "20px",
+                      }}
+
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={8} >
+                  <Grid container
+                    direction="column"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+                    sx={{marginTop: "40px"}}
+                  >
+                    <Grid item xs={10}>
+                      <Typography
+                        component={"h3"}
+                        // sx={{ textAlign: "justify" }}
+                        variant="h4"
+                        id="fontSize"
+                        sx={{fontWeight: "bold" }}
+                      >
+                        {noticia.titulo}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography
+                        component={"p"}
+                        variant="p"
+                        id="fontSize2"
+                        style={{
+                          marginTop: "40px",
+                          textAlign: "left",
+                          width: "500px",
+                          textJustify: "inter-word",
+                          whiteSpace: 'pre-line',
+                          alignItems: "baseline",
+                          lineHeight: "25px"
+                        }}
+                      >
+                        {noticia.descripcion}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+            </Card>
+          </div>
+        )}
+        {/* {!cargando && noticia.id !== 0 && (
           <Grid
             container
             direction="column"
@@ -107,7 +186,7 @@ export default function DetallesNoticia() {
               </Box>
             </Grid>
           </Grid>
-        )}
+        )} */}
         {cargando && (
           <Container sx={{ top: "60%", left: "70%" }}>
             <Loading />
