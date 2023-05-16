@@ -67,7 +67,7 @@ export default function DetallesNoticia() {
                 boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
                 backgroundColor: "white",
                 borderRadius: "30px",
-                
+
               }}
             >
 
@@ -98,7 +98,7 @@ export default function DetallesNoticia() {
                     direction="column"
                     justifyContent="space-evenly"
                     alignItems="center"
-                    sx={{marginTop: "40px"}}
+                    sx={{ marginTop: "40px" }}
                   >
                     <Grid item xs={10}>
                       <Typography
@@ -106,7 +106,7 @@ export default function DetallesNoticia() {
                         // sx={{ textAlign: "justify" }}
                         variant="h4"
                         id="fontSize"
-                        sx={{fontWeight: "bold" }}
+                        sx={{ fontWeight: "bold" }}
                       >
                         {noticia.titulo}
                       </Typography>
@@ -136,57 +136,6 @@ export default function DetallesNoticia() {
             </Card>
           </div>
         )}
-        {/* {!cargando && noticia.id !== 0 && (
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            spacing={8}
-          >
-            <Grid item xs={12}>
-              <Image
-                alt="noticia"
-                src={
-                  noticia.url !== ""
-                    ? noticia.url
-                    : "/assets/img/placeholder.png"
-                }
-                width="600"
-                height="400"
-                style={{
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  border: "0 10px 15px black",
-                  borderRadius: "15px",
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <Box>
-                <Typography
-                  component={"h3"}
-                  sx={{ textAlign: "justify" }}
-                  variant="h4"
-                  id="fontSize"
-                >
-                  {noticia.titulo}
-                </Typography>
-                <Typography
-                  component={"p"}
-                  variant="p"
-                  id="fontSize2"
-                  style={{
-                    marginTop: "40px",
-                    textAlign: "justify",
-                    textJustify: "inter-word",
-                  }}
-                >
-                  {noticia.descripcion}
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        )} */}
         {cargando && (
           <Container sx={{ top: "60%", left: "70%" }}>
             <Loading />
