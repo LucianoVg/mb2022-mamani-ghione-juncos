@@ -98,7 +98,7 @@ export default function Preanalitico() {
                 Reporte Historial Académico</Typography>
       {authUser?.rol?.tipo != "Estudiante" && (
         <Box sx={{ marginBottom: "20px" }}>
-          <h3>Buscar Alumno</h3>
+          <h3>Buscar Estudiante:</h3>
 
           <FormControl sx={{ marginRight: "20px" }}>
             <Autocomplete
@@ -126,7 +126,9 @@ export default function Preanalitico() {
               )}
             />
 
-            <Button
+          
+          </FormControl>
+          <Button
               onClick={traerPreanalitico}
               sx={{ marginTop: "20px" }}
               variant="outlined"
@@ -135,7 +137,6 @@ export default function Preanalitico() {
             >
               Buscar
             </Button>
-          </FormControl>
         </Box>
       )}
 
@@ -145,7 +146,7 @@ export default function Preanalitico() {
             <Table
               size="small"
               aria-label="customized table"
-              sx={{ minWidth: "600px" }}
+              sx={{ minWidth: "600px"}}
             >
               <TableHead>
                 <TableRow>
