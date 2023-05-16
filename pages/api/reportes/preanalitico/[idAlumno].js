@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 async function Preanalitico(idAlumno) {
   try {
     console.log("Id alumno: ", idAlumno);
-    return await db.$queryRaw`select m.id as id ,m.nombre as materia, m.idcurso as curso , idalumnoxcursoxdivision,
+    return await db.$queryRaw`select m.id as id ,m.nombre as materia, cd.idcurso as curso , idalumnoxcursoxdivision,
         avg ((SELECT AVG(c)
                FROM   (VALUES(nota1),
                              (nota2),
@@ -53,11 +53,13 @@ async function Preanalitico(idAlumno) {
                              (nota5)) T (c))) as notafinal
        from nota as n
        INNER JOIN materia as m ON m.id = n.idmateria
+       Inner join materiaxcursoxdivision mxd on mxd.idmateria = m.id
+       inner join cursoxdivision cd on cd.id = mxd.idcursoxdivision
        INNER JOIN alumnoxcursoxdivision as a ON a.id = n.idalumnoxcursoxdivision
        INNER JOIN usuario as u ON u.id = a.idusuario
        where idalumnoxcursoxdivision = ${Number(idAlumno)} and u.activo = true 
-       group by  m.nombre, idalumnoxcursoxdivision, m.idcurso, m.id
-       order by m.idcurso asc, m.id asc`;
+       group by  m.nombre, idalumnoxcursoxdivision, cd.idcurso, m.id
+       order by cd.idcurso, m.id asc`;
   } catch (error) {
     console.error(error);
   }
