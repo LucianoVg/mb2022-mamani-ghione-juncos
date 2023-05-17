@@ -29,7 +29,7 @@ import axios from "axios";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import { guardarImagen } from "../../api/servicios/portada";
-import { FileOpenSharp } from "@mui/icons-material";
+import { FileOpenSharp, Search } from "@mui/icons-material";
 import { TabPanel } from "../../../components/tabPanel";
 
 const MaterialEstudio = () => {
@@ -51,19 +51,17 @@ const MaterialEstudio = () => {
     const cursoxdivision = cursos?.find((c) => c.id === e.target.value);
     setIdCursoXdivision(Number(cursoxdivision?.id));
     await traerMaterias(Number(cursoxdivision?.curso?.id));
-    await descargarMaterial(tabIndex + 1, Number(e.target.value));
   };
   const handleMateria = (e) => {
     setIdMateria(e.target.value);
-    descargarMaterial(tabIndex + 1, 0, e.target.value);
   };
   const traerMaterias = async (idCurso = 1) => {
     let param =
       authUser?.rol?.tipo === "Docente"
         ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
         : idCurso
-          ? `?idCurso=${idCurso}`
-          : "";
+        ? `?idCurso=${idCurso}`
+        : "";
     console.log("Query Param:", param);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
@@ -89,15 +87,10 @@ const MaterialEstudio = () => {
     }
   };
 
-  const cursosDivision = cursos?.sort(
-    (a, b) =>
-      a.id - b.id
-  );
+  const cursosDivision = cursos?.sort((a, b) => a.id - b.id);
   const cursosOrdenados = cursosDivision?.sort(
-    (a, b) =>
-      a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
+    (a, b) => a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
   );
-
 
   const traerTrimestres = async () => {
     const res = await axios.get(
@@ -189,6 +182,7 @@ const MaterialEstudio = () => {
     setTabIndex(0);
     await descargarMaterial(1);
   };
+
   const handleArchivos = (e) => {
     if (e.target.files.length) {
       setArchivos(e.target.files);
@@ -288,15 +282,7 @@ const MaterialEstudio = () => {
                 </Select>
               </FormControl>
             </Box>
-            <Box
-            // sx={{
-            //   display: "flex",
-            //   flexWrap: "wrap",
-            //   alignItems: "start",
-            //   justifyContent: "flex-start",
-            // }}
-            >
-
+            <Box>
               <FormControl sx={{ width: "250px", marginRight: "20px" }}>
                 <InputLabel id="demo-simple-select-label">Materia</InputLabel>
                 <Select
@@ -310,12 +296,30 @@ const MaterialEstudio = () => {
                 >
                   {materiasOrdenadas &&
                     materiasOrdenadas?.map((m, i) => (
-                      <MenuItem selected={i === 0} key={i} value={m.materia?.id}>
+                      <MenuItem
+                        selected={i === 0}
+                        key={i}
+                        value={m.materia?.id}
+                      >
                         {m.materia?.nombre}
                       </MenuItem>
                     ))}
                 </Select>
               </FormControl>
+              <Button
+                sx={{ mx: 2 }}
+                variant="contained"
+                onClick={async () =>
+                  await descargarMaterial(
+                    tabIndex + 1,
+                    idCursoXdivision,
+                    idMateria
+                  )
+                }
+                startIcon={<Search />}
+              >
+                Buscar
+              </Button>
               <Button
                 // sx={{ mx: 2, my: 1 }}
                 variant="outlined"
@@ -339,7 +343,7 @@ const MaterialEstudio = () => {
                 value={tabIndex}
                 onChange={(e, newValue) => {
                   setTabIndex((_) => newValue);
-                  descargarMaterial(newValue + 1);
+                  descargarMaterial(newValue + 1, idCursoXdivision, idMateria);
                 }}
               >
                 {trimestres
@@ -367,7 +371,7 @@ const MaterialEstudio = () => {
                                 justifyContent: "space-between",
                               }}
                             >
-                              {subir  ? (
+                              {subir ? (
                                 <Button
                                   onClick={() => subirMaterial(t.id)}
                                   variant="contained"
