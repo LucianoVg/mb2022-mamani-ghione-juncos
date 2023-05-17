@@ -111,6 +111,7 @@ export default function AsistenciasDocentes() {
 
   const tienePermisos = () => {
     return (
+      authUser?.rol?.tipo === "Preceptor" ||
       authUser?.rol?.tipo === "Administrador" ||
       authUser?.rol?.tipo === "Director" ||
       authUser?.rol?.tipo === "Vicedirector" ||
