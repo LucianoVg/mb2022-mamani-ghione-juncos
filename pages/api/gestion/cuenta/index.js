@@ -242,6 +242,10 @@ export async function registrarUsuario(
 }
 
 export async function traerUsuario(correo, password) {
+  let AND = [{ correo: correo }];
+  if (password) {
+    AND.push({ password });
+  }
   try {
     const usuario = await db.usuario.findFirst({
       include: {
@@ -255,16 +259,16 @@ export async function traerUsuario(correo, password) {
                   include: {
                     curso: true,
                     division: true,
-                  }
-                }
-              }
-            }
-          }
+                  },
+                },
+              },
+            },
+          },
         },
         preceptorxcurso: {
           include: {
             curso: true,
-          }
+          },
         },
         alumnoxcursoxdivision1: {
           include: {
@@ -273,9 +277,9 @@ export async function traerUsuario(correo, password) {
               include: {
                 curso: true,
                 division: true,
-              }
-            }
-          }
+              },
+            },
+          },
         },
         alumnoxcursoxdivision2: {
           include: {
@@ -284,13 +288,13 @@ export async function traerUsuario(correo, password) {
               include: {
                 curso: true,
                 division: true,
-              }
-            }
-          }
+              },
+            },
+          },
         },
       },
       where: {
-        AND: [{ correo: correo }, { password: password }],
+        AND: AND,
       },
     });
     console.log("Usuario:", usuario);
