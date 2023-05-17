@@ -17,6 +17,7 @@ import {
   TableRow,
   TextField,
   Typography,
+  Grid
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import { Search } from "@mui/icons-material";
@@ -36,7 +37,7 @@ export default function Preanalitico() {
       router.push("/gestion/cuenta/login");
     }
     // traerUsuario();
-    if (authUser.rol) {
+    if (authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -92,10 +93,10 @@ export default function Preanalitico() {
 
   return (
     <Layout>
-           <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
-            >
-                Reporte Historial Académico</Typography>
+      <Typography variant="h4"
+        sx={{ marginBottom: "20px" }}
+      >
+        Reporte Historial Académico</Typography>
       {authUser?.rol?.tipo != "Estudiante" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Estudiante:</h3>
@@ -126,27 +127,26 @@ export default function Preanalitico() {
               )}
             />
 
-          
+
           </FormControl>
           <Button
-              onClick={traerPreanalitico}
-              sx={{ marginTop: "20px" }}
-              variant="outlined"
-              startIcon={<Search />}
-              color="info"
-            >
-              Buscar
-            </Button>
+            onClick={traerPreanalitico}
+            sx={{ marginTop: "20px" }}
+            variant="outlined"
+            startIcon={<Search />}
+            color="info"
+          >
+            Buscar
+          </Button>
         </Box>
       )}
-
       <div>
         {!cargando && preanalitico.length > 0 && (
           <TableContainer component={Paper}>
             <Table
               size="small"
               aria-label="customized table"
-              sx={{ minWidth: "600px"}}
+              sx={{ minWidth: "600px" }}
             >
               <TableHead>
                 <TableRow>
