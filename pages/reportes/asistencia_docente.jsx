@@ -43,7 +43,7 @@ export default function AsistenciasDocentes() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    if (authUser && authUser.rol) {
+    if (authUser && authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
@@ -60,12 +60,13 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasAnuales = async () => {
     setCargando3(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_anual/${
-        idDocente || authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0].idusuario
-          : 1
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_anual/${    
+        authUser?.rol?.tipo === "Docente"
+      ? authUser?.docentexmateria[0]?.iddocente
+      : idDocente
+      ? idDocente 
+      : 1
       }`
     );
     if (res.status === 200) {
@@ -77,12 +78,13 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasMensuales = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
       }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${
-        idDocente || authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0].idusuario
-          : 1
+        authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.iddocente
+        : idDocente
+        ? idDocente 
+        : 1
       }&mes=${mes}`
     );
     if (res.status === 200) {
@@ -94,12 +96,13 @@ export default function AsistenciasDocentes() {
   const listadoAsistencias = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
       }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${
-        idDocente || authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0].idusuario
-          : 1
+        authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.iddocente
+        : idDocente
+        ? idDocente 
+        : 1
       }&mes=${mes}`
     );
     if (res.status === 200) {
@@ -331,18 +334,18 @@ export default function AsistenciasDocentes() {
                           {l.presente
                             ? "Presente"
                             : l.ausente
-                            ? "Ausente"
-                            : l.ausentejustificado
-                            ? "Ausente Justificado"
-                            : l.llegadatarde
-                            ? "Llegada Tarde"
-                            : l.llegadatardejustificada
-                            ? "Llegada Tarde Justificada"
-                            : l.mediafalta
-                            ? "Media Falta"
-                            : l.mediafaltajustificada
-                            ? "Media Falta Justificada"
-                            : "No tiene asistencia cargada"}
+                              ? "Ausente"
+                              : l.ausentejustificado
+                                ? "Ausente Justificado"
+                                : l.llegadatarde
+                                  ? "Llegada Tarde"
+                                  : l.llegadatardejustificada
+                                    ? "Llegada Tarde Justificada"
+                                    : l.mediafalta
+                                      ? "Media Falta"
+                                      : l.mediafaltajustificada
+                                        ? "Media Falta Justificada"
+                                        : "No tiene asistencia cargada"}
                         </TableCell>
                       </TableRow>
                     ))}

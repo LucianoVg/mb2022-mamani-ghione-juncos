@@ -32,11 +32,22 @@ export async function ConteoAsistenciasMensual(idDocente, mes) {
     try {
         console.log(fechaInicio, fechaFin);
         const conteo = await db.$queryRaw`SELECT a.iddocente,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocente = ${Number(idDocente)}) as presente,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocente = ${Number(idDocente)}) as ausente,
+            (SELECT COUNT(*) FROM asistenciadocente WHERE presente = true  and iddocente = ${Number(idDocente)}
+            and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+            and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as presente,
+
+            (SELECT COUNT(*) FROM asistenciadocente WHERE ausente = true  and iddocente = ${Number(idDocente)}
+            and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+            and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as ausente,
+
             -- (SELECT COUNT(*) FROM asistenciadocente WHERE ausentejustificado = true and iddocente = ${Number(idDocente)}) as ausentejustificado ,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}) as llegadatarde,
-            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocente = ${Number(idDocente)}) as mediafalta
+            (SELECT COUNT(*) FROM asistenciadocente WHERE  llegadatarde= true and iddocente = ${Number(idDocente)}
+            and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+            and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as llegadatarde,
+            
+            (SELECT COUNT(*) FROM asistenciadocente WHERE mediafalta= true and iddocente = ${Number(idDocente)}
+            and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+        and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as mediafalta
         FROM asistenciadocente as a
         where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
         and TO_DATE(${fechaFin},'DD/MM/YYYY') ) 

@@ -70,8 +70,8 @@ export default function Asistencias() {
       authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
         : authUser?.rol?.tipo === "Tutor"
-        ? authUser?.alumnoxcursoxdivision2[0].id
-        : idAlumno;
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno;
     setCargando2(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${param}`
@@ -87,8 +87,8 @@ export default function Asistencias() {
       authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
         : authUser?.rol?.tipo === "Tutor"
-        ? authUser?.alumnoxcursoxdivision2[0].id
-        : idAlumno;
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno;
     setCargando1(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${param}&mes=${mes}`
@@ -150,8 +150,8 @@ export default function Asistencias() {
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
           : authUser?.rol?.tipo === "Tutor"
-          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-          : ""}
+            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+            : ""}
       </Typography>
       <Box
         sx={{
@@ -165,34 +165,44 @@ export default function Asistencias() {
         {authUser?.rol?.tipo != "Estudiante" &&
           authUser?.rol?.tipo != "Tutor" && (
             <>
-              <h3>Buscar Estudiante</h3>
-              <FormControl style={{ marginRight: "20px" }}>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  // value={value}
-                  name="idAlumno"
-                  onChange={handleAlumno}
-                  getOptionLabel={(alumnos) =>
-                    `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
-                  }
-                  options={alumnos}
-                  sx={{ width: "250px" }}
-                  isOptionEqualToValue={(option, value) =>
-                    option?.apellido === value?.apellido
-                  }
-                  noOptionsText={"No existe un estudiante con ese nombre"}
-                  renderOption={(props, alumnos) => (
-                    <Box component="li" {...props} key={alumnos?.id}>
-                      {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                    </Box>
-                  )}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Estudiante" />
-                  )}
-                />
-              </FormControl>
+              {/* <Grid container>
+               <Grid item xs={12}>
+               <Typography variant="h6">
+                  Buscar estudiante:
+                </Typography>
+               </Grid>
+              </Grid> */}
+              <Box>
+                <FormControl style={{ marginRight: "20px" }}>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    // value={value}
+                    name="idAlumno"
+                    size="small"
+                    onChange={handleAlumno}
+                    getOptionLabel={(alumnos) =>
+                      `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
+                    }
+                    options={alumnos}
+                    sx={{ width: "250px" }}
+                    isOptionEqualToValue={(option, value) =>
+                      option?.apellido === value?.apellido
+                    }
+                    noOptionsText={"No existe un estudiante con ese nombre"}
+                    renderOption={(props, alumnos) => (
+                      <Box component="li" {...props} key={alumnos?.id}>
+                        {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                      </Box>
+                    )}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Estudiante" />
+                    )}
+                  />
+                </FormControl>
+              </Box>
             </>
+
           )}
         <FormControl sx={{ my: 1 }}>
           <InputLabel id="demo-simple-select-label">Mes</InputLabel>
@@ -341,18 +351,18 @@ export default function Asistencias() {
                             {l.presente
                               ? "Presente"
                               : l.ausente
-                              ? "Ausente"
-                              : l.ausentejustificado
-                              ? "Ausente Justificado"
-                              : l.llegadatarde
-                              ? "Llegada Tarde"
-                              : l.llegadatardejustificada
-                              ? "Llegada Tarde Justificada"
-                              : l.mediafalta
-                              ? "Media Falta"
-                              : l.mediafaltajustificada
-                              ? "Media Falta Justificada"
-                              : "No tiene asistencia cargada"}
+                                ? "Ausente"
+                                : l.ausentejustificado
+                                  ? "Ausente Justificado"
+                                  : l.llegadatarde
+                                    ? "Llegada Tarde"
+                                    : l.llegadatardejustificada
+                                      ? "Llegada Tarde Justificada"
+                                      : l.mediafalta
+                                        ? "Media Falta"
+                                        : l.mediafaltajustificada
+                                          ? "Media Falta Justificada"
+                                          : "No tiene asistencia cargada"}
                           </TableCell>
                         </TableRow>
                       ))}
