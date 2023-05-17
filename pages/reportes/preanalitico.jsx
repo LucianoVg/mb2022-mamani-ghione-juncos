@@ -103,13 +103,18 @@ export default function Preanalitico() {
       {authUser?.rol?.tipo != "Estudiante" &&
         authUser?.rol?.tipo != "Tutor" && (
           <Box sx={{ marginBottom: "20px" }}>
-            <h3>Buscar Estudiante:</h3>
+                 <Typography variant="h6"
+            sx={{ marginBottom: "10px" }}
+          >
+            Buscar estudiante:
+          </Typography>
 
             <FormControl sx={{ marginRight: "20px" }}>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
                 // value={value}
+                size="small"
                 name="idAlumno"
                 onChange={handleAlumno}
                 getOptionLabel={(alumno) =>
@@ -133,7 +138,7 @@ export default function Preanalitico() {
             </FormControl>
             <Button
               onClick={traerPreanalitico}
-              sx={{ marginTop: "20px" }}
+              // sx={{ marginTop: "20px" }}
               variant="outlined"
               startIcon={<Search />}
               color="info"

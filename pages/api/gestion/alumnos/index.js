@@ -24,7 +24,7 @@ export async function traerAlumnos(idCursoXdivision) {
     let AND = [
       {
         usuario: {
-          activo: true,
+          activo: true
         },
       },
     ];
@@ -41,8 +41,8 @@ export async function traerAlumnos(idCursoXdivision) {
     };
     if (idCursoXdivision) {
       AND.push({
-        idcursoxdivision: Number(idCursoXdivision),
-      });
+        idcursoxdivision: Number(idCursoXdivision)
+      },);
     }
     options = {
       ...options,

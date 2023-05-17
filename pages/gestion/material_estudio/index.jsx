@@ -18,6 +18,7 @@ import {
   MenuItem,
   Select,
   Typography,
+  Stack,
 } from "@mui/material";
 
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -32,16 +33,17 @@ import { FileOpenSharp } from "@mui/icons-material";
 import { TabPanel } from "../../../components/tabPanel";
 
 const MaterialEstudio = () => {
-  const [idCurso, setIdCurso] = useState("");
-  const [materias, setMaterias] = useState();
+  const [idCursoXdivision, setIdCursoXdivision] = useState(1);
+  const [materias, setMaterias] = useState([]);
   const [cursos, setCursos] = useState();
   const handleCurso = async (e) => {
-    setIdCurso(Number(e.target.value));
-    await traerMaterias(Number(e.target.value));
+    const cursoxdivision = cursos?.find((c) => c.id === e.target.value);
+    setIdCursoXdivision(Number(cursoxdivision?.id));
+    await traerMaterias(Number(cursoxdivision?.curso?.id));
     await descargarMaterial(tabIndex + 1, Number(e.target.value));
   };
   const { loading, authUser } = useAuth();
-  const [idMateria, setIdMateria] = useState("");
+  const [idMateria, setIdMateria] = useState(1);
   const [subiendo, setSubiendo] = useState(false);
   const [trimestres, setTrimestres] = useState();
   const [alumno, setAlumno] = useState();
@@ -55,26 +57,29 @@ const MaterialEstudio = () => {
     setIdMateria(e.target.value);
     descargarMaterial(tabIndex + 1, 0, e.target.value);
   };
-  const traerMaterias = async (idCurso) => {
-    let param = idCurso ? `?idCurso=${idCurso}` : "";
+  const traerMaterias = async (idCurso = 1) => {
+    let param =
+      authUser?.rol?.tipo === "Docente"
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
+        : idCurso
+          ? `?idCurso=${idCurso}`
+          : "";
+    console.log("Query Param:", param);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
     );
-    if (res.data) {
-      let tempMaterias = [];
-      res.data.forEach((mxc) => {
-        if (!tempMaterias.find((mat) => mat?.id === mxc.materia?.id)) {
-          tempMaterias.push({
-            id: mxc.materia?.id,
-            idcurso: mxc.cursoxdivision?.idcurso,
-            nombre: mxc.materia?.nombre,
-          });
-        }
-      });
-      console.log("Materias: ", tempMaterias);
-      setMaterias(tempMaterias);
+    if (res.status === 200) {
+      setMaterias(res.data);
+      console.log("Materias: ", res.data);
     }
   };
+  const materiaSinRepetir = materias.filter(
+    (m) => m.cursoxdivision?.iddivision === 1
+  );
+  const materiasOrdenadas = materiaSinRepetir?.sort(
+    (a, b) =>
+      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+  );
   const traerCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
@@ -83,6 +88,17 @@ const MaterialEstudio = () => {
       setCursos(res.data);
     }
   };
+
+  const cursosDivision = cursos?.sort(
+    (a, b) =>
+      a.id - b.id
+  );
+  const cursosOrdenados = cursosDivision?.sort(
+    (a, b) =>
+      a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
+  );
+
+
   const traerTrimestres = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`
@@ -168,8 +184,8 @@ const MaterialEstudio = () => {
     }
   };
   const quitarFiltros = async () => {
-    setIdCurso("");
-    setIdMateria("");
+    setIdCursoXdivision(1);
+    setIdMateria(1);
     setTabIndex(0);
     await descargarMaterial(1);
   };
@@ -228,7 +244,7 @@ const MaterialEstudio = () => {
   };
   return (
     <Layout>
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Material de Estudio
       </Typography>
       <div>
@@ -253,16 +269,17 @@ const MaterialEstudio = () => {
                   }}
                   IconComponent={ArrowRightIcon}
                   name="idCurso"
-                  value={idCurso}
+                  value={idCursoXdivision}
                   label="Curso"
+                  size="small"
                   required
                   onChange={handleCurso}
                 >
-                  {cursos &&
-                    cursos?.map((c, i) => (
+                  {cursosOrdenados &&
+                    cursosOrdenados?.map((c, i) => (
                       <MenuItem
                         key={i}
-                        value={c.idcurso}
+                        value={c.id}
                         sx={{ display: "inline-block" }}
                       >
                         {c.curso?.nombre} {c.division?.division}
@@ -272,89 +289,35 @@ const MaterialEstudio = () => {
               </FormControl>
             </Box>
             <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "start",
-                justifyContent: "flex-start",
-              }}
+            // sx={{
+            //   display: "flex",
+            //   flexWrap: "wrap",
+            //   alignItems: "start",
+            //   justifyContent: "flex-start",
+            // }}
             >
-              <FormControl>
-                <InputLabel htmlFor="inputMateria">Materia</InputLabel>
+
+              <FormControl sx={{ width: "250px", marginRight: "20px" }}>
+                <InputLabel id="demo-simple-select-label">Materia</InputLabel>
                 <Select
-                  id="inputMateria"
-                  onChange={handleMateria}
-                  name="idMateria"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   value={idMateria}
+                  size="small"
                   label="Materia"
-                  required
-                  sx={{ width: "260px" }}
+                  onChange={handleMateria}
                   MenuProps={{ disableScrollLock: true }}
                 >
-                  <ListSubheader>Primero</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 1 && (
-                          <MenuItem selected={i === 1} key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
-                  <ListSubheader>Segundo</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 2 && (
-                          <MenuItem key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
-                  <ListSubheader>Tercero</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 3 && (
-                          <MenuItem key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
-                  <ListSubheader>Cuarto</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 4 && (
-                          <MenuItem key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
-                  <ListSubheader>Quinto</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 5 && (
-                          <MenuItem key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
-                  <ListSubheader>Sexto</ListSubheader>
-                  {materias &&
-                    materias?.map(
-                      (m, i) =>
-                        m?.idcurso === 6 && (
-                          <MenuItem key={i} value={m.id}>
-                            {m.nombre}
-                          </MenuItem>
-                        )
-                    )}
+                  {materiasOrdenadas &&
+                    materiasOrdenadas?.map((m, i) => (
+                      <MenuItem selected={i === 0} key={i} value={m.materia?.id}>
+                        {m.materia?.nombre}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
               <Button
-                sx={{ mx: 2, my: 1 }}
+                // sx={{ mx: 2, my: 1 }}
                 variant="outlined"
                 onClick={quitarFiltros}
               >
@@ -404,7 +367,7 @@ const MaterialEstudio = () => {
                                 justifyContent: "space-between",
                               }}
                             >
-                              {subir ? (
+                              {subir  ? (
                                 <Button
                                   onClick={() => subirMaterial(t.id)}
                                   variant="contained"

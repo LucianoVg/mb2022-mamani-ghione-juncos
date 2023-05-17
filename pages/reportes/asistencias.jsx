@@ -162,16 +162,16 @@ export default function Asistencias() {
           my: 2,
         }}
       >
-        {authUser?.rol?.tipo != "Estudiante" &&
-          authUser?.rol?.tipo != "Tutor" && (
+        {(authUser?.rol?.tipo != "Estudiante" &&
+          authUser?.rol?.tipo != "Tutor") && (
             <>
-              {/* <Grid container>
+              <Grid container>
                <Grid item xs={12}>
                <Typography variant="h6">
                   Buscar estudiante:
                 </Typography>
                </Grid>
-              </Grid> */}
+              </Grid>
               <Box>
                 <FormControl style={{ marginRight: "20px" }}>
                   <Autocomplete

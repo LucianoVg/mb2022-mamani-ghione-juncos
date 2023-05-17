@@ -78,10 +78,9 @@ export default function Sancion() {
   const listarSanciones = async () => {
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0].id
-          : authUser?.rol?.tipo === "Tutor"
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor"
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }`
@@ -140,25 +139,30 @@ export default function Sancion() {
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
           : authUser?.rol?.tipo === "Tutor"
-          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-          : ""}
+            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+            : ""}
       </Typography>
       {authUser?.rol?.tipo !== "Estudiante" &&
         authUser?.rol?.tipo !== "Tutor" && (
           <Box>
-            <h3>Buscar Alumno</h3>
+            <Typography variant="h6"
+              sx={{ marginBottom: "10px" }}
+            >
+              Buscar estudiante:
+            </Typography>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 2, sm: 2, md: 5 }}
               sx={{ marginBottom: "30px" }}
             >
-              <FormControl size={"small"}>
+              {/* <FormControl size={"small"}>
                 <InputLabel htmlFor="selectCurso">Curso</InputLabel>
                 <Select
                   sx={{ width: 120 }}
                   name="idCurso"
                   value={idCurso}
                   onChange={handleCurso}
+                  size="small"
                   MenuProps={{ disableScrollLock: true }}
                 >
                   {cursos.map((c) => (
@@ -167,7 +171,7 @@ export default function Sancion() {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl> */}
               <FormControl>
                 <Autocomplete
                   size="small"

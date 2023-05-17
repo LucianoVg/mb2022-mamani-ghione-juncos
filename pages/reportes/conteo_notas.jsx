@@ -141,6 +141,7 @@ export default function Dashboard() {
                 id="inputMateria"
                 // value={value}
                 name="idMateria"
+                size="small"
                 onChange={handleSelect}
                 options={materiasOrdenadas}
                 getOptionLabel={(materia) => `${materia?.materia?.nombre}`}

@@ -55,6 +55,7 @@ export default function Notas() {
           await traerMaterias();
           if (authUser?.rol?.tipo !== "Estudiante") {
             await listarCursos();
+            await listarAlumnos();
           } else {
             await promedioPorTrimestre();
             await notasPorTrimestre();
@@ -82,10 +83,9 @@ export default function Notas() {
     // );
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0].id
-          : authUser?.rol?.tipo === "Tutor"
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor"
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -99,12 +99,10 @@ export default function Notas() {
   const promedioPorTrimestre = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/notas/promedios_trimestres/${
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0].id
-          : authUser?.rol?.tipo === "Tutor"
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/notas/promedios_trimestres/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor"
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -123,34 +121,22 @@ export default function Notas() {
     if (res.status === 200) {
       console.log(res.data);
       setAlumnos(res.data);
-      setIdAlumno(
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0]?.id
-          : 1
-      );
+      // setIdAlumno(
+      //   authUser?.rol?.tipo === "Estudiante"
+      //     ? authUser?.alumnoxcursoxdivision1[0]?.id
+      //     : 1
+      // );
     }
   };
-  const traerMaterias = async (idCurso) => {
+  const traerMaterias = async (idCurso = 1) => {
     let param =
       authUser?.rol?.tipo === "Estudiante"
         ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
         : authUser?.rol?.tipo === "Tutor"
-        ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
-        : idCurso
-        ? `?idCurso=${idCurso}`
-        : "";
-    // let param;
-    // if (authUser?.rol?.tipo === "Estudiante") {
-    //   param = authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}` : "";
-    //   console.log("param materia estudiante", param)
-    // } else {
-    //   if (authUser?.rol?.tipo === "Tutor") {
-    //     param = authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}` : "";
-    //     console.log("param materia tutor", param)
-    //   } else {
-    //     param = idCurso ? `?idCurso=${idCurso}` : "";
-    //   }
-    // };
+          ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
+          : idCurso
+            ? `?idCurso=${idCurso}`
+            : "";
     console.log("Query Param:", param);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
@@ -185,6 +171,15 @@ export default function Notas() {
       setCursos(res.data);
     }
   };
+  const cursosDivision = cursos?.sort(
+    (a, b) =>
+      a.id - b.id
+  );
+  const cursosOrdenados = cursosDivision?.sort(
+    (a, b) =>
+      a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
+  );
+
   const handleCursoXdivision = async (e) => {
     if (e.target.value) {
       const cursoxdivision = cursos?.find((c) => c.id === e.target.value);
@@ -222,17 +217,21 @@ export default function Notas() {
 
   return (
     <Layout>
-      <Typography variant="h4" sx={{ marginBottom: "30px" }}>
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Notas{" "}
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
           : authUser?.rol?.tipo === "Tutor"
-          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-          : ""}
+            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+            : ""}
       </Typography>
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box>
-          <h3>Buscar Estudiante</h3>
+          <Typography variant="h6"
+            sx={{ marginBottom: "10px" }}
+          >
+            Buscar estudiante:
+          </Typography>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 5 }}
@@ -245,13 +244,14 @@ export default function Notas() {
                 id="demo-simple-select"
                 label="Curso"
                 name="idCurso"
+                size="small"
                 value={idCursoXdivision}
                 onChange={handleCursoXdivision}
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value={0}>Seleccione un curso</MenuItem>
-                {cursos &&
-                  cursos.map((c, i) => (
+                {cursosOrdenados &&
+                  cursosOrdenados.map((c, i) => (
                     <MenuItem selected={i === 0} value={c.id} key={i}>
                       {c.curso?.nombre} {c.division?.division}
                     </MenuItem>
@@ -265,6 +265,7 @@ export default function Notas() {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={idMateria}
+                size="small"
                 label="Materia"
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
@@ -283,6 +284,7 @@ export default function Notas() {
                 id="combo-box-demo"
                 // value={value}
                 name="idAlumno"
+                size="small"
                 onChange={handleAlumno}
                 getOptionLabel={(alumno) =>
                   `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
@@ -325,6 +327,7 @@ export default function Notas() {
               value={idMateria}
               size="small"
               label="Materia"
+
               onChange={handleMateria}
               MenuProps={{ disableScrollLock: true }}
             >

@@ -61,12 +61,11 @@ export default function AsistenciasDocentes() {
     setCargando3(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_anual/${    
-        authUser?.rol?.tipo === "Docente"
-      ? authUser?.docentexmateria[0]?.iddocente
-      : idDocente
-      ? idDocente 
-      : 1
+      }/reportes/asistencias/asistencias_docente/conteo_anual/${authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.iddocente
+        : idDocente
+          ? idDocente
+          : 1
       }`
     );
     if (res.status === 200) {
@@ -79,12 +78,11 @@ export default function AsistenciasDocentes() {
     setCargando2(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${
-        authUser?.rol?.tipo === "Docente"
+      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
         ? authUser?.docentexmateria[0]?.iddocente
         : idDocente
-        ? idDocente 
-        : 1
+          ? idDocente
+          : 1
       }&mes=${mes}`
     );
     if (res.status === 200) {
@@ -97,12 +95,11 @@ export default function AsistenciasDocentes() {
     setCargando1(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${
-        authUser?.rol?.tipo === "Docente"
+      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
         ? authUser?.docentexmateria[0]?.iddocente
         : idDocente
-        ? idDocente 
-        : 1
+          ? idDocente
+          : 1
       }&mes=${mes}`
     );
     if (res.status === 200) {
@@ -151,9 +148,13 @@ export default function AsistenciasDocentes() {
         {authUser?.rol?.tipo === "Docente" ? `de ${authUser?.nombre}` : ""}
       </Typography>
 
-      {authUser?.rol?.tipo != "Docente" && (
+      {authUser?.rol?.tipo != "Docente" ? (
         <>
-          <h3>Buscar Docente</h3>
+          <Typography variant="h6"
+          sx={{marginBottom: "10px"}}
+          >
+            Buscar docente:
+          </Typography>
           <Box>
             <FormControl style={{ marginRight: "20px" }}>
               <Autocomplete
@@ -161,6 +162,7 @@ export default function AsistenciasDocentes() {
                 id="combo-box-demo"
                 // value={value}
                 name="idDocente"
+                size="small"
                 onChange={handleDocente}
                 getOptionLabel={(docentes) =>
                   `${docentes?.apellido} ${docentes?.nombre}`
@@ -188,6 +190,7 @@ export default function AsistenciasDocentes() {
                 id="demo-simple-select"
                 value={mes}
                 label="Mes"
+                size="small"
                 onChange={handleMes}
                 style={{ width: "160px" }}
                 MenuProps={{ disableScrollLock: true }}
@@ -216,7 +219,45 @@ export default function AsistenciasDocentes() {
             </Box>
           </Box>
         </>
-      )}
+      ) : (
+        <>
+          <FormControl style={{ marginRight: "20px" }}>
+            <InputLabel id="demo-simple-select-label">Mes</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={mes}
+              label="Mes"
+              size="small"
+              onChange={handleMes}
+              style={{ width: "160px" }}
+              MenuProps={{ disableScrollLock: true }}
+            >
+              <MenuItem value={3}>Marzo</MenuItem>
+              <MenuItem value={4}>Abril</MenuItem>
+              <MenuItem value={5}>Mayo</MenuItem>
+              <MenuItem value={6}>Junio</MenuItem>
+              <MenuItem value={7}>Julio</MenuItem>
+              <MenuItem value={8}>Agosto</MenuItem>
+              <MenuItem value={9}>Septiembre</MenuItem>
+              <MenuItem value={10}>Octubre</MenuItem>
+              <MenuItem value={11}>Noviembre</MenuItem>
+              <MenuItem value={12}>Diciembre</MenuItem>
+            </Select>
+          </FormControl>
+          <Box sx={{ marginBottom: "20px", marginTop: 2 }}>
+            <Button
+              onClick={handleSearch}
+              variant="outlined"
+              startIcon={<Search />}
+              color="info"
+            >
+              Buscar
+            </Button>
+          </Box>
+        </>
+      )
+      }
 
       <div sx={{ marginTop: 10 }}>
         <Grid container spacing={2}>
@@ -356,6 +397,6 @@ export default function AsistenciasDocentes() {
           </Grid>
         </Grid>
       </div>
-    </Layout>
+    </Layout >
   );
 }
