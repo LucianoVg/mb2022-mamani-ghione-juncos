@@ -367,7 +367,7 @@ const MaterialEstudio = () => {
                                 justifyContent: "space-between",
                               }}
                             >
-                              {subir  ? (
+                              {subir && (authUser?.rol?.tipo === "Docente" || authUser?.rol?.tipo === "Administrador")  ? (
                                 <Button
                                   onClick={() => subirMaterial(t.id)}
                                   variant="contained"
@@ -377,7 +377,7 @@ const MaterialEstudio = () => {
                                   Subir apunte
                                 </Button>
                               ) : (
-                                puedeSubirArchivos() && (
+                                puedeSubirArchivos() && (authUser?.rol?.tipo === "Docente" || authUser?.rol?.tipo === "Administrador") && (
                                   <Button
                                     variant="contained"
                                     component={"label"}
