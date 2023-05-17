@@ -78,6 +78,11 @@ const MaterialEstudio = () => {
       console.log("Materias: ", res.data);
     }
   };
+  const materiasOrdenadas = materias?.sort(
+    (a, b) =>
+      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+  );
+
   const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
     (a, b) => (
       a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
@@ -91,10 +96,15 @@ const MaterialEstudio = () => {
   );
 
 
-  const materiasOrdenadas = materias?.sort(
+  const materiaSinRepetir = materias.filter(
+    (m) => m.cursoxdivision?.iddivision === authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
+  );
+  const materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
     (a, b) =>
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
   );
+
+  
   const traerCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
@@ -341,7 +351,6 @@ const MaterialEstudio = () => {
             </FormControl>
           )}
         {authUser?.rol?.tipo === "Estudiante" && (
-
           <>
             <Box sx={{ marginBottom: "20px" }}>
               <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
@@ -353,7 +362,7 @@ const MaterialEstudio = () => {
                   // value={value}
                   name="idMateria"
                   onChange={handleMateria}
-                  options={materiasOrdenadas}
+                  options={materiasOrdenadasEstudiante}
                   getOptionLabel={(materia) =>
                     `${materia?.materia?.nombre}`
                   }
