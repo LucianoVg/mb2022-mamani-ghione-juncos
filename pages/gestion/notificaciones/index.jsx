@@ -151,7 +151,9 @@ const Notificaciones = () => {
                       Volver a notificación para tutor
                     </Button>
                     <Box>
-                      <FormControl   size="small" fullWidth>
+                      <FormControl   size="small" fullWidth 
+                      sx={{marginBottom: "20px"}}
+                      >
                         <InputLabel id="demo-simple-select-label">
                           Curso
                         </InputLabel>

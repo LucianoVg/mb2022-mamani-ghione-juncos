@@ -139,8 +139,11 @@ const Sanciones = () => {
       </Typography>
 
       <Box direction="row" sx={{ marginBottom: "10px" }}>
-        <FormControl style={{ marginRight: "20px" }}>
+        <FormControl style={{ marginRight: "20px" }}
+        size="small"
+        >
           <Autocomplete
+            size="small"
             disablePortal
             id="combo-box-demo"
             // value={value}
@@ -165,7 +168,7 @@ const Sanciones = () => {
             )}
           />
         </FormControl>
-        <FormControl>
+        <FormControl   size="small">
           <InputLabel htmlFor="inputCurso">Curso</InputLabel>
           <Select
             sx={{ width: "200px", marginRight: "20px" }}

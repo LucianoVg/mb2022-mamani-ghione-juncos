@@ -180,6 +180,7 @@ export default function MantenimientoUsuario() {
         >
           <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
             <Autocomplete
+              size="small"
               disablePortal
               id="combo-box-demo"
               // value={value}
@@ -205,7 +206,7 @@ export default function MantenimientoUsuario() {
             />
           </FormControl>
           {authUser?.rol?.tipo !== "Secretaria" && (
-            <FormControl>
+            <FormControl   size="small">
               <InputLabel id="select-label">Rol</InputLabel>
               <Select
                 labelId="select-label"

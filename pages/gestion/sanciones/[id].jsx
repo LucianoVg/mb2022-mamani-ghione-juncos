@@ -153,10 +153,11 @@ export default function DetalleSancion() {
           <Box style={{ marginTop: "30px" }}>
             <Box direction="row">
               {!esSancionGrupal && (
-                <FormControl>
+                <FormControl >
                   <InputLabel htmlFor="inputAlumno">Estudiante</InputLabel>
                   <Select
                     value={idalumno}
+                    size="small"
                     // onChange={handleIdAlumno}
                     name="idalumno"
                     id="inputAlumno"
@@ -173,7 +174,7 @@ export default function DetalleSancion() {
                 </FormControl>
               )}
 
-              <FormControl>
+              <FormControl   size="small">
                 <InputLabel htmlFor="inputTipoSancion">
                   Tipo de Sanción
                 </InputLabel>

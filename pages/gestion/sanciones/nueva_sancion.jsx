@@ -123,6 +123,7 @@ export default function NuevaSancion() {
                                         disablePortal
                                         id="combo-box-demo"
                                         // value={value}
+                                        size="small"
                                         name="idAlumno"
                                         onChange={handleAlumno}
                                         getOptionLabel={(alumnos) => `${alumnos?.usuario?.apellido} ${alumnos.usuario?.nombre}`}
@@ -163,14 +164,14 @@ export default function NuevaSancion() {
                         }
                         {
                             esSancionGrupal && (
-                                <FormControl style={{ marginRight: "20px", marginBottom: "20px" }}>
+                                <FormControl style={{ marginRight: "20px", marginBottom: "20px" }}   size="small">
                                     <InputLabel htmlFor="inputCurso">Curso</InputLabel>
                                     <Select value={sancion.idCurso}
                                         onChange={handleSancion}
                                         name="idCurso"
                                         id="inputCurso"
                                         label="Curso"
-                                        sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
+                                        sx={{ width: '100px', marginRight: '20px' }}
                                         MenuProps={{ disableScrollLock: true }}
                                     >
                                         {
@@ -187,14 +188,14 @@ export default function NuevaSancion() {
                             )
                         }
 
-                        <FormControl>
+                        <FormControl   size="small">
                             <InputLabel htmlFor="inputTipoSancion">Tipo de Sancion</InputLabel>
                             <Select value={sancion.idTipoSancion}
                                 onChange={handleSancion}
                                 name="idTipoSancion"
                                 id="inputTipoSancion"
                                 label="Tipo de Sancion"
-                                sx={{ width: '180px', marginBottom: '20px' }}
+                                sx={{ width: '180px'}}
                             >
                                 {
                                     tipoSanciones && tipoSanciones.map((t, i) => (
@@ -225,27 +226,27 @@ export default function NuevaSancion() {
 
                     <Box>
                         <Stack direction="row" spacing={2}>
-                        <Button disabled={guardando} variant="contained" sx={{ width: '170px', marginRight: "20px"}} color="primary" type="submit">
-                            {
-                                guardando && <Loading size={30} />
-                            }
-                            {
-                                !guardando && <span>Generar Sancion</span>
-                            }
-                        </Button>
-                        <Button  variant="contained"
-                            sx={{
-                                width: '170px', backgroundColor: "white", color: "black",
-                                ":hover": {
-                                    backgroundColor: "lightgray"
+                            <Button disabled={guardando} variant="contained" sx={{ width: '170px', marginRight: "20px" }} color="primary" type="submit">
+                                {
+                                    guardando && <Loading size={30} />
                                 }
-                            }}
-                           href='/gestion/sanciones'
-                                                      >
-                            Volver
-                        </Button>
+                                {
+                                    !guardando && <span>Generar Sancion</span>
+                                }
+                            </Button>
+                            <Button variant="contained"
+                                sx={{
+                                    width: '170px', backgroundColor: "white", color: "black",
+                                    ":hover": {
+                                        backgroundColor: "lightgray"
+                                    }
+                                }}
+                                href='/gestion/sanciones'
+                            >
+                                Volver
+                            </Button>
                         </Stack>
-                     
+
                     </Box>
                 </Box>
             </div>

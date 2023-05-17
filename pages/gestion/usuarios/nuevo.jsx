@@ -51,7 +51,7 @@ export default function NuevoUsuario() {
     })
     const [curso, setCurso] = useState()
     const [rol, setRol] = useState(0)
-    const [usuarioLogeado, setUsuarioLogueado] = useState({ id: 0, rol: '' })
+    const [usuariologeado, setUsuarioLogueado] = useState({ id: 0, rol: '' })
     const [mensaje, setMensaje] = useState("")
     const [esAlumno, setEsAlumno] = useState(false)
     const [esPreceptor, setEsPreceptor] = useState(false)
@@ -65,7 +65,7 @@ export default function NuevoUsuario() {
             router.push('/gestion/cuenta/login')
         }
         // traerUsuario()
-        if (usuarioLogeado.rol) {
+        if (authUser?.rol?.tipo) {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
@@ -74,19 +74,19 @@ export default function NuevoUsuario() {
                 traerMaterias()
             }
         }
-    }, [authUser, loading, usuarioLogeado.id, usuarioLogeado.rol])
+    }, [authUser, loading, authUser?.id, authUser?.rol?.tipo])
 
     // const traerUsuario = async () => {
     //     const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`)
     //     if (res.data) {
-    //         setUsuarioLogueado({ ...usuarioLogeado, id: Number(res.data?.id), rol: res.data?.rol?.tipo })
+    //         setUsuarioLogueado({ ...authUser?, id: Number(res.data?.id), rol: res.data?.rol?.tipo?.tipo })
     //     }
     // }
     const tienePermisos = () => {
-        return usuarioLogeado.rol === 'Administrador'
-            || usuarioLogeado.rol === 'Secretaria'
-            || usuarioLogeado.rol === 'Director'
-            || usuarioLogeado.rol === 'Vicedirector'
+        return authUser?.rol?.tipo === 'Administrador'
+            || authUser?.rol?.tipo === 'Secretaria'
+            || authUser?.rol?.tipo === 'Director'
+            || authUser?.rol?.tipo === 'Vicedirector'
     }
     const traerCursos = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`)
@@ -187,7 +187,7 @@ export default function NuevoUsuario() {
                 contrasenia: usuario.contrasenia,
                 esAlumno: esAlumno,
                 esDocente: esDocente,
-                idUsuario: usuarioLogeado.id,
+                idUsuario: authUser?.id,
                 idMateriasXcursoXdivision: idMaterias
             }
             console.log(data);
@@ -258,6 +258,7 @@ export default function NuevoUsuario() {
                     </Box>
                     <Box direction='row' >
                         <TextField
+                            size="small"
                             margin="normal"
                             name="nombre"
                             onChange={handleForm}
@@ -268,6 +269,7 @@ export default function NuevoUsuario() {
                         />
 
                         <TextField
+                            size="small"
                             margin="normal"
                             name="apellido"
                             onChange={handleForm}
@@ -280,6 +282,7 @@ export default function NuevoUsuario() {
                     <Box direction='row'>
 
                         <TextField
+                            size="small"
                             margin="normal"
                             name="correo"
                             onChange={handleForm}
@@ -290,6 +293,7 @@ export default function NuevoUsuario() {
                             sx={{ marginRight: '20px', marginBottom: '20px', width: '280px' }}
                         />
                         <TextField
+                            size="small"
                             margin="normal"
                             name="legajo"
                             type="number"
@@ -303,6 +307,18 @@ export default function NuevoUsuario() {
 
                     <Box direction='row'>
                         <TextField
+                            size="small"
+                            margin="normal"
+                            name="telefono"
+                            onChange={handleForm}
+                            label="Telefono"
+                            value={usuario.telefono}
+                            type="number"
+                            required
+                            sx={{ marginRight: '20px', marginBottom: '20px' }}
+                        />
+                        <TextField
+                            size="small"
                             margin="normal"
                             name="localidad"
                             onChange={handleForm}
@@ -313,19 +329,11 @@ export default function NuevoUsuario() {
                         />
 
 
-                        <TextField
-                            margin="normal"
-                            name="telefono"
-                            onChange={handleForm}
-                            label="Telefono"
-                            value={usuario.telefono}
-                            type="number"
-                            required
-                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                        />
+
 
 
                         <TextField
+                            size="small"
                             margin="normal"
                             name="direccion"
                             onChange={handleForm}
@@ -346,13 +354,13 @@ export default function NuevoUsuario() {
                                     name="fecha"
                                     value={fecha}
                                     onChange={handleFecha}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField size="small" {...params} />}
                                     MenuProps={{ disableScrollLock: true }}
                                 />
                             </LocalizationProvider>
                         </FormControl>
 
-                        <FormControl >
+                        <FormControl size="small" >
                             <InputLabel id="select-label">Sexo</InputLabel>
                             <Select labelId="select-label"
                                 name="sexo"
@@ -369,9 +377,9 @@ export default function NuevoUsuario() {
                         </FormControl>
 
                         {
-                            usuarioLogeado?.rol === 'Administrador' &&
+                            authUser?.rol?.tipo === 'Administrador' &&
                             (
-                                <FormControl>
+                                <FormControl size="small">
                                     <InputLabel id="select-label">Rol</InputLabel>
                                     <Select labelId="select-label"
                                         name="rol"
@@ -393,9 +401,9 @@ export default function NuevoUsuario() {
                             )
                         }
                         {
-                            usuarioLogeado?.rol === 'Director' &&
+                            authUser?.rol?.tipo === 'Director' &&
                             (
-                                <FormControl>
+                                <FormControl size="small">
                                     <InputLabel id="select-label">Rol</InputLabel>
                                     <Select labelId="select-label"
                                         name="rol"
@@ -421,9 +429,9 @@ export default function NuevoUsuario() {
                             )
                         }
                         {
-                            usuarioLogeado?.rol === 'Vicedirector' &&
+                            authUser?.rol?.tipo === 'Vicedirector' &&
                             (
-                                <FormControl>
+                                <FormControl size="small">
                                     <InputLabel id="select-label">Rol</InputLabel>
                                     <Select labelId="select-label"
                                         name="rol"
@@ -448,9 +456,9 @@ export default function NuevoUsuario() {
                             )
                         }
                         {
-                            usuarioLogeado?.rol === 'Secretaria' &&
+                            authUser?.rol?.tipo === 'Secretaria' &&
                             (
-                                <FormControl>
+                                <FormControl size="small">
                                     <InputLabel id="select-label">Rol</InputLabel>
                                     <Select labelId="select-label"
                                         name="rol"
@@ -480,7 +488,7 @@ export default function NuevoUsuario() {
                     <Box>
 
                         <TextField
-
+                            size="small"
                             margin="normal"
                             name="contrasenia"
                             onChange={handleForm}
@@ -496,7 +504,7 @@ export default function NuevoUsuario() {
                             <Box>
                                 <h3>Seleccionar curso</h3>
 
-                                <FormControl>
+                                <FormControl size="small">
                                     <InputLabel id="select-label">Curso</InputLabel>
                                     <Select
                                         labelId="select-label"
@@ -524,7 +532,7 @@ export default function NuevoUsuario() {
                         esPreceptor && (
                             <Box>
                                 <h3>Seleccionar curso/s</h3>
-                                <FormControl sx={{ width: 300 }}>
+                                <FormControl sx={{ width: 300 }} size="small">
                                     <InputLabel id="demo-multiple-name-label">Cursos</InputLabel>
                                     <Select
                                         required
@@ -557,7 +565,7 @@ export default function NuevoUsuario() {
                         esDocente && (
                             <Box>
                                 <h3>Seleccionar Materia/s</h3>
-                                <FormControl sx={{ width: 300 }}>
+                                <FormControl sx={{ width: 300 }} size="small">
                                     <InputLabel id="demo-multiple-name-label">Materias</InputLabel>
                                     <Select
                                         required
@@ -607,7 +615,7 @@ export default function NuevoUsuario() {
 
                                     <Box direction='row'>
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="nombre"
                                             onChange={handleTutor}
@@ -618,7 +626,7 @@ export default function NuevoUsuario() {
                                         />
 
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="apellido"
                                             onChange={handleTutor}
@@ -629,6 +637,7 @@ export default function NuevoUsuario() {
 
                                     <Box direction='row'>
                                         <TextField
+                                            size="small"
                                             sx={{ width: '280px', marginRight: '20px', marginBottom: '20px' }}
                                             margin="normal"
                                             name="correo"
@@ -641,7 +650,7 @@ export default function NuevoUsuario() {
                                         />
 
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="dni"
                                             onChange={handleTutor}
@@ -651,6 +660,7 @@ export default function NuevoUsuario() {
                                     </Box>
                                     <Box direction='row'>
                                         <TextField
+                                            size="small"
                                             margin="normal"
                                             name="localidad"
                                             onChange={handleTutor}
@@ -661,7 +671,7 @@ export default function NuevoUsuario() {
                                         />
 
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="telefono"
                                             onChange={handleTutor}
@@ -673,7 +683,7 @@ export default function NuevoUsuario() {
                                         />
 
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="direccion"
                                             onChange={handleTutor}
@@ -684,7 +694,7 @@ export default function NuevoUsuario() {
                                         />
                                     </Box>
                                     <Box direction='row'>
-                                        <FormControl>
+                                        <FormControl size="small">
                                             <InputLabel id="select-label">Sexo</InputLabel>
                                             <Select labelId="select-label"
                                                 name="sexo"
@@ -702,7 +712,7 @@ export default function NuevoUsuario() {
                                     </Box>
                                     <Box>
                                         <TextField
-
+                                            size="small"
                                             margin="normal"
                                             name="contrasenia"
                                             onChange={handleTutor}
