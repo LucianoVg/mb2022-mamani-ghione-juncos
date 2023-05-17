@@ -53,8 +53,7 @@ export default function Asistencias() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser?.rol) {
+    if (authUser && authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
@@ -67,11 +66,12 @@ export default function Asistencias() {
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const conteoAsistenciasAnuales = async () => {
-    let param = authUser?.rol?.tipo === "Estudiante" ?
-      authUser?.alumnoxcursoxdivision1[0].id
-      : authUser?.rol?.tipo === "Tutor" ?
-        authUser?.alumnoxcursoxdivision2[0].id
-        : idAlumno
+    let param =
+      authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor"
+        ? authUser?.alumnoxcursoxdivision2[0].id
+        : idAlumno;
     setCargando2(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${param}`
@@ -83,11 +83,12 @@ export default function Asistencias() {
     setCargando2(false);
   };
   const conteoAsistenciasMensuales = async () => {
-    let param = authUser?.rol?.tipo === "Estudiante" ?
-      authUser?.alumnoxcursoxdivision1[0].id
-      : authUser?.rol?.tipo === "Tutor" ?
-        authUser?.alumnoxcursoxdivision2[0].id
-        : idAlumno
+    let param =
+      authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor"
+        ? authUser?.alumnoxcursoxdivision2[0].id
+        : idAlumno;
     setCargando1(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${param}&mes=${mes}`
@@ -116,15 +117,6 @@ export default function Asistencias() {
       authUser?.rol?.tipo === "Tutor"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
 
   const listarAlumnos = async () => {
     const res = await axios.get(
@@ -153,67 +145,56 @@ export default function Asistencias() {
   };
   return (
     <Layout>
-      <Typography variant="h4"
-        sx={{ marginBottom: "20px" }}
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        Reporte Asistencias{" "}
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor"
+          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : ""}
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "start",
+          flexWrap: "wrap",
+          my: 2,
+        }}
       >
-        Reporte Asistencias</Typography>
-      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" && (
-        <Box>
-          <h3>Buscar Estudiante</h3>
-          <FormControl style={{ marginRight: "20px" }}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              // value={value}
-              name="idAlumno"
-              onChange={handleAlumno}
-              getOptionLabel={(alumnos) =>
-                `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
-              }
-              options={alumnos}
-              sx={{ width: "250px" }}
-              isOptionEqualToValue={(option, value) =>
-                option?.apellido === value?.apellido
-              }
-              noOptionsText={"No existe un estudiante con ese nombre"}
-              renderOption={(props, alumnos) => (
-                <Box component="li" {...props} key={alumnos?.id}>
-                  {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                </Box>
-              )}
-              renderInput={(params) => <TextField {...params} label="Estudiante" />}
-            />
-          </FormControl>
-
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Mes</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={mes}
-              label="Mes"
-              onChange={handleMes}
-              style={{ width: "160px" }}
-              MenuProps={{ disableScrollLock: true }}
-            >
-              <MenuItem value={3}>Marzo</MenuItem>
-              <MenuItem value={4}>Abril</MenuItem>
-              <MenuItem value={5}>Mayo</MenuItem>
-              <MenuItem value={6}>Junio</MenuItem>
-              <MenuItem value={7}>Julio</MenuItem>
-              <MenuItem value={8}>Agosto</MenuItem>
-              <MenuItem value={9}>Septiembre</MenuItem>
-              <MenuItem value={10}>Octubre</MenuItem>
-              <MenuItem value={11}>Noviembre</MenuItem>
-              <MenuItem value={12}>Diciembre</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-
-      )}
-
-      {authUser?.rol?.tipo === "Estudiante" || authUser?.rol?.tipo === "Tutor" && (
-        <FormControl sx={{marginBottom: "30px", marginRight: "20px"}}>
+        {authUser?.rol?.tipo != "Estudiante" &&
+          authUser?.rol?.tipo != "Tutor" && (
+            <>
+              <h3>Buscar Estudiante</h3>
+              <FormControl style={{ marginRight: "20px" }}>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idAlumno"
+                  onChange={handleAlumno}
+                  getOptionLabel={(alumnos) =>
+                    `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
+                  }
+                  options={alumnos}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un estudiante con ese nombre"}
+                  renderOption={(props, alumnos) => (
+                    <Box component="li" {...props} key={alumnos?.id}>
+                      {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Estudiante" />
+                  )}
+                />
+              </FormControl>
+            </>
+          )}
+        <FormControl sx={{ my: 1 }}>
           <InputLabel id="demo-simple-select-label">Mes</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -237,15 +218,17 @@ export default function Asistencias() {
             <MenuItem value={12}>Diciembre</MenuItem>
           </Select>
         </FormControl>
-      )}
-      <Button
-        onClick={handleSearch}
-        variant="outlined"
-        startIcon={<Search />}
-        color="info"
-      >
-        Buscar
-      </Button>
+        <Button
+          onClick={handleSearch}
+          variant="outlined"
+          startIcon={<Search />}
+          color="info"
+          sx={{ mx: 2, my: 1 }}
+        >
+          Buscar
+        </Button>
+      </Box>
+
       <div sx={{ marginTop: "200px" }}>
         <Grid container spacing={2}>
           <Grid item xs>
@@ -358,18 +341,18 @@ export default function Asistencias() {
                             {l.presente
                               ? "Presente"
                               : l.ausente
-                                ? "Ausente"
-                                : l.ausentejustificado
-                                  ? "Ausente Justificado"
-                                  : l.llegadatarde
-                                    ? "Llegada Tarde"
-                                    : l.llegadatardejustificada
-                                      ? "Llegada Tarde Justificada"
-                                      : l.mediafalta
-                                        ? "Media Falta"
-                                        : l.mediafaltajustificada
-                                          ? "Media Falta Justificada"
-                                          : "No tiene asistencia cargada"}
+                              ? "Ausente"
+                              : l.ausentejustificado
+                              ? "Ausente Justificado"
+                              : l.llegadatarde
+                              ? "Llegada Tarde"
+                              : l.llegadatardejustificada
+                              ? "Llegada Tarde Justificada"
+                              : l.mediafalta
+                              ? "Media Falta"
+                              : l.mediafaltajustificada
+                              ? "Media Falta Justificada"
+                              : "No tiene asistencia cargada"}
                           </TableCell>
                         </TableRow>
                       ))}

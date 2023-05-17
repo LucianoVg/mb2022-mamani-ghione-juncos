@@ -50,21 +50,21 @@ export default function Sancion() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser.rol) {
+    if (authUser && authUser.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
-        if (authUser?.rol?.tipo === "Estudiante") {
-          traerAlumno();
-        } else {
+        if (
+          authUser?.rol?.tipo !== "Estudiante" &&
+          authUser?.rol?.tipo !== "Tutor"
+        ) {
           traerCursos();
           listarAlumnos();
         }
         listarSanciones();
       }
     }
-  }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
+  }, [loading, authUser]);
 
   const traerCursos = async () => {
     const res = await axios.get(
@@ -74,18 +74,17 @@ export default function Sancion() {
       setCursos(res.data);
     }
   };
-  const traerAlumno = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/${usuario.id}`
-    );
-    if (res.data) {
-      setIdAlumno(res.data?.id);
-    }
-  };
+
   const listarSanciones = async () => {
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${idAlumno}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor"
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno
+      }`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -103,15 +102,6 @@ export default function Sancion() {
       authUser?.rol?.tipo === "Tutor"
     );
   };
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
 
   const listarAlumnos = async () => {
     const res = await axios.get(
@@ -145,72 +135,77 @@ export default function Sancion() {
 
   return (
     <Layout>
-           <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        Reporte Sanciones{" "}
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor"
+          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : ""}
+      </Typography>
+      {authUser?.rol?.tipo !== "Estudiante" &&
+        authUser?.rol?.tipo !== "Tutor" && (
+          <Box>
+            <h3>Buscar Alumno</h3>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 2, md: 5 }}
+              sx={{ marginBottom: "30px" }}
             >
-                Reporte Sanciones</Typography>
-      {usuario?.rol !== "Estudiante" && usuario?.rol !== "Tutor" && (
-        <Box>
-          <h3>Buscar Alumno</h3>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 2, sm: 2, md: 5 }}
-            sx={{ marginBottom: "30px" }}
-          >
-            <FormControl size={"small"}>
-              <InputLabel htmlFor="selectCurso">Curso</InputLabel>
-              <Select
-                sx={{ width: 120 }}
-                name="idCurso"
-                value={idCurso}
-                onChange={handleCurso}
-                MenuProps={{ disableScrollLock: true }}
+              <FormControl size={"small"}>
+                <InputLabel htmlFor="selectCurso">Curso</InputLabel>
+                <Select
+                  sx={{ width: 120 }}
+                  name="idCurso"
+                  value={idCurso}
+                  onChange={handleCurso}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {cursos.map((c) => (
+                    <MenuItem key={c.id} value={c.id}>
+                      {c.curso?.nombre} {c.division?.division}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idAlumno"
+                  onChange={handleAlumno}
+                  getOptionLabel={(alumnos) =>
+                    `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
+                  }
+                  options={alumnos}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un estudiante con ese nombre"}
+                  renderOption={(props, alumnos) => (
+                    <Box component="li" {...props} key={alumnos?.id}>
+                      {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Estudiante" />
+                  )}
+                />
+              </FormControl>
+              <Button
+                onClick={listarSanciones}
+                variant="outlined"
+                startIcon={<Search />}
+                color="info"
               >
-                {cursos.map((c) => (
-                  <MenuItem key={c.id} value={c.id}>
-                    {c.curso?.nombre} {c.division?.division}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl>
-              <Autocomplete
-                size="small"
-                disablePortal
-                id="combo-box-demo"
-                // value={value}
-                name="idAlumno"
-                onChange={handleAlumno}
-                getOptionLabel={(alumnos) =>
-                  `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
-                }
-                options={alumnos}
-                sx={{ width: "250px" }}
-                isOptionEqualToValue={(option, value) =>
-                  option?.apellido === value?.apellido
-                }
-                noOptionsText={"No existe un estudiante con ese nombre"}
-                renderOption={(props, alumnos) => (
-                  <Box component="li" {...props} key={alumnos?.id}>
-                    {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Estudiante" />
-                )}
-              />
-            </FormControl>
-            <Button
-              onClick={listarSanciones}
-              variant="outlined"
-              startIcon={<Search />}
-              color="info"
-            >
-              Buscar
-            </Button>
-          </Stack>
-        </Box>
-      )}
+                Buscar
+              </Button>
+            </Stack>
+          </Box>
+        )}
 
       <div sx={{ marginTop: "200px" }}>
         {!cargando && (

@@ -82,10 +82,11 @@ export default function Notas() {
     // );
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${authUser?.rol?.tipo === "Estudiante" ?
-        authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" ?
-          authUser?.alumnoxcursoxdivision2[0].id
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor"
+          ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
     );
@@ -98,11 +99,13 @@ export default function Notas() {
   const promedioPorTrimestre = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/notas/promedios_trimestres/${authUser?.rol?.tipo === "Estudiante" ?
-        authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" ?
-          authUser?.alumnoxcursoxdivision2[0].id
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/notas/promedios_trimestres/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor"
+          ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
     );
@@ -129,15 +132,13 @@ export default function Notas() {
   };
   const traerMaterias = async (idCurso) => {
     let param =
-      authUser?.rol?.tipo === "Estudiante" ?
-        `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
-        : (
-          authUser?.rol?.tipo === "Tutor" ?
-            `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
-            : idCurso ?
-              `?idCurso=${idCurso}`
-              : ""
-        )
+      authUser?.rol?.tipo === "Estudiante"
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
+        : authUser?.rol?.tipo === "Tutor"
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
+        : idCurso
+        ? `?idCurso=${idCurso}`
+        : "";
     // let param;
     // if (authUser?.rol?.tipo === "Estudiante") {
     //   param = authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}` : "";
@@ -155,7 +156,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
     );
     if (res.status === 200) {
-      setMaterias(res.data)
+      setMaterias(res.data);
       console.log("Materias: ", res.data);
       // let tempMaterias = [];
       // res.data.forEach((m) => {
@@ -222,10 +223,14 @@ export default function Notas() {
   return (
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "30px" }}>
-        Reporte Notas
+        Reporte Notas{" "}
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor"
+          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : ""}
       </Typography>
-      {authUser?.rol?.tipo != "Estudiante" &&
-        authUser?.rol?.tipo != "Tutor" ? (
+      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box>
           <h3>Buscar Estudiante</h3>
           <Stack
@@ -263,20 +268,13 @@ export default function Notas() {
                 label="Materia"
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
-               
               >
                 {materiasOrdenadas &&
-                  materiasOrdenadas?.map((m, i) =>
-
-                    <MenuItem
-                      selected={i === 0}
-                      key={i}
-                      value={m.materia?.id}
-                    >
+                  materiasOrdenadas?.map((m, i) => (
+                    <MenuItem selected={i === 0} key={i} value={m.materia?.id}>
                       {m.materia?.nombre}
                     </MenuItem>
-
-                  )}
+                  ))}
               </Select>
             </FormControl>
             <FormControl style={{ marginRight: "20px" }}>
@@ -330,19 +328,12 @@ export default function Notas() {
               onChange={handleMateria}
               MenuProps={{ disableScrollLock: true }}
             >
-
               {materiasOrdenadas &&
-                materiasOrdenadas?.map((m, i) =>
-
-                  <MenuItem
-                    selected={i === 0}
-                    key={i}
-                    value={m.materia?.id}
-                  >
+                materiasOrdenadas?.map((m, i) => (
+                  <MenuItem selected={i === 0} key={i} value={m.materia?.id}>
                     {m.materia?.nombre}
                   </MenuItem>
-
-                )}
+                ))}
             </Select>
           </FormControl>
           <Button
@@ -363,8 +354,10 @@ export default function Notas() {
             Seleccione una materia para buscar su promedio
           </Typography>
         )}
-      {
-        !cargando1 && !cargando2 && notaTrimestre.length > 0 && promedioTrimestre.length > 0 && (
+      {!cargando1 &&
+        !cargando2 &&
+        notaTrimestre.length > 0 &&
+        promedioTrimestre.length > 0 && (
           <Grid container spacing={2}>
             <Grid item xs>
               <h2>Notas por trimestre</h2>
@@ -582,7 +575,6 @@ export default function Notas() {
           <Loading size={50} />
         </Container>
       )}
-
     </Layout>
   );
 }

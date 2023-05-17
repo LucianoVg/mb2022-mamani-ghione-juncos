@@ -17,7 +17,7 @@ import {
   TableRow,
   TextField,
   Typography,
-  Grid
+  Grid,
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import { Search } from "@mui/icons-material";
@@ -26,7 +26,6 @@ import Loading from "../../components/loading";
 export default function Preanalitico() {
   const [alumnos, setAlumnos] = useState([]);
   const router = useRouter();
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
   const [idAlumno, setIdAlumno] = useState(0);
   const [preanalitico, setPreanalitico] = useState([]);
@@ -36,45 +35,37 @@ export default function Preanalitico() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    // traerUsuario();
-    if (authUser?.rol) {
+    if (authUser && authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
-        authUser
-        listarAlumnos();
+        if (
+          authUser.rol?.tipo !== "Estudiante" &&
+          authUser?.rol?.tipo !== "Tutor"
+        ) {
+          listarAlumnos();
+        }
         traerPreanalitico();
       }
     }
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const traerPreanalitico = async () => {
-    if (authUser?.rol?.tipo === "Estudiante") {
-      setIdAlumno(authUser?.alumnoxcursoxdivision1[0].id)
-    };
-    if (authUser?.rol?.tipo === "Tutor") {
-      setIdAlumno(authUser?.alumnoxcursoxdivision2[0].id)
-
-    };
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${idAlumno}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor"
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno
+      }`
     );
     if (res.status === 200) {
       setPreanalitico(res.data);
     }
     setCargando(false);
   };
-
-  // const traerUsuario = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cuenta/${authUser?.email}`
-  //   );
-  //   if (res.data) {
-  //     console.log(res.data);
-  //     setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo });
-  //   }
-  // };
   const tienePermisos = () => {
     return (
       authUser?.rol?.tipo === "Administrador" ||
@@ -101,12 +92,16 @@ export default function Preanalitico() {
 
   return (
     <Layout>
-      <Typography variant="h4"
-        sx={{ marginBottom: "20px" }}
-      >
-        Reporte Historial Académico</Typography>
-      {
-        (authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor") && (
+      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        Reporte Historial Académico{" "}
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor"
+          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : ""}
+      </Typography>
+      {authUser?.rol?.tipo != "Estudiante" &&
+        authUser?.rol?.tipo != "Tutor" && (
           <Box sx={{ marginBottom: "20px" }}>
             <h3>Buscar Estudiante:</h3>
 
@@ -135,8 +130,6 @@ export default function Preanalitico() {
                   <TextField {...params} label="Estudiante" />
                 )}
               />
-
-
             </FormControl>
             <Button
               onClick={traerPreanalitico}
