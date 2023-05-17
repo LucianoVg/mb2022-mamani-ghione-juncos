@@ -60,7 +60,7 @@ const MaterialEstudio = () => {
   const traerMaterias = async (idCurso = 1) => {
     let param =
       authUser?.rol?.tipo === "Docente"
-        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
+        ? `?idCurso=${authUser?.docentexmateria[0]?.materiaxcursoxdivision?.cursoxdivision?.idcurso}`
         : idCurso
           ? `?idCurso=${idCurso}`
           : "";
