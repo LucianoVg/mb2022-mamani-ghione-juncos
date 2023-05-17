@@ -32,15 +32,29 @@ export async function ConteoAsistenciasMensual(idAlumno, mes) {
         let fechaFin = `${dia}/${mes < 10 ? '0' + mes : mes}/${new Date().getFullYear()}`
 
         const conteo = await db.$queryRaw`SELECT a.idalumnoxcursoxdivision,
-    (SELECT COUNT(*) FROM asistencia WHERE presente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as presente,
-    (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausente,
-    (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as ausentejustificado ,
-    (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as llegadatarde,
-    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}) as mediafalta
+    (SELECT COUNT(*) FROM asistencia WHERE presente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}
+    and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as presente,
+    
+    (SELECT COUNT(*) FROM asistencia WHERE ausente = true  and idalumnoxcursoxdivision = ${Number(idAlumno)}
+    and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as ausente,
+   
+    (SELECT COUNT(*) FROM asistencia WHERE ausentejustificado = true and idalumnoxcursoxdivision = ${Number(idAlumno)}
+    and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as ausentejustificado ,
+   
+    (SELECT COUNT(*) FROM asistencia WHERE  llegadatarde= true and idalumnoxcursoxdivision = ${Number(idAlumno)}
+    and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as llegadatarde,
+   
+    (SELECT COUNT(*) FROM asistencia WHERE mediafalta= true and idalumnoxcursoxdivision = ${Number(idAlumno)}
+    and (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+    and TO_DATE(${fechaFin},'DD/MM/YYYY') ) ) as mediafalta
 FROM asistencia as a
-where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
-and TO_DATE(${fechaFin},'DD/MM/YYYY') ) 
-and idalumnoxcursoxdivision = ${Number(idAlumno)}
+-- where (TO_DATE(creadoen,'DD/MM/YYYY') between  TO_DATE(${fechaInicio},'DD/MM/YYYY') 
+-- and TO_DATE(${fechaFin},'DD/MM/YYYY') ) 
+-- and idalumnoxcursoxdivision = ${Number(idAlumno)}
 group by a.idalumnoxcursoxdivision`
 
         var presente = JSON.stringify(conteo, (_, v) => typeof v === 'bigint' ? v.toString() : v)
