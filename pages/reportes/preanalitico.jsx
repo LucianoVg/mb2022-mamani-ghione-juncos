@@ -104,7 +104,8 @@ export default function Preanalitico() {
         sx={{ marginBottom: "20px" }}
       >
         Reporte Historial Académico</Typography>
-      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" && (
+      {
+      authUser?.rol?.tipo != "Estudiante" || authUser?.rol?.tipo != "Tutor" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Estudiante:</h3>
 
