@@ -40,8 +40,9 @@ export default function Notas() {
   const [cargando2, setCargando2] = useState(false);
   const [idCursoXdivision, setIdCursoXdivision] = useState(1);
   const [cursos, setCursos] = useState([]);
-  const [idAlumno, setIdAlumno] = useState(1);
-  const [idMateria, setIdMateria] = useState(1);
+  const [idAlumno, setIdAlumno] = useState();
+  const [idMateria, setIdMateria] = useState();
+  const [nombreAlumno, setNombreAlumno] = useState();
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -75,17 +76,11 @@ export default function Notas() {
     );
   };
   const notasPorTrimestre = async () => {
-    // console.log(
-    //   "IdAlumno:",
-    //   authUser?.alumnoxcursoxdivision1[0]?.id,
-    //   "IdMateria:",
-    //   idMateria
-    // );
     setCargando1(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -102,7 +97,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL
       }/reportes/notas/promedios_trimestres/${authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -132,7 +127,7 @@ export default function Notas() {
     let param =
       authUser?.rol?.tipo === "Estudiante"
         ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
           : idCurso
             ? `?idCurso=${idCurso}`
@@ -202,14 +197,18 @@ export default function Notas() {
     }
   };
 
-  const handleAlumno = (e, newValue) => {
+  const handleAlumno = async (e, newValue) => {
     if (newValue) {
-      console.log(newValue);
-      setIdAlumno(newValue.id);
-    } else {
-      setIdAlumno("");
+      // console.log("Value", newValue?.id)
+      let alumno = authUser.alumnoxcursoxdivision2?.find((a) => newValue?.id === a.id);
+      // console.log("alumnoo", alumno)
+      setIdAlumno(newValue?.id)
+      await traerMaterias(Number(alumno?.cursoxdivision?.curso?.id));
+      let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`
+      setNombreAlumno(nombre)
     }
-  };
+  }
+
   const handleSearch = async () => {
     await notasPorTrimestre();
     await promedioPorTrimestre();
@@ -219,11 +218,15 @@ export default function Notas() {
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Notas{" "}
-        {authUser?.rol?.tipo === "Estudiante"
-          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor"
-            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-            : ""}
+        {
+          authUser?.rol?.tipo === "Estudiante"
+            ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+            : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+              ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+              : authUser?.rol?.tipo === "Tutor"
+                ? `de ${nombreAlumno}`
+                : ""
+        }
       </Typography>
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box>
@@ -259,13 +262,13 @@ export default function Notas() {
               </Select>
             </FormControl>
 
-            <FormControl sx={{ width: "250px" }}>
-              <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+            <FormControl sx={{ width: "250px" }} size="small">
+              <InputLabel id="demo-simple-select-label-1">Materia</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
+                labelId="demo-simple-select-label-1"
                 id="demo-simple-select"
                 value={idMateria}
-                size="small"
+
                 label="Materia"
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
@@ -319,15 +322,42 @@ export default function Notas() {
         </Box>
       ) : (
         <Box direction="row">
-          <FormControl sx={{ width: "250px", marginRight: "20px" }}>
+          <FormControl sx={{ width: "250px", marginRight: "20px" }} >
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              // value={value}
+              name="idAlumno"
+              size="small"
+              onChange={handleAlumno}
+              getOptionLabel={(alumno) =>
+                `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
+              }
+              options={authUser?.alumnoxcursoxdivision2}
+              sx={{ width: "250px" }}
+              isOptionEqualToValue={(option, value) =>
+                option?.id === value?.id
+              }
+              noOptionsText={"No existe un estudiante con ese nombre"}
+              renderOption={(props, alumno) => (
+                <Box component="li" {...props} key={alumno?.id}>
+                  {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Estudiante" />
+              )}
+            />
+          </FormControl>
+
+          <FormControl sx={{ width: "250px", marginRight: "20px" }} size="small">
             <InputLabel id="demo-simple-select-label">Materia</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={idMateria}
-              size="small"
-              label="Materia"
 
+              label="Materia"
               onChange={handleMateria}
               MenuProps={{ disableScrollLock: true }}
             >
