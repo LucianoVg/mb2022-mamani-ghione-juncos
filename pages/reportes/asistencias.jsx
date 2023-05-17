@@ -54,7 +54,7 @@ export default function Asistencias() {
       router.push("/gestion/cuenta/login");
     }
     // traerUsuario();
-    if (authUser.rol) {
+    if (authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/");
       } else {
