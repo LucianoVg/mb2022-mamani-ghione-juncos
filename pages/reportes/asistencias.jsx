@@ -67,9 +67,14 @@ export default function Asistencias() {
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const conteoAsistenciasAnuales = async () => {
+    let param = authUser?.rol?.tipo === "Estudiante" ?
+      authUser?.alumnoxcursoxdivision1[0].id
+      : authUser?.rol?.tipo === "Tutor" ?
+        authUser?.alumnoxcursoxdivision2[0].id
+        : idAlumno
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${idAlumno}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${param}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -78,9 +83,14 @@ export default function Asistencias() {
     setCargando2(false);
   };
   const conteoAsistenciasMensuales = async () => {
+    let param = authUser?.rol?.tipo === "Estudiante" ?
+      authUser?.alumnoxcursoxdivision1[0].id
+      : authUser?.rol?.tipo === "Tutor" ?
+        authUser?.alumnoxcursoxdivision2[0].id
+        : idAlumno
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${idAlumno}&mes=${mes}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${param}&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -143,11 +153,11 @@ export default function Asistencias() {
   };
   return (
     <Layout>
-       <Typography variant="h4" 
-            sx={{marginBottom:"20px"}}
-            >
-                Reporte Asistencias</Typography>
-      {usuario?.rol != "Estudiante" && usuario?.rol != "Tutor" && (
+      <Typography variant="h4"
+        sx={{ marginBottom: "20px" }}
+      >
+        Reporte Asistencias</Typography>
+      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo  != "Tutor" && (
         <Box>
           <h3>Buscar Alumno</h3>
           <FormControl style={{ marginRight: "20px" }}>
@@ -349,18 +359,18 @@ export default function Asistencias() {
                             {l.presente
                               ? "Presente"
                               : l.ausente
-                              ? "Ausente"
-                              : l.ausentejustificado
-                              ? "Ausente Justificado"
-                              : l.llegadatarde
-                              ? "Llegada Tarde"
-                              : l.llegadatardejustificada
-                              ? "Llegada Tarde Justificada"
-                              : l.mediafalta
-                              ? "Media Falta"
-                              : l.mediafaltajustificada
-                              ? "Media Falta Justificada"
-                              : "No tiene asistencia cargada"}
+                                ? "Ausente"
+                                : l.ausentejustificado
+                                  ? "Ausente Justificado"
+                                  : l.llegadatarde
+                                    ? "Llegada Tarde"
+                                    : l.llegadatardejustificada
+                                      ? "Llegada Tarde Justificada"
+                                      : l.mediafalta
+                                        ? "Media Falta"
+                                        : l.mediafaltajustificada
+                                          ? "Media Falta Justificada"
+                                          : "No tiene asistencia cargada"}
                           </TableCell>
                         </TableRow>
                       ))}

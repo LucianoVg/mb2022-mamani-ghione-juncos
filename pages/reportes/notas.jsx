@@ -305,7 +305,7 @@ export default function Notas() {
         </Box>
       ) : (
         <Box direction="row">
-          <FormControl sx={{ width: "150px", mx: 2 }}>
+          <FormControl sx={{ width: "150px", marginRight: "20px" }}>
             <InputLabel id="demo-simple-select-label">Materia</InputLabel>
             <Select
               labelId="demo-simple-select-label"
