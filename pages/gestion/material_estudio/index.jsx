@@ -180,7 +180,7 @@ const MaterialEstudio = () => {
     setIdCursoXdivision(1);
     setIdMateria(1);
     setTabIndex(0);
-    await descargarMaterial(1);
+    await descargarMaterial(1, 1, 1);
   };
 
   const handleArchivos = (e) => {
@@ -242,94 +242,91 @@ const MaterialEstudio = () => {
         Material de Estudio
       </Typography>
       <div>
-        {authUser?.rol?.tipo !== "Estudiante" && (
-          <>
-            <Box sx={{ marginBottom: "20px" }}>
-              <FormControl sx={{ width: "100px" }}>
-                <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                <Select
-                  direction="row"
-                  // PONER LA LISTA EN HORIZONTAL
-                  MenuProps={{
-                    anchorOrigin: {
-                      vertical: "center",
-                      horizontal: "right",
-                    },
-                    transformOrigin: {
-                      vertical: "center",
-                      horizontal: "left",
-                    },
-                    disableScrollLock: true,
-                  }}
-                  IconComponent={ArrowRightIcon}
-                  name="idCurso"
-                  value={idCursoXdivision}
-                  label="Curso"
-                  size="small"
-                  required
-                  onChange={handleCurso}
+        {authUser?.rol?.tipo !== "Estudiante" &&
+          authUser?.rol?.tipo !== "Docente" && (
+            <>
+              <Box sx={{ marginBottom: "20px" }}>
+                <FormControl sx={{ width: "100px" }}>
+                  <InputLabel id="demo-simple-select-label">Curso</InputLabel>
+                  <Select
+                    direction="row"
+                    // PONER LA LISTA EN HORIZONTAL
+                    MenuProps={{
+                      anchorOrigin: {
+                        vertical: "center",
+                        horizontal: "right",
+                      },
+                      transformOrigin: {
+                        vertical: "center",
+                        horizontal: "left",
+                      },
+                      disableScrollLock: true,
+                    }}
+                    IconComponent={ArrowRightIcon}
+                    name="idCurso"
+                    value={idCursoXdivision}
+                    label="Curso"
+                    size="small"
+                    required
+                    onChange={handleCurso}
+                  >
+                    {cursosOrdenados &&
+                      cursosOrdenados?.map((c, i) => (
+                        <MenuItem
+                          key={i}
+                          value={c.id}
+                          sx={{ display: "inline-block" }}
+                        >
+                          {c.curso?.nombre} {c.division?.division}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box>
+                <FormControl sx={{ width: "250px", marginRight: "20px" }}>
+                  <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={idMateria}
+                    size="small"
+                    label="Materia"
+                    onChange={handleMateria}
+                    MenuProps={{ disableScrollLock: true }}
+                  >
+                    {materiasOrdenadas &&
+                      materiasOrdenadas?.map((m, i) => (
+                        <MenuItem selected={i === 0} key={i} value={m.id}>
+                          {m.materia?.nombre}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+                <Button
+                  sx={{ mx: 2 }}
+                  variant="contained"
+                  onClick={async () =>
+                    await descargarMaterial(
+                      tabIndex + 1,
+                      idCursoXdivision,
+                      idMateria
+                    )
+                  }
+                  startIcon={<Search />}
                 >
-                  {cursosOrdenados &&
-                    cursosOrdenados?.map((c, i) => (
-                      <MenuItem
-                        key={i}
-                        value={c.id}
-                        sx={{ display: "inline-block" }}
-                      >
-                        {c.curso?.nombre} {c.division?.division}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Box>
-            <Box>
-              <FormControl sx={{ width: "250px", marginRight: "20px" }}>
-                <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={idMateria}
-                  size="small"
-                  label="Materia"
-                  onChange={handleMateria}
-                  MenuProps={{ disableScrollLock: true }}
+                  Buscar
+                </Button>
+                <Button
+                  // sx={{ mx: 2, my: 1 }}
+                  variant="outlined"
+                  onClick={quitarFiltros}
                 >
-                  {materiasOrdenadas &&
-                    materiasOrdenadas?.map((m, i) => (
-                      <MenuItem
-                        selected={i === 0}
-                        key={i}
-                        value={m.materia?.id}
-                      >
-                        {m.materia?.nombre}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-              <Button
-                sx={{ mx: 2 }}
-                variant="contained"
-                onClick={async () =>
-                  await descargarMaterial(
-                    tabIndex + 1,
-                    idCursoXdivision,
-                    idMateria
-                  )
-                }
-                startIcon={<Search />}
-              >
-                Buscar
-              </Button>
-              <Button
-                // sx={{ mx: 2, my: 1 }}
-                variant="outlined"
-                onClick={quitarFiltros}
-              >
-                Quitar Filtros
-              </Button>
-            </Box>
-          </>
-        )}
+                  Quitar Filtros
+                </Button>
+              </Box>
+            </>
+          )}
         {subiendo && <LinearProgress sx={{ my: 2 }} />}
         {mensaje && (
           <Alert sx={{ my: 2 }} variant="outlined" color="info">
