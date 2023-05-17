@@ -36,12 +36,6 @@ const MaterialEstudio = () => {
   const [idCursoXdivision, setIdCursoXdivision] = useState(1);
   const [materias, setMaterias] = useState([]);
   const [cursos, setCursos] = useState();
-  const handleCurso = async (e) => {
-    const cursoxdivision = cursos?.find((c) => c.id === e.target.value);
-    setIdCursoXdivision(Number(cursoxdivision?.id));
-    await traerMaterias(Number(cursoxdivision?.curso?.id));
-    await descargarMaterial(tabIndex + 1, Number(e.target.value));
-  };
   const { loading, authUser } = useAuth();
   const [idMateria, setIdMateria] = useState(1);
   const [subiendo, setSubiendo] = useState(false);
@@ -53,6 +47,12 @@ const MaterialEstudio = () => {
   const [archivos, setArchivos] = useState(null);
   const [materiales, setMateriales] = useState([]);
 
+  const handleCurso = async (e) => {
+    const cursoxdivision = cursos?.find((c) => c.id === e.target.value);
+    setIdCursoXdivision(Number(cursoxdivision?.id));
+    await traerMaterias(Number(cursoxdivision?.curso?.id));
+    await descargarMaterial(tabIndex + 1, Number(e.target.value));
+  };
   const handleMateria = (e) => {
     setIdMateria(e.target.value);
     descargarMaterial(tabIndex + 1, 0, e.target.value);
@@ -367,7 +367,7 @@ const MaterialEstudio = () => {
                                 justifyContent: "space-between",
                               }}
                             >
-                              {subir && (authUser?.rol?.tipo === "Docente" || authUser?.rol?.tipo === "Administrador")  ? (
+                              {subir  ? (
                                 <Button
                                   onClick={() => subirMaterial(t.id)}
                                   variant="contained"
@@ -377,7 +377,7 @@ const MaterialEstudio = () => {
                                   Subir apunte
                                 </Button>
                               ) : (
-                                puedeSubirArchivos() && (authUser?.rol?.tipo === "Docente" || authUser?.rol?.tipo === "Administrador") && (
+                                puedeSubirArchivos() && (
                                   <Button
                                     variant="contained"
                                     component={"label"}
