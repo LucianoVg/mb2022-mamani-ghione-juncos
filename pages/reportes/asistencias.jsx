@@ -157,7 +157,7 @@ export default function Asistencias() {
         sx={{ marginBottom: "20px" }}
       >
         Reporte Asistencias</Typography>
-      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo  != "Tutor" && (
+      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" && (
         <Box>
           <h3>Buscar Alumno</h3>
           <FormControl style={{ marginRight: "20px" }}>
@@ -209,16 +209,18 @@ export default function Asistencias() {
             </Select>
           </FormControl>
         </Box>
+
       )}
 
-      {authUser?.rol?.tipo === "Estudiante" && (
-        <FormControl>
+      {authUser?.rol?.tipo === "Estudiante" || authUser?.rol?.tipo === "Tutor" && (
+        <FormControl sx={{marginBottom: "30px", marginRight: "20px"}}>
           <InputLabel id="demo-simple-select-label">Mes</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={mes}
             label="Mes"
+            size="small"
             onChange={handleMes}
             style={{ width: "160px" }}
             MenuProps={{ disableScrollLock: true }}
@@ -236,17 +238,14 @@ export default function Asistencias() {
           </Select>
         </FormControl>
       )}
-      <Box sx={{ marginBottom: "20px", marginTop: 2 }}>
-        <Button
-          onClick={handleSearch}
-          variant="outlined"
-          startIcon={<Search />}
-          color="info"
-        >
-          Buscar
-        </Button>
-      </Box>
-
+      <Button
+        onClick={handleSearch}
+        variant="outlined"
+        startIcon={<Search />}
+        color="info"
+      >
+        Buscar
+      </Button>
       <div sx={{ marginTop: "200px" }}>
         <Grid container spacing={2}>
           <Grid item xs>
