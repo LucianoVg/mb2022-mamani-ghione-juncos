@@ -105,49 +105,49 @@ export default function Preanalitico() {
       >
         Reporte Historial Académico</Typography>
       {
-      authUser?.rol?.tipo != "Estudiante" || authUser?.rol?.tipo != "Tutor" && (
-        <Box sx={{ marginBottom: "20px" }}>
-          <h3>Buscar Estudiante:</h3>
+        (authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor") && (
+          <Box sx={{ marginBottom: "20px" }}>
+            <h3>Buscar Estudiante:</h3>
 
-          <FormControl sx={{ marginRight: "20px" }}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              // value={value}
-              name="idAlumno"
-              onChange={handleAlumno}
-              getOptionLabel={(alumno) =>
-                `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
-              }
-              options={alumnos}
-              sx={{ width: "250px" }}
-              isOptionEqualToValue={(option, value) =>
-                option?.usuario?.apellido === value?.usuario?.apellido
-              }
-              noOptionsText={"No existe un estudiante con ese nombre"}
-              renderOption={(props, alumno) => (
-                <Box component="li" {...props} key={alumno?.id}>
-                  {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField {...params} label="Estudiante" />
-              )}
-            />
+            <FormControl sx={{ marginRight: "20px" }}>
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                // value={value}
+                name="idAlumno"
+                onChange={handleAlumno}
+                getOptionLabel={(alumno) =>
+                  `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                }
+                options={alumnos}
+                sx={{ width: "250px" }}
+                isOptionEqualToValue={(option, value) =>
+                  option?.usuario?.apellido === value?.usuario?.apellido
+                }
+                noOptionsText={"No existe un estudiante con ese nombre"}
+                renderOption={(props, alumno) => (
+                  <Box component="li" {...props} key={alumno?.id}>
+                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Estudiante" />
+                )}
+              />
 
 
-          </FormControl>
-          <Button
-            onClick={traerPreanalitico}
-            sx={{ marginTop: "20px" }}
-            variant="outlined"
-            startIcon={<Search />}
-            color="info"
-          >
-            Buscar
-          </Button>
-        </Box>
-      )}
+            </FormControl>
+            <Button
+              onClick={traerPreanalitico}
+              sx={{ marginTop: "20px" }}
+              variant="outlined"
+              startIcon={<Search />}
+              color="info"
+            >
+              Buscar
+            </Button>
+          </Box>
+        )}
       <div>
         {!cargando && preanalitico.length > 0 && (
           <TableContainer component={Paper}>
@@ -2809,7 +2809,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[55]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[55]?.notafinal.length > 0 ? (
+                        Number(preanalitico[55]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2839,7 +2845,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[69]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[69]?.notafinal.length > 0 ? (
+                        Number(preanalitico[69]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2874,7 +2886,13 @@ export default function Preanalitico() {
                       opacity: "0%",
                     }}
                   >
-                    {preanalitico[9]?.notafinal}
+                    {
+                      preanalitico[9]?.notafinal.length > 0 ? (
+                        Number(preanalitico[9]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2906,7 +2924,13 @@ export default function Preanalitico() {
                       opacity: "0%",
                     }}
                   >
-                    {preanalitico[19]?.notafinal}
+                    {
+                      preanalitico[19]?.notafinal.length > 0 ? (
+                        Number(preanalitico[19]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2938,7 +2962,13 @@ export default function Preanalitico() {
                       opacity: "0%",
                     }}
                   >
-                    {preanalitico[30]?.notafinal}
+                    {
+                      preanalitico[30]?.notafinal.length > 0 ? (
+                        Number(preanalitico[30]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2970,7 +3000,13 @@ export default function Preanalitico() {
                       opacity: "0%",
                     }}
                   >
-                    {Number(preanalitico[42]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[42]?.notafinal.length > 0 ? (
+                        Number(preanalitico[42]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -3000,7 +3036,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[56]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[56]?.notafinal.length > 0 ? (
+                        Number(preanalitico[56]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -3032,7 +3074,13 @@ export default function Preanalitico() {
                       opacity: "0%",
                     }}
                   >
-                    {Number(preanalitico[69]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[69]?.notafinal.length > 0 ? (
+                        Number(preanalitico[69]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -3041,7 +3089,7 @@ export default function Preanalitico() {
         )}
         {!cargando && preanalitico.length === 0 && (
           <Typography variant="h5" sx={{ textAlign: "center" }}>
-            No hay informacion disponible
+            No hay información disponible
           </Typography>
         )}
         {cargando && (
