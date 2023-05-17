@@ -254,7 +254,7 @@ export default function Notas() {
               </Select>
             </FormControl>
 
-            <FormControl sx={{ width: "150px" }}>
+            <FormControl sx={{ width: "250px" }}>
               <InputLabel id="demo-simple-select-label">Materia</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -263,6 +263,7 @@ export default function Notas() {
                 label="Materia"
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
+               
               >
                 {materiasOrdenadas &&
                   materiasOrdenadas?.map((m, i) =>
@@ -318,7 +319,7 @@ export default function Notas() {
         </Box>
       ) : (
         <Box direction="row">
-          <FormControl sx={{ width: "150px", marginRight: "20px" }}>
+          <FormControl sx={{ width: "250px", marginRight: "20px" }}>
             <InputLabel id="demo-simple-select-label">Materia</InputLabel>
             <Select
               labelId="demo-simple-select-label"

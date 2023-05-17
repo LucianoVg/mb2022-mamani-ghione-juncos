@@ -83,6 +83,11 @@ export const Notificacion = () => {
         }}
       >
         <List>
+          {(!notificaciones || notificaciones?.length === 0) && (
+            <ListItem>
+              <ListItemText>No hay notificaciones</ListItemText>
+            </ListItem>
+          )}
           {notificaciones &&
             notificaciones?.map((n, i) => (
               <ListItem key={i} disablePadding>
@@ -94,12 +99,8 @@ export const Notificacion = () => {
                 </ListItemButton>
               </ListItem>
             ))}
-          {(!notificaciones || notificaciones?.length === 0) && (
-            <ListItem>
-              <ListItemText>No hay notificaciones</ListItemText>
-            </ListItem>
-          )}
-          {notificaciones && notificaciones?.length && (
+
+          {notificaciones && notificaciones?.length > 0&& (
             <ListItem disablePadding>
               <ListItemButton
                 component="a"

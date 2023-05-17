@@ -159,7 +159,7 @@ export default function Asistencias() {
         Reporte Asistencias</Typography>
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" && (
         <Box>
-          <h3>Buscar Alumno</h3>
+          <h3>Buscar Estudiante</h3>
           <FormControl style={{ marginRight: "20px" }}>
             <Autocomplete
               disablePortal

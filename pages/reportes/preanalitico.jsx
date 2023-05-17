@@ -48,6 +48,13 @@ export default function Preanalitico() {
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const traerPreanalitico = async () => {
+    if (authUser?.rol?.tipo === "Estudiante") {
+      setIdAlumno(authUser?.alumnoxcursoxdivision1[0].id)
+    };
+    if (authUser?.rol?.tipo === "Tutor") {
+      setIdAlumno(authUser?.alumnoxcursoxdivision2[0].id)
+
+    };
     setCargando(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${idAlumno}`
@@ -97,7 +104,7 @@ export default function Preanalitico() {
         sx={{ marginBottom: "20px" }}
       >
         Reporte Historial Académico</Typography>
-      {authUser?.rol?.tipo != "Estudiante" && (
+      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" && (
         <Box sx={{ marginBottom: "20px" }}>
           <h3>Buscar Estudiante:</h3>
 
