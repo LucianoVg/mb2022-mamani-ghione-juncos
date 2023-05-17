@@ -41,6 +41,7 @@ export default function Preanalitico() {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
+        authUser
         listarAlumnos();
         traerPreanalitico();
       }
