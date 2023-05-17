@@ -56,7 +56,7 @@ const MaterialEstudio = () => {
   };
   const handleMateria = (e) => {
     if (e.target.value) {
-      setIdMateria(Number(materiaxdivision?.id));
+      setIdMateria(Number(e.target.value));
     }
 
   };
