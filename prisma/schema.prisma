@@ -65,14 +65,13 @@ model curso {
 }
 
 model cursoxdivision {
-  id                    Int                     @id @default(autoincrement())
-  idcurso               Int
-  iddivision            Int
-  alumnoxcursoxdivision alumnoxcursoxdivision[]
-  curso                 curso                   @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  division              division                @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  fechaexamen           fechaexamen[]
-
+  id                     Int                      @id @default(autoincrement())
+  idcurso                Int
+  iddivision             Int
+  alumnoxcursoxdivision  alumnoxcursoxdivision[]
+  curso                  curso                    @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  division               division                 @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fechaexamen            fechaexamen[]
   materiaxcursoxdivision materiaxcursoxdivision[]
 }
 
