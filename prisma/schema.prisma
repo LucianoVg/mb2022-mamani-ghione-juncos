@@ -65,14 +65,14 @@ model curso {
 }
 
 model cursoxdivision {
-  id                     Int                      @id @default(autoincrement())
-  idcurso                Int
-  iddivision             Int
-  alumnoxcursoxdivision  alumnoxcursoxdivision[]
-  curso                  curso                    @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  division               division                 @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  fechaexamen            fechaexamen[]
-  materialestudio        materialestudio[]
+  id                    Int                     @id @default(autoincrement())
+  idcurso               Int
+  iddivision            Int
+  alumnoxcursoxdivision alumnoxcursoxdivision[]
+  curso                 curso                   @relation(fields: [idcurso], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  division              division                @relation(fields: [iddivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fechaexamen           fechaexamen[]
+
   materiaxcursoxdivision materiaxcursoxdivision[]
 }
 
@@ -87,6 +87,7 @@ model materiaxcursoxdivision {
   idcursoxdivision Int
   idmateria        Int
   docentexmateria  docentexmateria[]
+  materialestudio  materialestudio[]
   cursoxdivision   cursoxdivision    @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
   materia          materia           @relation(fields: [idmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -138,24 +139,21 @@ model materia {
   nombre                 String?
   idcorrelativa          Int?
   historialnota          historialnota[]
-  materialestudio        materialestudio[]
   materiaxcursoxdivision materiaxcursoxdivision[]
   nota                   nota[]
 }
 
 model materialestudio {
-  id               Int            @id @default(autoincrement())
-  titulo           String?
-  fecha            String?
-  url              String?
-  idcursoxdivision Int
-  idmateria        Int
-  idtrimestre      Int
-  idusuario        Int
-  cursoxdivision   cursoxdivision @relation(fields: [idcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  materia          materia        @relation(fields: [idmateria], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  trimestre        trimestre      @relation(fields: [idtrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuario          usuario        @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                       Int                    @id @default(autoincrement())
+  titulo                   String?
+  fecha                    String?
+  url                      String?
+  idmateriaxcursoxdivision Int
+  idtrimestre              Int
+  idusuario                Int
+  materiaxcursoxdivision   materiaxcursoxdivision @relation(fields: [idmateriaxcursoxdivision], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trimestre                trimestre              @relation(fields: [idtrimestre], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuario                  usuario                @relation(fields: [idusuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model menu {

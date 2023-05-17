@@ -151,7 +151,7 @@ const Notificaciones = () => {
                       Volver a notificación para tutor
                     </Button>
                     <Box>
-                      <FormControl fullWidth>
+                      <FormControl   size="small" fullWidth>
                         <InputLabel id="demo-simple-select-label">
                           Curso
                         </InputLabel>
@@ -161,9 +161,17 @@ const Notificaciones = () => {
                           value={idCurso}
                           name="idCurso"
                           label="Curso"
+                        
                           onChange={handleCurso}
                           sx={{ width: "90px", marginRight: "20px" }}
-                          MenuProps={{ disableScrollLock: true }}
+                          MenuProps={{
+                            disableScrollLock: true,
+                            label: {
+                              style: {
+                                marginTop: "-10px"
+                              }
+                            }
+                          }}
                         >
                           <MenuItem value={"todos"}>Todos</MenuItem>
                           {cursos &&
@@ -199,6 +207,7 @@ const Notificaciones = () => {
                           id="combo-box-demo"
                           // value={value}
                           name="idTutor"
+                          size="small"
                           onChange={handleTutor}
                           getOptionLabel={(tutor) =>
                             `${tutor?.apellido} ${tutor?.nombre}`
@@ -228,108 +237,109 @@ const Notificaciones = () => {
                   <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     Asunto
                   </Typography>
-                  <FormControl 
-                  sx={{
-                    marginBottom: "30px"
-                  }}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    focused
-                    name="asunto"
-                    multiline
-                    rows={1}
-                    required
-                    value={notificacion.asunto}
-                    onChange={handleNotificacion}
-                    style={{
-                      width: "350px",
-                      height: "35px",
-                      resize: "none",
-                      fontSize: "20px",
-                    }}
-                    inputProps={{ maxLength: 30 }}
-                  />
-                </FormControl>
-              </Box>
-              <Box>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Contenido
-                </Typography>
-                <FormControl>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    focused
-                    name="contenido"
-                    multiline
-                    rows={5}
-                    required
-                    // label="Contenido"
-                    inputProps={{ maxLength: 300 }}
-                    // value={noticiaActualizar.descripcion}
-                    // placeholder={noticiaActualizar?.descripcion}
-                    value={notificacion.contenido}
-                    onChange={handleNotificacion}
-                    style={{
-                      width: "350px",
-                      // height: "400px",
-                      resize: "none",
-                      fontSize: "20px",
-                    }}
-                  />
-                </FormControl>
-              </Box>
+                  <FormControl
+                    sx={{
+                      marginBottom: "30px"
+                    }}>
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      focused
+                      name="asunto"
+                      multiline
+                      rows={1}
+                      required
 
-              {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
-              <Box xs={12} >
-                <Button variant="contained" type="submit">
-                  Enviar
-                </Button>
+                      value={notificacion.asunto}
+                      onChange={handleNotificacion}
+                      style={{
+                        width: "350px",
+                        height: "35px",
+                        resize: "none",
+                        fontSize: "20px",
+                      }}
+                      inputProps={{ maxLength: 30 }}
+                    />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    Contenido
+                  </Typography>
+                  <FormControl>
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      focused
+                      name="contenido"
+                      multiline
+                      rows={5}
+                      required
+                      // label="Contenido"
+                      inputProps={{ maxLength: 300 }}
+                      // value={noticiaActualizar.descripcion}
+                      // placeholder={noticiaActualizar?.descripcion}
+                      value={notificacion.contenido}
+                      onChange={handleNotificacion}
+                      style={{
+                        width: "350px",
+                        // height: "400px",
+                        resize: "none",
+                        fontSize: "20px",
+                      }}
+                    />
+                  </FormControl>
+                </Box>
+
+                {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
+                <Box xs={12} >
+                  <Button variant="contained" type="submit">
+                    Enviar
+                  </Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          </Grid>
+          <Grid item xs>
+            {cargandoInfo && (
+              <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                <Loading size={50} />
+              </Container>
+            )}
+            {!cargandoInfo && (
+              <>
+                <h1>Notificaciones enviadas</h1>
+                <Box sx={{ width: "350px" }}>
+                  <List
+                    style={{
+                      boxShadow:
+                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                      border: "0 10px 15px black",
+                      borderRadius: "15px",
+                    }}
+                  >
+                    {listNotificaciones.map((n, i) => (
+                      <ListItem disablePadding key={i} value={n.id}>
+                        <ListItemButton
+                          component="a"
+                          onClick={() =>
+                            router.push(
+                              `/gestion/notificaciones/detalles/${n.id}`
+                            )
+                          }
+                        >
+                          <ListItemText primary={n.asunto} />
+                        </ListItemButton>
+                        <Divider />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              </>
+            )}
+          </Grid>
         </Grid>
-        <Grid item xs>
-          {cargandoInfo && (
-            <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-              <Loading size={50} />
-            </Container>
-          )}
-          {!cargandoInfo && (
-            <>
-              <h1>Notificaciones enviadas</h1>
-              <Box sx={{ width: "350px" }}>
-                <List
-                  style={{
-                    boxShadow:
-                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                    border: "0 10px 15px black",
-                    borderRadius: "15px",
-                  }}
-                >
-                  {listNotificaciones.map((n, i) => (
-                    <ListItem disablePadding key={i} value={n.id}>
-                      <ListItemButton
-                        component="a"
-                        onClick={() =>
-                          router.push(
-                            `/gestion/notificaciones/detalles/${n.id}`
-                          )
-                        }
-                      >
-                        <ListItemText primary={n.asunto} />
-                      </ListItemButton>
-                      <Divider />
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-            </>
-          )}
-        </Grid>
-      </Grid>
-    </div>
+      </div>
     </Layout >
   );
 };

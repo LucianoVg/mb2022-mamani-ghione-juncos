@@ -359,19 +359,21 @@ export default function Asistencias() {
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <Box>
-                    <LocalizationProvider
-                      adapterLocale="es-mx"
-                      dateAdapter={AdapterDayjs}
-                    >
-                      <MobileDatePicker
-                        label="Fecha"
-                        name="fecha"
-                        value={fecha}
-                        onChange={handleFecha}
-                        renderInput={(params) => <TextField {...params} />}
-                        MenuProps={{ disableScrollLock: true }}
-                      />
-                    </LocalizationProvider>
+                    <FormControl>
+                      <LocalizationProvider
+                        adapterLocale="es-mx"
+                        dateAdapter={AdapterDayjs}
+                      >
+                        <MobileDatePicker
+                          label="Fecha"
+                          name="fecha"
+                          value={fecha}
+                          onChange={handleFecha}
+                          renderInput={(params) => <TextField size="small" {...params} />}
+                          MenuProps={{ disableScrollLock: true }}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
                   </Box>
 
                   <Typography variant="h6" sx={{ marginTop: "20px" }}>
@@ -388,6 +390,7 @@ export default function Asistencias() {
                         id="combo-box-demo"
                         // value={value}
                         name="idAlumno"
+                        size="small"
                         onChange={handleAlumno}
                         getOptionLabel={(alumno) =>
                           `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
@@ -440,7 +443,7 @@ export default function Asistencias() {
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <Box sx={{ marginBottom: "20px" }}>
-                    <FormControl>
+                    <FormControl size="small">
                       <InputLabel id="demo-simple-select-label">
                         Curso
                       </InputLabel>
@@ -469,20 +472,22 @@ export default function Asistencias() {
                     </FormControl>
                   </Box>
                   <Box style={{ marginRight: "20px", marginBottom: "25px" }}>
-                    <LocalizationProvider
-                      adapterLocale="es-mx"
-                      dateAdapter={AdapterDayjs}
-                    >
-                      <MobileDatePicker
-                        label="Fecha"
-                        name="fecha"
-                        value={fecha}
-                        format="DD-MM-YYYY"
-                        onChange={handleFecha}
-                        renderInput={(params) => <TextField {...params} />}
-                        MenuProps={{ disableScrollLock: true }}
-                      />
-                    </LocalizationProvider>
+                    <FormControl>
+                      <LocalizationProvider
+                        adapterLocale="es-mx"
+                        dateAdapter={AdapterDayjs}
+                      >
+                        <MobileDatePicker
+                          label="Fecha"
+                          name="fecha"
+                          value={fecha}
+                          format="DD-MM-YYYY"
+                          onChange={handleFecha}
+                          renderInput={(params) => <TextField size="small" {...params} />}
+                          MenuProps={{ disableScrollLock: true }}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
                   </Box>
                   <Box>
                     <Button
@@ -631,10 +636,10 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                  !a.ausente &&
-                  !a.ausentejustificado &&
-                  !a.llegadatarde &&
-                  !a.mediafalta ? (
+                    !a.ausente &&
+                    !a.ausentejustificado &&
+                    !a.llegadatarde &&
+                    !a.mediafalta ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}

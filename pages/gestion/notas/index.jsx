@@ -147,7 +147,7 @@ export default function Notas() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/trimestres`
     );
     setTrimestres((_) => res.data);
-  
+
   };
   const traerCursos = async () => {
     try {
@@ -412,7 +412,7 @@ export default function Notas() {
 
   const materiasOrdenadas = authUser?.docentexmateria?.sort(
     (a, b) => (
-      a.materiaxcursoxdivision?.idcursoxdivision -b.materiaxcursoxdivision?.idcursoxdivision &&
+      a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision &&
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
@@ -424,61 +424,63 @@ export default function Notas() {
         </Typography>
         <Box sx={{ marginTop: "20px" }}>
           <Box direction="row">
-            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              {authUser?.rol?.tipo === "Docente" ? (
-                <FormControl>
-                  <InputLabel htmlFor="inputMateria">Materia</InputLabel>
-                  <Select
-                    id="inputMateria"
-                    onChange={handleMateria}
-                    label="Materia"
-                    defaultValue={idMateria}
-                    sx={{
-                      width: "150px",
-                      marginRight: "20px",
-                    }}
-                    MenuProps={{ disableScrollLock: true }}
-                  >
-                    {materiasOrdenadas?.map((m, i) =>
-                      m.materiaxcursoxdivision.idmateria === idMateria ? (
-                        <MenuItem
-                          key={i}
-                          // defaultValue={""}
-                          selected
-                          value={m.idmateriaxcursoxdivision}
-                        >
-                          {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                          {
-                            m.materiaxcursoxdivision?.cursoxdivision?.curso
-                              ?.nombre
-                          }{" "}
-                          {
-                            m.materiaxcursoxdivision?.cursoxdivision?.division
-                              ?.division
-                          }
-                        </MenuItem>
-                      ) : (
-                        <MenuItem
-                          key={i}
-                          // defaultValue={""}
-                          value={m.idmateriaxcursoxdivision}
-                        >
-                          {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                          {
-                            m.materiaxcursoxdivision?.cursoxdivision?.curso
-                              ?.nombre
-                          }{" "}
-                          {
-                            m.materiaxcursoxdivision?.cursoxdivision?.division
-                              ?.division
-                          }
-                        </MenuItem>
-                      )
-                    )}
-                  </Select>
-                </FormControl>
-              ) : (
+
+            {authUser?.rol?.tipo === "Docente" ? (
+              <FormControl size="small">
+                <InputLabel id="inputMateria">Materia</InputLabel>
+                <Select
+                  labelId="inputMateria"
+                  onChange={handleMateria}
+                  label="Materia"
+                  defaultValue={idMateria}
+                  sx={{
+                    width: "330px",
+                    marginRight: "20px",
+                  }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {materiasOrdenadas?.map((m, i) =>
+                    m.materiaxcursoxdivision.idmateria === idMateria ? (
+                      <MenuItem
+                        key={i}
+                        // defaultValue={""}
+                        selected
+                        value={m.idmateriaxcursoxdivision}
+                      >
+                        {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                        {
+                          m.materiaxcursoxdivision?.cursoxdivision?.curso
+                            ?.nombre
+                        }{" "}
+                        {
+                          m.materiaxcursoxdivision?.cursoxdivision?.division
+                            ?.division
+                        }
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        key={i}
+                        // defaultValue={""}
+                        value={m.idmateriaxcursoxdivision}
+                      >
+                        {m.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                        {
+                          m.materiaxcursoxdivision?.cursoxdivision?.curso
+                            ?.nombre
+                        }{" "}
+                        {
+                          m.materiaxcursoxdivision?.cursoxdivision?.division
+                            ?.division
+                        }
+                      </MenuItem>
+                    )
+                  )}
+                </Select>
+              </FormControl>
+            ) : (
+              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
                 <Autocomplete
+                size="small"
                   sx={{ width: "330px" }}
                   disablePortal
                   id="inputMateria"
@@ -510,8 +512,9 @@ export default function Notas() {
                     <TextField {...params} label="Materias" />
                   )}
                 />
-              )}
-            </FormControl>
+              </FormControl>
+            )}
+
 
             {/* {
               authUser?.rol?.tipo === "Docente" && (
@@ -571,6 +574,7 @@ export default function Notas() {
           <Box>
             <FormControl style={{ marginRight: "20px", marginBottom: 10 }}>
               <Autocomplete
+              size="small"
                 sx={{ width: "250px" }}
                 disablePortal
                 id="combo-box-demo"

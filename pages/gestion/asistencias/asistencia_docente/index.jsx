@@ -319,17 +319,19 @@ export default function Asistencias() {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <Box>
-              <LocalizationProvider
-                adapterLocale="es-mx"
-                dateAdapter={AdapterDayjs}
-              >
-                <MobileDatePicker
-                  label="Fecha"
-                  value={fecha}
-                  onChange={handleFecha}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
+              <FormControl >
+                <LocalizationProvider
+                  adapterLocale="es-mx"
+                  dateAdapter={AdapterDayjs}
+                >
+                  <MobileDatePicker
+                    label="Fecha"
+                    value={fecha}
+                    onChange={handleFecha}
+                    renderInput={(params) => <TextField size="small"{...params} />}
+                  />
+                </LocalizationProvider>
+              </FormControl>
             </Box>
 
             <Typography variant="h6" sx={{ mt: 2 }}>
@@ -339,10 +341,12 @@ export default function Asistencias() {
             <Box sx={{ marginTop: "25px" }}>
               <FormControl
                 style={{ marginRight: "20px", marginBottom: "25px" }}
+                
               >
                 <Autocomplete
                   sx={{ width: "250px" }}
                   disablePortal
+                  size="small"
                   id="combo-box-demo"
                   // value={value}
                   name="idAlumno"
@@ -459,12 +463,12 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                  !a.ausente &&
-                  !a.ausentejustificado &&
-                  !a.llegadatarde &&
-                  !a.llegadatardejustificada &&
-                  !a.mediafalta &&
-                  !a.mediafaltajustificada ? (
+                    !a.ausente &&
+                    !a.ausentejustificado &&
+                    !a.llegadatarde &&
+                    !a.llegadatardejustificada &&
+                    !a.mediafalta &&
+                    !a.mediafaltajustificada ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}
