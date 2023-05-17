@@ -56,14 +56,7 @@ const MaterialEstudio = () => {
   };
   const handleMateria = (e) => {
     if (e.target.value) {
-      const materiaxdivision = materias?.find(
-        (m) => m.id === Number(e.target.value)
-      );
-      // console.log(materiaxdivision);
-      if (materiaxdivision) {
-        setIdMateria(Number(materiaxdivision?.id));
-        setIdCursoXdivision(Number(materiaxdivision?.cursoxdivision?.id));
-      }
+      setIdMateria(Number(materiaxdivision?.id));
     }
 
   };
