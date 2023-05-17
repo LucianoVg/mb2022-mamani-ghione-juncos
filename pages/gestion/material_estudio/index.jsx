@@ -102,7 +102,7 @@ const MaterialEstudio = () => {
       )
     );
   }
-  
+
   let materiaSinRepetir
   let materiasOrdenadasEstudiante
   if (authUser?.rol?.tipo === "Estudiante") {
@@ -286,7 +286,7 @@ const MaterialEstudio = () => {
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
                 size="small"
-                sx={{ width: "330px" }}
+                sx={{ width: "340px" }}
                 disablePortal
                 id="inputMateria"
                 // value={value}
@@ -324,7 +324,7 @@ const MaterialEstudio = () => {
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
                 size="small"
-                sx={{ width: "330px" }}
+                sx={{ width: "340px" }}
                 disablePortal
                 id="inputMateria"
                 // value={value}
