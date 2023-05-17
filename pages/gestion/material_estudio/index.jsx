@@ -419,7 +419,7 @@ const MaterialEstudio = () => {
             {mensaje}
           </Alert>
         )}
-        <Box sx={{ marginTop: "30px" }}>
+        <Box>
           {trimestres && (
             <>
               <Tabs
