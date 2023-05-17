@@ -47,7 +47,7 @@ export default function Notas() {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
     }
-    if (authUser && authUser.rol) {
+    if (authUser && authUser?.rol) {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
@@ -74,12 +74,12 @@ export default function Notas() {
     );
   };
   const notasPorTrimestre = async () => {
-    console.log(
-      "IdAlumno:",
-      authUser?.alumnoxcursoxdivision1[0].id,
-      "IdMateria:",
-      idMateria
-    );
+    // console.log(
+    //   "IdAlumno:",
+    //   authUser?.alumnoxcursoxdivision1[0]?.id,
+    //   "IdMateria:",
+    //   idMateria
+    // );
     setCargando1(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${authUser?.rol?.tipo === "Estudiante" ?
@@ -131,18 +131,31 @@ export default function Notas() {
     let param =
       authUser?.rol?.tipo === "Estudiante" ?
         `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
-        : authUser?.rol?.tipo === "Tutor" ?
-          `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
-          : idCurso ?
-            `?idCurso=${idCurso}`
-            : ""
-
+        : (
+          authUser?.rol?.tipo === "Tutor" ?
+            `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
+            : idCurso ?
+              `?idCurso=${idCurso}`
+              : ""
+        )
+    // let param;
+    // if (authUser?.rol?.tipo === "Estudiante") {
+    //   param = authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}` : "";
+    //   console.log("param materia estudiante", param)
+    // } else {
+    //   if (authUser?.rol?.tipo === "Tutor") {
+    //     param = authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}` : "";
+    //     console.log("param materia tutor", param)
+    //   } else {
+    //     param = idCurso ? `?idCurso=${idCurso}` : "";
+    //   }
+    // };
     console.log("Query Param:", param);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL} /gestion/materias${param} `
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
     );
     if (res.status === 200) {
-      setIdMateria(res.data)
+      setMaterias(res.data)
       console.log("Materias: ", res.data);
       // let tempMaterias = [];
       // res.data.forEach((m) => {
@@ -165,7 +178,7 @@ export default function Notas() {
 
   const listarCursos = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL} /gestion/cursos`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
     );
     if (res.data) {
       setCursos(res.data);
@@ -211,10 +224,10 @@ export default function Notas() {
       <Typography variant="h4" sx={{ marginBottom: "30px" }}>
         Reporte Notas
       </Typography>
-      {authUser?.rol?.tipo !== "Estudiante" &&
-        !authUser?.rol?.tipo !== "Tutor" ? (
+      {authUser?.rol?.tipo != "Estudiante" &&
+        authUser?.rol?.tipo != "Tutor" ? (
         <Box>
-          <h3>Buscar Alumno</h3>
+          <h3>Buscar Estudiante</h3>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 2, sm: 2, md: 5 }}
@@ -251,18 +264,18 @@ export default function Notas() {
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
               >
-               {materiasOrdenadas &&
-                materiasOrdenadas?.map((m, i) =>
+                {materiasOrdenadas &&
+                  materiasOrdenadas?.map((m, i) =>
 
-                  <MenuItem
-                    selected={i === 0}
-                    key={i}
-                    value={m.materia?.id}
-                  >
-                    {m.materia?.nombre}
-                  </MenuItem>
+                    <MenuItem
+                      selected={i === 0}
+                      key={i}
+                      value={m.materia?.id}
+                    >
+                      {m.materia?.nombre}
+                    </MenuItem>
 
-                )}
+                  )}
               </Select>
             </FormControl>
             <FormControl style={{ marginRight: "20px" }}>
@@ -349,227 +362,226 @@ export default function Notas() {
             Seleccione una materia para buscar su promedio
           </Typography>
         )}
-      <Grid container spacing={2}>
-        <Grid item xs>
-          <h2>Notas por trimestre</h2>
-          <div sx={{ marginBottom: "100px" }}>
-            {!cargando1 && notaTrimestre.length > 0 && (
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        colSpan={12}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                        }}
-                      >
-                        {notaTrimestre[0]?.materia}
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {notaTrimestre.map((n, i) =>
-                      n.id == 1 ? (
-                        <TableRow key={i}>
-                          <TableCell
-                            variant="head"
-                            sx={{
-                              color: "black",
-                              backgroundColor: "lightblue",
-                            }}
-                          >
-                            Primer Trimestre
-                          </TableCell>
-                          <TableCell>{n.nota1}</TableCell>
-                          <TableCell>{n.nota2}</TableCell>
-                          <TableCell>{n.nota3}</TableCell>
-                          <TableCell>{n.nota4}</TableCell>
-                          <TableCell>{n.nota5}</TableCell>
-                        </TableRow>
-                      ) : n.id === 2 ? (
-                        <TableRow key={i}>
-                          <TableCell
-                            variant="head"
-                            sx={{
-                              color: "black",
-                              backgroundColor: "lightblue",
-                            }}
-                          >
-                            Segundo Trimestre
-                          </TableCell>
-                          <TableCell>{n.nota1}</TableCell>
-                          <TableCell>{n.nota2}</TableCell>
-                          <TableCell>{n.nota3}</TableCell>
-                          <TableCell>{n.nota4}</TableCell>
-                          <TableCell>{n.nota5}</TableCell>
-                        </TableRow>
-                      ) : (
-                        <TableRow key={i}>
-                          <TableCell
-                            variant="head"
-                            sx={{
-                              color: "black",
-                              backgroundColor: "lightblue",
-                            }}
-                          >
-                            Tercer Trimestre
-                          </TableCell>
-                          <TableCell>{n.nota1}</TableCell>
-                          <TableCell>{n.nota2}</TableCell>
-                          <TableCell>{n.nota3}</TableCell>
-                          <TableCell>{n.nota4}</TableCell>
-                          <TableCell>{n.nota5}</TableCell>
-                        </TableRow>
-                      )
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-            {cargando1 && (
-              <Container sx={{ m: "auto", textAlign: "center" }}>
-                <Loading size={50} />
-              </Container>
-            )}
-          </div>
-        </Grid>
-        <Grid item xs>
-          <h2>Promedio por trimestre</h2>
+      {
+        !cargando1 && !cargando2 && notaTrimestre.length > 0 && promedioTrimestre.length > 0 && (
+          <Grid container spacing={2}>
+            <Grid item xs>
+              <h2>Notas por trimestre</h2>
+              <div sx={{ marginBottom: "100px" }}>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align="center"
+                          colSpan={12}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                          }}
+                        >
+                          {notaTrimestre[0]?.materia}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {notaTrimestre.map((n, i) =>
+                        n.id == 1 ? (
+                          <TableRow key={i}>
+                            <TableCell
+                              variant="head"
+                              sx={{
+                                color: "black",
+                                backgroundColor: "lightblue",
+                              }}
+                            >
+                              Primer Trimestre
+                            </TableCell>
+                            <TableCell>{n.nota1}</TableCell>
+                            <TableCell>{n.nota2}</TableCell>
+                            <TableCell>{n.nota3}</TableCell>
+                            <TableCell>{n.nota4}</TableCell>
+                            <TableCell>{n.nota5}</TableCell>
+                          </TableRow>
+                        ) : n.id === 2 ? (
+                          <TableRow key={i}>
+                            <TableCell
+                              variant="head"
+                              sx={{
+                                color: "black",
+                                backgroundColor: "lightblue",
+                              }}
+                            >
+                              Segundo Trimestre
+                            </TableCell>
+                            <TableCell>{n.nota1}</TableCell>
+                            <TableCell>{n.nota2}</TableCell>
+                            <TableCell>{n.nota3}</TableCell>
+                            <TableCell>{n.nota4}</TableCell>
+                            <TableCell>{n.nota5}</TableCell>
+                          </TableRow>
+                        ) : (
+                          <TableRow key={i}>
+                            <TableCell
+                              variant="head"
+                              sx={{
+                                color: "black",
+                                backgroundColor: "lightblue",
+                              }}
+                            >
+                              Tercer Trimestre
+                            </TableCell>
+                            <TableCell>{n.nota1}</TableCell>
+                            <TableCell>{n.nota2}</TableCell>
+                            <TableCell>{n.nota3}</TableCell>
+                            <TableCell>{n.nota4}</TableCell>
+                            <TableCell>{n.nota5}</TableCell>
+                          </TableRow>
+                        )
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <h2>Promedio por trimestre</h2>
+              <div sx={{ marginTop: "200px" }}>
+                <TableContainer component={Paper}>
+                  <Table aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align="center"
+                          colSpan={6}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
 
-          <div sx={{ marginTop: "200px" }}>
-            {!cargando2 && promedioTrimestre.length > 0 && (
-              <TableContainer component={Paper}>
-                <Table aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        colSpan={6}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-
-                          borderBottom: 1,
-                          borderBottomColor: "black",
-                        }}
-                      >
-                        {promedioTrimestre[0]?.materia}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        colSpan={2}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-
-                          borderBottom: 1,
-                          borderBottomColor: "black",
-                        }}
-                      >
-                        Primer Trimestre
-                      </TableCell>
-                      <TableCell
-                        colSpan={2}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-
-                          borderBottom: 1,
-                          borderBottomColor: "black",
-                        }}
-                      >
-                        Segundo Trimestre
-                      </TableCell>
-
-                      <TableCell
-                        colSpan={2}
-                        align="center"
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-
-                          borderBottom: 1,
-                          borderBottomColor: "black",
-                        }}
-                      >
-                        Tercer Trimestre
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          {promedioTrimestre[0]?.materia}
+                        </TableCell>
+                      </TableRow>
                       <TableRow>
                         <TableCell
                           colSpan={2}
-                          component="th"
-                          scope="row"
                           sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
                             borderRightColor: "black",
                             borderRight: 1,
-                            borderTop: 1,
-                            borderTopColor: "black",
+
                             borderBottom: 1,
                             borderBottomColor: "black",
                           }}
                         >
-                          {Number(promedioTrimestre[0]?.promedio).toFixed(2)}
+                          Primer Trimestre
                         </TableCell>
                         <TableCell
                           colSpan={2}
-                          component="th"
-                          scope="row"
                           sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
                             borderRightColor: "black",
                             borderRight: 1,
-                            borderTop: 1,
-                            borderTopColor: "black",
+
                             borderBottom: 1,
                             borderBottomColor: "black",
                           }}
                         >
-                          {Number(promedioTrimestre[1]?.promedio).toFixed(2)}
+                          Segundo Trimestre
                         </TableCell>
+
                         <TableCell
                           colSpan={2}
-                          component="th"
-                          scope="row"
+                          align="center"
                           sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
                             borderRightColor: "black",
                             borderRight: 1,
-                            borderTop: 1,
-                            borderTopColor: "black",
+
                             borderBottom: 1,
                             borderBottomColor: "black",
                           }}
                         >
-                          {Number(promedioTrimestre[2]?.promedio).toFixed(2)}
+                          Tercer Trimestre
                         </TableCell>
                       </TableRow>
-                    }
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-            {cargando2 && (
-              <Container sx={{ m: "auto", textAlign: "center" }}>
-                <Loading size={50} />
-              </Container>
-            )}
-          </div>
-        </Grid>
-      </Grid>
+                    </TableHead>
+                    <TableBody>
+                      {
+                        <TableRow>
+                          <TableCell
+                            colSpan={2}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {Number(promedioTrimestre[0]?.promedio).toFixed(2)}
+                          </TableCell>
+                          <TableCell
+                            colSpan={2}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {Number(promedioTrimestre[1]?.promedio).toFixed(2)}
+                          </TableCell>
+                          <TableCell
+                            colSpan={2}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {Number(promedioTrimestre[2]?.promedio).toFixed(2)}
+                          </TableCell>
+                        </TableRow>
+                      }
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </Grid>
+          </Grid>
+        )}
+      {cargando1 && (
+        <Container sx={{ m: "auto", textAlign: "left" }}>
+          <Loading size={50} />
+        </Container>
+      )}
+      {cargando2 && (
+        <Container sx={{ m: "auto", textAlign: "right" }}>
+          <Loading size={50} />
+        </Container>
+      )}
+
     </Layout>
   );
 }
