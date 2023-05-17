@@ -58,17 +58,16 @@ const MaterialEstudio = () => {
     if (e.target.value) {
       setIdMateria(Number(e.target.value));
     }
-
   };
   const traerMaterias = async (idCurso) => {
     let param =
       authUser?.rol?.tipo === "Docente"
         ? `?idCurso=${authUser?.docentexmateria[0]?.materiaxcursoxdivision?.cursoxdivision?.idcurso}`
         : authUser?.rol?.tipo === "Estudiante"
-          ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
-          : idCurso
-            ? `?idCurso=${idCurso}`
-            : "";
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
+        : idCurso
+        ? `?idCurso=${idCurso}`
+        : "";
     console.log("Query Param:", param);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
@@ -79,43 +78,44 @@ const MaterialEstudio = () => {
     }
   };
 
-  let materiasOrdenadas
+  let materiasOrdenadas;
   if (authUser?.rol?.tipo === "Administrador") {
     materiasOrdenadas = materias?.sort(
       (a, b) =>
-        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+        a.materiaxcursoxdivision?.idmateria -
+        b.materiaxcursoxdivision?.idmateria
     );
   }
 
-  let materiasOrdenadas1
-  let materiasOrdenadasDocente
+  let materiasOrdenadas1;
+  let materiasOrdenadasDocente;
   if (authUser?.rol?.tipo === "Docente") {
     materiasOrdenadas1 = authUser?.docentexmateria?.sort(
-      (a, b) => (
-        a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
-      )
+      (a, b) =>
+        a.materiaxcursoxdivision?.cursoxdivision?.iddivision -
+        b.materiaxcursoxdivision?.cursoxdivision?.iddivision
     );
     materiasOrdenadasDocente = materiasOrdenadas1.sort(
-      (a, b) => (
-
-        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-      )
+      (a, b) =>
+        a.materiaxcursoxdivision?.idmateria -
+        b.materiaxcursoxdivision?.idmateria
     );
   }
 
-  let materiaSinRepetir
-  let materiasOrdenadasEstudiante
+  let materiaSinRepetir;
+  let materiasOrdenadasEstudiante;
   if (authUser?.rol?.tipo === "Estudiante") {
     materiaSinRepetir = materias.filter(
-      (m) => m.cursoxdivision?.iddivision === authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
+      (m) =>
+        m.cursoxdivision?.iddivision ===
+        authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
     );
     materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
       (a, b) =>
-        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+        a.materiaxcursoxdivision?.idmateria -
+        b.materiaxcursoxdivision?.idmateria
     );
-
   }
-
 
   const traerCursos = async () => {
     const res = await axios.get(
@@ -149,7 +149,7 @@ const MaterialEstudio = () => {
     }
   };
   const subirMaterial = async (idTrimestre) => {
-    if (idCurso && idMateria) {
+    if (idMateria) {
       for (const key in archivos) {
         const file = archivos[key];
         if (typeof file === "object") {
@@ -164,7 +164,6 @@ const MaterialEstudio = () => {
             {
               titulo: file.name,
               url: url,
-              idCurso: idCurso,
               idMateria: idMateria,
               idTrimestre: idTrimestre,
               idUsuario: authUser?.id,
@@ -175,29 +174,28 @@ const MaterialEstudio = () => {
             setTimeout(() => {
               setMensaje("");
             }, 2000);
-            await descargarMaterial(idTrimestre, idCurso, idMateria);
+            await descargarMaterial(idTrimestre, idMateria);
           } else {
             setMensaje("No se pudo subir el material");
           }
         }
       }
     } else {
-      setMensaje("Elija un curso y una materia");
+      setMensaje("Elija una materia");
       setTimeout(() => {
         setMensaje("");
       }, 2000);
     }
   };
-  const descargarMaterial = async (idTrimestre, idCurso, idMateria) => {
+  const descargarMaterial = async (idTrimestre, idMateria) => {
     try {
       let params = `?idTrimestre=${idTrimestre}`;
-      if (idCurso) {
-        params += `&idCurso=${idCurso}`;
-      }
+
       if (idMateria) {
         params += `&idMateria=${idMateria}`;
       }
       console.log(params);
+      setSubiendo(true);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/search${params}`
       );
@@ -216,10 +214,8 @@ const MaterialEstudio = () => {
     }
   };
   const quitarFiltros = async () => {
-    setIdCursoXdivision(1);
+    await descargarMaterial(tabIndex + 1, materias[0].id);
     setIdMateria(1);
-    setTabIndex(0);
-    await descargarMaterial(1, 1, 1);
   };
 
   const handleArchivos = (e) => {
@@ -241,7 +237,7 @@ const MaterialEstudio = () => {
         traerMaterias();
         traerTrimestres();
         traerAlumno();
-        descargarMaterial(1);
+        descargarMaterial(1, materias[0]?.id);
       }
     }
   }, [loading, authUser]);
@@ -265,7 +261,7 @@ const MaterialEstudio = () => {
         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/material_estudio/delete/${id}`
       );
       setMensaje(res.data);
-      descargarMaterial(idTrimestre);
+      descargarMaterial(idTrimestre, materias[0].id);
     } catch (error) {
       console.log(error);
       setMensaje(error.message);
@@ -281,91 +277,91 @@ const MaterialEstudio = () => {
         Material de Estudio
       </Typography>
       <div>
-        {
-          authUser?.rol?.tipo === "Administrador" && (
-            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              <Autocomplete
-                size="small"
-                sx={{ width: "340px" }}
-                disablePortal
-                id="inputMateria"
-                // value={value}
-                name="idMateria"
-                onChange={handleMateria}
-                options={materiasOrdenadas}
-                getOptionLabel={(materia) =>
-                  `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
-                }
-                isOptionEqualToValue={(option, value) => {
-                  return option?.id === value?.id;
-                }}
-                noOptionsText={"No existe materia con ese nombre"}
-                renderOption={(props, materia) => (
-                  <Box
-                    component="li"
-                    {...props}
-                    key={materia?.id}
-                    value={materia?.id}
-                  >
-                    {materia?.materia?.nombre}
-                    &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                    {materia?.cursoxdivision?.curso?.nombre}&nbsp;
-                    {materia?.cursoxdivision?.division?.division}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Materias" />
-                )}
-              />
-            </FormControl>
-          )}
-        {
-          authUser?.rol?.tipo === "Docente" && (
-            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-              <Autocomplete
-                size="small"
-                sx={{ width: "340px" }}
-                disablePortal
-                id="inputMateria"
-                // value={value}
-                name="idMateria"
-                onChange={handleMateria}
-                options={materiasOrdenadasDocente}
-                getOptionLabel={(materia) =>
-                  `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
-                }
-                isOptionEqualToValue={(option, value) => {
-                  return option?.id === value?.id;
-                }}
-                noOptionsText={"No existe materia con ese nombre"}
-                renderOption={(props, materia) => (
-                  <Box
-                    component="li"
-                    {...props}
-                    key={materia?.id}
-                    value={materia?.id}
-                  >
-                    {materia.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                    {
-                      materia.materiaxcursoxdivision?.cursoxdivision?.curso
-                        ?.nombre
-                    }{" "}
-                    {
-                      materia.materiaxcursoxdivision?.cursoxdivision?.division
-                        ?.division
-                    }
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Materias" />
-                )}
-              />
-            </FormControl>
-          )}
+        {authUser?.rol?.tipo === "Administrador" && (
+          <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+            <Autocomplete
+              size="small"
+              sx={{ width: "340px" }}
+              disablePortal
+              id="inputMateria"
+              // value={value}
+              name="idMateria"
+              onChange={handleMateria}
+              options={materiasOrdenadas}
+              getOptionLabel={(materia) =>
+                `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
+              }
+              isOptionEqualToValue={(option, value) => {
+                return option?.id === value?.id;
+              }}
+              noOptionsText={"No existe materia con ese nombre"}
+              renderOption={(props, materia) => (
+                <Box
+                  component="li"
+                  {...props}
+                  key={materia?.id}
+                  value={materia?.id}
+                >
+                  {materia?.materia?.nombre}
+                  &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                  {materia?.cursoxdivision?.curso?.nombre}&nbsp;
+                  {materia?.cursoxdivision?.division?.division}
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Materias" />
+              )}
+            />
+          </FormControl>
+        )}
+        {authUser?.rol?.tipo === "Docente" && (
+          <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+            <Autocomplete
+              size="small"
+              sx={{ width: "340px" }}
+              disablePortal
+              id="inputMateria"
+              // value={value}
+              name="idMateria"
+              onChange={handleMateria}
+              options={materiasOrdenadasDocente}
+              getOptionLabel={(materia) =>
+                `${materia.materiaxcursoxdivision?.materia?.nombre} - ${materia.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} ${materia.materiaxcursoxdivision?.cursoxdivision?.division?.division}`
+              }
+              isOptionEqualToValue={(option, value) => {
+                return option?.id === value?.id;
+              }}
+              noOptionsText={"No existe materia con ese nombre"}
+              renderOption={(props, materia) => (
+                <Box
+                  component="li"
+                  {...props}
+                  key={materia?.id}
+                  value={materia?.id}
+                >
+                  {materia.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                  {
+                    materia.materiaxcursoxdivision?.cursoxdivision?.curso
+                      ?.nombre
+                  }{" "}
+                  {
+                    materia.materiaxcursoxdivision?.cursoxdivision?.division
+                      ?.division
+                  }
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Materias" />
+              )}
+            />
+          </FormControl>
+        )}
         {authUser?.rol?.tipo === "Estudiante" && (
           <>
             <Box sx={{ marginBottom: "20px" }}>
-              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+              <FormControl
+                style={{ marginRight: "20px", marginBottom: "25px" }}
+              >
                 <Autocomplete
                   size="small"
                   sx={{ width: "330px" }}
@@ -375,9 +371,7 @@ const MaterialEstudio = () => {
                   name="idMateria"
                   onChange={handleMateria}
                   options={materiasOrdenadasEstudiante}
-                  getOptionLabel={(materia) =>
-                    `${materia?.materia?.nombre}`
-                  }
+                  getOptionLabel={(materia) => `${materia?.materia?.nombre}`}
                   isOptionEqualToValue={(option, value) => {
                     return option?.id === value?.id;
                   }}
@@ -400,84 +394,22 @@ const MaterialEstudio = () => {
             </Box>
           </>
         )}
-        {/* <FormControl sx={{ width: "100px" }}>
-                  <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                  <Select
-                    direction="row"
-                    // PONER LA LISTA EN HORIZONTAL
-                    MenuProps={{
-                      anchorOrigin: {
-                        vertical: "center",
-                        horizontal: "right",
-                      },
-                      transformOrigin: {
-                        vertical: "center",
-                        horizontal: "left",
-                      },
-                      disableScrollLock: true,
-                    }}
-                    IconComponent={ArrowRightIcon}
-                    name="idCurso"
-                    value={idCursoXdivision}
-                    label="Curso"
-                    size="small"
-                    required
-                    onChange={handleCurso}
-                  >
-                    {cursosOrdenados &&
-                      cursosOrdenados?.map((c, i) => (
-                        <MenuItem
-                          key={i}
-                          value={c.id}
-                          sx={{ display: "inline-block" }}
-                        >
-                          {c.curso?.nombre} {c.division?.division}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl sx={{ width: "250px", marginRight: "20px" }}>
-                  <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={idMateria}
-                    size="small"
-                    label="Materia"
-                    onChange={handleMateria}
-                    MenuProps={{ disableScrollLock: true }}
-                  >
-                    {materiasOrdenadas &&
-                      materiasOrdenadas?.map((m, i) => (
-                        <MenuItem selected={i === 0} key={i} value={m.id}>
-                          {m.materia?.nombre}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl> */}
-        {/* <Button
-                sx={{ mx: 2 }}
-                variant="contained"
-                onClick={async () =>
-                  await descargarMaterial(
-                    tabIndex + 1,
-                    idCursoXdivision,
-                    idMateria
-                  )
-                }
-                startIcon={<Search />}
-              >
-                Buscar
-              </Button> */}
-        {/* <Button
-                // sx={{ mx: 2, my: 1 }}
-                variant="outlined"
-                onClick={quitarFiltros}
-              >
-                Quitar Filtros
-              </Button> */}
+
+        <Button
+          sx={{ mx: 2 }}
+          variant="contained"
+          onClick={async () => await descargarMaterial(tabIndex + 1, idMateria)}
+          startIcon={<Search />}
+        >
+          Buscar
+        </Button>
+        <Button
+          // sx={{ mx: 2, my: 1 }}
+          variant="outlined"
+          onClick={async () => await quitarFiltros()}
+        >
+          Quitar Filtros
+        </Button>
 
         {subiendo && <LinearProgress sx={{ my: 2 }} />}
         {mensaje && (
@@ -490,9 +422,9 @@ const MaterialEstudio = () => {
             <>
               <Tabs
                 value={tabIndex}
-                onChange={(e, newValue) => {
+                onChange={async (e, newValue) => {
                   setTabIndex((_) => newValue);
-                  descargarMaterial(newValue + 1, idCursoXdivision, idMateria);
+                  await descargarMaterial(newValue + 1, idMateria);
                 }}
               >
                 {trimestres
@@ -610,7 +542,7 @@ const MaterialEstudio = () => {
           )}
         </Box>
       </div>
-    </Layout >
+    </Layout>
   );
 };
 
