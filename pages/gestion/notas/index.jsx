@@ -426,7 +426,7 @@ export default function Notas() {
           <Box direction="row">
 
             {authUser?.rol?.tipo === "Docente" ? (
-              <FormControl size="small">
+              <FormControl size="small" sx={{ marginBottom: "25px"}}>
                 <InputLabel id="inputMateria">Materia</InputLabel>
                 <Select
                   labelId="inputMateria"

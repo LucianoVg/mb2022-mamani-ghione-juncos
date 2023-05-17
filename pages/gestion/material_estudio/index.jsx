@@ -78,6 +78,15 @@ const MaterialEstudio = () => {
       console.log("Materias: ", res.data);
     }
   };
+
+
+  const materiasOrdenadasDocente = authUser?.docentexmateria?.sort(
+    (a, b) => (
+      a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision &&
+      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+    )
+  );
+
   const materiaSinRepetir = materias.filter(
     (m) => m.cursoxdivision?.iddivision === 1
   );
@@ -287,7 +296,49 @@ const MaterialEstudio = () => {
               />
             </FormControl>
           )}
-
+ {
+          authUser?.rol?.tipo === "Docente" && (
+            <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+              <Autocomplete
+                size="small"
+                sx={{ width: "330px" }}
+                disablePortal
+                id="inputMateria"
+                // value={value}
+                name="idMateria"
+                onChange={handleMateria}
+                options={materiasOrdenadasDocente}
+                getOptionLabel={(materia) =>
+                  `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
+                }
+                isOptionEqualToValue={(option, value) => {
+                  return option?.id === value?.id;
+                }}
+                noOptionsText={"No existe materia con ese nombre"}
+                renderOption={(props, materia) => (
+                  <Box
+                    component="li"
+                    {...props}
+                    key={materia?.id}
+                    value={materia?.id}
+                  >
+                       {materia.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                        {
+                          materia.materiaxcursoxdivision?.cursoxdivision?.curso
+                            ?.nombre
+                        }{" "}
+                        {
+                          materia.materiaxcursoxdivision?.cursoxdivision?.division
+                            ?.division
+                        }
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Materias" />
+                )}
+              />
+            </FormControl>
+          )}
         {authUser?.rol?.tipo === "Estudiante" && (
 
           <>
