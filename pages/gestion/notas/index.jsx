@@ -409,13 +409,17 @@ export default function Notas() {
       setIdCurso("");
     }
   };
-
-  const materiasOrdenadas = authUser?.docentexmateria?.sort(
+  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
     (a, b) => (
-      a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision &&
+      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
+    )
+  );
+  const materiasOrdenadas2 = materiasOrdenadas1?.sort(
+    (a, b) => (
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
+ 
   return (
     <Layout>
       <Container maxWidth={"xl"}>
@@ -439,7 +443,7 @@ export default function Notas() {
                   }}
                   MenuProps={{ disableScrollLock: true }}
                 >
-                  {materiasOrdenadas?.map((m, i) =>
+                  {materiasOrdenadas2?.map((m, i) =>
                     m.materiaxcursoxdivision.idmateria === idMateria ? (
                       <MenuItem
                         key={i}

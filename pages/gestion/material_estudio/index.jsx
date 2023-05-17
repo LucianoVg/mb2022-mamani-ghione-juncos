@@ -78,19 +78,20 @@ const MaterialEstudio = () => {
       console.log("Materias: ", res.data);
     }
   };
-
-
-  const materiasOrdenadasDocente = authUser?.docentexmateria?.sort(
+  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
     (a, b) => (
-      a.materiaxcursoxdivision?.idcursoxdivision - b.materiaxcursoxdivision?.idcursoxdivision &&
+      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
+    )
+  );
+  const materiasOrdenadasDocente = materiasOrdenadas1.sort(
+    (a, b) => (
+     
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
     )
   );
 
-  const materiaSinRepetir = materias.filter(
-    (m) => m.cursoxdivision?.iddivision === 1
-  );
-  const materiasOrdenadas = materiaSinRepetir?.sort(
+
+  const materiasOrdenadas = materias?.sort(
     (a, b) =>
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
   );
