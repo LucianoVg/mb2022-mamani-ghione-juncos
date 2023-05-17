@@ -78,33 +78,45 @@ const MaterialEstudio = () => {
       console.log("Materias: ", res.data);
     }
   };
-  const materiasOrdenadas = materias?.sort(
-    (a, b) =>
-      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-  );
 
-  const materiasOrdenadas1 = authUser?.docentexmateria?.sort(
-    (a, b) => (
-      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
-    )
-  );
-  const materiasOrdenadasDocente = materiasOrdenadas1.sort(
-    (a, b) => (
-     
-      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-    )
-  );
+  let materiasOrdenadas
+  if (authUser?.rol?.tipo === "Administrador") {
+    materiasOrdenadas = materias?.sort(
+      (a, b) =>
+        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+    );
+  }
 
+  let materiasOrdenadas1
+  let materiasOrdenadasDocente
+  if (authUser?.rol?.tipo === "Docente") {
+    materiasOrdenadas1 = authUser?.docentexmateria?.sort(
+      (a, b) => (
+        a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
+      )
+    );
+    materiasOrdenadasDocente = materiasOrdenadas1.sort(
+      (a, b) => (
 
-  const materiaSinRepetir = materias.filter(
-    (m) => m.cursoxdivision?.iddivision === authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
-  );
-  const materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
-    (a, b) =>
-      a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-  );
-
+        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+      )
+    );
+  }
   
+  let materiaSinRepetir
+  let materiasOrdenadasEstudiante
+  if (authUser?.rol?.tipo === "Estudiante") {
+    materiaSinRepetir = materias.filter(
+      (m) => m.cursoxdivision?.iddivision === authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
+    );
+    materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
+      (a, b) =>
+        a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
+    );
+
+  }
+
+
   const traerCursos = async () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
@@ -307,7 +319,7 @@ const MaterialEstudio = () => {
               />
             </FormControl>
           )}
- {
+        {
           authUser?.rol?.tipo === "Docente" && (
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
@@ -333,15 +345,15 @@ const MaterialEstudio = () => {
                     key={materia?.id}
                     value={materia?.id}
                   >
-                       {materia.materiaxcursoxdivision?.materia?.nombre} -{" "}
-                        {
-                          materia.materiaxcursoxdivision?.cursoxdivision?.curso
-                            ?.nombre
-                        }{" "}
-                        {
-                          materia.materiaxcursoxdivision?.cursoxdivision?.division
-                            ?.division
-                        }
+                    {materia.materiaxcursoxdivision?.materia?.nombre} -{" "}
+                    {
+                      materia.materiaxcursoxdivision?.cursoxdivision?.curso
+                        ?.nombre
+                    }{" "}
+                    {
+                      materia.materiaxcursoxdivision?.cursoxdivision?.division
+                        ?.division
+                    }
                   </Box>
                 )}
                 renderInput={(params) => (
