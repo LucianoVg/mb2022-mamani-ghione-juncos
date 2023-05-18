@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "../../components/context/authUserProvider";
@@ -20,8 +20,9 @@ import {
   Grid,
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
-import { Search } from "@mui/icons-material";
+import { Print, Search } from "@mui/icons-material";
 import Loading from "../../components/loading";
+import { useReactToPrint } from "react-to-print";
 
 export default function Preanalitico() {
   const [alumnos, setAlumnos] = useState([]);
@@ -92,7 +93,10 @@ export default function Preanalitico() {
       }
     }
   };
-
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
@@ -192,9 +196,17 @@ export default function Preanalitico() {
           </Box>
         )
       )}
+      <Button
+        onClick={handlePrint}
+        disabled={!nombreAlumno}
+        variant="text"
+        startIcon={<Print />}
+      >
+        Imprimir Preanalitico
+      </Button>
       <div>
         {!cargando && authUser && preanalitico.length > 0 && (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} ref={componentRef}>
             <Table
               size="small"
               aria-label="customized table"

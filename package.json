@@ -27,7 +27,8 @@
     "react-chartjs-2": "^5.0.1",
     "react-dom": "^18.2.0",
     "react-doom": "^1.0.0",
-    "react-material-ui-carousel": "^3.4.2"
+    "react-material-ui-carousel": "^3.4.2",
+    "react-to-print": "^2.14.12"
   },
   "devDependencies": {
     "@types/node": "^18.7.10",
