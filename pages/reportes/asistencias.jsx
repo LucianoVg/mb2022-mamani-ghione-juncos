@@ -50,7 +50,6 @@ export default function Asistencias() {
   const [cargando3, setCargando3] = useState(false);
   const [nombreAlumno, setNombreAlumno] = useState();
 
-
   useEffect(() => {
     if (!loading && !authUser) {
       router.push("/gestion/cuenta/login");
@@ -59,24 +58,25 @@ export default function Asistencias() {
       if (!tienePermisos()) {
         router.push("/");
       } else {
-        listarAlumnos();
-        listadoAsistencias();
-        conteoAsistenciasAnuales();
-        conteoAsistenciasMensuales();
+        if (
+          authUser?.rol?.tipo !== "Estudiante" &&
+          authUser?.rol?.tipo !== "Tutor"
+        ) {
+          listarAlumnos();
+        }
+        if (idAlumno && mes) {
+          listadoAsistencias();
+          conteoAsistenciasAnuales();
+          conteoAsistenciasMensuales();
+        }
       }
     }
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
 
   const conteoAsistenciasAnuales = async () => {
-    let param =
-      authUser?.rol?.tipo === "Estudiante"
-        ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-          ? authUser?.alumnoxcursoxdivision2[0].id
-          : idAlumno;
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${param}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${idAlumno}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -85,15 +85,9 @@ export default function Asistencias() {
     setCargando2(false);
   };
   const conteoAsistenciasMensuales = async () => {
-    let param =
-      authUser?.rol?.tipo === "Estudiante"
-        ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-          ? authUser?.alumnoxcursoxdivision2[0].id
-          : idAlumno;
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${param}&mes=${mes}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${idAlumno}&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -123,7 +117,7 @@ export default function Asistencias() {
 
   const listarAlumnos = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos/`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/alumnos`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -134,9 +128,13 @@ export default function Asistencias() {
   const handleAlumno = (e, newValue) => {
     if (newValue) {
       setIdAlumno(newValue.id);
-      let alumno = authUser.alumnoxcursoxdivision2?.find((a) => newValue?.id === a.id);
-      let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`
-      setNombreAlumno(nombre)
+      let alumno = authUser.alumnoxcursoxdivision2?.find(
+        (a) => newValue?.id === a.id
+      );
+      if (alumno) {
+        let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`;
+        setNombreAlumno(nombre);
+      }
     }
   };
 
@@ -153,15 +151,11 @@ export default function Asistencias() {
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Asistencias{" "}
-        {
-          authUser?.rol?.tipo === "Estudiante"
-            ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-            : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-              ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-              : authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]
-                ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-                : ""
-        }
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+          ? `de ${nombreAlumno}`
+          : ""}
       </Typography>
       <Box
         sx={{
@@ -172,55 +166,51 @@ export default function Asistencias() {
           my: 2,
         }}
       >
-        {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
-          <>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography variant="h6">
-                  Buscar estudiante:
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box>
-              <FormControl sx={{ width: "250px", marginRight: "20px" }} >
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  // value={value}
-                  name="idAlumno"
-                  size="small"
-                  onChange={handleAlumno}
-                  getOptionLabel={(alumno) =>
-                    `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
-                  }
-                  options={authUser?.alumnoxcursoxdivision2}
-                  sx={{ width: "250px" }}
-                  isOptionEqualToValue={(option, value) =>
-                    option?.id === value?.id
-                  }
-                  noOptionsText={"No existe un estudiante con ese nombre"}
-                  renderOption={(props, alumno) => (
-                    <Box component="li" {...props} key={alumno?.id}>
-                      {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                    </Box>
-                  )}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Estudiante" />
-                  )}
-                />
-              </FormControl>
-            </Box>
-          </>
-
-        )}
-        {(authUser?.rol?.tipo != "Estudiante" &&
-          authUser?.rol?.tipo != "Tutor") && (
+        {authUser?.rol?.tipo === "Tutor" &&
+          authUser?.alumnoxcursoxdivision2[1] && (
             <>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="h6">
-                    Buscar estudiante:
-                  </Typography>
+                  <Typography variant="h6">Buscar estudiante:</Typography>
+                </Grid>
+              </Grid>
+              <Box>
+                <FormControl sx={{ width: "250px", marginRight: "20px" }}>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    // value={value}
+                    name="idAlumno"
+                    size="small"
+                    onChange={handleAlumno}
+                    getOptionLabel={(alumno) =>
+                      `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
+                    }
+                    options={authUser?.alumnoxcursoxdivision2}
+                    sx={{ width: "250px" }}
+                    isOptionEqualToValue={(option, value) =>
+                      option?.id === value?.id
+                    }
+                    noOptionsText={"No existe un estudiante con ese nombre"}
+                    renderOption={(props, alumno) => (
+                      <Box component="li" {...props} key={alumno?.id}>
+                        {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                      </Box>
+                    )}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Estudiante" />
+                    )}
+                  />
+                </FormControl>
+              </Box>
+            </>
+          )}
+        {authUser?.rol?.tipo != "Estudiante" &&
+          authUser?.rol?.tipo != "Tutor" && (
+            <>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant="h6">Buscar estudiante:</Typography>
                 </Grid>
               </Grid>
               <Box>
@@ -253,7 +243,6 @@ export default function Asistencias() {
                 </FormControl>
               </Box>
             </>
-
           )}
         <FormControl sx={{ my: 1 }}>
           <InputLabel id="demo-simple-select-label">Mes</InputLabel>
@@ -314,7 +303,24 @@ export default function Asistencias() {
                               backgroundColor: "lightblue",
                             }}
                           >
-                            Total de Asistencias Mensuales
+                            {l.creadoen}
+                          </TableCell>
+                          <TableCell align="center" className="col-md-1 ">
+                            {l.presente
+                              ? "Presente"
+                              : l.ausente
+                              ? "Ausente"
+                              : l.ausentejustificado
+                              ? "Ausente Justificado"
+                              : l.llegadatarde
+                              ? "Llegada Tarde"
+                              : l.llegadatardejustificada
+                              ? "Llegada Tarde Justificada"
+                              : l.mediafalta
+                              ? "Media Falta"
+                              : l.mediafaltajustificada
+                              ? "Media Falta Justificada"
+                              : "No tiene asistencia cargada"}
                           </TableCell>
                         </TableRow>
                       </TableHead>

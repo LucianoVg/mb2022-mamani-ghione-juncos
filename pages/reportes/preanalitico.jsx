@@ -30,6 +30,7 @@ export default function Preanalitico() {
   const [idAlumno, setIdAlumno] = useState(0);
   const [preanalitico, setPreanalitico] = useState([]);
   const [cargando, setCargando] = useState(false);
+  const [nombreAlumno, setNombreAlumno] = useState("");
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -45,7 +46,6 @@ export default function Preanalitico() {
         ) {
           listarAlumnos();
         }
-        traerPreanalitico();
       }
     }
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
@@ -56,8 +56,6 @@ export default function Preanalitico() {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${
         authUser?.rol?.tipo === "Estudiante"
           ? authUser?.alumnoxcursoxdivision1[0].id
-          : authUser?.rol?.tipo === "Tutor"
-          ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }`
     );
@@ -85,8 +83,13 @@ export default function Preanalitico() {
   const handleAlumno = (e, newValue) => {
     if (newValue) {
       setIdAlumno(newValue.id);
-    } else {
-      traerPreanalitico();
+      let alumno = authUser.alumnoxcursoxdivision2?.find(
+        (a) => newValue?.id === a.id
+      );
+      if (alumno) {
+        let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`;
+        setNombreAlumno(nombre);
+      }
     }
   };
 
@@ -96,18 +99,59 @@ export default function Preanalitico() {
         Reporte Historial Académico{" "}
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor"
-          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+          ? ` de ${nombreAlumno}`
           : ""}
       </Typography>
-      {authUser?.rol?.tipo != "Estudiante" &&
-        authUser?.rol?.tipo != "Tutor" && (
-          <Box sx={{ marginBottom: "20px" }}>
-                 <Typography variant="h6"
-            sx={{ marginBottom: "10px" }}
-          >
+      {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
+        <Box sx={{ marginBottom: "20px" }}>
+          <Typography variant="h6" sx={{ marginBottom: "10px" }}>
             Buscar estudiante:
           </Typography>
+
+          <FormControl sx={{ marginRight: "20px" }}>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              // value={value}
+              size="small"
+              name="idAlumno"
+              onChange={handleAlumno}
+              getOptionLabel={(alumno) =>
+                `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+              }
+              options={alumnos}
+              sx={{ width: "250px" }}
+              isOptionEqualToValue={(option, value) =>
+                option?.usuario?.apellido === value?.usuario?.apellido
+              }
+              noOptionsText={"No existe un estudiante con ese nombre"}
+              renderOption={(props, alumno) => (
+                <Box component="li" {...props} key={alumno?.id}>
+                  {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Estudiante" />
+              )}
+            />
+          </FormControl>
+          <Button
+            onClick={traerPreanalitico}
+            // sx={{ marginTop: "20px" }}
+            variant="outlined"
+            startIcon={<Search />}
+            color="info"
+          >
+            Buscar
+          </Button>
+        </Box>
+      ) : (
+        authUser?.rol?.tipo === "Tutor" && (
+          <Box sx={{ marginBottom: "20px" }}>
+            <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+              Buscar estudiante:
+            </Typography>
 
             <FormControl sx={{ marginRight: "20px" }}>
               <Autocomplete
@@ -120,10 +164,10 @@ export default function Preanalitico() {
                 getOptionLabel={(alumno) =>
                   `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
                 }
-                options={alumnos}
+                options={authUser?.alumnoxcursoxdivision2}
                 sx={{ width: "250px" }}
                 isOptionEqualToValue={(option, value) =>
-                  option?.usuario?.apellido === value?.usuario?.apellido
+                  option?.id === value?.id
                 }
                 noOptionsText={"No existe un estudiante con ese nombre"}
                 renderOption={(props, alumno) => (
@@ -146,7 +190,8 @@ export default function Preanalitico() {
               Buscar
             </Button>
           </Box>
-        )}
+        )
+      )}
       <div>
         {!cargando && authUser && preanalitico.length > 0 && (
           <TableContainer component={Paper}>
