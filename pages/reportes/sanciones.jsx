@@ -40,7 +40,7 @@ export default function Sancion() {
   const [sanciones, setSanciones] = useState([]);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const [cargando, setCargando] = useState(false);
-  const [idAlumno, setIdAlumno] = useState("");
+  const [idAlumno, setIdAlumno] = useState(0);
   const [idCurso, setIdCurso] = useState("");
   const { loading, authUser } = useAuth();
   const router = useRouter();
@@ -61,7 +61,7 @@ export default function Sancion() {
         ) {
           traerCursos();
           listarAlumnos();
-          listarSanciones();
+          // listarSanciones();
         } else {
           if (idAlumno) {
             listarSanciones();
@@ -91,7 +91,7 @@ export default function Sancion() {
           : idAlumno
       }`
     );
-    if( authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]){
+    if (authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]) {
       setNombreAlumno(`${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre} ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido}`)
     }
     if (res.status === 200) {
@@ -154,9 +154,11 @@ export default function Sancion() {
         Reporte Sanciones{" "}
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-            ? ` de ${nombreAlumno}`
-            : ""}
+          : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+            : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+              ? ` de ${nombreAlumno}`
+              : ""}
       </Typography>
 
       {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
@@ -278,175 +280,346 @@ export default function Sancion() {
 
 
       <div sx={{ marginTop: "200px" }}>
-        {!cargando && sanciones.length > 0 && idAlumno != 0 ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    sx={{
-                      color: "black",
-                      backgroundColor: "lightblue",
-                      borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    Motivo
-                  </TableCell>
-                  <TableCell
-                    colSpan={1}
-                    sx={{
-                      color: "black",
-                      backgroundColor: "lightblue",
-                      borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    Autoridad
-                  </TableCell>
-                  <TableCell
-                    colSpan={1}
-                    sx={{
-                      color: "black",
-                      backgroundColor: "lightblue",
-                      borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    Cargo
-                  </TableCell>
-                  <TableCell
-                    colSpan={1}
-                    align="left"
-                    sx={{
-                      color: "black",
-                      backgroundColor: "lightblue",
-                      borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    Fecha
-                  </TableCell>
-                  <TableCell
-                    colSpan={1}
-                    sx={{
-                      color: "black",
-                      backgroundColor: "lightblue",
-                      borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    Tipo
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {sanciones &&
-                  sanciones.map((s, i) => (
-                    <TableRow key={i}>
+        {
+          !cargando && authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1] ? (
+            (sanciones.length === 0 && idAlumno === 0)  ? (
+              <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+                Seleccione un estudiante
+              </Typography>
+            ) : (
+              !cargando && sanciones.length > 0 && idAlumno != 0 ? (
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          colSpan={4}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          Motivo
+                        </TableCell>
+                        <TableCell
+                          colSpan={1}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          Autoridad
+                        </TableCell>
+                        <TableCell
+                          colSpan={1}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          Cargo
+                        </TableCell>
+                        <TableCell
+                          colSpan={1}
+                          align="left"
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          Fecha
+                        </TableCell>
+                        <TableCell
+                          colSpan={1}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "lightblue",
+                            borderRightColor: "black",
+                            borderRight: 1,
+                            borderBottom: 1,
+                            borderBottomColor: "black",
+                          }}
+                        >
+                          Tipo
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {sanciones &&
+                        sanciones.map((s, i) => (
+                          <TableRow key={i}>
+                            <TableCell
+                              colSpan={4}
+                              component="th"
+                              scope="row"
+                              sx={{
+                                borderRightColor: "black",
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderTopColor: "black",
+                                borderBottom: 1,
+                                borderBottomColor: "black",
+                              }}
+                            >
+                              {s?.motivo}
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              component="th"
+                              scope="row"
+                              sx={{
+                                borderRightColor: "black",
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderTopColor: "black",
+                                borderBottom: 1,
+                                borderBottomColor: "black",
+                              }}
+                            >
+                              {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              component="th"
+                              scope="row"
+                              sx={{
+                                borderRightColor: "black",
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderTopColor: "black",
+                                borderBottom: 1,
+                                borderBottomColor: "black",
+                              }}
+                            >
+                              {s?.usuario?.rol?.tipo}
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              component="th"
+                              scope="row"
+                              sx={{
+                                borderRightColor: "black",
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderTopColor: "black",
+                                borderBottom: 1,
+                                borderBottomColor: "black",
+                              }}
+                            >
+                              {s?.fecha}
+                            </TableCell>
+                            <TableCell
+                              colSpan={1}
+                              component="th"
+                              scope="row"
+                              sx={{
+                                borderRightColor: "black",
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderTopColor: "black",
+                                borderBottom: 1,
+                                borderBottomColor: "black",
+                              }}
+                            >
+                              {s?.tiposancion?.tipo}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                !cargando && sanciones.length === 0 &&
+                (
+                  <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+                    Este estudiante no fue sancionado.
+                  </Typography>
+                )
+              )
+            )
+          ) : (
+            !cargando && sanciones.length > 0 && idAlumno != 0 ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
                       <TableCell
                         colSpan={4}
-                        component="th"
-                        scope="row"
                         sx={{
+                          color: "black",
+                          backgroundColor: "lightblue",
                           borderRightColor: "black",
                           borderRight: 1,
-                          borderTop: 1,
-                          borderTopColor: "black",
                           borderBottom: 1,
                           borderBottomColor: "black",
                         }}
                       >
-                        {s?.motivo}
+                        Motivo
                       </TableCell>
                       <TableCell
                         colSpan={1}
-                        component="th"
-                        scope="row"
                         sx={{
+                          color: "black",
+                          backgroundColor: "lightblue",
                           borderRightColor: "black",
                           borderRight: 1,
-                          borderTop: 1,
-                          borderTopColor: "black",
                           borderBottom: 1,
                           borderBottomColor: "black",
                         }}
                       >
-                        {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
+                        Autoridad
                       </TableCell>
                       <TableCell
                         colSpan={1}
-                        component="th"
-                        scope="row"
                         sx={{
+                          color: "black",
+                          backgroundColor: "lightblue",
                           borderRightColor: "black",
                           borderRight: 1,
-                          borderTop: 1,
-                          borderTopColor: "black",
                           borderBottom: 1,
                           borderBottomColor: "black",
                         }}
                       >
-                        {s?.usuario?.rol?.tipo}
+                        Cargo
                       </TableCell>
                       <TableCell
                         colSpan={1}
-                        component="th"
-                        scope="row"
+                        align="left"
                         sx={{
+                          color: "black",
+                          backgroundColor: "lightblue",
                           borderRightColor: "black",
                           borderRight: 1,
-                          borderTop: 1,
-                          borderTopColor: "black",
                           borderBottom: 1,
                           borderBottomColor: "black",
                         }}
                       >
-                        {s?.fecha}
+                        Fecha
                       </TableCell>
                       <TableCell
                         colSpan={1}
-                        component="th"
-                        scope="row"
                         sx={{
+                          color: "black",
+                          backgroundColor: "lightblue",
                           borderRightColor: "black",
                           borderRight: 1,
-                          borderTop: 1,
-                          borderTopColor: "black",
                           borderBottom: 1,
                           borderBottomColor: "black",
                         }}
                       >
-                        {s?.tiposancion?.tipo}
+                        Tipo
                       </TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          !cargando && idAlumno === 0 ? (
-            <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-              Seleccione un estudiante
-            </Typography>
-          ) : (
-            !cargando && (<Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-              Este estudiante no fue sancionado.
-            </Typography>)
-
+                  </TableHead>
+                  <TableBody>
+                    {sanciones &&
+                      sanciones.map((s, i) => (
+                        <TableRow key={i}>
+                          <TableCell
+                            colSpan={4}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {s?.motivo}
+                          </TableCell>
+                          <TableCell
+                            colSpan={1}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
+                          </TableCell>
+                          <TableCell
+                            colSpan={1}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {s?.usuario?.rol?.tipo}
+                          </TableCell>
+                          <TableCell
+                            colSpan={1}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {s?.fecha}
+                          </TableCell>
+                          <TableCell
+                            colSpan={1}
+                            component="th"
+                            scope="row"
+                            sx={{
+                              borderRightColor: "black",
+                              borderRight: 1,
+                              borderTop: 1,
+                              borderTopColor: "black",
+                              borderBottom: 1,
+                              borderBottomColor: "black",
+                            }}
+                          >
+                            {s?.tiposancion?.tipo}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              !cargando && idAlumno != 0 && (
+                <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+                  Este estudiante no fue sancionado.
+                </Typography>)
+            )
           )
-        )}
+        }
+
         {cargando && (
           <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
             <Loading size={80} />

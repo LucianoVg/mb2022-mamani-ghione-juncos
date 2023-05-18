@@ -301,9 +301,153 @@ export default function Asistencias() {
       {
         authUser?.rol?.tipo === "Tutor" &&
           authUser?.alumnoxcursoxdivision2[1] ? (
-          <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-            Seleccione un estudiante
-          </Typography>
+          !idAlumno ? (
+            <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+              Seleccione un estudiante
+            </Typography>
+          ) : (
+            mensual.length > 0 &&(
+              <div sx={{ marginTop: "200px" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    {!cargando1 && (
+                      <TableContainer>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell
+                                align="center"
+                                colSpan={12}
+                                sx={{
+                                  color: "black",
+                                  backgroundColor: "lightblue",
+                                }}
+                              >
+                                Total de Asistencias Mensuales
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>Presente</TableCell>
+                              <TableCell>Ausente</TableCell>
+                              <TableCell>Llegada Tarde</TableCell>
+                              <TableCell>Media Falta</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>{mensual[0]?.presente}</TableCell>
+                              <TableCell>{mensual[0]?.ausente} </TableCell>
+                              <TableCell>{mensual[0]?.llegadatarde}</TableCell>
+                              <TableCell>{mensual[0]?.mediafalta}</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    )}
+                    {cargando1 && (
+                      <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                        <Loading size={50} />
+                      </Container>
+                    )}
+                  </Grid>
+                  <Grid item xs>
+                    {!cargando2 && (
+                      <TableContainer>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell
+                                align="center"
+                                colSpan={6}
+                                sx={{
+                                  color: "black",
+                                  backgroundColor: "lightblue",
+                                }}
+                              >
+                                Total de Asistencias Anuales
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>Presente</TableCell>
+                              <TableCell>Ausente</TableCell>
+                              <TableCell>Llegada Tarde</TableCell>
+                              <TableCell>Media Falta</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>{anual[0]?.presente}</TableCell>
+                              <TableCell>{anual[0]?.ausente} </TableCell>
+                              <TableCell>{anual[0]?.llegadatarde}</TableCell>
+                              <TableCell>{anual[0]?.mediafalta}</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    )}
+                    {cargando2 && (
+                      <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                        <Loading size={50} />
+                      </Container>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    {!cargando3 && (
+                      <TableContainer component={Paper} style={{ marginTop: "40px" }}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell align="center" scope="col">
+                                Fecha
+                              </TableCell>
+                              <TableCell align="center" scope="col">
+                                Asistencia
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {listado &&
+                              listado.map((l, i) => (
+                                <TableRow key={i}>
+                                  <TableCell
+                                    align="center"
+                                    className="col-md-1 text-capitalize"
+                                  >
+                                    {l.creadoen}
+                                  </TableCell>
+                                  <TableCell align="center" className="col-md-1 ">
+                                    {l.presente
+                                      ? "Presente"
+                                      : l.ausente
+                                        ? "Ausente"
+                                        : l.ausentejustificado
+                                          ? "Ausente Justificado"
+                                          : l.llegadatarde
+                                            ? "Llegada Tarde"
+                                            : l.llegadatardejustificada
+                                              ? "Llegada Tarde Justificada"
+                                              : l.mediafalta
+                                                ? "Media Falta"
+                                                : l.mediafaltajustificada
+                                                  ? "Media Falta Justificada"
+                                                  : "No tiene asistencia cargada"}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    )}
+                    {cargando3 && (
+                      <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                        <Loading size={50} />
+                      </Container>
+                    )}
+                  </Grid>
+                </Grid>
+              </div>
+            )
+          )
         ) : (
           <div sx={{ marginTop: "200px" }}>
             <Grid container spacing={2}>
