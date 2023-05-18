@@ -78,9 +78,11 @@ export default function Notas() {
   const notasPorTrimestre = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${authUser?.rol?.tipo === "Estudiante"
-        ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/notas/notas_trimestres/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor" &&
+            !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -94,10 +96,13 @@ export default function Notas() {
   const promedioPorTrimestre = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/notas/promedios_trimestres/${authUser?.rol?.tipo === "Estudiante"
-        ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/notas/promedios_trimestres/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0].id
+          : authUser?.rol?.tipo === "Tutor" &&
+            !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }/${idMateria}`
@@ -116,22 +121,18 @@ export default function Notas() {
     if (res.status === 200) {
       console.log(res.data);
       setAlumnos(res.data);
-      // setIdAlumno(
-      //   authUser?.rol?.tipo === "Estudiante"
-      //     ? authUser?.alumnoxcursoxdivision1[0]?.id
-      //     : 1
-      // );
     }
   };
   const traerMaterias = async (idCurso = 1) => {
     let param =
       authUser?.rol?.tipo === "Estudiante"
         ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.idcurso}`
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-          ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
-          : idCurso
-            ? `?idCurso=${idCurso}`
-            : "";
+        : authUser?.rol?.tipo === "Tutor" &&
+          !authUser?.alumnoxcursoxdivision2[1]
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision2[0]?.cursoxdivision?.idcurso}`
+        : idCurso
+        ? `?idCurso=${idCurso}`
+        : "";
     console.log("Query Param:", param);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/materias${param} `
@@ -139,15 +140,6 @@ export default function Notas() {
     if (res.status === 200) {
       setMaterias(res.data);
       console.log("Materias: ", res.data);
-      // let tempMaterias = [];
-      // res.data.forEach((m) => {
-      //   if (!tempMaterias.find((mat) => mat.materia?.id === m.materia?.id))
-      //     tempMaterias.push(m);
-      // });
-      // setMaterias(tempMaterias);
-      // setIdMateria(
-      //   authUser?.rol?.tipo === "Estudiante" ? tempMaterias[0].id : 1
-      // );
     }
   };
   const materiaSinRepetir = materias.filter(
@@ -166,13 +158,9 @@ export default function Notas() {
       setCursos(res.data);
     }
   };
-  const cursosDivision = cursos?.sort(
-    (a, b) =>
-      a.id - b.id
-  );
+  const cursosDivision = cursos?.sort((a, b) => a.id - b.id);
   const cursosOrdenados = cursosDivision?.sort(
-    (a, b) =>
-      a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
+    (a, b) => a.cursoxdivision?.iddivision - b.cursoxdivision?.iddivision
   );
 
   const handleCursoXdivision = async (e) => {
@@ -200,14 +188,18 @@ export default function Notas() {
   const handleAlumno = async (e, newValue) => {
     if (newValue) {
       // console.log("Value", newValue?.id)
-      let alumno = authUser.alumnoxcursoxdivision2?.find((a) => newValue?.id === a.id);
+      let alumno = authUser.alumnoxcursoxdivision2?.find(
+        (a) => newValue?.id === a.id
+      );
       // console.log("alumnoo", alumno)
-      setIdAlumno(newValue?.id)
-      await traerMaterias(Number(alumno?.cursoxdivision?.curso?.id));
-      let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`
-      setNombreAlumno(nombre)
+      setIdAlumno(newValue?.id);
+      if (alumno) {
+        await traerMaterias(Number(alumno?.cursoxdivision?.curso?.id));
+        let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`;
+        setNombreAlumno(nombre);
+      }
     }
-  }
+  };
 
   const handleSearch = async () => {
     await notasPorTrimestre();
@@ -218,21 +210,15 @@ export default function Notas() {
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Notas{" "}
-        {
-          authUser?.rol?.tipo === "Estudiante"
-            ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-            : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-              ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-              : authUser?.rol?.tipo === "Tutor"
-                ? `de ${nombreAlumno}`
-                : ""
-        }
+        {authUser?.rol?.tipo === "Estudiante"
+          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+          ? ` de ${nombreAlumno}`
+          : ""}
       </Typography>
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box>
-          <Typography variant="h6"
-            sx={{ marginBottom: "10px" }}
-          >
+          <Typography variant="h6" sx={{ marginBottom: "10px" }}>
             Buscar estudiante:
           </Typography>
           <Stack
@@ -268,7 +254,6 @@ export default function Notas() {
                 labelId="demo-simple-select-label-1"
                 id="demo-simple-select"
                 value={idMateria}
-
                 label="Materia"
                 onChange={handleMateria}
                 MenuProps={{ disableScrollLock: true }}
@@ -322,7 +307,7 @@ export default function Notas() {
         </Box>
       ) : (
         <Box direction="row">
-          <FormControl sx={{ width: "250px", marginRight: "20px" }} >
+          <FormControl sx={{ width: "250px", marginRight: "20px" }}>
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -335,9 +320,7 @@ export default function Notas() {
               }
               options={authUser?.alumnoxcursoxdivision2}
               sx={{ width: "250px" }}
-              isOptionEqualToValue={(option, value) =>
-                option?.id === value?.id
-              }
+              isOptionEqualToValue={(option, value) => option?.id === value?.id}
               noOptionsText={"No existe un estudiante con ese nombre"}
               renderOption={(props, alumno) => (
                 <Box component="li" {...props} key={alumno?.id}>
@@ -350,13 +333,15 @@ export default function Notas() {
             />
           </FormControl>
 
-          <FormControl sx={{ width: "250px", marginRight: "20px" }} size="small">
+          <FormControl
+            sx={{ width: "250px", marginRight: "20px" }}
+            size="small"
+          >
             <InputLabel id="demo-simple-select-label">Materia</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={idMateria}
-
               label="Materia"
               onChange={handleMateria}
               MenuProps={{ disableScrollLock: true }}
