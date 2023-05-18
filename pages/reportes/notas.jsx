@@ -493,8 +493,8 @@ export default function Notas() {
             <Grid item xs>
               <h2>Promedio por trimestre</h2>
               <div sx={{ marginTop: "200px" }}>
-                <TableContainer component={Paper}>
-                  <Table aria-label="customized table">
+                <TableContainer >
+                  <Table >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -503,11 +503,11 @@ export default function Notas() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
+                            // borderRightColor: "black",
+                            // borderRight: 1,
 
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           {promedioTrimestre[0]?.materia}
@@ -519,11 +519,11 @@ export default function Notas() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
+                            // borderRightColor: "black",
+                            // borderRight: 1,
 
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Primer Trimestre
@@ -533,11 +533,11 @@ export default function Notas() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
+                            // borderRightColor: "black",
+                            // borderRight: 1,
 
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Segundo Trimestre
@@ -549,11 +549,11 @@ export default function Notas() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
+                            // borderRightColor: "black",
+                            // borderRight: 1,
 
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Tercer Trimestre
@@ -568,12 +568,12 @@ export default function Notas() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              // borderBottomColor: "black",
                             }}
                           >
                             {Number(promedioTrimestre[0]?.promedio).toFixed(2)}
@@ -583,12 +583,12 @@ export default function Notas() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              // borderBottomColor: "black",
                             }}
                           >
                             {Number(promedioTrimestre[1]?.promedio).toFixed(2)}
@@ -598,12 +598,12 @@ export default function Notas() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              // borderBottomColor: "black",
                             }}
                           >
                             {Number(promedioTrimestre[2]?.promedio).toFixed(2)}

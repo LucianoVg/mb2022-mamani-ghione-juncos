@@ -289,7 +289,7 @@ export default function Sancion() {
             ) : (
               !cargando && sanciones.length > 0 && idAlumno != 0 ? (
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="customized table">
+                  <Table sx={{ minWidth: 650 }} >
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -310,10 +310,10 @@ export default function Sancion() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderRightColor: "black",
+                            // borderRight: 1,
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Autoridad
@@ -323,10 +323,10 @@ export default function Sancion() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderRightColor: "black",
+                            // borderRight: 1,
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Cargo
@@ -337,10 +337,10 @@ export default function Sancion() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderRightColor: "black",
+                            // borderRight: 1,
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Fecha
@@ -350,10 +350,10 @@ export default function Sancion() {
                           sx={{
                             color: "black",
                             backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
-                            borderBottom: 1,
-                            borderBottomColor: "black",
+                            // borderRightColor: "black",
+                            // borderRight: 1,
+                            // borderBottom: 1,
+                            // borderBottomColor: "black",
                           }}
                         >
                           Tipo
@@ -370,11 +370,11 @@ export default function Sancion() {
                               scope="row"
                               sx={{
                                 borderRightColor: "black",
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderTopColor: "black",
-                                borderBottom: 1,
-                                borderBottomColor: "black",
+                                // borderRight: 1,
+                                // borderTop: 1,
+                                // borderTopColor: "black",
+                                // borderBottom: 1,
+                                // borderBottomColor: "black",
                               }}
                             >
                               {s?.motivo}
@@ -385,11 +385,11 @@ export default function Sancion() {
                               scope="row"
                               sx={{
                                 borderRightColor: "black",
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderTopColor: "black",
-                                borderBottom: 1,
-                                borderBottomColor: "black",
+                                // borderRight: 1,
+                                // borderTop: 1,
+                                // borderTopColor: "black",
+                                // borderBottom: 1,
+                                // borderBottomColor: "black",
                               }}
                             >
                               {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
@@ -400,11 +400,11 @@ export default function Sancion() {
                               scope="row"
                               sx={{
                                 borderRightColor: "black",
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderTopColor: "black",
-                                borderBottom: 1,
-                                borderBottomColor: "black",
+                                // borderRight: 1,
+                                // borderTop: 1,
+                                // borderTopColor: "black",
+                                // borderBottom: 1,
+                                // borderBottomColor: "black",
                               }}
                             >
                               {s?.usuario?.rol?.tipo}
@@ -414,12 +414,12 @@ export default function Sancion() {
                               component="th"
                               scope="row"
                               sx={{
-                                borderRightColor: "black",
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderTopColor: "black",
-                                borderBottom: 1,
-                                borderBottomColor: "black",
+                                // borderRightColor: "black",
+                                // borderRight: 1,
+                                // borderTop: 1,
+                                // borderTopColor: "black",
+                                // borderBottom: 1,
+                                // borderBottomColor: "black",
                               }}
                             >
                               {s?.fecha}
@@ -429,12 +429,12 @@ export default function Sancion() {
                               component="th"
                               scope="row"
                               sx={{
-                                borderRightColor: "black",
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderTopColor: "black",
-                                borderBottom: 1,
-                                borderBottomColor: "black",
+                                // borderRightColor: "black",
+                                // borderRight: 1,
+                                // borderTop: 1,
+                                // borderTopColor: "black",
+                                // borderBottom: 1,
+                                // borderBottomColor: "black",
                               }}
                             >
                               {s?.tiposancion?.tipo}
@@ -464,10 +464,10 @@ export default function Sancion() {
                         sx={{
                           color: "black",
                           backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-                          borderBottom: 1,
-                          borderBottomColor: "black",
+                          // borderRightColor: "black",
+                          // borderRight: 1,
+                          // borderBottom: 1,
+                          // borderBottomColor: "black",
                         }}
                       >
                         Motivo
@@ -477,10 +477,10 @@ export default function Sancion() {
                         sx={{
                           color: "black",
                           backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-                          borderBottom: 1,
-                          borderBottomColor: "black",
+                          // borderRightColor: "black",
+                          // borderRight: 1,
+                          // borderBottom: 1,
+                          // borderBottomColor: "black",
                         }}
                       >
                         Autoridad
@@ -490,10 +490,10 @@ export default function Sancion() {
                         sx={{
                           color: "black",
                           backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-                          borderBottom: 1,
-                          borderBottomColor: "black",
+                          // borderRightColor: "black",
+                          // borderRight: 1,
+                          // borderBottom: 1,
+                          // borderBottomColor: "black",
                         }}
                       >
                         Cargo
@@ -504,10 +504,10 @@ export default function Sancion() {
                         sx={{
                           color: "black",
                           backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-                          borderBottom: 1,
-                          borderBottomColor: "black",
+                          // borderRightColor: "black",
+                          // borderRight: 1,
+                          // borderBottom: 1,
+                          // borderBottomColor: "black",
                         }}
                       >
                         Fecha
@@ -517,10 +517,10 @@ export default function Sancion() {
                         sx={{
                           color: "black",
                           backgroundColor: "lightblue",
-                          borderRightColor: "black",
-                          borderRight: 1,
-                          borderBottom: 1,
-                          borderBottomColor: "black",
+                          // borderRightColor: "black",
+                          // borderRight: 1,
+                          // borderBottom: 1,
+                          // borderBottomColor: "black",
                         }}
                       >
                         Tipo
@@ -536,12 +536,12 @@ export default function Sancion() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              borderBottomColor: "grey",
                             }}
                           >
                             {s?.motivo}
@@ -551,12 +551,12 @@ export default function Sancion() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              borderBottomColor: "grey",
                             }}
                           >
                             {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
@@ -566,12 +566,12 @@ export default function Sancion() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              borderBottomColor: "grey",
                             }}
                           >
                             {s?.usuario?.rol?.tipo}
@@ -581,12 +581,12 @@ export default function Sancion() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              borderBottomColor: "grey",
                             }}
                           >
                             {s?.fecha}
@@ -596,12 +596,12 @@ export default function Sancion() {
                             component="th"
                             scope="row"
                             sx={{
-                              borderRightColor: "black",
-                              borderRight: 1,
-                              borderTop: 1,
-                              borderTopColor: "black",
-                              borderBottom: 1,
-                              borderBottomColor: "black",
+                              // borderRightColor: "black",
+                              // borderRight: 1,
+                              // borderTop: 1,
+                              // borderTopColor: "black",
+                              // borderBottom: 1,
+                              borderBottomColor: "grey",
                             }}
                           >
                             {s?.tiposancion?.tipo}
