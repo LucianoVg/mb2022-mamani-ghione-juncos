@@ -42,12 +42,14 @@ export default function Asistencias() {
   const [anual, setAnual] = useState([]);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const { loading, authUser } = useAuth();
-  const [idAlumno, setIdAlumno] = useState(1);
+  const [idAlumno, setIdAlumno] = useState();
   const [mes, setMes] = useState(3);
   const router = useRouter();
   const [cargando1, setCargando1] = useState(false);
   const [cargando2, setCargando2] = useState(false);
   const [cargando3, setCargando3] = useState(false);
+  const [nombreAlumno, setNombreAlumno] = useState();
+
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -69,7 +71,7 @@ export default function Asistencias() {
     let param =
       authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno;
     setCargando2(true);
@@ -86,7 +88,7 @@ export default function Asistencias() {
     let param =
       authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno;
     setCargando1(true);
@@ -132,6 +134,9 @@ export default function Asistencias() {
   const handleAlumno = (e, newValue) => {
     if (newValue) {
       setIdAlumno(newValue.id);
+      let alumno = authUser.alumnoxcursoxdivision2?.find((a) => newValue?.id === a.id);
+      let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`
+      setNombreAlumno(nombre)
     }
   };
 
@@ -148,11 +153,15 @@ export default function Asistencias() {
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Asistencias{" "}
-        {authUser?.rol?.tipo === "Estudiante"
-          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor"
-            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-            : ""}
+        {
+          authUser?.rol?.tipo === "Estudiante"
+            ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+            : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+              ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+              : authUser?.rol?.tipo === "Tutor"
+                ? `de ${nombreAlumno}`
+                : ""
+        }
       </Typography>
       <Box
         sx={{
@@ -163,15 +172,56 @@ export default function Asistencias() {
           my: 2,
         }}
       >
+        {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
+          <>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="h6">
+                  Buscar estudiante:
+                </Typography>
+              </Grid>
+            </Grid>
+            <Box>
+              <FormControl sx={{ width: "250px", marginRight: "20px" }} >
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idAlumno"
+                  size="small"
+                  onChange={handleAlumno}
+                  getOptionLabel={(alumno) =>
+                    `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
+                  }
+                  options={authUser?.alumnoxcursoxdivision2}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.id === value?.id
+                  }
+                  noOptionsText={"No existe un estudiante con ese nombre"}
+                  renderOption={(props, alumno) => (
+                    <Box component="li" {...props} key={alumno?.id}>
+                      {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Estudiante" />
+                  )}
+                />
+              </FormControl>
+            </Box>
+          </>
+
+        )}
         {(authUser?.rol?.tipo != "Estudiante" &&
           authUser?.rol?.tipo != "Tutor") && (
             <>
               <Grid container>
-               <Grid item xs={12}>
-               <Typography variant="h6">
-                  Buscar estudiante:
-                </Typography>
-               </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="h6">
+                    Buscar estudiante:
+                  </Typography>
+                </Grid>
               </Grid>
               <Box>
                 <FormControl style={{ marginRight: "20px" }}>
