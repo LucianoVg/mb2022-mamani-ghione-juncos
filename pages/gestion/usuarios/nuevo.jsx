@@ -1,4 +1,4 @@
-import { Alert, Box, Button, FormControl, Grid, Container, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography, useTheme } from "@mui/material";
+import { Alert, Box, Button, FormControl, Stack, Grid, Container, Autocomplete, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -59,6 +59,9 @@ export default function NuevoUsuario() {
     const [guardando, setGuardando] = useState(false)
     const { loading, authUser } = useAuth()
     const [buscando, setBuscando] = useState(false)
+    const [tutores, setTutores] = useState()
+
+
 
     useEffect(() => {
         if (!loading && !authUser) {
@@ -69,6 +72,7 @@ export default function NuevoUsuario() {
             if (!tienePermisos()) {
                 router.push('/error')
             } else {
+                traerTutores()
                 traerRoles()
                 traerCursos()
                 traerMaterias()
@@ -107,7 +111,12 @@ export default function NuevoUsuario() {
             setMateriasXcurso(res.data)
         }
     }
-
+    const traerTutores = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/tutores`)
+        if (res.data) {
+            setTutores(res.data)
+        }
+    }
     const handleFecha = (value) => {
         setFecha(new Date(value))
     }
@@ -227,6 +236,21 @@ export default function NuevoUsuario() {
             })
         }
     }
+
+
+    const [idTutor, setIdTutor] = useState()
+
+    const handleIdTutor = (e, newValue) => {
+        setIdTutor(Number(newValue?.id));
+        console.log("TUTOOOOR", idTutor);
+
+
+    }
+
+    const [existeTutor, setExisteTutor] = useState({
+        status: false,
+    });
+
 
     console.log(idMaterias)
 
@@ -608,136 +632,207 @@ export default function NuevoUsuario() {
                 </Box >
                 {
                     esAlumno && (
-                        <>
+                        existeTutor.status === true ? (
                             <Box sx={{ marginLeft: "40px" }}>
                                 <h2>Datos de Tutor</h2>
-                                <Box component={'form'} onSubmit={registrarTutor}>
-
-                                    <Box direction='row'>
-                                        <TextField
+                                <Button
+                                    variant="contained"
+                                    color="info"
+                                    size="small"
+                                    style={{ marginRight: "20px", marginBottom: "10px" }}
+                                    onClick={() => {
+                                        setExisteTutor({ status: false });
+                                    }}
+                                >
+                                    No existe Tutor
+                                </Button>
+                                <Stack
+                                    direction="column"
+                               
+                                >
+                                  <h3>Seleccione al tutor</h3>
+                                    <FormControl style={{ marginRight: "20px" }}>
+                                        <Autocomplete
+                                            disablePortal
+                                            id="combo-box-demo"
+                                            // value={value}
+                                            name="idAlumno"
                                             size="small"
-                                            margin="normal"
-                                            name="nombre"
-                                            onChange={handleTutor}
-                                            label="Nombre"
-                                            value={tutor.nombre}
-                                            required
-                                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                        />
-
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="apellido"
-                                            onChange={handleTutor}
-                                            label="Apellido"
-                                            value={tutor.apellido}
-                                            required />
-                                    </Box>
-
-                                    <Box direction='row'>
-                                        <TextField
-                                            size="small"
-                                            sx={{ width: '280px', marginRight: '20px', marginBottom: '20px' }}
-                                            margin="normal"
-                                            name="correo"
-                                            onChange={handleTutor}
-                                            label="Mail"
-                                            type={'email'}
-                                            value={tutor.correo}
-                                            required
-
-                                        />
-
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="dni"
-                                            onChange={handleTutor}
-                                            label="Legajo"
-                                            value={tutor.dni}
-                                            required />
-                                    </Box>
-                                    <Box direction='row'>
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="localidad"
-                                            onChange={handleTutor}
-                                            label="Localidad"
-                                            value={tutor.localidad}
-                                            required
-                                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                        />
-
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="telefono"
-                                            onChange={handleTutor}
-                                            label="Telefono"
-                                            value={tutor.telefono}
-                                            type={'tel'}
-                                            required
-                                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                        />
-
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="direccion"
-                                            onChange={handleTutor}
-                                            label="Direccion"
-                                            value={tutor.direccion}
-                                            required
-                                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                        />
-                                    </Box>
-                                    <Box direction='row'>
-                                        <FormControl size="small">
-                                            <InputLabel id="select-label">Sexo</InputLabel>
-                                            <Select labelId="select-label"
-                                                name="sexo"
-                                                label="Sexo"
-                                                required
-                                                onChange={handleTutor}
-                                                value={tutor.sexo}
-                                                sx={{ marginRight: '20px', marginBottom: '10px' }}
-                                            >
-
-                                                <MenuItem value="M">Masculino</MenuItem>
-                                                <MenuItem value="F">Femenino</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Box>
-                                    <Box>
-                                        <TextField
-                                            size="small"
-                                            margin="normal"
-                                            name="contrasenia"
-                                            onChange={handleTutor}
-                                            label="Contraseña Temporal"
-                                            value={tutor.contrasenia}
-                                            type={'password'}
-                                            required
-                                            sx={{ marginRight: '20px', marginBottom: '20px' }}
-                                        />
-
-                                    </Box>
-                                    <Box>
-                                        <Button disabled={guardando || buscando} sx={{ mt: 2 }} variant="contained" color="primary" type="submit">
-                                            {
-                                                guardando || buscando && <Loading size={30} />
+                                            onChange={handleIdTutor}
+                                            getOptionLabel={(tutor) =>
+                                                `${tutor?.nombre} ${tutor?.apellido}`
                                             }
-                                            {
-                                                !guardando && !buscando && <span>Registrar Tutor</span>
+                                            options={tutores}
+                                            sx={{ width: "250px" }}
+                                            isOptionEqualToValue={(option, value) =>
+                                                option?.id === value?.id
                                             }
+                                            noOptionsText={"No existe un estudiante con ese nombre"}
+                                            renderOption={(props, tutor) => (
+                                                <Box component="li" {...props} key={tutor?.id}>
+                                                    {tutor?.nombre} {tutor?.apellido}
+                                                </Box>
+                                            )}
+                                            renderInput={(params) => (
+                                                <TextField {...params} label="Tutores" />
+                                            )}
+                                        />
+                                    </FormControl>
+                                    <Box>
+                                            <Button disabled={guardando || buscando} sx={{ mt: 2 }} variant="contained" color="primary" type="submit">
+                                                {
+                                                    guardando || buscando && <Loading size={30} />
+                                                }
+                                                {
+                                                    !guardando && !buscando && <span>Registrar Tutor</span>
+                                                }
+                                            </Button>
+                                        </Box>
+                                </Stack>
+                            </Box>
+                        ) : (
+                            <>
+                                <Box sx={{ marginLeft: "40px" }}>
+                                    <h2>Datos de Tutor</h2>
+                                    <Box component={'form'} onSubmit={registrarTutor}>
+                                        <Button
+                                            variant="contained"
+                                            color="info"
+                                            size="small"
+                                            style={{ marginRight: "20px", marginBottom: "20px" }}
+                                            onClick={() => {
+                                                setExisteTutor({ status: true });
+                                            }}
+                                        >
+                                            Existe Tutor
                                         </Button>
+
+                                        <Box direction='row'>
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="nombre"
+                                                onChange={handleTutor}
+                                                label="Nombre"
+                                                value={tutor.nombre}
+                                                required
+                                                sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                            />
+
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="apellido"
+                                                onChange={handleTutor}
+                                                label="Apellido"
+                                                value={tutor.apellido}
+                                                required />
+                                        </Box>
+
+                                        <Box direction='row'>
+                                            <TextField
+                                                size="small"
+                                                sx={{ width: '280px', marginRight: '20px', marginBottom: '20px' }}
+                                                margin="normal"
+                                                name="correo"
+                                                onChange={handleTutor}
+                                                label="Mail"
+                                                type={'email'}
+                                                value={tutor.correo}
+                                                required
+
+                                            />
+
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="dni"
+                                                onChange={handleTutor}
+                                                label="Legajo"
+                                                value={tutor.dni}
+                                                required />
+                                        </Box>
+                                        <Box direction='row'>
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="localidad"
+                                                onChange={handleTutor}
+                                                label="Localidad"
+                                                value={tutor.localidad}
+                                                required
+                                                sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                            />
+
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="telefono"
+                                                onChange={handleTutor}
+                                                label="Telefono"
+                                                value={tutor.telefono}
+                                                type={'tel'}
+                                                required
+                                                sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                            />
+
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="direccion"
+                                                onChange={handleTutor}
+                                                label="Direccion"
+                                                value={tutor.direccion}
+                                                required
+                                                sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                            />
+                                        </Box>
+                                        <Box direction='row'>
+                                            <FormControl size="small">
+                                                <InputLabel id="select-label">Sexo</InputLabel>
+                                                <Select labelId="select-label"
+                                                    name="sexo"
+                                                    label="Sexo"
+                                                    required
+                                                    onChange={handleTutor}
+                                                    value={tutor.sexo}
+                                                    sx={{ marginRight: '20px', marginBottom: '10px' }}
+                                                >
+
+                                                    <MenuItem value="M">Masculino</MenuItem>
+                                                    <MenuItem value="F">Femenino</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                        <Box>
+                                            <TextField
+                                                size="small"
+                                                margin="normal"
+                                                name="contrasenia"
+                                                onChange={handleTutor}
+                                                label="Contraseña Temporal"
+                                                value={tutor.contrasenia}
+                                                type={'password'}
+                                                required
+                                                sx={{ marginRight: '20px', marginBottom: '20px' }}
+                                            />
+
+                                        </Box>
+                                        <Box>
+                                            <Button disabled={guardando || buscando} sx={{ mt: 2 }} variant="contained" color="primary" type="submit">
+                                                {
+                                                    guardando || buscando && <Loading size={30} />
+                                                }
+                                                {
+                                                    !guardando && !buscando && <span>Registrar Tutor</span>
+                                                }
+                                            </Button>
+                                        </Box>
                                     </Box>
                                 </Box>
-                            </Box>
 
-                        </>
+                            </>
+                        )
                     )
                 }
                 {
@@ -747,7 +842,7 @@ export default function NuevoUsuario() {
                         </Alert>
                     )
                 }
-            </Container>
+            </Container >
         </Layout >
     )
 }

@@ -84,12 +84,16 @@ export default function Sancion() {
 
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0].id
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0]?.id
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+          ? authUser?.alumnoxcursoxdivision2[0]?.id
           : idAlumno
       }`
     );
+    if( authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]){
+      setNombreAlumno(`${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre} ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido}`)
+    }
     if (res.status === 200) {
       console.log(res.data);
       setSanciones(res.data);
@@ -151,8 +155,8 @@ export default function Sancion() {
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
           : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-          ? ` de ${nombreAlumno}`
-          : ""}
+            ? ` de ${nombreAlumno}`
+            : ""}
       </Typography>
 
       {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
@@ -206,17 +210,17 @@ export default function Sancion() {
       )}
 
       {authUser?.rol?.tipo !== "Estudiante" &&
-      authUser?.rol?.tipo !== "Tutor" ? (
-        <Box>
-          <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-            Buscar estudiante:
-          </Typography>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 2, sm: 2, md: 5 }}
-            sx={{ marginBottom: "30px" }}
-          >
-            {/* <FormControl size={"small"}>
+        authUser?.rol?.tipo !== "Tutor" && (
+          <Box>
+            <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+              Buscar estudiante:
+            </Typography>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 2, md: 5 }}
+              sx={{ marginBottom: "30px" }}
+            >
+              {/* <FormControl size={"small"}>
                 <InputLabel htmlFor="selectCurso">Curso</InputLabel>
                 <Select
                   sx={{ width: 120 }}
@@ -233,54 +237,6 @@ export default function Sancion() {
                   ))}
                 </Select>
               </FormControl> */}
-            <FormControl>
-              <Autocomplete
-                size="small"
-                disablePortal
-                id="combo-box-demo"
-                // value={value}
-                name="idAlumno"
-                onChange={handleAlumno}
-                getOptionLabel={(alumnos) =>
-                  `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
-                }
-                options={alumnos}
-                sx={{ width: "250px" }}
-                isOptionEqualToValue={(option, value) =>
-                  option?.apellido === value?.apellido
-                }
-                noOptionsText={"No existe un estudiante con ese nombre"}
-                renderOption={(props, alumnos) => (
-                  <Box component="li" {...props} key={alumnos?.id}>
-                    {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Estudiante" />
-                )}
-              />
-            </FormControl>
-            <Button
-              onClick={listarSanciones}
-              variant="outlined"
-              startIcon={<Search />}
-              color="info"
-            >
-              Buscar
-            </Button>
-          </Stack>
-        </Box>
-      ) : (
-        authUser?.rol?.tipo === "Tutor" && (
-          <Box>
-            <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-              Buscar estudiante:
-            </Typography>
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 2, sm: 2, md: 5 }}
-              sx={{ marginBottom: "30px" }}
-            >
               <FormControl>
                 <Autocomplete
                   size="small"
@@ -289,18 +245,18 @@ export default function Sancion() {
                   // value={value}
                   name="idAlumno"
                   onChange={handleAlumno}
-                  getOptionLabel={(alumno) =>
-                    `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                  getOptionLabel={(alumnos) =>
+                    `${alumnos?.usuario?.apellido} ${alumnos?.usuario?.nombre}`
                   }
-                  options={authUser?.alumnoxcursoxdivision2}
+                  options={alumnos}
                   sx={{ width: "250px" }}
                   isOptionEqualToValue={(option, value) =>
-                    option?.id === value?.id
+                    option?.apellido === value?.apellido
                   }
                   noOptionsText={"No existe un estudiante con ese nombre"}
-                  renderOption={(props, alumno) => (
-                    <Box component="li" {...props} key={alumno?.id}>
-                      {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                  renderOption={(props, alumnos) => (
+                    <Box component="li" {...props} key={alumnos?.id}>
+                      {alumnos?.usuario?.apellido} {alumnos?.usuario?.nombre}
                     </Box>
                   )}
                   renderInput={(params) => (
@@ -318,8 +274,8 @@ export default function Sancion() {
               </Button>
             </Stack>
           </Box>
-        )
-      )}
+        )}
+
 
       <div sx={{ marginTop: "200px" }}>
         {!cargando && sanciones.length > 0 && idAlumno != 0 ? (

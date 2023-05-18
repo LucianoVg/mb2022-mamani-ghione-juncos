@@ -76,7 +76,12 @@ export default function Asistencias() {
   const conteoAsistenciasAnuales = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${idAlumno}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_anual/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno
+      }`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -87,7 +92,12 @@ export default function Asistencias() {
   const conteoAsistenciasMensuales = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${idAlumno}&mes=${mes}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/conteo_mensual?idAlumno=${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno
+      }&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -97,7 +107,12 @@ export default function Asistencias() {
   };
   const listadoAsistencias = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/listado_mensual?idAlumno=${idAlumno}&mes=${mes}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/asistencias/listado_mensual?idAlumno=${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+          ? authUser?.alumnoxcursoxdivision2[0].id
+          : idAlumno
+      }&mes=${mes}`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -153,9 +168,11 @@ export default function Asistencias() {
         Reporte Asistencias{" "}
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-          ? `de ${nombreAlumno}`
-          : ""}
+          : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+            : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+              ? ` de ${nombreAlumno}`
+              : ""}
       </Typography>
       <Box
         sx={{
@@ -282,7 +299,8 @@ export default function Asistencias() {
 
 
       {
-        !idAlumno ? (
+        authUser?.rol?.tipo === "Tutor" &&
+          authUser?.alumnoxcursoxdivision2[1] ? (
           <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
             Seleccione un estudiante
           </Typography>
@@ -303,24 +321,7 @@ export default function Asistencias() {
                               backgroundColor: "lightblue",
                             }}
                           >
-                            {l.creadoen}
-                          </TableCell>
-                          <TableCell align="center" className="col-md-1 ">
-                            {l.presente
-                              ? "Presente"
-                              : l.ausente
-                              ? "Ausente"
-                              : l.ausentejustificado
-                              ? "Ausente Justificado"
-                              : l.llegadatarde
-                              ? "Llegada Tarde"
-                              : l.llegadatardejustificada
-                              ? "Llegada Tarde Justificada"
-                              : l.mediafalta
-                              ? "Media Falta"
-                              : l.mediafaltajustificada
-                              ? "Media Falta Justificada"
-                              : "No tiene asistencia cargada"}
+                            Total de Asistencias Mensuales
                           </TableCell>
                         </TableRow>
                       </TableHead>
