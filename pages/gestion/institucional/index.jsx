@@ -30,10 +30,10 @@ export default function Institucional() {
 
   return (
     <Layout>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+      {/* <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         {" "}
         Ficha Institucional
-      </Typography>
+      </Typography> */}
       {!cargando && !fichaInstitucional && (
         <div style={{ marginBottom: "20px" }}>
           <Typography sx={{ mb: 3 }} component={"h3"} variant="h4">
@@ -57,7 +57,6 @@ export default function Institucional() {
         )}
       {!cargando && fichaInstitucional && (
         <div>
-          <Carrusel imagenes={fichaInstitucional?.portadaficha} />
           {!cargando &&
             authUser &&
             fichaInstitucional &&
@@ -71,6 +70,7 @@ export default function Institucional() {
                 </Link>
               </div>
             )}
+          <Carrusel imagenes={fichaInstitucional?.portadaficha} />
           <Grid container spacing={2} sx={{ minWidth: "300px" }}>
             <Grid item xs={12}>
               <Typography

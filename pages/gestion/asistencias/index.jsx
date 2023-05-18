@@ -353,7 +353,7 @@ export default function Asistencias() {
                 setInEditMode({ status: true });
               }}
             >
-              Ir a búsqueda por curso
+              Buscar por curso
             </Button>
             <Box>
               <Grid container spacing={2}>
@@ -416,7 +416,7 @@ export default function Asistencias() {
                     <Button
                       variant="outlined"
                       onClick={buscarAsistencias}
-                      startIcon={<Search />}
+                      endIcon={<Search />}
                       color="info"
                     >
                       Buscar
@@ -437,7 +437,7 @@ export default function Asistencias() {
                 setInEditMode({ status: false });
               }}
             >
-              Ir a búsqueda por Estudiante
+              Buscar por estudiante
             </Button>
             <Box>
               <Grid container spacing={2}>
@@ -725,14 +725,14 @@ export default function Asistencias() {
                           <Stack spacing={1} direction="row">
                             <Button
                               variant="contained"
-                              color="primary"
+                              color="success"
                               onClick={() => onSave(a?.id)}
                             >
                               Cargar
                             </Button>
                             <Button
                               variant="contained"
-                              color="secondary"
+                              color="error"
                               onClick={() => onCancel()}
                             >
                               Cancelar

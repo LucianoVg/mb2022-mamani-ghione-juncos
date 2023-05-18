@@ -397,15 +397,15 @@ const MaterialEstudio = () => {
 
         <Button
           sx={{ mx: 2 }}
-          variant="contained"
+          variant="outlined"
           onClick={async () => await descargarMaterial(tabIndex + 1, idMateria)}
-          startIcon={<Search />}
+          endIcon={<Search />}
         >
           Buscar
         </Button>
         <Button
-          // sx={{ mx: 2, my: 1 }}
-          variant="outlined"
+            color="info"
+            variant="text"
           onClick={async () => await quitarFiltros()}
         >
           Quitar Filtros

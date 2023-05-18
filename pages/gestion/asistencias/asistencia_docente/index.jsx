@@ -396,7 +396,7 @@ export default function Asistencias() {
               <Button
                 variant="outlined"
                 onClick={buscarAsistencias}
-                startIcon={<Search />}
+                endIcon={<Search />}
                 color="info"
               >
                 Buscar

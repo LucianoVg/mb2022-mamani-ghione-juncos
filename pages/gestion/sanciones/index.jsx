@@ -235,7 +235,7 @@ const Sanciones = () => {
       < Box direction="row">
         <FormControl sx={{ marginRight: "20px", marginBottom: "10px" }}>
           <Button
-            startIcon={<Search />}
+            endIcon={<Search />}
             variant="outlined"
             onClick={buscarSanciones}
           >

@@ -10,6 +10,7 @@ import {
   Divider,
   Grid,
   Typography,
+  Stack,
 } from "@mui/material";
 import Loading from "../../../components/loading";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -70,22 +71,24 @@ const MasInfo = () => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h4" sx={{ marginBottom: 2 }}>
+              <Typography variant="h4" sx={{ marginBottom: "50px" }}>
                 Detalle de Asistencia
               </Typography>
             </Grid>
           </Grid>
-          <div className="hstack gap-2 ">
-            <Box component="div" sx={{ marginBottom: 2 }}>
+
+          <Stack direction="row" sx={{ marginBottom: "40px" }}>
+
+            <Box component="div" sx={{ marginRight: "140px" }}>
               <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                Alumno:{" "}
+                Estudiante:{" "}
               </Typography>
               <Typography variant="body1" sx={{ fontSize: 18 }}>
                 {asistencia?.alumnoxcursoxdivision?.usuario?.apellido}{" "}
                 {asistencia?.alumnoxcursoxdivision?.usuario?.nombre}
               </Typography>
             </Box>
-            <Box component="div" sx={{ marginBottom: 2 }}>
+            <Box component="div" sx={{ marginRight: "200px" }}>
               <Typography variant="h5" sx={{ fontWeight: 500 }}>
                 Curso:{" "}
               </Typography>
@@ -101,7 +104,7 @@ const MasInfo = () => {
               </Typography>
             </Box>
             {asistencia?.motivo != null ? (
-              <Box component={"div"} sx={{ marginBottom: 2 }}>
+              <Box component={"div"} >
                 <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
                   Editado por:{" "}
                 </Typography>
@@ -119,10 +122,12 @@ const MasInfo = () => {
                 </Typography>
               </Box>
             )}
-          </div>
+          </Stack>
+
           <Divider sx={{ width: "100%", marginBottom: 2 }} />
-          <div className="hstack gap-3">
-            <Box component={"div"} sx={{ marginBottom: 2 }}>
+
+          <Stack direction="row" sx={{ marginBottom: "40px" }}>
+            <Box sx={{ marginRight: "140px" }}>
               <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
                 Asistencia Actual
               </Typography>
@@ -150,7 +155,7 @@ const MasInfo = () => {
                 <h4>-</h4>
               )}
             </Box>
-            <Box component={"div"} sx={{ marginBottom: 2 }}>
+            <Box sx={{ marginRight: "140px" }}>
               <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
                 Creado el:{" "}
               </Typography>
@@ -158,29 +163,31 @@ const MasInfo = () => {
                 {asistencia?.creadoen}
               </Typography>
             </Box>
-
-            {asistencia?.actualizadoen ? (
-              <Box component="div" sx={{ marginBottom: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  Actualizado el:
-                </Typography>
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  {asistencia?.actualizadoen}
-                </Typography>
-              </Box>
-            ) : (
-              <Box component="div" sx={{ marginBottom: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  Actualizado en:
-                </Typography>
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  --/--/----
-                </Typography>
-              </Box>
-            )}
-          </div>
+            <Box>
+              {asistencia?.actualizadoen ? (
+                <Box component="div" sx={{ marginBottom: 2 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                    Actualizado el:
+                  </Typography>
+                  <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                    {asistencia?.actualizadoen}
+                  </Typography>
+                </Box>
+              ) : (
+                <Box component="div" sx={{ marginBottom: 2 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                    Actualizado en:
+                  </Typography>
+                  <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                    --/--/----
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          </Stack>
           <Divider sx={{ width: "100%", marginBottom: 2 }} />
-          <Box component={"div"} sx={{ margin: "auto" }}>
+
+          <Box>
             <Typography variant="h5" sx={{ fontWeight: 500 }}>
               Motivo
             </Typography>
