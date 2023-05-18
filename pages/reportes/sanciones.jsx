@@ -40,11 +40,13 @@ export default function Sancion() {
   const [sanciones, setSanciones] = useState([]);
   const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const [cargando, setCargando] = useState(false);
-  const [idAlumno, setIdAlumno] = useState(1);
+  const [idAlumno, setIdAlumno] = useState(0);
   const [idCurso, setIdCurso] = useState("");
   const { loading, authUser } = useAuth();
   const router = useRouter();
   const [cursos, setCursos] = useState([]);
+  const [nombreAlumno, setNombreAlumno] = useState();
+
 
   useEffect(() => {
     if (!loading && !authUser) {
@@ -76,11 +78,12 @@ export default function Sancion() {
   };
 
   const listarSanciones = async () => {
+
     setCargando(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${authUser?.rol?.tipo === "Estudiante"
         ? authUser?.alumnoxcursoxdivision1[0].id
-        : authUser?.rol?.tipo === "Tutor"
+        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0].id
           : idAlumno
       }`
@@ -120,11 +123,15 @@ export default function Sancion() {
       setAlumnos(res.data);
     }
   };
-
   const handleAlumno = (e, newValue) => {
     if (newValue) {
       setIdAlumno(newValue.id);
+      let alumno = authUser.alumnoxcursoxdivision2?.find((a) => newValue?.id === a.id);
+      let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`
+      setNombreAlumno(nombre)
+
     }
+
   };
 
   const handleCurso = (e) => {
@@ -136,12 +143,65 @@ export default function Sancion() {
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Sanciones{" "}
-        {authUser?.rol?.tipo === "Estudiante"
-          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor"
-            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-            : ""}
+        {
+          authUser?.rol?.tipo === "Estudiante"
+            ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+            : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+              ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+              : nombreAlumno
+        }
       </Typography>
+
+      {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
+        <>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+                Buscar estudiante:
+              </Typography>
+            </Grid>
+          </Grid>
+          <Box>
+            <FormControl sx={{ width: "250px", marginBottom: "20px", marginRight: "10px" }} >
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                // value={value}
+                name="idAlumno"
+                size="small"
+                onChange={handleAlumno}
+                getOptionLabel={(alumno) =>
+                  `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
+                }
+                options={authUser?.alumnoxcursoxdivision2}
+                sx={{ width: "250px" }}
+                isOptionEqualToValue={(option, value) =>
+                  option?.id === value?.id
+                }
+                noOptionsText={"No existe un estudiante con ese nombre"}
+                renderOption={(props, alumno) => (
+                  <Box component="li" {...props} key={alumno?.id}>
+                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Estudiante" />
+                )}
+              />
+            </FormControl>
+            <Button
+              onClick={listarSanciones}
+              variant="outlined"
+              startIcon={<Search />}
+              color="info"
+            >
+              Buscar
+            </Button>
+          </Box>
+        </>
+
+      )}
+
       {authUser?.rol?.tipo !== "Estudiante" &&
         authUser?.rol?.tipo !== "Tutor" && (
           <Box>
@@ -212,7 +272,7 @@ export default function Sancion() {
         )}
 
       <div sx={{ marginTop: "200px" }}>
-        {!cargando && (
+        {!cargando && sanciones.length > 0 && idAlumno != 0 ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="customized table">
               <TableHead>
@@ -369,6 +429,17 @@ export default function Sancion() {
               </TableBody>
             </Table>
           </TableContainer>
+        ) : (
+          !cargando && idAlumno === 0 ? (
+            <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+              Seleccione un estudiante
+            </Typography>
+          ) : (
+            !cargando && (<Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+              Este estudiante no fue sancionado.
+            </Typography>)
+
+          )
         )}
         {cargando && (
           <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
@@ -376,6 +447,6 @@ export default function Sancion() {
           </Container>
         )}
       </div>
-    </Layout>
+    </Layout >
   );
 }
