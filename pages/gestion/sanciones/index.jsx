@@ -4,6 +4,7 @@ import {
   Container,
   Box,
   TextField,
+  Grid,
   Autocomplete,
   InputLabel,
   MenuItem,
@@ -131,66 +132,107 @@ const Sanciones = () => {
       traerSanciones();
     }
   };
-
+  const [inEditMode, setInEditMode] = useState({
+    status: false,
+  });
   return (
     <Layout>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Sanciones
       </Typography>
 
-      <Box direction="row" sx={{ marginBottom: "10px" }}>
-        <FormControl style={{ marginRight: "20px" }}
-        size="small"
-        >
-          <Autocomplete
-            size="small"
-            disablePortal
-            id="combo-box-demo"
-            // value={value}
-            name="idAlumno"
-            onChange={handleAlumno}
-            getOptionLabel={(alumno) =>
-              `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
-            }
-            options={alumnos}
-            sx={{ width: "250px" }}
-            isOptionEqualToValue={(option, value) =>
-              option?.usuario?.apellido === value?.usuario?.apellido
-            }
-            noOptionsText={"No existe un estudiante con ese nombre"}
-            renderOption={(props, alumno) => (
-              <Box component="li" {...props} key={alumno?.id}>
-                {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField {...params} label="Estudiante" />
-            )}
-          />
-        </FormControl>
-        <FormControl   size="small">
-          <InputLabel htmlFor="inputCurso">Curso</InputLabel>
-          <Select
-            sx={{ width: "200px", marginRight: "20px" }}
-            id="inputCurso"
-            name={"idCurso"}
-            defaultValue={0}
-            onChange={handleCurso}
-            label="Curso"
-            MenuProps={{ disableScrollLock: true }}
-          >
-            <MenuItem value={0}>Seleccione un curso</MenuItem>
-            {cursos &&
-              cursos?.map((c, i) => (
-                <MenuItem key={i} value={c.id}>
-                  {c.curso?.nombre} {c.division.division}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-      </Box>
+      {inEditMode.status === true ? (
+        <Grid container sx={{ marginBottom: "20px" }}>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="info"
+              size="small"
+              style={{ marginRight: "20px", marginBottom: "20px" }}
+              onClick={() => {
+                setInEditMode({ status: false });
+              }}
+            >
+              Buscar por estudiante
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl size="small">
+              <InputLabel htmlFor="inputCurso">Curso</InputLabel>
+              <Select
+                sx={{ width: "200px", marginRight: "20px" }}
+                id="inputCurso"
+                name={"idCurso"}
+                defaultValue={0}
+                onChange={handleCurso}
+                label="Curso"
+                MenuProps={{ disableScrollLock: true }}
+              >
+                <MenuItem value={0}>Seleccione un curso</MenuItem>
+                {cursos &&
+                  cursos?.map((c, i) => (
+                    <MenuItem key={i} value={c.id}>
+                      {c.curso?.nombre} {c.division.division}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
-      <Box direction="row">
+        </Grid>
+      ) : (
+        <Box direction="column" sx={{ marginBottom: "20px" }}>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="info"
+              size="small"
+              style={{ marginRight: "20px", marginBottom: "20px" }}
+              onClick={() => {
+                setInEditMode({ status: true });
+              }}
+            >
+              Buscar por curso
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl style={{ marginRight: "20px" }}
+              size="small"
+            >
+              <Autocomplete
+                size="small"
+                disablePortal
+                id="combo-box-demo"
+                // value={value}
+                name="idAlumno"
+                onChange={handleAlumno}
+                getOptionLabel={(alumno) =>
+                  `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                }
+                options={alumnos}
+                sx={{ width: "250px" }}
+                isOptionEqualToValue={(option, value) =>
+                  option?.usuario?.apellido === value?.usuario?.apellido
+                }
+                noOptionsText={"No existe un estudiante con ese nombre"}
+                renderOption={(props, alumno) => (
+                  <Box component="li" {...props} key={alumno?.id}>
+                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Estudiante" />
+                )}
+              />
+            </FormControl>
+          </Grid>
+
+
+        </Box>
+      )
+      }
+
+      < Box direction="row">
         <FormControl sx={{ marginRight: "20px", marginBottom: "10px" }}>
           <Button
             startIcon={<Search />}
@@ -214,72 +256,78 @@ const Sanciones = () => {
         </FormControl>
       </Box>
 
-      {cargandoInfo && (
-        <Container sx={{ textAlign: "center" }}>
-          <Loading size={80} />
-        </Container>
-      )}
-      {!cargandoInfo && (
-        <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-          <Table sx={{ minWidth: 650 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell align="right">Nombre</TableCell>
-                <TableCell align="right">Apellido</TableCell>
-                <TableCell align="right">Curso</TableCell>
-                <TableCell align="right">Division</TableCell>
-                <TableCell align="right">Fecha</TableCell>
-                <TableCell align="right">Acción</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {paginacion.dataActual()?.map((s, i) => (
-                <TableRow key={i}>
-                  <TableCell align="right">
-                    {s.alumnoxcursoxdivision?.usuario?.nombre}
-                  </TableCell>
-                  <TableCell align="right">
-                    {s.alumnoxcursoxdivision?.usuario?.apellido}
-                  </TableCell>
-                  <TableCell align="right">
-                    {s.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}
-                  </TableCell>
-                  <TableCell align="right">
-                    {
-                      s.alumnoxcursoxdivision?.cursoxdivision?.division
-                        ?.division
-                    }
-                  </TableCell>
-                  <TableCell align="right">{s.sancion?.fecha}</TableCell>
-                  <TableCell align="right">
-                    <Link href={`/gestion/sanciones/${s?.id}`}>
-                      <Button variant="outlined" component="label" color="info">
-                        Detalles
-                      </Button>
-                    </Link>
-                  </TableCell>
+      {
+        cargandoInfo && (
+          <Container sx={{ textAlign: "center" }}>
+            <Loading size={80} />
+          </Container>
+        )
+      }
+      {
+        !cargandoInfo && (
+          <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">Nombre</TableCell>
+                  <TableCell align="right">Apellido</TableCell>
+                  <TableCell align="right">Curso</TableCell>
+                  <TableCell align="right">Division</TableCell>
+                  <TableCell align="right">Fecha</TableCell>
+                  <TableCell align="right">Acción</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-      {!cargandoInfo && sanciones && sanciones?.length > 0 && (
-        <Container
-          maxWidth={"lg"}
-          sx={{ marginTop: 2, width: "fit-content", textAlign: "center" }}
-        >
-          <Pagination
-            count={cantidadPaginas}
-            size="large"
-            page={pagina}
-            variant="outlined"
-            shape="circular"
-            onChange={handlerCambioPagina}
-          />
-        </Container>
-      )}
-    </Layout>
+              </TableHead>
+              <TableBody>
+                {paginacion.dataActual()?.map((s, i) => (
+                  <TableRow key={i}>
+                    <TableCell align="right">
+                      {s.alumnoxcursoxdivision?.usuario?.nombre}
+                    </TableCell>
+                    <TableCell align="right">
+                      {s.alumnoxcursoxdivision?.usuario?.apellido}
+                    </TableCell>
+                    <TableCell align="right">
+                      {s.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}
+                    </TableCell>
+                    <TableCell align="right">
+                      {
+                        s.alumnoxcursoxdivision?.cursoxdivision?.division
+                          ?.division
+                      }
+                    </TableCell>
+                    <TableCell align="right">{s.sancion?.fecha}</TableCell>
+                    <TableCell align="right">
+                      <Link href={`/gestion/sanciones/${s?.id}`}>
+                        <Button variant="outlined" component="label" color="info">
+                          Detalles
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )
+      }
+      {
+        !cargandoInfo && sanciones && sanciones?.length > 0 && (
+          <Container
+            maxWidth={"lg"}
+            sx={{ marginTop: 2, width: "fit-content", textAlign: "center" }}
+          >
+            <Pagination
+              count={cantidadPaginas}
+              size="large"
+              page={pagina}
+              variant="outlined"
+              shape="circular"
+              onChange={handlerCambioPagina}
+            />
+          </Container>
+        )
+      }
+    </Layout >
   );
 };
 
