@@ -5,12 +5,12 @@ export default async function handler(req, res) {
   try {
     await NextCors(req, res, {
       // Options
-      methods: ["GET", "POST"],
+      methods: ["GET"],
       origin: process.env.HOST,
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     if (req.method === "GET") {
-      let { idUsuario, idRol, idLogged, rol } = req.query;
+      let { idUsuario, idRol, idLogged, rol, legajo, correo } = req.query;
       console.log(idUsuario, idRol, idLogged, rol);
       let and = [
         {
@@ -29,16 +29,16 @@ export default async function handler(req, res) {
                     include: {
                       curso: true,
                       division: true,
-                    }
-                  }
-                }
-              }
-            }
+                    },
+                  },
+                },
+              },
+            },
           },
           preceptorxcurso: {
             include: {
               curso: true,
-            }
+            },
           },
           alumnoxcursoxdivision1: {
             include: {
@@ -47,9 +47,9 @@ export default async function handler(req, res) {
                 include: {
                   curso: true,
                   division: true,
-                }
-              }
-            }
+                },
+              },
+            },
           },
           alumnoxcursoxdivision2: {
             include: {
@@ -58,9 +58,9 @@ export default async function handler(req, res) {
                 include: {
                   curso: true,
                   division: true,
-                }
-              }
-            }
+                },
+              },
+            },
           },
         },
         orderBy: {
@@ -101,6 +101,12 @@ export default async function handler(req, res) {
             },
           },
         });
+      }
+      if (legajo) {
+        and.push({ legajo: legajo });
+      }
+      if (correo) {
+        and.push({ correo: correo });
       }
       if (and.length) {
         options = {

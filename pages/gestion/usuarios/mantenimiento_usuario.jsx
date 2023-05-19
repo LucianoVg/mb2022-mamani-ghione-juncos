@@ -56,7 +56,7 @@ export default function MantenimientoUsuario() {
   const [cargandoInfo, setCargandoInfo] = useState(false);
   const [rol, setRol] = useState("");
   const [roles, setRoles] = useState([]);
-  const [idSelectedUser, setIdSelectedUser] = useState(0);
+  const [idSelectedUser, setIdSelectedUser] = useState("");
 
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina);
@@ -74,7 +74,7 @@ export default function MantenimientoUsuario() {
         traerUsuarios();
       }
     }
-  }, [authUser, loading]);
+  }, [authUser, authUser?.id, loading]);
 
   const tienePermisos = () => {
     return (
@@ -85,30 +85,29 @@ export default function MantenimientoUsuario() {
     );
   };
   const traerUsuarios = async () => {
-    queryParams.push({ idLogged: authUser?.id, rol: authUser?.rol?.tipo });
     if (idUsuario) {
       queryParams.push({ idUsuario });
     }
     if (rol) {
       queryParams.push({ idRol: rol });
     }
-    let params = "";
+    let params = `?idLogged=${authUser?.id}&rol=${authUser?.rol?.tipo}`;
     queryParams.forEach((qp) => {
       for (const key in qp) {
-        params += `${key}=${qp[key]}&`;
+        params += `&${key}=${qp[key]}&`;
       }
     });
     console.log(params);
     setCargandoInfo(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?${params}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios${params}`
     );
+    setCargandoInfo(false);
     if (res.data) {
       setUsuarios(res.data);
       queryParams = [];
       setRol(0);
     }
-    setCargandoInfo(false);
   };
   const traerRoles = async () => {
     let param = `?rol=${authUser?.rol?.tipo}`;
@@ -206,7 +205,7 @@ export default function MantenimientoUsuario() {
             />
           </FormControl>
           {authUser?.rol?.tipo !== "Secretaria" && (
-            <FormControl   size="small">
+            <FormControl size="small">
               <InputLabel id="select-label">Rol</InputLabel>
               <Select
                 labelId="select-label"

@@ -27,28 +27,12 @@ export default async function handler(req, res) {
         idUsuario,
         esAlumno,
         esDocente,
+        esPreceptor,
         idMaterias,
+        idCursos,
+        fechaNacimiento,
       } = req.body;
 
-      console.log({
-        login,
-        nombre,
-        apellido,
-        legajo,
-        telefono,
-        correo,
-        direccion,
-        localidad,
-        idRol,
-        idTutor,
-        sexo,
-        contrasenia,
-        idCurso,
-        idUsuario,
-        esAlumno,
-        esDocente,
-        idMaterias,
-      });
       const creado = await registrarUsuario(
         login,
         nombre,
@@ -66,7 +50,10 @@ export default async function handler(req, res) {
         idUsuario,
         esAlumno,
         esDocente,
-        idMaterias
+        esPreceptor,
+        idMaterias,
+        idCursos,
+        fechaNacimiento
       );
 
       return res.status(200).json(creado);
@@ -81,7 +68,7 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).send(error);
+    return res.status(500).send(error);
   }
 }
 
@@ -102,8 +89,30 @@ export async function registrarUsuario(
   idUsuario,
   esAlumno = false,
   esDocente = false,
-  idMaterias
+  esPreceptor = false,
+  idMaterias = [],
+  idCursos = [],
+  fechaNacimiento
 ) {
+  let ultimoId = await db.usuario.count();
+  let data = {
+    id: ++ultimoId,
+    login,
+    nombre,
+    apellido,
+    legajo,
+    telefono,
+    correo,
+    direccion,
+    localidad,
+    activo: true,
+    idrol: Number(idRol),
+    sexo,
+    password: contrasenia,
+    fechanacimiento: fechaNacimiento,
+  };
+  let docentexmateria = [];
+  let preceptorxcurso = [];
   try {
     if (esAlumno) {
       const estadoalumno = await db.estadoalumno.findFirst({
@@ -111,133 +120,74 @@ export async function registrarUsuario(
           estado: "Regular",
         },
       });
-      let alumno = await db.usuario.create({
-        data: {
-          login: login,
-          nombre: nombre,
-          apellido: apellido,
-          legajo: legajo,
-          correo: correo,
-          localidad: localidad,
-          telefono: telefono,
-          direccion: direccion,
-          idrol: Number(idRol),
-          sexo: sexo,
-          activo: true,
-          password: contrasenia,
-          alumnoxcursoxdivision: {
-            create: {
-              tutor: {
-                connect: {
-                  id: Number(idTutor),
-                },
-              },
-              cursoxdivision: {
-                connect: {
-                  id: Number(idCurso),
-                },
-              },
-              estadoalumno: {
-                connect: {
-                  id: Number(estadoalumno?.id),
-                },
-              },
-              fechamatriculacion: new Date()
-                .toLocaleDateString("es-AR")
-                .split("T")[0],
-              asistencia: {
-                create: {
-                  presente: false,
-                  ausente: false,
-                  ausentejustificado: false,
-                  llegadatarde: false,
-                  mediafalta: false,
-                  creadoen: new Date()
-                    .toLocaleDateString("es-AR")
-                    .split("T")[0],
-                  usuario: {
-                    connect: {
-                      id: Number(idUsuario),
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-      return alumno;
-    } else if (esDocente) {
-      let docente = await db.usuario.create({
-        data: {
-          login: login,
-          nombre: nombre,
-          apellido: apellido,
-          legajo: legajo,
-          correo: correo,
-          localidad: localidad,
-          telefono: telefono,
-          direccion: direccion,
-          idrol: Number(idRol),
-          sexo: sexo,
-          activo: true,
-          password: contrasenia,
-        },
-      });
-      idMaterias?.map(async (idMateria) => {
-        const docentexmateria = await db.docentexmateria.create({
-          data: {
-            materia: {
-              connect: {
-                id: idMateria,
-              },
-            },
-            usuario: {
-              connect: {
-                id: docente.id,
-              },
-            },
-            asistenciadocente: {
+      data = {
+        ...data,
+        alumnoxcursoxdivision1: {
+          create: {
+            idtutor: Number(idTutor),
+            idcursoxdivision: Number(idCurso),
+            idestadoalumno: Number(estadoalumno?.id),
+            fechamatriculacion: new Date()
+              .toLocaleDateString("en-GB")
+              .split("T")[0],
+            asistencia: {
               create: {
                 presente: false,
                 ausente: false,
                 ausentejustificado: false,
                 llegadatarde: false,
                 mediafalta: false,
-                creadoen: new Date().toLocaleDateString("es-AR").split("T")[0],
-                usuario: {
-                  connect: {
-                    id: Number(idUsuario),
-                  },
-                },
+                creadoen: new Date().toLocaleDateString("en-GB").split("T")[0],
+                idusuario: Number(idUsuario),
               },
             },
           },
-        });
-        console.log(docentexmateria);
-      });
-      return docente;
-    } else {
-      let usuario = await db.usuario.create({
-        data: {
-          login: login,
-          nombre: nombre,
-          apellido: apellido,
-          legajo: legajo,
-          correo: correo,
-          localidad: localidad,
-          telefono: telefono,
-          direccion: direccion,
-          idrol: Number(idRol),
-          sexo: sexo,
-          activo: true,
-          password: contrasenia,
         },
-      });
-      return usuario;
+      };
     }
+
+    if (esDocente) {
+      idMaterias.map(async (idmateria) => {
+        docentexmateria.push({
+          idmateriaxcursoxdivision: Number(idmateria),
+        });
+      });
+      data = {
+        ...data,
+        docentexmateria: {
+          create: docentexmateria,
+        },
+        asistenciadocente1: {
+          create: {
+            presente: false,
+            ausente: false,
+            ausentejustificado: false,
+            llegadatarde: false,
+            mediafalta: false,
+            creadoen: new Date().toLocaleDateString("en-GB").split("T")[0],
+            idusuario: Number(idUsuario),
+          },
+        },
+      };
+    }
+
+    if (esPreceptor) {
+      idCursos.map((idCurso) => {
+        preceptorxcurso.push({ idcurso: Number(idCurso) });
+      });
+      data = {
+        ...data,
+        preceptorxcurso: {
+          create: preceptorxcurso,
+        },
+      };
+    }
+
+    return await db.usuario.create({
+      data: data,
+    });
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 
