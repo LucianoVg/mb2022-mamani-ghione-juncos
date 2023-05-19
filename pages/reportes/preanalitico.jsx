@@ -87,10 +87,9 @@ export default function Preanalitico() {
       let alumno = authUser.alumnoxcursoxdivision2?.find(
         (a) => newValue?.id === a.id
       );
-      if (alumno) {
-        let nombre = `${alumno?.usuario?.nombre} ${alumno?.usuario?.apellido}`;
-        setNombreAlumno(nombre);
-      }
+      setNombreAlumno(
+        `${newValue?.usuario?.nombre} ${newValue?.usuario?.apellido}`
+      );
     }
   };
   const componentRef = useRef();
@@ -99,14 +98,14 @@ export default function Preanalitico() {
   });
   return (
     <Layout>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+      {/* <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Reporte Historial Académico{" "}
-        {authUser?.rol?.tipo === "Estudiante"
+        {authUser?.rol?.tipo === "Estudiante" && nombreAlumno
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
           : authUser?.rol?.tipo === "Tutor" && nombreAlumno
           ? ` de ${nombreAlumno}`
-          : ""}
-      </Typography>
+          : nombreAlumno && ` de ${nombreAlumno}`}
+      </Typography> */}
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box sx={{ marginBottom: "20px" }}>
           <Typography variant="h6" sx={{ marginBottom: "10px" }}>
@@ -198,7 +197,7 @@ export default function Preanalitico() {
       )}
       <Button
         onClick={handlePrint}
-        disabled={!nombreAlumno}
+        disabled={!preanalitico.length}
         variant="text"
         startIcon={<Print />}
       >
@@ -213,6 +212,21 @@ export default function Preanalitico() {
               sx={{ minWidth: "600px" }}
             >
               <TableHead>
+                <TableRow>
+                  <TableCell
+                    colSpan={20}
+                    sx={{ backgroundColor: "lightblue", color: "black" }}
+                  >
+                    <Typography variant="h4" sx={{ textAlign: "center" }}>
+                      Reporte Historial Académico{" "}
+                      {authUser?.rol?.tipo === "Estudiante" && nombreAlumno
+                        ? ` de ${authUser?.apellido} ${authUser?.nombre}`
+                        : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+                        ? ` de ${nombreAlumno}`
+                        : nombreAlumno && ` de ${nombreAlumno}`}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
                 <TableRow>
                   <TableCell
                     align="center"
