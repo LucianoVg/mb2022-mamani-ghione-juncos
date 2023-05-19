@@ -10,7 +10,8 @@ export default async function handler(req, res) {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     if (req.method === "GET") {
-      const cursoXDivision = await traerCursosXDivision();
+      const { idDocente } = req.query;
+      const cursoXDivision = await traerCursosXDivision(idDocente);
       return res.status(200).json(cursoXDivision);
     } else {
       return res.status(405).send("Metodo no permitido");
@@ -21,8 +22,21 @@ export default async function handler(req, res) {
   }
 }
 
-export async function traerCursosXDivision() {
+export async function traerCursosXDivision(idDocente) {
   try {
+    let where = idDocente
+      ? {
+          materiaxcursoxdivision: {
+            some: {
+              docentexmateria: {
+                some: {
+                  id: Number(idDocente),
+                },
+              },
+            },
+          },
+        }
+      : {};
     const cursosXDivision = await db.cursoxdivision.findMany({
       include: {
         curso: true,
@@ -33,6 +47,7 @@ export async function traerCursosXDivision() {
           nombre: "asc",
         },
       },
+      where,
     });
     return cursosXDivision;
   } catch (error) {

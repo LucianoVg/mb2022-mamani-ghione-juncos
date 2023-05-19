@@ -54,7 +54,8 @@ export default function DetallesNoticia() {
       authUser?.rol?.tipo === "Director" ||
       authUser?.rol?.tipo === "Vicedirector" ||
       authUser?.rol?.tipo === "Preceptor" ||
-      authUser?.rol?.tipo === "Estudiante"
+      authUser?.rol?.tipo === "Estudiante" ||
+      authUser?.rol?.tipo === "Tutor"
     );
   };
   const traerDetalle = async () => {
@@ -152,7 +153,6 @@ export default function DetallesNoticia() {
                         fullWidth
                         sx={{ alignItems: "center" }}
                         maxRows={2}
-                        
                         inputProps={{
                           className: styles.Typography,
                           style: {
@@ -164,7 +164,7 @@ export default function DetallesNoticia() {
                             marginRight: "30px",
                           },
                           disableunderline: "true",
-                          maxLength: 30 
+                          maxLength: 30,
                         }}
                         placeholder={notificacion?.asunto}
                         name="asunto"
@@ -187,7 +187,7 @@ export default function DetallesNoticia() {
                             marginRight: "20px",
                           },
                           disableunderline: "true",
-                          maxLength: 300
+                          maxLength: 300,
                         }}
                         placeholder={notificacion?.contenido}
                         name="contenido"
@@ -237,7 +237,6 @@ export default function DetallesNoticia() {
                           marginTop: "20px",
                           marginLeft: "30px",
                           marginRight: "30px",
-               
                         }}
                         className={`${styles.Typography}`}
                       >

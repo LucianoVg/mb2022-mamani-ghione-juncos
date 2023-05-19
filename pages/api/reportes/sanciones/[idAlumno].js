@@ -51,8 +51,7 @@ async function ReporteSanciones(idAlumno = 0) {
         },
       };
     }
-    const sanciones = await db.sancion.findMany(options);
-    return sanciones;
+    return await db.sancion.findMany(options);
   } catch (error) {
     console.error(error);
   }

@@ -8,37 +8,28 @@ import {
   Button,
   Stack,
   Autocomplete,
-  Menu,
-  Popover,
-  TextareaAutosize,
-  ButtonGroup,
   Container,
-  IconButton,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Paper,
   Select,
-  Tab,
   Table,
   TableBody,
   TableContainer,
   TableHead,
   TableRow,
-  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { styled } from "@mui/material/styles";
+import TableCell from "@mui/material/TableCell";
 import Loading from "../../components/loading";
 import { Search } from "@mui/icons-material";
 
 export default function Sancion() {
   const [alumnos, setAlumnos] = useState([]);
   const [sanciones, setSanciones] = useState([]);
-  const [usuario, setUsuario] = useState({ id: 0, rol: "" });
   const [cargando, setCargando] = useState(false);
   const [idAlumno, setIdAlumno] = useState(0);
   const [idCurso, setIdCurso] = useState("");
@@ -61,12 +52,8 @@ export default function Sancion() {
         ) {
           traerCursos();
           listarAlumnos();
-          // listarSanciones();
-        } else {
-          if (idAlumno) {
-            listarSanciones();
-          }
         }
+        listarSanciones();
       }
     }
   }, [loading, authUser]);
@@ -81,24 +68,30 @@ export default function Sancion() {
   };
 
   const listarSanciones = async () => {
-
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${authUser?.rol?.tipo === "Estudiante"
-        ? authUser?.alumnoxcursoxdivision1[0]?.id
-        : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/sanciones/${
+        authUser?.rol?.tipo === "Estudiante"
+          ? authUser?.alumnoxcursoxdivision1[0]?.id
+          : authUser?.rol?.tipo === "Tutor" &&
+            !authUser?.alumnoxcursoxdivision2[1]
           ? authUser?.alumnoxcursoxdivision2[0]?.id
           : idAlumno
       }`
     );
-    if (authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]) {
-      setNombreAlumno(`${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre} ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido}`)
+    setCargando(false);
+    if (
+      authUser?.rol?.tipo === "Tutor" &&
+      !authUser?.alumnoxcursoxdivision2[1]
+    ) {
+      setNombreAlumno(
+        `${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre} ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido}`
+      );
     }
     if (res.status === 200) {
       console.log(res.data);
       setSanciones(res.data);
     }
-    setCargando(false);
   };
 
   const tienePermisos = () => {
@@ -140,7 +133,6 @@ export default function Sancion() {
         setNombreAlumno(nombre);
       }
     }
-
   };
 
   const handleCurso = (e) => {
@@ -154,62 +146,73 @@ export default function Sancion() {
         Reporte Sanciones{" "}
         {authUser?.rol?.tipo === "Estudiante"
           ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor" && !authUser?.alumnoxcursoxdivision2[1]
-            ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
-            : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-              ? ` de ${nombreAlumno}`
-              : ""}
+          : authUser?.rol?.tipo === "Tutor" &&
+            !authUser?.alumnoxcursoxdivision2[1]
+          ? ` de ${authUser?.alumnoxcursoxdivision2[0].usuario?.apellido} ${authUser?.alumnoxcursoxdivision2[0].usuario?.nombre}`
+          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
+          ? ` de ${nombreAlumno}`
+          : ""}
       </Typography>
-
-      {(authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1]) && (
-        <>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                Buscar estudiante:
-              </Typography>
-            </Grid>
-          </Grid>
-          <Box>
-            <FormControl sx={{ width: "250px", marginBottom: "20px", marginRight: "10px" }} >
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                // value={value}
-                name="idAlumno"
-                size="small"
-                onChange={handleAlumno}
-                getOptionLabel={(alumno) =>
-                  `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
-                }
-                options={authUser?.alumnoxcursoxdivision2}
-                sx={{ width: "250px" }}
-                isOptionEqualToValue={(option, value) =>
-                  option?.id === value?.id
-                }
-                noOptionsText={"No existe un estudiante con ese nombre"}
-                renderOption={(props, alumno) => (
-                  <Box component="li" {...props} key={alumno?.id}>
-                    {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Estudiante" />
-                )}
-              />
-            </FormControl>
-            <Button
-              onClick={listarSanciones}
-              variant="outlined"
-              startIcon={<Search />}
-              color="info"
-            >
-              Buscar
-            </Button>
-          </Box>
-        </>
-
+      {cargando && (
+        <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+          <Loading size={80} />
+        </Container>
       )}
+      {authUser?.rol?.tipo === "Tutor" &&
+        authUser?.alumnoxcursoxdivision2[1] && (
+          <>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+                  Buscar estudiante:
+                </Typography>
+              </Grid>
+            </Grid>
+            <Box>
+              <FormControl
+                sx={{
+                  width: "250px",
+                  marginBottom: "20px",
+                  marginRight: "10px",
+                }}
+              >
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idAlumno"
+                  size="small"
+                  onChange={handleAlumno}
+                  getOptionLabel={(alumno) =>
+                    `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} `
+                  }
+                  options={authUser?.alumnoxcursoxdivision2}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.id === value?.id
+                  }
+                  noOptionsText={"No existe un estudiante con ese nombre"}
+                  renderOption={(props, alumno) => (
+                    <Box component="li" {...props} key={alumno?.id}>
+                      {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Estudiante" />
+                  )}
+                />
+              </FormControl>
+              <Button
+                onClick={listarSanciones}
+                variant="outlined"
+                startIcon={<Search />}
+                color="info"
+              >
+                Buscar
+              </Button>
+            </Box>
+          </>
+        )}
 
       {authUser?.rol?.tipo !== "Estudiante" &&
         authUser?.rol?.tipo !== "Tutor" && (
@@ -222,7 +225,7 @@ export default function Sancion() {
               spacing={{ xs: 2, sm: 2, md: 5 }}
               sx={{ marginBottom: "30px" }}
             >
-              {/* <FormControl size={"small"}>
+              <FormControl size={"small"}>
                 <InputLabel htmlFor="selectCurso">Curso</InputLabel>
                 <Select
                   sx={{ width: 120 }}
@@ -238,7 +241,7 @@ export default function Sancion() {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl> */}
+              </FormControl>
               <FormControl>
                 <Autocomplete
                   size="small"
@@ -278,354 +281,125 @@ export default function Sancion() {
           </Box>
         )}
 
-
       <div sx={{ marginTop: "200px" }}>
-        {
-          !cargando && authUser?.rol?.tipo === "Tutor" && authUser?.alumnoxcursoxdivision2[1] ? (
-            (sanciones.length === 0 && idAlumno === 0)  ? (
-              <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-                Seleccione un estudiante
-              </Typography>
-            ) : (
-              !cargando && sanciones.length > 0 && idAlumno != 0 ? (
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          colSpan={4}
-                          sx={{
-                            color: "black",
-                            backgroundColor: "lightblue",
-                            borderRightColor: "black",
-                            borderRight: 1,
-                            borderBottom: 1,
-                            borderBottomColor: "black",
-                          }}
-                        >
-                          Motivo
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          sx={{
-                            color: "black",
-                            backgroundColor: "lightblue",
-                            // borderRightColor: "black",
-                            // borderRight: 1,
-                            // borderBottom: 1,
-                            // borderBottomColor: "black",
-                          }}
-                        >
-                          Autoridad
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          sx={{
-                            color: "black",
-                            backgroundColor: "lightblue",
-                            // borderRightColor: "black",
-                            // borderRight: 1,
-                            // borderBottom: 1,
-                            // borderBottomColor: "black",
-                          }}
-                        >
-                          Cargo
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          align="left"
-                          sx={{
-                            color: "black",
-                            backgroundColor: "lightblue",
-                            // borderRightColor: "black",
-                            // borderRight: 1,
-                            // borderBottom: 1,
-                            // borderBottomColor: "black",
-                          }}
-                        >
-                          Fecha
-                        </TableCell>
-                        <TableCell
-                          colSpan={1}
-                          sx={{
-                            color: "black",
-                            backgroundColor: "lightblue",
-                            // borderRightColor: "black",
-                            // borderRight: 1,
-                            // borderBottom: 1,
-                            // borderBottomColor: "black",
-                          }}
-                        >
-                          Tipo
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {sanciones &&
-                        sanciones.map((s, i) => (
-                          <TableRow key={i}>
-                            <TableCell
-                              colSpan={4}
-                              component="th"
-                              scope="row"
-                              sx={{
-                                borderRightColor: "black",
-                                // borderRight: 1,
-                                // borderTop: 1,
-                                // borderTopColor: "black",
-                                // borderBottom: 1,
-                                // borderBottomColor: "black",
-                              }}
-                            >
-                              {s?.motivo}
-                            </TableCell>
-                            <TableCell
-                              colSpan={1}
-                              component="th"
-                              scope="row"
-                              sx={{
-                                borderRightColor: "black",
-                                // borderRight: 1,
-                                // borderTop: 1,
-                                // borderTopColor: "black",
-                                // borderBottom: 1,
-                                // borderBottomColor: "black",
-                              }}
-                            >
-                              {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
-                            </TableCell>
-                            <TableCell
-                              colSpan={1}
-                              component="th"
-                              scope="row"
-                              sx={{
-                                borderRightColor: "black",
-                                // borderRight: 1,
-                                // borderTop: 1,
-                                // borderTopColor: "black",
-                                // borderBottom: 1,
-                                // borderBottomColor: "black",
-                              }}
-                            >
-                              {s?.usuario?.rol?.tipo}
-                            </TableCell>
-                            <TableCell
-                              colSpan={1}
-                              component="th"
-                              scope="row"
-                              sx={{
-                                // borderRightColor: "black",
-                                // borderRight: 1,
-                                // borderTop: 1,
-                                // borderTopColor: "black",
-                                // borderBottom: 1,
-                                // borderBottomColor: "black",
-                              }}
-                            >
-                              {s?.fecha}
-                            </TableCell>
-                            <TableCell
-                              colSpan={1}
-                              component="th"
-                              scope="row"
-                              sx={{
-                                // borderRightColor: "black",
-                                // borderRight: 1,
-                                // borderTop: 1,
-                                // borderTopColor: "black",
-                                // borderBottom: 1,
-                                // borderBottomColor: "black",
-                              }}
-                            >
-                              {s?.tiposancion?.tipo}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : (
-                !cargando && sanciones.length === 0 &&
-                (
-                  <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-                    Este estudiante no fue sancionado.
-                  </Typography>
-                )
-              )
-            )
-          ) : (
-            !cargando && sanciones.length > 0 && idAlumno != 0 ? (
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
+        {!cargando &&
+          authUser?.rol?.tipo === "Tutor" &&
+          authUser?.alumnoxcursoxdivision2[1] &&
+          sanciones.length === 0 &&
+          idAlumno === 0 && (
+            <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+              Seleccione un estudiante
+            </Typography>
+          )}
+        {!cargando && sanciones.length === 0 && idAlumno !== 0 && (
+          <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+            Este estudiante no fue sancionado.
+          </Typography>
+        )}
+        {!cargando && sanciones.length > 0 && (
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    colSpan={4}
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                      borderRightColor: "black",
+                      borderRight: 1,
+                      borderBottom: 1,
+                      borderBottomColor: "black",
+                    }}
+                  >
+                    Motivo
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                    }}
+                  >
+                    Autoridad
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                    }}
+                  >
+                    Cargo
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="left"
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                    }}
+                  >
+                    Fecha
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    sx={{
+                      color: "black",
+                      backgroundColor: "lightblue",
+                    }}
+                  >
+                    Tipo
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sanciones &&
+                  sanciones.map((s, i) => (
+                    <TableRow key={i}>
                       <TableCell
                         colSpan={4}
+                        component="th"
+                        scope="row"
                         sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          // borderRightColor: "black",
-                          // borderRight: 1,
-                          // borderBottom: 1,
-                          // borderBottomColor: "black",
+                          borderRightColor: "black",
                         }}
                       >
-                        Motivo
+                        {s?.motivo}
                       </TableCell>
                       <TableCell
                         colSpan={1}
+                        component="th"
+                        scope="row"
                         sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          // borderRightColor: "black",
-                          // borderRight: 1,
-                          // borderBottom: 1,
-                          // borderBottomColor: "black",
+                          borderRightColor: "black",
                         }}
                       >
-                        Autoridad
+                        {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
                       </TableCell>
                       <TableCell
                         colSpan={1}
+                        component="th"
+                        scope="row"
                         sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          // borderRightColor: "black",
-                          // borderRight: 1,
-                          // borderBottom: 1,
-                          // borderBottomColor: "black",
+                          borderRightColor: "black",
                         }}
                       >
-                        Cargo
+                        {s?.usuario?.rol?.tipo}
                       </TableCell>
-                      <TableCell
-                        colSpan={1}
-                        align="left"
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          // borderRightColor: "black",
-                          // borderRight: 1,
-                          // borderBottom: 1,
-                          // borderBottomColor: "black",
-                        }}
-                      >
-                        Fecha
+                      <TableCell colSpan={1} component="th" scope="row">
+                        {s?.fecha}
                       </TableCell>
-                      <TableCell
-                        colSpan={1}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                          // borderRightColor: "black",
-                          // borderRight: 1,
-                          // borderBottom: 1,
-                          // borderBottomColor: "black",
-                        }}
-                      >
-                        Tipo
+                      <TableCell colSpan={1} component="th" scope="row">
+                        {s?.tiposancion?.tipo}
                       </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {sanciones &&
-                      sanciones.map((s, i) => (
-                        <TableRow key={i}>
-                          <TableCell
-                            colSpan={4}
-                            component="th"
-                            scope="row"
-                            sx={{
-                              // borderRightColor: "black",
-                              // borderRight: 1,
-                              // borderTop: 1,
-                              // borderTopColor: "black",
-                              // borderBottom: 1,
-                              borderBottomColor: "grey",
-                            }}
-                          >
-                            {s?.motivo}
-                          </TableCell>
-                          <TableCell
-                            colSpan={1}
-                            component="th"
-                            scope="row"
-                            sx={{
-                              // borderRightColor: "black",
-                              // borderRight: 1,
-                              // borderTop: 1,
-                              // borderTopColor: "black",
-                              // borderBottom: 1,
-                              borderBottomColor: "grey",
-                            }}
-                          >
-                            {`${s?.usuario.apellido} ${s?.usuario.nombre}`}
-                          </TableCell>
-                          <TableCell
-                            colSpan={1}
-                            component="th"
-                            scope="row"
-                            sx={{
-                              // borderRightColor: "black",
-                              // borderRight: 1,
-                              // borderTop: 1,
-                              // borderTopColor: "black",
-                              // borderBottom: 1,
-                              borderBottomColor: "grey",
-                            }}
-                          >
-                            {s?.usuario?.rol?.tipo}
-                          </TableCell>
-                          <TableCell
-                            colSpan={1}
-                            component="th"
-                            scope="row"
-                            sx={{
-                              // borderRightColor: "black",
-                              // borderRight: 1,
-                              // borderTop: 1,
-                              // borderTopColor: "black",
-                              // borderBottom: 1,
-                              borderBottomColor: "grey",
-                            }}
-                          >
-                            {s?.fecha}
-                          </TableCell>
-                          <TableCell
-                            colSpan={1}
-                            component="th"
-                            scope="row"
-                            sx={{
-                              // borderRightColor: "black",
-                              // borderRight: 1,
-                              // borderTop: 1,
-                              // borderTopColor: "black",
-                              // borderBottom: 1,
-                              borderBottomColor: "grey",
-                            }}
-                          >
-                            {s?.tiposancion?.tipo}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ) : (
-              !cargando && idAlumno != 0 && (
-                <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-                  Este estudiante no fue sancionado.
-                </Typography>)
-            )
-          )
-        }
-
-        {cargando && (
-          <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-            <Loading size={80} />
-          </Container>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         )}
       </div>
-    </Layout >
+    </Layout>
   );
 }

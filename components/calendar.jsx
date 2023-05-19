@@ -23,7 +23,7 @@ export default function Calendar({
           items: cursos,
           displayExpr: "curso",
           valueExpr: "id",
-          value: tempData.idCurso,
+          value: tempData.idCurso ? tempData.idCurso : "",
           readonly: !tienePermisos(),
           onValueChanged(args) {
             tempData.idCurso = Number(args.value);
@@ -37,7 +37,7 @@ export default function Calendar({
         editorType: "dxTextBox",
         dataField: "asunto",
         editorOptions: {
-          value: tempData.asunto,
+          value: tempData.asunto ? tempData.asunto : "",
           readonly: !tienePermisos(),
           onValueChanged(args) {
             tempData.asunto = args.value;
@@ -86,12 +86,18 @@ export default function Calendar({
   const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
-    traerCursos();
+    if (authUser?.rol?.tipo !== "Estudiante") {
+      traerCursos();
+    }
   }, [authUser]);
 
   const traerCursos = async () => {
+    let param =
+      authUser?.rol?.tipo === "Docente"
+        ? `?idDocente=${authUser?.docentexmateria[0]?.id}`
+        : "";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/cursos${param}`
     );
     if (res.data) {
       setCursos(
@@ -108,19 +114,32 @@ export default function Calendar({
       authUser?.rol?.tipo === "Docente"
     );
   };
-
+  const isValidDate = (date = new Date()) => {
+    return date.getMonth() >= 3 && date.getDay() >= 1 && date.getDay() <= 5;
+  };
   return (
     <div id="calendar">
       <Scheduler
         firstDayOfWeek={1}
-        locale={"es-AR"}
+        allDayPanelMode="hidden"
+        showAllDayPanel={false}
         dataSource={data}
+        dataCellTemplate={function (cellData, index, container) {
+          if (!isValidDate(cellData.startDate)) {
+            container.classList.add("bg-not-valid-day");
+            container.classList.add("dx-state-disabled");
+            container.classList.add("dx-scheduler-date-table-other-month");
+            return container.textContent;
+          }
+          return container;
+        }}
         defaultCurrentDate={new Date()}
         currentView="month"
         views={["month"]}
         onAppointmentClick={(e) => {
           console.log(e.appointmentData);
           tempData = {
+            ...tempData,
             id: e.appointmentData.id,
             idCurso: e.appointmentData.idCurso,
             asunto: e.appointmentData.text,

@@ -9,13 +9,12 @@ import { useAuth } from "./context/authUserProvider";
 
 export const Notificacion = () => {
   const { loading, authUser } = useAuth();
-  const [notificaciones, setNotificaciones] = useState();
+  const [notificaciones, setNotificaciones] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
-    if (!localStorage.getItem("vistas")) {
-      localStorage.setItem("vistas", true);
+    if (!localStorage.getItem(idUsuario.toString()) && notificaciones.length) {
+      localStorage.setItem(idUsuario.toString(), true);
     }
   };
 
@@ -26,20 +25,35 @@ export const Notificacion = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  let idUsuario =
+    authUser?.rol?.tipo === "Estudiante"
+      ? authUser?.alumnoxcursoxdivision1[0]?.id
+      : authUser?.id;
   useEffect(() => {
     if (!loading && authUser) {
-      ListarNotificaciones();
-    }
-  }, [loading, authUser]);
-
-  const ListarNotificaciones = async () => {
-    if (authUser?.id) {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${authUser?.id}`
-      );
-      if (res.status === 200) {
-        setNotificaciones(res.data);
+      if (authUser?.rol && authUser?.rol?.tipo === "Estudiante") {
+        ListarNotificacionesAlumno();
       }
+      if (authUser?.rol && authUser?.rol?.tipo === "Tutor") {
+        ListarNotificacionesTutor();
+      }
+    }
+  }, [loading, authUser, idUsuario]);
+
+  const ListarNotificacionesAlumno = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/alumno/${idUsuario}`
+    );
+    if (res.status === 200) {
+      setNotificaciones(res.data);
+    }
+  };
+  const ListarNotificacionesTutor = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/tutor/${idUsuario}`
+    );
+    if (res.status === 200) {
+      setNotificaciones(res.data);
     }
   };
   return (
@@ -50,7 +64,7 @@ export const Notificacion = () => {
             aria-describedby={id}
             variant="contained"
             badgeContent={
-              !localStorage.getItem("vistas") && notificaciones
+              !localStorage.getItem(idUsuario) && notificaciones.length
                 ? notificaciones.length
                 : null
             }
@@ -100,7 +114,7 @@ export const Notificacion = () => {
               </ListItem>
             ))}
 
-          {notificaciones && notificaciones?.length > 0&& (
+          {notificaciones && notificaciones?.length > 0 && (
             <ListItem disablePadding>
               <ListItemButton
                 component="a"

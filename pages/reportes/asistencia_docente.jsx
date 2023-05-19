@@ -60,10 +60,12 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasAnuales = async () => {
     setCargando3(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_anual/${authUser?.rol?.tipo === "Docente"
-        ? authUser?.docentexmateria[0]?.iddocente
-        : idDocente
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_anual/${
+        authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0]?.idusuario
+          : idDocente
           ? idDocente
           : 1
       }`
@@ -77,10 +79,12 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasMensuales = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
-        ? authUser?.docentexmateria[0]?.iddocente
-        : idDocente
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${
+        authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0]?.idusuario
+          : idDocente
           ? idDocente
           : 1
       }&mes=${mes}`
@@ -94,10 +98,12 @@ export default function AsistenciasDocentes() {
   const listadoAsistencias = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
-        ? authUser?.docentexmateria[0]?.iddocente
-        : idDocente
+      `${
+        process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${
+        authUser?.rol?.tipo === "Docente"
+          ? authUser?.docentexmateria[0]?.idusuario
+          : idDocente
           ? idDocente
           : 1
       }&mes=${mes}`
@@ -151,9 +157,7 @@ export default function AsistenciasDocentes() {
 
       {authUser?.rol?.tipo != "Docente" ? (
         <>
-          <Typography variant="h6"
-          sx={{marginBottom: "10px"}}
-          >
+          <Typography variant="h6" sx={{ marginBottom: "10px" }}>
             Buscar docente:
           </Typography>
           <Box>
@@ -257,8 +261,7 @@ export default function AsistenciasDocentes() {
             </Button>
           </Box>
         </>
-      )
-      }
+      )}
 
       <div sx={{ marginTop: 10 }}>
         <Grid container spacing={2}>
@@ -376,18 +379,18 @@ export default function AsistenciasDocentes() {
                           {l.presente
                             ? "Presente"
                             : l.ausente
-                              ? "Ausente"
-                              : l.ausentejustificado
-                                ? "Ausente Justificado"
-                                : l.llegadatarde
-                                  ? "Llegada Tarde"
-                                  : l.llegadatardejustificada
-                                    ? "Llegada Tarde Justificada"
-                                    : l.mediafalta
-                                      ? "Media Falta"
-                                      : l.mediafaltajustificada
-                                        ? "Media Falta Justificada"
-                                        : "No tiene asistencia cargada"}
+                            ? "Ausente"
+                            : l.ausentejustificado
+                            ? "Ausente Justificado"
+                            : l.llegadatarde
+                            ? "Llegada Tarde"
+                            : l.llegadatardejustificada
+                            ? "Llegada Tarde Justificada"
+                            : l.mediafalta
+                            ? "Media Falta"
+                            : l.mediafaltajustificada
+                            ? "Media Falta Justificada"
+                            : "No tiene asistencia cargada"}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -398,6 +401,6 @@ export default function AsistenciasDocentes() {
           </Grid>
         </Grid>
       </div>
-    </Layout >
+    </Layout>
   );
 }

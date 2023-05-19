@@ -37,9 +37,16 @@ export default function FechasExamen() {
     );
   };
   const traerExamenes = async () => {
+    let param =
+      authUser?.rol?.tipo === "Estudiante"
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0].idcursoxdivision}`
+        : authUser?.rol?.tipo === "Docente"
+        ? `?idDocente=${authUser?.docentexmateria[0].idusuario}`
+        : "";
+    console.log("Examenes param:", param);
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/examenes${param}`
     );
     if (res.data) {
       console.log(res.data);
