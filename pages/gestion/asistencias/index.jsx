@@ -35,7 +35,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Select from "@mui/material/Select";
 import { usePagination } from "../../../components/hooks/paginationHook";
-import { Add, Search } from "@mui/icons-material";
+import { Add, Close, Search } from "@mui/icons-material";
 import { useAuth } from "../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import Loading from "../../../components/loading";
@@ -95,18 +95,6 @@ export default function Asistencias() {
   };
 
   const listarAsistencias = async () => {
-    setCargandoInfo(true);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias`
-    );
-    // console.log(res);
-    if (res.data) {
-      setAsistencias(res.data);
-    }
-    setCargandoInfo(false);
-  };
-
-  const buscarAsistencias = async () => {
     if (idAlumno) {
       queryParams.push({ idAlumno: idAlumno });
     }
@@ -129,13 +117,10 @@ export default function Asistencias() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencias?${params}`
     );
-    console.log(res.data);
+    setCargandoInfo(false);
     if (res.data) {
       setAsistencias(res.data);
     }
-    setCargandoInfo(false);
-    resetValues();
-    queryParams = [];
   };
 
   const traerAlumnos = async () => {
@@ -183,11 +168,6 @@ export default function Asistencias() {
     rowKey: 0,
   });
 
-  const resetValues = () => {
-    setIdCurso(0);
-    setFecha(null);
-    setIdAlumno("");
-  };
   const onSave = async (id) => {
     setGuardando(true);
     await axios.put(
@@ -269,7 +249,12 @@ export default function Asistencias() {
     setAsistenciaId(0);
     setOpen(false);
   };
-
+  const resetValues = () => {
+    setIdAlumno("");
+    setFecha(new Date());
+    setIdCurso("");
+    queryParams = [];
+  };
   return (
     <Layout>
       <Container maxWidth="xl" style={{ position: "relative" }}>
@@ -369,7 +354,9 @@ export default function Asistencias() {
                           name="fecha"
                           value={fecha}
                           onChange={handleFecha}
-                          renderInput={(params) => <TextField size="small" {...params} />}
+                          renderInput={(params) => (
+                            <TextField size="small" {...params} />
+                          )}
                           MenuProps={{ disableScrollLock: true }}
                         />
                       </LocalizationProvider>
@@ -411,16 +398,6 @@ export default function Asistencias() {
                         )}
                       />
                     </FormControl>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      onClick={buscarAsistencias}
-                      endIcon={<Search />}
-                      color="info"
-                    >
-                      Buscar
-                    </Button>
                   </Box>
                 </Grid>
               </Grid>
@@ -483,113 +460,41 @@ export default function Asistencias() {
                           value={fecha}
                           format="DD-MM-YYYY"
                           onChange={handleFecha}
-                          renderInput={(params) => <TextField size="small" {...params} />}
+                          renderInput={(params) => (
+                            <TextField size="small" {...params} />
+                          )}
                           MenuProps={{ disableScrollLock: true }}
                         />
                       </LocalizationProvider>
                     </FormControl>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      onClick={buscarAsistencias}
-                      startIcon={<Search />}
-                      color="info"
-                    >
-                      Buscar
-                    </Button>
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           </Box>
         )}
-
-        {/* <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <Box sx={{ marginBottom: "20px" }}>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">Curso</InputLabel>
-                <Select
-                  sx={{ width: "90px", marginRight: "20px" }}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Curso"
-                  name="idCurso"
-                  value={idCurso}
-                  onChange={handleCurso}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  <MenuItem value={0}>Seleccione un curso</MenuItem>
-                  {cursos &&
-                    cursos.map((c, i) => (
-                      <MenuItem selected={i === 0} value={c.id} key={c.id}>
-                        {c.curso?.nombre} {c.division?.division}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Box>
-            <Box>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <MobileDatePicker
-                  label="Fecha"
-                  name="fecha"
-                  value={fecha}
-                  onChange={handleFecha}
-                  renderInput={(params) => <TextField {...params} />}
-                  MenuProps={{ disableScrollLock: true }}
-                />
-              </LocalizationProvider>
-            </Box>
-
-            <Typography variant="h6" sx={{ marginTop: "20px" }}>
-              Buscar Estudiante:
-            </Typography>
-
-            <Box sx={{ marginTop: "25px" }}>
-              <FormControl
-                style={{ marginRight: "20px", marginBottom: "25px" }}
-              >
-                <Autocomplete
-                  sx={{ width: "250px" }}
-                  disablePortal
-                  id="combo-box-demo"
-                  // value={value}
-                  name="idAlumno"
-                  onChange={handleAlumno}
-                  getOptionLabel={(alumno) =>
-                    `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
-                  }
-                  options={alumnos}
-                  isOptionEqualToValue={(option, value) =>
-                    option?.usuario?.apellido === value?.usuario?.apellido
-                  }
-                  noOptionsText={"No existe un estudiante con ese nombre"}
-                  renderOption={(props, alumno) => (
-                    <Box component="li" {...props} key={alumno?.id}>
-                      {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
-                    </Box>
-                  )}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Estudiante" />
-                  )}
-                />
-              </FormControl>
-            </Box>
-            <Box>
-              <Button
-                variant="outlined"
-                onClick={buscarAsistencias}
-                startIcon={<Search />}
-                color="info"
-              >
-                Buscar
-              </Button>
-            </Box>
-          </Grid>
-        </Grid> */}
-
+        <Box flexDirection={"row"}>
+          <Button
+            variant="contained"
+            onClick={listarAsistencias}
+            endIcon={<Search />}
+            color="info"
+          >
+            Buscar
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ mx: 1 }}
+            onClick={async () => {
+              resetValues();
+              await listarAsistencias();
+            }}
+            endIcon={<Close />}
+            color="info"
+          >
+            Quitar Filtros
+          </Button>
+        </Box>
         {cargandoInfo && (
           <Container sx={{ m: "auto", textAlign: "center" }}>
             <Loading size={80} />
@@ -612,7 +517,6 @@ export default function Asistencias() {
                   <TableCell align="center" scope="col">
                     Nombre
                   </TableCell>
-                  {/* <TableCell scope="col">Preceptor</TableCell> */}
                   <TableCell align="center" scope="col">
                     Presente
                   </TableCell>
@@ -636,10 +540,10 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                    !a.ausente &&
-                    !a.ausentejustificado &&
-                    !a.llegadatarde &&
-                    !a.mediafalta ? (
+                  !a.ausente &&
+                  !a.ausentejustificado &&
+                  !a.llegadatarde &&
+                  !a.mediafalta ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}

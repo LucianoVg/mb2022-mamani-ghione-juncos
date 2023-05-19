@@ -47,6 +47,7 @@ export default function Preanalitico() {
         ) {
           listarAlumnos();
         }
+        traerPreanalitico();
       }
     }
   }, [authUser?.id, authUser?.rol?.tipo, loading, authUser]);
@@ -98,14 +99,6 @@ export default function Preanalitico() {
   });
   return (
     <Layout>
-      {/* <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Reporte Historial Académico{" "}
-        {authUser?.rol?.tipo === "Estudiante" && nombreAlumno
-          ? ` de ${authUser?.apellido} ${authUser?.nombre}`
-          : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-          ? ` de ${nombreAlumno}`
-          : nombreAlumno && ` de ${nombreAlumno}`}
-      </Typography> */}
       {authUser?.rol?.tipo != "Estudiante" && authUser?.rol?.tipo != "Tutor" ? (
         <Box sx={{ marginBottom: "20px" }}>
           <Typography variant="h6" sx={{ marginBottom: "10px" }}>
@@ -219,7 +212,7 @@ export default function Preanalitico() {
                   >
                     <Typography variant="h4" sx={{ textAlign: "center" }}>
                       Reporte Historial Académico{" "}
-                      {authUser?.rol?.tipo === "Estudiante" && nombreAlumno
+                      {authUser?.rol?.tipo === "Estudiante"
                         ? ` de ${authUser?.apellido} ${authUser?.nombre}`
                         : authUser?.rol?.tipo === "Tutor" && nombreAlumno
                         ? ` de ${nombreAlumno}`

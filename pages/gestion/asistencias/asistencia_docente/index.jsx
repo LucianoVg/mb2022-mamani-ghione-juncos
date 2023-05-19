@@ -33,7 +33,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Select from "@mui/material/Select";
 import { usePagination } from "../../../../components/hooks/paginationHook";
-import { Add, Search } from "@mui/icons-material";
+import { Add, Close, Search } from "@mui/icons-material";
 import { useAuth } from "../../../../components/context/authUserProvider";
 import { useRouter } from "next/router";
 import Loading from "../../../../components/loading";
@@ -80,36 +80,6 @@ export default function Asistencias() {
     );
   };
   const listarAsistencias = async () => {
-    setCargandoInfo(true);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente`
-    );
-    if (res.data) {
-      setAsistencias(res.data);
-    }
-    setCargandoInfo(false);
-  };
-
-  const traerDocentes = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/`
-    );
-    console.log(res.data);
-    if (res.data) {
-      setDocentes(res.data);
-    }
-  };
-  const [docentes, setDocentes] = useState([]);
-  const [idDocente, setIdDocente] = useState("");
-
-  const handleDocente = (e, newValue) => {
-    if (newValue) {
-      setIdDocente(newValue.id);
-    } else {
-      setIdDocente(0);
-    }
-  };
-  const buscarAsistencias = async () => {
     if (idDocente) {
       queryParams.push({ idDocente });
     }
@@ -129,12 +99,32 @@ export default function Asistencias() {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/asistencia_docente?${params}`
     );
-    queryParams = [];
+    setCargandoInfo(false);
     if (res.data) {
       setAsistencias(res.data);
     }
-    setCargandoInfo(false);
   };
+
+  const traerDocentes = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/docentes/`
+    );
+    console.log(res.data);
+    if (res.data) {
+      setDocentes(res.data);
+    }
+  };
+  const [docentes, setDocentes] = useState([]);
+  const [idDocente, setIdDocente] = useState("");
+
+  const handleDocente = (e, newValue) => {
+    if (newValue) {
+      setIdDocente(newValue.id);
+    } else {
+      setIdDocente("");
+    }
+  };
+
   const handlerCambioPagina = (e, pagina) => {
     setPagina(pagina);
     paginacion.saltar(pagina);
@@ -143,7 +133,11 @@ export default function Asistencias() {
   const handleFecha = (value) => {
     setFecha(new Date(value));
   };
-
+  const resetValues = () => {
+    setIdDocente("");
+    setFecha(new Date());
+    queryParams = [];
+  };
   const bloquearCheck = (a) => {
     return (
       a.presente ||
@@ -169,9 +163,7 @@ export default function Asistencias() {
         ausente: ausente,
         ausenteJustificado: aj,
         llegadaTarde: llegadaTarde,
-        // llegadaTardeJustificada: ltj,
         mediaFalta: mf,
-        // mediaFaltaJustificada: mfj,
         idUsuario: authUser.id,
         motivo: motivo,
       }
@@ -319,7 +311,7 @@ export default function Asistencias() {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <Box>
-              <FormControl >
+              <FormControl>
                 <LocalizationProvider
                   adapterLocale="es-mx"
                   dateAdapter={AdapterDayjs}
@@ -328,7 +320,9 @@ export default function Asistencias() {
                     label="Fecha"
                     value={fecha}
                     onChange={handleFecha}
-                    renderInput={(params) => <TextField size="small"{...params} />}
+                    renderInput={(params) => (
+                      <TextField size="small" {...params} />
+                    )}
                   />
                 </LocalizationProvider>
               </FormControl>
@@ -341,7 +335,6 @@ export default function Asistencias() {
             <Box sx={{ marginTop: "25px" }}>
               <FormControl
                 style={{ marginRight: "20px", marginBottom: "25px" }}
-                
               >
                 <Autocomplete
                   sx={{ width: "250px" }}
@@ -371,35 +364,26 @@ export default function Asistencias() {
               </FormControl>
             </Box>
 
-            {/* <Box direction='row'>
-                            <TextField
-                                sx={{ width: '100px', marginRight: '20px', marginBottom: '20px' }}
-                                name="legajo"
-                                type="number"
-                                value={legajo}
-                                onChange={handleLegajo}
-                                label="Legajo" />
-                            <TextField
-                                sx={{ width: '150px', marginRight: '20px', marginBottom: '20px' }}
-                                name="nombreDocente"
-                                value={nombreDocente}
-                                onChange={handleNombreDocente}
-                                label="Nombre" />
-                            <TextField
-                                sx={{ width: '150px', marginRight: '20px' }}
-                                name="apellidoDocente"
-                                value={apellidoDocente}
-                                onChange={handleApellidoDocente}
-                                label="Apellido" />
-                        </Box> */}
-            <Box sx={{ marginTop: "20px" }}>
+            <Box flexDirection={"row"}>
               <Button
-                variant="outlined"
-                onClick={buscarAsistencias}
+                variant="contained"
+                onClick={listarAsistencias}
                 endIcon={<Search />}
                 color="info"
               >
                 Buscar
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ mx: 1 }}
+                onClick={async () => {
+                  resetValues();
+                  await listarAsistencias();
+                }}
+                endIcon={<Close />}
+                color="info"
+              >
+                Quitar Filtros
               </Button>
             </Box>
           </Grid>
@@ -463,12 +447,12 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                    !a.ausente &&
-                    !a.ausentejustificado &&
-                    !a.llegadatarde &&
-                    !a.llegadatardejustificada &&
-                    !a.mediafalta &&
-                    !a.mediafaltajustificada ? (
+                  !a.ausente &&
+                  !a.ausentejustificado &&
+                  !a.llegadatarde &&
+                  !a.llegadatardejustificada &&
+                  !a.mediafalta &&
+                  !a.mediafaltajustificada ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}
