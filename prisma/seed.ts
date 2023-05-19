@@ -430,29 +430,29 @@ async function main() {
   //     i = i + 1
   //     idTutor = idTutor + 1
   // }
-  // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
-  //     include: {
-  //         cursoxdivision: true
-  //     },
-  // })
-  // fechas && fechas.map((fecha) => {
-  //     alumnos && alumnos.map(async (a) => {
-  //         const asistencia = await prisma.asistencia.create({
-  //             data: {
-  //                 idalumnoxcursoxdivision: a.id,
-  //                 presente: false,
-  //                 ausente: false,
-  //                 ausentejustificado: false,
-  //                 llegadatarde: false,
-  //                 mediafalta: false,
-  //                 creadoen: fecha,
-  //                 idusuario: 1,
-  //                 actualizadoen: ""
-  //             }
-  //         })
-  //         console.log(asistencia)
-  //     })
-  // })
+  const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+      include: {
+          cursoxdivision: true
+      },
+  })
+  fechas && fechas.map((fecha) => {
+      alumnos && alumnos.map(async (a) => {
+          const asistencia = await prisma.asistencia.create({
+              data: {
+                  idalumnoxcursoxdivision: a.id,
+                  presente: false,
+                  ausente: false,
+                  ausentejustificado: false,
+                  llegadatarde: false,
+                  mediafalta: false,
+                  creadoen: fecha,
+                  idusuario: 1,
+                  actualizadoen: ""
+              }
+          })
+          console.log(asistencia)
+      })
+  })
   // const docentes = await prisma.usuario.findMany({
   //     where: {
   //         idrol: 1
