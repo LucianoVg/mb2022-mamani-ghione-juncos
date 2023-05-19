@@ -241,7 +241,7 @@ export default function MantenimientoUsuario() {
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Rol</TableCell>
+           
                   <TableCell align="center">Legajo</TableCell>
                   <TableCell align="center">Nombre</TableCell>
                   <TableCell align="center">Apellido</TableCell>
@@ -249,13 +249,14 @@ export default function MantenimientoUsuario() {
                   <TableCell align="center">Direccion</TableCell>
                   <TableCell align="center">Telefono</TableCell>
                   <TableCell align="center">Localidad</TableCell>
+                  <TableCell align="center">Rol</TableCell>
                   <TableCell align="center">Accion</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {paginacion.dataActual()?.map((u, i) => (
                   <TableRow key={i}>
-                    <TableCell align="left">{u.rol?.tipo}</TableCell>
+                  
                     <TableCell align="center">{u.legajo}</TableCell>
                     <TableCell align="left">{u.nombre}</TableCell>
                     <TableCell align="left">{u.apellido}</TableCell>
@@ -263,6 +264,7 @@ export default function MantenimientoUsuario() {
                     <TableCell align="left">{u.direccion}</TableCell>
                     <TableCell align="center">{u.telefono}</TableCell>
                     <TableCell align="left">{u.localidad}</TableCell>
+                    <TableCell align="left">{u.rol?.tipo}</TableCell>
 
                     <TableCell align="center">
                       <IconButton onClick={(e) => handleClick(e, u.id)}>
