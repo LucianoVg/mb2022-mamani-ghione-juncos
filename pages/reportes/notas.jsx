@@ -398,6 +398,41 @@ export default function Notas() {
           </Box>
         )
       }
+      {
+        authUser?.rol?.tipo === "Estudiante" && (
+          <Box direction="row">
+            <FormControl
+              sx={{ width: "250px", marginRight: "20px" }}
+              size="small"
+            >
+              <InputLabel id="demo-simple-select-label">Materia</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={idMateria}
+                label="Materia"
+                onChange={handleMateria}
+                MenuProps={{ disableScrollLock: true }}
+              >
+                {materiasOrdenadas &&
+                  materiasOrdenadas?.map((m, i) => (
+                    <MenuItem selected={i === 0} key={i} value={m.materia?.id}>
+                      {m.materia?.nombre}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            <Button
+              onClick={handleSearch}
+              variant="outlined"
+              startIcon={<Search />}
+              color="info"
+            >
+              Buscar
+            </Button>
+          </Box>
+        )
+      }
       {!cargando1 &&
         !cargando2 &&
         notaTrimestre.length === 0 &&
@@ -414,7 +449,7 @@ export default function Notas() {
             <Grid item xs>
               <h2>Notas por trimestre</h2>
               <div sx={{ marginBottom: "100px" }}>
-                <TableContainer>
+                <TableContainer component={Paper}>
                   <Table>
                     <TableHead>
                       <TableRow>
@@ -493,7 +528,7 @@ export default function Notas() {
             <Grid item xs>
               <h2>Promedio por trimestre</h2>
               <div sx={{ marginTop: "200px" }}>
-                <TableContainer >
+                <TableContainer component={Paper} >
                   <Table >
                     <TableHead>
                       <TableRow>

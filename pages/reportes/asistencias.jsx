@@ -311,7 +311,7 @@ export default function Asistencias() {
                 <Grid container spacing={2}>
                   <Grid item xs>
                     {!cargando1 && (
-                      <TableContainer>
+                      <TableContainer component={Paper}>
                         <Table>
                           <TableHead>
                             <TableRow>
@@ -352,7 +352,7 @@ export default function Asistencias() {
                   </Grid>
                   <Grid item xs>
                     {!cargando2 && (
-                      <TableContainer>
+                      <TableContainer component={Paper}>
                         <Table>
                           <TableHead>
                             <TableRow>
