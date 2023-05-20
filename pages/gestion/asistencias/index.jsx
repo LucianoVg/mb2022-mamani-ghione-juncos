@@ -255,6 +255,7 @@ export default function Asistencias() {
     setIdCurso("");
     queryParams = [];
   };
+
   return (
     <Layout>
       <Container maxWidth="xl" style={{ position: "relative" }}>
@@ -327,7 +328,7 @@ export default function Asistencias() {
         </Modal>
         {/* MODAL------------------------------------------------------------------------------------------------- */}
 
-        {inEditMode.status === false ? (
+        {inEditMode.status === true ? (
           <Box>
             <Button
               variant="contained"
@@ -335,7 +336,7 @@ export default function Asistencias() {
               size="small"
               style={{ marginRight: "20px", marginBottom: "20px" }}
               onClick={() => {
-                setInEditMode({ status: true });
+                setInEditMode({ status: false });
               }}
             >
               Buscar por curso
@@ -411,7 +412,7 @@ export default function Asistencias() {
               size="small"
               style={{ marginRight: "20px", marginBottom: "20px" }}
               onClick={() => {
-                setInEditMode({ status: false });
+                setInEditMode({ status: true });
               }}
             >
               Buscar por estudiante
