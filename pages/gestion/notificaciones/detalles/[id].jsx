@@ -307,8 +307,8 @@ export default function DetallesNoticia() {
                       <Grid container direction="row-reverse" >
                         <Grid item sx={{ marginRight: "50px" }}>
                           {
-                            notificacion?.notificacionxalumno.length > 0 && authUser?.rol?.tipo != "Estudiante" ||
-                              authUser?.rol?.tipo != "Tutor" ? (
+                            notificacion?.notificacionxalumno.length > 0 && (authUser?.rol?.tipo != "Estudiante" &&
+                              authUser?.rol?.tipo != "Tutor") ? (
                               <Typography
                                 variant="caption"
                                 sx={{ marginBottom: "30px" }}
