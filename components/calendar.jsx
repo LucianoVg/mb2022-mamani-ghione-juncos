@@ -123,7 +123,6 @@ export default function Calendar({
         firstDayOfWeek={1}
         dataSource={data}
         showAllDayPanel={true}
-        allDayExpr="algo"
         dataCellTemplate={function (cellData, index, container) {
           if (!isValidDate(cellData.startDate)) {
             container.classList.add("dx-state-disabled");
