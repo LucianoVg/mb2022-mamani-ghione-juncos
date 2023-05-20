@@ -52,7 +52,13 @@ export default function Detalles() {
           : theme.typography.fontWeightMedium,
     };
   }
+  const [cursos, setCursos] = useState([]);
+  const [idCurso, setIdCurso] = useState("");
+  const [usuario, setUsuario] = useState();
+  const [materiasXcurso, setMateriasXcurso] = useState([]);
 
+  const { loading, authUser } = useAuth();
+  const router = useRouter();
   const [dataUsuario, setDataUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -63,14 +69,20 @@ export default function Detalles() {
     password: "",
     telefono: "",
     fechanacimiento: "",
+    alumno: {
+      id: 0,
+      idCurso: "",
+    },
+    preceptor: {
+      id: 0,
+      idCursos: [],
+    },
+    docente: {
+      id: 0,
+      idMaterias: [],
+    },
   });
-  const [cursos, setCursos] = useState([]);
-  const [idCurso, setIdCurso] = useState([]);
-  const [usuario, setUsuario] = useState();
-  const [materiasXcurso, setMateriasXcurso] = useState([]);
 
-  const { loading, authUser } = useAuth();
-  const router = useRouter();
   let idCursales = usuario?.preceptorxcurso?.map((c) => {
     return c?.curso?.id;
   });
@@ -88,7 +100,6 @@ export default function Detalles() {
   console.log("materiales", idMateriales);
   console.log("idmaterias", idMaterias);
 
-  const [fecha, setFecha] = useState(null);
   const [respuesta, setRespuesta] = useState({ status: 0, mensaje: "" });
   const [guardando, setGuardando] = useState(false);
   const [cargando, setCargando] = useState(false);
@@ -127,23 +138,21 @@ export default function Detalles() {
     }
   };
   const traerUsuario = async () => {
-    setCargando(true);
     if (id) {
+      setCargando(true);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios?idUsuario=${id}`
       );
+      setCargando(false);
       console.log("USUARIO: ", res.data);
       setUsuario(res.data[0]);
-      setCargando(false);
-      return;
     }
-    setCargando(false);
   };
   const handleUsuario = (e) => {
     setDataUsuario({ ...dataUsuario, [e.target.name]: e.target.value });
   };
   const handleFecha = (value) => {
-    setFecha(new Date(value));
+    setFechanacimiento(value);
     setDataUsuario({
       ...dataUsuario,
       fechanacimiento: new Date(value)
@@ -160,6 +169,10 @@ export default function Detalles() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setDataUsuario((data) => ({
+      ...data,
+      preceptor: { id: usuario?.preceptorxcurso[0]?.id, idCursos: value },
+    }));
   };
   const handleMaterias = (event) => {
     const {
@@ -170,6 +183,10 @@ export default function Detalles() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setDataUsuario((data) => ({
+      ...data,
+      docente: { id: usuario?.docentexmateria[0]?.id, idMaterias: value },
+    }));
   };
   const updateProfile = async () => {
     setGuardando(true);
@@ -196,6 +213,13 @@ export default function Detalles() {
   };
   const handleCurso = (e) => {
     setIdCurso(Number(e.target.value));
+    setDataUsuario((prev) => ({
+      ...prev,
+      alumno: {
+        id: usuario?.alumnoxcursoxdivision1[0]?.id,
+        idCurso: Number(e.target.value),
+      },
+    }));
   };
 
   const [nombre, setNombre] = useState();
@@ -206,28 +230,18 @@ export default function Detalles() {
   const [localidad, setLocalidad] = useState();
   const [direccion, setDireccion] = useState();
   const [telefono, setTelefono] = useState();
-  const [fechanacimiento, setFechanacimiento] = useState();
+  const [fechanacimiento, setFechanacimiento] = useState(new Date());
 
   console.log("datausuario:", dataUsuario);
 
-  //   const materiasUnicas = usuario?.docentexmateria?.materiaxcursoxdivision?.materia?.reduce((m, item) => {
-  //     const existingItem = m.find(({id}) => id === item.id);
-  //     if(existingItem)
-  //         existingItem.id = existingItem.qty + item.qty;
-  //     else
-  //         prev.push(item);
-  //    return prev;
-  //  }, [])
-
   const materiasOrdenadas1 = usuario?.docentexmateria?.sort(
-    (a, b) => (
-      a.materiaxcursoxdivision?.cursoxdivision?.iddivision - b.materiaxcursoxdivision?.cursoxdivision?.iddivision
-    )
+    (a, b) =>
+      a.materiaxcursoxdivision?.cursoxdivision?.iddivision -
+      b.materiaxcursoxdivision?.cursoxdivision?.iddivision
   );
   const materiasOrdenadas2 = materiasOrdenadas1?.sort(
-    (a, b) => (
+    (a, b) =>
       a.materiaxcursoxdivision?.idmateria - b.materiaxcursoxdivision?.idmateria
-    )
   );
   return (
     <Layout>
@@ -341,8 +355,8 @@ export default function Detalles() {
                         ?.nombre
                     }
                     ° Año &quot;
-                    {usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision?.division
-                      ?.division || "N/A"}
+                    {usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision
+                      ?.division?.division || "N/A"}
                     &quot;
                   </Typography>
                 )}
@@ -382,9 +396,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                    new Date(
-                      usuario?.fechanacimiento.split("/")[2]
-                    ).getFullYear()
+                      new Date(
+                        usuario?.fechanacimiento.split("/")[2]
+                      ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -458,11 +472,11 @@ export default function Detalles() {
                         size="small"
                         label="Curso"
                         name="idCurso"
-                        defaultValue={idCurso}
+                        value={idCurso}
                         onChange={handleCurso}
                         MenuProps={{ disableScrollLock: true }}
                       >
-                        <MenuItem value={0}>Seleccione un curso</MenuItem>
+                        <MenuItem value={""}>Seleccione un curso</MenuItem>
                         {cursos &&
                           cursos.map((c, i) => (
                             <MenuItem
@@ -562,9 +576,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                    new Date(
-                      usuario?.fechanacimiento.split("/")[2]
-                    ).getFullYear()
+                      new Date(
+                        usuario?.fechanacimiento.split("/")[2]
+                      ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>
@@ -578,7 +592,7 @@ export default function Detalles() {
                     <MobileDatePicker
                       InputProps={{ sx: { height: "40px" } }}
                       // label="Fecha"
-                      name="fecha"
+                      name="fechanacimiento"
                       value={fechanacimiento}
                       onChange={handleFecha}
                       renderInput={(params) => <TextField {...params} />}
@@ -676,16 +690,7 @@ export default function Detalles() {
                   <Typography variant="h6">
                     <strong>Materia/s Impartidas</strong>
                   </Typography>
-                  <Typography
-                    variant="h6"
-                  // sx={{
-                  //   width: "auto",
-                  //   display: "flex",
-                  //   alignItems: "start",
-                  //   justifyContent: "flex-start",
-                  //   flexWrap: "wrap",
-                  // }}
-                  >
+                  <Typography variant="h6">
                     <List>
                       {materiasOrdenadas2.map((dxm) => (
                         <ListItem key={dxm.id} sx={{ marginTop: "-10px" }}>
@@ -761,15 +766,6 @@ export default function Detalles() {
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    // renderValue={(usuario) => {
-                    //   return usuario.docentexmateria?.map((s, i) => (
-                    //     <MenuItem key={s.materia?.i} value={s.materia?.nombre}>
-                    //       <ListItemText
-                    //         primary={s.materia?.nombre}
-                    //       />
-                    //     </MenuItem>
-                    //   ));
-                    // }}
                     value={idMaterias}
                     onChange={handleMaterias}
                     input={<OutlinedInput label="Materias" />}
