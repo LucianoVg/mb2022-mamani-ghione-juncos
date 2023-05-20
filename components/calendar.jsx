@@ -121,16 +121,16 @@ export default function Calendar({
     <div id="calendar">
       <Scheduler
         firstDayOfWeek={1}
-        allDayPanelMode="hidden"
-        showAllDayPanel={false}
         dataSource={data}
+        showAllDayPanel={true}
+        allDayExpr="algo"
         dataCellTemplate={function (cellData, index, container) {
           if (!isValidDate(cellData.startDate)) {
-            container.classList.add("bg-not-valid-day");
             container.classList.add("dx-state-disabled");
             container.classList.add("dx-scheduler-date-table-other-month");
-            return container.textContent;
+            container.classList.add("bg-not-valid-day");
           }
+          container.innerText = cellData.text;
           return container;
         }}
         defaultCurrentDate={new Date()}
