@@ -151,7 +151,7 @@ export default function DetallesNoticia() {
                         variant="standard"
                         autoFocus
                         fullWidth
-                        sx={{ alignItems: "center" }}
+                        sx={{ alignItems: "center", marginTop: "-9px" }}
                         maxRows={2}
                         inputProps={{
                           className: styles.Typography,
@@ -159,7 +159,7 @@ export default function DetallesNoticia() {
                             fontWeight: "bold",
                             textAlign: "center",
                             marginBottom: "24.6px",
-                            marginTop: "20.5px",
+                            marginTop: "19.5px",
                             marginLeft: "30px",
                             marginRight: "30px",
                           },
@@ -179,6 +179,7 @@ export default function DetallesNoticia() {
                         autoFocus
                         fullWidth
                         maxRows={7}
+                        sx={{ marginTop: "-9px" }}
                         inputProps={{
                           className: styles.Typography2,
                           style: {
@@ -187,7 +188,7 @@ export default function DetallesNoticia() {
                             marginRight: "20px",
                           },
                           disableunderline: "true",
-                          maxLength: 300,
+                          maxLength: 200,
                         }}
                         placeholder={notificacion?.contenido}
                         name="contenido"
@@ -195,10 +196,10 @@ export default function DetallesNoticia() {
                         onChange={handleContenido}
                       />
                     </Grid>
-                    <Grid item>
+                    <Grid item sx={{ marginTop: "-8px" }}>
                       <Typography
                         variant="caption"
-                        sx={{ marginBottom: "30px", marginLeft: "30px" }}
+                        sx={{ marginLeft: "30px" }}
                         className={`${styles.Typography3}`}
                       >
                         {" "}
@@ -208,6 +209,38 @@ export default function DetallesNoticia() {
                           {notificacion.usuario?.rol?.tipo})
                         </strong>
                       </Typography>
+                    </Grid>
+                    <Grid item >
+                      <Grid container direction="row-reverse" >
+                        <Grid item sx={{ marginRight: "50px" }}>
+                          {
+                            notificacion?.notificacionxalumno.length > 0 && (authUser?.rol?.tipo !== "Estudiante" ||
+                              authUser?.rol?.tipo !== "Tutor") ? (
+                              <Typography
+                                variant="caption"
+                                // sx={{ marginBottom: "30px" }}
+                                className={`${styles.Typography3}`}
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
+                                </strong>
+                              </Typography>
+                            ) : (
+                              <Typography
+                                variant="caption"
+                                // sx={{marginRight: "60px" }}
+                                className={`${styles.Typography3}`}
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
+                                </strong>
+                              </Typography>
+                            )
+                          }
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Box>
@@ -256,10 +289,10 @@ export default function DetallesNoticia() {
                         {notificacion?.contenido}{" "}
                       </Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid item >
                       <Typography
                         variant="caption"
-                        sx={{ marginBottom: "30px", marginLeft: "30px" }}
+                        sx={{ marginBottom: "35px", marginLeft: "30px" }}
                         className={`${styles.Typography3}`}
                       >
                         {" "}
@@ -269,6 +302,38 @@ export default function DetallesNoticia() {
                           {notificacion.usuario?.rol?.tipo})
                         </strong>
                       </Typography>
+                    </Grid>
+                    <Grid item >
+                      <Grid container direction="row-reverse" >
+                        <Grid item sx={{ marginRight: "50px" }}>
+                          {
+                            notificacion?.notificacionxalumno.length > 0 && (authUser?.rol?.tipo != "Estudiante" ||
+                              authUser?.rol?.tipo != "Tutor") ? (
+                              <Typography
+                                variant="caption"
+                                sx={{ marginBottom: "30px" }}
+                                className={`${styles.Typography3}`}
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
+                                </strong>
+                              </Typography>
+                            ) : (
+                              <Typography
+                                variant="caption"
+                                sx={{ marginBottom: "30px" }}
+                                className={`${styles.Typography3}`}
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
+                                </strong>
+                              </Typography>
+                            )
+                          }
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Box>

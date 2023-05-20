@@ -97,6 +97,9 @@ export default function ListadoNotificaciones() {
       if (!tienePermisos()) {
         router.push("/error");
       } else {
+        if (authUser?.rol?.tipo === "Administrador") {
+          ListarNotificacionesAdmin()
+        }
         if (authUser?.rol && authUser?.rol?.tipo === "Estudiante") {
           ListarNotificacionesAlumno();
         }
@@ -125,10 +128,10 @@ export default function ListadoNotificaciones() {
   //         setUsuario({ id: res.data?.id, rol: res.data?.rol?.tipo })
   //     }
   // }
-  const ListarNotificaciones = async () => {
+  const ListarNotificacionesAdmin = async () => {
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/usuario/${usuario?.id}`
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/listar_notificaciones`
     );
     if (res.status === 200) {
       console.log(res.data);
@@ -167,7 +170,7 @@ export default function ListadoNotificaciones() {
                 minWidth: "100px",
               }}
             >
-              {notificaciones &&
+              {notificaciones && authUser?.rol?.tipo != "Administrador" &&
                 notificaciones?.map((n, i) => (
                   <Tab
                     key={i}
@@ -176,8 +179,17 @@ export default function ListadoNotificaciones() {
                     sx={{ borderBottom: 1, borderColor: "divider" }}
                   />
                 ))}
+              {notificaciones && authUser?.rol?.tipo === "Administrador" &&
+                notificaciones?.map((n, i) => (
+                  <Tab
+                    key={i}
+                    label={n.asunto}
+                    {...a11yProps(i)}
+                    sx={{ borderBottom: 1, borderColor: "divider" }}
+                  />
+                ))}
             </Tabs>
-            {notificaciones &&
+            {notificaciones && authUser?.rol?.tipo != "Administrador" &&
               notificaciones?.map((n, i) => (
                 <TabPanel
                   key={i}
@@ -210,6 +222,43 @@ export default function ListadoNotificaciones() {
                       Atte. {n.notificacion?.usuario?.nombre}{" "}
                       {n.notificacion?.usuario?.apellido} (
                       {n.notificacion?.usuario?.rol?.tipo})
+                    </strong>
+                  </Typography>
+                </TabPanel>
+              ))}
+            {notificaciones && authUser?.rol?.tipo === "Administrador" &&
+              notificaciones?.map((n, i) => (
+                <TabPanel
+                  key={i}
+                  value={value}
+                  index={i}
+                  style={{ width: "680px" }}
+                  container="true"
+                >
+                  <Typography
+                    textAlign="center"
+                    variant={"h6"}
+                    sx={{ marginBottom: "30px" }}
+                    className={`${styles.Typography}`}
+                  >
+                    <strong>{n.notificacion?.asunto}</strong>{" "}
+                  </Typography>
+                  <Typography
+                    variant={"body2"}
+                    sx={{ marginBottom: "30px" }}
+                    className={`${styles.Typography2}`}
+                  >
+                    {n.contenido}{" "}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    className={`${styles.Typography3}`}
+                  >
+                    {" "}
+                    <strong>
+                      Atte. {n.usuario?.nombre}{" "}
+                      {n.usuario?.apellido} (
+                      {n.usuario?.rol?.tipo})
                     </strong>
                   </Typography>
                 </TabPanel>

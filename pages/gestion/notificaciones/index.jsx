@@ -278,7 +278,7 @@ const Notificaciones = () => {
                       rows={5}
                       required
                       // label="Contenido"
-                      inputProps={{ maxLength: 300 }}
+                      inputProps={{ maxLength: 200 }}
                       // value={noticiaActualizar.descripcion}
                       // placeholder={noticiaActualizar?.descripcion}
                       value={notificacion.contenido}

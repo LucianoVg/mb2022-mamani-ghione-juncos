@@ -27,6 +27,25 @@ async function DetalleNotificacion(idNotificacion) {
                     include: {
                         rol: true
                     }
+                },
+                notificacionxalumno: {
+                    include: {
+                        alumnoxcursoxdivision: {
+                            include: {
+                                cursoxdivision: {
+                                  include:{
+                                    curso: true,
+                                    division: true
+                                  }
+                                }
+                            }
+                        }
+                    }
+                },
+                notificacionxtutor: {
+                    include: {
+                        tutor: true
+                    }
                 }
             },
             where: {

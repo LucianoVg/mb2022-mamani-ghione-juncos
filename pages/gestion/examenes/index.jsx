@@ -39,9 +39,9 @@ export default function FechasExamen() {
   const traerExamenes = async () => {
     let param =
       authUser?.rol?.tipo === "Estudiante"
-        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0].idcursoxdivision}`
+        ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.idcursoxdivision}`
         : authUser?.rol?.tipo === "Docente"
-        ? `?idDocente=${authUser?.docentexmateria[0].idusuario}`
+        ? `?idDocente=${authUser?.docentexmateria[0]?.idusuario}`
         : "";
     console.log("Examenes param:", param);
     setCargando(true);

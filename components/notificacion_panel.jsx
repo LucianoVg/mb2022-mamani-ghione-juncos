@@ -31,6 +31,9 @@ export const Notificacion = () => {
       : authUser?.id;
   useEffect(() => {
     if (!loading && authUser) {
+      if (authUser?.rol && authUser?.rol?.tipo === "Administrador") {
+        ListarNotificacionesAdmin();
+      }
       if (authUser?.rol && authUser?.rol?.tipo === "Estudiante") {
         ListarNotificacionesAlumno();
       }
@@ -54,6 +57,15 @@ export const Notificacion = () => {
     );
     if (res.status === 200) {
       setNotificaciones(res.data);
+    }
+  };
+  const ListarNotificacionesAdmin = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/listar_notificaciones`
+    );
+    if (res.status === 200) {
+      setNotificaciones(res.data);
+      console.log("Admin", res.data)
     }
   };
   return (
@@ -102,7 +114,7 @@ export const Notificacion = () => {
               <ListItemText>No hay notificaciones</ListItemText>
             </ListItem>
           )}
-          {notificaciones &&
+          {notificaciones && authUser?.rol?.tipo != "Administrador" &&
             notificaciones?.map((n, i) => (
               <ListItem key={i} disablePadding>
                 <ListItemButton
@@ -113,7 +125,17 @@ export const Notificacion = () => {
                 </ListItemButton>
               </ListItem>
             ))}
-
+          {notificaciones && authUser?.rol?.tipo === "Administrador" &&
+            notificaciones?.map((n, i) => (
+              <ListItem key={i} disablePadding>
+                <ListItemButton
+                  component="a"
+                  href={`/gestion/notificaciones/detalles/${n.id}`}
+                >
+                  <ListItemText primary={n.asunto} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           {notificaciones && notificaciones?.length > 0 && (
             <ListItem disablePadding>
               <ListItemButton
@@ -128,6 +150,7 @@ export const Notificacion = () => {
               </ListItemButton>
             </ListItem>
           )}
+
         </List>
       </Popover>
     </Container>
