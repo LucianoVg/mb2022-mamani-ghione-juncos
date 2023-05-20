@@ -265,7 +265,25 @@ export default function DetallesNoticia() {
                         Editar
                       </Button>
                     )}
+                  {
+                    (authUser?.rol?.tipo === "Estudiante" ||
+                    authUser?.rol?.tipo === "Tutor") && (
+                      <Button
+                        variant="contained"
+                        disabled
+                        sx={{ marginLeft: "30px", marginTop: "20px", opacity: "0%" }}
+                        onClick={() => {
+                          setEditMode(true);
+                          setAsunto(notificacion?.asunto);
+                          setContenido(notificacion?.contenido);
+                        }}
+                      >
+                        Editar
+                      </Button>
+                    )
+                  }
                   <Grid>
+
                     <Grid item>
                       <Typography
                         textAlign="center"
