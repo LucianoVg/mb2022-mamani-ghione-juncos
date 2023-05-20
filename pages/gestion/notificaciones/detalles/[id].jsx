@@ -16,6 +16,7 @@ import {
 import styles from "../../../../styles/fontSize.module.css";
 import React from "react";
 import { useAuth } from "../../../../components/context/authUserProvider";
+import { clamp } from "lodash";
 
 export default function DetallesNoticia() {
   const [cargando, setCargando] = useState(false);
@@ -154,8 +155,10 @@ export default function DetallesNoticia() {
                         sx={{ alignItems: "center", marginTop: "-9px" }}
                         maxRows={2}
                         inputProps={{
-                          className: styles.Typography,
+                          // className: styles.Typography,
                           style: {
+                            fontSize: "clamp(25px, 3vw, 50px)",
+                            lineHeight: "clamp(25px, 3vw, 40px)",
                             fontWeight: "bold",
                             textAlign: "center",
                             marginBottom: "24.6px",
@@ -181,8 +184,10 @@ export default function DetallesNoticia() {
                         maxRows={7}
                         sx={{ marginTop: "-9px" }}
                         inputProps={{
-                          className: styles.Typography2,
+                          // className: styles.Typography2,
                           style: {
+                            fontSize: "clamp(15px, 2vw, 40px)",
+                            lineHeight: "clamp(20px, 3vw, 40px)",
                             marginBottom: "25px",
                             marginLeft: "30px",
                             marginRight: "20px",
@@ -199,8 +204,8 @@ export default function DetallesNoticia() {
                     <Grid item sx={{ marginTop: "-8px" }}>
                       <Typography
                         variant="caption"
-                        sx={{ marginLeft: "30px" }}
-                        className={`${styles.Typography3}`}
+                        sx={{ marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
+                        // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
@@ -266,12 +271,14 @@ export default function DetallesNoticia() {
                         textAlign="center"
                         variant={"h6"}
                         sx={{
+                          fontSize: "clamp(25px, 3vw, 50px)",
+                          lineHeight: "clamp(25px, 3vw, 40px)",
                           marginBottom: "30px",
                           marginTop: "20px",
                           marginLeft: "30px",
                           marginRight: "30px",
                         }}
-                        className={`${styles.Typography}`}
+                        // className={`${styles.Typography}`}
                       >
                         <strong>{notificacion?.asunto}</strong>{" "}
                       </Typography>
@@ -280,11 +287,13 @@ export default function DetallesNoticia() {
                       <Typography
                         variant={"body2"}
                         sx={{
+                          fontSize: "clamp(15px, 2vw, 40px)",
+                          lineHeight: "clamp(20px, 3vw, 40px)",
                           marginBottom: "30px",
                           marginLeft: "30px",
                           marginRight: "20px",
                         }}
-                        className={`${styles.Typography2}`}
+                        // className={`${styles.Typography2}`}
                       >
                         {notificacion?.contenido}{" "}
                       </Typography>
@@ -292,8 +301,8 @@ export default function DetallesNoticia() {
                     <Grid item >
                       <Typography
                         variant="caption"
-                        sx={{ marginBottom: "35px", marginLeft: "30px" }}
-                        className={`${styles.Typography3}`}
+                        sx={{ marginBottom: "35px", marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)"  }}
+                        // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
