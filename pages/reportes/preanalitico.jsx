@@ -55,10 +55,9 @@ export default function Preanalitico() {
   const traerPreanalitico = async () => {
     setCargando(true);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${
-        authUser?.rol?.tipo === "Estudiante"
-          ? authUser?.alumnoxcursoxdivision1[0].id
-          : idAlumno
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/reportes/preanalitico/${authUser?.rol?.tipo === "Estudiante"
+        ? authUser?.alumnoxcursoxdivision1[0].id
+        : idAlumno
       }`
     );
     if (res.status === 200) {
@@ -208,15 +207,20 @@ export default function Preanalitico() {
                 <TableRow>
                   <TableCell
                     colSpan={20}
-                    sx={{ backgroundColor: "lightblue", color: "black" }}
+                    sx={{
+                      backgroundColor: "lightblue", color: "black",
+                      borderBottomColor: "black",
+
+
+                    }}
                   >
                     <Typography variant="h4" sx={{ textAlign: "center" }}>
                       Reporte Historial Académico{" "}
                       {authUser?.rol?.tipo === "Estudiante"
                         ? ` de ${authUser?.apellido} ${authUser?.nombre}`
                         : authUser?.rol?.tipo === "Tutor" && nombreAlumno
-                        ? ` de ${nombreAlumno}`
-                        : nombreAlumno && ` de ${nombreAlumno}`}
+                          ? ` de ${nombreAlumno}`
+                          : nombreAlumno && ` de ${nombreAlumno}`}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -229,6 +233,7 @@ export default function Preanalitico() {
                       backgroundColor: "lightblue",
                       borderRightColor: "black",
                       borderRight: 1,
+
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
@@ -299,6 +304,7 @@ export default function Preanalitico() {
                       backgroundColor: "lightblue",
                       borderLeftColor: "black",
                       borderLeft: 1,
+
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
@@ -530,7 +536,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -560,7 +566,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -590,7 +596,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -620,7 +626,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -628,7 +634,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[31]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[31]?.notafinal.length > 0 ? (
+                        Number(preanalitico[31]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -650,7 +662,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -658,7 +670,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[43]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[43]?.notafinal.length > 0 ? (
+                        Number(preanalitico[43]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -680,15 +698,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[57]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[57]?.notafinal.length > 0 ? (
+                        Number(preanalitico[57]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -713,7 +737,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -743,7 +767,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -773,7 +797,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -803,7 +827,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -811,7 +835,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[32]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[32]?.notafinal.length > 0 ? (
+                        Number(preanalitico[32]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -833,7 +863,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -841,7 +871,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[44]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[44]?.notafinal.length > 0 ? (
+                        Number(preanalitico[44]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -863,15 +899,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[58]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[58]?.notafinal.length > 0 ? (
+                        Number(preanalitico[58]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -896,7 +938,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -926,7 +968,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -956,7 +998,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -986,7 +1028,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -994,7 +1036,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[33]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[33]?.notafinal.length > 0 ? (
+                        Number(preanalitico[33]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1016,7 +1064,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1024,7 +1072,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[45]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[45]?.notafinal.length > 0 ? (
+                        Number(preanalitico[45]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1046,15 +1100,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[59]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[59]?.notafinal.length > 0 ? (
+                        Number(preanalitico[59]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1079,7 +1139,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1109,7 +1169,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1139,7 +1199,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1169,7 +1229,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1177,7 +1237,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[34]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[34]?.notafinal.length > 0 ? (
+                        Number(preanalitico[34]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1199,7 +1265,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1207,7 +1273,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[46]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[46]?.notafinal.length > 0 ? (
+                        Number(preanalitico[46]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1229,15 +1301,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[60]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[60]?.notafinal.length > 0 ? (
+                        Number(preanalitico[60]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1262,7 +1340,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1292,7 +1370,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1322,7 +1400,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1352,7 +1430,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1360,7 +1438,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[35]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[35]?.notafinal.length > 0 ? (
+                        Number(preanalitico[35]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1382,7 +1466,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1390,7 +1474,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[47]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[47]?.notafinal.length > 0 ? (
+                        Number(preanalitico[47]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1412,15 +1502,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[61]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[61]?.notafinal.length > 0 ? (
+                        Number(preanalitico[61]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1445,7 +1541,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1475,7 +1571,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1505,7 +1601,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1535,7 +1631,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1543,7 +1639,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[36]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[36]?.notafinal.length > 0 ? (
+                        Number(preanalitico[36]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1565,7 +1667,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1573,7 +1675,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[48]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[48]?.notafinal.length > 0 ? (
+                        Number(preanalitico[48]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1595,15 +1703,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[62]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[62]?.notafinal.length > 0 ? (
+                        Number(preanalitico[62]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1628,7 +1742,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1658,7 +1772,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1688,7 +1802,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1718,7 +1832,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1726,7 +1840,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[37]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[37]?.notafinal.length > 0 ? (
+                        Number(preanalitico[37]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1748,7 +1868,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1756,7 +1876,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[49]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[49]?.notafinal.length > 0 ? (
+                        Number(preanalitico[49]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1778,15 +1904,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[63]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[63]?.notafinal.length > 0 ? (
+                        Number(preanalitico[63]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1811,7 +1943,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1841,7 +1973,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1871,7 +2003,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1901,7 +2033,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1909,7 +2041,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[38]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[38]?.notafinal.length > 0 ? (
+                        Number(preanalitico[38]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1931,7 +2069,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -1939,7 +2077,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[50]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[50]?.notafinal.length > 0 ? (
+                        Number(preanalitico[50]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -1961,15 +2105,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[64]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[64]?.notafinal.length > 0 ? (
+                        Number(preanalitico[64]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -1994,7 +2144,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2024,7 +2174,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2054,7 +2204,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2084,7 +2234,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2092,7 +2242,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[39]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[39]?.notafinal.length > 0 ? (
+                        Number(preanalitico[39]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2114,7 +2270,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2122,7 +2278,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[51]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[51]?.notafinal.length > 0 ? (
+                        Number(preanalitico[51]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2144,15 +2306,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[65]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[65]?.notafinal.length > 0 ? (
+                        Number(preanalitico[65]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2177,7 +2345,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2207,7 +2375,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2237,7 +2405,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2267,7 +2435,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2275,7 +2443,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[40]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[40]?.notafinal.length > 0 ? (
+                        Number(preanalitico[40]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2297,7 +2471,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2305,7 +2479,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[52]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[52]?.notafinal.length > 0 ? (
+                        Number(preanalitico[52]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2327,15 +2507,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[66]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[66]?.notafinal.length > 0 ? (
+                        Number(preanalitico[66]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2361,7 +2547,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2393,7 +2579,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2424,7 +2610,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2454,7 +2640,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2462,7 +2648,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[41]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[41]?.notafinal.length > 0 ? (
+                        Number(preanalitico[41]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2484,7 +2676,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2492,7 +2684,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[53]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[53]?.notafinal.length > 0 ? (
+                        Number(preanalitico[53]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2514,15 +2712,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[67]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[67]?.notafinal.length > 0 ? (
+                        Number(preanalitico[67]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2548,7 +2752,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2580,7 +2784,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2612,7 +2816,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2643,7 +2847,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2651,7 +2855,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[42]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[42]?.notafinal.length > 0 ? (
+                        Number(preanalitico[42]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2673,7 +2883,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2681,7 +2891,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[54]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[54]?.notafinal.length > 0 ? (
+                        Number(preanalitico[54]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2703,15 +2919,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[68]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[68]?.notafinal.length > 0 ? (
+                        Number(preanalitico[68]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2737,7 +2959,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2769,7 +2991,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2801,7 +3023,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2833,7 +3055,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2864,7 +3086,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2872,7 +3094,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[55]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[55]?.notafinal.length > 0 ? (
+                        Number(preanalitico[55]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -2894,15 +3122,21 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[69]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[69]?.notafinal.length > 0 ? (
+                        Number(preanalitico[69]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                 </TableRow>
 
@@ -2928,7 +3162,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2960,7 +3194,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -2992,7 +3226,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -3024,7 +3258,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -3055,7 +3289,7 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
+                      borderLeft: 1,
                       borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
@@ -3063,7 +3297,13 @@ export default function Preanalitico() {
                       borderBottomColor: "black",
                     }}
                   >
-                    {Number(preanalitico[56]?.notafinal).toFixed(2)}
+                    {
+                      preanalitico[56]?.notafinal.length > 0 ? (
+                        Number(preanalitico[56]?.notafinal).toFixed(2)
+                      ) : (
+                        " "
+                      )
+                    }
                   </TableCell>
                   <TableCell
                     colSpan={2}
@@ -3086,8 +3326,8 @@ export default function Preanalitico() {
                     align="center"
                     sx={{
                       borderLeftColor: "black",
-                      borderLeftt: 1,
-                      borderRight: 1,
+                      borderLeft: 1,
+                      // borderRight: 1,
                       borderTop: 1,
                       borderTopColor: "black",
                       borderBottom: 1,
