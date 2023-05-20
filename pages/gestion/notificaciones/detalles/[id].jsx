@@ -278,7 +278,7 @@ export default function DetallesNoticia() {
                           marginLeft: "30px",
                           marginRight: "30px",
                         }}
-                        // className={`${styles.Typography}`}
+                      // className={`${styles.Typography}`}
                       >
                         <strong>{notificacion?.asunto}</strong>{" "}
                       </Typography>
@@ -293,7 +293,7 @@ export default function DetallesNoticia() {
                           marginLeft: "30px",
                           marginRight: "20px",
                         }}
-                        // className={`${styles.Typography2}`}
+                      // className={`${styles.Typography2}`}
                       >
                         {notificacion?.contenido}{" "}
                       </Typography>
@@ -302,7 +302,7 @@ export default function DetallesNoticia() {
                       <Typography
                         variant="caption"
                         sx={{ marginBottom: "35px", marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
-                        // className={`${styles.Typography3}`}
+                      // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
@@ -316,31 +316,33 @@ export default function DetallesNoticia() {
                       <Grid container direction="row-reverse" >
                         <Grid item sx={{ marginRight: "50px" }}>
                           {
-                            notificacion?.notificacionxalumno.length > 0 && (authUser?.rol?.tipo != "Estudiante" &&
-                              authUser?.rol?.tipo != "Tutor") ? (
-                              <Typography
-                                variant="caption"
-                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                            authUser?.rol?.tipo != "Estudiante" &&
+                            authUser?.rol?.tipo != "Tutor" && (
+                              notificacion?.notificacionxalumno.length > 0 ? (
+                                <Typography
+                                  variant="caption"
+                                  sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                                 // className={`${styles.Typography3}`}
-                              >
-                                {" "}
-                                <strong>
-                                  Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
-                                </strong>
-                              </Typography>
-                            ) : (
-                              <Typography
-                                variant="caption"
-                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                                >
+                                  {" "}
+                                  <strong>
+                                    Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
+                                  </strong>
+                                </Typography>
+                              ) : (
+                                <Typography
+                                  variant="caption"
+                                  sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                                 // className={`${styles.Typography3}`}
-                              >
-                                {" "}
-                                <strong>
-                                  Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
-                                </strong>
-                              </Typography>
-                            )
-                          }
+                                >
+                                  {" "}
+                                  <strong>
+                                    Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
+                                  </strong>
+                                </Typography>
+                              )
+                            )}
+
                         </Grid>
                       </Grid>
                     </Grid>
