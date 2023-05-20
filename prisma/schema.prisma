@@ -53,8 +53,8 @@ model asistenciadocente {
   motivo             String?
   ausentejustificado Boolean?
   iddocente          Int
-  docentexmateria    docentexmateria @relation(fields: [iddocente], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  usuario            usuario         @relation(fields: [idusuario], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  docente            usuario  @relation("docente", fields: [iddocente], references: [id], onDelete: Cascade)
+  usuario            usuario  @relation("usuario", fields: [idusuario], references: [id], onDelete: Cascade)
 }
 
 model curso {
@@ -97,7 +97,6 @@ model docentexmateria {
   idmateriaxcursoxdivision Int
   materiaxcursoxdivision   materiaxcursoxdivision @relation(fields: [idmateriaxcursoxdivision], references: [id], onDelete: Cascade)
   usuario                  usuario                @relation(fields: [idusuario], references: [id], onDelete: Cascade)
-  asistenciadocente        asistenciadocente[]
 }
 
 model estadoalumno {
@@ -358,7 +357,8 @@ model usuario {
   alumnoxcursoxdivision2 alumnoxcursoxdivision[] @relation("tutor")
   alumnoxcursoxdivision1 alumnoxcursoxdivision[] @relation("usuario")
   asistencia             asistencia[]
-  asistenciadocente      asistenciadocente[]
+  asistenciadocente1     asistenciadocente[]     @relation("docente")
+  asistenciadocente2     asistenciadocente[]     @relation("usuario")
   docentexmateria        docentexmateria[]
   fechaexamen            fechaexamen[]
   fichainstitucional     fichainstitucional[]

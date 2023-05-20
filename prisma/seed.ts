@@ -430,39 +430,17 @@ async function main() {
   //     i = i + 1
   //     idTutor = idTutor + 1
   // }
-  const alumnos = await prisma.alumnoxcursoxdivision.findMany({
-      include: {
-          cursoxdivision: true
-      },
-  })
-  fechas && fechas.map((fecha) => {
-      alumnos && alumnos.map(async (a) => {
-          const asistencia = await prisma.asistencia.create({
-              data: {
-                  idalumnoxcursoxdivision: a.id,
-                  presente: false,
-                  ausente: false,
-                  ausentejustificado: false,
-                  llegadatarde: false,
-                  mediafalta: false,
-                  creadoen: fecha,
-                  idusuario: 1,
-                  actualizadoen: ""
-              }
-          })
-          console.log(asistencia)
-      })
-  })
-  // const docentes = await prisma.usuario.findMany({
-  //     where: {
-  //         idrol: 1
-  //     }
+
+  // const alumnos = await prisma.alumnoxcursoxdivision.findMany({
+  //     include: {
+  //         cursoxdivision: true
+  //     },
   // })
   // fechas && fechas.map((fecha) => {
-  //     docentes && docentes.map(async (d) => {
-  //         const asistencia = await prisma.asistenciadocente.create({
+  //     alumnos && alumnos.map(async (a) => {
+  //         const asistencia = await prisma.asistencia.create({
   //             data: {
-  //                 iddocente: d.id,
+  //                 idalumnoxcursoxdivision: a.id,
   //                 presente: false,
   //                 ausente: false,
   //                 ausentejustificado: false,
@@ -476,6 +454,31 @@ async function main() {
   //         console.log(asistencia)
   //     })
   // })
+  const docentes = await prisma.usuario.findMany({
+      where: {
+          idrol: 1
+      }
+  })
+  fechas && fechas.map((fecha) => {
+      docentes && docentes.map(async (d) => {
+          const asistencia = await prisma.asistenciadocente.create({
+              data: {
+                  iddocente: d.id,
+                  presente: false,
+                  ausente: false,
+                  ausentejustificado: false,
+                  llegadatarde: false,
+                  mediafalta: false,
+                  creadoen: fecha,
+                  idusuario: 1,
+                  actualizadoen: ""
+              }
+          })
+          console.log(asistencia)
+      })
+  })
+
+  
   //  materias = await prisma.materia.findMany()
   // docentes.map(async (d) => {
   //     materias.map(async (m) => {
