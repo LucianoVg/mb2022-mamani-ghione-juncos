@@ -205,7 +205,7 @@ export default function DetallesNoticia() {
                       <Typography
                         variant="caption"
                         sx={{ marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
-                        // className={`${styles.Typography3}`}
+                      // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
@@ -223,8 +223,8 @@ export default function DetallesNoticia() {
                               authUser?.rol?.tipo !== "Tutor") ? (
                               <Typography
                                 variant="caption"
-                                // sx={{ marginBottom: "30px" }}
-                                className={`${styles.Typography3}`}
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                              // className={`${styles.Typography3}`}
                               >
                                 {" "}
                                 <strong>
@@ -234,8 +234,8 @@ export default function DetallesNoticia() {
                             ) : (
                               <Typography
                                 variant="caption"
-                                // sx={{marginRight: "60px" }}
-                                className={`${styles.Typography3}`}
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                              // className={`${styles.Typography3}`}
                               >
                                 {" "}
                                 <strong>
@@ -301,7 +301,7 @@ export default function DetallesNoticia() {
                     <Grid item >
                       <Typography
                         variant="caption"
-                        sx={{ marginBottom: "35px", marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)"  }}
+                        sx={{ marginBottom: "35px", marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
                         // className={`${styles.Typography3}`}
                       >
                         {" "}
@@ -320,8 +320,8 @@ export default function DetallesNoticia() {
                               authUser?.rol?.tipo != "Tutor") ? (
                               <Typography
                                 variant="caption"
-                                sx={{ marginBottom: "30px" }}
-                                className={`${styles.Typography3}`}
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                                // className={`${styles.Typography3}`}
                               >
                                 {" "}
                                 <strong>
@@ -331,8 +331,8 @@ export default function DetallesNoticia() {
                             ) : (
                               <Typography
                                 variant="caption"
-                                sx={{ marginBottom: "30px" }}
-                                className={`${styles.Typography3}`}
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                                // className={`${styles.Typography3}`}
                               >
                                 {" "}
                                 <strong>

@@ -201,21 +201,28 @@ export default function ListadoNotificaciones() {
                   <Typography
                     textAlign="center"
                     variant={"h6"}
-                    sx={{ marginBottom: "30px" }}
-                    className={`${styles.Typography}`}
+                    sx={{
+                      marginBottom: "30px", fontSize: "clamp(25px, 3vw, 50px)",
+                      lineHeight: "clamp(25px, 3vw, 40px)",
+                    }}
+                    // className={`${styles.Typography}`}
                   >
                     <strong>{n.notificacion?.asunto}</strong>{" "}
                   </Typography>
                   <Typography
                     variant={"body2"}
-                    sx={{ marginBottom: "30px" }}
-                    className={`${styles.Typography2}`}
+                    sx={{
+                      marginBottom: "30px", fontSize: "clamp(15px, 2vw, 40px)",
+                      lineHeight: "clamp(20px, 3vw, 40px)",
+                    }}
+                  // className={`${styles.Typography2}`}
                   >
                     {n.notificacion?.contenido}{" "}
                   </Typography>
                   <Typography
                     variant="caption"
-                    className={`${styles.Typography3}`}
+                    sx={{fontSize: "clamp(15px, 2vw, 40px)"}}
+                    // className={`${styles.Typography3}`}
                   >
                     {" "}
                     <strong>
@@ -238,21 +245,29 @@ export default function ListadoNotificaciones() {
                   <Typography
                     textAlign="center"
                     variant={"h6"}
-                    sx={{ marginBottom: "30px" }}
-                    className={`${styles.Typography}`}
+                    sx={{
+                      marginBottom: "30px", fontSize: "clamp(25px, 3vw, 50px)",
+                      lineHeight: "clamp(25px, 3vw, 40px)",
+                    }}
+
+                    // className={`${styles.Typography}`}
                   >
                     <strong>{n.notificacion?.asunto}</strong>{" "}
                   </Typography>
                   <Typography
                     variant={"body2"}
-                    sx={{ marginBottom: "30px" }}
-                    className={`${styles.Typography2}`}
+                    sx={{
+                      marginBottom: "30px", fontSize: "clamp(15px, 2vw, 40px)",
+                      lineHeight: "clamp(20px, 3vw, 40px)",
+                    }}
+                    // className={`${styles.Typography2}`}
                   >
                     {n.contenido}{" "}
                   </Typography>
                   <Typography
                     variant="caption"
-                    className={`${styles.Typography3}`}
+                    sx={{fontSize: "clamp(15px, 2vw, 40px)"}}
+                    // className={`${styles.Typography3}`}
                   >
                     {" "}
                     <strong>
