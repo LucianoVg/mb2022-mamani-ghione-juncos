@@ -307,8 +307,8 @@ export default function Sancion() {
                       color: "black",
                       backgroundColor: "lightblue",
                       borderRightColor: "black",
-                      borderRight: 1,
-                      borderBottom: 1,
+                      // borderRight: 1,
+                      // borderBottom: 1,
                       borderBottomColor: "black",
                     }}
                   >
