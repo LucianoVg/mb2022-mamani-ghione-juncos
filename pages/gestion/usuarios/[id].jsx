@@ -69,16 +69,16 @@ export default function Detalles() {
     password: "",
     telefono: "",
     fechanacimiento: "",
-    alumno: {
-      id: 0,
-      idCurso: "",
-    },
+    //  alumno: {
+    //    id: 0,
+    //    idCurso: "",
+    //  },
     preceptor: {
-      id: 0,
+      idPreceptores: [],
       idCursos: [],
     },
     docente: {
-      id: 0,
+      idDocentes: [],
       idMaterias: [],
     },
   });
@@ -171,7 +171,10 @@ export default function Detalles() {
     );
     setDataUsuario((data) => ({
       ...data,
-      preceptor: { id: usuario?.preceptorxcurso[0]?.id, idCursos: value },
+      preceptor: {
+        idPreceptores: usuario?.preceptorxcurso?.map((pxc) => pxc.id),
+        idCursos: value,
+      },
     }));
   };
   const handleMaterias = (event) => {
@@ -185,7 +188,10 @@ export default function Detalles() {
     );
     setDataUsuario((data) => ({
       ...data,
-      docente: { id: usuario?.docentexmateria[0]?.id, idMaterias: value },
+      docente: {
+        idDocentes: usuario?.docentexmateria?.map((dxm) => dxm.id),
+        idMaterias: value,
+      },
     }));
   };
   const updateProfile = async () => {
@@ -213,13 +219,13 @@ export default function Detalles() {
   };
   const handleCurso = (e) => {
     setIdCurso(Number(e.target.value));
-    setDataUsuario((prev) => ({
-      ...prev,
-      alumno: {
-        id: usuario?.alumnoxcursoxdivision1[0]?.id,
-        idCurso: Number(e.target.value),
-      },
-    }));
+    //  setDataUsuario((prev) => ({
+    //    ...prev,
+    //    alumno: {
+    //      id: usuario?.alumnoxcursoxdivision1[0]?.id,
+    //      idCurso: Number(e.target.value),
+    //    },
+    //  }));
   };
 
   const [nombre, setNombre] = useState();

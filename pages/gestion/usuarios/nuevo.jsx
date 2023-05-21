@@ -228,7 +228,9 @@ export default function NuevoUsuario() {
         correo: usuario.correo,
         direccion: usuario.direccion,
         localidad: usuario.localidad,
-        fechaNacimiento: fecha.toLocaleDateString("en-GB"),
+        fechaNacimiento: fecha
+          ? fecha.toLocaleDateString("en-GB").split("T")[0]
+          : null,
         idRol: usuario.idRol,
         idCurso: usuario.idCurso,
         idTutor: usuario.idTutor,

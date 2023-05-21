@@ -53,60 +53,78 @@ async function actualizarUsuario(id, dataUsuario) {
     if (dataUsuario.fechanacimiento) {
       data = { ...data, fechanacimiento: dataUsuario.fechanacimiento };
     }
-    if (dataUsuario.alumno.id) {
-      data = {
-        ...data,
-        alumnoxcursoxdivision1: {
-          update: {
-            data: {
-              cursoxdivision: {
-                update: {
-                  idcurso: Number(dataUsuario?.alumno?.idCurso),
-                },
+    //  if (dataUsuario.alumno.id) {
+    //    data = {
+    //      ...data,
+    //      alumnoxcursoxdivision1: {
+    //        update: {
+    //          data: {
+    //            cursoxdivision: {
+    //              update: {
+    //                idcurso: Number(dataUsuario?.alumno?.idCurso),
+    //              },
+    //            },
+    //          },
+    //          where: {
+    //            id: Number(dataUsuario?.alumno?.id),
+    //          },
+    //        },
+    //      },
+    //    };
+    //  }
+    if (dataUsuario.preceptor.idPreceptores.length) {
+      dataUsuario.preceptor.idPreceptores?.map(async (idPreceptor) => {
+        const deleted = await db.preceptorxcurso.delete({
+          where: {
+            id: Number(idPreceptor),
+          },
+        });
+        console.log("PreceptorXCurso:", deleted);
+      });
+
+      dataUsuario.preceptor?.idCursos?.map(async (idcurso) => {
+        await db.preceptorxcurso.create({
+          data: {
+            curso: {
+              connect: {
+                id: Number(idcurso),
               },
             },
-            where: {
-              id: Number(dataUsuario?.alumno?.id),
+            usuario: {
+              connect: {
+                id: Number(id),
+              },
             },
           },
-        },
-      };
+        });
+      });
     }
-    if (dataUsuario.preceptor.id) {
-      data = {
-        ...data,
-        preceptorxcurso: {
-          connectOrCreate: dataUsuario.preceptor?.idCursos?.map((idcurso) => ({
-            create: {
-              idcurso: Number(idcurso),
+    if (dataUsuario.docente.idDocentes.length) {
+      dataUsuario.docente.idDocentes?.map(async (idDocente) => {
+        const deleted = await db.docentexmateria.delete({
+          where: {
+            id: Number(idDocente),
+          },
+        });
+        console.log("DocenteXMateria:", deleted);
+      });
+
+      dataUsuario.docente?.idMaterias?.map(async (idmateria) => {
+        await db.docentexmateria.create({
+          data: {
+            materiaxcursoxdivision: {
+              connect: {
+                id: Number(idmateria),
+              },
             },
-            where: {
-              id: Number(dataUsuario?.preceptor?.id),
-            },
-          })),
-        },
-      };
-    }
-    if (dataUsuario.docente.id) {
-      data = {
-        ...data,
-        docentexmateria: {
-          update: {
-            data: {
-              materiaxcursoxdivision: dataUsuario?.docente?.idMaterias?.map(
-                (idmateria) => ({
-                  update: {
-                    id: Number(idmateria),
-                  },
-                })
-              ),
-            },
-            where: {
-              id: Number(dataUsuario?.docente?.id),
+            usuario: {
+              connect: {
+                id: Number(id),
+              },
             },
           },
-        },
-      };
+        });
+      });
     }
     console.log(data);
     const usuario = await db.usuario.update({
