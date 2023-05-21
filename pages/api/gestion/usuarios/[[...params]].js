@@ -88,19 +88,42 @@ export default async function handler(req, res) {
       }
       if (rol === "Secretaria") {
         and.push({
-          rol: {
-            tipo: "Estudiante",
-          },
-        });
+          OR: [
+            {
+              rol: {
+                tipo: "Estudiante"
+              },
+            },
+            {
+              rol: {
+                tipo: "Tutor"
+              },
+            },
+          ]
+        },);
       }
       if (rol === "Director") {
         and.push({
           rol: {
             tipo: {
-              not: "Administrador",
+              not: "Administrador"
+            }
+          },
+        },);
+      }
+      if (rol === "Vicedirector") {
+        and.push({
+          rol: {
+            tipo: {
+              not: "Administrador"
             },
           },
-        });
+          rol: {
+            tipo: {
+              not: "Director"
+            }
+          },
+        },);
       }
       if (legajo) {
         and.push({ legajo: legajo });

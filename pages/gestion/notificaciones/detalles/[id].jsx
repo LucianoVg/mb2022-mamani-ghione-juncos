@@ -72,6 +72,25 @@ export default function DetallesNoticia() {
       setCargando(false);
     }
   };
+
+  const borrarNotificacion = async (id) => {
+    // if (confirm("Está seguro que desea eliminar la notificación?")) {
+    let res
+    notificacion?.notificacionxtutor[0] ? (
+      res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/tutor/${id}`
+      )
+    ) : (
+      res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/alumno/${id}`
+      )
+    )
+    if (res.status === 200) {
+      router.push("/gestion/notificaciones/");
+    }
+    // }
+  };
+
   const onSave = async (id) => {
     const res = await axios.put(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/update/${id}`,
@@ -141,6 +160,7 @@ export default function DetallesNoticia() {
                       variant="contained"
                       color="error"
                       sx={{ marginLeft: "40px", marginTop: "20px" }}
+                      onClick={() => borrarNotificacion(notificacion?.id,)}
                     >
                       Eliminar
                     </Button>
@@ -267,7 +287,7 @@ export default function DetallesNoticia() {
                     )}
                   {
                     (authUser?.rol?.tipo === "Estudiante" ||
-                    authUser?.rol?.tipo === "Tutor") && (
+                      authUser?.rol?.tipo === "Tutor") && (
                       <Button
                         variant="contained"
                         disabled

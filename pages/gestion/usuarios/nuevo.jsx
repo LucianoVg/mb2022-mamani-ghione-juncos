@@ -662,17 +662,21 @@ export default function NuevoUsuario() {
               </FormControl>
             </Box>
           )}
+          {
+            existeTutor.status === false && (
+              <Button
+                disabled={guardando || buscando}
+                sx={{ mt: 2 }}
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                {!guardando && !buscando && <span>Registrar Usuario</span>}
+                {guardando || (buscando && <Loading size={30} />)}
+              </Button>
+            )
+          }
 
-          <Button
-            disabled={guardando || buscando}
-            sx={{ mt: 2 }}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            {!guardando && !buscando && <span>Registrar Usuario</span>}
-            {guardando || (buscando && <Loading size={30} />)}
-          </Button>
         </Box>
         {esAlumno &&
           (existeTutor.status === true ? (
@@ -718,20 +722,16 @@ export default function NuevoUsuario() {
                     )}
                   />
                 </FormControl>
-                {!existeTutor && (
-                  <Box>
-                    <Button
-                      disabled={guardando || buscando}
-                      sx={{ mt: 2 }}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
-                      {guardando || (buscando && <Loading size={30} />)}
-                      {!guardando && !buscando && <span>Registrar Tutor</span>}
-                    </Button>
-                  </Box>
-                )}
+                <Button
+                  disabled={guardando || buscando}
+                  sx={{ mt: 2, width: "180px"}}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  {!guardando && !buscando && <span>Registrar Usuario</span>}
+                  {guardando || (buscando && <Loading size={30} />)}
+                </Button>
               </Stack>
             </Box>
           ) : (

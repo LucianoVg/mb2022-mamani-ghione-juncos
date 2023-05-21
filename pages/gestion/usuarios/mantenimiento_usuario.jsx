@@ -72,6 +72,7 @@ export default function MantenimientoUsuario() {
         router.push("/error");
       } else {
         traerUsuarios();
+        traerUsuarios1();
       }
     }
   }, [authUser, authUser?.id, loading]);
@@ -84,6 +85,22 @@ export default function MantenimientoUsuario() {
       authUser?.rol?.tipo === "Director"
     );
   };
+
+
+  const [listaUsuarios, setListaUsuarios] = useState();
+
+  const traerUsuarios1 = async (idRol) => {
+    let param = idRol ? idRol : "";
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/usuarios/listar/${param}`
+    );
+    if (res.status === 200) {
+      console.log(res.data);
+      setListaUsuarios(res.data);
+    }
+  };
+
+
   const traerUsuarios = async () => {
     if (idUsuario) {
       queryParams.push({ idUsuario });
@@ -119,8 +136,12 @@ export default function MantenimientoUsuario() {
       setRoles(res.data);
     }
   };
-  const handleRol = (e) => {
+
+  const handleRol = async (e) => {
     setRol(e.target.value || "");
+    setIdUsuario("")
+    await traerUsuarios1(e.target.value);
+
   };
 
   const [idUsuario, setIdUsuario] = useState("");
@@ -161,10 +182,10 @@ export default function MantenimientoUsuario() {
         {(authUser?.rol?.tipo === "Director" ||
           authUser?.rol?.tipo === "Administrador" ||
           authUser?.rol?.tipo === "Vicedirector") && (
-          <Link href={"/gestion/usuarios/nuevo"}>
-            <Button variant="contained">Nuevo Usuario</Button>
-          </Link>
-        )}
+            <Link href={"/gestion/usuarios/nuevo"}>
+              <Button variant="contained">Nuevo Usuario</Button>
+            </Link>
+          )}
         {authUser?.rol?.tipo === "Secretaria" && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Estudiante</Button>
@@ -173,74 +194,294 @@ export default function MantenimientoUsuario() {
         <Typography variant="h4" sx={{ textAlign: "center", m: 2 }}>
           Usuarios del Sistema
         </Typography>
-        <Box
-          direction="row"
-          sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
-        >
-          <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
-            <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              // value={value}
-              name="idUsuario"
-              onChange={handleUsuario}
-              getOptionLabel={(usuario) =>
-                `${usuario?.apellido} ${usuario?.nombre}`
-              }
-              options={usuarios}
-              sx={{ width: "250px" }}
-              isOptionEqualToValue={(option, value) =>
-                option?.apellido === value?.apellido
-              }
-              noOptionsText={"No existe un usuario con ese nombre"}
-              renderOption={(props, usuario) => (
-                <Box component="li" {...props} key={usuario?.id}>
-                  {usuario?.apellido} {usuario?.nombre}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField {...params} label="Usuarios" />
-              )}
-            />
-          </FormControl>
-          {authUser?.rol?.tipo !== "Secretaria" && (
-            <FormControl size="small">
-              <InputLabel id="select-label">Rol</InputLabel>
-              <Select
-                labelId="select-label"
-                name="rol"
-                label="Rol"
-                onChange={handleRol}
-                value={rol}
-                sx={{ width: "170px" }}
-                MenuProps={{ disableScrollLock: true }}
+        {
+          authUser?.rol?.tipo === "Administrador" && (
+            <Box
+              direction="row"
+            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+            >
+              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idUsuario"
+                  onChange={handleUsuario}
+                  getOptionLabel={(usuario) =>
+                    `${usuario?.apellido} ${usuario?.nombre}`
+                  }
+                  options={listaUsuarios}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un usuario con ese nombre"}
+                  renderOption={(props, usuario) => (
+                    <Box component="li" {...props} key={usuario?.id}>
+                      {usuario?.apellido} {usuario?.nombre}
+                    </Box>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Usuarios" />
+                  )}
+                />
+              </FormControl>
+              <FormControl size="small"
+                sx={{ marginRight: "20px" }}
               >
-                {roles &&
-                  roles.map((r, i) => (
-                    <MenuItem key={i} value={r.id}>
-                      {r.tipo}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          )}
-          <Button
-            sx={{ mx: 3 }}
-            onClick={traerUsuarios}
-            variant="outlined"
-            startIcon={<Search />}
-          >
-            Buscar
-          </Button>
-        </Box>
+                <InputLabel id="select-label">Rol</InputLabel>
+                <Select
+                  labelId="select-label"
+                  name="rol"
+                  label="Rol"
+                  onChange={handleRol}
+                  value={rol}
+                  sx={{ width: "170px" }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {roles &&
+                    roles.map((r, i) => (
+                      <MenuItem key={i} value={r.id}>
+                        {r.tipo}
+                      </MenuItem>
+
+                    ))}
+                </Select>
+              </FormControl>
+              <Button
+                // sx={{ mx: 3 }}
+                onClick={traerUsuarios}
+                variant="outlined"
+                startIcon={<Search />}
+              >
+                Buscar
+              </Button>
+            </Box>
+
+          )
+        }
+        {
+          authUser?.rol?.tipo === "Director" && (
+            <Box
+              direction="row"
+            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+            >
+              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idUsuario"
+                  onChange={handleUsuario}
+                  getOptionLabel={(usuario) =>
+                    `${usuario?.apellido} ${usuario?.nombre}`
+                  }
+                  options={listaUsuarios}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un usuario con ese nombre"}
+                  renderOption={(props, usuario) => (
+                    usuario?.rol?.tipo != "Administrador" && (
+                      <Box component="li" {...props} key={usuario?.id}>
+                        {usuario?.apellido} {usuario?.nombre}
+                      </Box>
+                    )
+
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Usuarios" />
+                  )}
+                />
+              </FormControl>
+              <FormControl size="small"
+                sx={{ marginRight: "20px" }}
+              >
+                <InputLabel id="select-label">Rol</InputLabel>
+                <Select
+                  labelId="select-label"
+                  name="rol"
+                  label="Rol"
+                  onChange={handleRol}
+                  value={rol}
+                  sx={{ width: "170px" }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {roles &&
+                    roles.map((r, i) => (
+                      r.tipo != "Administrador" && (
+                        <MenuItem key={i} value={r.id}>
+                          {r.tipo}
+                        </MenuItem>
+                      )
+                    ))}
+                </Select>
+              </FormControl>
+              <Button
+                // sx={{ mx: 3 }}
+                onClick={traerUsuarios}
+                variant="outlined"
+                startIcon={<Search />}
+              >
+                Buscar
+              </Button>
+            </Box>
+
+          )
+        }
+
+        {
+          authUser?.rol?.tipo === "Vicedirector" && (
+            <Box
+              direction="row"
+            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+            >
+              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idUsuario"
+                  onChange={handleUsuario}
+                  getOptionLabel={(usuario) =>
+                    `${usuario?.apellido} ${usuario?.nombre}`
+                  }
+                  options={listaUsuarios}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un usuario con ese nombre"}
+                  renderOption={(props, usuario) => (
+                    usuario?.rol?.tipo != "Administrador" && usuario?.rol?.tipo != "Director" (
+                      <Box component="li" {...props} key={usuario?.id}>
+                        {usuario?.apellido} {usuario?.nombre}
+                      </Box>
+                    )
+
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Usuarios" />
+                  )}
+                />
+              </FormControl>
+              <FormControl size="small"
+                sx={{ marginRight: "20px" }}
+              >
+                <InputLabel id="select-label">Rol</InputLabel>
+                <Select
+                  labelId="select-label"
+                  name="rol"
+                  label="Rol"
+                  onChange={handleRol}
+                  value={rol}
+                  sx={{ width: "170px" }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {roles &&
+                    roles.map((r, i) => (
+                      r.tipo != "Administrador" && r.tipo != "Director" (
+                        <MenuItem key={i} value={r.id}>
+                          {r.tipo}
+                        </MenuItem>
+                      )
+                    ))}
+                </Select>
+              </FormControl>
+              <Button
+                // sx={{ mx: 3 }}
+                onClick={traerUsuarios}
+                variant="outlined"
+                startIcon={<Search />}
+              >
+                Buscar
+              </Button>
+            </Box>
+
+          )
+        }
+        {
+          authUser?.rol?.tipo === "Secretaria" && (
+            <Box
+              direction="row"
+            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+            >
+              <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
+                <Autocomplete
+                  size="small"
+                  disablePortal
+                  id="combo-box-demo"
+                  // value={value}
+                  name="idUsuario"
+                  onChange={handleUsuario}
+                  getOptionLabel={(usuario) =>
+                    `${usuario?.apellido} ${usuario?.nombre}`
+                  }
+                  options={listaUsuarios}
+                  sx={{ width: "250px" }}
+                  isOptionEqualToValue={(option, value) =>
+                    option?.apellido === value?.apellido
+                  }
+                  noOptionsText={"No existe un usuario con ese nombre"}
+                  renderOption={(props, usuario) => (
+                    (usuario?.rol?.tipo === "Estudiante" || usuario?.rol?.tipo === "Tutor") && (
+                      <Box component="li" {...props} key={usuario?.id}>
+                        {usuario?.apellido} {usuario?.nombre}
+                      </Box>
+                    )
+
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Usuarios" />
+                  )}
+                />
+              </FormControl>
+              <FormControl size="small"
+                sx={{ marginRight: "20px" }}
+              >
+                <InputLabel id="select-label">Rol</InputLabel>
+                <Select
+                  labelId="select-label"
+                  name="rol"
+                  label="Rol"
+                  onChange={handleRol}
+                  value={rol}
+                  sx={{ width: "170px" }}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {roles &&
+                    roles.map((r, i) => (
+                      (r.tipo === "Estudiante" || r.tipo === "Tutor") && (
+                        <MenuItem key={i} value={r.id}>
+                          {r.tipo}
+                        </MenuItem>
+                      )
+                    ))}
+                </Select>
+              </FormControl>
+              <Button
+                // sx={{ mx: 3 }}
+                onClick={traerUsuarios}
+                variant="outlined"
+                startIcon={<Search />}
+              >
+                Buscar
+              </Button>
+            </Box>
+          )
+        }
+
 
         {!cargandoInfo && (
           <TableContainer sx={{ marginTop: "20px" }} component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-           
+
                   <TableCell align="center">Legajo</TableCell>
                   <TableCell align="center">Nombre</TableCell>
                   <TableCell align="center">Apellido</TableCell>
@@ -253,64 +494,65 @@ export default function MantenimientoUsuario() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginacion.dataActual()?.map((u, i) => (
-                  <TableRow key={i}>
-                  
-                    <TableCell align="center">{u.legajo}</TableCell>
-                    <TableCell align="left">{u.nombre}</TableCell>
-                    <TableCell align="left">{u.apellido}</TableCell>
-                    <TableCell align="left">{u.correo}</TableCell>
-                    <TableCell align="left">{u.direccion}</TableCell>
-                    <TableCell align="center">{u.telefono}</TableCell>
-                    <TableCell align="left">{u.localidad}</TableCell>
-                    <TableCell align="left">{u.rol?.tipo}</TableCell>
+                {
+                  paginacion.dataActual()?.map((u, i) => (
+                    <TableRow key={i}>
+                      <TableCell align="center">{u.legajo}</TableCell>
+                      <TableCell align="left">{u.nombre}</TableCell>
+                      <TableCell align="left">{u.apellido}</TableCell>
+                      <TableCell align="left">{u.correo}</TableCell>
+                      <TableCell align="left">{u.direccion}</TableCell>
+                      <TableCell align="center">{u.telefono}</TableCell>
+                      <TableCell align="left">{u.localidad}</TableCell>
+                      <TableCell align="left">{u.rol?.tipo}</TableCell>
 
-                    <TableCell align="center">
-                      <IconButton onClick={(e) => handleClick(e, u.id)}>
-                        <MoreVertIcon
-                          sx={{ cursor: "pointer", color: "black" }}
-                        />
-                      </IconButton>
-                      <Popover
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "center",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "center",
-                        }}
-                        PaperProps={{
-                          style: {
-                            width: "100px",
-                            boxShadow: "0px 0px 6px 1px rgb(0 0 0 / 0.2)",
-                            position: "fixed",
-                          },
-                        }}
-                      >
-                        <List>
-                          <ListItem disablePadding>
-                            <ListItemButton
-                              component="a"
-                              href={`/gestion/usuarios/${idSelectedUser}`}
-                            >
-                              <ListItemText primary="Detalles" />
-                            </ListItemButton>
-                          </ListItem>
-                          <ListItem disablePadding>
-                            <ListItemButton onClick={onDeleteUser}>
-                              <ListItemText primary="Eliminar" />
-                            </ListItemButton>
-                          </ListItem>
-                        </List>
-                      </Popover>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      <TableCell align="center">
+                        <IconButton onClick={(e) => handleClick(e, u.id)}>
+                          <MoreVertIcon
+                            sx={{ cursor: "pointer", color: "black" }}
+                          />
+                        </IconButton>
+                        <Popover
+                          id={id}
+                          open={open}
+                          anchorEl={anchorEl}
+                          onClose={handleClose}
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "center",
+                          }}
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "center",
+                          }}
+                          PaperProps={{
+                            style: {
+                              width: "100px",
+                              boxShadow: "0px 0px 6px 1px rgb(0 0 0 / 0.2)",
+                              position: "fixed",
+                            },
+                          }}
+                        >
+                          <List>
+                            <ListItem disablePadding>
+                              <ListItemButton
+                                component="a"
+                                href={`/gestion/usuarios/${idSelectedUser}`}
+                              >
+                                <ListItemText primary="Detalles" />
+                              </ListItemButton>
+                            </ListItem>
+                            <ListItem disablePadding>
+                              <ListItemButton onClick={onDeleteUser}>
+                                <ListItemText primary="Eliminar" />
+                              </ListItemButton>
+                            </ListItem>
+                          </List>
+                        </Popover>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
               </TableBody>
             </Table>
           </TableContainer>
