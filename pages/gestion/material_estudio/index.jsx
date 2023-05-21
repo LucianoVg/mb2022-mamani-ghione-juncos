@@ -536,8 +536,7 @@ const MaterialEstudio = () => {
                           <div
                             style={{
                               fontSize: 18,
-                              marginTop: 15,
-                              color: "black",
+                              color: "lightblue",
                               textAlign: "center",
                             }}
                           >
