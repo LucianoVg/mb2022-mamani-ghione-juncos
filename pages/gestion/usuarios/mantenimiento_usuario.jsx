@@ -211,7 +211,7 @@ export default function MantenimientoUsuario() {
                 options={listaUsuarios}
                 sx={{ width: "250px" }}
                 isOptionEqualToValue={(option, value) =>
-                  option?.apellido === value?.apellido
+                  option?.id === value?.id
                 }
                 noOptionsText={"No existe un usuario con ese nombre"}
                 renderOption={(props, usuario) => (
