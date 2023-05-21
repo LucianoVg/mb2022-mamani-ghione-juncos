@@ -151,8 +151,10 @@ const Notificaciones = () => {
                       Volver a notificación para tutor
                     </Button>
                     <Box>
-                      <FormControl   size="small" fullWidth 
-                      sx={{marginBottom: "20px"}}
+                      <FormControl
+                        size="small"
+                        fullWidth
+                        sx={{ marginBottom: "20px" }}
                       >
                         <InputLabel id="demo-simple-select-label">
                           Curso
@@ -163,16 +165,15 @@ const Notificaciones = () => {
                           value={idCurso}
                           name="idCurso"
                           label="Curso"
-                        
                           onChange={handleCurso}
                           sx={{ width: "90px", marginRight: "20px" }}
                           MenuProps={{
                             disableScrollLock: true,
                             label: {
                               style: {
-                                marginTop: "-10px"
-                              }
-                            }
+                                marginTop: "-10px",
+                              },
+                            },
                           }}
                         >
                           <MenuItem value={"todos"}>Todos</MenuItem>
@@ -241,8 +242,9 @@ const Notificaciones = () => {
                   </Typography>
                   <FormControl
                     sx={{
-                      marginBottom: "30px"
-                    }}>
+                      marginBottom: "30px",
+                    }}
+                  >
                     <TextField
                       margin="normal"
                       fullWidth
@@ -251,7 +253,6 @@ const Notificaciones = () => {
                       multiline
                       rows={1}
                       required
-
                       value={notificacion.asunto}
                       onChange={handleNotificacion}
                       style={{
@@ -294,7 +295,7 @@ const Notificaciones = () => {
                 </Box>
 
                 {/* PERMITIR COMO MAXIMO 300 CARACTERES PARA EVITAR QUE SE BUGUE EN EL CELULAR */}
-                <Box xs={12} >
+                <Box xs={12}>
                   <Button variant="contained" type="submit">
                     Enviar
                   </Button>
@@ -308,7 +309,7 @@ const Notificaciones = () => {
                 <Loading size={50} />
               </Container>
             )}
-            {!cargandoInfo && (
+            {!cargandoInfo && listNotificaciones.length > 0 && (
               <>
                 <h1>Notificaciones enviadas</h1>
                 <Box sx={{ width: "350px" }}>
@@ -339,10 +340,15 @@ const Notificaciones = () => {
                 </Box>
               </>
             )}
+            {!cargandoInfo && listNotificaciones.length === 0 && (
+              <Typography variant="h5">
+                No hay notificaciones enviadas
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </div>
-    </Layout >
+    </Layout>
   );
 };
 

@@ -74,21 +74,17 @@ export default function DetallesNoticia() {
   };
 
   const borrarNotificacion = async (id) => {
-    // if (confirm("Está seguro que desea eliminar la notificación?")) {
-    let res
-    notificacion?.notificacionxtutor[0] ? (
-      res = await axios.delete(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/tutor/${id}`
-      )
-    ) : (
-      res = await axios.delete(
-        `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/alumno/${id}`
-      )
-    )
+    let res;
+    notificacion?.notificacionxtutor[0]
+      ? (res = await axios.delete(
+          `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/tutor/${id}`
+        ))
+      : (res = await axios.delete(
+          `${process.env.NEXT_PUBLIC_CLIENT_URL}/gestion/notificaciones/delete/alumno/${id}`
+        ));
     if (res.status === 200) {
-      router.push("/gestion/notificaciones/");
+      router.push("/gestion/notificaciones");
     }
-    // }
   };
 
   const onSave = async (id) => {
@@ -160,7 +156,7 @@ export default function DetallesNoticia() {
                       variant="contained"
                       color="error"
                       sx={{ marginLeft: "40px", marginTop: "20px" }}
-                      onClick={() => borrarNotificacion(notificacion?.id,)}
+                      onClick={() => borrarNotificacion(notificacion?.id)}
                     >
                       Eliminar
                     </Button>
@@ -224,8 +220,11 @@ export default function DetallesNoticia() {
                     <Grid item sx={{ marginTop: "-8px" }}>
                       <Typography
                         variant="caption"
-                        sx={{ marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
-                      // className={`${styles.Typography3}`}
+                        sx={{
+                          marginLeft: "30px",
+                          fontSize: "clamp(15px, 2vw, 40px)",
+                        }}
+                        // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
@@ -235,35 +234,54 @@ export default function DetallesNoticia() {
                         </strong>
                       </Typography>
                     </Grid>
-                    <Grid item >
-                      <Grid container direction="row-reverse" >
+                    <Grid item>
+                      <Grid container direction="row-reverse">
                         <Grid item sx={{ marginRight: "50px" }}>
-                          {
-                            notificacion?.notificacionxalumno.length > 0 && (authUser?.rol?.tipo !== "Estudiante" ||
-                              authUser?.rol?.tipo !== "Tutor") ? (
-                              <Typography
-                                variant="caption"
-                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                          {notificacion?.notificacionxalumno.length > 0 &&
+                          (authUser?.rol?.tipo !== "Estudiante" ||
+                            authUser?.rol?.tipo !== "Tutor") ? (
+                            <Typography
+                              variant="caption"
+                              sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                               // className={`${styles.Typography3}`}
-                              >
-                                {" "}
-                                <strong>
-                                  Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
-                                </strong>
-                              </Typography>
-                            ) : (
-                              <Typography
-                                variant="caption"
-                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                            >
+                              {" "}
+                              <strong>
+                                Enviado a:{" "}
+                                {
+                                  notificacion.notificacionxalumno[0]
+                                    ?.alumnoxcursoxdivision?.cursoxdivision
+                                    ?.curso?.nombre
+                                }
+                                ° Año &quot;
+                                {
+                                  notificacion.notificacionxalumno[0]
+                                    ?.alumnoxcursoxdivision?.cursoxdivision
+                                    ?.division?.division
+                                }
+                                &quot;
+                              </strong>
+                            </Typography>
+                          ) : (
+                            <Typography
+                              variant="caption"
+                              sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                               // className={`${styles.Typography3}`}
-                              >
-                                {" "}
-                                <strong>
-                                  Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
-                                </strong>
-                              </Typography>
-                            )
-                          }
+                            >
+                              {" "}
+                              <strong>
+                                Enviado a:{" "}
+                                {
+                                  notificacion.notificacionxtutor[0]?.tutor
+                                    ?.nombre
+                                }{" "}
+                                {
+                                  notificacion.notificacionxtutor[0]?.tutor
+                                    ?.apellido
+                                }
+                              </strong>
+                            </Typography>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -285,25 +303,26 @@ export default function DetallesNoticia() {
                         Editar
                       </Button>
                     )}
-                  {
-                    (authUser?.rol?.tipo === "Estudiante" ||
-                      authUser?.rol?.tipo === "Tutor") && (
-                      <Button
-                        variant="contained"
-                        disabled
-                        sx={{ marginLeft: "30px", marginTop: "20px", opacity: "0%" }}
-                        onClick={() => {
-                          setEditMode(true);
-                          setAsunto(notificacion?.asunto);
-                          setContenido(notificacion?.contenido);
-                        }}
-                      >
-                        Editar
-                      </Button>
-                    )
-                  }
+                  {(authUser?.rol?.tipo === "Estudiante" ||
+                    authUser?.rol?.tipo === "Tutor") && (
+                    <Button
+                      variant="contained"
+                      disabled
+                      sx={{
+                        marginLeft: "30px",
+                        marginTop: "20px",
+                        opacity: "0%",
+                      }}
+                      onClick={() => {
+                        setEditMode(true);
+                        setAsunto(notificacion?.asunto);
+                        setContenido(notificacion?.contenido);
+                      }}
+                    >
+                      Editar
+                    </Button>
+                  )}
                   <Grid>
-
                     <Grid item>
                       <Typography
                         textAlign="center"
@@ -316,7 +335,7 @@ export default function DetallesNoticia() {
                           marginLeft: "30px",
                           marginRight: "30px",
                         }}
-                      // className={`${styles.Typography}`}
+                        // className={`${styles.Typography}`}
                       >
                         <strong>{notificacion?.asunto}</strong>{" "}
                       </Typography>
@@ -331,16 +350,20 @@ export default function DetallesNoticia() {
                           marginLeft: "30px",
                           marginRight: "20px",
                         }}
-                      // className={`${styles.Typography2}`}
+                        // className={`${styles.Typography2}`}
                       >
                         {notificacion?.contenido}{" "}
                       </Typography>
                     </Grid>
-                    <Grid item >
+                    <Grid item>
                       <Typography
                         variant="caption"
-                        sx={{ marginBottom: "35px", marginLeft: "30px", fontSize: "clamp(15px, 2vw, 40px)" }}
-                      // className={`${styles.Typography3}`}
+                        sx={{
+                          marginBottom: "35px",
+                          marginLeft: "30px",
+                          fontSize: "clamp(15px, 2vw, 40px)",
+                        }}
+                        // className={`${styles.Typography3}`}
                       >
                         {" "}
                         <strong>
@@ -350,37 +373,54 @@ export default function DetallesNoticia() {
                         </strong>
                       </Typography>
                     </Grid>
-                    <Grid item >
-                      <Grid container direction="row-reverse" >
+                    <Grid item>
+                      <Grid container direction="row-reverse">
                         <Grid item sx={{ marginRight: "50px" }}>
-                          {
-                            authUser?.rol?.tipo != "Estudiante" &&
-                            authUser?.rol?.tipo != "Tutor" && (
-                              notificacion?.notificacionxalumno.length > 0 ? (
-                                <Typography
-                                  variant="caption"
-                                  sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                          {authUser?.rol?.tipo != "Estudiante" &&
+                            authUser?.rol?.tipo != "Tutor" &&
+                            (notificacion?.notificacionxalumno.length > 0 ? (
+                              <Typography
+                                variant="caption"
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                                 // className={`${styles.Typography3}`}
-                                >
-                                  {" "}
-                                  <strong>
-                                    Enviado a: {notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.curso?.nombre}° {" "} Año {" "} &quot;{notificacion.notificacionxalumno[0]?.alumnoxcursoxdivision?.cursoxdivision?.division?.division}&quot;
-                                  </strong>
-                                </Typography>
-                              ) : (
-                                <Typography
-                                  variant="caption"
-                                  sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a:{" "}
+                                  {
+                                    notificacion.notificacionxalumno[0]
+                                      ?.alumnoxcursoxdivision?.cursoxdivision
+                                      ?.curso?.nombre
+                                  }
+                                  ° Año &quot;
+                                  {
+                                    notificacion.notificacionxalumno[0]
+                                      ?.alumnoxcursoxdivision?.cursoxdivision
+                                      ?.division?.division
+                                  }
+                                  &quot;
+                                </strong>
+                              </Typography>
+                            ) : (
+                              <Typography
+                                variant="caption"
+                                sx={{ fontSize: "clamp(15px, 2vw, 40px)" }}
                                 // className={`${styles.Typography3}`}
-                                >
-                                  {" "}
-                                  <strong>
-                                    Enviado a: {notificacion.notificacionxtutor[0]?.tutor?.nombre} {notificacion.notificacionxtutor[0]?.tutor?.apellido}
-                                  </strong>
-                                </Typography>
-                              )
-                            )}
-
+                              >
+                                {" "}
+                                <strong>
+                                  Enviado a:{" "}
+                                  {
+                                    notificacion.notificacionxtutor[0]?.tutor
+                                      ?.nombre
+                                  }{" "}
+                                  {
+                                    notificacion.notificacionxtutor[0]?.tutor
+                                      ?.apellido
+                                  }
+                                </strong>
+                              </Typography>
+                            ))}
                         </Grid>
                       </Grid>
                     </Grid>
