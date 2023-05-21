@@ -110,11 +110,11 @@ const MaterialEstudio = () => {
         m.cursoxdivision?.iddivision ===
         authUser?.alumnoxcursoxdivision1[0]?.cursoxdivision?.iddivision
     );
-    materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
-      (a, b) =>
-        a.materiaxcursoxdivision?.idmateria -
-        b.materiaxcursoxdivision?.idmateria
-    );
+    // materiasOrdenadasEstudiante = materiaSinRepetir?.sort(
+    //   (a, b) =>
+    //     a.materiaxcursoxdivision?.idmateria -
+    //     b.materiaxcursoxdivision?.idmateria
+    // );
   }
 
   const traerCursos = async () => {
@@ -286,7 +286,7 @@ const MaterialEstudio = () => {
               // value={value}
               name="idMateria"
               onChange={handleMateria}
-              options={materiasOrdenadas}
+              options={materias}
               getOptionLabel={(materia) =>
                 `${materia?.materia?.nombre}   -   ${materia?.cursoxdivision?.curso?.nombre} ${materia?.cursoxdivision?.division?.division}`
               }
@@ -323,7 +323,7 @@ const MaterialEstudio = () => {
               // value={value}
               name="idMateria"
               onChange={handleMateria}
-              options={materiasOrdenadasDocente}
+              options={materias}
               getOptionLabel={(materia) =>
                 `${materia.materiaxcursoxdivision?.materia?.nombre} - ${materia.materiaxcursoxdivision?.cursoxdivision?.curso?.nombre} ${materia.materiaxcursoxdivision?.cursoxdivision?.division?.division}`
               }
@@ -369,7 +369,7 @@ const MaterialEstudio = () => {
                   // value={value}
                   name="idMateria"
                   onChange={handleMateria}
-                  options={materiasOrdenadasEstudiante}
+                  options={materiaSinRepetir}
                   getOptionLabel={(materia) => `${materia?.materia?.nombre}`}
                   isOptionEqualToValue={(option, value) => {
                     return option?.id === value?.id;
