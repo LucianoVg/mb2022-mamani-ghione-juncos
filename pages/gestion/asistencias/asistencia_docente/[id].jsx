@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../../../components/context/authUserProvider";
 import {
   Box,
+  Stack,
   Button,
   Container,
   Divider,
@@ -14,7 +15,7 @@ import {
 } from "@mui/material";
 import Loading from "../../../../components/loading";
 import Link from "next/link";
-import { ArrowBack } from "@mui/icons-material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const MasInfo = () => {
   const { loading, authUser } = useAuth();
@@ -60,123 +61,131 @@ const MasInfo = () => {
   return (
     <Layout>
       {!cargando && (
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={10}>
-              <Typography variant="h4" sx={{ marginBottom: 2 }}>
-                Detalle de Asistencia Docente
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Link href={"/gestion/asistencias/asistencia_docente"}>
-                <Button
-                  endIcon={<ArrowBack />}
-                  color="secondary"
-                  variant="outlined"
-                >
-                  Volver
-                </Button>
-              </Link>
-            </Grid>
-          </Grid>
-          <div className="hstack gap-2 ">
-            <Box component="div" sx={{ marginBottom: 2 }}>
-              <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                Docente:{" "}
-              </Typography>
-              <Typography variant="body1" sx={{ fontSize: 18 }}>
-                {asistencia?.docente?.apellido} {asistencia?.docente?.nombre}
-              </Typography>
-            </Box>
-            {asistencia?.motivo ? (
-              <Box component={"div"} sx={{ marginBottom: 2 }}>
-                <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
-                  Editado por:{" "}
-                </Typography>
-                <Typography variant="body1" sx={{ fontSize: 18 }}>
-                  {asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}
-                </Typography>
-              </Box>
-            ) : (
-              <Box component="div" sx={{ marginBottom: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  Creado por:
-                </Typography>
-                <Typography variant="body1" sx={{ fontSize: 18 }}>
-                  {asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}
-                </Typography>
-              </Box>
-            )}
-          </div>
-          <Divider sx={{ width: "100%", marginBottom: 2 }} />
-          <div className="hstack gap-3">
-            <Box component={"div"} sx={{ marginBottom: 2 }}>
-              <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
-                Asistencia Actual
-              </Typography>
-              {asistencia?.presente ? (
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  Presente
-                </Typography>
-              ) : asistencia?.ausente ? (
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  Ausente
-                </Typography>
-              ) : asistencia?.ausentejustificado ? (
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  Ausente Justificado
-                </Typography>
-              ) : asistencia?.llegadatarde ? (
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  Llegada Tarde
-                </Typography>
-              ) : asistencia?.mediafalta ? (
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  Media Falta
-                </Typography>
-              ) : (
-                <h4>-</h4>
-              )}
-            </Box>
-            <Box component={"div"} sx={{ marginBottom: 2 }}>
-              <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
-                Creado el:{" "}
-              </Typography>
-              <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                {asistencia?.creadoen}
-              </Typography>
-            </Box>
+         <div>
+         <Grid container spacing={2}>
+           <Grid item xs={12}>
+             <Button
+               sx={{ border: "none", marginLeft: "-20px" }}
+               className="buttonRegresar"
+               href="/gestion/asistencias"
+               startIcon={<ArrowBackIosIcon />}
+             >
+               Regresar
+             </Button>
+           </Grid>
+           <Grid item xs={12}>
+             <Typography variant="h4" sx={{ marginBottom: "50px" }}>
+               Detalle de Asistencia Docente
+             </Typography>
+           </Grid>
+         </Grid>
 
-            {asistencia?.actualizadoen ? (
-              <Box component="div" sx={{ marginBottom: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  Actualizado el:
-                </Typography>
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  {asistencia?.actualizadoen}
-                </Typography>
-              </Box>
-            ) : (
-              <Box component="div" sx={{ marginBottom: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  Actualizado en:
-                </Typography>
-                <Typography variant={"body1"} sx={{ fontSize: 18 }}>
-                  --/--/----
-                </Typography>
-              </Box>
-            )}
-          </div>
-          <Divider sx={{ width: "100%", marginBottom: 2 }} />
-          <Box component={"div"} sx={{ margin: "auto" }}>
-            <Typography variant="h5" sx={{ fontWeight: 500 }}>
-              Motivo
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: 18 }}>
-              {asistencia?.motivo || "N/A"}
-            </Typography>
-          </Box>
-        </div>
+         <Stack direction="row" sx={{ marginBottom: "40px" }}>
+
+           <Box component="div" sx={{ marginRight: "140px" }}>
+             <Typography variant="h5" sx={{ fontWeight: 500 }}>
+               Docente:{" "}
+             </Typography>
+             <Typography variant="body1" sx={{ fontSize: 18 }}>
+             {asistencia?.docente?.apellido} {asistencia?.docente?.nombre}
+             </Typography>
+           </Box>
+       
+       
+           {asistencia?.motivo != null ? (
+             <Box component={"div"} >
+               <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
+                 Editado por:{" "}
+               </Typography>
+               <Typography variant="body1" sx={{ fontSize: 18 }}>
+                 {asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}
+               </Typography>
+             </Box>
+           ) : (
+             <Box component="div" sx={{ marginBottom: 2 }}>
+               <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                 Creado por:
+               </Typography>
+               <Typography variant="body1" sx={{ fontSize: 18 }}>
+                 {asistencia?.usuario?.nombre} {asistencia?.usuario?.apellido}
+               </Typography>
+             </Box>
+           )}
+         </Stack>
+
+         <Divider sx={{ width: "100%", marginBottom: 2 }} />
+
+         <Stack direction="row" sx={{ marginBottom: "40px" }}>
+           <Box sx={{ marginRight: "140px" }}>
+             <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
+               Asistencia Actual
+             </Typography>
+             {asistencia?.presente ? (
+               <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                 Presente
+               </Typography>
+             ) : asistencia?.ausente ? (
+               <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                 Ausente
+               </Typography>
+             ) : asistencia?.ausentejustificado ? (
+               <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                 Ausente Justificado
+               </Typography>
+             ) : asistencia?.llegadatarde ? (
+               <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                 Llegada Tarde
+               </Typography>
+             ) : asistencia?.mediafalta ? (
+               <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                 Media Falta
+               </Typography>
+             ) : (
+               <h4>-</h4>
+             )}
+           </Box>
+           <Box sx={{ marginRight: "140px" }}>
+             <Typography variant={"h5"} sx={{ fontWeight: 500 }}>
+               Creado el:{" "}
+             </Typography>
+             <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+               {asistencia?.creadoen}
+             </Typography>
+           </Box>
+           <Box>
+             {asistencia?.actualizadoen ? (
+               <Box component="div" sx={{ marginBottom: 2 }}>
+                 <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                   Actualizado el:
+                 </Typography>
+                 <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                   {asistencia?.actualizadoen}
+                 </Typography>
+               </Box>
+             ) : (
+               <Box component="div" sx={{ marginBottom: 2 }}>
+                 <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                   Actualizado en:
+                 </Typography>
+                 <Typography variant={"body1"} sx={{ fontSize: 18 }}>
+                   --/--/----
+                 </Typography>
+               </Box>
+             )}
+           </Box>
+         </Stack>
+         <Divider sx={{ width: "100%", marginBottom: 2 }} />
+
+         <Box>
+           <Typography variant="h5" sx={{ fontWeight: 500 }}>
+             Motivo
+           </Typography>
+           <Typography variant="body1" sx={{ fontSize: 18 }}>
+             {asistencia?.motivo || "N/A"}
+           </Typography>
+         </Box>
+       </div>
+      
       )}
       {cargando && (
         <Container sx={{ textAlign: "center" }}>

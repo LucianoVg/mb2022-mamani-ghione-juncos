@@ -11,9 +11,9 @@ export default async function handler(req, res) {
         });
         const { id } = req.query
         if (req.method === 'PUT') {
-            const { presente, ausente, ausenteJustificado, llegadaTarde, llegadaTardeJustificada, mediaFalta, mediaFaltaJustificada, motivo, idUsuario } = req.body
+            const { presente, ausente, ausenteJustificado, llegadaTarde, mediaFalta, motivo, idUsuario } = req.body
 
-            const asistencia = await updateAsistencia(id, presente, ausente, ausenteJustificado, llegadaTarde, llegadaTardeJustificada, mediaFalta, mediaFaltaJustificada, motivo, idUsuario)
+            const asistencia = await updateAsistencia(id, presente, ausente, ausenteJustificado, llegadaTarde, mediaFalta, motivo, idUsuario)
             return res.status(200).json(asistencia)
         }
     } catch (error) {
@@ -33,7 +33,7 @@ export async function updateAsistencia(id, presente = false, ausente = false, au
                 mediafalta: mediaFalta,
                 motivo: motivo,
                 idusuario: Number(idUsuario),
-                actualizadoen: new Date().toLocaleDateString('es-AR').split('T')[0]
+                actualizadoen: new Date().toLocaleDateString("en-GB").split('T')[0]
             },
             where: {
                 id: Number(id)

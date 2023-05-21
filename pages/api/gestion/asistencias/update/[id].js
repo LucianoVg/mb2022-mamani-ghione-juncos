@@ -59,7 +59,7 @@ export async function updateAsistencia(
         mediafalta: mediaFalta,
         motivo: motivo,
         idusuario: Number(idUsuario),
-        actualizadoen: new Date().toLocaleDateString("es-AR").split("T")[0],
+        actualizadoen: new Date().toLocaleDateString("en-GB").split("T")[0],
       },
       where: {
         id: Number(id),

@@ -164,7 +164,7 @@ export default function Asistencias() {
         ausenteJustificado: aj,
         llegadaTarde: llegadaTarde,
         mediaFalta: mf,
-        idUsuario: authUser.id,
+        idUsuario: authUser?.id,
         motivo: motivo,
       }
     );
@@ -387,26 +387,7 @@ export default function Asistencias() {
               </Button>
             </Box>
           </Grid>
-          {/* <Grid item xs>
-                        <Box component="span">
-                            <div style={{ fontFamily: "roboto", fontSize: "20px" }}>
-                                <Stack spacing={1} direction="row" >
-                                    <h5 ><strong>Asistencia modificada:</strong> </h5>
-                                    <Button variant="contained" disabled style={{ fontSize: '20px', backgroundColor: 'lightsteelblue', color: 'transparent', height: '40px', marginTop: '25px' }}>Contained</Button>
-                                </Stack >
-                                <h5 style={{ marginTop: '-10px' }}>
-                                    <hr />
-                                    <strong>P:</strong> Presente     <hr />
-                                    <strong>A:</strong> Ausente    <hr />
-                                    <strong>AJ:</strong> Ausente Justificado    <hr />
-                                    <strong>LT:</strong> Llegada Tarde    <hr />
-                                    <strong>LTJ:</strong> Llegada Tarde Justificada   <hr />
-                                    <strong>MF:</strong> Media Falta    <hr />
-                                    <strong>MFJ:</strong> Media Falta Justificada    <hr />
-                                </h5>
-                            </div>
-                        </Box>
-                    </Grid> */}
+
         </Grid>
         {cargandoInfo && (
           <Container sx={{ textAlign: "center" }}>
@@ -447,12 +428,12 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                  !a.ausente &&
-                  !a.ausentejustificado &&
-                  !a.llegadatarde &&
-                  !a.llegadatardejustificada &&
-                  !a.mediafalta &&
-                  !a.mediafaltajustificada ? (
+                    !a.ausente &&
+                    !a.ausentejustificado &&
+                    !a.llegadatarde &&
+                    !a.llegadatardejustificada &&
+                    !a.mediafalta &&
+                    !a.mediafaltajustificada ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}
@@ -653,7 +634,7 @@ export default function Asistencias() {
 
                       <TableCell className="col-md-1 ">
                         {inEditMode.status && inEditMode.rowKey === a?.id ? (
-                          <Switch name="mf" checked={mf} onChange={handleMf} />
+                          <Switch name="mf" checked={mf} s onChange={handleMf} />
                         ) : (
                           <Switch
                             type="checkbox"
@@ -669,14 +650,6 @@ export default function Asistencias() {
                             <Stack spacing={1} direction="row">
                               <Button
                                 variant="contained"
-                                color="success"
-                                onClick={() => handleOpen(a)}
-                              >
-                                Actualizar
-                              </Button>
-
-                              <Button
-                                variant="contained"
                                 color="error"
                                 style={{ marginLeft: 8 }}
                                 onClick={() => onCancel()}
@@ -687,18 +660,7 @@ export default function Asistencias() {
                           </React.Fragment>
                         ) : (
                           <Stack spacing={1} direction="row">
-                            <Button
-                              variant="contained"
-                              onClick={() =>
-                                setInEditMode({
-                                  status: true,
-                                  rowKey: a?.id,
-                                })
-                              }
-                            >
-                              Editar
-                            </Button>
-                            <Button
+                                                     <Button
                               variant="contained"
                               sx={{
                                 backgroundColor: "lightblue",
@@ -803,13 +765,25 @@ export default function Asistencias() {
                         {inEditMode.status && inEditMode.rowKey === a?.id ? (
                           <React.Fragment>
                             <Stack spacing={1} direction="row">
-                              <Button
-                                variant="contained"
-                                color="success"
-                                onClick={() => handleOpen(a)}
-                              >
-                                Actualizar
-                              </Button>
+                              {
+                                aj ? (
+                                  <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={() => handleOpen(a)}
+                                  >
+                                    Actualizar
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={() => onSave(a.id)}
+                                  >
+                                    Actualizar
+                                  </Button>
+                                )
+                              }
 
                               <Button
                                 variant="contained"

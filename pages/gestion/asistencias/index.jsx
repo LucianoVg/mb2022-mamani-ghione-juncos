@@ -476,7 +476,7 @@ export default function Asistencias() {
         )}
         <Box flexDirection={"row"}>
           <Button
-            variant="text"
+            variant="outlined"
             onClick={listarAsistencias}
             endIcon={<Search />}
             color="info"
@@ -484,7 +484,7 @@ export default function Asistencias() {
             Buscar
           </Button>
           <Button
-            variant="outlined"
+            variant="text"
             sx={{ mx: 1 }}
             onClick={async () => {
               resetValues();
@@ -541,10 +541,10 @@ export default function Asistencias() {
               <TableBody>
                 {paginacion.dataActual().map((a, i) =>
                   !a.presente &&
-                  !a.ausente &&
-                  !a.ausentejustificado &&
-                  !a.llegadatarde &&
-                  !a.mediafalta ? (
+                    !a.ausente &&
+                    !a.ausentejustificado &&
+                    !a.llegadatarde &&
+                    !a.mediafalta ? (
                     <TableRow key={a.id}>
                       <TableCell className="col-md-1 text-capitalize">
                         {a.creadoen}
@@ -946,13 +946,25 @@ export default function Asistencias() {
                         {inEditMode.status && inEditMode.rowKey === a?.id ? (
                           <React.Fragment>
                             <Stack spacing={1} direction="row">
-                              <Button
-                                variant="contained"
-                                color="success"
-                                onClick={() => handleOpen(a)}
-                              >
-                                Actualizar
-                              </Button>
+                              {
+                                aj ? (
+                                  <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={() => handleOpen(a)}
+                                  >
+                                    Actualizar
+                                  </Button>
+                                ) : (
+                                  <Button
+                                  variant="contained"
+                                  color="success"
+                                  onClick={() => onSave(a.id)}
+                                >
+                                  Actualizar
+                                </Button>
+                                )
+                              }
 
                               <Button
                                 variant="contained"
