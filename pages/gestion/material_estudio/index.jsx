@@ -533,7 +533,7 @@ const MaterialEstudio = () => {
                             </TableRow>
                           ))
                         ) : (
-                          <span
+                          <div
                             style={{
                               fontSize: 18,
                               marginTop: 15,
@@ -542,7 +542,7 @@ const MaterialEstudio = () => {
                             }}
                           >
                             Seleccione una materia
-                          </span>
+                          </div>
                         )}
                       </TableBody>
                     </Table>
