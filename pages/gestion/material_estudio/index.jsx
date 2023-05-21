@@ -214,8 +214,7 @@ const MaterialEstudio = () => {
     }
   };
   const quitarFiltros = async () => {
-    await descargarMaterial(tabIndex + 1, materias[0].id);
-    setIdMateria(1);
+    setIdMateria("");
   };
 
   const handleArchivos = (e) => {
@@ -237,7 +236,7 @@ const MaterialEstudio = () => {
         traerMaterias();
         traerTrimestres();
         traerAlumno();
-        descargarMaterial(1, materias[0]?.id);
+        // descargarMaterial(1, materias[0]?.id);
       }
     }
   }, [loading, authUser]);
@@ -404,8 +403,8 @@ const MaterialEstudio = () => {
           Buscar
         </Button>
         <Button
-            color="info"
-            variant="text"
+          color="info"
+          variant="text"
           onClick={async () => await quitarFiltros()}
         >
           Quitar Filtros
@@ -490,7 +489,7 @@ const MaterialEstudio = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {materiales.length > 0 &&
+                        {materiales.length > 0 ? (
                           materiales.map((m) => (
                             <TableRow key={m.id}>
                               <TableCell
@@ -532,7 +531,18 @@ const MaterialEstudio = () => {
                                 )}
                               </TableCell>
                             </TableRow>
-                          ))}
+                          ))
+                        ) : (
+                          <div
+                            style={{
+                              fontSize: 18,
+                              color: "lightblue",
+                              textAlign: "center",
+                            }}
+                          >
+                            Seleccione una materia
+                          </div>
+                        )}
                       </TableBody>
                     </Table>
                   </TableContainer>
