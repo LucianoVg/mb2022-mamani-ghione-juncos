@@ -402,9 +402,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <Typography variant="h6" sx={{ width: "250px" }}>
@@ -465,37 +465,18 @@ export default function Detalles() {
                     variant="outlined"
                   />
                 </FormControl>
-                {usuario?.rol?.tipo === "Estudiante" && editMode && (
-                  <FormControl>
-                    <Typography variant="h6" sx={{ width: "200px" }}>
-                      <strong>Curso</strong> <br />
-                    </Typography>
-                    <FormControl>
-                      <Select
-                        sx={{ width: "90px", marginRight: "20px" }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        size="small"
-                        label="Curso"
-                        name="idCurso"
-                        value={idCurso}
-                        onChange={handleCurso}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem value={""}>Seleccione un curso</MenuItem>
-                        {cursos &&
-                          cursos.map((c, i) => (
-                            <MenuItem
-                              selected={i === 0}
-                              value={c.id}
-                              key={c.id}
-                            >
-                              {c?.nombre}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </FormControl>
+                {usuario?.rol?.tipo === "Estudiante" && (
+                  <Typography variant="h6" sx={{ width: "200px" }}>
+                    <strong>Curso</strong> <br />
+                    {
+                      usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision?.curso
+                        ?.nombre
+                    }
+                    ° Año &quot;
+                    {usuario?.alumnoxcursoxdivision1[0]?.cursoxdivision
+                      ?.division?.division || "N/A"}
+                    &quot;
+                  </Typography>
                 )}
               </Stack>
               <Stack
@@ -582,9 +563,9 @@ export default function Detalles() {
                   <strong>Edad</strong> <br />
                   {usuario?.fechanacimiento
                     ? new Date().getFullYear() -
-                      new Date(
-                        usuario?.fechanacimiento.split("/")[2]
-                      ).getFullYear()
+                    new Date(
+                      usuario?.fechanacimiento.split("/")[2]
+                    ).getFullYear()
                     : "N/A"}
                 </Typography>
                 <FormControl>

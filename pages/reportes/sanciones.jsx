@@ -309,7 +309,7 @@ export default function Sancion() {
                       borderRightColor: "black",
                       // borderRight: 1,
                       // borderBottom: 1,
-                      borderBottomColor: "black",
+                      // borderBottomColor: "black",
                     }}
                   >
                     Motivo

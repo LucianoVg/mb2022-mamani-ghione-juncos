@@ -476,7 +476,7 @@ export default function Asistencias() {
         )}
         <Box flexDirection={"row"}>
           <Button
-            variant="contained"
+            variant="text"
             onClick={listarAsistencias}
             endIcon={<Search />}
             color="info"
