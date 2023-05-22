@@ -1,5 +1,6 @@
 import NextCors from "nextjs-cors/dist";
 import { db } from "../../../../prisma";
+import { fechas } from "../../../../helpers/fechas";
 
 export default async function handler(req, res) {
   try {
@@ -95,8 +96,9 @@ export async function registrarUsuario(
   fechaNacimiento
 ) {
   let ultimoId = await db.usuario.count();
+  ultimoId += 2;
   let data = {
-    id: ++ultimoId,
+    id: ultimoId,
     login,
     nombre,
     apellido,
@@ -111,64 +113,123 @@ export async function registrarUsuario(
     password: contrasenia,
     fechanacimiento: fechaNacimiento,
   };
-  let docentexmateria = [];
+  console.log("Data", data);
   let preceptorxcurso = [];
   try {
     if (esAlumno) {
+      const usuario = await db.usuario.create({
+        data: data,
+      });
       const estadoalumno = await db.estadoalumno.findFirst({
         where: {
           estado: "Regular",
         },
       });
-      data = {
-        ...data,
-        alumnoxcursoxdivision1: {
-          create: {
-            idtutor: Number(idTutor),
-            idcursoxdivision: Number(idCurso),
-            idestadoalumno: Number(estadoalumno?.id),
-            fechamatriculacion: new Date()
-              .toLocaleDateString("en-GB")
-              .split("T")[0],
-            asistencia: {
-              create: {
-                presente: false,
-                ausente: false,
-                ausentejustificado: false,
-                llegadatarde: false,
-                mediafalta: false,
-                creadoen: new Date().toLocaleDateString("en-GB").split("T")[0],
-                idusuario: Number(idUsuario),
-              },
-            },
+      const alumno = await db.alumnoxcursoxdivision.create({
+        data: {
+          idtutor: Number(idTutor),
+          idcursoxdivision: Number(idCurso),
+          idestadoalumno: Number(estadoalumno?.id),
+          idusuario: Number(usuario.id),
+          fechamatriculacion: new Date()
+            .toLocaleDateString("en-GB")
+            .split("T")[0],
+        },
+      });
+      const materias = await db.materiaxcursoxdivision.findMany({
+        include: {
+          materia: true,
+        },
+        where: {
+          idcursoxdivision: Number(idCurso),
+        },
+        orderBy: {
+          materia: {
+            id: "asc",
           },
         },
-      };
+      });
+
+      const trimestres = await db.trimestre.findMany({
+        orderBy: {
+          id: "asc",
+        },
+      });
+
+      materias &&
+        materias.map((m) => {
+          trimestres &&
+            trimestres.map(async (t) => {
+              const nota = await db.nota.create({
+                data: {
+                  idalumnoxcursoxdivision: alumno?.id,
+                  idmateria: m.idmateria,
+                  idtrimestre: t.id,
+                  nota1: 0,
+                  nota2: 0,
+                  nota3: 0,
+                  nota4: 0,
+                  nota5: 0,
+                  anoactual: new Date().getFullYear(),
+                  idusuario: Number(idUsuario),
+                },
+              });
+              console.log(nota);
+            });
+        });
+
+      fechas &&
+        fechas.map(async (fecha) => {
+          const asistencia = await db.asistencia.create({
+            data: {
+              idalumnoxcursoxdivision: alumno.id,
+              presente: false,
+              ausente: false,
+              ausentejustificado: false,
+              llegadatarde: false,
+              mediafalta: false,
+              creadoen: fecha,
+              idusuario: Number(idUsuario),
+              actualizadoen: "",
+            },
+          });
+          console.log(asistencia);
+        });
+
+      return;
     }
 
     if (esDocente) {
-      idMaterias.map(async (idmateria) => {
-        docentexmateria.push({
-          idmateriaxcursoxdivision: Number(idmateria),
-        });
+      const usuario = await db.usuario.create({
+        data: data,
       });
-      data = {
-        ...data,
-        docentexmateria: {
-          create: docentexmateria,
-        },
-        asistenciadocente1: {
-          create: {
-            presente: false,
-            ausente: false,
-            ausentejustificado: false,
-            llegadatarde: false,
-            mediafalta: false,
-            creadoen: new Date().toLocaleDateString("en-GB").split("T")[0],
-            idusuario: Number(idUsuario),
+      idMaterias.map(async (idmateria) => {
+        const docente = await db.docentexmateria.create({
+          data: {
+            idusuario: Number(usuario.id),
+            idmateriaxcursoxdivision: Number(idmateria),
           },
-        },
-      };
+        });
+        console.log(docente);
+      });
+      fechas &&
+        fechas.map(async (fecha) => {
+          const asistencia = await db.asistenciadocente.create({
+            data: {
+              iddocente: Number(usuario.id),
+              presente: false,
+              ausente: false,
+              ausentejustificado: false,
+              llegadatarde: false,
+              mediafalta: false,
+              creadoen: fecha,
+              idusuario: Number(idUsuario),
+              actualizadoen: "",
+            },
+          });
+          console.log(asistencia);
+        });
+      return;
     }
 
     if (esPreceptor) {
