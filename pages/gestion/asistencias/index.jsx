@@ -425,28 +425,59 @@ export default function Asistencias() {
                       <InputLabel id="demo-simple-select-label">
                         Curso
                       </InputLabel>
-                      <Select
-                        sx={{ width: "90px", marginRight: "20px" }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Curso"
-                        name="idCurso"
-                        value={idCurso}
-                        onChange={handleCurso}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem value={""}>Seleccione un curso</MenuItem>
-                        {cursos &&
-                          cursos.map((c, i) => (
-                            <MenuItem
-                              selected={i === 0}
-                              value={c.id}
-                              key={c.id}
-                            >
-                              {c.curso?.nombre} {c.division?.division}
-                            </MenuItem>
-                          ))}
-                      </Select>
+                      {
+                        authUser?.rol?.tipo === "Preceptor" ? (
+                          <Select
+                            sx={{ width: "90px", marginRight: "20px" }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Curso"
+                            name="idCurso"
+                            value={idCurso}
+                            onChange={handleCurso}
+                            MenuProps={{ disableScrollLock: true }}
+                          >
+                            <MenuItem value={""}>Seleccione un curso</MenuItem>
+                            {cursos &&
+                              cursos.map((c, i) => (
+                                authUser?.preceptorxcurso.map(p => (
+                                  p.idcurso === c.curso?.id && (
+                                    <MenuItem
+                                      selected={i === 0}
+                                      value={c.id}
+                                      key={c.id}
+                                    >
+                                      {c.curso?.nombre} {c.division?.division}
+                                    </MenuItem>
+                                  )
+                                ))
+                              ))}
+                          </Select>
+                        ) : (
+                          <Select
+                            sx={{ width: "90px", marginRight: "20px" }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Curso"
+                            name="idCurso"
+                            value={idCurso}
+                            onChange={handleCurso}
+                            MenuProps={{ disableScrollLock: true }}
+                          >
+                            <MenuItem value={""}>Seleccione un curso</MenuItem>
+                            {cursos &&
+                              cursos.map((c, i) => (
+                                <MenuItem
+                                  selected={i === 0}
+                                  value={c.id}
+                                  key={c.id}
+                                >
+                                  {c.curso?.nombre} {c.division?.division}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )
+                      }
                     </FormControl>
                   </Box>
                   <Box style={{ marginRight: "20px", marginBottom: "25px" }}>
@@ -957,12 +988,12 @@ export default function Asistencias() {
                                   </Button>
                                 ) : (
                                   <Button
-                                  variant="contained"
-                                  color="success"
-                                  onClick={() => onSave(a.id)}
-                                >
-                                  Actualizar
-                                </Button>
+                                    variant="contained"
+                                    color="success"
+                                    onClick={() => onSave(a.id)}
+                                  >
+                                    Actualizar
+                                  </Button>
                                 )
                               }
 
