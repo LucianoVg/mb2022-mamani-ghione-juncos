@@ -15,19 +15,29 @@ export default async function handler(req, res) {
       preanalitico?.forEach((p) => {
         if (p.curso < 4) {
           let dosDecimal = Number(p.notafinal).toFixed(2);
+          console.log(dosDecimal)
           let nota = dosDecimal.toString().split(".");
           let entero = Number(nota[0]);
+          // console.log(entero)
           let decimal = Number(nota[1]);
+          // console.log(decimal)
           if (decimal) {
-            if (decimal <= 50) {
+            // if (decimal >= 1 && decimal < 50) {
+            //   decimal = 0;
+            // }
+            if (decimal >= 33 && decimal < 75) {
               decimal = 50;
+            } else {
+              if (decimal >= 75) {
+                entero = entero + 1;
+                decimal = 0;
+              }
             }
-            if (decimal > 50) {
-              entero = entero + 1;
-              decimal = 0;
-            }
+
             p.notafinal = Number(`${entero}.${decimal}`);
+
           }
+
         }
       });
 
