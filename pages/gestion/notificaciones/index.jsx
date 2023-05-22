@@ -71,7 +71,8 @@ const Notificaciones = () => {
       authUser?.rol?.tipo === "Administrador" ||
       authUser?.rol?.tipo === "Director" ||
       authUser?.rol?.tipo === "Vicedirector" ||
-      authUser?.rol?.tipo === "Preceptor"
+      authUser?.rol?.tipo === "Preceptor" ||
+      authUser?.rol?.tipo === "Secretaria"
     );
   };
 
