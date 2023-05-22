@@ -95,10 +95,17 @@ export async function registrarUsuario(
   idCursos = [],
   fechaNacimiento
 ) {
-  let ultimoId = await db.usuario.count();
-  ultimoId += 2;
+  let usuarios = await db.usuario.findMany({
+    select: {
+      id: true,
+    },
+    orderBy: {
+      id: "desc",
+    },
+  });
+
   let data = {
-    id: ultimoId,
+    id: usuarios[0].id + 1,
     login,
     nombre,
     apellido,
