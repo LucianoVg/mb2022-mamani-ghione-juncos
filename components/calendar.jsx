@@ -111,7 +111,8 @@ export default function Calendar({
   const tienePermisos = () => {
     return (
       authUser?.rol?.tipo === "Administrador" ||
-      authUser?.rol?.tipo === "Docente"
+      authUser?.rol?.tipo === "Docente" ||
+      authUser?.rol?.tipo === "Director"
     );
   };
   const isValidDate = (date = new Date()) => {
