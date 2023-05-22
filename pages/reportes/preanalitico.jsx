@@ -69,6 +69,7 @@ export default function Preanalitico() {
     return (
       authUser?.rol?.tipo === "Administrador" ||
       authUser?.rol?.tipo === "Director" ||
+      authUser?.rol?.tipo === "Vicedirector" ||
       authUser?.rol?.tipo === "Secretaria" ||
       authUser?.rol?.tipo === "Tutor" ||
       authUser?.rol?.tipo === "Estudiante"

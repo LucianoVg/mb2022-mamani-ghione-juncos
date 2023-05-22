@@ -228,7 +228,7 @@ export default function ListadoNotificaciones() {
                     sx={{
                       marginLeft: "30px",
                       marginTop: "20px",
-                      fontSize: "clamp(15px, 2vw, 40px)"
+                      fontSize: "clamp(15px, 2vw, 25px)"
                     }}
                   // className={`${styles.Typography3}`}
                   >
@@ -257,7 +257,7 @@ export default function ListadoNotificaciones() {
                       marginLeft: "30px",
                       marginTop: "50px",
                       marginBottom: "40px", fontSize: "clamp(25px, 3vw, 50px)",
-                      lineHeight: "clamp(25px, 3vw, 40px)",
+                      lineHeight: "clamp(25px, 3vw, 20px)",
                     }}
 
                   // className={`${styles.Typography}`}
@@ -279,7 +279,7 @@ export default function ListadoNotificaciones() {
                     variant="caption"
                     sx={{
                       marginLeft: "30px",
-                      fontSize: "clamp(15px, 2vw, 40px)"
+                      fontSize: "clamp(15px, 2vw, 25px)"
                     }}
                   // className={`${styles.Typography3}`}
                   >
