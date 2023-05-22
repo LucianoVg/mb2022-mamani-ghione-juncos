@@ -10,8 +10,11 @@ export default async function handler(req, res) {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     if (req.method === "GET") {
-      let { fecha, idCurso, idAlumno } = req.query;
-      console.log(fecha, idCurso, idAlumno);
+      let { fecha, idCurso, idAlumno, idCursos } = req.query;
+      console.log(fecha, idCurso, idCursos, idAlumno);
+
+
+
 
       let AND = [
         {
@@ -58,6 +61,18 @@ export default async function handler(req, res) {
           alumnoxcursoxdivision: {
             cursoxdivision: {
               id: Number(idCurso),
+            },
+          },
+        });
+      } else {
+        AND.push({
+          alumnoxcursoxdivision: {
+            cursoxdivision: {
+              curso: {
+                id: {
+                  in: [idCursos]
+                }
+              }
             },
           },
         });

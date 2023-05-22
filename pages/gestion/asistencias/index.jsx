@@ -47,6 +47,8 @@ export default function Asistencias() {
   const cantidadPaginas = Math.ceil(asistencias?.length / pageSize);
   const paginacion = usePagination(asistencias || [], pageSize);
 
+
+
   const [cursos, setCursos] = useState();
   const [idCurso, setIdCurso] = useState("");
   const [fecha, setFecha] = useState(null);
@@ -95,6 +97,13 @@ export default function Asistencias() {
   };
 
   const listarAsistencias = async () => {
+    if (authUser?.rol?.tipo === "Preceptor") {
+      queryParams.push({
+        idCursos: authUser?.preceptorxcurso?.map(p => (
+          p.idcurso
+        ))
+      });
+    }
     if (idAlumno) {
       queryParams.push({ idAlumno: idAlumno });
     }
@@ -372,37 +381,68 @@ export default function Asistencias() {
                     <FormControl
                       style={{ marginRight: "20px", marginBottom: "25px" }}
                     >
-                      <Autocomplete
-                        sx={{ width: "250px" }}
-                        disablePortal
-                        id="combo-box-demo"
-                        // value={value}
-                        name="idAlumno"
-                        size="small"
-                        onChange={handleAlumno}
-                        getOptionLabel={(alumno) =>
-                          `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
-                        }
-                        options={alumnos}
-                        isOptionEqualToValue={(option, value) =>
-                          option?.usuario?.apellido === value?.usuario?.apellido
-                        }
-                        noOptionsText={"No existe un estudiante con ese nombre"}
-                        renderOption={(props, alumno) => (
-                          authUser?.preceptorxcurso.map(p => (
-                            p.idcurso === alumno?.cursoxdivision?.curso?.id && (
+                      {
+                        authUser?.rol?.tipo === "Preceptor" ? (
+                          <Autocomplete
+                            sx={{ width: "250px" }}
+                            disablePortal
+                            id="combo-box-demo"
+                            // value={value}
+                            name="idAlumno"
+                            size="small"
+                            onChange={handleAlumno}
+                            getOptionLabel={(alumno) =>
+                              `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                            }
+                            options={alumnos}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.usuario?.apellido === value?.usuario?.apellido
+                            }
+                            noOptionsText={"No existe un estudiante con ese nombre"}
+                            renderOption={(props, alumno) => (
+                              authUser?.preceptorxcurso.map(p => (
+                                p.idcurso === alumno?.cursoxdivision?.curso?.id && (
+                                  <Box component="li" {...props} key={alumno?.id}>
+                                    {alumno?.usuario?.apellido}{" "}
+                                    {alumno?.usuario?.nombre}
+                                  </Box>
+                                )
+                              ))
+
+                            )}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Estudiante" />
+                            )}
+                          />
+                        ) : (
+                          <Autocomplete
+                            sx={{ width: "250px" }}
+                            disablePortal
+                            id="combo-box-demo"
+                            // value={value}
+                            name="idAlumno"
+                            size="small"
+                            onChange={handleAlumno}
+                            getOptionLabel={(alumno) =>
+                              `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                            }
+                            options={alumnos}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.usuario?.apellido === value?.usuario?.apellido
+                            }
+                            noOptionsText={"No existe un estudiante con ese nombre"}
+                            renderOption={(props, alumno) => (
                               <Box component="li" {...props} key={alumno?.id}>
-                              {alumno?.usuario?.apellido}{" "}
-                              {alumno?.usuario?.nombre}
-                            </Box>
-                            )
-                          ))
-                         
-                        )}
-                        renderInput={(params) => (
-                          <TextField {...params} label="Estudiante" />
-                        )}
-                      />
+                                {alumno?.usuario?.apellido}{" "}
+                                {alumno?.usuario?.nombre}
+                              </Box>
+                            )}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Estudiante" />
+                            )}
+                          />
+                        )
+                      }
                     </FormControl>
                   </Box>
                 </Grid>
