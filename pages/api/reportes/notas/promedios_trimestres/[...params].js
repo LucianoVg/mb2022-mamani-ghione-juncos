@@ -28,21 +28,23 @@ async function PromedioXtrimestre(idAlumno, idMateria) {
     let anoActual = new Date().getFullYear();
     return await db.$queryRaw`select m.nombre as materia, idalumnoxcursoxdivision,t.trimestre as trimestre,
         (SELECT AVG(c)
-               FROM   (VALUES(nota1),
-                             (nota2),
-                             (nota3),
-                             (nota4),
-                             (nota5)) T (c)) AS Promedio
-       from nota as n
+               FROM   (VALUES(CASE WHEN nota1 > 0 THEN nota1 END),
+                             (CASE WHEN nota2 > 0 THEN nota2 END),
+                             (CASE WHEN nota3 > 0 THEN nota3 END),
+                             (CASE WHEN nota4 > 0 THEN nota4 END),
+                             (CASE WHEN nota5 > 0 THEN nota5 END)) T (c)) AS Promedio
+       from nota as n      
        INNER JOIN materia as m ON m.id = n.idmateria
        INNER JOIN trimestre as t ON t.id = n.idtrimestre
        inner join alumnoxcursoxdivision as al on al.id = n.idalumnoxcursoxdivision
        inner join usuario as u on u.id = al.idusuario
-       where idalumnoxcursoxdivision =${Number(
-         idAlumno
-       )} and idmateria = ${Number(
+       where
+            idalumnoxcursoxdivision =${Number(
+      idAlumno
+    )} and idmateria = ${Number(
       idMateria
     )} and u.activo = true and anoactual = ${Number(anoActual)}
+    
        order by m.nombre asc, t.trimestre asc`;
   } catch (error) {
     console.error(error);

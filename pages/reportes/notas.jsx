@@ -478,11 +478,51 @@ export default function Notas() {
                             >
                               Primer Trimestre
                             </TableCell>
-                            <TableCell>{n.nota1}</TableCell>
-                            <TableCell>{n.nota2}</TableCell>
-                            <TableCell>{n.nota3}</TableCell>
-                            <TableCell>{n.nota4}</TableCell>
-                            <TableCell>{n.nota5}</TableCell>
+                            <TableCell>
+                              {
+                                n.nota1 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota1
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota2 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota2
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota3 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota3
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota4 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota4
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota5 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota5
+                                )
+                              }
+                            </TableCell>
                           </TableRow>
                         ) : n.id === 2 ? (
                           <TableRow key={i}>
@@ -495,11 +535,51 @@ export default function Notas() {
                             >
                               Segundo Trimestre
                             </TableCell>
-                            <TableCell>{n.nota1}</TableCell>
-                            <TableCell>{n.nota2}</TableCell>
-                            <TableCell>{n.nota3}</TableCell>
-                            <TableCell>{n.nota4}</TableCell>
-                            <TableCell>{n.nota5}</TableCell>
+                            <TableCell>
+                              {
+                                n.nota1 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota1
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota2 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota2
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota3 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota3
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota4 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota4
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota5 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota5
+                                )
+                              }
+                            </TableCell>
                           </TableRow>
                         ) : (
                           <TableRow key={i}>
@@ -512,11 +592,51 @@ export default function Notas() {
                             >
                               Tercer Trimestre
                             </TableCell>
-                            <TableCell>{n.nota1}</TableCell>
-                            <TableCell>{n.nota2}</TableCell>
-                            <TableCell>{n.nota3}</TableCell>
-                            <TableCell>{n.nota4}</TableCell>
-                            <TableCell>{n.nota5}</TableCell>
+                            <TableCell>
+                              {
+                                n.nota1 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota1
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota2 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota2
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota3 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota3
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota4 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota4
+                                )
+                              }
+                            </TableCell>
+                            <TableCell>
+                              {
+                                n.nota5 === 0 ? (
+                                  " "
+                                ) : (
+                                  n.nota5
+                                )
+                              }
+                            </TableCell>
                           </TableRow>
                         )
                       )}
