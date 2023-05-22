@@ -16,6 +16,7 @@ export default async function handler(req, res) {
         {
           activo: true,
         },
+
       ];
       let options = {
         include: {
@@ -112,18 +113,21 @@ export default async function handler(req, res) {
         },);
       }
       if (rol === "Vicedirector") {
-        and.push({
-          rol: {
-            tipo: {
-              not: "Administrador"
+        and.push(
+          {
+            rol: {
+              tipo: {
+                not: "Administrador"
+              },
             },
           },
-          rol: {
-            tipo: {
-              not: "Director"
-            }
-          },
-        },);
+          {
+            rol: {
+              tipo: {
+                not: "Director"
+              }
+            },
+          },);
       }
       if (legajo) {
         and.push({ legajo: legajo });

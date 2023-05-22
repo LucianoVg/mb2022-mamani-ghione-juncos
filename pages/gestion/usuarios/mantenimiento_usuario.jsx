@@ -276,7 +276,8 @@ export default function MantenimientoUsuario() {
                 }
                 noOptionsText={"No existe un usuario con ese nombre"}
                 renderOption={(props, usuario) =>
-                  usuario?.rol?.tipo != "Administrador" && (
+                  usuario?.rol?.tipo != "Administrador" &&  
+                  usuario?.rol?.tipo != "Director" && (
                     <Box component="li" {...props} key={usuario?.id}>
                       {usuario?.apellido} {usuario?.nombre}
                     </Box>
@@ -301,7 +302,8 @@ export default function MantenimientoUsuario() {
                 {roles &&
                   roles.map(
                     (r, i) =>
-                      r.tipo != "Administrador" && (
+                      r.tipo != "Administrador" && 
+                      r.tipo != "Director" && (
                         <MenuItem key={i} value={r.id}>
                           {r.tipo}
                         </MenuItem>
@@ -344,7 +346,8 @@ export default function MantenimientoUsuario() {
                 noOptionsText={"No existe un usuario con ese nombre"}
                 renderOption={(props, usuario) =>
                   usuario?.rol?.tipo != "Administrador" &&
-                  usuario?.rol?.tipo != "Director" &&
+                  usuario?.rol?.tipo != "Director" && 
+                  usuario?.rol?.tipo != "Vicedirector" &&
                   (
                     <Box component="li" {...props} key={usuario?.id}>
                       {usuario?.apellido} {usuario?.nombre}
@@ -372,6 +375,7 @@ export default function MantenimientoUsuario() {
                     (r, i) =>
                       r.tipo != "Administrador" &&
                       r.tipo != "Director" &&
+                      r.tipo != "Vicedirector" &&
                       (
                         <MenuItem key={i} value={r.id}>
                           {r.tipo}

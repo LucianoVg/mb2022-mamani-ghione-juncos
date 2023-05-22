@@ -25,8 +25,8 @@ async function traerRoles(rol) {
         console.log(rol);
         let opt = {}
         let and = []
-        if (rol) and.push({ tipo: { not: rol } })
-        if (rol === "Director") and.push({ tipo: { not: "Administrador" } })
+        // if (rol) and.push({ tipo: { not: rol } })
+        // if (rol === "Director") and.push({ tipo: { not: "Administrador" } })
         opt = {
             ...opt,
             where: {

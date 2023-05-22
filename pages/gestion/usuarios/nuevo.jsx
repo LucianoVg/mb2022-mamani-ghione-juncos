@@ -499,7 +499,7 @@ export default function NuevoUsuario() {
                   {roles &&
                     roles.map(
                       (r, i) =>
-                        r?.tipo != "Administrador" && r?.tipo != "Tutor" && (
+                        r?.tipo != "Administrador" && r?.tipo != "Tutor" && r?.tipo != "Director" && (
                           <MenuItem key={i} value={r.id}>
                             {r.tipo}
                           </MenuItem>
@@ -530,7 +530,8 @@ export default function NuevoUsuario() {
                       (r, i) =>
                         r?.tipo != "Administrador" &&
                         r?.tipo != "Director" &&
-                        r?.tipo != "Tutor" && (
+                        r?.tipo != "Tutor" &&
+                        r?.tipo != "Vicedirector" && (
                           <MenuItem key={i} value={r.id}>
                             {r.tipo}
                           </MenuItem>
