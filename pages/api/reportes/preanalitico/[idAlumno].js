@@ -19,12 +19,22 @@ export default async function handler(req, res) {
           let nota = dosDecimal.toString().split(".");
           let entero = Number(nota[0]);
           // console.log(entero)
-          let decimal = Number(nota[1]);
-          // console.log(decimal)
+          // let decimal =Number(nota[1]);
+
+          let decimal
+          let decimal1 = nota[1].toString().split("");
+          console.log(decimal1)
+          if (Number(decimal1[0]) === 0 && Number(decimal1[1]) > 0) {
+            decimal = 1
+          } else {
+            decimal = Number(nota[1])
+          }
+          console.log(decimal)
+
           if (decimal) {
-            // if (decimal >= 1 && decimal < 50) {
-            //   decimal = 0;
-            // }
+            if (decimal >= 1 && decimal < 33) {
+              decimal = 0;
+            }
             if (decimal >= 33 && decimal < 75) {
               decimal = 50;
             } else {
