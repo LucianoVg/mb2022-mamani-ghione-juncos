@@ -100,7 +100,8 @@ export default function Sancion() {
       authUser?.rol?.tipo === "Director" ||
       authUser?.rol?.tipo === "Vicedirector" ||
       authUser?.rol?.tipo === "Estudiante" ||
-      authUser?.rol?.tipo === "Tutor"
+      authUser?.rol?.tipo === "Tutor" ||
+      authUser?.rol?.tipo === "Preceptor"
     );
   };
 
