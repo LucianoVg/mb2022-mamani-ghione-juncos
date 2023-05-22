@@ -13,9 +13,6 @@ export default async function handler(req, res) {
       let { fecha, idCurso, idAlumno, idCursos } = req.query;
       console.log(fecha, idCurso, idCursos, idAlumno);
 
-
-
-
       let AND = [
         {
           alumnoxcursoxdivision: {
@@ -64,15 +61,18 @@ export default async function handler(req, res) {
             },
           },
         });
-      } else {
+      }
+      if (idCursos) {
+        let cursos = Array.from(idCursos).filter((c) => c !== ",");
+        console.log("IdCursos:", cursos);
         AND.push({
           alumnoxcursoxdivision: {
             cursoxdivision: {
               curso: {
                 id: {
-                  in: [idCursos]
-                }
-              }
+                  in: cursos.map((c) => Number(c)),
+                },
+              },
             },
           },
         });
