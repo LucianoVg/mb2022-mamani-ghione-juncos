@@ -470,9 +470,11 @@ export default function NuevoUsuario() {
                 >
                   {roles &&
                     roles.map((r, i) => (
-                      <MenuItem key={i} value={r.id}>
-                        {r.tipo}
-                      </MenuItem>
+                      r?.tipo != "Tutor" && (
+                        <MenuItem key={i} value={r.id}>
+                          {r.tipo}
+                        </MenuItem>
+                      )
                     ))}
                 </Select>
               </FormControl>
@@ -497,7 +499,7 @@ export default function NuevoUsuario() {
                   {roles &&
                     roles.map(
                       (r, i) =>
-                        r?.tipo != "Administrador" && (
+                        r?.tipo != "Administrador" && r?.tipo != "Tutor" && (
                           <MenuItem key={i} value={r.id}>
                             {r.tipo}
                           </MenuItem>
@@ -527,7 +529,8 @@ export default function NuevoUsuario() {
                     roles.map(
                       (r, i) =>
                         r?.tipo != "Administrador" &&
-                        r?.tipo != "Director" && (
+                        r?.tipo != "Director" &&
+                        r?.tipo != "Tutor" && (
                           <MenuItem key={i} value={r.id}>
                             {r.tipo}
                           </MenuItem>
@@ -724,10 +727,11 @@ export default function NuevoUsuario() {
                 </FormControl>
                 <Button
                   disabled={guardando || buscando}
-                  sx={{ mt: 2, width: "180px"}}
+                  sx={{ mt: 2, width: "180px" }}
                   variant="contained"
                   color="primary"
                   type="submit"
+                  onClick={registrarUsuario}
                 >
                   {!guardando && !buscando && <span>Registrar Usuario</span>}
                   {guardando || (buscando && <Loading size={30} />)}

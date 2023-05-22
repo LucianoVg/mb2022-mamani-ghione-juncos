@@ -6,6 +6,7 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import "dayjs/locale/es-mx";
 import {
   List,
+  Box,
   ListItemText,
   ListItemIcon,
   ListItem,
@@ -21,7 +22,7 @@ import {
   OutlinedInput,
   Button,
   Alert,
-  Box,
+
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
@@ -30,6 +31,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+// import { Box } from "devextreme-react";
 
 export default function Detalles() {
   const ITEM_HEIGHT = 48;
@@ -601,69 +603,73 @@ export default function Detalles() {
               >
                 <strong>Datos del Estudiante</strong>
               </Typography>
+              {
+                usuario?.alumnoxcursoxdivision2?.map(t => (
+                  <>
+                    <Stack
+                      direction={{ xs: "column", sm: "row" }}
+                      spacing={{ xs: 2, sm: 2, md: 23, marginBottom: "30px" }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Nombre</strong> <br />
+                        {t?.usuario?.nombre || "N/A"}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Apellido</strong> <br />
+                        {t?.usuario?.apellido ||
+                          "N/A"}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Legajo</strong> <br />
+                        {t?.usuario?.legajo || "N/A"}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Curso</strong> <br />
+                        {
+                          t?.cursoxdivision?.curso?.nombre
+                        }
+                        ° Año &quot;
+                        {t?.cursoxdivision?.division?.division || "N/A"}
+                        &quot;
+                      </Typography>
+                    </Stack>
 
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Nombre</strong> <br />
-                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.nombre || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Apellido</strong> <br />
-                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.apellido ||
-                    "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Legajo</strong> <br />
-                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.legajo || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Curso</strong> <br />
-                  {
-                    usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.curso
-                      ?.nombre
-                  }
-                  ° Año &quot;
-                  {usuario?.alumnoxcursoxdivision2[0]?.cursoxdivision?.division
-                    ?.division || "N/A"}
-                  &quot;
-                </Typography>
-              </Stack>
-
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={{ xs: 2, sm: 2, md: 23 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Mail</strong> <br />
-                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.correo || "N/A"}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ width: "200px", marginBottom: "20px" }}
-                >
-                  <strong>Teléfono</strong> <br />
-                  {usuario?.alumnoxcursoxdivision2[0]?.usuario?.telefono ||
-                    "N/A"}
-                </Typography>
-              </Stack>
+                    <Stack
+                      direction={{ xs: "column", sm: "row" }}
+                      spacing={{ xs: 2, sm: 2, md: 23 }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Mail</strong> <br />
+                        {t?.usuario?.correo || "N/A"}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{ width: "200px", marginBottom: "20px" }}
+                      >
+                        <strong>Teléfono</strong> <br />
+                        {t?.usuario?.telefono ||
+                          "N/A"}
+                      </Typography>
+                    </Stack>
+                    <Divider sx={{ marginTop: "20px", marginBottom: "20px"}}></Divider>
+                  </>
+                ))
+              }
             </>
           )}
           {usuario?.rol?.tipo === "Docente" && !editMode && (
@@ -899,12 +905,15 @@ export default function Detalles() {
             </>
           )}
         </Container>
-      )}
-      {cargando && (
-        <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-          <Loading size={80} />
-        </Container>
-      )}
-    </Layout>
+      )
+      }
+      {
+        cargando && (
+          <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+            <Loading size={80} />
+          </Container>
+        )
+      }
+    </Layout >
   );
 }
