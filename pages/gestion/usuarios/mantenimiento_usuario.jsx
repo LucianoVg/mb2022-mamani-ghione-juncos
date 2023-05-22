@@ -180,10 +180,10 @@ export default function MantenimientoUsuario() {
         {(authUser?.rol?.tipo === "Director" ||
           authUser?.rol?.tipo === "Administrador" ||
           authUser?.rol?.tipo === "Vicedirector") && (
-          <Link href={"/gestion/usuarios/nuevo"}>
-            <Button variant="contained">Nuevo Usuario</Button>
-          </Link>
-        )}
+            <Link href={"/gestion/usuarios/nuevo"}>
+              <Button variant="contained">Nuevo Usuario</Button>
+            </Link>
+          )}
         {authUser?.rol?.tipo === "Secretaria" && (
           <Link href={"/gestion/usuarios/nuevo"}>
             <Button variant="contained">Nuevo Estudiante</Button>
@@ -195,7 +195,7 @@ export default function MantenimientoUsuario() {
         {authUser?.rol?.tipo === "Administrador" && (
           <Box
             direction="row"
-            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+          // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
           >
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
@@ -256,7 +256,7 @@ export default function MantenimientoUsuario() {
         {authUser?.rol?.tipo === "Director" && (
           <Box
             direction="row"
-            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+          // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
           >
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
@@ -323,7 +323,7 @@ export default function MantenimientoUsuario() {
         {authUser?.rol?.tipo === "Vicedirector" && (
           <Box
             direction="row"
-            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+          // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
           >
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
@@ -344,12 +344,12 @@ export default function MantenimientoUsuario() {
                 noOptionsText={"No existe un usuario con ese nombre"}
                 renderOption={(props, usuario) =>
                   usuario?.rol?.tipo != "Administrador" &&
-                  usuario?.rol?.tipo !=
-                    "Director"(
-                      <Box component="li" {...props} key={usuario?.id}>
-                        {usuario?.apellido} {usuario?.nombre}
-                      </Box>
-                    )
+                  usuario?.rol?.tipo != "Director" &&
+                  (
+                    <Box component="li" {...props} key={usuario?.id}>
+                      {usuario?.apellido} {usuario?.nombre}
+                    </Box>
+                  )
                 }
                 renderInput={(params) => (
                   <TextField {...params} label="Usuarios" />
@@ -371,12 +371,12 @@ export default function MantenimientoUsuario() {
                   roles.map(
                     (r, i) =>
                       r.tipo != "Administrador" &&
-                      r.tipo !=
-                        "Director"(
-                          <MenuItem key={i} value={r.id}>
-                            {r.tipo}
-                          </MenuItem>
-                        )
+                      r.tipo != "Director" &&
+                      (
+                        <MenuItem key={i} value={r.id}>
+                          {r.tipo}
+                        </MenuItem>
+                      )
                   )}
               </Select>
             </FormControl>
@@ -393,7 +393,7 @@ export default function MantenimientoUsuario() {
         {authUser?.rol?.tipo === "Secretaria" && (
           <Box
             direction="row"
-            // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+          // sx={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
           >
             <FormControl style={{ marginRight: "20px", marginBottom: "25px" }}>
               <Autocomplete
