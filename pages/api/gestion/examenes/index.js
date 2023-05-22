@@ -10,8 +10,14 @@ export default async function handler(req, res) {
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     if (req.method === "GET") {
-      const { idCurso, idDocente } = req.query;
-      const fechasExamen = await traerFechaExamenes(idCurso, idDocente);
+      const { idCurso, idCursos, idDocente } = req.query;
+
+      console.log("IdCursos:", idCursos);
+      const fechasExamen = await traerFechaExamenes(
+        idCurso,
+        idDocente,
+        idCursos
+      );
       return res.status(200).json(fechasExamen);
     }
     if (req.method === "POST") {
@@ -30,7 +36,7 @@ export default async function handler(req, res) {
     return res.status(500).send(error);
   }
 }
-export async function traerFechaExamenes(idCurso, idDocente) {
+export async function traerFechaExamenes(idCurso, idDocente, idCursos) {
   try {
     let where = {};
     if (idCurso) {
@@ -59,6 +65,18 @@ export async function traerFechaExamenes(idCurso, idDocente) {
                 },
               },
             },
+          },
+        },
+      };
+    }
+    if (idCursos) {
+      let cursos = Array.from(idCursos).filter((c) => c !== ",");
+      console.log("IdCursos:", cursos);
+      where = {
+        ...where,
+        curso: {
+          id: {
+            in: cursos.map((c) => Number(c)),
           },
         },
       };

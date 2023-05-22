@@ -42,6 +42,10 @@ export default function FechasExamen() {
         ? `?idCurso=${authUser?.alumnoxcursoxdivision1[0]?.idcursoxdivision}`
         : authUser?.rol?.tipo === "Docente"
         ? `?idDocente=${authUser?.docentexmateria[0]?.idusuario}`
+        : authUser?.rol?.tipo === "Tutor"
+        ? `?idCursos=${authUser?.alumnoxcursoxdivision2?.map(
+            (axc) => axc.cursoxdivision?.curso?.id
+          )}`
         : "";
     console.log("Examenes param:", param);
     setCargando(true);
