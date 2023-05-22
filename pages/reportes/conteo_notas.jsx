@@ -136,7 +136,7 @@ export default function Dashboard() {
           {materias.length > 0 && (
             <FormControl sx={{ marginBottom: "20px" }}>
               <Autocomplete
-                sx={{ width: "330px" }}
+                sx={{ width: "410px" }}
                 disablePortal
                 id="inputMateria"
                 // value={value}
@@ -144,7 +144,7 @@ export default function Dashboard() {
                 size="small"
                 onChange={handleSelect}
                 options={materiasOrdenadas}
-                getOptionLabel={(materia) => `${materia?.materia?.nombre}`}
+                getOptionLabel={(materia) => `${materia?.materia?.nombre} - ${materia?.cursoxdivision?.curso?.nombre} Año`}
                 isOptionEqualToValue={(option, value) => {
                   return option?.materia?.id === value?.materia?.id;
                 }}
@@ -156,7 +156,7 @@ export default function Dashboard() {
                     key={materia?.id}
                     value={materia?.materia?.id}
                   >
-                    {materia?.materia?.nombre}
+                    {materia?.materia?.nombre} - {materia?.cursoxdivision?.curso?.nombre} Año
                   </Box>
                 )}
                 renderInput={(params) => (

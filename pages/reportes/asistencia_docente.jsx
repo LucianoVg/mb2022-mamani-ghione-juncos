@@ -60,12 +60,10 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasAnuales = async () => {
     setCargando3(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_anual/${
-        authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0]?.idusuario
-          : idDocente
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_anual/${authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.idusuario
+        : idDocente
           ? idDocente
           : 1
       }`
@@ -79,12 +77,10 @@ export default function AsistenciasDocentes() {
   const listarAsistenciasMensuales = async () => {
     setCargando2(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${
-        authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0]?.idusuario
-          : idDocente
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/conteo_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.idusuario
+        : idDocente
           ? idDocente
           : 1
       }&mes=${mes}`
@@ -98,12 +94,10 @@ export default function AsistenciasDocentes() {
   const listadoAsistencias = async () => {
     setCargando1(true);
     const res = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_CLIENT_URL
-      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${
-        authUser?.rol?.tipo === "Docente"
-          ? authUser?.docentexmateria[0]?.idusuario
-          : idDocente
+      `${process.env.NEXT_PUBLIC_CLIENT_URL
+      }/reportes/asistencias/asistencias_docente/listado_mensual?idDocente=${authUser?.rol?.tipo === "Docente"
+        ? authUser?.docentexmateria[0]?.idusuario
+        : idDocente
           ? idDocente
           : 1
       }&mes=${mes}`
@@ -143,10 +137,14 @@ export default function AsistenciasDocentes() {
     setMes(Number(e.target.value || 3));
   };
 
+  const [bandera, setBandera] = useState(0);
   const handleSearch = async () => {
+    setBandera(1)
     await listarAsistenciasAnuales();
     await listarAsistenciasMensuales();
     await listadoAsistencias();
+
+    // console.log("bandera", bandera)
   };
   return (
     <Layout>
@@ -263,144 +261,152 @@ export default function AsistenciasDocentes() {
         </>
       )}
 
-      <div sx={{ marginTop: 10 }}>
-        <Grid container spacing={2}>
-          <Grid item xs>
-            {cargando2 && (
-              <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-                <Loading size={50} />
-              </Container>
-            )}
-            {!cargando2 && (
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        colSpan={12}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                        }}
-                      >
-                        Total de Asistencias Mensuales
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Presente</TableCell>
-                      <TableCell>Ausente</TableCell>
-                      <TableCell>Llegada Tarde</TableCell>
-                      <TableCell>Media Falta</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>{mensual[0]?.presente}</TableCell>
-                      <TableCell>{mensual[0]?.ausente} </TableCell>
-                      <TableCell>{mensual[0]?.llegadatarde}</TableCell>
-                      <TableCell>{mensual[0]?.mediafalta}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Grid>
-          <Grid item xs>
-            {cargando3 && (
-              <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-                <Loading size={50} />
-              </Container>
-            )}
-            {!cargando3 && (
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        colSpan={6}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "lightblue",
-                        }}
-                      >
-                        Total de Asistencias Anuales
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Presente</TableCell>
-                      <TableCell>Ausente</TableCell>
-                      <TableCell>Llegada Tarde</TableCell>
-                      <TableCell>Media Falta</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>{anual[0]?.presente}</TableCell>
-                      <TableCell>{anual[0]?.ausente} </TableCell>
-                      <TableCell>{anual[0]?.llegadatarde}</TableCell>
-                      <TableCell>{anual[0]?.mediafalta}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            {cargando1 && (
-              <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
-                <Loading size={80} />
-              </Container>
-            )}
-            {!cargando1 && (
-              <TableContainer component={Paper} style={{ marginTop: "40px" }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center" scope="col">
-                        Fecha
-                      </TableCell>
-                      <TableCell align="center" scope="col">
-                        Asistencia
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {listado.map((l, i) => (
-                      <TableRow key={i}>
-                        <TableCell
-                          align="center"
-                          className="col-md-1 text-capitalize"
-                        >
-                          {l.creadoen}
-                        </TableCell>
-                        <TableCell align="center" className="col-md-1 ">
-                          {l.presente
-                            ? "Presente"
-                            : l.ausente
-                            ? "Ausente"
-                            : l.ausentejustificado
-                            ? "Ausente Justificado"
-                            : l.llegadatarde
-                            ? "Llegada Tarde"
-                            : l.llegadatardejustificada
-                            ? "Llegada Tarde Justificada"
-                            : l.mediafalta
-                            ? "Media Falta"
-                            : l.mediafaltajustificada
-                            ? "Media Falta Justificada"
-                            : "No tiene asistencia cargada"}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Grid>
-        </Grid>
-      </div>
+      {
+        bandera != 0 ? (
+          <div sx={{ marginTop: 10 }}>
+            <Grid container spacing={2}>
+              <Grid item xs>
+                {cargando2 && (
+                  <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                    <Loading size={50} />
+                  </Container>
+                )}
+                {!cargando2 && (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="center"
+                            colSpan={12}
+                            sx={{
+                              color: "black",
+                              backgroundColor: "lightblue",
+                            }}
+                          >
+                            Total de Asistencias Mensuales
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>Presente</TableCell>
+                          <TableCell>Ausente</TableCell>
+                          <TableCell>Llegada Tarde</TableCell>
+                          <TableCell>Media Falta</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>{mensual[0]?.presente}</TableCell>
+                          <TableCell>{mensual[0]?.ausente} </TableCell>
+                          <TableCell>{mensual[0]?.llegadatarde}</TableCell>
+                          <TableCell>{mensual[0]?.mediafalta}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Grid>
+              <Grid item xs>
+                {cargando3 && (
+                  <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                    <Loading size={50} />
+                  </Container>
+                )}
+                {!cargando3 && (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="center"
+                            colSpan={6}
+                            sx={{
+                              color: "black",
+                              backgroundColor: "lightblue",
+                            }}
+                          >
+                            Total de Asistencias Anuales
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>Presente</TableCell>
+                          <TableCell>Ausente</TableCell>
+                          <TableCell>Llegada Tarde</TableCell>
+                          <TableCell>Media Falta</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>{anual[0]?.presente}</TableCell>
+                          <TableCell>{anual[0]?.ausente} </TableCell>
+                          <TableCell>{anual[0]?.llegadatarde}</TableCell>
+                          <TableCell>{anual[0]?.mediafalta}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                {cargando1 && (
+                  <Container sx={{ maxWidth: "fit-content", textAlign: "center" }}>
+                    <Loading size={80} />
+                  </Container>
+                )}
+                {!cargando1 && (
+                  <TableContainer component={Paper} style={{ marginTop: "40px" }}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center" scope="col">
+                            Fecha
+                          </TableCell>
+                          <TableCell align="center" scope="col">
+                            Asistencia
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {listado.map((l, i) => (
+                          <TableRow key={i}>
+                            <TableCell
+                              align="center"
+                              className="col-md-1 text-capitalize"
+                            >
+                              {l.creadoen}
+                            </TableCell>
+                            <TableCell align="center" className="col-md-1 ">
+                              {l.presente
+                                ? "Presente"
+                                : l.ausente
+                                  ? "Ausente"
+                                  : l.ausentejustificado
+                                    ? "Ausente Justificado"
+                                    : l.llegadatarde
+                                      ? "Llegada Tarde"
+                                      : l.llegadatardejustificada
+                                        ? "Llegada Tarde Justificada"
+                                        : l.mediafalta
+                                          ? "Media Falta"
+                                          : l.mediafaltajustificada
+                                            ? "Media Falta Justificada"
+                                            : "No tiene asistencia cargada"}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Grid>
+            </Grid>
+          </div>
+        ): (
+          <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
+            Seleccione un docente
+          </Typography>
+        )
+      }
     </Layout>
   );
 }

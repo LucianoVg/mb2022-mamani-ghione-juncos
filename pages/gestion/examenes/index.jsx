@@ -30,7 +30,7 @@ export default function FechasExamen() {
   const tienePermisos = () => {
     return (
       authUser.rol?.tipo === "Administrador" ||
-      authUser.rol?.tipo === "Vicedirector" ||
+      authUser.rol?.tipo === "Director" ||
       authUser.rol?.tipo === "Docente" ||
       authUser.rol?.tipo === "Estudiante" ||
       authUser.rol?.tipo === "Tutor"

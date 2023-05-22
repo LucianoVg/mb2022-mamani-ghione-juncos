@@ -471,11 +471,11 @@ export default function MantenimientoUsuario() {
                   <TableCell align="center">Nombre</TableCell>
                   <TableCell align="center">Apellido</TableCell>
                   <TableCell align="center">Mail</TableCell>
-                  <TableCell align="center">Direccion</TableCell>
-                  <TableCell align="center">Telefono</TableCell>
+                  <TableCell align="center">Dirección</TableCell>
+                  <TableCell align="center">Teléfono</TableCell>
                   <TableCell align="center">Localidad</TableCell>
                   <TableCell align="center">Rol</TableCell>
-                  <TableCell align="center">Accion</TableCell>
+                  <TableCell align="center">Acción</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

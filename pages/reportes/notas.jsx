@@ -438,7 +438,7 @@ export default function Notas() {
         notaTrimestre.length === 0 &&
         promedioTrimestre.length === 0 && (
           <Typography variant="h5" sx={{ textAlign: "center", my: 3 }}>
-            Seleccione una materia para buscar su promedio
+            Seleccione una materia para buscar sus notas
           </Typography>
         )}
       {!cargando1 &&

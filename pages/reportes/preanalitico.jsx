@@ -114,17 +114,19 @@ export default function Preanalitico() {
               name="idAlumno"
               onChange={handleAlumno}
               getOptionLabel={(alumno) =>
-                `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre}`
+                `${alumno?.usuario?.apellido} ${alumno?.usuario?.nombre} - ${alumno?.cursoxdivision?.curso?.nombre}${alumno?.cursoxdivision?.division?.division}`
+                
               }
               options={alumnos}
-              sx={{ width: "250px" }}
+              sx={{ width: "300px" }}
               isOptionEqualToValue={(option, value) =>
                 option?.usuario?.apellido === value?.usuario?.apellido
               }
               noOptionsText={"No existe un estudiante con ese nombre"}
               renderOption={(props, alumno) => (
                 <Box component="li" {...props} key={alumno?.id}>
-                  {alumno?.usuario?.apellido} {alumno?.usuario?.nombre}
+                  {alumno?.usuario?.apellido} {alumno?.usuario?.nombre} - {alumno?.cursoxdivision?.curso?.nombre}{alumno?.cursoxdivision?.division?.division}
+                  
                 </Box>
               )}
               renderInput={(params) => (
