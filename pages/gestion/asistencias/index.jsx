@@ -389,10 +389,15 @@ export default function Asistencias() {
                         }
                         noOptionsText={"No existe un estudiante con ese nombre"}
                         renderOption={(props, alumno) => (
-                          <Box component="li" {...props} key={alumno?.id}>
-                            {alumno?.usuario?.apellido}{" "}
-                            {alumno?.usuario?.nombre}
-                          </Box>
+                          authUser?.preceptorxcurso.map(p => (
+                            p.idcurso === alumno?.cursoxdivision?.curso?.id && (
+                              <Box component="li" {...props} key={alumno?.id}>
+                              {alumno?.usuario?.apellido}{" "}
+                              {alumno?.usuario?.nombre}
+                            </Box>
+                            )
+                          ))
+                         
                         )}
                         renderInput={(params) => (
                           <TextField {...params} label="Estudiante" />
